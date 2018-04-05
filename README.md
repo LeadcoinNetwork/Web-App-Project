@@ -50,3 +50,11 @@ cp .env.example .env
 ```bash
 docker-compose up -d
 ```
+
+#### Test
+```
+docker-compose run -e NODE_ENV=test backend npm test
+```
+
+## Git branching model
+This project follows `git flow feature branching model` (git flow), if you are not familliar with that please read here: [Git flow cheatsheet](https://danielkummer.github.io/git-flow-cheatsheet/)
