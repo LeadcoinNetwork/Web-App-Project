@@ -9,3 +9,9 @@ services:
     build: backend
     image: leadcoin/backend
     env_file: .env
+    ports:
+      - '3001:3000'
+    volumes:
+      - './backend/app:/usr/src/app'
+      - './backend/test:/usr/src/test'
+    command: 'npm run develop'
