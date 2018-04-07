@@ -3,6 +3,7 @@ require("dotenv").config();
 
 module.exports = {
   env: process.env.NODE_ENV,
+  baseURI: '/api/v1',
   app: {
     port: 3000
   },

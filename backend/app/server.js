@@ -7,7 +7,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.use("/api/v1", router);
+app.use(config.baseURI, router);
 
 // respond with json body for 404 status
 app.use((req, res, next) => {

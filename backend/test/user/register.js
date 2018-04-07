@@ -7,7 +7,7 @@ const request = require("request-promise-native").defaults({
   resolveWithFullResponse: true
 });
 
-describe("/api/v1/user.register", () => {
+describe(`${config.baseURI}/user`, () => {
   it("Should register a new user", done => {
     var user = {
       fname: "John",
@@ -17,7 +17,7 @@ describe("/api/v1/user.register", () => {
     };
 
     request
-      .post("/api/v1/user.register", {
+      .post(`${config.baseURI}/user`, {
         json: user
       })
       .then(res => {
@@ -52,7 +52,7 @@ describe("/api/v1/user.register", () => {
     };
 
     request
-      .post("/api/v1/user.register", {
+      .post(`${config.baseURI}/user`, {
         json: user
       })
       .then(res => {
@@ -60,7 +60,7 @@ describe("/api/v1/user.register", () => {
         expect(res.statusCode).to.equal(201, JSON.stringify(res.body));
 
         return request
-          .post("/api/v1/user.register", {
+          .post(`${config.baseURI}/user`, {
             json: user,
             simple: false // don't reject for the expected 409 status code
           })

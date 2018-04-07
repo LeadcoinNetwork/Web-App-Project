@@ -3,4 +3,4 @@ const user = require("./user");
 
 var router = (module.exports = express.Router());
 
-router.post("/user.register", user.create, user.get);
+router.post("/user", user.create, user.get);
