@@ -1,7 +1,7 @@
-import * as React from "react";
-import "./App.css";
+import * as React from 'react';
+import './App.css';
 
-const logo = require("./logo.svg");
+const logo = require('./logo.svg');
 
 export interface Props {
   name: string;
