@@ -1,6 +1,7 @@
 {
   "devDependencies": {
     "husky": "^0.14.3",
+    "prettier": "^1.11.1",
     "pretty-quick": "^1.4.1"
   },
   "name": "leadcoin-web",
@@ -10,8 +11,5 @@
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/LeadcoinNetwork/leadcoin-web",
-  "license": "MIT",
-  "devDependencies": {
-    "prettier": "^1.11.1"
-  }
+  "license": "MIT"
 }
