@@ -1,46 +1,21 @@
 const bcrypt = require("bcrypt");
 const validator = require("validator");
 const zxcvbn = require("zxcvbn");
+const { pick } = require("lodash");
 const User = require("../model/user");
 
 module.exports = {
-  register,
+  create,
   findByEmail,
+  findById,
+  updateById,
   deleteById,
   encryptPassword,
   validateFirstName,
   validateLastName,
   validateEmail,
-  validatePasswordStrength,
-  validateUserDetails
+  validatePasswordStrength
 };
-
-async function register(user) {
-  // prevent duplicate
-  if (await User.findByEmail(user.email)) {
-    var err = new Error("Email " + user.email + " is already in use");
-    err.status = 409;
-    throw err;
-  }
-
-  user = validateUserDetails(user);
-  user.password = encryptPassword(user.password);
-  user.created = Date.now();
-
-  await User.create(user);
-
-  return await findByEmail(user.email);
-}
-
-async function findByEmail(email) {
-  var user = await User.findByEmail(email);
-  if (user) delete user.password;
-  return user;
-}
-
-async function deleteById(userId) {
-  return await User.deleteById(userId);
-}
 
 function encryptPassword(password) {
   return bcrypt.hashSync(password, 10);
@@ -74,11 +49,81 @@ function validatePasswordStrength(password) {
   return password;
 }
 
-function validateUserDetails(user) {
-  return {
+function validateRole(role) {
+  if (typeof role != "string" || !["user", "admin"].includes(role)) {
+    throw new Error("Invalid role, given " + role);
+  }
+  return role;
+}
+
+// returns user/undefined
+async function create(user) {
+  user = pick(user, ["fname", "lname", "email", "password", "role"]);
+
+  user = {
     fname: validateFirstName(user.fname),
     lname: validateLastName(user.lname),
     email: validateEmail(user.email),
     password: validatePasswordStrength(user.password)
   };
+
+  // prevent duplicate
+  if (await User.findByEmail(user.email)) {
+    var err = new Error("Email " + user.email + " is already in use");
+    err.status = 409;
+    throw err;
+  }
+
+  user.password = encryptPassword(user.password);
+  user.created = Date.now();
+
+  await User.create(user);
+
+  return await findByEmail(user.email);
+}
+
+// returns user/undefined
+async function findByEmail(email) {
+  var user = await User.findByEmail(email);
+  if (user) delete user.password;
+  return user;
+}
+
+// returns user/undefined
+async function findById(userId) {
+  var user = await User.findById(userId);
+  if (user) delete user.password;
+  return user;
+}
+
+// returns user/undefined
+async function updateById(userId, user) {
+  user = pick(user, ["fname", "lname", "email", "password", "role"]);
+
+  if (user.fname) user.fname = validateFirstName(user.fname);
+  if (user.lname) user.lname = validateLastName(user.lname);
+  if (user.email) {
+    user.email = validateEmail(user.email);
+    if (await User.findByEmail(user.email)) {
+      var err = new Error("Email " + user.email + " is already in use");
+      err.status = 409;
+      throw err;
+    }
+  }
+
+  if (user.password) {
+    user.password = validatePasswordStrength(user.password);
+    user.password = encryptPassword(user.password);
+  }
+
+  if (user.role) user.role = validateRole(user.role);
+
+  await User.updateById(userId, user);
+
+  return await findById(userId);
+}
+
+// returns true/false
+async function deleteById(userId) {
+  return await User.deleteById(userId);
 }
