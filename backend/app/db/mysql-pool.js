@@ -1,4 +1,4 @@
-const config = require("./config");
+const config = require("../config");
 const mysql = require("promise-mysql");
 
 module.exports = mysql.createPool(config.mysql);
@@ -20,14 +20,14 @@ module.exports = mysql.createPool(config.mysql);
       conn.query("USE " + config.mysql.database);
       conn.query(`CREATE TABLE IF NOT EXISTS users (
         id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        pass VARCHAR(60) NOT NULL,
-        mail VARCHAR(254) NOT NULL UNIQUE,
+        password VARCHAR(60) NOT NULL,
+        email VARCHAR(254) NOT NULL UNIQUE,
         role VARCHAR(255) DEFAULT 'user',
         fname VARCHAR(40),
         lname VARCHAR(40),
-        created INT(10) NOT NULL,
-        access INT(10),
-        login INT(10),
+        created BIGINT NOT NULL,
+        access BIGINT,
+        login BIGINT,
         active TINYINT(1) UNSIGNED DEFAULT 0
       )`);
 

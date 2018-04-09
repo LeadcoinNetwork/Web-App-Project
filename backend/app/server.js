@@ -16,7 +16,7 @@ app.use((req, res, next) => {
   });
 });
 
-// respond with json body for internal errors
+// respond with json body for errors
 app.use((err, req, res, next) => {
   res.status(err.status || 500).json({
     error: err.message

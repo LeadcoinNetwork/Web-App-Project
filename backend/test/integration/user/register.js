@@ -1,5 +1,5 @@
-const config = require("../../app/config");
-const mysqlPool = require("../../app/mysql-pool");
+const config = require("../../../app/config");
+const { mysqlPool } = require("../../../app/db");
 const expect = require("chai").expect;
 
 const request = require("request-promise-native").defaults({
@@ -12,8 +12,8 @@ describe(`Create ${config.baseURI}/user`, () => {
     const user = {
       fname: "John",
       lname: "Doe",
-      mail: "john@doe.com",
-      pass: "pass"
+      email: "john@doe.com",
+      password: "Pa$$w0rd!"
     };
 
     const resCreate = await request.post(`${config.baseURI}/user`, {
@@ -26,17 +26,19 @@ describe(`Create ${config.baseURI}/user`, () => {
     expect(newUser).to.include({
       fname: user.fname,
       lname: user.lname,
-      mail: user.mail,
+      email: user.email,
       role: "user"
     });
 
     // test database
-    const dbSel = await mysqlPool
-      .query("SELECT mail FROM users WHERE id = ?", newUser.id);
+    const dbSel = await mysqlPool.query(
+      "SELECT email FROM users WHERE id = ?",
+      newUser.id
+    );
 
     expect(dbSel)
       .to.be.an("array")
-      .that.eql([{ mail: user.mail }]);
+      .that.eql([{ email: user.email }]);
 
     // clean up
     const resDel = await request.delete(`${config.baseURI}/user/${newUser.id}`);
@@ -47,8 +49,8 @@ describe(`Create ${config.baseURI}/user`, () => {
     const user = {
       fname: "John",
       lname: "Doe",
-      mail: "john.dup@doe.com",
-      pass: "pass"
+      email: "john.dup@doe.com",
+      password: "Pa$$w0rd!"
     };
 
     request

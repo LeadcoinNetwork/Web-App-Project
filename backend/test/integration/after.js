@@ -1,6 +1,6 @@
-const config = require("../app/config");
-const mysqlPool = require("../app/mysql-pool");
-const server = require("../app/server");
+const config = require("../../app/config");
+const { mysqlPool } = require("../../app/db");
+const server = require("../../app/server");
 
 after(done => {
   // clean up environment
