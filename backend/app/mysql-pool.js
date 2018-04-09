@@ -19,15 +19,16 @@ module.exports = mysql.createPool(config.mysql);
       conn.query("CREATE DATABASE IF NOT EXISTS " + config.mysql.database);
       conn.query("USE " + config.mysql.database);
       conn.query(`CREATE TABLE IF NOT EXISTS users (
-        uid INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        fname VARCHAR(40) NOT NULL,
-        lname VARCHAR(40) NOT NULL,
+        id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         pass VARCHAR(60) NOT NULL,
         mail VARCHAR(254) NOT NULL UNIQUE,
-        created INT(10),
+        role VARCHAR(255) DEFAULT 'user',
+        fname VARCHAR(40),
+        lname VARCHAR(40),
+        created INT(10) NOT NULL,
         access INT(10),
         login INT(10),
-        role VARCHAR(255) DEFAULT 'user'
+        active TINYINT(1) UNSIGNED DEFAULT 0
       )`);
 
       return conn.end();

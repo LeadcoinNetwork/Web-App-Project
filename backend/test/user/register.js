@@ -7,44 +7,44 @@ const request = require("request-promise-native").defaults({
   resolveWithFullResponse: true
 });
 
-describe(`${config.baseURI}/user`, () => {
-  it("Should register a new user", done => {
-    var user = {
+describe(`Create ${config.baseURI}/user`, () => {
+  it("Should create a new user", async () => {
+    const user = {
       fname: "John",
       lname: "Doe",
       mail: "john@doe.com",
       pass: "pass"
     };
 
-    request
-      .post(`${config.baseURI}/user`, {
-        json: user
-      })
-      .then(res => {
-        // test http response
-        expect(res.statusCode).to.equal(201, JSON.stringify(res.body));
-        expect(res.body).to.include({
-          fname: user.fname,
-          lname: user.lname,
-          mail: user.mail,
-          role: "user"
-        });
+    const resCreate = await request.post(`${config.baseURI}/user`, {
+      json: user
+    });
 
-        // test database
-        return mysqlPool
-          .query("SELECT mail FROM users WHERE mail = ?", user.mail)
-          .then(rows => {
-            expect(rows)
-              .to.be.an("array")
-              .that.eql([{ mail: user.mail }]);
-            done();
-          });
-      })
-      .catch(done);
+    // test http response
+    const newUser = resCreate.body;
+    expect(resCreate.statusCode).to.equal(201, JSON.stringify(newUser));
+    expect(newUser).to.include({
+      fname: user.fname,
+      lname: user.lname,
+      mail: user.mail,
+      role: "user"
+    });
+
+    // test database
+    const dbSel = await mysqlPool
+      .query("SELECT mail FROM users WHERE id = ?", newUser.id);
+
+    expect(dbSel)
+      .to.be.an("array")
+      .that.eql([{ mail: user.mail }]);
+
+    // clean up
+    const resDel = await request.delete(`${config.baseURI}/user/${newUser.id}`);
+    expect(resDel.statusCode).to.equal(200, JSON.stringify(resDel.body));
   });
 
   it("Should reject duplicate", done => {
-    var user = {
+    const user = {
       fname: "John",
       lname: "Doe",
       mail: "john.dup@doe.com",
