@@ -1,6 +1,11 @@
 const express = require("express");
 const user = require("./user");
 
-var router = (module.exports = express.Router());
+const router = express.Router();
+module.exports = router;
 
-router.post("/user.register", user.create, user.get);
+router.post("/user", user.create);
+router.get("/user/:userId", user.read);
+router.put("/user/:userId", user.update);
+router.delete("/user/:userId", user.delete);
+

@@ -1,8 +1,9 @@
 const bcrypt = require("bcrypt");
+const { omit } = require("lodash");
 const mysqlPool = require("../mysql-pool");
 
-module.exports = function(req, res, next) {
-  var user = {
+module.exports = async function(req, res, next) {
+  const user = {
     fname: req.body.fname,
     lname: req.body.lname,
     pass: bcrypt.hashSync(req.body.pass, 10),
@@ -10,20 +11,25 @@ module.exports = function(req, res, next) {
     created: Date.now() / 1000
   };
 
-  mysqlPool
-    .query("INSERT INTO users SET ?", user)
-    .then(() => {
-      res.status(201); // Created
-      next();
-      return null; // suppress bluebird warning. see http://goo.gl/rRqMUw
-    })
-    .catch(err => {
-      if (err.code == "ER_DUP_ENTRY") {
-        res.status(409).json({
-          error: err.sqlMessage
-        });
-      } else {
-        next(err);
-      }
-    });
+  try {
+    const dbIns = await mysqlPool
+      .query("INSERT INTO users SET ?", user);
+
+    const dbSel = await mysqlPool
+      .query("SELECT * FROM users WHERE id = ?", dbIns.insertId);
+
+    res.status(201).send( // Created
+      omit(dbSel[0], 'pass') // omit the pass field
+    );
+  } catch(err) {
+    if (err.code === "ER_DUP_ENTRY") {
+      res.status(409).json({
+        error: err.sqlMessage
+      });
+    } else {
+      next(err);
+    }
+  }
+
+
 };
