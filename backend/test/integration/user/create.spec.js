@@ -13,7 +13,7 @@ describe(`Create ${config.baseURI}/user`, () => {
       fname: "John",
       lname: "Doe",
       email: "john@doe.com",
-      password: "Pa$$w0rd!"
+      password: "912379233"
     };
 
     const resCreate = await request.post(`${config.baseURI}/user`, {
@@ -50,7 +50,7 @@ describe(`Create ${config.baseURI}/user`, () => {
       fname: "John",
       lname: "Doe",
       email: "john.dup@doe.com",
-      password: "Pa$$w0rd!"
+      password: "912379233"
     };
 
     request

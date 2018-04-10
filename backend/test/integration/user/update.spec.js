@@ -14,7 +14,7 @@ describe(`Update ${config.baseURI}/user`, () => {
       fname: "Bob",
       lname: "Dugla",
       email: "some@mail.com",
-      password: "Pa$$w0rd!"
+      password: "912379233"
     };
 
     const { body: newUser } = await request.post(`${config.baseURI}/user`, {
@@ -25,7 +25,7 @@ describe(`Update ${config.baseURI}/user`, () => {
       fname: "Alex",
       lname: "Bora",
       email: "bora@email.com",
-      password: "newpass",
+      password: "912379231",
       role: "admin"
     };
 

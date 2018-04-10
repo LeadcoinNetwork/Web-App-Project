@@ -13,7 +13,7 @@ describe(`Get ${config.baseURI}/user`, () => {
       fname: "Bob",
       lname: "Dugla",
       email: "some@mail.com",
-      password: "Pa$$w0rd!"
+      password: "912379233"
     };
 
     const { body: newUser } = await request.post(`${config.baseURI}/user`, {
