@@ -1,13 +1,16 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const passport = require("passport");
 const config = require("./config");
 const router = require("./router");
 
 const app = express();
 
 app.use(bodyParser.json());
-
 app.use(config.baseURI, router);
+
+require("./passport");
+app.use(passport.initialize());
 
 // respond with json body for 404 status
 app.use((req, res, next) => {

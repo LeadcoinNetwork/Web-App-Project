@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const validator = require("validator");
 const zxcvbn = require("zxcvbn");
 const { pick } = require("lodash");
+const auth = require("../lib/auth");
 const User = require("../model/user");
 
 const Joi = require("joi").extend(joi => ({
@@ -54,13 +55,8 @@ module.exports = {
   findByEmail,
   findById,
   updateById,
-  deleteById,
-  encryptPassword
+  deleteById
 };
-
-function encryptPassword(password) {
-  return bcrypt.hashSync(password, 10);
-}
 
 async function preventDuplicatedEmail(email) {
   if (await User.findByEmail(email)) {
@@ -82,7 +78,7 @@ async function create(user) {
 
   await preventDuplicatedEmail(user.email);
 
-  user.password = encryptPassword(user.password);
+  user.password = auth.hashPassword(user.password);
   user.created = Date.now();
 
   await User.create(user);
@@ -112,7 +108,7 @@ async function updateById(userId, user) {
   await preventDuplicatedEmail(user.email);
 
   if (user.password) {
-    user.password = encryptPassword(user.password);
+    user.password = auth.hashPassword(user.password);
   }
 
   await User.updateById(userId, user);

@@ -1,5 +1,5 @@
 const config = require("../../app/config");
-const { mysqlPool } = require("../../app/db");
+const { mysqlPool } = require("../../app/mysql");
 const server = require("../../app/server");
 
 after(done => {

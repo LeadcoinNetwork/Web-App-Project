@@ -1,5 +1,5 @@
 const config = require("../../../app/config");
-const mysqlPool = require("../../../app/db/mysql-pool");
+const { mysqlPool } = require("../../../app/mysql");
 const expect = require("chai").expect;
 
 const request = require("request-promise-native").defaults({
