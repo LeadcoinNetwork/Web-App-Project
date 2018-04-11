@@ -19,8 +19,15 @@ app.use((req, res, next) => {
   });
 });
 
-// respond with json body for errors
+// custom error handler
 app.use((err, req, res, next) => {
+  // customize Joi validation errors
+  if (err.isJoi) {
+    err.message = err.details.map(e => e.message).join("; ");
+    err.status = 400;
+  }
+
+  // respond with json body
   res.status(err.status || 500).json({
     error: err.message
   });

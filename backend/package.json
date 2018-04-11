@@ -19,7 +19,6 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "promise-mysql": "^3.2.1",
-    "validator": "^9.4.1",
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
