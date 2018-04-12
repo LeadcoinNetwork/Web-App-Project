@@ -1,13 +1,13 @@
-const expect = require("chai").expect;
-const { omit } = require("lodash");
 const config = require("../../../app/config");
+const expect = require("chai").expect;
+const { pick, omit } = require("lodash");
 
 const request = require("request-promise-native").defaults({
   baseUrl: "http://localhost:" + config.app.port + config.baseURI,
   resolveWithFullResponse: true
 });
 
-describe(`Get ${config.baseURI}/user`, () => {
+describe(`Login ${config.baseURI}/login`, () => {
   it("Should get the user", async () => {
     // first, add a user
     const user = {
@@ -21,13 +21,13 @@ describe(`Get ${config.baseURI}/user`, () => {
       json: user
     });
 
-    const resGet = await request.get(`/user/${resCreate.body.user.id}`, {
-      auth: { bearer: resCreate.body.token },
-      json: true
+    const resLogin = await request.post("/login", {
+      json: pick(user, "email", "password")
     });
 
-    expect(resGet.statusCode).to.equal(200, JSON.stringify(resGet.body));
-    expect(omit(resGet.body, "login")).to.eql(
+    expect(resLogin.statusCode).to.equal(200, JSON.stringify(resLogin.body));
+    expect(resLogin.body).to.have.keys("user", "token");
+    expect(omit(resLogin.body.user, "login")).to.eql(
       omit(resCreate.body.user, "login")
     );
   });

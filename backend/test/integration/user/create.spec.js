@@ -1,29 +1,30 @@
 const config = require("../../../app/config");
 const { mysqlPool } = require("../../../app/mysql");
+const { omit } = require("lodash");
 const expect = require("chai").expect;
 
 const request = require("request-promise-native").defaults({
-  baseUrl: "http://localhost:" + config.app.port,
+  baseUrl: "http://localhost:" + config.app.port + config.baseURI,
   resolveWithFullResponse: true
 });
 
 describe(`Create ${config.baseURI}/user`, () => {
-  it("Should create a new user", async () => {
-    const user = {
-      fname: "John",
-      lname: "Doe",
-      email: "john@doe.com",
-      password: "912379233"
-    };
+  const user = {
+    fname: "John",
+    lname: "Doe",
+    email: "john@doe.com",
+    password: "912379233"
+  };
 
-    const resCreate = await request.post(`${config.baseURI}/user`, {
+  it("Should create a new user", async () => {
+    const res = await request.post("/user", {
       json: user
     });
 
     // test http response
-    const newUser = resCreate.body;
-    expect(resCreate.statusCode).to.equal(201, JSON.stringify(newUser));
-    expect(newUser).to.include({
+    expect(res.statusCode).to.equal(201, JSON.stringify(res.body));
+    expect(res.body).to.have.keys("user", "token");
+    expect(res.body.user).to.include({
       fname: user.fname,
       lname: user.lname,
       email: user.email,
@@ -31,48 +32,30 @@ describe(`Create ${config.baseURI}/user`, () => {
     });
 
     // test database
-    const dbSel = await mysqlPool.query(
-      "SELECT email FROM users WHERE id = ?",
-      newUser.id
+    const [dbUser] = await mysqlPool.query(
+      "SELECT * FROM users WHERE id = ?",
+      res.body.user.id
     );
 
-    expect(dbSel)
-      .to.be.an("array")
-      .that.eql([{ email: user.email }]);
-
-    // clean up
-    const resDel = await request.delete(`${config.baseURI}/user/${newUser.id}`);
-    expect(resDel.statusCode).to.equal(200, JSON.stringify(resDel.body));
+    expect(omit(dbUser, "password", "login"))
+      .to.be.an("object")
+      .that.eql(omit(res.body.user, "login"));
   });
 
-  it("Should reject duplicate", done => {
-    const user = {
-      fname: "John",
-      lname: "Doe",
-      email: "john.dup@doe.com",
-      password: "912379233"
-    };
+  it("Should reject duplicate", async () => {
+    const resCreate = await request.post("/user", {
+      json: user
+    });
 
-    request
-      .post(`${config.baseURI}/user`, {
-        json: user
-      })
-      .then(res => {
-        // test http response
-        expect(res.statusCode).to.equal(201, JSON.stringify(res.body));
+    // test http response
+    expect(resCreate.statusCode).to.equal(201, JSON.stringify(resCreate.body));
 
-        return request
-          .post(`${config.baseURI}/user`, {
-            json: user,
-            simple: false // don't reject for the expected 409 status code
-          })
-          .then(res => {
-            // test http response
-            expect(res.statusCode).to.equal(409, JSON.stringify(res.body));
+    const resDup = await request.post("/user", {
+      json: user,
+      simple: false // don't reject for the expected 409 status code
+    });
 
-            done();
-          });
-      })
-      .catch(done);
+    // test http duplicate response
+    expect(resDup.statusCode).to.equal(409, JSON.stringify(resCreate.body));
   });
 });

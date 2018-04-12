@@ -3,7 +3,7 @@ const { mysqlPool } = require("../../../app/mysql");
 const expect = require("chai").expect;
 
 const request = require("request-promise-native").defaults({
-  baseUrl: "http://localhost:" + config.app.port,
+  baseUrl: "http://localhost:" + config.app.port + config.baseURI,
   resolveWithFullResponse: true
 });
 
@@ -17,7 +17,7 @@ describe(`Update ${config.baseURI}/user`, () => {
       password: "912379233"
     };
 
-    const { body: newUser } = await request.post(`${config.baseURI}/user`, {
+    const resCreate = await request.post("/user", {
       json: user
     });
 
@@ -29,20 +29,17 @@ describe(`Update ${config.baseURI}/user`, () => {
       role: "admin"
     };
 
-    const res = await request.put(`${config.baseURI}/user/${newUser.id}`, {
+    const resUpd = await request.put(`/user/${resCreate.body.user.id}`, {
+      auth: { bearer: resCreate.body.token },
       json: updUser
     });
 
-    expect(res.statusCode).to.equal(200, JSON.stringify(res.body));
-    expect(res.body).to.include({
+    expect(resUpd.statusCode).to.equal(200, JSON.stringify(resUpd.body));
+    expect(resUpd.body).to.include({
       fname: updUser.fname,
       lname: updUser.lname,
       email: updUser.email,
       role: "admin"
     });
-
-    // clean up
-    const resDel = await request.delete(`${config.baseURI}/user/${newUser.id}`);
-    expect(resDel.statusCode).to.equal(200, JSON.stringify(resDel.body));
   });
 });
