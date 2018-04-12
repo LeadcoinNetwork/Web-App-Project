@@ -8,7 +8,8 @@ module.exports = {
   findByEmail,
   findById,
   updateById,
-  deleteById
+  deleteById,
+  login
 };
 
 // returns user/undefined
@@ -19,6 +20,7 @@ async function create(user) {
 
   user.password = auth.hashPassword(user.password);
   user.created = Date.now();
+  user.role = "user";
 
   await User.create(user);
 
@@ -57,4 +59,13 @@ async function updateById(userId, user) {
 // returns true/false
 async function deleteById(userId) {
   return await User.deleteById(userId);
+}
+
+async function login(user) {
+  // update login timestamp
+  await User.login(user.id);
+
+  let token = auth.generateToken(user);
+  delete user.password;
+  return { user, token };
 }

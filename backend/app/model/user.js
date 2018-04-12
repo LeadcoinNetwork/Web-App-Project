@@ -5,7 +5,8 @@ module.exports = {
   findByEmail,
   findById,
   updateById,
-  deleteById
+  deleteById,
+  login
 };
 
 async function create(user) {
@@ -26,4 +27,8 @@ async function updateById(userId, user) {
 
 async function deleteById(userId) {
   return await db.user.deleteById(userId);
+}
+
+async function login(userId) {
+  return await db.user.login(userId);
 }

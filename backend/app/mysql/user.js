@@ -5,7 +5,8 @@ module.exports = {
   findByEmail,
   findById,
   updateById,
-  deleteById
+  deleteById,
+  login
 };
 
 async function create(user) {
@@ -38,5 +39,13 @@ async function updateById(userId, user) {
 
 async function deleteById(userId) {
   let status = await mysqlPool.query("DELETE FROM users WHERE id = ?", userId);
+  return status.affectedRows != 0;
+}
+
+async function login(userId) {
+  let status = await mysqlPool.query(
+    "UPDATE users SET login = ? WHERE id = ?",
+    [Date.now(), userId]
+  );
   return status.affectedRows != 0;
 }
