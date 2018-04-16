@@ -9,7 +9,8 @@ module.exports = {
   findById,
   updateById,
   deleteById,
-  login
+  login,
+  activateByKey
 };
 
 // returns user/undefined
@@ -21,6 +22,8 @@ async function create(user) {
   user.password = auth.hashPassword(user.password);
   user.created = Date.now();
   user.role = "user";
+  user.activation_key = auth.generateActivationKey(user.email);
+  user.disabled = "NOT_ACTIVATED_BY_EMAIL";
 
   await User.create(user);
 
@@ -61,11 +64,28 @@ async function deleteById(userId) {
   return await User.deleteById(userId);
 }
 
-async function login(user) {
-  // update login timestamp
-  await User.login(user.id);
+async function login(userId) {
+  let user = await findById(userId);
+  if (user.disabled) {
+    return { error: user.disabled };
+  }
 
-  let token = auth.generateToken(user);
-  delete user.password;
-  return { user, token };
+  // update login timestamp
+  await User.updateById(user.id, { login: Date.now() });
+
+  let token = auth.generateJWT(user);
+  return { token };
+}
+
+// returns user/false
+async function activateByKey(key) {
+  if (!key) throw new Error("No activation key");
+  let user = await User.findByActivationKey(key);
+  if (!user) return false;
+
+  await User.updateById(user.id, {
+    activation_key: null,
+    disabled: null
+  });
+  return await findById(user.id);
 }

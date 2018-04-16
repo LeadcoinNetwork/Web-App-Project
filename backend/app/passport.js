@@ -20,6 +20,7 @@ passport.use(
           if (!auth.comparePassword(password, user.password)) {
             return done(null, false, { message: "Incorrect password" });
           }
+          delete user.password;
           return done(null, user);
         })
         .catch(done);

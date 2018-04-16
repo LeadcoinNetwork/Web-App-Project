@@ -6,8 +6,9 @@ const config = require("../config");
 module.exports = {
   hashPassword,
   comparePassword,
-  generateToken,
-  authenticate
+  generateJWT,
+  authenticate,
+  generateActivationKey
 };
 
 function hashPassword(password) {
@@ -18,7 +19,7 @@ function comparePassword(password, hash) {
   return bcrypt.compareSync(password, hash);
 }
 
-function generateToken(user) {
+function generateJWT(user) {
   let options = {
     expiresIn: config.jwtExpiresIn
   };
@@ -49,4 +50,8 @@ function authenticate(name, options, callback) {
   );
 
   return passport.authenticate(name, options, callback);
+}
+
+function generateActivationKey(email) {
+  return bcrypt.hashSync(email, 10);
 }

@@ -1,34 +1,44 @@
+const chaiAsPromised = require("chai-as-promised");
+const { expect } = require("chai").use(chaiAsPromised);
+const { omit } = require("lodash");
 const config = require("../../../app/config");
-const expect = require("chai").expect;
-const { pick, omit } = require("lodash");
+const User = require("../../../app/controller/user");
 
 const request = require("request-promise-native").defaults({
-  baseUrl: "http://localhost:" + config.app.port + config.baseURI,
-  resolveWithFullResponse: true
+  baseUrl: "http://localhost:" + config.app.port + config.baseURI
 });
 
 describe(`Login ${config.baseURI}/login`, () => {
-  it("Should get the user", async () => {
-    // first, add a user
-    const user = {
-      fname: "Bob",
-      lname: "Dugla",
-      email: "some@mail.com",
-      password: "912379233"
-    };
+  const email = "john@doe.com";
+  const password = "912379233";
 
-    const resCreate = await request.post("/user", {
-      json: user
+  var dbUser;
+
+  beforeEach(async () => {
+    // add a user
+    dbUser = await User.create({
+      fname: "John",
+      lname: "Doe",
+      email: email,
+      password: password
+    });
+  });
+
+  it("Should return a JSON Web Token", async () => {
+    dbUser = await User.activateByKey(dbUser.activation_key);
+    var { user, token } = await request.post("/login", {
+      json: { email, password }
     });
 
-    const resLogin = await request.post("/login", {
-      json: pick(user, "email", "password")
-    });
+    expect(token).to.be.a("string");
+    expect(user).to.eql(dbUser);
+  });
 
-    expect(resLogin.statusCode).to.equal(200, JSON.stringify(resLogin.body));
-    expect(resLogin.body).to.have.keys("user", "token");
-    expect(omit(resLogin.body.user, "login")).to.eql(
-      omit(resCreate.body.user, "login")
-    );
+  it("Should reject if user is disabled", () => {
+    return expect(
+      request.post("/login", {
+        json: { email, password }
+      })
+    ).to.be.rejectedWith('401 - {"error":"NOT_ACTIVATED_BY_EMAIL"}');
   });
 });

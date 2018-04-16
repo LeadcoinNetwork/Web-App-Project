@@ -3,15 +3,9 @@ const { mysqlPool } = require("../../app/mysql");
 const server = require("../../app/server");
 
 after(async () => {
-  // clean up environment
+  // close open connections and allow mocha process to end
   server.close();
-  /*  mysqlPool
-    .query("DROP DATABASE " + config.mysql.database)
-    .catch(console.error)
-    .then(() => {
-      return mysqlPool.end(); // close all connections
-    })
-    .then(done);*/
+  await mysqlPool.query("DROP DATABASE " + config.mysql.database);
   await mysqlPool.end();
 });
 

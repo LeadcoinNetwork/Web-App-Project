@@ -6,7 +6,9 @@ const auth = require("../lib/auth");
 const router = express.Router();
 module.exports = router;
 
-router.post("/user", create, login);
+router.post("/user", create);
+
+router.get("/activate", activateByKey, login);
 
 router
   .route("/user/:userId")
@@ -19,9 +21,9 @@ router.post("/login", auth.authenticate("local"), login);
 
 async function create(req, res, next) {
   try {
-    req.user = await User.create(req.body);
+    let user = await User.create(req.body);
     res.status(201); // Created
-    next();
+    res.json(user);
   } catch (e) {
     next(e);
   }
@@ -36,7 +38,7 @@ async function deleteById(req, res, next) {
       });
     } else {
       res.status(404).json({
-        error: "Not Found"
+        error: "not found"
       });
     }
   } catch (e) {
@@ -51,7 +53,7 @@ async function findById(req, res, next) {
       res.status(200).json(user);
     } else {
       res.status(404).json({
-        error: "Not Found"
+        error: "not found"
       });
     }
   } catch (e) {
@@ -66,7 +68,7 @@ async function updateById(req, res, next) {
       res.status(200).json(user);
     } else {
       res.status(404).json({
-        error: "Not Found"
+        error: "not found"
       });
     }
   } catch (e) {
@@ -76,8 +78,30 @@ async function updateById(req, res, next) {
 
 async function login(req, res, next) {
   try {
-    let { user, token } = await User.login(req.user);
-    res.json({ user, token });
+    let user = req.user;
+    let { error, token } = await User.login(user.id);
+    if (token) {
+      res.json({ user, token });
+    } else {
+      res.status(401).json({ error });
+    }
+  } catch (e) {
+    next(e);
+  }
+}
+
+async function activateByKey(req, res, next) {
+  try {
+    let key = req.query.activation_key;
+    let user = await User.activateByKey(key);
+    if (user) {
+      req.user = user;
+      next();
+    } else {
+      res.status(404).json({
+        error: "not found"
+      });
+    }
   } catch (e) {
     next(e);
   }

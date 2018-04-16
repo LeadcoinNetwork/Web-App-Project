@@ -22,13 +22,14 @@ module.exports = mysql.createPool(config.mysql);
         id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         password VARCHAR(60) NOT NULL,
         email VARCHAR(254) NOT NULL UNIQUE,
+        activation_key VARCHAR(60),
         role VARCHAR(255) DEFAULT 'user',
         fname VARCHAR(40),
         lname VARCHAR(40),
         created BIGINT NOT NULL,
         access BIGINT,
         login BIGINT,
-        active TINYINT(1) UNSIGNED DEFAULT 0
+        disabled VARCHAR(40)
       )`);
 
       return conn.end();

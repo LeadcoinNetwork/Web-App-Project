@@ -1,5 +1,6 @@
 const config = require("../../../app/config");
 const { mysqlPool } = require("../../../app/mysql");
+const User = require("../../../app/controller/user");
 const expect = require("chai").expect;
 
 const request = require("request-promise-native").defaults({
@@ -10,16 +11,15 @@ const request = require("request-promise-native").defaults({
 describe(`Update ${config.baseURI}/user`, () => {
   it("Should update the user", async () => {
     // first, add a user
-    const user = {
-      fname: "Bob",
-      lname: "Dugla",
-      email: "some@mail.com",
+    var user = await User.create({
+      fname: "John",
+      lname: "Doe",
+      email: "john@doe.com",
       password: "912379233"
-    };
-
-    const resCreate = await request.post("/user", {
-      json: user
     });
+
+    user = await User.activateByKey(user.activation_key);
+    var { token } = await User.login(user.id);
 
     const updUser = {
       fname: "Alex",
@@ -29,13 +29,13 @@ describe(`Update ${config.baseURI}/user`, () => {
       role: "admin"
     };
 
-    const resUpd = await request.put(`/user/${resCreate.body.user.id}`, {
-      auth: { bearer: resCreate.body.token },
+    const res = await request.put(`/user/${user.id}`, {
+      auth: { bearer: token },
       json: updUser
     });
 
-    expect(resUpd.statusCode).to.equal(200, JSON.stringify(resUpd.body));
-    expect(resUpd.body).to.include({
+    expect(res.statusCode).to.equal(200, JSON.stringify(res.body));
+    expect(res.body).to.include({
       fname: updUser.fname,
       lname: updUser.lname,
       email: updUser.email,

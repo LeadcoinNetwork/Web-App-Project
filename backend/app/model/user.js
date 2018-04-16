@@ -2,23 +2,27 @@ const db = require("../mysql");
 
 module.exports = {
   create,
-  findByEmail,
   findById,
+  findByEmail,
+  findByActivationKey,
   updateById,
-  deleteById,
-  login
+  deleteById
 };
 
 async function create(user) {
   return await db.user.create(user);
 }
 
+async function findById(userId) {
+  return await db.user.findById(userId);
+}
+
 async function findByEmail(email) {
   return await db.user.findByEmail(email);
 }
 
-async function findById(userId) {
-  return await db.user.findById(userId);
+async function findByActivationKey(key) {
+  return await db.user.findByActivationKey(key);
 }
 
 async function updateById(userId, user) {
@@ -27,8 +31,4 @@ async function updateById(userId, user) {
 
 async function deleteById(userId) {
   return await db.user.deleteById(userId);
-}
-
-async function login(userId) {
-  return await db.user.login(userId);
 }
