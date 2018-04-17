@@ -1,5 +1,6 @@
 import * as React from 'react';
 import './App.css';
+import { LoginForm } from './loginForm/LoginForm';
 
 const logo = require('./logo.svg');
 
@@ -22,6 +23,8 @@ class App extends React.Component<Props, object> {
           <br />
           Optional Props: {this.props.city}
         </p>
+
+        <LoginForm/>
       </div>
     );
   }
