@@ -3,25 +3,20 @@ const { expect } = require("chai").use(chaiAsPromised);
 const { omit } = require("lodash");
 const config = require("../../../app/config");
 const User = require("../../../app/controller/user");
+const { testUser } = require("../util");
 
 const request = require("request-promise-native").defaults({
   baseUrl: "http://localhost:" + config.app.port + config.baseURI
 });
 
 describe(`Login ${config.baseURI}/auth/login`, () => {
-  const email = "john@doe.com";
-  const password = "912379233";
+  const { email, password } = testUser;
 
   var dbUser;
 
   beforeEach(async () => {
     // add a user
-    dbUser = await User.create({
-      fname: "John",
-      lname: "Doe",
-      email: email,
-      password: password
-    });
+    dbUser = await User.create(testUser);
   });
 
   it("Should return a JSON Web Token", async () => {
@@ -39,6 +34,6 @@ describe(`Login ${config.baseURI}/auth/login`, () => {
       request.post("/auth/login", {
         json: { email, password }
       })
-    ).to.be.rejectedWith('401 - {"error":"NOT_ACTIVATED_BY_EMAIL"}');
+    ).to.be.rejectedWith('401 - {"error":"EMAIL_NOT_VERIFIED"}');
   });
 });

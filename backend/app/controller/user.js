@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const auth = require("../lib/auth");
 const validate = require("../lib/validate");
+const mail = require("../lib/mail");
 const User = require("../model/user");
 
 module.exports = {
@@ -23,7 +24,9 @@ async function create(user) {
   user.created = Date.now();
   user.role = "user";
   user.activation_key = auth.generateActivationKey(user.email);
-  user.disabled = "NOT_ACTIVATED_BY_EMAIL";
+  user.disabled = "EMAIL_NOT_VERIFIED";
+
+  await mail.newUser(user);
 
   await User.create(user);
 
@@ -48,10 +51,15 @@ async function findById(userId) {
 async function updateById(userId, user) {
   user = await validate.updateUser(user);
 
-  await validate.preventDuplicateEmail(user.email);
-
   if (user.password) {
     user.password = auth.hashPassword(user.password);
+  }
+
+  if (user.email) {
+    await validate.preventDuplicateEmail(user.email, userId);
+    user.activation_key = auth.generateActivationKey(user.email);
+    user.disabled = "EMAIL_NOT_VERIFIED";
+    await mail.updateEmail(user);
   }
 
   await User.updateById(userId, user);

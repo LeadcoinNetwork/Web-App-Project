@@ -67,8 +67,9 @@ async function updateUser(user) {
   return await Joi.validate(user, userSchema.min(1), { abortEarly: false });
 }
 
-async function preventDuplicateEmail(email) {
-  if (await User.findByEmail(email)) {
+async function preventDuplicateEmail(email, userId) {
+  let user = await User.findByEmail(email);
+  if (user && user.id !== parseInt(userId)) {
     let err = new Error("Email " + email + " is already in use");
     err.status = 409;
     throw err;

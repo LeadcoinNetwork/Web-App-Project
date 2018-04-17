@@ -2,6 +2,7 @@ const expect = require("chai").expect;
 const { omit } = require("lodash");
 const User = require("../../../app/controller/user");
 const config = require("../../../app/config");
+const { testUser } = require("../util");
 
 const request = require("request-promise-native").defaults({
   baseUrl: "http://localhost:" + config.app.port + config.baseURI,
@@ -11,12 +12,7 @@ const request = require("request-promise-native").defaults({
 describe(`Get ${config.baseURI}/user`, () => {
   it("Should get the user", async () => {
     // first, add a user
-    var user = await User.create({
-      fname: "John",
-      lname: "Doe",
-      email: "john@doe.com",
-      password: "912379233"
-    });
+    var user = await User.create(testUser);
 
     user = await User.activateByKey(user.activation_key);
     var { token } = await User.login(user.id);

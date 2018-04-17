@@ -2,6 +2,7 @@ const config = require("../../../app/config");
 const { mysqlPool } = require("../../../app/mysql");
 const User = require("../../../app/controller/user");
 const expect = require("chai").expect;
+const { testUser } = require("../util");
 
 const request = require("request-promise-native").defaults({
   baseUrl: "http://localhost:" + config.app.port + config.baseURI,
@@ -11,12 +12,7 @@ const request = require("request-promise-native").defaults({
 describe(`Delete ${config.baseURI}/user`, () => {
   it("Should delete a user", async () => {
     // first, add a user
-    var user = await User.create({
-      fname: "John",
-      lname: "Doe",
-      email: "john@doe.com",
-      password: "912379233"
-    });
+    var user = await User.create(testUser);
 
     user = await User.activateByKey(user.activation_key);
     var { token } = await User.login(user.id);
