@@ -8,7 +8,7 @@ const request = require("request-promise-native").defaults({
   baseUrl: "http://localhost:" + config.app.port + config.baseURI
 });
 
-describe(`Login ${config.baseURI}/login`, () => {
+describe(`Login ${config.baseURI}/auth/login`, () => {
   const email = "john@doe.com";
   const password = "912379233";
 
@@ -26,7 +26,7 @@ describe(`Login ${config.baseURI}/login`, () => {
 
   it("Should return a JSON Web Token", async () => {
     dbUser = await User.activateByKey(dbUser.activation_key);
-    var { user, token } = await request.post("/login", {
+    var { user, token } = await request.post("/auth/login", {
       json: { email, password }
     });
 
@@ -36,7 +36,7 @@ describe(`Login ${config.baseURI}/login`, () => {
 
   it("Should reject if user is disabled", () => {
     return expect(
-      request.post("/login", {
+      request.post("/auth/login", {
         json: { email, password }
       })
     ).to.be.rejectedWith('401 - {"error":"NOT_ACTIVATED_BY_EMAIL"}');

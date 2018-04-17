@@ -2,6 +2,7 @@ const db = require("../mysql");
 
 module.exports = {
   create,
+  findBy,
   findById,
   findByEmail,
   findByActivationKey,
@@ -11,6 +12,10 @@ module.exports = {
 
 async function create(user) {
   return await db.user.create(user);
+}
+
+async function findBy(param) {
+  return await db.user.findById(param);
 }
 
 async function findById(userId) {

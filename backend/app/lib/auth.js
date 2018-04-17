@@ -21,7 +21,7 @@ function comparePassword(password, hash) {
 
 function generateJWT(user) {
   let options = {
-    expiresIn: config.jwtExpiresIn
+    expiresIn: config.auth.jwt.expiresIn
   };
 
   let payload = {
@@ -29,7 +29,7 @@ function generateJWT(user) {
     email: user.email
   };
 
-  return jwt.sign(payload, config.jwtSecret, options);
+  return jwt.sign(payload, config.auth.jwt.secret, options);
 }
 
 // set default options for passport.authenticate

@@ -2,6 +2,7 @@ const mysqlPool = require("./mysql-pool");
 
 module.exports = {
   create,
+  findBy,
   findById,
   findByEmail,
   findByActivationKey,
@@ -12,6 +13,12 @@ module.exports = {
 async function create(user) {
   let status = await mysqlPool.query("INSERT INTO users SET ?", user);
   return status.affectedRows != 0;
+}
+
+async function findBy(param) {
+  let rows = await mysqlPool.query("SELECT * FROM users WHERE ?", param);
+  let user = rows[0];
+  return user && Object.assign({}, user);
 }
 
 async function findById(userId) {

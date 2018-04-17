@@ -20,13 +20,15 @@ module.exports = mysql.createPool(config.mysql);
       conn.query("USE " + config.mysql.database);
       conn.query(`CREATE TABLE IF NOT EXISTS users (
         id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        password VARCHAR(60) NOT NULL,
+        provider_id VARCHAR(40),
+        provider VARCHAR(40),
+        password VARCHAR(60),
         email VARCHAR(254) NOT NULL UNIQUE,
         activation_key VARCHAR(60),
         role VARCHAR(255) DEFAULT 'user',
-        fname VARCHAR(40),
-        lname VARCHAR(40),
-        created BIGINT NOT NULL,
+        fname VARCHAR(40) NOT NULL,
+        lname VARCHAR(40) NOT NULL,
+        created BIGINT,
         access BIGINT,
         login BIGINT,
         disabled VARCHAR(40)

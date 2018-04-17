@@ -14,4 +14,4 @@ services:
     volumes:
       - './backend/app:/usr/src/app'
       - './backend/test:/usr/src/test'
-    command: 'npm run develop'
+    command: 'npm start'

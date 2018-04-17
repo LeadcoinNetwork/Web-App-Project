@@ -7,8 +7,17 @@ module.exports = {
   app: {
     port: 3000
   },
-  jwtSecret: process.env.JWT_SECRET,
-  jwtExpiresIn: process.env.JWT_EXPIRES_IN,
+  auth: {
+    jwt: {
+      secret: process.env.JWT_SECRET,
+      expiresIn: process.env.JWT_EXPIRES_IN
+    },
+    google: {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: process.env.GOOGLE_CALLBACK_URL
+    }
+  },
   mysql: {
     host: process.env.MYSQL_HOST,
     user: process.env.MYSQL_USER,

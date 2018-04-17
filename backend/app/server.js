@@ -3,14 +3,18 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const config = require("./config");
 const router = require("./router");
+const strategies = require("./controller/passport-strategies");
 
 const app = express();
 
 app.use(bodyParser.json());
+
 app.use(config.baseURI, router);
 
-require("./passport");
 app.use(passport.initialize());
+passport.use(strategies.localStrategy);
+passport.use(strategies.jwtStrategy);
+passport.use(strategies.googleStrategy);
 
 // respond with json body for 404 status
 app.use((req, res, next) => {
