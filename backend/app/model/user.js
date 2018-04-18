@@ -4,6 +4,7 @@ module.exports = {
   create,
   findBy,
   findById,
+  findByProviderId,
   findByEmail,
   findByActivationKey,
   updateById,
@@ -20,6 +21,10 @@ async function findBy(param) {
 
 async function findById(userId) {
   return await db.user.findById(userId);
+}
+
+async function findByProviderId(provider, providerId) {
+  return await db.user.findByProviderId(provider, providerId);
 }
 
 async function findByEmail(email) {

@@ -4,6 +4,7 @@ module.exports = {
   create,
   findBy,
   findById,
+  findByProviderId,
   findByEmail,
   findByActivationKey,
   updateById,
@@ -23,6 +24,14 @@ async function findBy(param) {
 
 async function findById(userId) {
   let rows = await mysqlPool.query("SELECT * FROM users WHERE id = ?", userId);
+  let user = rows[0];
+  return user && Object.assign({}, user);
+}
+
+async function findByProviderId(provider, providerId) {
+  let rows = await mysqlPool.query(
+    `SELECT * FROM users WHERE provider = '${provider}' AND provider_id = '${providerId}'`
+  );
   let user = rows[0];
   return user && Object.assign({}, user);
 }

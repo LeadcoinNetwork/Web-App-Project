@@ -15,6 +15,7 @@ app.use(passport.initialize());
 passport.use(strategies.localStrategy);
 passport.use(strategies.jwtStrategy);
 passport.use(strategies.googleStrategy);
+passport.use(strategies.facebookStrategy);
 
 // respond with json body for 404 status
 app.use((req, res, next) => {

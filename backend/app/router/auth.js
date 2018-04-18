@@ -11,6 +11,9 @@ router.post("/auth/login", auth.authenticate("local"), login);
 router.get("/auth/google", auth.authenticate("google"), login);
 router.get("/auth/google/callback", auth.authenticate("google"), login);
 
+router.get("/auth/facebook", auth.authenticate("facebook"), login);
+router.get("/auth/facebook/callback", auth.authenticate("facebook"), login);
+
 async function login(req, res, next) {
   try {
     let user = req.user;
