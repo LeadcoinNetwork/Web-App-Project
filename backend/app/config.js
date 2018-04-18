@@ -26,7 +26,6 @@ module.exports = {
   mail: {
     host: process.env.MAIL_HOST,
     port: process.env.MAIL_PORT,
-    secure: Boolean(process.env.MAIL_SECURE),
     user: process.env.MAIL_USER,
     pass: process.env.MAIL_PASS
   },
