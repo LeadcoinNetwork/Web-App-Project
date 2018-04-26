@@ -24,7 +24,6 @@ module.exports = mysql.createPool(config.mysql);
         provider VARCHAR(40),
         password VARCHAR(60),
         email VARCHAR(254) NOT NULL UNIQUE,
-        activation_key VARCHAR(60),
         role VARCHAR(255) DEFAULT 'user',
         fname VARCHAR(40) NOT NULL,
         lname VARCHAR(40) NOT NULL,
@@ -32,6 +31,15 @@ module.exports = mysql.createPool(config.mysql);
         access BIGINT,
         login BIGINT,
         disabled VARCHAR(40)
+      )`);
+
+      conn.query(`CREATE TABLE IF NOT EXISTS tokens (
+        user_id INT(10) UNSIGNED PRIMARY KEY,
+        token VARCHAR(60),
+        pending_email VARCHAR(254) UNIQUE,
+        created BIGINT,
+        FOREIGN KEY (user_id) REFERENCES users(id)
+          ON DELETE CASCADE
       )`);
 
       return conn.end();

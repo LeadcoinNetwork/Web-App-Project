@@ -5,7 +5,7 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
 const config = require("../config");
 const auth = require("../lib/auth");
-const User = require("../model/user");
+const User = require("./user");
 const validate = require("../lib/validate");
 
 const localStrategy = new LocalStrategy(
@@ -14,14 +14,7 @@ const localStrategy = new LocalStrategy(
   },
   async (email, password, done) => {
     try {
-      let user = await User.findByEmail(email);
-      if (!user) {
-        return done(null, false, { message: "Incorrect email" });
-      }
-      if (!auth.comparePassword(password, user.password)) {
-        return done(null, false, { message: "Incorrect password" });
-      }
-      delete user.password;
+      let user = await User.authenticatePassword(email, password);
       done(null, user);
     } catch (e) {
       done(e);
@@ -36,11 +29,12 @@ const jwtStrategy = new JWTStrategy(
   },
   async (jwt, done) => {
     try {
-      let user = await User.findById(jwt.id);
+      let [user] = await User.find({ id: jwt.id });
       if (!user) {
-        return done(null, false, { message: "User not found" });
+        let err = new Error("Unauthorized");
+        err.status = 401;
+        throw err;
       }
-      delete user.password;
       done(null, user);
     } catch (e) {
       done(e);
@@ -56,9 +50,11 @@ const googleStrategy = new GoogleStrategy(
     scope: ["profile", "email"]
   },
   async function(accessToken, refreshToken, profile, done) {
-    console.log(accessToken, refreshToken, profile);
     try {
-      let user = await User.findByProviderId(profile.provider, profile.id);
+      let [user] = await User.find({
+        provider_id: profile.id,
+        provider: profile.provider
+      });
       if (!user) {
         user = {
           fname: profile.name.givenName,
@@ -69,9 +65,24 @@ const googleStrategy = new GoogleStrategy(
           created: Date.now(),
           role: "user"
         };
-        await validate.preventDuplicateEmail(user.email);
-        await User.create(user);
-        user = await User.findByEmail(user.email);
+        await User.insert(user);
+        [user] = await User.find({ email: user.email });
+      } else {
+        let update = difference(
+          {
+            fname: user.fname,
+            lname: user.lname,
+            email: user.email
+          },
+          {
+            fname: profile.name.givenName,
+            lname: profile.name.familyName,
+            email: profile.emails[0].value
+          }
+        );
+        if (Object.keys(update).length) {
+          user = await User.updateExternal(update);
+        }
       }
       done(null, user);
     } catch (e) {
@@ -89,9 +100,11 @@ const facebookStrategy = new FacebookStrategy(
     profileFields: ["id", "name", "email"]
   },
   async function(accessToken, refreshToken, profile, done) {
-    console.log(accessToken, refreshToken, profile);
     try {
-      let user = await User.findByProviderId(profile.provider, profile.id);
+      let [user] = await User.find({
+        provider_id: profile.id,
+        provider: profile.provider
+      });
       if (!user) {
         user = {
           fname: profile.name.givenName,
@@ -102,9 +115,24 @@ const facebookStrategy = new FacebookStrategy(
           created: Date.now(),
           role: "user"
         };
-        await validate.preventDuplicateEmail(user.email);
-        await User.create(user);
-        user = await User.findByEmail(user.email);
+        await User.insert(user);
+        [user] = await User.find({ email: user.email });
+      } else {
+        let update = difference(
+          {
+            fname: user.fname,
+            lname: user.lname,
+            email: user.email
+          },
+          {
+            fname: profile.name.givenName,
+            lname: profile.name.familyName,
+            email: profile.emails[0].value
+          }
+        );
+        if (Object.keys(update).length) {
+          user = await User.updateExternal(update);
+        }
       }
       done(null, user);
     } catch (e) {
@@ -119,3 +147,23 @@ module.exports = {
   googleStrategy,
   facebookStrategy
 };
+
+// taken from https://gist.github.com/Yimiprod/7ee176597fef230d1451#gistcomment-2565071
+const { transform, isEqual, isObject } = require("lodash");
+
+/**
+ * Deep diff between two object, using lodash
+ * @param  {Object} object Object compared
+ * @param  {Object} base   Object to compare with
+ * @return {Object}        Return a new object who represent the diff
+ */
+function difference(object, base) {
+  return transform(object, (result, value, key) => {
+    if (!isEqual(value, base[key])) {
+      result[key] =
+        isObject(value) && isObject(base[key])
+          ? difference(value, base[key])
+          : value;
+    }
+  });
+}

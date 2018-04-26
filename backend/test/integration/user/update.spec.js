@@ -1,6 +1,7 @@
 const config = require("../../../app/config");
 const { mysqlPool } = require("../../../app/mysql");
 const User = require("../../../app/controller/user");
+const { Token } = require("../../../app/model");
 const expect = require("chai").expect;
 const { testUser } = require("../util");
 
@@ -12,10 +13,10 @@ const request = require("request-promise-native").defaults({
 describe(`Update ${config.baseURI}/user`, () => {
   it("Should update the user", async () => {
     // first, add a user
-    var user = await User.create(testUser);
-
-    user = await User.activateByKey(user.activation_key);
-    var { token } = await User.login(user.id);
+    var user = await User.register(testUser);
+    var [{ token }] = await Token.find({ user_id: user.id });
+    var user = await User.confirmEmail(token);
+    var token = await User.login(user.id);
 
     const updUser = {
       fname: "Alex",

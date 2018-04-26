@@ -10,5 +10,5 @@ after(async () => {
 });
 
 afterEach(async () => {
-  await mysqlPool.query("TRUNCATE users");
+  await mysqlPool.query("DELETE FROM users");
 });

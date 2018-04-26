@@ -20,7 +20,7 @@ passport.use(strategies.facebookStrategy);
 // respond with json body for 404 status
 app.use((req, res, next) => {
   res.status(404).json({
-    error: "not found"
+    error: "Not Found"
   });
 });
 

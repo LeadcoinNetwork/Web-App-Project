@@ -39,7 +39,7 @@
     "develop": "nodemon app/server.js",
     "test": "npm run test:unit; npm run test:integration",
     "test:unit": "mocha test/unit/**",
-    "test:integration": "mocha test/integration/** --timeout 10000"
+    "test:integration": "mocha test/integration/** --timeout 20000"
   },
   "bugs": {
     "url": "https://github.com/LeadcoinNetwork/leadcoin-web/issues"

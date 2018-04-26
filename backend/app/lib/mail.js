@@ -1,22 +1,16 @@
 const mailer = require("nodemailer-promise");
-const { mail: config } = require("../config");
+const config = require("../config");
 
-const sendMail = mailer.config({
-  host: config.host,
-  port: config.port,
-  secure: config.secure,
-  auth: {
-    user: config.user,
-    pass: config.pass
-  }
-});
+const sendMail = mailer.config(config.mail);
+const baseUrl = config.host + config.baseURI;
 
 module.exports = {
-  newUser,
-  updateEmail
+  confirmEmail,
+  confirmEmailUpdate,
+  forgotPassword
 };
 
-function newUser(user) {
+function confirmEmail(user, token) {
   return sendMail({
     to: user.email,
     subject: "Wellcome to Leadcoin Network",
@@ -25,8 +19,10 @@ function newUser(user) {
       user.fname +
       "!</h2>" +
       "<p>Please click " +
-      '<a href="http://localhost:3000/api/v1/auth/activate?activation_key=' +
-      user.activation_key +
+      '<a href="' +
+      baseUrl +
+      "/auth/confirm-email?token=" +
+      token +
       '">' +
       "here " +
       "</a>" +
@@ -35,7 +31,7 @@ function newUser(user) {
   });
 }
 
-function updateEmail(user) {
+function confirmEmailUpdate(user, token) {
   return sendMail({
     to: user.email,
     subject: "Email changed",
@@ -43,12 +39,35 @@ function updateEmail(user) {
       "<h2>Hello " +
       user.fname +
       "!</h2>" +
-      "<p>Please confirm your email address " +
-      '<a href="http://localhost:3000/api/v1/auth/activate?activation_key=' +
-      user.activation_key +
+      "<p>Please confirm your new email address " +
+      '<a href="' +
+      baseUrl +
+      "/auth/confirm-email-update?token=" +
+      token +
       '">' +
       "here " +
       "</a>" +
+      "</p>"
+  });
+}
+
+function forgotPassword(user, token) {
+  return sendMail({
+    to: user.email,
+    subject: "Reset Password",
+    html:
+      "<h2>Hello " +
+      user.fname +
+      "!</h2>" +
+      "<p>Please click " +
+      '<a href="' +
+      baseUrl +
+      "/auth/reset-password?token=" +
+      token +
+      '">' +
+      "here " +
+      "</a>" +
+      "to choose a new password" +
       "</p>"
   });
 }

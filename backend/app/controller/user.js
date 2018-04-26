@@ -1,99 +1,182 @@
-const bcrypt = require("bcrypt");
 const auth = require("../lib/auth");
 const validate = require("../lib/validate");
 const mail = require("../lib/mail");
-const User = require("../model/user");
+const { User, Token } = require("../model");
 
 module.exports = {
-  create,
-  findByEmail,
-  findById,
-  updateById,
-  deleteById,
+  insert,
+  find,
+  remove,
   login,
-  activateByKey
+  register,
+  confirmEmail,
+  authenticatePassword,
+  update,
+  confirmEmailUpdate,
+  forgotPassword,
+  updateExternal
 };
 
-// returns user/undefined
-async function create(user) {
-  user = await validate.newUser(user);
+// returns user
+async function insert(user) {
+  let { email } = user;
+  await validate.uniqueEmail(email);
 
-  await validate.preventDuplicateEmail(user.email);
-
-  user.password = auth.hashPassword(user.password);
   user.created = Date.now();
-  user.role = "user";
-  user.activation_key = auth.generateActivationKey(user.email);
-  user.disabled = "EMAIL_NOT_VERIFIED";
+  await User.insert(user);
 
-  await mail.newUser(user);
-
-  await User.create(user);
-
-  return await findByEmail(user.email);
-}
-
-// returns user/undefined
-async function findByEmail(email) {
-  let user = await User.findByEmail(email);
-  if (user) delete user.password;
+  [user] = await find({ email });
   return user;
 }
 
-// returns user/undefined
-async function findById(userId) {
-  let user = await User.findById(userId);
-  if (user) delete user.password;
-  return user;
-}
-
-// returns user/undefined
-async function updateById(userId, user) {
-  user = await validate.updateUser(user);
-
-  if (user.password) {
-    user.password = auth.hashPassword(user.password);
-  }
-
-  if (user.email) {
-    await validate.preventDuplicateEmail(user.email, userId);
-    user.activation_key = auth.generateActivationKey(user.email);
-    user.disabled = "EMAIL_NOT_VERIFIED";
-    await mail.updateEmail(user);
-  }
-
-  await User.updateById(userId, user);
-
-  return await findById(userId);
+// returns [user]
+async function find(condition, fields) {
+  let users = await User.find(condition, fields);
+  users = users.map(user => {
+    delete user.password;
+    return user;
+  });
+  return users;
 }
 
 // returns true/false
-async function deleteById(userId) {
-  return await User.deleteById(userId);
+async function remove(userId) {
+  return await User.remove(userId);
 }
 
 async function login(userId) {
-  let user = await findById(userId);
+  let [user] = await find({ id: userId });
   if (user.disabled) {
-    return { error: user.disabled };
+    let err = new Error(user.disabled);
+    err.status = 403;
+    throw err;
   }
 
   // update login timestamp
-  await User.updateById(user.id, { login: Date.now() });
+  await User.update(user.id, { login: Date.now() });
 
   let token = auth.generateJWT(user);
-  return { token };
+  return token;
 }
 
-// returns user/false
-async function activateByKey(key) {
-  if (!key) throw new Error("No activation key");
-  let user = await User.findByActivationKey(key);
-  if (!user) return false;
+// ----------------------------- ONLY LOCAL USERS -----------------------------
 
-  await User.updateById(user.id, {
-    activation_key: null,
-    disabled: null
+// returns user
+async function register(user) {
+  user = await validate.newUser(user);
+
+  let { email } = user;
+
+  user.password = auth.hashPassword(user.password);
+  user.disabled = "EMAIL_NOT_VERIFIED";
+  let token = auth.generateToken();
+
+  user = await insert(user);
+
+  await Token.insert({
+    user_id: user.id,
+    token: token,
+    created: Date.now()
   });
-  return await findById(user.id);
+
+  await mail.confirmEmail(user, token);
+
+  return user;
+}
+
+// returns user
+async function confirmEmail(token) {
+  let [{ user_id: userId }] = await Token.find({ token });
+  if (!userId) {
+    let err = new Error("Not Found");
+    err.status = 404;
+    throw err;
+  }
+  await Token.remove(userId);
+  await User.update(userId, { disabled: null });
+  let [user] = await find({ id: userId });
+  return user;
+}
+
+// returns user
+async function authenticatePassword(email, password) {
+  let [user] = await User.find({ email });
+  if (user && auth.comparePassword(password, user.password)) {
+    delete user.password;
+    return user;
+  } else {
+    let err = new Error("Unauthorized");
+    err.status = 401;
+    throw err;
+  }
+}
+
+// returns user
+async function update(userId, user) {
+  user = await validate.partialUser(user);
+  let { email, password } = user;
+  if (password) {
+    password = auth.hashPassword(password);
+  }
+  if (email) {
+    await validate.uniqueEmail(email, userId);
+    let token = auth.generateToken();
+    await Token.insert({
+      user_id: userId,
+      token: token,
+      pending_email: email,
+      created: Date.now()
+    });
+    await mail.confirmEmailUpdate(user, token);
+    delete user.email;
+  }
+
+  await User.update(userId, user);
+  [user] = await find({ id: userId });
+  return user;
+}
+
+// returns undefined
+async function confirmEmailUpdate(token) {
+  let { user_id: userId, pending_email: email } = await Token.find({ token });
+  await User.update(userId, { email });
+  await Token.remove(token);
+}
+
+// returns undefined
+async function forgotPassword(email) {
+  let [user] = find({ email });
+  if (!user) {
+    let err = new Error("Not Found");
+    err.status = 404;
+    throw err;
+  }
+  let token = auth.generateToken();
+  await Token.insert({
+    user_id: user.id,
+    token: token,
+    created: Date.now()
+  });
+  await mail.forgotPassword(user, token);
+}
+
+// returns user
+async function resetPassword(token, password) {
+  let { user_id: userId } = await Token.find({ token });
+  let user = await update(userId, { password });
+  await Token.remove(token);
+  return user;
+}
+
+//  --------------------------- ONLY EXTERNAL USERS ---------------------------
+
+// returns user
+async function updateExternal(userId, user) {
+  let { email } = user;
+  if (email) {
+    await validate.uniqueEmail(email);
+  }
+  await User.update(userId, user);
+  [user] = await find({ id: userId });
+  return user;
 }

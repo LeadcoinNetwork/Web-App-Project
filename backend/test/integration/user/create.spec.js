@@ -19,11 +19,12 @@ describe(`Create ${config.baseURI}/user`, () => {
     expect(user).to.include(omit(testUser, "password"));
 
     // test database
-    expect(await User.findById(user.id)).to.eql(user);
+    let [dbUser] = await User.find({ id: user.id });
+    expect(dbUser).to.eql(user);
   });
 
   it("Should reject duplicate", async () => {
-    await User.create(testUser);
+    await User.register(testUser);
 
     return expect(
       request.post("/user", {

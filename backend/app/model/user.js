@@ -1,44 +1,24 @@
 const db = require("../mysql");
 
 module.exports = {
-  create,
-  findBy,
-  findById,
-  findByProviderId,
-  findByEmail,
-  findByActivationKey,
-  updateById,
-  deleteById
+  insert,
+  update,
+  find,
+  remove
 };
 
-async function create(user) {
-  return await db.user.create(user);
+async function insert(user) {
+  return await db.user.insert(user);
 }
 
-async function findBy(param) {
-  return await db.user.findById(param);
+async function update(userId, user) {
+  return await db.user.update(userId, user);
 }
 
-async function findById(userId) {
-  return await db.user.findById(userId);
+async function find(condition, fields) {
+  return await db.user.find(condition, fields);
 }
 
-async function findByProviderId(provider, providerId) {
-  return await db.user.findByProviderId(provider, providerId);
-}
-
-async function findByEmail(email) {
-  return await db.user.findByEmail(email);
-}
-
-async function findByActivationKey(key) {
-  return await db.user.findByActivationKey(key);
-}
-
-async function updateById(userId, user) {
-  return await db.user.updateById(userId, user);
-}
-
-async function deleteById(userId) {
-  return await db.user.deleteById(userId);
+async function remove(userId) {
+  return await db.user.remove(userId);
 }

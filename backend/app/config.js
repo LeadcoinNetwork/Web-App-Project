@@ -1,9 +1,19 @@
 // load configuration from `.env` file
 require("dotenv").config();
+const url = require("url");
+
+const host = process.env.HOST;
+const baseURI = "/api/v1";
+const googleRedirectUrl = host + baseURI + "/auth/google/callback";
+const facebookRedirectUrl = host + baseURI + "/auth/facebook/callback";
+
+console.log("Google Redirect URL:  ", googleRedirectUrl);
+console.log("Facebook Redirect URL:", facebookRedirectUrl);
 
 module.exports = {
   env: process.env.NODE_ENV,
-  baseURI: "/api/v1",
+  baseURI: baseURI,
+  host: host,
   app: {
     port: 3000
   },
@@ -15,19 +25,21 @@ module.exports = {
     google: {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: process.env.GOOGLE_CALLBACK_URL
+      callbackURL: googleRedirectUrl
     },
     facebook: {
       clientID: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-      callbackURL: process.env.FACEBOOK_CALLBACK_URL
+      callbackURL: facebookRedirectUrl
     }
   },
   mail: {
     host: process.env.MAIL_HOST,
     port: process.env.MAIL_PORT,
-    user: process.env.MAIL_USER,
-    pass: process.env.MAIL_PASS
+    auth: {
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASS
+    }
   },
   mysql: {
     host: process.env.MYSQL_HOST,

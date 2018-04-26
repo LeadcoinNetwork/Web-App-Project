@@ -3,12 +3,15 @@ const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const config = require("../config");
 
+const jwtOptions = {
+  expiresIn: config.auth.jwt.expiresIn
+};
+
 module.exports = {
   hashPassword,
   comparePassword,
   generateJWT,
-  authenticate,
-  generateActivationKey
+  generateToken
 };
 
 function hashPassword(password) {
@@ -20,38 +23,14 @@ function comparePassword(password, hash) {
 }
 
 function generateJWT(user) {
-  let options = {
-    expiresIn: config.auth.jwt.expiresIn
-  };
-
   let payload = {
     id: user.id,
     email: user.email
   };
 
-  return jwt.sign(payload, config.auth.jwt.secret, options);
+  return jwt.sign(payload, config.auth.jwt.secret, jwtOptions);
 }
 
-// set default options for passport.authenticate
-function authenticate(name, options, callback) {
-  if (typeof options == "function") {
-    callback = options;
-    options = {};
-  }
-
-  options = Object.assign(
-    {
-      session: false,
-      // failWithError is not documented (as of Apr 2018)
-      // see https://github.com/passport/www.passportjs.org/pull/51
-      failWithError: true
-    },
-    options
-  );
-
-  return passport.authenticate(name, options, callback);
-}
-
-function generateActivationKey(email) {
-  return bcrypt.hashSync(email, 10);
+function generateToken() {
+  return bcrypt.genSaltSync();
 }

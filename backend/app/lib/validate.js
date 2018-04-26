@@ -4,8 +4,8 @@ const User = require("../model/user");
 
 module.exports = {
   newUser,
-  updateUser,
-  preventDuplicateEmail
+  partialUser,
+  uniqueEmail
 };
 
 const userSchema = Joi.object().keys({
@@ -63,12 +63,12 @@ async function newUser(user) {
   );
 }
 
-async function updateUser(user) {
+async function partialUser(user) {
   return await Joi.validate(user, userSchema.min(1), { abortEarly: false });
 }
 
-async function preventDuplicateEmail(email, userId) {
-  let user = await User.findByEmail(email);
+async function uniqueEmail(email, userId) {
+  let [user] = await User.find({ email });
   if (user && user.id !== parseInt(userId)) {
     let err = new Error("Email " + email + " is already in use");
     err.status = 409;

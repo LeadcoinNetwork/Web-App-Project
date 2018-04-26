@@ -3,7 +3,7 @@ const config = require("../../app/config");
 const testUser = {
   fname: "John",
   lname: "Doe",
-  email: config.mail.user,
+  email: config.mail.auth.user,
   password: "912379233"
 };
 
