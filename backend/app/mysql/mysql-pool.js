@@ -1,4 +1,4 @@
-const config = require("./config");
+const config = require("../config");
 const mysql = require("promise-mysql");
 
 module.exports = mysql.createPool(config.mysql);
@@ -19,15 +19,27 @@ module.exports = mysql.createPool(config.mysql);
       conn.query("CREATE DATABASE IF NOT EXISTS " + config.mysql.database);
       conn.query("USE " + config.mysql.database);
       conn.query(`CREATE TABLE IF NOT EXISTS users (
-        uid INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        provider_id VARCHAR(40),
+        provider VARCHAR(40),
+        password VARCHAR(60),
+        email VARCHAR(254) NOT NULL UNIQUE,
+        role VARCHAR(255) DEFAULT 'user',
         fname VARCHAR(40) NOT NULL,
         lname VARCHAR(40) NOT NULL,
-        pass VARCHAR(60) NOT NULL,
-        mail VARCHAR(254) NOT NULL UNIQUE,
-        created INT(10),
-        access INT(10),
-        login INT(10),
-        role VARCHAR(255) DEFAULT 'user'
+        created BIGINT,
+        access BIGINT,
+        login BIGINT,
+        disabled VARCHAR(40)
+      )`);
+
+      conn.query(`CREATE TABLE IF NOT EXISTS tokens (
+        user_id INT(10) UNSIGNED PRIMARY KEY,
+        token VARCHAR(60),
+        pending_email VARCHAR(254) UNIQUE,
+        created BIGINT,
+        FOREIGN KEY (user_id) REFERENCES users(id)
+          ON DELETE CASCADE
       )`);
 
       return conn.end();

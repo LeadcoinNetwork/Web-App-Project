@@ -7,4 +7,6 @@ ADD     ./yarn.lock /usr/src
 
 RUN yarn
 
+ADD     ./test /usr/src/test
+
 CMD ["npm", "start"]
