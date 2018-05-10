@@ -3,3 +3,10 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.external_login_container {
+  text-align:center;
+}
+.external_login_container >div {
+  min-width: 30vw;
+}
