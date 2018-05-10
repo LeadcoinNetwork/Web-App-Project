@@ -5,6 +5,7 @@ import TextField from 'material-ui/TextField'
 interface stateProps {
   email: string
   password: string
+  cpassword: string
   fname: string
   lname: string
 }
@@ -13,6 +14,7 @@ export class SignupForm extends React.Component {
   state: stateProps = {
     email: '',
     password: '',
+    cpassword: '',
     fname: '',
     lname: ''
   }
@@ -29,6 +31,12 @@ export class SignupForm extends React.Component {
     })
   }
 
+  cpwordChange(event: any) {
+    this.setState({
+      cpassword: event.target.value
+    })
+  }
+
   pwordChange(event: any) {
     this.setState({
       password: event.target.value
@@ -39,6 +47,38 @@ export class SignupForm extends React.Component {
     this.setState({
       email: event.target.value
     })
+  }
+
+  passwordField() {
+    const {password, cpassword} = this.state
+    let errorText = ''
+    if (password!=cpassword) {
+      errorText = 'Passwords do not match'
+    }
+    return (
+      <div>
+        <TextField
+          id="password"
+          label="Password"
+          className="pwordField"
+          value={this.state.password}
+          onChange={this.pwordChange.bind(this)}
+          errorText = {errorText}
+          type="password"
+          margin="normal" 
+          />
+        <TextField
+          id="confirm_password"
+          label="Confirm Password"
+          errorText = {errorText}
+          className="cpwordField"
+          value={this.state.cpassword}
+          onChange={this.cpwordChange.bind(this)}
+          type="password"
+          margin="normal" 
+          />
+      </div>
+    )
   }
 
   render() {
@@ -71,17 +111,6 @@ export class SignupForm extends React.Component {
               value={this.state.email}
               onChange={this.emailChange.bind(this)}
               margin="normal" />
-          </div>
-          <div>
-            <TextField
-              id="password"
-              label="Password"
-              className="pwordField"
-              value={this.state.password}
-              onChange={this.pwordChange.bind(this)}
-              type="password"
-              margin="normal" 
-              />
           </div>
           <Button variant="raised" color="primary">
             SignUp
