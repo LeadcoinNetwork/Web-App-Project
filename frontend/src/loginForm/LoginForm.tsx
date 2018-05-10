@@ -1,6 +1,7 @@
 import * as React from 'react'
 import Button from 'material-ui/Button'
 import TextField from 'material-ui/TextField'
+import axios from 'axios'
 
 interface stateProps {
   email: string
@@ -33,6 +34,17 @@ export class LoginForm extends React.Component <ComponentProps> {
     this.props.navigate('signup')
   }
 
+  loginfb() {
+    axios.get('/auth/facebook')
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  }
+
   render() {
     return (
       <div className="loginForm">
@@ -40,7 +52,7 @@ export class LoginForm extends React.Component <ComponentProps> {
           <div>
             <TextField
               id="email"
-              label="Email"
+              floatingLabelText="Email"
               className="emailField"
               value={this.state.email}
               onChange={this.emailChange.bind(this)}
@@ -62,7 +74,7 @@ export class LoginForm extends React.Component <ComponentProps> {
         </div>
         <div> Or, you can sign in using </div>
         <div className="external_login_container">
-          <div> <Button variant="raised" color="primary"> Facebook </Button> </div>
+          <div> <Button variant="raised" onclick={this.loginfb.bind(this)} color="primary"> Facebook </Button> </div>
           <div> <Button variant="raised" color="primary"> Google </Button> </div>
         </div>
         <div className="signup_cta">

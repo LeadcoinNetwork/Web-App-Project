@@ -19,41 +19,20 @@ export class SignupForm extends React.Component {
     lname: ''
   }
 
-  lnameChange(event: any) {
-    this.setState({
-      lname: event.target.value
-    })
-  }
-
-  fnameChange(event: any) {
-    this.setState({
-      fname: event.target.value
-    })
-  }
-
-  cpwordChange(event: any) {
-    this.setState({
-      cpassword: event.target.value
-    })
-  }
-
-  pwordChange(event: any) {
-    this.setState({
-      password: event.target.value
-    })
-  }
-
-  emailChange(event: any) {
-    this.setState({
-      email: event.target.value
-    })
-  }
+  handleChange = (name:string) => {
+    return (event:any) => {
+      this.setState({
+        [name]: event.target.value,
+      });
+    };
+  } 
 
   passwordField() {
     const {password, cpassword} = this.state
     let errorText = ''
     if (password!=cpassword) {
       errorText = 'Passwords do not match'
+      console.log(1)
     }
     return (
       <div>
@@ -62,18 +41,19 @@ export class SignupForm extends React.Component {
           label="Password"
           className="pwordField"
           value={this.state.password}
-          onChange={this.pwordChange.bind(this)}
+          onChange={this.handleChange('password')}
           errorText = {errorText}
           type="password"
           margin="normal" 
           />
+          <br/>
         <TextField
           id="confirm_password"
           label="Confirm Password"
           errorText = {errorText}
           className="cpwordField"
           value={this.state.cpassword}
-          onChange={this.cpwordChange.bind(this)}
+          onChange={this.handleChange('cpassword')}
           type="password"
           margin="normal" 
           />
@@ -91,7 +71,7 @@ export class SignupForm extends React.Component {
               label="First Name"
               className="fnameField"
               value={this.state.fname}
-              onChange={this.fnameChange.bind(this)}
+              onChange={this.handleChange('fname')}
               margin="normal" />
           </div>
           <div>
@@ -100,7 +80,7 @@ export class SignupForm extends React.Component {
               label="Last Name"
               className="lnameField"
               value={this.state.lname}
-              onChange={this.lnameChange.bind(this)}
+              onChange={this.handleChange('lname')}
               margin="normal" />
           </div>
           <div>
@@ -109,9 +89,10 @@ export class SignupForm extends React.Component {
               label="Email"
               className="emailField"
               value={this.state.email}
-              onChange={this.emailChange.bind(this)}
+              onChange={this.handleChange('email')}
               margin="normal" />
           </div>
+          {this.passwordField()}
           <Button variant="raised" color="primary">
             SignUp
           </Button>
