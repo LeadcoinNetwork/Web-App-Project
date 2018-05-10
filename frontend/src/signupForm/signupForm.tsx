@@ -9,12 +9,24 @@ interface stateProps {
   lname: string
 }
 
-export class signupForm extends React.Component {
+export class SignupForm extends React.Component {
   state: stateProps = {
     email: '',
     password: '',
     fname: '',
     lname: ''
+  }
+
+  lnameChange(event: any) {
+    this.setState({
+      lname: event.target.value
+    })
+  }
+
+  fnameChange(event: any) {
+    this.setState({
+      fname: event.target.value
+    })
   }
 
   pwordChange(event: any) {
@@ -31,8 +43,26 @@ export class signupForm extends React.Component {
 
   render() {
     return (
-      <div className="loginForm">
-        <div className="localLogin">
+      <div className="signupForm">
+        <div className="signupDetails">
+          <div>
+            <TextField
+              id="fname"
+              label="First Name"
+              className="fnameField"
+              value={this.state.fname}
+              onChange={this.fnameChange.bind(this)}
+              margin="normal" />
+          </div>
+          <div>
+            <TextField
+              id="lname"
+              label="Last Name"
+              className="lnameField"
+              value={this.state.lname}
+              onChange={this.lnameChange.bind(this)}
+              margin="normal" />
+          </div>
           <div>
             <TextField
               id="email"
@@ -50,21 +80,13 @@ export class signupForm extends React.Component {
               value={this.state.password}
               onChange={this.pwordChange.bind(this)}
               type="password"
-              margin="normal" />
+              margin="normal" 
+              />
           </div>
           <Button variant="raised" color="primary">
-            Login
+            SignUp
           </Button>
         </div>
-        <div> Or, you can sign in using </div>
-        <div className="external_login_container">
-          <div> <Button variant="raised" color="primary"> Facebook </Button> </div>
-          <div> <Button variant="raised" color="primary"> Google </Button> </div>
-        </div>
-        <div className="signup_cta">
-          <span> Not a user? </span>
-          <span> Sign-up now! </span>
-          </div>
       </div>
     );
   }

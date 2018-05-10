@@ -1,6 +1,7 @@
-import * as React from 'react';
-import './App.css';
-import { LoginForm } from './loginForm/LoginForm';
+import * as React from 'react'
+import './App.css'
+import { LoginForm } from './loginForm/LoginForm'
+import { SignupForm } from './signupForm/signupForm'
 
 const logo = require('./logo.svg');
 
@@ -9,22 +10,35 @@ export interface Props {
   city?: string;
 }
 
+interface stateProps {
+  currentPage: string
+}
+
 class App extends React.Component<Props, object> {
+  state: stateProps = {
+    currentPage: '',
+  }
+  navigate(route: string) {
+    this.setState({
+      currentPage: route 
+    })
+  }
+
   render() {
+    let currentComponent = <LoginForm navigate={this.navigate.bind(this)} />
+    const {currentPage} = this.state
+    const header = (
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <h1 className="App-title">Welcome to LeadCoin</h1>
+      </header>
+    )
+    if (currentPage === 'signup') 
+      currentComponent = <SignupForm />
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to LeadCoin</h1>
-        </header>
-        <p className="App-intro">
-          Here you see an example of using props. required props:
-          <b>{this.props.name}</b>
-          <br />
-          Optional Props: {this.props.city}
-        </p>
-
-        <LoginForm/>
+        {header}
+        {currentComponent}
       </div>
     );
   }

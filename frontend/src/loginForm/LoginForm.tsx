@@ -7,7 +7,11 @@ interface stateProps {
   password: string
 }
 
-export class LoginForm extends React.Component {
+interface ComponentProps {
+  navigate: any
+}
+
+export class LoginForm extends React.Component <ComponentProps> {
   state: stateProps = {
     email: '',
     password: ''
@@ -23,6 +27,10 @@ export class LoginForm extends React.Component {
     this.setState({
       email: event.target.value
     })
+  }
+
+  navigate() {
+    this.props.navigate('signup')
   }
 
   render() {
@@ -59,7 +67,7 @@ export class LoginForm extends React.Component {
         </div>
         <div className="signup_cta">
           <span> Not a user? </span>
-          <span> Sign-up now! </span>
+          <span onClick={this.navigate.bind(this)}> Sign-up now! </span>
           </div>
       </div>
     );
