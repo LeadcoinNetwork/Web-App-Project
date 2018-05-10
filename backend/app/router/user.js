@@ -41,6 +41,7 @@ async function remove(req, res, next) {
       });
     } else {
       res.status(404).json({
+        path: 'remove',
         error: "Not Found"
       });
     }
@@ -56,6 +57,7 @@ async function find(req, res, next) {
       res.status(200).json(user);
     } else {
       res.status(404).json({
+        path: 'find',
         error: "Not Found"
       });
     }
@@ -71,6 +73,7 @@ async function update(req, res, next) {
       res.status(200).json(user);
     } else {
       res.status(404).json({
+        path: 'update',
         error: "Not Found"
       });
     }

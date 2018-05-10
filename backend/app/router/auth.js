@@ -47,6 +47,7 @@ async function confirmEmail(req, res, next) {
       next();
     } else {
       res.status(404).json({
+        path: 'confirmMail',
         error: "Not Found"
       });
     }
@@ -84,6 +85,7 @@ async function resetPassword(req, res, next) {
       next();
     } else {
       res.status(404).json({
+        path: 'resetPass',
         error: "Not Found"
       });
     }
