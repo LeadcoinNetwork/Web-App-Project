@@ -63,25 +63,28 @@ async function login(userId) {
 
 // returns user
 async function register(user) {
-  user = await validate.newUser(user);
+  user = await validate.newUser(user)
 
-  let { email } = user;
+  let { email } = user
 
-  user.password = auth.hashPassword(user.password);
-  user.disabled = "EMAIL_NOT_VERIFIED";
-  let token = auth.generateToken();
+  user.password = auth.hashPassword(user.password)
+  user.disabled = "EMAIL_NOT_VERIFIED"
+  user.company = null
+  user.country = null
+  user.phone = null
+  let token = auth.generateToken()
 
-  user = await insert(user);
+  user = await insert(user)
 
   await Token.insert({
     user_id: user.id,
     token: token,
     created: Date.now()
-  });
+  })
 
-  await mail.confirmEmail(user, token);
+  await mail.confirmEmail(user, token)
 
-  return user;
+  return user
 }
 
 // returns user

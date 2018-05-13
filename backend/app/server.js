@@ -5,9 +5,24 @@ const config = require("./config");
 const router = require("./router");
 const strategies = require("./controller/passport-strategies");
 
+console.log(config.baseURI)
+
 const app = express();
 
 app.use(bodyParser.json());
+
+// allow cross-origin requests on development env
+
+if (config.env === "development") {
+  console.log('Allowing orphan SSL certificates')
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
+  console.log('Allowing cross-origin requests')
+  app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*")
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+    next()
+  })
+}
 
 app.use(config.baseURI, router);
 
