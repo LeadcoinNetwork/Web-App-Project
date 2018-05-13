@@ -1,6 +1,7 @@
 import * as React from 'react'
 import Button from 'material-ui/Button'
 import TextField from 'material-ui/TextField'
+import axios from 'axios'
 
 interface stateProps {
   email: string
@@ -8,6 +9,7 @@ interface stateProps {
   cpassword: string
   fname: string
   lname: string
+  errors: string[]
 }
 
 export class SignupForm extends React.Component {
@@ -16,20 +18,42 @@ export class SignupForm extends React.Component {
     password: '',
     cpassword: '',
     fname: '',
-    lname: ''
+    lname: '',
+    errors: []
   }
 
   handleChange = (name:string) => {
     return (event:any) => {
-      this.setState({
-        [name]: event.target.value,
-      });
+      this.setState({ [name]: event.target.value });
     };
   } 
 
+  submit = () => {
+    const {fname, lname, password, email} = this.state
+    axios.post('http://localhost:3000/api/v1/user', {
+      fname, lname, email, password
+    })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      if (error.response) {
+        // error originated from server
+        if (error.response.data.error){
+          let errors = error.response.data.error.split("; ")
+          this.setState({errors: errors})
+        }
+      } else if (error.request) {
+        // request made, no response though
+      } else {
+        // error was thrown during request setup
+      }
+    });
+  }
+
   passwordField() {
     const {password, cpassword} = this.state
-    let errorText = ''
+    let errorText
     if (password!=cpassword) {
       errorText = 'Passwords do not match'
       console.log(1)
@@ -57,6 +81,18 @@ export class SignupForm extends React.Component {
           type="password"
           margin="normal" 
           />
+      </div>
+    )
+  }
+
+  generalError() {
+    const {errors} = this.state
+    const errorMsgs = errors.map((e,i) => {return (<div key={i}>{e}</div>)})
+    if (errorMsgs.length < 1)
+      return
+    return (
+      <div className='error'>
+        {errorMsgs}
       </div>
     )
   }
@@ -93,7 +129,8 @@ export class SignupForm extends React.Component {
               margin="normal" />
           </div>
           {this.passwordField()}
-          <Button variant="raised" color="primary">
+          {this.generalError()}
+          <Button variant="raised" color="primary" onClick={this.submit.bind(this)}>
             SignUp
           </Button>
         </div>

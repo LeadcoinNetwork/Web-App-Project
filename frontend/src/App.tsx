@@ -2,6 +2,7 @@ import * as React from 'react'
 import './App.css'
 import { LoginForm } from './loginForm/LoginForm'
 import { SignupForm } from './signupForm/signupForm'
+import { UserDetails } from './userDetails/userDetails'
 
 const logo = require('./logo.svg');
 
@@ -33,7 +34,9 @@ class App extends React.Component<Props, object> {
         <h1 className="App-title">Welcome to LeadCoin</h1>
       </header>
     )
-    if (currentPage === 'signup') 
+    if (currentPage === 'userDetails')
+      currentComponent = <UserDetails />
+    if (currentPage === 'signup')
       currentComponent = <SignupForm />
     return (
       <div className="App">
