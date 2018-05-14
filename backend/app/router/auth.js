@@ -1,58 +1,71 @@
-const express = require("express");
-const passport = require("passport");
-const User = require("../controller/user");
-const auth = require("../lib/auth");
+const express = require("express")
+const passport = require("passport")
+const User = require("../controller/user")
+const auth = require("../lib/auth")
 
-const router = express.Router();
-module.exports = router;
+const router = express.Router()
+module.exports = router
 
 const authOptions = {
   session: false
-};
+}
 
-router.post("/auth/login", passport.authenticate("local", authOptions), login);
-router.get("/auth/confirm-email", confirmEmail, login);
-router.get("/auth/confirm-email-update", confirmEmailUpdate);
-router.post("/auth/forgot-password", forgotPassword);
-router.post("/auth/reset-password", resetPassword, login);
+router.post("/auth/login", passport.authenticate("local", authOptions), login)
+router.get("/auth/confirm-email", confirmEmail, login)
+router.get("/auth/resend-email", resendEmail, login)
+router.get("/auth/confirm-email-update", confirmEmailUpdate)
+router.post("/auth/forgot-password", forgotPassword)
+router.post("/auth/reset-password", resetPassword, login)
 
 router.get(
   ["/auth/google", "/auth/google/callback"],
   passport.authenticate("google", authOptions),
   login
-);
+)
 
 router.get(
   ["/auth/facebook", "/auth/facebook/callback"],
   passport.authenticate("facebook", authOptions),
   login
-);
+)
+
+async function resendEmail(req, res, next) {
+  try {
+    let user = req.user
+    console.log(req)
+    let token = await User.login(user.id)
+    let user = await User.resendEmail(token)
+    res.json({ user, token })
+  } catch (e) {
+    next(e)
+  }
+}
 
 async function login(req, res, next) {
   try {
-    let user = req.user;
-    let token = await User.login(user.id);
-    res.json({ user, token });
+    let user = req.user
+    let token = await User.login(user.id)
+    res.json({ user, token })
   } catch (e) {
-    next(e);
+    next(e)
   }
 }
 
 async function confirmEmail(req, res, next) {
   try {
-    let { token } = req.query;
-    let user = await User.confirmEmail(token);
+    let { token } = req.query
+    let user = await User.confirmEmail(token)
     if (user) {
-      req.user = user;
-      next();
+      req.user = user
+      next()
     } else {
       res.status(404).json({
         path: 'confirmMail',
         error: "Not Found"
-      });
+      })
     }
   } catch (e) {
-    next(e);
+    next(e)
   }
 }
 

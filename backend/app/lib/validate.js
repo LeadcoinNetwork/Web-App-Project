@@ -8,7 +8,24 @@ module.exports = {
   uniqueEmail
 };
 
+//TODO: fine tune the validation
+
 const userSchema = Joi.object().keys({
+  phone: Joi.string()
+    .alphanum()
+    .min(3)
+    .max(15)
+    .label("Phone"),
+  country: Joi.string()
+    .alphanum()
+    .min(3)
+    .max(30)
+    .label("Country"),
+  company: Joi.string()
+    .alphanum()
+    .min(3)
+    .max(30)
+    .label("Company"),
   fname: Joi.string()
     .alphanum()
     .min(3)

@@ -11,7 +11,13 @@ const app = express();
 
 app.use(bodyParser.json());
 
-// allow cross-origin requests on development env
+// handle simple options request, needed for websockets and put/delete requests 
+app.options("/*", function(req, res, next){
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With')
+  res.send(200)
+})
 
 if (config.env === "development") {
   console.log('Allowing orphan SSL certificates')

@@ -10,6 +10,7 @@ module.exports = {
   login,
   register,
   confirmEmail,
+  resendEmail,
   authenticatePassword,
   update,
   confirmEmailUpdate,
@@ -69,9 +70,6 @@ async function register(user) {
 
   user.password = auth.hashPassword(user.password)
   user.disabled = "EMAIL_NOT_VERIFIED"
-  user.company = null
-  user.country = null
-  user.phone = null
   let token = auth.generateToken()
 
   user = await insert(user)
@@ -88,17 +86,29 @@ async function register(user) {
 }
 
 // returns user
+async function resendEmail(token) {
+  let [user] = await Token.find({ token })
+  if (!user) {
+    let err = new Error("Not Found")
+    err.status = 404
+    throw err
+  }
+  await mail.confirmEmail(user, token)
+  return user
+}
+
+// returns user
 async function confirmEmail(token) {
-  let [{ user_id: userId }] = await Token.find({ token });
+  let [{ user_id: userId }] = await Token.find({ token })
   if (!userId) {
     let err = new Error("Not Found");
-    err.status = 404;
-    throw err;
+    err.status = 404
+    throw err
   }
-  await Token.remove(userId);
-  await User.update(userId, { disabled: null });
-  let [user] = await find({ id: userId });
-  return user;
+  await Token.remove(userId)
+  await User.update(userId, { disabled: null })
+  let [user] = await find({ id: userId })
+  return user
 }
 
 // returns user
@@ -118,9 +128,11 @@ async function authenticatePassword(email, password) {
 async function update(userId, user) {
   user = await validate.partialUser(user);
   let { email, password } = user;
+
   if (password) {
     password = auth.hashPassword(password);
   }
+
   if (email) {
     await validate.uniqueEmail(email, userId);
     let token = auth.generateToken();

@@ -25,8 +25,9 @@ router
 async function register(req, res, next) {
   try {
     let user = await User.register(req.body);
+    let token = auth.generateJWT(user);
     res.status(201); // Created
-    res.json(user);
+    res.json({ user, token });
   } catch (e) {
     next(e);
   }

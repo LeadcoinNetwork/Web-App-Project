@@ -13,7 +13,7 @@ module.exports = {
 function confirmEmail(user, token) {
   return sendMail({
     to: user.email,
-    subject: "Wellcome to Leadcoin Network",
+    subject: "Welcome to Leadcoin Network",
     html:
       "<h2>Hello " +
       user.fname +
