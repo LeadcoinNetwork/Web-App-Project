@@ -2,7 +2,6 @@ import * as React from 'react'
 import Button from 'material-ui/Button'
 import TextField from 'material-ui/TextField'
 import axios from 'axios'
-import {EmailConfirm} from '../emailConfirm/emailconfirm'
 
 interface stateProps {
   email: string
@@ -12,6 +11,8 @@ interface stateProps {
 
 interface ComponentProps {
   navigate: any
+  saveToken: any
+  setUser: any
 }
 
 export class LoginForm extends React.Component <ComponentProps> {
@@ -43,8 +44,10 @@ export class LoginForm extends React.Component <ComponentProps> {
       email, password
     })
     .then((response) => {
-      const {user} = response.data
+      const {user, token} = response.data
       const {phone, country, company} = user
+      this.props.setUser(user)
+      this.props.saveToken(token)
       if (phone && country && company) {
         // TODO: continue to site and stuff
       } else {
@@ -61,9 +64,7 @@ export class LoginForm extends React.Component <ComponentProps> {
               this.setState({error})
               break
             case "EMAIL_NOT_VERIFIED": 
-              this.setState({
-                needEmailVerification: true
-              })
+              this.props.navigate('emailVerification')
               break
           }
         }
@@ -86,47 +87,51 @@ export class LoginForm extends React.Component <ComponentProps> {
   }
 
   render() {
-    const {needEmailVerification} = this.state
-    if (needEmailVerification) {
-      return (
-        <EmailConfirm />
-      )
-    }
     return (
       <div className="loginForm">
-        <div className="localLogin">
-          <div>
-            <TextField
-              id="email"
-              label="Email"
-              className="emailField"
-              value={this.state.email}
-              onChange={this.emailChange.bind(this)}
-              margin="normal" />
+        <div className="login_containers">
+          <div className="login_header"> Login.</div>
+          <div className="external_login_container">
+            <div> <Button variant="raised" onClick={this.loginfb.bind(this)} color="primary"> Facebook </Button> </div>
+            <div> <Button variant="raised" color="primary"> Google </Button> </div>
           </div>
-          <div>
-            <TextField
-              id="password"
-              label="Password"
-              className="pwordField"
-              value={this.state.password}
-              onChange={this.pwordChange.bind(this)}
-              type="password"
-              margin="normal" />
+          <div className="localLogin">
+            <div> Or enter your details. </div>
+            <div>
+              <TextField
+                id="email"
+                label="Email"
+                fullWidth={true}
+                className="emailField"
+                value={this.state.email}
+                onChange={this.emailChange.bind(this)}
+                margin="normal" />
+            </div>
+            <div>
+              <TextField
+                id="password"
+                label="Password"
+                fullWidth={true}
+                className="pwordField"
+                value={this.state.password}
+                onChange={this.pwordChange.bind(this)}
+                type="password"
+                margin="normal" />
+            </div>
+            <div className="flexed login_helpers"> 
+              <div className="remember_me">
+                <input type="checkbox" />
+                <span> Remember me? </span>
+              </div>
+              <div className=""> Forgot your password? </div>
+            </div>
+            <div className="alignRight">
+              <Button variant="raised" onClick={this.login.bind(this)} color="primary">
+                Login
+              </Button>
+            </div>
           </div>
-          <Button variant="raised" onClick={this.login.bind(this)} color="primary">
-            Login
-          </Button>
         </div>
-        <div> Or, you can sign in using </div>
-        <div className="external_login_container">
-          <div> <Button variant="raised" onClick={this.loginfb.bind(this)} color="primary"> Facebook </Button> </div>
-          <div> <Button variant="raised" color="primary"> Google </Button> </div>
-        </div>
-        <div className="signup_cta">
-          <span> Not a user? </span>
-          <a onClick={this.navigate.bind(this)}> Sign-up now! </a>
-          </div>
       </div>
     );
   }

@@ -6,17 +6,21 @@ import axios from 'axios'
 interface stateProps {
   email: string
   password: string
-  cpassword: string
   fname: string
   lname: string
   errors: string[]
 }
 
-export class SignupForm extends React.Component {
+interface ComponentProps {
+  setUser: any
+  navigate: any
+  saveToken: any
+}
+
+export class SignupForm extends React.Component <ComponentProps> {
   state: stateProps = {
     email: '',
     password: '',
-    cpassword: '',
     fname: '',
     lname: '',
     errors: []
@@ -33,8 +37,10 @@ export class SignupForm extends React.Component {
     axios.post('http://localhost:3000/api/v1/user', {
       fname, lname, email, password
     })
-    .then((response) => {
-      console.log(response);
+    .then(({data}) => {
+      const {token, user} = data
+      this.props.setUser(user)
+      this.props.saveToken(token)
     })
     .catch((error) => {
       if (error.response) {
@@ -52,12 +58,6 @@ export class SignupForm extends React.Component {
   }
 
   passwordField() {
-    const {password, cpassword} = this.state
-    let errorText
-    if (password!=cpassword) {
-      errorText = 'Passwords do not match'
-      console.log(1)
-    }
     return (
       <div>
         <TextField
@@ -66,35 +66,25 @@ export class SignupForm extends React.Component {
           className="pwordField"
           value={this.state.password}
           onChange={this.handleChange('password')}
-          errorText = {errorText}
           type="password"
           margin="normal" 
           />
           <br/>
-        <TextField
-          id="confirm_password"
-          label="Confirm Password"
-          errorText = {errorText}
-          className="cpwordField"
-          value={this.state.cpassword}
-          onChange={this.handleChange('cpassword')}
-          type="password"
-          margin="normal" 
-          />
       </div>
     )
   }
 
   generalError() {
     const {errors} = this.state
-    const errorMsgs = errors.map((e,i) => {return (<div key={i}>{e}</div>)})
-    if (errorMsgs.length < 1)
-      return
-    return (
-      <div className='error'>
-        {errorMsgs}
-      </div>
-    )
+    if (errors.length > 0) {
+      const errorMsgs = errors.map((e,i) => {return (<div key={i}>{e}</div>)})
+      return (
+        <div className='error'>
+          {errorMsgs}
+        </div>
+      )
+    }
+    return
   }
 
   render() {

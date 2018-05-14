@@ -1,18 +1,26 @@
 import * as React from 'react'
 import Button from 'material-ui/Button'
 import TextField from 'material-ui/TextField'
+import axios from 'axios'
 
 interface StateProps {
-  company_name: string
+  company: string
   country: string
   phone: string
+  errors: string[]
 }
 
-export class UserDetails extends React.Component {
+interface ComponentProps {
+  token: string
+  user: any
+}
+
+export class UserDetails extends React.Component <ComponentProps> {
   state:StateProps = {
-    company_name: '',
+    company: '',
     country: '',
-    phone: ''
+    phone: '',
+    errors: []
   }
 
   handleChange = (name:string) => {
@@ -21,16 +29,59 @@ export class UserDetails extends React.Component {
     };
   } 
 
+  submitDetails() {
+    const {company, country, phone} = this.state
+    const {user, token} = this.props
+    console.log('updating',{company, country, phone, token} )
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
+    axios.put('http://localhost:3000/api/v1/user/'+user.id, {
+      company, country, phone
+    })
+    .then((response) => {
+      console.log(response)
+    })
+    .catch((error) => {
+      if (error.response) {
+        // error originated from server
+        if (error.response.data.error){
+          let errors = error.response.data.error.split("; ")
+          this.setState({errors: errors})
+        }
+      } else if (error.request) {
+        // request made, no response though
+      } else {
+        // error was thrown during request setup
+      }
+    });
+  }
+
+  generalError() {
+    const {errors} = this.state
+    if (errors.length > 0) {
+      const errorMsgs = errors.map((e,i) => {return (<div key={i}>{e}</div>)})
+      return (
+        <div className='error'>
+          {errorMsgs}
+        </div>
+      )
+    }
+    return
+  }
+
+
   render() {
     return (
       <div className="emailConfirm">
         <div>
+          Please complete your sign-up by filling these details:
+        </div>
+        <div>
           <TextField
             id="company"
             label="Company Name"
-            className="company_nameField"
-            value={this.state.company_name}
-            onChange={this.handleChange('company_name')}
+            className="companyField"
+            value={this.state.company}
+            onChange={this.handleChange('company')}
             type="text"
             margin="normal" 
             />
@@ -57,8 +108,9 @@ export class UserDetails extends React.Component {
             margin="normal" 
             />
         </div>
+        {this.generalError()}
         <div className="submitDetails">
-          <div> <Button variant="raised" color="primary"> Complete Sign-Up </Button> </div>
+          <div> <Button onClick={this.submitDetails.bind(this)} variant="raised" color="primary"> Complete Sign-Up </Button> </div>
         </div>
       </div>
     );
