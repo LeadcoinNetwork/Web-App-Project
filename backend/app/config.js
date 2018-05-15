@@ -6,9 +6,10 @@ const host = process.env.HOST;
 const baseURI = "/api/v1";
 const googleRedirectUrl = host + baseURI + "/auth/google/callback";
 const facebookRedirectUrl = host + baseURI + "/auth/facebook/callback";
+const linkedInRedirectUrl = host + baseURI + "/auth/linkedin/callback";
 
 console.log("Google Redirect URL:  ", googleRedirectUrl);
-console.log("Facebook Redirect URL:", facebookRedirectUrl);
+console.log("Linkedin Redirect URL:", linkedInRedirectUrl);
 
 module.exports = {
   env: process.env.NODE_ENV,
@@ -26,6 +27,11 @@ module.exports = {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: googleRedirectUrl
+    },
+    linkedin: {
+      clientID: process.env.LINKEDIN_CLIENT_ID,
+      clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
+      callbackURL: linkedInRedirectUrl
     },
     facebook: {
       clientID: process.env.FACEBOOK_CLIENT_ID,

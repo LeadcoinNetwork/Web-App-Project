@@ -24,6 +24,12 @@ router.get(
 )
 
 router.get(
+  ["/auth/linkedin", "/auth/linkedin/callback"],
+  passport.authenticate("linkedin", authOptions),
+  login
+)
+
+router.get(
   ["/auth/facebook", "/auth/facebook/callback"],
   passport.authenticate("facebook", authOptions),
   login

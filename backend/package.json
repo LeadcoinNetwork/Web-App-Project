@@ -20,6 +20,7 @@
     "passport-facebook": "^2.1.1",
     "passport-google-oauth20": "^1.0.0",
     "passport-jwt": "^4.0.0",
+    "passport-linkedin-oauth2": "^1.5.0",
     "passport-local": "^1.0.0",
     "promise-mysql": "^3.2.1",
     "zxcvbn": "^4.4.2"

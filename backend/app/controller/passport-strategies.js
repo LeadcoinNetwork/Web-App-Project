@@ -7,6 +7,7 @@ const config = require("../config");
 const auth = require("../lib/auth");
 const User = require("./user");
 const validate = require("../lib/validate");
+const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy
 
 const localStrategy = new LocalStrategy(
   {
@@ -21,6 +22,31 @@ const localStrategy = new LocalStrategy(
     }
   }
 );
+
+const linkedInStrategy = new LinkedInStrategy({
+  clientID: config.auth.linkedin.clientID,
+  clientSecret: config.auth.linkedin.clientSecret,
+  callbackURL: config.auth.linkedin.callbackURL,
+  scope: ['r_emailaddress', 'r_basicprofile']
+}, async function(accessToken, refreshToken, profile, done) {
+    console.log('got back here with linkedin user', profile)
+    return
+    try {
+      let [user] = await User.find({
+        provider_id: profile.id,
+        provider: profile.provider
+      })
+      if (!user) {
+        //TODO: create used with data from linkedin
+      } else {
+        //TODO: check if user is different, if so - update
+      }
+      done(null, user);
+    } catch (e) {
+      done(e);
+    }
+  }
+)
 
 const jwtStrategy = new JWTStrategy(
   {
