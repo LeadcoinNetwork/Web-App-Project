@@ -170,6 +170,7 @@ module.exports = {
   localStrategy,
   jwtStrategy,
   googleStrategy,
+  linkedInStrategy,
   facebookStrategy
 };
 

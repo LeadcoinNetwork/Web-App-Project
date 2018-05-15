@@ -2,7 +2,8 @@
 require("dotenv").config();
 const url = require("url");
 
-const host = process.env.HOST;
+//const host = process.env.HOST;
+const host = 'http://localhost'
 const baseURI = "/api/v1";
 const googleRedirectUrl = host + baseURI + "/auth/google/callback";
 const facebookRedirectUrl = host + baseURI + "/auth/facebook/callback";

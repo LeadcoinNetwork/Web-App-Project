@@ -37,6 +37,7 @@ passport.use(strategies.localStrategy);
 passport.use(strategies.jwtStrategy);
 passport.use(strategies.googleStrategy);
 passport.use(strategies.facebookStrategy);
+passport.use(strategies.linkedInStrategy);
 
 
 // respond with json body for 404 status
