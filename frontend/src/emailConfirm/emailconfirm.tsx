@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Button from 'material-ui/Button'
+import RaisedButton from 'material-ui/RaisedButton'
 import axios from 'axios'
 
 interface ComponentProps {
@@ -45,7 +45,7 @@ export class EmailConfirm extends React.Component <ComponentProps> {
         <div> We sent you an email.</div>
         <div> Please click on the link </div>
         <div className="resend_button">
-          <div> <Button onClick={this.resendEmail.bind(this)} variant="raised" color="primary"> Resend </Button> </div>
+          <div> <RaisedButton onClick={this.resendEmail.bind(this)} variant="raised" color="primary"> Resend </RaisedButton> </div>
         </div>
         <div className="response">
           {this.state.response}

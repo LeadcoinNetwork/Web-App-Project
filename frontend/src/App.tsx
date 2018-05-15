@@ -4,7 +4,7 @@ import { LoginForm } from './loginForm/LoginForm'
 import { SignupForm } from './signupForm/signupForm'
 import { UserDetails } from './userDetails/userDetails'
 import { EmailConfirm } from './emailConfirm/emailconfirm'
-import Button from 'material-ui/Button'
+import RaisedButton from 'material-ui/RaisedButton'
 
 interface stateProps {
   currentPage: string
@@ -69,9 +69,9 @@ class App extends React.Component {
         <div className="logo"> </div>
         <div> Don't have an account? </div>
         <div>
-          <Button variant="raised" onClick={() => {this.navigate("signup")}} color="primary">
+          <RaisedButton variant="raised" onClick={() => {this.navigate("signup")}} color="primary">
             Start Now
-          </Button>
+          </RaisedButton>
         </div>
       </div>
     )

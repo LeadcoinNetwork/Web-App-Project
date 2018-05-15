@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Button from 'material-ui/Button'
+import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 import axios from 'axios'
 
@@ -120,9 +120,9 @@ export class SignupForm extends React.Component <ComponentProps> {
           </div>
           {this.passwordField()}
           {this.generalError()}
-          <Button variant="raised" color="primary" onClick={this.submit.bind(this)}>
+          <RaisedButton variant="raised" color="primary" onClick={this.submit.bind(this)}>
             SignUp
-          </Button>
+          </RaisedButton>
         </div>
       </div>
     );

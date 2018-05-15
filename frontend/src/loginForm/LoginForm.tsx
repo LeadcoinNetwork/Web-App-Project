@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Button from 'material-ui/Button'
+import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 import axios from 'axios'
 
@@ -116,8 +116,8 @@ export class LoginForm extends React.Component <ComponentProps> {
         <div className="login_containers">
           <div className="login_header"> Login.</div>
           <div className="external_login_container">
-            <div> <Button variant="raised" onClick={this.loginLI.bind(this)} color="primary"> LinkedIn </Button> </div>
-            <div> <Button variant="raised" onClick={this.loginGoogle.bind(this)} color="primary"> Google </Button> </div>
+            <div> <RaisedButton variant="raised" onClick={this.loginLI.bind(this)} color="primary"> LinkedIn </RaisedButton> </div>
+            <div> <RaisedButton variant="raised" onClick={this.loginGoogle.bind(this)} color="primary"> Google </RaisedButton> </div>
           </div>
           <div className="localLogin">
             <form className="localLoginForm"
@@ -160,9 +160,9 @@ export class LoginForm extends React.Component <ComponentProps> {
                 <div className=""> Forgot your password? </div>
               </div>
               <div className="alignRight">
-                <Button type="submit" variant="raised" color="primary">
+                <RaisedButton type="submit" variant="raised" color="primary">
                   Login
-                </Button>
+                </RaisedButton>
               </div>
             </form>
           </div>
