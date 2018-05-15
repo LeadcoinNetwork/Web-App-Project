@@ -3,10 +3,13 @@ import Button from 'material-ui/Button'
 import TextField from 'material-ui/TextField'
 import axios from 'axios'
 
+import Checkbox from 'material-ui/Checkbox'
+
 interface stateProps {
   email: string
   password: string
   needEmailVerification: boolean
+  remember: boolean
 }
 
 interface ComponentProps {
@@ -19,6 +22,7 @@ export class LoginForm extends React.Component <ComponentProps> {
   state: stateProps = {
     email: '',
     password: '',
+    remember: true,
     needEmailVerification: false
   }
 
@@ -36,6 +40,14 @@ export class LoginForm extends React.Component <ComponentProps> {
 
   navigate() {
     this.props.navigate('signup')
+  }
+
+  updateCheck() {
+    this.setState((oldState: stateProps) => {
+      return {
+        remember: !oldState.remember,
+      };
+    });
   }
 
   login() {
@@ -138,7 +150,11 @@ export class LoginForm extends React.Component <ComponentProps> {
               </div>
               <div className="flexed login_helpers">
                 <div className="remember_me">
-                  <input type="checkbox" />
+                  <Checkbox
+                    label="Simple with controlled value"
+                    checked={this.state.remember}
+                    onChange={this.updateCheck.bind(this)}
+                  />
                   <span> Remember me? </span>
                 </div>
                 <div className=""> Forgot your password? </div>
