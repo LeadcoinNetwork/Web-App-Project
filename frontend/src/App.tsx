@@ -6,19 +6,13 @@ import { UserDetails } from './userDetails/userDetails'
 import { EmailConfirm } from './emailConfirm/emailconfirm'
 import Button from 'material-ui/Button'
 
-
-export interface Props {
-  name: string;
-  city?: string;
-}
-
 interface stateProps {
   currentPage: string
   token: string
   user?: any
 }
 
-class App extends React.Component<Props, object> {
+class App extends React.Component {
   state: stateProps = {
     currentPage: 'login',
     token: ''
@@ -41,6 +35,8 @@ class App extends React.Component<Props, object> {
   getComponent() {
     const {currentPage} = this.state
     switch (currentPage) {
+      case "dashboard":
+        return <div> You are logged in </div>
       case "emailVerification":
         return <EmailConfirm 
           navigate={this.navigate.bind(this)} 

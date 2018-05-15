@@ -27,8 +27,7 @@ body {
 }
 
 .loginForm {
-  width: 60vw;
-  margin: 2vw auto;
+  width: 75%;
 }
 
 .login_containers {
@@ -82,13 +81,6 @@ body {
   height: 100vh;
 }
 
-.pwordField {
-  border-radius: 1.5vw;
-  padding: 2vw;
-  background-color: white;
-  border-bottom: none;
-}
-
 .alignRight {
   padding: 1vh 0;
   text-align: right;
@@ -122,9 +114,10 @@ body {
   justify-content: space-between;
 }
 
-.emailField {
-  padding: 2vw;
+.pwordField, .emailField, .fnameField, .lnameField {
   border-radius: 1.5vw;
+  padding: 2vw;
+  padding-left: 3vw;
   background-color: white;
 }
 

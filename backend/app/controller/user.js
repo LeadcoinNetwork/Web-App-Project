@@ -47,16 +47,14 @@ async function remove(userId) {
 
 async function login(userId) {
   let [user] = await find({ id: userId });
+  let token = auth.generateJWT(user);
   if (user.disabled) {
-    let err = new Error(user.disabled);
-    err.status = 403;
-    throw err;
+    return token;
   }
 
   // update login timestamp
   await User.update(user.id, { login: Date.now() });
 
-  let token = auth.generateJWT(user);
   return token;
 }
 
@@ -101,7 +99,7 @@ async function resendEmail(token) {
 async function confirmEmail(token) {
   let [{ user_id: userId }] = await Token.find({ token })
   if (!userId) {
-    let err = new Error("Not Found");
+    let err = new Error("Not Found")
     err.status = 404
     throw err
   }
@@ -113,29 +111,29 @@ async function confirmEmail(token) {
 
 // returns user
 async function authenticatePassword(email, password) {
-  let [user] = await User.find({ email });
+  let [user] = await User.find({ email })
   if (user && auth.comparePassword(password, user.password)) {
-    delete user.password;
-    return user;
+    delete user.password
+    return user
   } else {
-    let err = new Error("Unauthorized");
-    err.status = 401;
-    throw err;
+    let err = new Error("Unauthorized")
+    err.status = 401
+    throw err
   }
 }
 
 // returns user
 async function update(userId, user) {
-  user = await validate.partialUser(user);
-  let { email, password } = user;
+  user = await validate.partialUser(user)
+  let { email, password } = user
 
   if (password) {
-    password = auth.hashPassword(password);
+    password = auth.hashPassword(password)
   }
 
   if (email) {
-    await validate.uniqueEmail(email, userId);
-    let token = auth.generateToken();
+    await validate.uniqueEmail(email, userId)
+    let token = auth.generateToken()
     await Token.insert({
       user_id: userId,
       token: token,

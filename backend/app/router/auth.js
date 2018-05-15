@@ -2,6 +2,7 @@ const express = require("express")
 const passport = require("passport")
 const User = require("../controller/user")
 const auth = require("../lib/auth")
+const mail = require("../lib/mail");
 
 const router = express.Router()
 module.exports = router
@@ -12,7 +13,7 @@ const authOptions = {
 
 router.post("/auth/login", passport.authenticate("local", authOptions), login)
 router.get("/auth/confirm-email", confirmEmail, login)
-router.get("/auth/resend-email", resendEmail, login)
+router.get("/auth/resend-email",passport.authenticate("jwt", authOptions), resendEmail)
 router.get("/auth/confirm-email-update", confirmEmailUpdate)
 router.post("/auth/forgot-password", forgotPassword)
 router.post("/auth/reset-password", resetPassword, login)
@@ -38,9 +39,8 @@ router.get(
 async function resendEmail(req, res, next) {
   try {
     let user = req.user
-    console.log(req)
     let token = await User.login(user.id)
-    let user = await User.resendEmail(token)
+    await mail.confirmEmail(user, token)
     res.json({ user, token })
   } catch (e) {
     next(e)

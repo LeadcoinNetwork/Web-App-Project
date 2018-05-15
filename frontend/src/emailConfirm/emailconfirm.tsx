@@ -19,7 +19,7 @@ export class EmailConfirm extends React.Component <ComponentProps> {
 
   resendEmail() {
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.props.token
-    axios.get('http://localhost:3000/api/v1/auth/confirm-email')
+    axios.get('http://localhost:3000/api/v1/auth/resend-email')
     .then((response) => {
       console.log(response)
       this.setState({response: "Email Sent!"})

@@ -29,7 +29,6 @@ const linkedInStrategy = new LinkedInStrategy({
   callbackURL: config.auth.linkedin.callbackURL,
   scope: ['r_emailaddress', 'r_basicprofile']
 }, async function(accessToken, refreshToken, profile, done) {
-    console.log('got back here with linkedin user', profile)
     return
     try {
       let [user] = await User.find({

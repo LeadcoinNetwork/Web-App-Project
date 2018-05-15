@@ -48,8 +48,10 @@ export class LoginForm extends React.Component <ComponentProps> {
       const {phone, country, company} = user
       this.props.setUser(user)
       this.props.saveToken(token)
-      if (phone && country && company) {
-        // TODO: continue to site and stuff
+      if (user.disabled) {
+        this.props.navigate('emailVerification')
+      } else if (phone && country && company) {
+        this.props.navigate('dashboard')
       } else {
         this.props.navigate('userDetails')
       }
@@ -76,8 +78,18 @@ export class LoginForm extends React.Component <ComponentProps> {
     });
   }
 
-  loginfb() {
-    axios.get('http://localhost:3000/api/v1/auth/facebook')
+  loginGoogle() {
+    axios.get('http://localhost:3000/api/v1/auth/google')
+    .then(function (response) {
+      console.log(response)
+    })
+    .catch(function (error) {
+      console.log(error)
+    });
+  }
+
+  loginLI() {
+    axios.get('http://localhost:3000/api/v1/auth/linkedin')
     .then(function (response) {
       console.log(response)
     })
@@ -92,44 +104,51 @@ export class LoginForm extends React.Component <ComponentProps> {
         <div className="login_containers">
           <div className="login_header"> Login.</div>
           <div className="external_login_container">
-            <div> <Button variant="raised" onClick={this.loginfb.bind(this)} color="primary"> Facebook </Button> </div>
-            <div> <Button variant="raised" color="primary"> Google </Button> </div>
+            <div> <Button variant="raised" onClick={this.loginLI.bind(this)} color="primary"> LinkedIn </Button> </div>
+            <div> <Button variant="raised" onClick={this.loginGoogle.bind(this)} color="primary"> Google </Button> </div>
           </div>
           <div className="localLogin">
-            <div> Or enter your details. </div>
-            <div>
-              <TextField
-                id="email"
-                label="Email"
-                fullWidth={true}
-                className="emailField"
-                value={this.state.email}
-                onChange={this.emailChange.bind(this)}
-                margin="normal" />
-            </div>
-            <div>
-              <TextField
-                id="password"
-                label="Password"
-                fullWidth={true}
-                className="pwordField"
-                value={this.state.password}
-                onChange={this.pwordChange.bind(this)}
-                type="password"
-                margin="normal" />
-            </div>
-            <div className="flexed login_helpers"> 
-              <div className="remember_me">
-                <input type="checkbox" />
-                <span> Remember me? </span>
+            <form className="localLoginForm"
+              onSubmit={(e) => {
+                this.login()
+                e.preventDefault()
+                e.stopPropagation()
+              }} >
+              <div> Or enter your details. </div>
+              <div>
+                <TextField
+                  id="email"
+                  label="Email"
+                  fullWidth={true}
+                  className="emailField"
+                  value={this.state.email}
+                  onChange={this.emailChange.bind(this)}
+                  margin="normal" />
               </div>
-              <div className=""> Forgot your password? </div>
-            </div>
-            <div className="alignRight">
-              <Button variant="raised" onClick={this.login.bind(this)} color="primary">
-                Login
-              </Button>
-            </div>
+              <div>
+                <TextField
+                  id="password"
+                  label="Password"
+                  fullWidth={true}
+                  className="pwordField"
+                  value={this.state.password}
+                  onChange={this.pwordChange.bind(this)}
+                  type="password"
+                  margin="normal" />
+              </div>
+              <div className="flexed login_helpers">
+                <div className="remember_me">
+                  <input type="checkbox" />
+                  <span> Remember me? </span>
+                </div>
+                <div className=""> Forgot your password? </div>
+              </div>
+              <div className="alignRight">
+                <Button type="submit" variant="raised" color="primary">
+                  Login
+                </Button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
