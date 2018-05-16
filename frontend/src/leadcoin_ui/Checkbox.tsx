@@ -1,19 +1,28 @@
 import * as React from 'react';
 import MaterialCheckbox from 'material-ui/Checkbox';
-import { CheckboxProps } from 'material-ui';
+//import { CheckboxProps } from 'material-ui';
 
 export interface ICheckbox {
-  onChange?(event: React.MouseEvent<{}>, checked: boolean): void;
-  onCheck?(event: React.MouseEvent<{}>, checked: boolean): void;
+  onClick?(value:boolean):void;
   label?: string;
   checked?: boolean;
 }
 
-const Checkbox = (props:CheckboxProps) => (
+const Checkbox= (props:ICheckbox) => (
   <MaterialCheckbox 
-    {...props}
-    onCheck={props.onChange} 
+    label={props.label}
+    checked={props.checked}
+    onCheck={(e:React.MouseEvent<HTMLInputElement>) => {
+      if (props.onClick) {
+        props.onClick(!!e.currentTarget.value);
+      }
+    }} 
     />
 );
 
 export default Checkbox;
+
+
+<input className="moshe username">
+</input>
+

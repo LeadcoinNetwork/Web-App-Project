@@ -83,7 +83,6 @@ export class UserDetails extends React.Component <ComponentProps> {
             value={this.state.company}
             onChange={this.handleChange('company')}
             type="text"
-            margin="normal" 
             />
         </div>
         <div>
@@ -94,7 +93,6 @@ export class UserDetails extends React.Component <ComponentProps> {
             value={this.state.country}
             onChange={this.handleChange('country')}
             type="text"
-            margin="normal" 
             />
         </div>
         <div>
@@ -105,7 +103,6 @@ export class UserDetails extends React.Component <ComponentProps> {
             value={this.state.phone}
             onChange={this.handleChange('phone')}
             type="text"
-            margin="normal" 
             />
         </div>
         {this.generalError()}

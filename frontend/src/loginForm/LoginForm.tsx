@@ -41,12 +41,8 @@ export class LoginForm extends React.Component <ComponentProps> {
     this.props.navigate('signup')
   }
 
-  updateCheck() {
-    this.setState((oldState: stateProps) => {
-      return {
-        remember: !oldState.remember,
-      };
-    });
+  updateCheck(value:boolean) {
+    this.setState({remember: value})
   }
 
   login() {
@@ -128,7 +124,7 @@ export class LoginForm extends React.Component <ComponentProps> {
                   className="emailField"
                   value={this.state.email}
                   onChange={this.emailChange.bind(this)}
-                  margin="normal" />
+                  />
               </div>
               <div>
                 <TextField
@@ -139,14 +135,14 @@ export class LoginForm extends React.Component <ComponentProps> {
                   value={this.state.password}
                   onChange={this.pwordChange.bind(this)}
                   type="password"
-                  margin="normal" />
+                  />
               </div>
               <div className="flexed login_helpers">
                 <div className="remember_me">
                   <Checkbox
                     label="Simple with controlled value"
                     checked={this.state.remember}
-                    onChange={this.updateCheck.bind(this)}
+                    onClick={this.updateCheck.bind(this)}
                   />
                   <span> Remember me? </span>
                 </div>
