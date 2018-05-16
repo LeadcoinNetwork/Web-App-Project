@@ -4,7 +4,8 @@ import { LoginForm } from './loginForm/LoginForm'
 import { SignupForm } from './signupForm/signupForm'
 import { UserDetails } from './userDetails/userDetails'
 import { EmailConfirm } from './emailConfirm/emailconfirm'
-import RaisedButton from 'material-ui/RaisedButton'
+import Button from './leadcoin_ui/Button'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 interface stateProps {
   currentPage: string
@@ -69,9 +70,9 @@ class App extends React.Component {
         <div className="logo"> </div>
         <div> Don't have an account? </div>
         <div>
-          <RaisedButton variant="raised" onClick={() => {this.navigate("signup")}} color="primary">
+          <Button onClick={() => {this.navigate("signup")}}>
             Start Now
-          </RaisedButton>
+          </Button>
         </div>
       </div>
     )
@@ -81,18 +82,20 @@ class App extends React.Component {
     }
 
     return (
-      <div className="App">
-        {top_strip}
-        <div className="page_split">
-          <div className="left">
-            {this.getComponent()}
-          </div>
-          <div className="right">
-            <div> Marketing Text </div>
-            <div> Video </div>
+      <MuiThemeProvider>
+        <div className="App">
+          {top_strip}
+          <div className="page_split">
+            <div className="left">
+              {this.getComponent()}
+            </div>
+            <div className="right">
+              <div> Marketing Text </div>
+              <div> Video </div>
+            </div>
           </div>
         </div>
-      </div>
+      </MuiThemeProvider>
     );
   }
 }

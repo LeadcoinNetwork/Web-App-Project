@@ -1,9 +1,8 @@
 import * as React from 'react'
-import RaisedButton from 'material-ui/RaisedButton'
-import TextField from 'material-ui/TextField'
+import Button from '../leadcoin_ui/Button'
+import TextField from '../leadcoin_ui/TextField'
 import axios from 'axios'
-
-import Checkbox from 'material-ui/Checkbox'
+import Checkbox from '../leadcoin_ui/Checkbox'
 
 interface stateProps {
   email: string
@@ -116,8 +115,8 @@ export class LoginForm extends React.Component <ComponentProps> {
         <div className="login_containers">
           <div className="login_header"> Login.</div>
           <div className="external_login_container">
-            <div> <RaisedButton variant="raised" onClick={this.loginLI.bind(this)} color="primary"> LinkedIn </RaisedButton> </div>
-            <div> <RaisedButton variant="raised" onClick={this.loginGoogle.bind(this)} color="primary"> Google </RaisedButton> </div>
+            <div> <Button onClick={this.loginLI.bind(this)}> LinkedIn </Button> </div>
+            <div> <Button onClick={this.loginGoogle.bind(this)}> Google </Button> </div>
           </div>
           <div className="localLogin">
             <form className="localLoginForm"
@@ -160,9 +159,9 @@ export class LoginForm extends React.Component <ComponentProps> {
                 <div className=""> Forgot your password? </div>
               </div>
               <div className="alignRight">
-                <RaisedButton type="submit" variant="raised" color="primary">
+                <Button type="submit">
                   Login
-                </RaisedButton>
+                </Button>
               </div>
             </form>
           </div>

@@ -1,6 +1,6 @@
 import * as React from 'react'
-import RaisedButton from 'material-ui/RaisedButton'
-import TextField from 'material-ui/TextField'
+import Button from '../leadcoin_ui/Button'
+import TextField from '../leadcoin_ui/TextField'
 import axios from 'axios'
 
 interface StateProps {
@@ -110,7 +110,7 @@ export class UserDetails extends React.Component <ComponentProps> {
         </div>
         {this.generalError()}
         <div className="submitDetails">
-          <div> <RaisedButton onClick={this.submitDetails.bind(this)} variant="raised" color="primary"> Complete Sign-Up </RaisedButton> </div>
+          <div> <Button onClick={this.submitDetails.bind(this)}> Complete Sign-Up </Button> </div>
         </div>
       </div>
     );
