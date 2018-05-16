@@ -89,14 +89,8 @@ export class LoginForm extends React.Component <ComponentProps> {
     });
   }
 
-  loginGoogle = () => {
-    axios.get('http://localhost:3000/api/v1/auth/google')
-    .then(function (response) {
-      console.log(response)
-    })
-    .catch(function (error) {
-      console.log(error)
-    });
+  loginGoogle() {
+    window.open('http://localhost:3000/api/v1/auth/google', '_top');
   }
 
   loginLI = () => {
