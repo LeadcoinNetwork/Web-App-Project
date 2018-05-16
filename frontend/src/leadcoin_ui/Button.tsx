@@ -1,8 +1,12 @@
 import * as React from 'react';
 import MaterialButton from 'material-ui/RaisedButton';
-import { RaisedButtonProps } from 'material-ui';
 
-const Button = (props:RaisedButtonProps) => (
+export interface IButton {
+  type?: string;
+  onClick?: React.MouseEventHandler<{}>;
+}
+
+const Button = (props:IButton) => (
   <MaterialButton {...props} />
 );
 

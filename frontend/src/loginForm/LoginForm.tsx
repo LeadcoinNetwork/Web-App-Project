@@ -89,7 +89,7 @@ export class LoginForm extends React.Component <ComponentProps> {
     });
   }
 
-  loginGoogle() {
+  loginGoogle = () => {
     axios.get('http://localhost:3000/api/v1/auth/google')
     .then(function (response) {
       console.log(response)
@@ -99,7 +99,7 @@ export class LoginForm extends React.Component <ComponentProps> {
     });
   }
 
-  loginLI() {
+  loginLI = () => {
     axios.get('http://localhost:3000/api/v1/auth/linkedin')
     .then(function (response) {
       console.log(response)
@@ -115,8 +115,8 @@ export class LoginForm extends React.Component <ComponentProps> {
         <div className="login_containers">
           <div className="login_header"> Login.</div>
           <div className="external_login_container">
-            <div> <Button onClick={this.loginLI.bind(this)}> LinkedIn </Button> </div>
-            <div> <Button onClick={this.loginGoogle.bind(this)}> Google </Button> </div>
+            <div> <Button onClick={this.loginLI}> LinkedIn </Button> </div>
+            <div> <Button onClick={this.loginGoogle}> Google </Button> </div>
           </div>
           <div className="localLogin">
             <form className="localLoginForm"

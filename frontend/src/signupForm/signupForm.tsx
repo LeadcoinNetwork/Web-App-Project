@@ -120,7 +120,7 @@ export class SignupForm extends React.Component <ComponentProps> {
           </div>
           {this.passwordField()}
           {this.generalError()}
-          <Button onClick={this.submit.bind(this)}>
+          <Button onClick={this.submit}>
             SignUp
           </Button>
         </div>

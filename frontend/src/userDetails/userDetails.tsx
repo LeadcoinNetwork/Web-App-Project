@@ -29,7 +29,7 @@ export class UserDetails extends React.Component <ComponentProps> {
     };
   } 
 
-  submitDetails() {
+  submitDetails = () => {
     const {company, country, phone} = this.state
     const {user, token} = this.props
     console.log('updating',{company, country, phone, token} )
@@ -110,7 +110,7 @@ export class UserDetails extends React.Component <ComponentProps> {
         </div>
         {this.generalError()}
         <div className="submitDetails">
-          <div> <Button onClick={this.submitDetails.bind(this)}> Complete Sign-Up </Button> </div>
+          <div> <Button onClick={this.submitDetails}> Complete Sign-Up </Button> </div>
         </div>
       </div>
     );
