@@ -118,20 +118,16 @@ export class LoginForm extends React.Component <ComponentProps> {
               <div> Or enter your details. </div>
               <div>
                 <TextField
-                  id="email"
                   label="Email"
                   fullWidth={true}
-                  className="emailField"
                   value={this.state.email}
                   onChange={this.emailChange.bind(this)}
                   />
               </div>
               <div>
                 <TextField
-                  id="password"
                   label="Password"
                   fullWidth={true}
-                  className="pwordField"
                   value={this.state.password}
                   onChange={this.pwordChange.bind(this)}
                   type="password"

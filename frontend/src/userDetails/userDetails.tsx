@@ -77,9 +77,7 @@ export class UserDetails extends React.Component <ComponentProps> {
         </div>
         <div>
           <TextField
-            id="company"
             label="Company Name"
-            className="companyField"
             value={this.state.company}
             onChange={this.handleChange('company')}
             type="text"
@@ -87,9 +85,7 @@ export class UserDetails extends React.Component <ComponentProps> {
         </div>
         <div>
           <TextField
-            id="country"
             label="Country"
-            className="countryField"
             value={this.state.country}
             onChange={this.handleChange('country')}
             type="text"
@@ -97,9 +93,7 @@ export class UserDetails extends React.Component <ComponentProps> {
         </div>
         <div>
           <TextField
-            id="phone"
             label="Phone"
-            className="phoneField"
             value={this.state.phone}
             onChange={this.handleChange('phone')}
             type="text"

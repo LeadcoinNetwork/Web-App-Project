@@ -61,9 +61,7 @@ export class SignupForm extends React.Component <ComponentProps> {
     return (
       <div>
         <TextField
-          id="password"
           label="Password"
-          className="pwordField"
           value={this.state.password}
           onChange={this.handleChange('password')}
           type="password"
@@ -92,27 +90,21 @@ export class SignupForm extends React.Component <ComponentProps> {
         <div className="signupDetails">
           <div>
             <TextField
-              id="fname"
               label="First Name"
-              className="fnameField"
               value={this.state.fname}
               onChange={this.handleChange('fname')}
               />
           </div>
           <div>
             <TextField
-              id="lname"
               label="Last Name"
-              className="lnameField"
               value={this.state.lname}
               onChange={this.handleChange('lname')}
               />
           </div>
           <div>
             <TextField
-              id="email"
               label="Email"
-              className="emailField"
               value={this.state.email}
               onChange={this.handleChange('email')}
               />
