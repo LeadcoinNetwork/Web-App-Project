@@ -6,8 +6,14 @@ export interface IButton {
   onClick?: React.MouseEventHandler<{}>;
 }
 
-const Button = (props:IButton) => (
-  <MaterialButton {...props} />
+const Button = ({
+  type,
+  onClick
+}:IButton) => (
+  <MaterialButton
+    type={type}
+    onClick={onClick}
+    />
 );
 
 export default Button;
