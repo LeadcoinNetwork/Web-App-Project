@@ -25,13 +25,13 @@ export class LoginForm extends React.Component <ComponentProps> {
     needEmailVerification: false
   }
 
-  pwordChange(event: any) {
+  pwordChange = (event: any) => {
     this.setState({
       password: event.target.value
     })
   }
 
-  emailChange(event: any) {
+  emailChange = (event: any) => {
     this.setState({
       email: event.target.value
     })
@@ -41,7 +41,7 @@ export class LoginForm extends React.Component <ComponentProps> {
     this.props.navigate('signup')
   }
 
-  updateCheck(value:boolean) {
+  updateCheck = (value:boolean) => {
     this.setState({remember: value})
   }
 
@@ -121,7 +121,7 @@ export class LoginForm extends React.Component <ComponentProps> {
                   label="Email"
                   fullWidth={true}
                   value={this.state.email}
-                  onChange={this.emailChange.bind(this)}
+                  onChange={this.emailChange}
                   />
               </div>
               <div>
@@ -129,7 +129,7 @@ export class LoginForm extends React.Component <ComponentProps> {
                   label="Password"
                   fullWidth={true}
                   value={this.state.password}
-                  onChange={this.pwordChange.bind(this)}
+                  onChange={this.pwordChange}
                   type="password"
                   />
               </div>
@@ -138,7 +138,7 @@ export class LoginForm extends React.Component <ComponentProps> {
                   <Checkbox
                     label="Simple with controlled value"
                     checked={this.state.remember}
-                    onClick={this.updateCheck.bind(this)}
+                    onClick={this.updateCheck}
                   />
                   <span> Remember me? </span>
                 </div>

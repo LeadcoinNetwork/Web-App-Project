@@ -19,17 +19,17 @@ class App extends React.Component {
     token: ''
   }
 
-  navigate(route: string) {
+  navigate = (route: string) => {
     this.setState({
       currentPage: route 
     })
   }
 
-  saveToken(token: string) {
+  saveToken = (token: string) => {
     this.setState({ token })
   }
 
-  setUser(user: object) {
+  setUser = (user: object) => {
     this.setState({ user })
   }
 
@@ -40,7 +40,7 @@ class App extends React.Component {
         return <div> You are logged in </div>
       case "emailVerification":
         return <EmailConfirm 
-          navigate={this.navigate.bind(this)} 
+          navigate={this.navigate} 
           token={this.state.token} 
         />
       case "userDetails":
@@ -50,15 +50,15 @@ class App extends React.Component {
         />
       case "login": 
         return <LoginForm 
-          setUser={this.setUser.bind(this)} 
-          saveToken={this.saveToken.bind(this)} 
-          navigate={this.navigate.bind(this)} 
+          setUser={this.setUser} 
+          saveToken={this.saveToken} 
+          navigate={this.navigate} 
         />
       case "signup": 
         return <SignupForm 
-          setUser = {this.setUser.bind(this)}
-          saveToken={this.saveToken.bind(this)} 
-          navigate={this.navigate.bind(this)} 
+          setUser = {this.setUser}
+          saveToken={this.saveToken} 
+          navigate={this.navigate} 
         />
     }
     return
