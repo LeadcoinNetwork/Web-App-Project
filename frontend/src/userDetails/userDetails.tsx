@@ -1,6 +1,6 @@
 import * as React from 'react'
-import Button from 'material-ui/Button'
-import TextField from 'material-ui/TextField'
+import Button from '../leadcoin_ui/Button'
+import TextField from '../leadcoin_ui/TextField'
 import axios from 'axios'
 
 interface StateProps {
@@ -29,7 +29,7 @@ export class UserDetails extends React.Component <ComponentProps> {
     };
   } 
 
-  submitDetails() {
+  submitDetails = () => {
     const {company, country, phone} = this.state
     const {user, token} = this.props
     console.log('updating',{company, country, phone, token} )
@@ -77,40 +77,31 @@ export class UserDetails extends React.Component <ComponentProps> {
         </div>
         <div>
           <TextField
-            id="company"
             label="Company Name"
-            className="companyField"
             value={this.state.company}
             onChange={this.handleChange('company')}
             type="text"
-            margin="normal" 
             />
         </div>
         <div>
           <TextField
-            id="country"
             label="Country"
-            className="countryField"
             value={this.state.country}
             onChange={this.handleChange('country')}
             type="text"
-            margin="normal" 
             />
         </div>
         <div>
           <TextField
-            id="phone"
             label="Phone"
-            className="phoneField"
             value={this.state.phone}
             onChange={this.handleChange('phone')}
             type="text"
-            margin="normal" 
             />
         </div>
         {this.generalError()}
         <div className="submitDetails">
-          <div> <Button onClick={this.submitDetails.bind(this)} variant="raised" color="primary"> Complete Sign-Up </Button> </div>
+          <div> <Button onClick={this.submitDetails}> Complete Sign-Up </Button> </div>
         </div>
       </div>
     );

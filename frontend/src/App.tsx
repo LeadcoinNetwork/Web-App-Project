@@ -4,7 +4,8 @@ import { LoginForm } from './loginForm/LoginForm'
 import { SignupForm } from './signupForm/signupForm'
 import { UserDetails } from './userDetails/userDetails'
 import { EmailConfirm } from './emailConfirm/emailconfirm'
-import Button from 'material-ui/Button'
+import Button from './leadcoin_ui/Button'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 interface stateProps {
   currentPage: string
@@ -18,17 +19,17 @@ class App extends React.Component {
     token: ''
   }
 
-  navigate(route: string) {
+  navigate = (route: string) => {
     this.setState({
       currentPage: route 
     })
   }
 
-  saveToken(token: string) {
+  saveToken = (token: string) => {
     this.setState({ token })
   }
 
-  setUser(user: object) {
+  setUser = (user: object) => {
     this.setState({ user })
   }
 
@@ -39,7 +40,7 @@ class App extends React.Component {
         return <div> You are logged in </div>
       case "emailVerification":
         return <EmailConfirm 
-          navigate={this.navigate.bind(this)} 
+          navigate={this.navigate} 
           token={this.state.token} 
         />
       case "userDetails":
@@ -49,15 +50,15 @@ class App extends React.Component {
         />
       case "login": 
         return <LoginForm 
-          setUser={this.setUser.bind(this)} 
-          saveToken={this.saveToken.bind(this)} 
-          navigate={this.navigate.bind(this)} 
+          setUser={this.setUser} 
+          saveToken={this.saveToken} 
+          navigate={this.navigate} 
         />
       case "signup": 
         return <SignupForm 
-          setUser = {this.setUser.bind(this)}
-          saveToken={this.saveToken.bind(this)} 
-          navigate={this.navigate.bind(this)} 
+          setUser = {this.setUser}
+          saveToken={this.saveToken} 
+          navigate={this.navigate} 
         />
     }
     return
@@ -69,7 +70,7 @@ class App extends React.Component {
         <div className="logo"> </div>
         <div> Don't have an account? </div>
         <div>
-          <Button variant="raised" onClick={() => {this.navigate("signup")}} color="primary">
+          <Button onClick={() => {this.navigate("signup")}}>
             Start Now
           </Button>
         </div>
@@ -81,18 +82,20 @@ class App extends React.Component {
     }
 
     return (
-      <div className="App">
-        {top_strip}
-        <div className="page_split">
-          <div className="left">
-            {this.getComponent()}
-          </div>
-          <div className="right">
-            <div> Marketing Text </div>
-            <div> Video </div>
+      <MuiThemeProvider>
+        <div className="App">
+          {top_strip}
+          <div className="page_split">
+            <div className="left">
+              {this.getComponent()}
+            </div>
+            <div className="right">
+              <div> Marketing Text </div>
+              <div> Video </div>
+            </div>
           </div>
         </div>
-      </div>
+      </MuiThemeProvider>
     );
   }
 }

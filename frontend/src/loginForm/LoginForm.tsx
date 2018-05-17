@@ -1,9 +1,8 @@
 import * as React from 'react'
-import Button from 'material-ui/Button'
-import TextField from 'material-ui/TextField'
+import Button from '../leadcoin_ui/Button'
+import TextField from '../leadcoin_ui/TextField'
 import axios from 'axios'
-
-import Checkbox from 'material-ui/Checkbox'
+import Checkbox from '../leadcoin_ui/Checkbox'
 
 interface stateProps {
   email: string
@@ -26,13 +25,13 @@ export class LoginForm extends React.Component <ComponentProps> {
     needEmailVerification: false
   }
 
-  pwordChange(event: any) {
+  pwordChange = (event: any) => {
     this.setState({
       password: event.target.value
     })
   }
 
-  emailChange(event: any) {
+  emailChange = (event: any) => {
     this.setState({
       email: event.target.value
     })
@@ -42,12 +41,8 @@ export class LoginForm extends React.Component <ComponentProps> {
     this.props.navigate('signup')
   }
 
-  updateCheck() {
-    this.setState((oldState: stateProps) => {
-      return {
-        remember: !oldState.remember,
-      };
-    });
+  updateCheck = (value:boolean) => {
+    this.setState({remember: value})
   }
 
   login() {
@@ -91,16 +86,10 @@ export class LoginForm extends React.Component <ComponentProps> {
   }
 
   loginGoogle() {
-    axios.get('http://localhost:3000/api/v1/auth/google')
-    .then(function (response) {
-      console.log(response)
-    })
-    .catch(function (error) {
-      console.log(error)
-    });
+    window.open('http://localhost:3000/api/v1/auth/google', '_top');
   }
 
-  loginLI() {
+  loginLI = () => {
     axios.get('http://localhost:3000/api/v1/auth/linkedin')
     .then(function (response) {
       console.log(response)
@@ -116,8 +105,8 @@ export class LoginForm extends React.Component <ComponentProps> {
         <div className="login_containers">
           <div className="login_header"> Login.</div>
           <div className="external_login_container">
-            <div> <Button variant="raised" onClick={this.loginLI.bind(this)} color="primary"> LinkedIn </Button> </div>
-            <div> <Button variant="raised" onClick={this.loginGoogle.bind(this)} color="primary"> Google </Button> </div>
+            <div> <Button onClick={this.loginLI}> LinkedIn </Button> </div>
+            <div> <Button onClick={this.loginGoogle}> Google </Button> </div>
           </div>
           <div className="localLogin">
             <form className="localLoginForm"
@@ -129,38 +118,34 @@ export class LoginForm extends React.Component <ComponentProps> {
               <div> Or enter your details. </div>
               <div>
                 <TextField
-                  id="email"
                   label="Email"
                   fullWidth={true}
-                  className="emailField"
                   value={this.state.email}
-                  onChange={this.emailChange.bind(this)}
-                  margin="normal" />
+                  onChange={this.emailChange}
+                  />
               </div>
               <div>
                 <TextField
-                  id="password"
                   label="Password"
                   fullWidth={true}
-                  className="pwordField"
                   value={this.state.password}
-                  onChange={this.pwordChange.bind(this)}
+                  onChange={this.pwordChange}
                   type="password"
-                  margin="normal" />
+                  />
               </div>
               <div className="flexed login_helpers">
                 <div className="remember_me">
                   <Checkbox
                     label="Simple with controlled value"
                     checked={this.state.remember}
-                    onChange={this.updateCheck.bind(this)}
+                    onClick={this.updateCheck}
                   />
                   <span> Remember me? </span>
                 </div>
                 <div className=""> Forgot your password? </div>
               </div>
               <div className="alignRight">
-                <Button type="submit" variant="raised" color="primary">
+                <Button type="submit">
                   Login
                 </Button>
               </div>

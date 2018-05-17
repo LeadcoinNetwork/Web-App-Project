@@ -1,6 +1,6 @@
 import * as React from 'react'
-import Button from 'material-ui/Button'
-import TextField from 'material-ui/TextField'
+import Button from '../leadcoin_ui/Button'
+import TextField from '../leadcoin_ui/TextField'
 import axios from 'axios'
 
 interface stateProps {
@@ -61,13 +61,10 @@ export class SignupForm extends React.Component <ComponentProps> {
     return (
       <div>
         <TextField
-          id="password"
           label="Password"
-          className="pwordField"
           value={this.state.password}
           onChange={this.handleChange('password')}
           type="password"
-          margin="normal" 
           />
           <br/>
       </div>
@@ -93,34 +90,28 @@ export class SignupForm extends React.Component <ComponentProps> {
         <div className="signupDetails">
           <div>
             <TextField
-              id="fname"
               label="First Name"
-              className="fnameField"
               value={this.state.fname}
               onChange={this.handleChange('fname')}
-              margin="normal" />
+              />
           </div>
           <div>
             <TextField
-              id="lname"
               label="Last Name"
-              className="lnameField"
               value={this.state.lname}
               onChange={this.handleChange('lname')}
-              margin="normal" />
+              />
           </div>
           <div>
             <TextField
-              id="email"
               label="Email"
-              className="emailField"
               value={this.state.email}
               onChange={this.handleChange('email')}
-              margin="normal" />
+              />
           </div>
           {this.passwordField()}
           {this.generalError()}
-          <Button variant="raised" color="primary" onClick={this.submit.bind(this)}>
+          <Button onClick={this.submit}>
             SignUp
           </Button>
         </div>
