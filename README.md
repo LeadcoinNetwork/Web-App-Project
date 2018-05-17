@@ -58,3 +58,11 @@ docker-compose run -e NODE_ENV=test backend npm test
 
 ## Git branching model
 This project follows `git flow feature branching model` (git flow), if you are not familliar with that please read here: [Git flow cheatsheet](https://danielkummer.github.io/git-flow-cheatsheet/)
+
+### ==========================
+docker run -ti -p3306:3306  -e MYSQL_ROOT_PASSWORD='Pa$$w0rd' --name ldc-mysql "mysql:5.7"
+docker stop ldc-mysql
+docker rm ldc-mysql
+docker exec -ti ldc-mysql mysql -p'Pa$$w0rd'
+mysql -u root -p
+GRANT ALL PRIVILEGES ON *.* TO 'ldc_user'@'localhost' IDENTIFIED BY 'ldc_password'
