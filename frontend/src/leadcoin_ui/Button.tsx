@@ -4,13 +4,16 @@ import MaterialButton from 'material-ui/RaisedButton';
 export interface IButton {
   type?: string;
   onClick?: React.MouseEventHandler<{}>;
+  children?: any;
 }
 
 const Button = ({
   type,
-  onClick
+  onClick,
+  children
 }:IButton) => (
   <MaterialButton
+    children={children}
     type={type}
     onClick={onClick}
     />

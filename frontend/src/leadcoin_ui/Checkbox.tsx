@@ -1,12 +1,11 @@
 import * as React from 'react';
 import MaterialCheckbox from 'material-ui/Checkbox';
-//import { CheckboxProps } from 'material-ui';
 
 export interface ICheckbox {
   onClick?(value:boolean):void;
   label?: string;
   checked?: boolean;
-}
+} 
 
 const Checkbox= (props:ICheckbox) => (
   <MaterialCheckbox 
@@ -21,8 +20,3 @@ const Checkbox= (props:ICheckbox) => (
 );
 
 export default Checkbox;
-
-
-<input className="moshe username">
-</input>
-
