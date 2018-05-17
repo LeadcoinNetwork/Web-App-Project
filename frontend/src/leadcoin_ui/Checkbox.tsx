@@ -13,7 +13,7 @@ const Checkbox= (props:ICheckbox) => (
     checked={props.checked}
     onCheck={(e:React.MouseEvent<HTMLInputElement>) => {
       if (props.onClick) {
-        props.onClick(!!e.currentTarget.value);
+        props.onClick(e.currentTarget.checked);
       }
     }} 
     />
