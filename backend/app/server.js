@@ -1,15 +1,12 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const passport = require("passport");
-const config = require("./config");
-const router = require("./router");
-const strategies = require("./controller/passport-strategies");
+const express = require("express")
+const bodyParser = require("body-parser")
+const passport = require("passport")
+const config = require("./config")
+const router = require("./router")
+const strategies = require("./controller/passport-strategies")
 
-console.log(config.baseURI)
-
-const app = express();
-
-app.use(bodyParser.json());
+const app = express()
+app.use(bodyParser.json())
 
 // handle simple options request, needed for websockets and put/delete requests 
 app.options("/*", function(req, res, next){
@@ -23,7 +20,7 @@ if (config.env === "development") {
   console.log('Allowing orphan SSL certificates')
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
   console.log('Allowing cross-origin requests')
-  app.use(function(req, res, next) {
+  app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*")
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
     next()
