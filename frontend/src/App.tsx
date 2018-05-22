@@ -4,6 +4,7 @@ import { LoginForm } from './loginForm/LoginForm'
 import { SignupForm } from './signupForm/signupForm'
 import { UserDetails } from './userDetails/userDetails'
 import { EmailConfirm } from './emailConfirm/emailconfirm'
+import { CsvUpload } from './csvUpload/csvUpload'
 import Button from './leadcoin_ui/Button'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
@@ -36,29 +37,34 @@ class App extends React.Component {
   getComponent() {
     const {currentPage} = this.state
     switch (currentPage) {
+      case "uploadCsv":
+        return <CsvUpload
+          navigate={this.navigate}
+          token={this.state.token}
+        />
       case "dashboard":
         return <div> You are logged in </div>
       case "emailVerification":
-        return <EmailConfirm 
-          navigate={this.navigate} 
-          token={this.state.token} 
+        return <EmailConfirm
+          navigate={this.navigate}
+          token={this.state.token}
         />
       case "userDetails":
-        return <UserDetails 
-          token={this.state.token} 
-          user={this.state.user} 
+        return <UserDetails
+          token={this.state.token}
+          user={this.state.user}
         />
-      case "login": 
-        return <LoginForm 
-          setUser={this.setUser} 
-          saveToken={this.saveToken} 
-          navigate={this.navigate} 
+      case "login":
+        return <LoginForm
+          setUser={this.setUser}
+          saveToken={this.saveToken}
+          navigate={this.navigate}
         />
-      case "signup": 
-        return <SignupForm 
+      case "signup":
+        return <SignupForm
           setUser = {this.setUser}
-          saveToken={this.saveToken} 
-          navigate={this.navigate} 
+          saveToken={this.saveToken}
+          navigate={this.navigate}
         />
     }
     return
@@ -66,12 +72,17 @@ class App extends React.Component {
 
   render() {
     const top_strip = (
-      <div className="flexed flexed_start top_strip"> 
+      <div className="flexed flexed_start top_strip">
         <div className="logo"> </div>
         <div> Don't have an account? </div>
         <div>
           <Button onClick={() => {this.navigate("signup")}}>
             Start Now
+          </Button>
+        </div>
+        <div>
+          <Button onClick={() => {this.navigate("uploadCsv")}}>
+            Upload
           </Button>
         </div>
       </div>

@@ -30,6 +30,10 @@ body {
   width: 75%;
 }
 
+.displaynone {
+  display: none;
+}
+
 .login_containers {
   padding: 1vw;
 }
