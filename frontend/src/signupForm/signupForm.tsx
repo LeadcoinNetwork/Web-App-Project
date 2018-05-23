@@ -2,6 +2,7 @@ import * as React from 'react'
 import Button from '../leadcoin_ui/Button'
 import TextField from '../leadcoin_ui/TextField'
 import axios from 'axios'
+import SSOContainer from '../SSO/SSOContainer'
 
 interface stateProps {
   email: string
@@ -87,6 +88,7 @@ export class SignupForm extends React.Component <ComponentProps> {
   render() {
     return (
       <div className="signupForm">
+        <SSOContainer />
         <div className="signupDetails">
           <div>
             <TextField

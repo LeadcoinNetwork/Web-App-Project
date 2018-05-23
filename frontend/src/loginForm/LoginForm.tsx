@@ -3,6 +3,7 @@ import Button from '../leadcoin_ui/Button'
 import TextField from '../leadcoin_ui/TextField'
 import axios from 'axios'
 import Checkbox from '../leadcoin_ui/Checkbox'
+import SSOContainer from '../SSO/SSOContainer'
 
 
 interface stateProps {
@@ -86,23 +87,12 @@ export class LoginForm extends React.Component <ComponentProps> {
     });
   }
 
-  loginGoogle() {
-    window.open('http://127.0.0.1.xip.io:3000/api/v1/auth/google', '_top')
-  }
-
-  loginLI = () => {
-    window.open('http://127.0.0.1.xip.io:3000/api/v1/auth/linkedin', '_top')
-  }
-
   render() {
     return (
       <div className="loginForm">
         <div className="login_containers">
           <div className="login_header"> Login.</div>
-          <div className="external_login_container">
-            <div> <Button onClick={this.loginLI}> LinkedIn </Button> </div>
-            <div> <Button onClick={this.loginGoogle}> Google </Button> </div>
-          </div>
+          <SSOContainer />
           <div className="localLogin">
             <form className="localLoginForm"
               onSubmit={(e) => {
