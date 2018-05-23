@@ -5,10 +5,15 @@ const csv = require('csv')
 const fs = require('fs')
 const program = require('commander')
 
-const parse_csv_file = (user_id, filename, field_names) => {
+const parse_csv_file = (user_id, filename, field_names=[]) => {
   return new Promise(
     (resolve, reject) => {
-      const parser = csv.parse({delimiter: ','}, (e, data) => {
+      const opts = {
+        delimiter: ','
+      }
+      if (!!field_names.length)
+        opts['columns'] = true
+      const parser = csv.parse(opts, (e, data) => {
         data.forEach(line => {
           let json_obj = {}
           field_names.forEach((field_name,i) => {
