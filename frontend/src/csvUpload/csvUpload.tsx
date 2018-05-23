@@ -29,7 +29,7 @@ export class CsvUpload extends React.Component <ComponentProps> {
     const {file} = this.state
     const formData = new FormData()
     formData.append('file',file)
-    axios.post('http://localhost:3000/api/v1/csv/upload', formData, {
+    axios.post('http://127.0.0.1.xip.io:3000/api/v1/csv/upload', formData, {
       headers: {
         'content-type': 'multipart/form-data'
       }
@@ -55,27 +55,26 @@ export class CsvUpload extends React.Component <ComponentProps> {
 
   render() {
     const {file} = this.state
-    console.log(file)
     return (
       <div className="emailConfirm">
         <div className="resend_button">
-          <div> 
-            <Button 
+          <div>
+            <Button
               containerElement='label'
-              label ='Upload' > 
-              <input 
-                className="displaynone" 
-                type="file" 
+              label ='Choose File' >
+              <input
+                className="displaynone"
+                type="file"
                 onChange={this.pickFile}
                 />
             </Button>
             </div>
         </div>
         <div className="response">
-            <Button 
-              onClick={ ()=> {this.submit()}}
-              containerElement='label'
-              label ='Upload' /> 
+          <Button
+            onClick={ ()=> {this.submit()}}
+            containerElement='label'
+            label ='Submit' />
         </div>
       </div>
     );

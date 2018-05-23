@@ -4,6 +4,8 @@ const passport = require("passport")
 const config = require("./config")
 const router = require("./router")
 const strategies = require("./controller/passport-strategies")
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
 
 const app = express()
 app.use(bodyParser.json())

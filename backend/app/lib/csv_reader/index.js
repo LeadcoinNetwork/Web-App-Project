@@ -1,6 +1,4 @@
-
 const Leads = require('./model')
-
 const csv = require('csv')
 const fs = require('fs')
 const program = require('commander')
@@ -11,14 +9,19 @@ const parse_csv_file = (user_id, filename, field_names=[]) => {
       const opts = {
         delimiter: ','
       }
-      if (!!field_names.length)
+      if (field_names.length < 1)
         opts['columns'] = true
       const parser = csv.parse(opts, (e, data) => {
+        console.log(data)
         data.forEach(line => {
           let json_obj = {}
-          field_names.forEach((field_name,i) => {
-            json_obj[field_name] = line[i]
-          })
+          if (field_names.length > 0)
+            field_names.forEach((field_name, i) => {
+              json_obj[field_name] = line[i]
+            })
+          else
+            json_obj = line
+          console.log(json_obj)
           const json = {
             user_id,
             json: JSON.stringify(json_obj),
