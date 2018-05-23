@@ -7,6 +7,7 @@ import { EmailConfirm } from './emailConfirm/emailconfirm'
 import { CsvUpload } from './csvUpload/csvUpload'
 import Button from './leadcoin_ui/Button'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+const Cookies = require('js-cookie')
 
 interface stateProps {
   currentPage: string
@@ -14,16 +15,30 @@ interface stateProps {
   user?: any
 }
 
+let currentPage = 'login'
+let token = Cookies.get('token') || ''
+let user = Cookies.get('user') || {}
+
+try {
+  user = JSON.parse(user)
+  if (user.disabled) {
+    currentPage = 'emailVerification'
+  }
+  if (user.phone) 
+    currentPage='dashboard'
+  else
+    currentPage='userDetails'
+} catch (e) {
+  user = ''
+}
+
 class App extends React.Component {
   state: stateProps = {
-    currentPage: 'login',
-    token: ''
+    currentPage, token, user
   }
 
-  navigate = (route: string) => {
-    this.setState({
-      currentPage: route 
-    })
+  navigate = (currentPage: string) => {
+    this.setState({ currentPage })
   }
 
   saveToken = (token: string) => {
@@ -73,7 +88,7 @@ class App extends React.Component {
   render() {
     const top_strip = (
       <div className="flexed flexed_start top_strip">
-        <div className="logo"> </div>
+        <div onClick={ () => this.navigate('login')} className="logo"> </div>
         <div> Don't have an account? </div>
         <div>
           <Button onClick={() => {this.navigate("signup")}}>
@@ -89,7 +104,7 @@ class App extends React.Component {
     )
 
     if (this.state.user && this.state.user.disabled && this.state.currentPage != 'emailVerification') {
-      this.setState({currentPage: 'emailVerification'})
+      //this.setState({currentPage: 'emailVerification'})
     }
 
     return (

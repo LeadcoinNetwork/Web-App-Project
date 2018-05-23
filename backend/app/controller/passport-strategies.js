@@ -23,30 +23,6 @@ const localStrategy = new LocalStrategy(
   }
 );
 
-const linkedInStrategy = new LinkedInStrategy({
-  clientID: config.auth.linkedin.clientID,
-  clientSecret: config.auth.linkedin.clientSecret,
-  callbackURL: config.auth.linkedin.callbackURL,
-  scope: ['r_emailaddress', 'r_basicprofile']
-}, async function(accessToken, refreshToken, profile, done) {
-    return
-    try {
-      let [user] = await User.find({
-        provider_id: profile.id,
-        provider: profile.provider
-      })
-      if (!user) {
-        //TODO: create used with data from linkedin
-      } else {
-        //TODO: check if user is different, if so - update
-      }
-      done(null, user);
-    } catch (e) {
-      done(e);
-    }
-  }
-)
-
 const jwtStrategy = new JWTStrategy(
   {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -67,6 +43,62 @@ const jwtStrategy = new JWTStrategy(
   }
 );
 
+const linkedInStrategy = new LinkedInStrategy({
+  clientID: config.auth.linkedin.clientID,
+  clientSecret: config.auth.linkedin.clientSecret,
+  callbackURL: config.auth.linkedin.callbackURL,
+  scope: ['r_emailaddress', 'r_basicprofile']
+}, async function(accessToken, refreshToken, profile, done) {
+    try {
+      // try to find user by provider
+      let [user] = await User.find({
+        provider_id: profile.id,
+        provider: profile.provider
+      })
+      if (!user) {
+        // try to find user by email
+        [user] = await User.find({ email: profile.emails[0].value });
+        if (user) {
+          // user email exists, transfer user to SSO
+          let update = {
+            provider_id: profile.id,
+            provider: profile.provider
+          }
+          user = await User.updateExternal(user.id, update);
+        } else {
+          // user is new, create user
+          user = {
+            fname: profile.name.givenName,
+            lname: profile.name.familyName,
+            email: profile.emails[0].value,
+            provider_id: profile.id,
+            provider: profile.provider,
+            created: Date.now(),
+            role: "user"
+          };
+          await User.insert(user);
+          [user] = await User.find({ email: user.email });
+        }
+      } else {
+        let update = difference( {
+          fname: user.fname,
+          lname: user.lname,
+          email: user.email
+        },{
+          fname: profile.name.givenName,
+          lname: profile.name.familyName,
+          email: profile.emails[0].value
+        });
+        if (Object.keys(update).length) {
+          user = await User.updateExternal(user.id, update);
+        }
+      }
+      done(null, user);
+    } catch (e) {
+      done(e);
+    }
+  }
+)
 const googleStrategy = new GoogleStrategy(
   {
     clientID: config.auth.google.clientID,
@@ -76,37 +108,47 @@ const googleStrategy = new GoogleStrategy(
   },
   async function(accessToken, refreshToken, profile, done) {
     try {
+      // try to find user by provider
       let [user] = await User.find({
         provider_id: profile.id,
         provider: profile.provider
-      });
+      })
       if (!user) {
-        user = {
-          fname: profile.name.givenName,
-          lname: profile.name.familyName,
-          email: profile.emails[0].value,
-          provider_id: profile.id,
-          provider: profile.provider,
-          created: Date.now(),
-          role: "user"
-        };
-        await User.insert(user);
-        [user] = await User.find({ email: user.email });
-      } else {
-        let update = difference(
-          {
-            fname: user.fname,
-            lname: user.lname,
-            email: user.email
-          },
-          {
+        // try to find user by email
+        [user] = await User.find({ email: profile.emails[0].value });
+        if (user) {
+          // user email exists, transfer user to SSO
+          let update = {
+            provider_id: profile.id,
+            provider: profile.provider
+          }
+          user = await User.updateExternal(user.id, update);
+        } else {
+          // user is new, create user
+          user = {
             fname: profile.name.givenName,
             lname: profile.name.familyName,
-            email: profile.emails[0].value
-          }
-        );
+            email: profile.emails[0].value,
+            provider_id: profile.id,
+            provider: profile.provider,
+            created: Date.now(),
+            role: "user"
+          };
+          await User.insert(user);
+          [user] = await User.find({ email: user.email });
+        }
+      } else {
+        let update = difference( {
+          fname: user.fname,
+          lname: user.lname,
+          email: user.email
+        },{
+          fname: profile.name.givenName,
+          lname: profile.name.familyName,
+          email: profile.emails[0].value
+        });
         if (Object.keys(update).length) {
-          user = await User.updateExternal(update);
+          user = await User.updateExternal(user.id, update);
         }
       }
       done(null, user);

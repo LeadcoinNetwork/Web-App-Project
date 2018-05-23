@@ -51,7 +51,13 @@ async function login(req, res, next) {
   try {
     let user = req.user
     let token = await User.login(user.id)
-    res.json({ user, token })
+    res.cookie('token', token)
+    res.cookie('user', JSON.stringify(user))
+    if (user.provider) {
+      res.redirect('http://127.0.0.1.xip.io:3001')
+    } else {
+      res.json({ user, token })
+    }
   } catch (e) {
     next(e)
   }

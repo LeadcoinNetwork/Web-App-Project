@@ -4,6 +4,7 @@ import TextField from '../leadcoin_ui/TextField'
 import axios from 'axios'
 import Checkbox from '../leadcoin_ui/Checkbox'
 
+
 interface stateProps {
   email: string
   password: string
@@ -47,7 +48,7 @@ export class LoginForm extends React.Component <ComponentProps> {
 
   login() {
     const {password, email} = this.state
-    axios.post('http://localhost:3000/api/v1/auth/login', {
+    axios.post('http://127.0.0.1.xip.io:3000/api/v1/auth/login', {
       email, password
     })
     .then((response) => {
@@ -86,17 +87,11 @@ export class LoginForm extends React.Component <ComponentProps> {
   }
 
   loginGoogle() {
-    window.open('http://localhost:3000/api/v1/auth/google', '_top');
+    window.open('http://127.0.0.1.xip.io:3000/api/v1/auth/google', '_top')
   }
 
   loginLI = () => {
-    axios.get('http://localhost:3000/api/v1/auth/linkedin')
-    .then(function (response) {
-      console.log(response)
-    })
-    .catch(function (error) {
-      console.log(error)
-    });
+    window.open('http://127.0.0.1.xip.io:3000/api/v1/auth/linkedin', '_top')
   }
 
   render() {
