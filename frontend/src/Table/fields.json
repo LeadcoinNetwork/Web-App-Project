@@ -1,0 +1,100 @@
+[
+  {
+    "name": "date",
+    "sortable": false,
+    "editable": false,
+    "maxWidth": null,
+    "minWidth": null
+  },
+  {
+    "name": "name",
+    "sortable": false,
+    "editable": false,
+    "maxWidth": null,
+    "minWidth": null
+  },
+  {
+    "name": "telephone",
+    "sortable": false,
+    "editable": false,
+    "maxWidth": null,
+    "minWidth": null
+  },
+  {
+    "name": "email",
+    "sortable": false,
+    "editable": false,
+    "maxWidth": null,
+    "minWidth": null
+  },
+  {
+    "name": "state",
+    "sortable": false,
+    "editable": false,
+    "maxWidth": null,
+    "minWidth": null
+  },
+  {
+    "name": "city",
+    "sortable": false,
+    "editable": false,
+    "maxWidth": null,
+    "minWidth": null
+  },
+  {
+    "name": "property type",
+    "sortable": false,
+    "editable": false,
+    "maxWidth": null,
+    "minWidth": null
+  },
+  {
+    "name": "size (SqFt)",
+    "sortable": false,
+    "editable": false,
+    "maxWidth": null,
+    "minWidth": null
+  },
+  {
+    "name": "budget",
+    "sortable": false,
+    "editable": false,
+    "maxWidth": null,
+    "minWidth": null
+  },
+  {
+    "name": "bedrooms",
+    "sortable": false,
+    "editable": false,
+    "maxWidth": null,
+    "minWidth": null
+  },
+  {
+    "name": "floor",
+    "sortable": false,
+    "editable": false,
+    "maxWidth": null,
+    "minWidth": null
+  },
+  {
+    "name": "specification",
+    "sortable": false,
+    "editable": false,
+    "maxWidth": null,
+    "minWidth": null
+  },
+  {
+    "name": "lead price",
+    "sortable": false,
+    "editable": false,
+    "maxWidth": null,
+    "minWidth": null
+  },
+  {
+    "name": "status",
+    "sortable": false,
+    "editable": false,
+    "maxWidth": null,
+    "minWidth": null
+  }
+]

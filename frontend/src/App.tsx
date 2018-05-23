@@ -8,6 +8,8 @@ import { CsvUpload } from './csvUpload/csvUpload'
 import Button from './leadcoin_ui/Button'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
+import Table from './Table';
+
 interface stateProps {
   currentPage: string
   token: string
@@ -22,7 +24,7 @@ class App extends React.Component {
 
   navigate = (route: string) => {
     this.setState({
-      currentPage: route 
+      currentPage: route
     })
   }
 
@@ -95,6 +97,21 @@ class App extends React.Component {
     return (
       <MuiThemeProvider>
         <div className="App">
+          <Table />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
           {top_strip}
           <div className="page_split">
             <div className="left">
