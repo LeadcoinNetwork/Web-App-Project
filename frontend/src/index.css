@@ -30,6 +30,26 @@ body {
   width: 75%;
 }
 
+.fields_mapper {
+  width: 75%;
+  margin: 20px auto;
+}
+
+.line {
+  height: 72px;
+  line-height: 24px;
+}
+
+.fieldLabel {
+  line-height: 98px;
+  width: 150px;
+  text-align: left;
+}
+
+.selected {
+  font-weight: bold;
+}
+
 .displaynone {
   display: none;
 }
