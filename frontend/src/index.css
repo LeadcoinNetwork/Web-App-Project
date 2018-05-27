@@ -42,8 +42,18 @@ body {
 
 .fieldLabel {
   line-height: 98px;
-  width: 150px;
+  min-width: 250px;
   text-align: left;
+  text-transform: capitalize;
+}
+
+.line>div {
+  flex-grow: 1;
+}
+
+.field_submit >div {
+  text-align: center;
+  flex-grow: 1;
 }
 
 .selected {
@@ -102,7 +112,7 @@ body {
   display: flex;
   border-bottom: solid thin black;
   align-items: stretch;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .alignRight {

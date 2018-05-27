@@ -1,4 +1,4 @@
-const Leads = require('./model')
+const {LeadsUpload} = require('../../model')
 const csv = require('csv')
 const fs = require('fs')
 const program = require('commander')
@@ -14,6 +14,7 @@ const parse_csv_file = (user_id, filename, field_names=[]) => {
         opts['columns'] = true
       const parser = csv.parse(opts, (e, data) => {
         if (e) return reject(e)
+        const batch_id = new Date().valueOf()
         data.forEach(line => {
           let json_obj = {}
           if (field_names.length > 0) {
@@ -26,8 +27,9 @@ const parse_csv_file = (user_id, filename, field_names=[]) => {
             field_list = Object.keys(json_obj)
           }
           try {
-            Leads.insert({
+            LeadsUpload.insert({
               user_id,
+              batch_id,
               json: JSON.stringify(json_obj),
               created: new Date().valueOf()
             })
@@ -35,7 +37,7 @@ const parse_csv_file = (user_id, filename, field_names=[]) => {
             reject(e)
           }
         })
-        resolve({x: data.length, field_list})
+        resolve({x: data.length, batch_id, field_list})
       })
       try {
         fs.createReadStream(__dirname+'/'+filename).pipe(parser)

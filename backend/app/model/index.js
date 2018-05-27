@@ -1,4 +1,5 @@
 module.exports = {
   Token: require("./token"),
-  User: require("./user")
+  User: require("./user"),
+  LeadsUpload: require('./leads_upload')
 };
