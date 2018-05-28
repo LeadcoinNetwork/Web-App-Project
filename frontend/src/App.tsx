@@ -97,21 +97,6 @@ class App extends React.Component {
     return (
       <MuiThemeProvider>
         <div className="App">
-          <Table />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
           {top_strip}
           <div className="page_split">
             <div className="left">
