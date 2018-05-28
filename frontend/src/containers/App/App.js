@@ -1,5 +1,4 @@
-import * as React from 'react'
-import './App.scss'
+import React from 'react'
 import { LoginForm } from './loginForm/LoginForm'
 import { SignupForm } from './signupForm/signupForm'
 import { UserDetails } from './userDetails/userDetails'
@@ -19,9 +18,9 @@ try {
     currentPage = 'emailVerification'
   }
   if (user.phone)
-    currentPage='dashboard'
+    currentPage = 'dashboard'
   else
-    currentPage='userDetails'
+    currentPage = 'userDetails'
 } catch (e) {
   user = ''
 }
@@ -44,7 +43,7 @@ class App extends React.Component {
   }
 
   getComponent() {
-    const {currentPage} = this.state
+    const { currentPage } = this.state
     switch (currentPage) {
       case "uploadCsv":
         return <CsvUpload
@@ -71,7 +70,7 @@ class App extends React.Component {
         />
       case "signup":
         return <SignupForm
-          setUser = {this.setUser}
+          setUser={this.setUser}
           saveToken={this.saveToken}
           navigate={this.navigate}
         />
@@ -82,15 +81,15 @@ class App extends React.Component {
   render() {
     const top_strip = (
       <div className="flexed flexed_start top_strip">
-        <div onClick={ () => this.navigate('login')} className="logo"> </div>
+        <div onClick={() => this.navigate('login')} className="logo"> </div>
         <div> Don't have an account? </div>
         <div>
-          <Button onClick={() => {this.navigate("signup")}}>
+          <Button onClick={() => { this.navigate("signup") }}>
             Start Now
           </Button>
         </div>
         <div>
-          <Button onClick={() => {this.navigate("uploadCsv")}}>
+          <Button onClick={() => { this.navigate("uploadCsv") }}>
             Upload
           </Button>
         </div>
