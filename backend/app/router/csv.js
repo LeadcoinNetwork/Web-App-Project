@@ -79,20 +79,21 @@ async function mapper(req, res, next) {
       if (insert_params['ext_data']) {
         insert_params['ext_data'] = JSON.stringify(insert_params['ext_data'])
       }
-      console.log(lead.data_id)
-      return leads.insert(insert_params, lead.data_id)
+      return leads.insert(insert_params)
+      .then( () => {
+        lead.processed = true
+        leads_upload.update(lead)
+      })
     })
     Promise.all(lead_promises)
     .then((results) => {
-      console.log(results)
-      next()
+      res.json({done: results.length})
     })
     .catch((e) => {
-      console.log(e)
+      console.error(e)
       next(e)
     })
     return
-    //res.json({data: response, db_field_list: mock_field_list})
   } catch (e) {
     next(e)
   }

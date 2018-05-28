@@ -1,23 +1,29 @@
 const mysqlPool = require("./mysql-pool")
 
 module.exports = {
-  insert, find, remove
+  insert, find, remove, update
 }
 
-async function insert(lead, lead_upload_id) {
+async function insert(lead) {
   let status = await mysqlPool.query("INSERT INTO leads SET ?", lead)
-  if (status.affectedRows != 0)
-    if (lead_upload_id) 
-      return lead_upload_id
   return status.affectedRows != 0
 }
 
-async function find(condition, fields) {
+async function update(_id, lead) {
+  let status = await mysqlPool.query("UPDATE leads SET ? WHERE id = ?", [
+    lead,
+    _id
+  ]);
+  return status.affectedRows != 0;
+}
+
+async function find(condition, fields, where_additions = []) {
   // convert condition to WHERE clause
   condition = Object.keys(condition)
     .map(key => {
       return `${key} = '${condition[key]}'`
     })
+    .concat(where_additions)
     .join(" AND ")
 
   if (condition) condition = `WHERE ${condition}`
