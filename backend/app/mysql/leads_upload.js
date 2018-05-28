@@ -1,12 +1,21 @@
 const mysqlPool = require("./mysql-pool")
 
 module.exports = {
-  insert, find, remove
+  insert, find, remove, update
 }
 
 async function insert(lead) {
   let status = await mysqlPool.query("INSERT INTO leads_upload SET ?", lead)
   return status.affectedRows != 0
+}
+
+async function update(data_id, lead) {
+  console.log(lead, data_id)
+  let status = await mysqlPool.query("UPDATE leads_upload SET ? WHERE data_id = ?", [
+    lead,
+    data_id
+  ]);
+  return status.affectedRows != 0;
 }
 
 async function find(condition, fields) {
@@ -31,7 +40,11 @@ async function find(condition, fields) {
   return rows
 }
 
-async function remove(batchId) {
-  let status = await mysqlPool.query("DELETE FROM leads_upload WHERE batch_id = ?", batchId)
+async function remove(batch_id, data_id) {
+  let status
+  if (data_id)
+    status = await mysqlPool.query("DELETE FROM leads_upload WHERE data_id = ?", data_id)
+  else
+    status = await mysqlPool.query("DELETE FROM leads_upload WHERE batch_id = ?", batch_id)
   return status.affectedRows != 0
 }

@@ -86,10 +86,12 @@ export class CsvUpload extends React.Component {
   }
 
   field_map_submit() {
-    const {field_map, batch_id} = this.state
+    const {field_map, batch_id, lead_price} = this.state
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.props.token
-    axios.post('http://127.0.0.1.xip.io:3000/api/v1/csv/mapper/'+batch_id, {field_map})
+    axios.post('http://127.0.0.1.xip.io:3000/api/v1/csv/mapper/'+batch_id, {field_map, lead_price})
     .then((response) => {
+      const {done} = response.data
+      console.log(done)
       //TODO: finish upload screen
     })
     .catch((error) => {
