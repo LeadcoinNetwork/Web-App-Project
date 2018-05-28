@@ -5,35 +5,21 @@ import axios from 'axios'
 import Checkbox from '../leadcoin_ui/Checkbox'
 import SSOContainer from '../SSO/SSOContainer'
 
-
-interface stateProps {
-  email: string
-  password: string
-  needEmailVerification: boolean
-  remember: boolean
-}
-
-interface ComponentProps {
-  navigate: any
-  saveToken: any
-  setUser: any
-}
-
-export class LoginForm extends React.Component <ComponentProps> {
-  state: stateProps = {
+export class LoginForm extends React.Component {
+  state = {
     email: '',
     password: '',
     remember: true,
     needEmailVerification: false
   }
 
-  pwordChange = (event: any) => {
+  pwordChange = event => {
     this.setState({
       password: event.target.value
     })
   }
 
-  emailChange = (event: any) => {
+  emailChange = event => {
     this.setState({
       email: event.target.value
     })
@@ -43,7 +29,7 @@ export class LoginForm extends React.Component <ComponentProps> {
     this.props.navigate('signup')
   }
 
-  updateCheck = (value:boolean) => {
+  updateCheck = value => {
     this.setState({remember: value})
   }
 

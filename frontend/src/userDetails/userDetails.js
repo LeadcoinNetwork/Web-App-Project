@@ -1,30 +1,18 @@
-import * as React from 'react'
+import React from 'react'
 import Button from '../leadcoin_ui/Button'
 import TextField from '../leadcoin_ui/TextField'
 import axios from 'axios'
 
-interface StateProps {
-  company: string
-  country: string
-  phone: string
-  errors: string[]
-}
-
-interface ComponentProps {
-  token: string
-  user: any
-}
-
-export class UserDetails extends React.Component <ComponentProps> {
-  state:StateProps = {
+export class UserDetails extends React.Component {
+  state = {
     company: '',
     country: '',
     phone: '',
     errors: []
   }
 
-  handleChange = (name:string) => {
-    return (event:any) => {
+  handleChange = name => {
+    return event => {
       this.setState({ [name]: event.target.value });
     };
   } 

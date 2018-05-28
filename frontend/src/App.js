@@ -1,5 +1,5 @@
 import * as React from 'react'
-import './App.css'
+import './App.scss'
 import { LoginForm } from './loginForm/LoginForm'
 import { SignupForm } from './signupForm/signupForm'
 import { UserDetails } from './userDetails/userDetails'
@@ -8,12 +8,6 @@ import { CsvUpload } from './csvUpload/csvUpload'
 import Button from './leadcoin_ui/Button'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 const Cookies = require('js-cookie')
-
-interface stateProps {
-  currentPage: string
-  token: string
-  user?: any
-}
 
 let currentPage = 'login'
 let token = Cookies.get('token') || ''
@@ -33,19 +27,19 @@ try {
 }
 
 class App extends React.Component {
-  state: stateProps = {
+  state = {
     currentPage, token, user
   }
 
-  navigate = (currentPage: string) => {
+  navigate = currentPage => {
     this.setState({ currentPage })
   }
 
-  saveToken = (token: string) => {
+  saveToken = token => {
     this.setState({ token })
   }
 
-  setUser = (user: object) => {
+  setUser = user => {
     this.setState({ user })
   }
 

@@ -5,31 +5,14 @@ import axios from 'axios'
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 
-interface ComponentProps {
-  navigate: any
-  token: string
-}
-
-interface StateProps {
-  response: string | null
-  currentStep: string
-  errors?: any
-  file?: any
-  x?: number 
-  file_field_list?: string[]
-  db_field_list?: string[]
-  field_map: object
-  batch_id?: number
-}
-
-export class CsvUpload extends React.Component <ComponentProps> {
-  state: StateProps = {
+export class CsvUpload extends React.Component {
+  state = {
     response: null,
     currentStep: 'upload',
     field_map: {}
   }
 
-  pickFile = (e: any) => {
+  pickFile = e => {
     this.setState({
       file: e.target.files[0]
     })
@@ -74,19 +57,19 @@ export class CsvUpload extends React.Component <ComponentProps> {
     })
   }
 
-  handleChange(fieldName: any, value: any) {
+  handleChange(fieldName, value) {
     const {field_map} = this.state
     field_map[fieldName] = value
     this.setState(field_map)
   }
 
-  listItems(fieldName: string) {
+  listItems(fieldName) {
     const {field_map, file_field_list} = this.state
     if (file_field_list) {
       let value = ''
       if (field_map && field_map[fieldName])
         value = field_map[fieldName]
-      const items = file_field_list.map( (field:string, i:number) => {
+      const items = file_field_list.map( (field, i) => {
         return <MenuItem value={field} key={i} primaryText={field}/>
       })
       return <SelectField
@@ -178,7 +161,7 @@ export class CsvUpload extends React.Component <ComponentProps> {
   generalError() {
     const {errors} = this.state
     if (errors && errors.length > 0) {
-      const errorMsgs = errors.map((e: any,i: number) => {return (<div key={i}>{e}</div>)})
+      const errorMsgs = errors.map((e, i) => {return (<div key={i}>{e}</div>)})
       return (
         <div className='error'>
           {errorMsgs}

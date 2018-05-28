@@ -4,22 +4,8 @@ import TextField from '../leadcoin_ui/TextField'
 import axios from 'axios'
 import SSOContainer from '../SSO/SSOContainer'
 
-interface stateProps {
-  email: string
-  password: string
-  fname: string
-  lname: string
-  errors: string[]
-}
-
-interface ComponentProps {
-  setUser: any
-  navigate: any
-  saveToken: any
-}
-
-export class SignupForm extends React.Component <ComponentProps> {
-  state: stateProps = {
+export class SignupForm extends React.Component {
+  state = {
     email: '',
     password: '',
     fname: '',
@@ -27,8 +13,8 @@ export class SignupForm extends React.Component <ComponentProps> {
     errors: []
   }
 
-  handleChange = (name:string) => {
-    return (event:any) => {
+  handleChange = name => {
+    return event => {
       this.setState({ [name]: event.target.value });
     };
   } 

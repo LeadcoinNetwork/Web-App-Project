@@ -2,18 +2,8 @@ import * as React from 'react'
 import Button from '../leadcoin_ui/Button'
 import axios from 'axios'
 
-interface ComponentProps {
-  navigate: any
-  token: string
-}
-
-interface StateProps {
-  response: string | null
-  errors?: any
-}
-
-export class EmailConfirm extends React.Component <ComponentProps> {
-  state: StateProps = {
+export class EmailConfirm extends React.Component {
+  state = {
     response: null
   }
 
