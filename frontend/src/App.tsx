@@ -24,7 +24,7 @@ try {
   if (user.disabled) {
     currentPage = 'emailVerification'
   }
-  if (user.phone) 
+  if (user.phone)
     currentPage='dashboard'
   else
     currentPage='userDetails'
