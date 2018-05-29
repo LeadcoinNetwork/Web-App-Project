@@ -6,16 +6,16 @@ import Checkbox from '../leadcoin_ui/Checkbox';
 const fields = require('./fields.json');
 const records = require('./records.json');
 
-const dinamicColsCount = (fields:any) => (
-  fields.filter((f:any) => (
+const dinamicColsCount = fields => (
+  fields.filter(f => (
     f.maxWidth === 'auto')
   ).length
 );
 
-const widthOfStaticCols = (fields:any) => {
+const widthOfStaticCols = fields => {
   let width = 0;
 
-  fields.forEach((f:any) => {
+  fields.forEach(f => {
     if (f.maxWidth !== 'auto') {
       width += Number(f.maxWidth.substr(0, f.maxWidth.length - 2));
     }
@@ -24,23 +24,8 @@ const widthOfStaticCols = (fields:any) => {
   return width;
 };
 
-export interface IField {
-  name:string;
-  key:string;
-  sortable:boolean;
-  editable:boolean;
-  maxWidth?:string;
-  minWidth?:string;
-}
-
-export interface ITable {
-  selectable?:boolean;
-  fields?:IField[];
-  records?:any[];
-}
-
-class Table extends React.Component <ITable> {
-  constructor(props:ITable) {
+class Table extends React.Component {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -61,16 +46,16 @@ class Table extends React.Component <ITable> {
   }
 }
 
-const THead = (props:any) => (
+const THead = props => (
   <div className='t-head'>
     <THRow {...props} />
   </div>
 );
 
-const THRow = (props:any) => (
+const THRow = props => (
   <div className='th-row'>
     {
-      props.fields.map((f:any) => (
+      props.fields.map(f => (
         <THRCol key={f.name} colCount={props.colCount} staticColsWidth={props.staticColsWidth} field={f} />
       ))
     }
@@ -81,7 +66,7 @@ const THRCol = ({
   field,
   colCount,
   staticColsWidth,
-}:any) => (
+}) => (
   <div key={field.name} className='thr-col' style={{
     width: `calc((100% - ${staticColsWidth}px) / ${colCount})`,
     maxWidth: field.maxWidth,
@@ -91,23 +76,23 @@ const THRCol = ({
   </div>
 );
 
-const TBody = (props:any) => (
+const TBody = props => (
   <div className='t-body'>
     {
-      props.records.map((r:any) => (
+      props.records.map(r => (
         <TBRow key={r.id} {...r} {...props} />
       ))
     }
   </div>
 );
 
-const TBRow = (props:any) => (
+const TBRow = props => (
   <div className='tb-row'>
     <div className='tbr-checkbox'>
       <Checkbox checked={false} onClick={() => console.log(props.id)} />
     </div>
     {
-      props.fields.map((f:any) => (
+      props.fields.map(f => (
         <TRCol key={f.key} colCount={props.colCount} staticColsWidth={props.staticColsWidth} field={f} value={props[f.key]} />
       ))
     }
@@ -119,7 +104,7 @@ const TRCol = ({
   value,
   colCount,
   staticColsWidth,
-}:any) => (
+}) => (
   <div className='tbr-col' style={{
     width: `calc((100% - ${staticColsWidth}px) / ${colCount})`,
     maxWidth: field.maxWidth,
