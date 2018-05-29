@@ -1,4 +1,4 @@
-import './style.scss';
+import './CSVUpload.scss';
 
 import CSVUpload from './CSVUpload';
 

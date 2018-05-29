@@ -1,11 +1,11 @@
 import React from 'react';
-import Button from '../leadcoin_ui/Button'
-import TextField from '../leadcoin_ui/TextField'
 import axios from 'axios'
-import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import SelectField from 'material-ui/SelectField';
+import Button from 'Components/Button';
+import TextField from 'Components/TextField';
 
-class CsvUpload extends React.Component {
+class CSVUpload extends React.Component {
   state = {
     response: null,
     currentStep: 'upload',

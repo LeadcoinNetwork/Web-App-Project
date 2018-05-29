@@ -1,8 +1,8 @@
 import React from 'react';
-import Button from '../leadcoin_ui/Button'
-import TextField from '../leadcoin_ui/TextField'
-import axios from 'axios'
-import SSOContainer from '../SSO/SSOContainer'
+import axios from 'axios';
+import Button from 'Components/Button';
+import TextField from 'Components/TextField';
+import SSOContainer from 'Components/SSOContainer';
 
 class SignupForm extends React.Component {
   state = {

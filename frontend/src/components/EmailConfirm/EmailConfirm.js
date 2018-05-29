@@ -1,6 +1,6 @@
-import React from 'react'
-import Button from '../leadcoin_ui/Button'
-import axios from 'axios'
+import React from 'react';
+import axios from 'axios';
+import Button from 'Components/Button';
 
 class EmailConfirm extends React.Component {
   state = {

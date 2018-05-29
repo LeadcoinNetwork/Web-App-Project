@@ -1,9 +1,9 @@
-import React from 'react';
-import Button from '../leadcoin_ui/Button'
-import TextField from '../leadcoin_ui/TextField'
-import axios from 'axios'
-import Checkbox from '../leadcoin_ui/Checkbox'
-import SSOContainer from '../SSO/SSOContainer'
+import React from 'react';;
+import axios from 'axios';
+import Button from 'Components/Button';
+import TextField from 'Components/TextField';
+import Checkbox from 'Components/Checkbox';
+import SSOContainer from 'Components/SSOContainer';
 
 class LoginForm extends React.Component {
   state = {

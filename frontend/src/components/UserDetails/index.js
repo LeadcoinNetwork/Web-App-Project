@@ -1,4 +1,4 @@
-import './style.scss';
+import './UserDetails.scss';
 
 import UserDetails from './UserDetails';
 

@@ -1,4 +1,4 @@
-import './style.scss';
+import './GoogleLogin.scss';
 
 import GoogleLogin from './GoogleLogin';
 

@@ -1,7 +1,7 @@
-import React from 'react'
-import Button from '../leadcoin_ui/Button'
-import TextField from '../leadcoin_ui/TextField'
-import axios from 'axios'
+import React from 'react';
+import axios from 'axios';
+import Button from 'Components/Button';
+import TextField from 'Components/TextField';
 
 class UserDetails extends React.Component {
   state = {

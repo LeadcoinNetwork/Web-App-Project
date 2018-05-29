@@ -1,4 +1,4 @@
-import './style.scss';
+import './TextField.scss';
 
 import TextField from './TextField';
 

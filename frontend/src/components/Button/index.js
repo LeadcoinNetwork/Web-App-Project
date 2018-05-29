@@ -1,4 +1,4 @@
-import './style.scss';
+import './Button.scss';
 
 import Button from './Button';
 

@@ -1,4 +1,4 @@
-import './style.scss';
+import './SignupForm.scss';
 
 import SignupForm from './SignupForm';
 

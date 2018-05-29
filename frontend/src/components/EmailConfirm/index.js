@@ -1,4 +1,4 @@
-import './style.scss';
+import './EmailConfirm.scss';
 
 import EmailConfirm from './EmailConfirm';
 

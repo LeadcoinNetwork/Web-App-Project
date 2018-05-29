@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '../leadcoin_ui/Button';
+import Button from 'Components/Button';
 
 class GoogleLogin extends React.Component {
   loginGoogle() {

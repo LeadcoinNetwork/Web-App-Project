@@ -1,4 +1,4 @@
-import './style.scss';
+import './LinkedinLogin.scss';
 
 import LinkedinLogin from './LinkedinLogin';
 

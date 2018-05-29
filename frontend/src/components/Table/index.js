@@ -1,4 +1,4 @@
-import './style.scss';
+import './Table.scss';
 
 import Table from './Table';
 

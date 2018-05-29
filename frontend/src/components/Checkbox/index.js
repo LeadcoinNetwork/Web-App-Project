@@ -1,4 +1,4 @@
-import './style.scss';
+import './Checkbox.scss';
 
 import Checkbox from './Checkbox';
 

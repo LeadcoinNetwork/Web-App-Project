@@ -1,16 +1,17 @@
-import React from 'react'
-import { LoginForm } from './loginForm/LoginForm'
-import { SignupForm } from './signupForm/signupForm'
-import { UserDetails } from './userDetails/userDetails'
-import { EmailConfirm } from './emailConfirm/emailconfirm'
-import { CsvUpload } from './csvUpload/csvUpload'
-import Button from './leadcoin_ui/Button'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-const Cookies = require('js-cookie')
+import React from 'react';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import LoginForm from 'Components/LoginForm';
+import SignupForm from 'Components/signupForm';
+import UserDetails from 'Components/userDetails';
+import EmailConfirm from 'Components/emailconfirm';
+import CsvUpload from 'Components/csvUpload';
+import Button from 'Components/Button';
 
-let currentPage = 'login'
-let token = Cookies.get('token') || ''
-let user = Cookies.get('user') || {}
+const cookies = require('js-cookie');
+
+let currentPage = 'login';
+let token = cookies.get('token') || '';
+let user = cookies.get('user') || {};
 
 try {
   user = JSON.parse(user)
