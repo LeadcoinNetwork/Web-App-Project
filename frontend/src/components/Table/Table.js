@@ -2,35 +2,14 @@ import React from 'react'
 import Checkbox from 'Components/Checkbox';
 import Button from 'Components/Button';
 
-const fields = require('./fields.json');
-const records = require('./records.json');
-
-const dinamicColsCount = fields => (
-  fields.filter(f => (
-    f.maxWidth === 'auto')
-  ).length
-);
-
-const widthOfStaticCols = fields => {
-  let width = 0;
-
-  fields.forEach(f => {
-    if (f.maxWidth !== 'auto') {
-      width += Number(f.maxWidth.substr(0, f.maxWidth.length - 2));
-    }
-  })
-
-  return width;
-};
-
 class Table extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       selectable: true,
-      fields: fields,
-      records: records,
+      fields: props.fields,
+      records: props.records,
       selectedRecords: new Set(),
     };
   }
@@ -41,26 +20,50 @@ class Table extends React.Component {
 
     this.setState({ selectedRecords });
   }
+  getDinamicColsCount(fields) {
+    return fields.filter(f => (
+      f.maxWidth === 'auto'
+    )).length;
+  }
+  getWidthOfStaticCols(fields) {
+    let width = 0;
+
+    fields.forEach(f => {
+      if (f.maxWidth !== 'auto') {
+        width += Number(f.maxWidth.substr(0, f.maxWidth.length - 2));
+      }
+    })
+
+    return width;
+  }
   render() {
+    let { 
+      fields,
+      records,
+      selectedRecords,
+    } = this.state;
+    let dinamicColsCount = this.getDinamicColsCount(fields);
+    let widthOfStaticCols = this.getWidthOfStaticCols(fields);
+
     return (
       <section className='ldc-table' >
         {
           this.props.multipleSelectionButton ? (
             <Button label={this.props.multipleSelectionButton}
-                    onClick={() => this.props.multipleSelectionAction(Array.from(this.state.selectedRecords))}
+                    onClick={() => this.props.multipleSelectionAction(Array.from(selectedRecords))}
                     />
           ) : null
         }
         <THead fields={fields}
-               colCount={dinamicColsCount(fields)}
-               staticColsWidth={widthOfStaticCols(fields)}
+               colCount={dinamicColsCount}
+               staticColsWidth={widthOfStaticCols}
                />
         <TBody fields={fields}
                records={records}
-               colCount={dinamicColsCount(fields)}
-               staticColsWidth={widthOfStaticCols(fields)}
+               colCount={dinamicColsCount}
+               staticColsWidth={widthOfStaticCols}
                toggleRecord={this.toggleRecord}
-               selectedRecords={this.state.selectedRecords}
+               selectedRecords={selectedRecords}
                />
         <div className='t-footer'></div>
       </section>
