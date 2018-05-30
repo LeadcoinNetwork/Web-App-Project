@@ -11,7 +11,7 @@ class TableData extends React.Component {
 
     this.state = {
       fields: fields,
-      records: records
+      records: records,
     }
   }
   buyLeads = leads => {

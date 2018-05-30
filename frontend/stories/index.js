@@ -1,8 +1,12 @@
-import React from "react";
-import { storiesOf } from "@storybook/react";
+import '../src/styles/global.scss';
+import React from 'react';
+import { storiesOf } from '@storybook/react';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Button from '../src/components/Button';
+import Table from '../src/components/Table';
 
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import Button from "../src/components/Button";
+const fields = require('../src/containers/TableData/fields.json');
+const leads = require('../src/containers/TableData/records.json');
 
 function createStoryInDesignDecoration(nameOfStory) {
   return storiesOf(nameOfStory, module).addDecorator(getStories => (
@@ -10,10 +14,23 @@ function createStoryInDesignDecoration(nameOfStory) {
   ));
 }
 
-createStoryInDesignDecoration("a/a")
-  .add("with text/a", () => <Button label="Hello1" />)
-  .add("with text/b", () => <Button label="Hello2" />);
+createStoryInDesignDecoration('Button').add(
+  'with label',
+  () => <Button label='Hello' />
+).add(
+  'with click', 
+  () => <Button label='Click me' onClick={() => alert('Clicked!')} />
+);
 
-createStoryInDesignDecoration("a/b")
-  .add("with text/a", () => <Button label="Hello1" />)
-  .add("with text/b", () => <Button label="Hello2" />);
+createStoryInDesignDecoration('Table').add(
+  'with leads',
+  () => (
+    <Table fields={fields}
+           records={leads}
+           multipleSelectionButton='Buy Selected Leads'
+           multipleSelectionAction={console.log}
+           recordMainButton='Buy'
+           recordMainAction={console.log}
+           />
+  )
+);
