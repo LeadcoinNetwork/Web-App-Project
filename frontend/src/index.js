@@ -1,10 +1,9 @@
-import 'Styles/global.scss';
+import "Styles/global.scss";
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from 'Containers/App';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "Containers/App";
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
+console.log(process.env.a);
+
+ReactDOM.render(<App />, document.getElementById("root"));
