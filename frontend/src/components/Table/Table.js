@@ -1,6 +1,7 @@
 import React from 'react'
-import Checkbox from 'Components/Checkbox';
 import Button from 'Components/Button';
+import THead from './THead';
+import TBody from './TBody';
 
 class Table extends React.Component {
   constructor(props) {
@@ -42,15 +43,16 @@ class Table extends React.Component {
       records,
       selectedRecords,
     } = this.state;
+    let props = this.props;
     let dinamicColsCount = this.getDinamicColsCount(fields);
     let widthOfStaticCols = this.getWidthOfStaticCols(fields);
 
     return (
       <section className='ldc-table' >
         {
-          this.props.multipleSelectionButton ? (
-            <Button label={this.props.multipleSelectionButton}
-                    onClick={() => this.props.multipleSelectionAction(Array.from(selectedRecords))}
+          props.multipleSelectionButton ? (
+            <Button label={props.multipleSelectionButton}
+                    onClick={() => props.multipleSelectionAction(Array.from(selectedRecords))}
                     />
           ) : null
         }
@@ -64,6 +66,7 @@ class Table extends React.Component {
                staticColsWidth={widthOfStaticCols}
                toggleRecord={this.toggleRecord}
                selectedRecords={selectedRecords}
+               recordMainAction={props.recordMainAction}
                />
         <div className='t-footer'></div>
       </section>
@@ -71,79 +74,5 @@ class Table extends React.Component {
     );
   }
 }
-
-const THead = props => (
-  <div className='t-head'>
-    <THRow {...props} />
-  </div>
-);
-
-const THRow = props => (
-  <div className='th-row'>
-    {
-      props.fields.map(f => (
-        <THRCol key={f.name}
-                colCount={props.colCount}
-                staticColsWidth={props.staticColsWidth}
-                field={f}
-                />
-      ))
-    }
-  </div>
-)
-
-const THRCol = ({
-  field,
-  colCount,
-  staticColsWidth,
-}) => (
-    <div key={field.name}
-         className='thr-col'
-         style={{
-           width: `calc((100% - ${staticColsWidth}px) / ${colCount})`,
-           maxWidth: field.maxWidth,
-           minWidth: field.minWidth,
-           }}>
-      {field.name}
-    </div>
-  );
-
-const TBody = props => (
-  <div className='t-body'>
-    {
-      props.records.map(r => (
-        <TBRow key={r.id} {...r} {...props} />
-      ))
-    }
-  </div>
-);
-
-const TBRow = props => (
-  <div className='tb-row'>
-    <div className='tbr-checkbox'>
-      <Checkbox checked={props.selectedRecords.has(props.id)} onClick={() => props.toggleRecord(props.id)} />
-    </div>
-    {
-      props.fields.map(f => (
-        <TRCol key={f.key} colCount={props.colCount} staticColsWidth={props.staticColsWidth} field={f} value={props[f.key]} />
-      ))
-    }
-  </div>
-);
-
-const TRCol = ({
-  field,
-  value,
-  colCount,
-  staticColsWidth,
-}) => (
-    <div className='tbr-col' style={{
-      width: `calc((100% - ${staticColsWidth}px) / ${colCount})`,
-      maxWidth: field.maxWidth,
-      minWidth: field.minWidth,
-    }}>
-      {value}
-    </div>
-  )
 
 export default Table;
