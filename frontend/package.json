@@ -5,7 +5,8 @@
   "scripts": {
     "start": "webpack-dev-server --progress --config webpack.dev.js",
     "build": "./node_modules/.bin/webpack --progress --config webpack.prod.js",
-    "storybook": "start-storybook -p 9001 -c .storybook"
+    "storybook": "start-storybook -p 9001 -c .storybook",
+    "precommit": "pretty-quick --staged"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -31,8 +32,11 @@
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.2.0",
     "html-webpack-template": "^6.2.0",
+    "husky": "^0.14.3",
     "node-sass": "^4.9.0",
     "postcss-loader": "^2.1.5",
+    "prettier": "^1.13.2",
+    "pretty-quick": "^1.6.0",
     "sass-loader": "^7.0.1",
     "style-loader": "^0.21.0",
     "webpack": "^4.9.1",
