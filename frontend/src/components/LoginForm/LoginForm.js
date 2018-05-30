@@ -1,68 +1,70 @@
-import React from 'react';;
-import axios from 'axios';
-import Button from 'Components/Button';
-import TextField from 'Components/TextField';
-import Checkbox from 'Components/Checkbox';
-import SSOContainer from 'Components/SSOContainer';
+import React from "react";
+import axios from "axios";
+import Button from "Components/Button";
+import TextField from "Components/TextField";
+import Checkbox from "Components/Checkbox";
+import SSOContainer from "Components/SSOContainer";
 
 class LoginForm extends React.Component {
   state = {
-    email: '',
-    password: '',
+    email: "",
+    password: "",
     remember: true,
     needEmailVerification: false
-  }
+  };
 
   pwordChange = event => {
     this.setState({
       password: event.target.value
-    })
-  }
+    });
+  };
 
   emailChange = event => {
     this.setState({
       email: event.target.value
-    })
-  }
+    });
+  };
 
   navigate() {
-    this.props.navigate('signup')
+    this.props.navigate("signup");
   }
 
   updateCheck = value => {
-    this.setState({ remember: value })
-  }
+    this.setState({ remember: value });
+  };
 
   login() {
-    const { password, email } = this.state
-    axios.post('http://127.0.0.1.xip.io:3000/api/v1/auth/login', {
-      email, password
-    })
-      .then((response) => {
-        const { user, token } = response.data
-        const { phone, country, company } = user
-        this.props.setUser(user)
-        this.props.saveToken(token)
+    const { password, email } = this.state;
+    axios
+      .post(`${process.env.BACKEND}/api/v1/auth/login`, {
+        email,
+        password
+      })
+      .then(response => {
+        const { user, token } = response.data;
+        const { phone, country, company } = user;
+        this.props.setUser(user);
+        this.props.saveToken(token);
         if (user.disabled) {
-          this.props.navigate('emailVerification')
+          this.props.navigate("emailVerification");
         } else if (phone && country && company) {
-          this.props.navigate('dashboard')
+          this.props.navigate("dashboard");
         } else {
-          this.props.navigate('userDetails')
+          this.props.navigate("userDetails");
         }
       })
-      .catch((e) => {
+      .catch(e => {
         if (e.response) {
           // error originated from server
           if (e.response.data.error) {
-            const { error } = e.response.data
+            const { error } = e.response.data;
             switch (error) {
               case "Unauthorized":
-                this.setState({ error })
-                break
+                this.setState({ error });
+                break;
               case "EMAIL_NOT_VERIFIED":
-                this.props.navigate('emailVerification')
-                break
+                this.props.navigate("emailVerification");
+                break;
             }
           }
         } else if (e.request) {
@@ -80,12 +82,14 @@ class LoginForm extends React.Component {
           <div className="login_header"> Login.</div>
           <SSOContainer />
           <div className="localLogin">
-            <form className="localLoginForm"
-              onSubmit={(e) => {
-                this.login()
-                e.preventDefault()
-                e.stopPropagation()
-              }} >
+            <form
+              className="localLoginForm"
+              onSubmit={e => {
+                this.login();
+                e.preventDefault();
+                e.stopPropagation();
+              }}
+            >
               <div> Or enter your details. </div>
               <div>
                 <TextField
@@ -116,9 +120,7 @@ class LoginForm extends React.Component {
                 <div className=""> Forgot your password? </div>
               </div>
               <div className="alignRight">
-                <Button type="submit">
-                  Login
-                </Button>
+                <Button type="submit">Login</Button>
               </div>
             </form>
           </div>

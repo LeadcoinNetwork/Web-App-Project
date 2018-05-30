@@ -1,11 +1,13 @@
 const merge = require("webpack-merge");
 const common = require("./webpack.common.js");
 const OpenBrowserPlugin = require("open-browser-webpack-plugin");
+var dotenv = require("dotenv");
+dotenv.config();
 
 module.exports = merge(common, {
   devtool: "cheap-module-eval-source-map",
   mode: "development",
-  plugins: [new OpenBrowserPlugin({ url: "http://localhost:8080" })],
+  plugins: [new OpenBrowserPlugin({ url: process.env.FRONTEND })],
   devServer: {
     contentBase: "./dist",
     historyApiFallback: true,
@@ -13,6 +15,7 @@ module.exports = merge(common, {
       colors: true,
       env: true
     },
-    host: "0.0.0.0"
+    port: process.env.PORT,
+    host: "127.0.0.1"
   }
 });
