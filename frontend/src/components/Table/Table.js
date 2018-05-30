@@ -12,6 +12,8 @@ class Table extends React.Component {
       records: props.records,
       selectedRecords: new Set(),
     };
+    console.log(window.addEventListener('scroll', () => console.log(window.document.body.getBoundingClientRect())))
+
   }
   toggleRecord = (id) => {
     let selectedRecords = new Set(this.state.selectedRecords);
