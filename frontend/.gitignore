@@ -6,10 +6,7 @@
 
 # production
 dist
-<<<<<<< HEAD
 build
-=======
->>>>>>> 91913c79678497ed3aaecba1c4d9a696d9beedca
 
 # misc
 .DS_Store
