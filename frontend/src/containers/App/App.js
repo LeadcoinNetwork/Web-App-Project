@@ -6,6 +6,7 @@ import UserDetails from 'Components/userDetails';
 import EmailConfirm from 'Components/emailconfirm';
 import CsvUpload from 'Components/csvUpload';
 import Button from 'Components/Button';
+import TableData from 'Containers/TableData';
 
 const cookies = require('js-cookie');
 
@@ -114,6 +115,7 @@ class App extends React.Component {
               <div> Video </div>
             </div>
           </div>
+          <TableData />
         </div>
       </MuiThemeProvider>
     );

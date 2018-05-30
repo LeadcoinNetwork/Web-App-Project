@@ -2,7 +2,7 @@ const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
-  devtool: 'inline-sorce-map',
+  devtool: 'cheap-module-eval-source-map',
   mode: 'development',
   devServer: {
     contentBase: './dist',

@@ -1,5 +1,6 @@
 import React from 'react'
 import Checkbox from 'Components/Checkbox';
+import Button from 'Components/Button';
 
 const fields = require('./fields.json');
 const records = require('./records.json');
@@ -30,13 +31,37 @@ class Table extends React.Component {
       selectable: true,
       fields: fields,
       records: records,
+      selectedRecords: new Set(),
     };
+  }
+  toggleRecord = (id) => {
+    let selectedRecords = new Set(this.state.selectedRecords);
+
+    selectedRecords.delete(id) ? null : selectedRecords.add(id);
+
+    this.setState({ selectedRecords });
   }
   render() {
     return (
       <section className='ldc-table' >
-        <THead fields={fields} colCount={dinamicColsCount(fields)} staticColsWidth={widthOfStaticCols(fields)} />
-        <TBody fields={fields} records={records} colCount={dinamicColsCount(fields)} staticColsWidth={widthOfStaticCols(fields)} />
+        {
+          this.props.multipleSelectionButton ? (
+            <Button label={this.props.multipleSelectionButton}
+                    onClick={() => this.props.multipleSelectionAction(Array.from(this.state.selectedRecords))}
+                    />
+          ) : null
+        }
+        <THead fields={fields}
+               colCount={dinamicColsCount(fields)}
+               staticColsWidth={widthOfStaticCols(fields)}
+               />
+        <TBody fields={fields}
+               records={records}
+               colCount={dinamicColsCount(fields)}
+               staticColsWidth={widthOfStaticCols(fields)}
+               toggleRecord={this.toggleRecord}
+               selectedRecords={this.state.selectedRecords}
+               />
         <div className='t-footer'></div>
       </section>
 
@@ -54,7 +79,11 @@ const THRow = props => (
   <div className='th-row'>
     {
       props.fields.map(f => (
-        <THRCol key={f.name} colCount={props.colCount} staticColsWidth={props.staticColsWidth} field={f} />
+        <THRCol key={f.name}
+                colCount={props.colCount}
+                staticColsWidth={props.staticColsWidth}
+                field={f}
+                />
       ))
     }
   </div>
@@ -65,11 +94,13 @@ const THRCol = ({
   colCount,
   staticColsWidth,
 }) => (
-    <div key={field.name} className='thr-col' style={{
-      width: `calc((100% - ${staticColsWidth}px) / ${colCount})`,
-      maxWidth: field.maxWidth,
-      minWidth: field.minWidth,
-    }}>
+    <div key={field.name}
+         className='thr-col'
+         style={{
+           width: `calc((100% - ${staticColsWidth}px) / ${colCount})`,
+           maxWidth: field.maxWidth,
+           minWidth: field.minWidth,
+           }}>
       {field.name}
     </div>
   );
@@ -87,7 +118,7 @@ const TBody = props => (
 const TBRow = props => (
   <div className='tb-row'>
     <div className='tbr-checkbox'>
-      <Checkbox checked={false} onClick={() => console.log(props.id)} />
+      <Checkbox checked={props.selectedRecords.has(props.id)} onClick={() => props.toggleRecord(props.id)} />
     </div>
     {
       props.fields.map(f => (
