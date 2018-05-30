@@ -8,7 +8,6 @@ class Table extends React.Component {
     super(props);
 
     this.state = {
-      selectable: true,
       fields: props.fields,
       records: props.records,
       selectedRecords: new Set(),
@@ -52,6 +51,7 @@ class Table extends React.Component {
         {
           props.multipleSelectionButton ? (
             <Button label={props.multipleSelectionButton}
+                    disabled={!selectedRecords.size}
                     onClick={() => props.multipleSelectionAction(Array.from(selectedRecords))}
                     />
           ) : null

@@ -6,7 +6,8 @@ const Button = ({
   onClick,
   children,
   label,
-  containerElement
+  containerElement,
+  disabled,
 }) => (
     <MaterialButton
       children={children}
@@ -14,6 +15,7 @@ const Button = ({
       label={label}
       onClick={onClick}
       containerElement={containerElement}
+      disabled={disabled}
     />
   );
 
