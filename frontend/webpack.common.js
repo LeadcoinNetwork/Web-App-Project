@@ -4,13 +4,7 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 
-const extractTextPluginToBundle = new ExtractTextPlugin("bundle.css");
-
 module.exports = {
-  // We export it because we need it in .storybook file.
-  // Webpack ignore this property
-  __extractTextPluginToBundle: extractTextPluginToBundle,
-
   entry: {
     app: "./src/index.js"
   },
@@ -21,7 +15,7 @@ module.exports = {
   },
   plugins: [
     new Dotenv({ systemvars: true, safe: true }),
-    extractTextPluginToBundle,
+    new ExtractTextPlugin("bundle.css"),
     new CleanWebpackPlugin(["dist"]),
     new HtmlWebpackPlugin({
       inject: false,
