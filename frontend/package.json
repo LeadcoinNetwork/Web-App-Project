@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "webpack-dev-server --progress --config webpack.dev.js",
-    "build": "./node_modules/.bin/webpack --progress --config webpack.prod.js"
+    "build": "./node_modules/.bin/webpack --progress --config webpack.prod.js",
+    "storybook": "start-storybook -p 9001 -c .storybook"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -18,11 +19,14 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.49",
     "@babel/preset-env": "^7.0.0-beta.49",
     "@babel/preset-react": "^7.0.0-beta.49",
+    "@storybook/react": "^4.0.0-alpha.3",
+    "babel-core": "7.0.0-bridge.0",
     "babel-loader": "^8.0.0-beta.3",
     "babili-webpack-plugin": "^0.1.2",
     "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^0.28.11",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.2.0",
     "html-webpack-template": "^6.2.0",
     "node-sass": "^4.9.0",

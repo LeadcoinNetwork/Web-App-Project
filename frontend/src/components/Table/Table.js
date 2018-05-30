@@ -1,5 +1,5 @@
 import React from 'react'
-import Checkbox from '../leadcoin_ui/Checkbox';
+import Checkbox from 'Components/Checkbox';
 
 const fields = require('./fields.json');
 const records = require('./records.json');
