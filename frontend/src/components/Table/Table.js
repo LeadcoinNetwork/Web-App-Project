@@ -66,6 +66,7 @@ class Table extends React.Component {
                staticColsWidth={widthOfStaticCols}
                toggleRecord={this.toggleRecord}
                selectedRecords={selectedRecords}
+               recordMainButton={props.recordMainButton}
                recordMainAction={props.recordMainAction}
                />
         <div className='t-footer'></div>

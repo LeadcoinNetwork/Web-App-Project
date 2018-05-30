@@ -28,6 +28,7 @@ class TableData extends React.Component {
              records={state.records}
              multipleSelectionButton='Buy Selected Leads'
              multipleSelectionAction={this.buyLeads}
+             recordMainButton='Buy'
              recordMainAction={this.buyLead}
              />
     )
