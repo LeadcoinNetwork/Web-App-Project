@@ -32,7 +32,6 @@ const withInfiniteScroll = onScrollBottom => WrappedComponent => {
       }
     };
     render() {
-      console.log("render", this.loading);
       const { onScrollBottom, ...passThroughProps } = this.props;
 
       return (

@@ -28,6 +28,7 @@ createStoryInDesignDecoration("Table").add("with leads", () => (
     multipleSelectionAction={console.log}
     recordMainButton="Buy"
     recordMainAction={console.log}
+    onScrollBottom={cb => cb()}
   />
 ));
 
