@@ -3,7 +3,6 @@ const url = require("url");
 var utils = require("./utils");
 
 dotenv.config();
-
 utils.throwOnMissingEnvironmentVariables();
 
 module.exports = {
