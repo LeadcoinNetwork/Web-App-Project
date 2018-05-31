@@ -25,7 +25,7 @@ class CSVUpload extends React.Component {
     const formData = new FormData();
     formData.append("file", file);
     axios
-      .post(`${process.env.BACKEND}/api/v1/csv/upload`, formData, {
+      .post(`${process.env.BACKEND}/csv/upload`, formData, {
         headers: {
           "content-type": "multipart/form-data"
         }
@@ -98,7 +98,7 @@ class CSVUpload extends React.Component {
     axios.defaults.headers.common["Authorization"] =
       "Bearer " + this.props.token;
     axios
-      .post(`${process.env.BACKEND}/api/v1/csv/mapper/` + batch_id, {
+      .post(`${process.env.BACKEND}/csv/mapper/` + batch_id, {
         field_map,
         lead_price
       })

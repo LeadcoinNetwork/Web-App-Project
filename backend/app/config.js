@@ -1,21 +1,15 @@
-// load configuration from `.env` file
-require("dotenv").config();
+var dotenv = require("dotenv");
 const url = require("url");
+var utils = require("./utils");
 
-//const host = process.env.HOST;
-const host = process.env.HOST
-const baseURI = "/api/v1";
-const googleRedirectUrl = host + baseURI + "/auth/google/callback";
-const facebookRedirectUrl = host + baseURI + "/auth/facebook/callback";
-const linkedInRedirectUrl = host + baseURI + "/auth/linkedin/callback";
+dotenv.config();
 
-console.log("Google Redirect URL:  ", googleRedirectUrl);
-console.log("Linkedin Redirect URL:", linkedInRedirectUrl);
+utils.throwOnMissingEnvironmentVariables();
 
 module.exports = {
   env: process.env.NODE_ENV,
-  baseURI: baseURI,
-  host: host,
+  backend: process.env.BACKEND,
+  frontend: process.env.FRONTEND,
   app: {
     port: 3000
   },
@@ -27,18 +21,19 @@ module.exports = {
     google: {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: googleRedirectUrl
+      callbackURL: process.env.BACKEND + "/auth/google/callback"
     },
     linkedin: {
       clientID: process.env.LINKEDIN_CLIENT_ID,
       clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
-      callbackURL: linkedInRedirectUrl
-    },
-    facebook: {
-      clientID: process.env.FACEBOOK_CLIENT_ID,
-      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-      callbackURL: facebookRedirectUrl
+      callbackURL: process.env.BACKEND + "/auth/linkedin/callback"
     }
+    // We removed facebook support for now. We me use it in the near future.
+    // facebook: {
+    //   clientID: process.env.FACEBOOK_CLIENT_ID,
+    //   clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+    //   callbackURL: process.env.BACKEND + "/auth/facebook/callback";
+    // }
   },
   mail: {
     host: process.env.MAIL_HOST,

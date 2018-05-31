@@ -6,11 +6,11 @@ const expect = require("chai").expect;
 const { testUser } = require("../util");
 
 const request = require("request-promise-native").defaults({
-  baseUrl: "http://localhost:" + config.app.port + config.baseURI,
+  baseUrl: config.backend,
   resolveWithFullResponse: true
 });
 
-describe(`Update ${config.baseURI}/user`, () => {
+describe(`Update ${config.backend}/user`, () => {
   it("Should update the user", async () => {
     // first, add a user
     var user = await User.register(testUser);

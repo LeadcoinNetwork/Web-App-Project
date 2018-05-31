@@ -1,25 +1,27 @@
-import React from 'react';
-import axios from 'axios';
-import Button from 'Components/Button';
+import React from "react";
+import axios from "axios";
+import Button from "Components/Button";
 
 class EmailConfirm extends React.Component {
   state = {
     response: null
-  }
+  };
 
   resendEmail = () => {
-    axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.props.token
-    axios.get('http://localhost:3000/api/v1/auth/resend-email')
-      .then((response) => {
-        console.log(response)
-        this.setState({ response: "Email Sent!" })
+    axios.defaults.headers.common["Authorization"] =
+      "Bearer " + this.props.token;
+    axios
+      .get(`${process.env.BACKEND}/auth/resend-email`)
+      .then(response => {
+        console.log(response);
+        this.setState({ response: "Email Sent!" });
       })
-      .catch((error) => {
+      .catch(error => {
         if (error.response) {
           // error originated from server
           if (error.response.data.error) {
-            let errors = error.response.data.error.split("; ")
-            this.setState({ errors: errors })
+            let errors = error.response.data.error.split("; ");
+            this.setState({ errors: errors });
           }
         } else if (error.request) {
           // request made, no response though
@@ -27,7 +29,7 @@ class EmailConfirm extends React.Component {
           // error was thrown during request setup
         }
       });
-  }
+  };
 
   render() {
     return (
@@ -35,11 +37,12 @@ class EmailConfirm extends React.Component {
         <div> We sent you an email.</div>
         <div> Please click on the link </div>
         <div className="resend_button">
-          <div> <Button onClick={this.resendEmail}> Resend </Button> </div>
+          <div>
+            {" "}
+            <Button onClick={this.resendEmail}> Resend </Button>{" "}
+          </div>
         </div>
-        <div className="response">
-          {this.state.response}
-        </div>
+        <div className="response">{this.state.response}</div>
       </div>
     );
   }

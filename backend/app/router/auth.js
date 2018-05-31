@@ -1,83 +1,88 @@
-const express = require("express")
-const passport = require("passport")
-const User = require("../controller/user")
-const auth = require("../lib/auth")
+const express = require("express");
+const passport = require("passport");
+const User = require("../controller/user");
+const auth = require("../lib/auth");
 const mail = require("../lib/mail");
+const config = require("../config");
 
-const router = express.Router()
-module.exports = router
+const router = express.Router();
+module.exports = router;
 
 const authOptions = {
   session: false
-}
+};
 
-router.post("/auth/login", passport.authenticate("local", authOptions), login)
-router.get("/auth/confirm-email", confirmEmail, login)
-router.get("/auth/resend-email",passport.authenticate("jwt", authOptions), resendEmail)
-router.get("/auth/confirm-email-update", confirmEmailUpdate)
-router.post("/auth/forgot-password", forgotPassword)
-router.post("/auth/reset-password", resetPassword, login)
+router.post("/auth/login", passport.authenticate("local", authOptions), login);
+router.get("/auth/confirm-email", confirmEmail, login);
+router.get(
+  "/auth/resend-email",
+  passport.authenticate("jwt", authOptions),
+  resendEmail
+);
+router.get("/auth/confirm-email-update", confirmEmailUpdate);
+router.post("/auth/forgot-password", forgotPassword);
+router.post("/auth/reset-password", resetPassword, login);
 
 router.get(
   ["/auth/google", "/auth/google/callback"],
   passport.authenticate("google", authOptions),
   login
-)
+);
 
 router.get(
   ["/auth/linkedin", "/auth/linkedin/callback"],
   passport.authenticate("linkedin", authOptions),
   login
-)
+);
 
 router.get(
   ["/auth/facebook", "/auth/facebook/callback"],
   passport.authenticate("facebook", authOptions),
   login
-)
+);
 
 async function resendEmail(req, res, next) {
   try {
-    let user = req.user
-    let token = await User.login(user.id)
-    await mail.confirmEmail(user, token)
-    res.json({ user, token })
+    let user = req.user;
+    let token = await User.login(user.id);
+    await mail.confirmEmail(user, token);
+    res.json({ user, token });
   } catch (e) {
-    next(e)
+    next(e);
   }
 }
 
 async function login(req, res, next) {
   try {
-    let user = req.user
-    let token = await User.login(user.id)
-    res.cookie('token', token)
-    res.cookie('user', JSON.stringify(user))
+    let user = req.user;
+    let token = await User.login(user.id);
+    res.cookie("token", token);
+    res.cookie("user", JSON.stringify(user));
     if (user.provider) {
-      res.redirect('http://127.0.0.1.xip.io:3001')
+      res.redirect(config.frontend);
     } else {
-      res.json({ user, token })
+      res.json({ user, token });
     }
   } catch (e) {
-    next(e)
+    next(e);
   }
 }
 
 async function confirmEmail(req, res, next) {
   try {
-    let { token } = req.query
-    let user = await User.confirmEmail(token)
+    let { token } = req.query;
+    let user = await User.confirmEmail(token);
     if (user) {
-      req.user = user
-      next()
+      req.user = user;
+      next();
     } else {
       res.status(404).json({
-        path: 'confirmMail',
+        path: "confirmMail",
         error: "Not Found"
-      })
+      });
     }
   } catch (e) {
-    next(e)
+    next(e);
   }
 }
 
@@ -110,7 +115,7 @@ async function resetPassword(req, res, next) {
       next();
     } else {
       res.status(404).json({
-        path: 'resetPass',
+        path: "resetPass",
         error: "Not Found"
       });
     }

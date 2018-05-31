@@ -3,7 +3,7 @@ import Button from "Components/Button";
 
 class LinkedinLogin extends React.Component {
   loginLI = () => {
-    window.open(`${process.env.BACKEND}/api/v1/auth/linkedin`, "_top");
+    window.open(`${process.env.BACKEND}/auth/linkedin`, "_top");
   };
 
   render() {

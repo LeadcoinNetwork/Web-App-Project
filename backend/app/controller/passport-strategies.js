@@ -7,7 +7,7 @@ const config = require("../config");
 const auth = require("../lib/auth");
 const User = require("./user");
 const validate = require("../lib/validate");
-const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy
+const LinkedInStrategy = require("passport-linkedin-oauth2").Strategy;
 
 const localStrategy = new LocalStrategy(
   {
@@ -43,147 +43,44 @@ const jwtStrategy = new JWTStrategy(
   }
 );
 
-const linkedInStrategy = new LinkedInStrategy({
-  clientID: config.auth.linkedin.clientID,
-  clientSecret: config.auth.linkedin.clientSecret,
-  callbackURL: config.auth.linkedin.callbackURL,
-  scope: ['r_emailaddress', 'r_basicprofile']
-}, async function(accessToken, refreshToken, profile, done) {
-    try {
-      // try to find user by provider
-      let [user] = await User.find({
-        provider_id: profile.id,
-        provider: profile.provider
-      })
-      if (!user) {
-        // try to find user by email
-        [user] = await User.find({ email: profile.emails[0].value });
-        if (user) {
-          // user email exists, transfer user to SSO
-          let update = {
-            provider_id: profile.id,
-            provider: profile.provider
-          }
-          user = await User.updateExternal(user.id, update);
-        } else {
-          // user is new, create user
-          user = {
-            fname: profile.name.givenName,
-            lname: profile.name.familyName,
-            email: profile.emails[0].value,
-            provider_id: profile.id,
-            provider: profile.provider,
-            created: Date.now(),
-            role: "user"
-          };
-          await User.insert(user);
-          [user] = await User.find({ email: user.email });
-        }
-      } else {
-        let update = difference( {
-          fname: user.fname,
-          lname: user.lname,
-          email: user.email
-        },{
-          fname: profile.name.givenName,
-          lname: profile.name.familyName,
-          email: profile.emails[0].value
-        });
-        if (Object.keys(update).length) {
-          user = await User.updateExternal(user.id, update);
-        }
-      }
-      done(null, user);
-    } catch (e) {
-      done(e);
-    }
-  }
-)
-const googleStrategy = new GoogleStrategy(
+const linkedInStrategy = new LinkedInStrategy(
   {
-    clientID: config.auth.google.clientID,
-    clientSecret: config.auth.google.clientSecret,
-    callbackURL: config.auth.google.callbackURL,
-    scope: ["profile", "email"]
+    clientID: config.auth.linkedin.clientID,
+    clientSecret: config.auth.linkedin.clientSecret,
+    callbackURL: config.auth.linkedin.callbackURL,
+    scope: ["r_emailaddress", "r_basicprofile"]
   },
   async function(accessToken, refreshToken, profile, done) {
     try {
       // try to find user by provider
-      let [user] = await User.find({
-        provider_id: profile.id,
-        provider: profile.provider
-      })
-      if (!user) {
-        // try to find user by email
-        [user] = await User.find({ email: profile.emails[0].value });
-        if (user) {
-          // user email exists, transfer user to SSO
-          let update = {
-            provider_id: profile.id,
-            provider: profile.provider
-          }
-          user = await User.updateExternal(user.id, update);
-        } else {
-          // user is new, create user
-          user = {
-            fname: profile.name.givenName,
-            lname: profile.name.familyName,
-            email: profile.emails[0].value,
-            provider_id: profile.id,
-            provider: profile.provider,
-            created: Date.now(),
-            role: "user"
-          };
-          await User.insert(user);
-          [user] = await User.find({ email: user.email });
-        }
-      } else {
-        let update = difference( {
-          fname: user.fname,
-          lname: user.lname,
-          email: user.email
-        },{
-          fname: profile.name.givenName,
-          lname: profile.name.familyName,
-          email: profile.emails[0].value
-        });
-        if (Object.keys(update).length) {
-          user = await User.updateExternal(user.id, update);
-        }
-      }
-      done(null, user);
-    } catch (e) {
-      done(e);
-    }
-  }
-);
-
-const facebookStrategy = new FacebookStrategy(
-  {
-    clientID: config.auth.facebook.clientID,
-    clientSecret: config.auth.facebook.clientSecret,
-    callbackURL: config.auth.facebook.callbackURL,
-    scope: ["email"],
-    profileFields: ["id", "name", "email"]
-  },
-  async function(accessToken, refreshToken, profile, done) {
-    try {
       let [user] = await User.find({
         provider_id: profile.id,
         provider: profile.provider
       });
       if (!user) {
-        user = {
-          fname: profile.name.givenName,
-          lname: profile.name.familyName,
-          email: profile.emails[0].value,
-          provider_id: profile.id,
-          provider: profile.provider,
-          created: Date.now(),
-          role: "user"
-        };
-        await User.insert(user);
-        [user] = await User.find({ email: user.email });
+        // try to find user by email
+        [user] = await User.find({ email: profile.emails[0].value });
+        if (user) {
+          // user email exists, transfer user to SSO
+          let update = {
+            provider_id: profile.id,
+            provider: profile.provider
+          };
+          user = await User.updateExternal(user.id, update);
+        } else {
+          // user is new, create user
+          user = {
+            fname: profile.name.givenName,
+            lname: profile.name.familyName,
+            email: profile.emails[0].value,
+            provider_id: profile.id,
+            provider: profile.provider,
+            created: Date.now(),
+            role: "user"
+          };
+          await User.insert(user);
+          [user] = await User.find({ email: user.email });
+        }
       } else {
         let update = difference(
           {
@@ -198,7 +95,68 @@ const facebookStrategy = new FacebookStrategy(
           }
         );
         if (Object.keys(update).length) {
-          user = await User.updateExternal(update);
+          user = await User.updateExternal(user.id, update);
+        }
+      }
+      done(null, user);
+    } catch (e) {
+      done(e);
+    }
+  }
+);
+const googleStrategy = new GoogleStrategy(
+  {
+    clientID: config.auth.google.clientID,
+    clientSecret: config.auth.google.clientSecret,
+    callbackURL: config.auth.google.callbackURL,
+    scope: ["profile", "email"]
+  },
+  async function(accessToken, refreshToken, profile, done) {
+    try {
+      // try to find user by provider
+      let [user] = await User.find({
+        provider_id: profile.id,
+        provider: profile.provider
+      });
+      if (!user) {
+        // try to find user by email
+        [user] = await User.find({ email: profile.emails[0].value });
+        if (user) {
+          // user email exists, transfer user to SSO
+          let update = {
+            provider_id: profile.id,
+            provider: profile.provider
+          };
+          user = await User.updateExternal(user.id, update);
+        } else {
+          // user is new, create user
+          user = {
+            fname: profile.name.givenName,
+            lname: profile.name.familyName,
+            email: profile.emails[0].value,
+            provider_id: profile.id,
+            provider: profile.provider,
+            created: Date.now(),
+            role: "user"
+          };
+          await User.insert(user);
+          [user] = await User.find({ email: user.email });
+        }
+      } else {
+        let update = difference(
+          {
+            fname: user.fname,
+            lname: user.lname,
+            email: user.email
+          },
+          {
+            fname: profile.name.givenName,
+            lname: profile.name.familyName,
+            email: profile.emails[0].value
+          }
+        );
+        if (Object.keys(update).length) {
+          user = await User.updateExternal(user.id, update);
         }
       }
       done(null, user);
@@ -208,15 +166,66 @@ const facebookStrategy = new FacebookStrategy(
   }
 );
 
+// Removed but one day we may returned the FacebookStrategy
+// const facebookStrategy = new FacebookStrategy(
+//   {
+//     clientID: config.auth.facebook.clientID,
+//     clientSecret: config.auth.facebook.clientSecret,
+//     callbackURL: config.auth.facebook.callbackURL,
+//     scope: ["email"],
+//     profileFields: ["id", "name", "email"]
+//   },
+//   async function(accessToken, refreshToken, profile, done) {
+//     try {
+//       let [user] = await User.find({
+//         provider_id: profile.id,
+//         provider: profile.provider
+//       });
+//       if (!user) {
+//         user = {
+//           fname: profile.name.givenName,
+//           lname: profile.name.familyName,
+//           email: profile.emails[0].value,
+//           provider_id: profile.id,
+//           provider: profile.provider,
+//           created: Date.now(),
+//           role: "user"
+//         };
+//         await User.insert(user);
+//         [user] = await User.find({ email: user.email });
+//       } else {
+//         let update = difference(
+//           {
+//             fname: user.fname,
+//             lname: user.lname,
+//             email: user.email
+//           },
+//           {
+//             fname: profile.name.givenName,
+//             lname: profile.name.familyName,
+//             email: profile.emails[0].value
+//           }
+//         );
+//         if (Object.keys(update).length) {
+//           user = await User.updateExternal(update);
+//         }
+//       }
+//       done(null, user);
+//     } catch (e) {
+//       done(e);
+//     }
+//   }
+// );
+
 module.exports = {
   localStrategy,
   jwtStrategy,
   googleStrategy,
-  linkedInStrategy,
-  facebookStrategy
+  linkedInStrategy
+  // Removed while one day we may bring it back
+  // facebookStrategy
 };
 
-// taken from https://gist.github.com/Yimiprod/7ee176597fef230d1451#gistcomment-2565071
 const { transform, isEqual, isObject } = require("lodash");
 
 /**

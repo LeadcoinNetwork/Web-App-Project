@@ -3,7 +3,7 @@ import Button from "Components/Button";
 
 class GoogleLogin extends React.Component {
   loginGoogle() {
-    window.open(`${process.env.BACKEND}/api/v1/auth/google`, "_top");
+    window.open(`${process.env.BACKEND}/auth/google`, "_top");
   }
 
   render() {

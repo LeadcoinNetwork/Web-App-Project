@@ -36,7 +36,7 @@ class LoginForm extends React.Component {
   login() {
     const { password, email } = this.state;
     axios
-      .post(`${process.env.BACKEND}/api/v1/auth/login`, {
+      .post(`${process.env.BACKEND}/auth/login`, {
         email,
         password
       })

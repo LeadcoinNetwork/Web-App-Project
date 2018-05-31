@@ -2,7 +2,6 @@ const mailer = require("nodemailer-promise");
 const config = require("../config");
 
 const sendMail = mailer.config(config.mail);
-const baseUrl = config.host + config.baseURI;
 
 module.exports = {
   confirmEmail,
@@ -21,7 +20,7 @@ function confirmEmail(user, token) {
       "!</h2>" +
       "<p>Please click " +
       '<a href="' +
-      baseUrl +
+      config.backend +
       "/auth/confirm-email?token=" +
       token +
       '">' +
@@ -42,7 +41,7 @@ function confirmEmailUpdate(user, token) {
       "!</h2>" +
       "<p>Please confirm your new email address " +
       '<a href="' +
-      baseUrl +
+      config.backend +
       "/auth/confirm-email-update?token=" +
       token +
       '">' +
@@ -62,7 +61,7 @@ function forgotPassword(user, token) {
       "!</h2>" +
       "<p>Please click " +
       '<a href="' +
-      baseUrl +
+      config.backend +
       "/auth/reset-password?token=" +
       token +
       '">' +

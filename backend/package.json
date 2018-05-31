@@ -37,6 +37,8 @@
     "nodemon": "^1.17.3",
     "request": "^2.85.0",
     "request-promise-native": "^1.0.5",
+    "husky": "^0.14.3",
+    "pretty-quick": "^1.6.0",
     "sinon": "^4.4.9"
   },
   "scripts": {
@@ -44,7 +46,8 @@
     "develop": "nodemon app/server.js",
     "test": "npm run test:unit; npm run test:integration",
     "test:unit": "mocha test/unit/**",
-    "test:integration": "mocha test/integration/** --timeout 20000"
+    "test:integration": "mocha test/integration/** --timeout 20000",
+    "precommit": "pretty-quick --staged"
   },
   "bugs": {
     "url": "https://github.com/LeadcoinNetwork/leadcoin-web/issues"
