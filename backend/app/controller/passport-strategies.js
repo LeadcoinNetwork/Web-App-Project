@@ -8,6 +8,7 @@ const auth = require("../lib/auth");
 const User = require("./user");
 const validate = require("../lib/validate");
 const LinkedInStrategy = require("passport-linkedin-oauth2").Strategy;
+const utils = require("../utils");
 
 const localStrategy = new LocalStrategy(
   {
@@ -82,7 +83,7 @@ const linkedInStrategy = new LinkedInStrategy(
           [user] = await User.find({ email: user.email });
         }
       } else {
-        let update = difference(
+        let update = utils.difference(
           {
             fname: user.fname,
             lname: user.lname,
@@ -143,7 +144,7 @@ const googleStrategy = new GoogleStrategy(
           [user] = await User.find({ email: user.email });
         }
       } else {
-        let update = difference(
+        let update = utils.difference(
           {
             fname: user.fname,
             lname: user.lname,
@@ -194,7 +195,7 @@ const googleStrategy = new GoogleStrategy(
 //         await User.insert(user);
 //         [user] = await User.find({ email: user.email });
 //       } else {
-//         let update = difference(
+//         let update = utils.difference(
 //           {
 //             fname: user.fname,
 //             lname: user.lname,
@@ -225,22 +226,3 @@ module.exports = {
   // Removed while one day we may bring it back
   // facebookStrategy
 };
-
-const { transform, isEqual, isObject } = require("lodash");
-
-/**
- * Deep diff between two object, using lodash
- * @param  {Object} object Object compared
- * @param  {Object} base   Object to compare with
- * @return {Object}        Return a new object who represent the diff
- */
-function difference(object, base) {
-  return transform(object, (result, value, key) => {
-    if (!isEqual(value, base[key])) {
-      result[key] =
-        isObject(value) && isObject(base[key])
-          ? difference(value, base[key])
-          : value;
-    }
-  });
-}

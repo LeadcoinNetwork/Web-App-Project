@@ -3,5 +3,6 @@ var dotenv = require("dotenv");
 var _ = require("lodash");
 
 module.exports = {
-  throwOnMissingEnvironmentVariables: require("./throwOnMissingEnvironmentVariables")
+  throwOnMissingEnvironmentVariables: require("./throwOnMissingEnvironmentVariables"),
+  difference: require("./difference")
 };
