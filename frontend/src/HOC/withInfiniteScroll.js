@@ -1,20 +1,53 @@
-import React from 'react';
+import React from "react";
+import { throttle } from "lodash";
 
-const withInfiniteScroll = () => WrappedComponent => {
+const withInfiniteScroll = onScrollBottom => WrappedComponent => {
   class WithInfiniteScroll extends React.Component {
-    componentDidMount() {
-      console.log(window.addEventListener('scroll', console.log))
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        loading: false
+      };
     }
+    componentDidMount() {
+      window.addEventListener("scroll", throttle(this.onScroll, 200));
+    }
+    onScroll = () => {
+      if (!this.state.loading) {
+        let clientHeight = window.document.documentElement.clientHeight,
+          rect = window.document.body.getBoundingClientRect();
+
+        if (rect.height - Math.abs(rect.top) <= clientHeight + 20) {
+          this.setState({
+            loading: true
+          });
+
+          this.props.onScrollBottom(() =>
+            this.setState({
+              loading: false
+            })
+          );
+        }
+      }
+    };
     render() {
+      console.log("render", this.loading);
+      const { onScrollBottom, ...passThroughProps } = this.props;
+
       return (
-        <WrappedComponent {...this.props} />
-      )
+        <>
+          <WrappedComponent {...passThroughProps} />
+          {this.state.loading ? <div>Loading...</div> : null}
+        </>
+      );
     }
   }
 
-  WithInfiniteScroll.displayName = `WithInfiniteScroll(${WrappedComponent.name || 'Component'})`;
+  WithInfiniteScroll.displayName = `WithInfiniteScroll(${WrappedComponent.name ||
+    "Component"})`;
 
   return WithInfiniteScroll;
-}
+};
 
 export default withInfiniteScroll;
