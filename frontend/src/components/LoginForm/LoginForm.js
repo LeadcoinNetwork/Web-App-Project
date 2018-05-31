@@ -35,6 +35,7 @@ class LoginForm extends React.Component {
 
   login() {
     const { password, email } = this.state;
+    axios.defaults.withCredentials = true;
     axios
       .post(`${process.env.BACKEND}/auth/login`, {
         email,

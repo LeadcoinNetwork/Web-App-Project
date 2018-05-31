@@ -8,6 +8,7 @@ class EmailConfirm extends React.Component {
   };
 
   resendEmail = () => {
+    axios.defaults.withCredentials = true;
     axios.defaults.headers.common["Authorization"] =
       "Bearer " + this.props.token;
     axios

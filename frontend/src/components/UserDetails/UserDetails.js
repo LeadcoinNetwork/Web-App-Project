@@ -21,6 +21,7 @@ class UserDetails extends React.Component {
     const { company, country, phone } = this.state;
     const { user, token } = this.props;
     console.log("updating", { company, country, phone, token });
+    axios.defaults.withCredentials = true;
     axios.defaults.headers.common["Authorization"] = "Bearer " + token;
     axios
       .put(`${process.env.BACKEND}/user/${user.id}`, {

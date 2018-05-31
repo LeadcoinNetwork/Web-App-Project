@@ -4,36 +4,31 @@ const passport = require("passport");
 const config = require("./config");
 const router = require("./router");
 const strategies = require("./controller/passport-strategies");
-var multer = require("multer");
-var upload = multer({ dest: "uploads/" });
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
+const url = require("url");
 
 const app = express();
 app.use(bodyParser.json());
 
-// handle simple options request, needed for websockets and put/delete requests
-app.options("/*", function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, Content-Length, X-Requested-With"
-  );
-  res.send(200);
-});
-
 if (config.env === "development") {
   console.log("Allowing orphan SSL certificates");
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-  console.log("Allowing cross-origin requests");
-  app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
-    );
-    next();
-  });
 }
+// console.log("Allowing cross-origin requests");
+app.use((req, res, next) => {
+  res.header(
+    "Access-Control-Allow-Origin",
+    url.parse(config.frontend).protocol + "//" + url.parse(config.frontend).host
+  );
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  next();
+});
 
 app.use("/", router);
 
