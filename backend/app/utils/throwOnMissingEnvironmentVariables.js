@@ -1,3 +1,7 @@
+var fs = require("fs");
+var _ = require("lodash");
+var dotenv = require("dotenv");
+
 module.exports = function throwOnMissingEnvironmentVariables() {
   REQUIRED_KEYS = dotenv.parse(fs.readFileSync("./.env.example"));
   var MISSING_VARS = _.keys(_.omit(REQUIRED_KEYS, _.keys(process.env)));

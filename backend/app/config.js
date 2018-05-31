@@ -35,6 +35,7 @@ module.exports = {
     // }
   },
   mail: {
+    mailer: process.env.MAILER,
     host: process.env.MAIL_HOST,
     port: process.env.MAIL_PORT,
     from: process.env.MAIL_FROM,

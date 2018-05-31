@@ -22,7 +22,7 @@ class SignupForm extends React.Component {
   submit = () => {
     const { fname, lname, password, email } = this.state;
     axios
-      .post(`${process.env.backend}/user`, {
+      .post(`${process.env.BACKEND}/user`, {
         fname,
         lname,
         email,
