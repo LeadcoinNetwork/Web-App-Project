@@ -1,7 +1,9 @@
+// external modules
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const passport = require("passport");
-const config = require("../config");
+
+// internal modules
+const config = require("../../config");
 
 const jwtOptions = {
   expiresIn: config.auth.jwt.expiresIn

@@ -1,4 +1,4 @@
-const mysqlPool = require("./mysql-pool");
+const mysqlPool = require("../mysql-pool/mysql-pool");
 
 module.exports = {
   insert,

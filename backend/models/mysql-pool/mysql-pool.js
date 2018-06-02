@@ -1,5 +1,8 @@
-const config = require("../config");
+// external modules
 const mysql = require("promise-mysql");
+
+// internal modules
+const config = require("../../config");
 
 module.exports = mysql.createPool(config.mysql);
 

@@ -1,12 +1,15 @@
+// External Modules
 const express = require("express");
 const bodyParser = require("body-parser");
 const passport = require("passport");
-const config = require("./config");
-const router = require("./router");
-const strategies = require("./controller/passport-strategies");
 const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
 const url = require("url");
+
+// Internal Modules
+const config = require("../../config");
+const router = require("./router");
+const strategies = require("./passport-strategies");
+const upload = multer({ dest: "../../uploads/" });
 
 const app = express();
 app.use(bodyParser.json());

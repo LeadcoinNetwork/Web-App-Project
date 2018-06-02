@@ -1,9 +1,12 @@
+// external modules
 const express = require("express");
 const passport = require("passport");
-const User = require("../controller/user");
-const auth = require("../lib/auth");
-const mail = require("../lib/mail");
-const config = require("../config");
+
+// internal modules
+const User = require("../../../models/user/user");
+const auth = require("../../../models/user/auth");
+const mail = require("../../../models/email/email");
+const config = require("../../../config");
 
 const router = express.Router();
 module.exports = router;

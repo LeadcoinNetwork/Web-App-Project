@@ -42,8 +42,8 @@
     "sinon": "^4.4.9"
   },
   "scripts": {
-    "start": "nodemon app/server.js",
-    "develop": "nodemon app/server.js",
+    "start": "nodemon controllers/express/server.js",
+    "develop": "nodemon controllers/express/server.js",
     "test": "npm run test:unit; npm run test:integration",
     "test:unit": "mocha test/unit/**",
     "test:integration": "mocha test/integration/** --timeout 20000",

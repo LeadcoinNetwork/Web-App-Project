@@ -1,7 +1,8 @@
-const auth = require("../lib/auth");
-const validate = require("../lib/validate");
-const mail = require("../lib/mail");
-const { User, Token } = require("../model");
+const auth = require("./auth");
+const validate = require("./validate");
+const mail = require("../email/email");
+const Token = require("../token-mysql/token-mysql");
+const User = require("./user-mysql");
 
 module.exports = {
   insert,
@@ -21,7 +22,7 @@ module.exports = {
 // returns user
 async function insert(user) {
   let { email } = user;
-  await validate.uniqueEmail(email);
+  await uniqueEmail(email);
 
   user.created = Date.now();
   await User.insert(user);
@@ -62,78 +63,78 @@ async function login(userId) {
 
 // returns user
 async function register(user) {
-  user = await validate.newUser(user)
+  user = await validate.newUser(user);
 
-  let { email } = user
+  let { email } = user;
 
-  user.password = auth.hashPassword(user.password)
-  user.disabled = "EMAIL_NOT_VERIFIED"
-  let token = auth.generateToken()
+  user.password = auth.hashPassword(user.password);
+  user.disabled = "EMAIL_NOT_VERIFIED";
+  let token = auth.generateToken();
 
-  user = await insert(user)
+  user = await insert(user);
 
   await Token.insert({
     user_id: user.id,
     token: token,
     created: Date.now()
-  })
+  });
 
-  await mail.confirmEmail(user, token)
+  await mail.confirmEmail(user, token);
 
-  return user
+  return user;
 }
 
 // returns user
 async function resendEmail(token) {
-  let [user] = await Token.find({ token })
+  let [user] = await Token.find({ token });
   if (!user) {
-    let err = new Error("Not Found")
-    err.status = 404
-    throw err
+    let err = new Error("Not Found");
+    err.status = 404;
+    throw err;
   }
-  await mail.confirmEmail(user, token)
-  return user
+  await mail.confirmEmail(user, token);
+  return user;
 }
 
 // returns user
 async function confirmEmail(token) {
-  let [{ user_id: userId }] = await Token.find({ token })
+  let [{ user_id: userId }] = await Token.find({ token });
   if (!userId) {
-    let err = new Error("Not Found")
-    err.status = 404
-    throw err
+    let err = new Error("Not Found");
+    err.status = 404;
+    throw err;
   }
-  await Token.remove(userId)
-  await User.update(userId, { disabled: null })
-  let [user] = await find({ id: userId })
-  return user
+  await Token.remove(userId);
+  await User.update(userId, { disabled: null });
+  let [user] = await find({ id: userId });
+  return user;
 }
 
 // returns user
 async function authenticatePassword(email, password) {
-  let [user] = await User.find({ email })
+  let [user] = await User.find({ email });
   if (user && auth.comparePassword(password, user.password)) {
-    delete user.password
-    return user
+    delete user.password;
+    return user;
   } else {
-    let err = new Error("Unauthorized")
-    err.status = 401
-    throw err
+    let err = new Error("Unauthorized");
+    err.status = 401;
+    throw err;
   }
 }
 
 // returns user
 async function update(userId, user) {
-  user = await validate.partialUser(user)
-  let { email, password } = user
+  user = await validate.partialUser(user);
+  let { email, password } = user;
 
   if (password) {
-    password = auth.hashPassword(password)
+    password = auth.hashPassword(password);
   }
 
   if (email) {
-    await validate.uniqueEmail(email, userId)
-    let token = auth.generateToken()
+    await uniqueEmail(email, userId);
+    let token = auth.generateToken();
     await Token.insert({
       user_id: userId,
       token: token,
@@ -187,9 +188,18 @@ async function resetPassword(token, password) {
 async function updateExternal(userId, user) {
   let { email } = user;
   if (email) {
-    await validate.uniqueEmail(email);
+    await uniqueEmail(email);
   }
   await User.update(userId, user);
   [user] = await find({ id: userId });
   return user;
+}
+
+async function uniqueEmail(email, userId) {
+  let [user] = await User.find({ email });
+  if (user && user.id !== parseInt(userId)) {
+    let err = new Error("Email " + email + " is already in use");
+    err.status = 409;
+    throw err;
+  }
 }

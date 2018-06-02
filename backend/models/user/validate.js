@@ -1,14 +1,11 @@
+// external modules
 const zxcvbn = require("zxcvbn");
 const Joi = require("joi").extend(joiPassword);
-const User = require("../model/user");
 
 module.exports = {
   newUser,
-  partialUser,
-  uniqueEmail
+  partialUser
 };
-
-//TODO: fine tune the validation
 
 const userSchema = Joi.object().keys({
   phone: Joi.string()
@@ -82,13 +79,4 @@ async function newUser(user) {
 
 async function partialUser(user) {
   return await Joi.validate(user, userSchema.min(1), { abortEarly: false });
-}
-
-async function uniqueEmail(email, userId) {
-  let [user] = await User.find({ email });
-  if (user && user.id !== parseInt(userId)) {
-    let err = new Error("Email " + email + " is already in use");
-    err.status = 409;
-    throw err;
-  }
 }

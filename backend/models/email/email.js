@@ -1,14 +1,11 @@
-const mailer = require("nodemailer-promise");
-const config = require("../config");
+// internal modules
+const config = require("../../config");
+
 var sendMail;
 if (config.mail.mailer == "SMTP") {
   sendMail = mailer.config(config.mail);
 } else {
-  sendMail = function() {
-    console.log("Send Email:");
-    console.log(arguments);
-    return Promise.resolve();
-  };
+  sendMail = require("../email-console/email-console");
 }
 
 module.exports = {

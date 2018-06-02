@@ -1,14 +1,16 @@
+// External Modules
 const LocalStrategy = require("passport-local").Strategy;
 const JWTStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
-const config = require("../config");
-const auth = require("../lib/auth");
-const User = require("./user");
-const validate = require("../lib/validate");
 const LinkedInStrategy = require("passport-linkedin-oauth2").Strategy;
-const utils = require("../utils");
+
+// Internal Modules
+const config = require("../../config");
+const auth = require("../../models/user/auth");
+const User = require("../../models/user/user");
+const utils = require("../../utils");
 
 const localStrategy = new LocalStrategy(
   {
