@@ -48,6 +48,7 @@ class Table extends React.Component {
 
     return (
       <section className="ldc-table">
+        {props.title ? <h1>{props.title}</h1> : null}
         {props.multipleSelectionButton ? (
           <Button
             label={props.multipleSelectionButton}

@@ -2,12 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import Table from "Components/Table";
 
-const fields = require("./fields.json");
+const fields = require("../../mocks/fields.json");
 
-class TableData extends React.Component {
+class My extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
 
     this.state = {
       fields: fields,
@@ -37,6 +36,7 @@ class TableData extends React.Component {
 
     return (
       <Table
+        title="My Leads"
         fields={state.fields}
         records={state.records}
         multipleSelectionButton="Buy Selected Leads"
@@ -53,4 +53,4 @@ const mapStateToProps = state => ({
   leads: state.leads
 });
 
-export default connect(mapStateToProps)(TableData);
+export default connect(mapStateToProps)(My);

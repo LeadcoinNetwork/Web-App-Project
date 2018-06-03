@@ -84,6 +84,7 @@ module.exports = {
       Containers: path.resolve(__dirname, "src/containers/"),
       HOC: path.resolve(__dirname, "src/HOC/"),
       Styles: path.resolve(__dirname, "src/styles/"),
+      Mocks: path.resolve(__dirname, "src/mocks/")
     }
   }
 };

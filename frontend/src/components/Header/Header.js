@@ -4,6 +4,8 @@ import { push } from "react-router-redux";
 
 const Header = props => (
   <div>
+    <Button label="home" onClick={() => props.dispatch(push("/"))} />
+    <Button label="admin" onClick={() => props.dispatch(push("/admin"))} />
     <Button
       label="user details"
       onClick={() => props.dispatch(push("/user-details"))}
@@ -18,7 +20,18 @@ const Header = props => (
       label="upload"
       onClick={() => props.dispatch(push("/csv-upload"))}
     />
-    <Button label="leads" onClick={() => props.dispatch(push("/leads"))} />
+    <Button
+      label="buy leads"
+      onClick={() => props.dispatch(push("/leads/buy"))}
+    />
+    <Button
+      label="sell leads"
+      onClick={() => props.dispatch(push("/leads/sell"))}
+    />
+    <Button
+      label="my leads"
+      onClick={() => props.dispatch(push("/leads/my"))}
+    />
     <br />
     <br />
   </div>

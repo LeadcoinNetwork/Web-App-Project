@@ -3,8 +3,8 @@ import { storiesOf } from "@storybook/react";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import Table from "./Table";
 
-const fields = require("../../containers/TableData/fields.json");
-const leads = require("../../containers/TableData/records.json");
+const fields = require("../../mocks/fields.json");
+const leads = require("../../mocks/leads.json");
 
 function createStoryInDesignDecoration(nameOfStory) {
   return storiesOf(nameOfStory, module).addDecorator(getStories => (
