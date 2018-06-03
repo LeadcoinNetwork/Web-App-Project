@@ -1,7 +1,7 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import Table from "./Table";
+import Table from "./";
 
 const fields = require("../../containers/TableData/fields.json");
 const leads = require("../../containers/TableData/records.json");
