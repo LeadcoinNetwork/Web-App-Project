@@ -2,7 +2,7 @@ import "Styles/global.scss";
 
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "Containers/App";
+import Root from "Containers/Root";
 import { Provider } from "react-redux";
 import { routerMiddleware, ConnectedRouter } from "react-router-redux";
 import { createBrowserHistory } from "history";
@@ -16,7 +16,7 @@ const store = createStore(rootReducer, applyMiddleware(ROUTER_MIDDLEWARE));
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <App />
+      <Root />
     </ConnectedRouter>
   </Provider>,
   document.getElementById("root")

@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import Button from "Components/Button";
 
-class EmailConfirm extends React.Component {
+class EmailConfirmation extends React.Component {
   state = {
     response: null
   };
@@ -48,4 +48,4 @@ class EmailConfirm extends React.Component {
   }
 }
 
-export default EmailConfirm;
+export default EmailConfirmation;
