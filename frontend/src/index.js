@@ -2,6 +2,22 @@ import "Styles/global.scss";
 
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "Containers/App";
+import Root from "Containers/Root";
+import { Provider } from "react-redux";
+import { routerMiddleware, ConnectedRouter } from "react-router-redux";
+import { createBrowserHistory } from "history";
+import { createStore, applyMiddleware } from "redux";
+import rootReducer from "./reducers/index";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+const history = createBrowserHistory();
+const ROUTER_MIDDLEWARE = routerMiddleware(history);
+const store = createStore(rootReducer, applyMiddleware(ROUTER_MIDDLEWARE));
+
+ReactDOM.render(
+  <Provider store={store}>
+    <ConnectedRouter history={history}>
+      <Root />
+    </ConnectedRouter>
+  </Provider>,
+  document.getElementById("root")
+);

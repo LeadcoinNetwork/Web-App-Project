@@ -1,16 +1,17 @@
 import React from "react";
+import { connect } from "react-redux";
 import Table from "Components/Table";
 
 const fields = require("./fields.json");
-const records = require("./records.json");
 
 class TableData extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    console.log(props);
 
     this.state = {
       fields: fields,
-      records: records
+      records: props.leads
     };
   }
   buyLeads = leads => {
@@ -48,4 +49,8 @@ class TableData extends React.Component {
   }
 }
 
-export default TableData;
+const mapStateToProps = state => ({
+  leads: state.leads
+});
+
+export default connect(mapStateToProps)(TableData);
