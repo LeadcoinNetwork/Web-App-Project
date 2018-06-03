@@ -5,10 +5,17 @@
 
   .t-head,
   .t-body {
-
     .th-row,
     .tb-row {
+      position: relative;
       padding-left: 50px;
+
+      .thr-checkbox {
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
 
       .thr-col,
       .tbr-col {
@@ -22,20 +29,16 @@
   }
 
   .t-head {
-
     .th-row {
-
       .thr-col {
         height: 40px;
         line-height: 40px;
         text-transform: capitalize;
       }
     }
-
   }
 
   .t-body {
-
     .tb-row {
       position: relative;
       background-color: hsl(0, 0%, 95%);
@@ -63,7 +66,6 @@
       }
 
       &:hover {
-        
         .tbr-buttons {
           opacity: 1;
         }

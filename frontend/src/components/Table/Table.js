@@ -11,7 +11,8 @@ class Table extends React.Component {
     this.state = {
       fields: props.fields,
       records: props.records,
-      selectedRecords: new Set()
+      selectedRecords: new Set(),
+      isAllSelected: false
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -24,7 +25,10 @@ class Table extends React.Component {
 
     selectedRecords.delete(id) ? null : selectedRecords.add(id);
 
-    this.setState({ selectedRecords });
+    this.setState({ selectedRecords, isAllSelected: false });
+  };
+  toggleAll = () => {
+    this.setState({ isAllSelected: !this.state.isAllSelected });
   };
   getDinamicColsCount(fields) {
     return fields.filter(f => f.maxWidth === "auto").length;
@@ -41,7 +45,7 @@ class Table extends React.Component {
     return width;
   }
   render() {
-    let { fields, records, selectedRecords } = this.state;
+    let { fields, records, selectedRecords, isAllSelected } = this.state;
     let props = this.props;
     let dinamicColsCount = this.getDinamicColsCount(fields);
     let widthOfStaticCols = this.getWidthOfStaticCols(fields);
@@ -52,9 +56,13 @@ class Table extends React.Component {
         {props.multipleSelectionButton ? (
           <Button
             label={props.multipleSelectionButton}
-            disabled={!selectedRecords.size}
+            disabled={!selectedRecords.size && !isAllSelected}
             onClick={() =>
-              props.multipleSelectionAction(Array.from(selectedRecords))
+              props.multipleSelectionAction(
+                isAllSelected
+                  ? records.map(r => r.id)
+                  : Array.from(selectedRecords)
+              )
             }
           />
         ) : null}
@@ -62,6 +70,8 @@ class Table extends React.Component {
           fields={fields}
           colCount={dinamicColsCount}
           staticColsWidth={widthOfStaticCols}
+          toggleAll={this.toggleAll}
+          isAllSelected={isAllSelected}
         />
         <TBody
           fields={fields}
@@ -72,6 +82,7 @@ class Table extends React.Component {
           selectedRecords={selectedRecords}
           recordMainButton={props.recordMainButton}
           recordMainAction={props.recordMainAction}
+          isAllSelected={isAllSelected}
         />
         <div className="t-footer" />
       </section>
