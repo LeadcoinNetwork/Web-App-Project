@@ -17,10 +17,6 @@ const Header = props => (
       onClick={() => props.dispatch(push("/email-confirmation"))}
     />
     <Button
-      label="upload"
-      onClick={() => props.dispatch(push("/csv-upload"))}
-    />
-    <Button
       label="buy leads"
       onClick={() => props.dispatch(push("/leads/buy"))}
     />
@@ -31,6 +27,18 @@ const Header = props => (
     <Button
       label="my leads"
       onClick={() => props.dispatch(push("/leads/my"))}
+    />
+    <Button
+      label="new lead"
+      onClick={() => props.dispatch(push("/leads/new"))}
+    />
+    <Button
+      label="csv upload"
+      onClick={() => props.dispatch(push("/leads/csv-upload"))}
+    />
+    <Button
+      label="lead dispute"
+      onClick={() => props.dispatch(push("/leads/1/dispute"))}
     />
     <br />
     <br />

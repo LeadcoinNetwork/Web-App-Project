@@ -19,7 +19,6 @@ const Root = () => (
       <Route path="/email-confirmation" component={EmailConfirmation} />
       <Route path="/signup" component={SignupForm} />
       <Route path="/login" component={LoginForm} />
-      <Route path="/csv-upload" component={CSVUpload} />
       <Route path="/leads" component={Leads} />
     </Switch>
   </App>
