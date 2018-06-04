@@ -10,8 +10,12 @@ const config = require("../../config");
 const router = require("./router");
 const strategies = require("./passport-strategies");
 const upload = multer({ dest: "../../uploads/" });
-
+const http = require("http");
+const io = require("./io/io");
 const app = express();
+
+var httpServer = http.createServer(app);
+io.connectToHTTP(httpServer);
 app.use(bodyParser.json());
 
 if (config.env === "development") {
@@ -65,7 +69,7 @@ app.use((err, req, res, next) => {
   next(err);
 });
 
-module.exports = app.listen(config.app.port, () => {
+module.exports = httpServer.listen(config.app.port, () => {
   if (config.env == "test") return;
   console.log("listening on *:" + config.app.port);
 });
