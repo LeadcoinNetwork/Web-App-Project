@@ -25,10 +25,19 @@ class Table extends React.Component {
 
     selectedRecords.delete(id) ? null : selectedRecords.add(id);
 
-    this.setState({ selectedRecords, isAllSelected: false });
+    this.setState({
+      selectedRecords,
+      isAllSelected: selectedRecords.size === this.state.records.length
+    });
   };
   toggleAll = () => {
-    this.setState({ isAllSelected: !this.state.isAllSelected });
+    if (this.state.selectedRecords.size === this.state.records.length) {
+      this.setState({ selectedRecords: new Set(), isAllSelected: false });
+    } else {
+      let selectedRecords = new Set();
+      this.state.records.forEach(r => selectedRecords.add(r.id));
+      this.setState({ selectedRecords, isAllSelected: true });
+    }
   };
   getDinamicColsCount(fields) {
     return fields.filter(f => f.maxWidth === "auto").length;
@@ -56,13 +65,9 @@ class Table extends React.Component {
         {props.multipleSelectionButton ? (
           <Button
             label={props.multipleSelectionButton}
-            disabled={!selectedRecords.size && !isAllSelected}
+            disabled={!selectedRecords.size}
             onClick={() =>
-              props.multipleSelectionAction(
-                isAllSelected
-                  ? records.map(r => r.id)
-                  : Array.from(selectedRecords)
-              )
+              props.multipleSelectionAction(Array.from(selectedRecords))
             }
           />
         ) : null}
