@@ -2,7 +2,7 @@
   {
     "key": "date",
     "name": "date",
-    "sortable": false,
+    "sortable": true,
     "editable": false,
     "maxWidth": "80px",
     "minWidth": "80px"
@@ -10,7 +10,7 @@
   {
     "key": "name",
     "name": "name",
-    "sortable": false,
+    "sortable": true,
     "editable": false,
     "maxWidth": "90px",
     "minWidth": "90px"
@@ -18,7 +18,7 @@
   {
     "key": "telephone",
     "name": "telephone",
-    "sortable": false,
+    "sortable": true,
     "editable": false,
     "maxWidth": "auto",
     "minWidth": "auto"
@@ -26,7 +26,7 @@
   {
     "key": "email",
     "name": "email",
-    "sortable": false,
+    "sortable": true,
     "editable": false,
     "maxWidth": "auto",
     "minWidth": "auto"
@@ -34,7 +34,7 @@
   {
     "key": "state",
     "name": "state",
-    "sortable": false,
+    "sortable": true,
     "editable": false,
     "maxWidth": "50px",
     "minWidth": "50px"
@@ -42,7 +42,7 @@
   {
     "key": "city",
     "name": "city",
-    "sortable": false,
+    "sortable": true,
     "editable": false,
     "maxWidth": "70px",
     "minWidth": "70px"
@@ -50,7 +50,7 @@
   {
     "key": "property_type",
     "name": "property type",
-    "sortable": false,
+    "sortable": true,
     "editable": false,
     "maxWidth": "auto",
     "minWidth": "auto"
@@ -58,7 +58,7 @@
   {
     "key": "size",
     "name": "size (SqFt)",
-    "sortable": false,
+    "sortable": true,
     "editable": false,
     "maxWidth": "50px",
     "minWidth": "50px"
@@ -66,7 +66,7 @@
   {
     "key": "budget",
     "name": "budget",
-    "sortable": false,
+    "sortable": true,
     "editable": false,
     "maxWidth": "70px",
     "minWidth": "70px"
@@ -74,7 +74,7 @@
   {
     "key": "bedrooms",
     "name": "rooms",
-    "sortable": false,
+    "sortable": true,
     "editable": false,
     "maxWidth": "80px",
     "minWidth": "80px"
@@ -82,7 +82,7 @@
   {
     "key": "floor",
     "name": "floor",
-    "sortable": false,
+    "sortable": true,
     "editable": false,
     "maxWidth": "50px",
     "minWidth": "50px"
@@ -90,7 +90,7 @@
   {
     "key": "specification",
     "name": "specification",
-    "sortable": false,
+    "sortable": true,
     "editable": false,
     "maxWidth": "auto",
     "minWidth": "auto"
@@ -98,7 +98,7 @@
   {
     "key": "lead_price",
     "name": "lead price",
-    "sortable": false,
+    "sortable": true,
     "editable": false,
     "maxWidth": "auto",
     "minWidth": "auto"
@@ -106,7 +106,7 @@
   {
     "key": "status",
     "name": "status",
-    "sortable": false,
+    "sortable": true,
     "editable": false,
     "maxWidth": "65px",
     "minWidth": "65px"
