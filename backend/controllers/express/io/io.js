@@ -5,7 +5,7 @@ module.exports = {
 };
 
 function connectToHTTP(httpServer) {
-  var io = httpServer;
+  var io = socketio(httpServer);
   io.origins("*:*");
 
   io.on("connection", function(socket) {
