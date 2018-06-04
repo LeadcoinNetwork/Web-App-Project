@@ -7,14 +7,20 @@ const Header = props => (
     <Button label="home" onClick={() => props.dispatch(push("/"))} />
     <Button label="admin" onClick={() => props.dispatch(push("/admin"))} />
     <Button
-      label="user details"
-      onClick={() => props.dispatch(push("/user-details"))}
+      label="complete registration"
+      onClick={() => props.dispatch(push("/users/complete-registration"))}
     />
-    <Button label="login" onClick={() => props.dispatch(push("/login"))} />
-    <Button label="signup" onClick={() => props.dispatch(push("/signup"))} />
+    <Button
+      label="login"
+      onClick={() => props.dispatch(push("/users/login"))}
+    />
+    <Button
+      label="signup"
+      onClick={() => props.dispatch(push("/users/signup"))}
+    />
     <Button
       label="email confirmation"
-      onClick={() => props.dispatch(push("/email-confirmation"))}
+      onClick={() => props.dispatch(push("/users/email-confirmation"))}
     />
     <Button
       label="buy leads"

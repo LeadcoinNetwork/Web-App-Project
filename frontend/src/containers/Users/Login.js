@@ -5,7 +5,7 @@ import TextField from "Components/TextField";
 import Checkbox from "Components/Checkbox";
 import SSOContainer from "Components/SSOContainer";
 
-class LoginForm extends React.Component {
+class Login extends React.Component {
   state = {
     email: "",
     password: "",
@@ -84,7 +84,7 @@ class LoginForm extends React.Component {
           <SSOContainer />
           <div className="localLogin">
             <form
-              className="localLoginForm"
+              className="lo"
               onSubmit={e => {
                 this.login();
                 e.preventDefault();
@@ -131,4 +131,4 @@ class LoginForm extends React.Component {
   }
 }
 
-export default LoginForm;
+export default Login;
