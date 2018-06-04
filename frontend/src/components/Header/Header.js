@@ -5,20 +5,53 @@ import { push } from "react-router-redux";
 const Header = props => (
   <div>
     <Button label="home" onClick={() => props.dispatch(push("/"))} />
-    <Button label="admin" onClick={() => props.dispatch(push("/admin"))} />
     <Button
-      label="user details"
-      onClick={() => props.dispatch(push("/user-details"))}
+      label="admin - login"
+      onClick={() => props.dispatch(push("/admin/login"))}
     />
-    <Button label="login" onClick={() => props.dispatch(push("/login"))} />
-    <Button label="signup" onClick={() => props.dispatch(push("/signup"))} />
+    <Button
+      label="admin - users"
+      onClick={() => props.dispatch(push("/admin/users"))}
+    />
+    <Button
+      label="admin - leads"
+      onClick={() => props.dispatch(push("/admin/leads"))}
+    />
+    <Button
+      label="admin - transactions"
+      onClick={() => props.dispatch(push("/admin/transactions"))}
+    />
+    <Button
+      label="signup"
+      onClick={() => props.dispatch(push("/users/signup"))}
+    />
+    <Button
+      label="complete registration"
+      onClick={() => props.dispatch(push("/users/complete-registration"))}
+    />
     <Button
       label="email confirmation"
-      onClick={() => props.dispatch(push("/email-confirmation"))}
+      onClick={() => props.dispatch(push("/users/email-confirmation"))}
     />
     <Button
-      label="upload"
-      onClick={() => props.dispatch(push("/csv-upload"))}
+      label="login"
+      onClick={() => props.dispatch(push("/users/login"))}
+    />
+    <Button
+      label="Settings"
+      onClick={() => props.dispatch(push("/users/settings"))}
+    />
+    <Button
+      label="Notifications"
+      onClick={() => props.dispatch(push("/users/notifications"))}
+    />
+    <Button
+      label="Payments"
+      onClick={() => props.dispatch(push("/users/payments"))}
+    />
+    <Button
+      label="Withdrawal"
+      onClick={() => props.dispatch(push("/users/withdrawal"))}
     />
     <Button
       label="buy leads"
@@ -31,6 +64,26 @@ const Header = props => (
     <Button
       label="my leads"
       onClick={() => props.dispatch(push("/leads/my"))}
+    />
+    <Button
+      label="new lead"
+      onClick={() => props.dispatch(push("/leads/new"))}
+    />
+    <Button
+      label="csv upload"
+      onClick={() => props.dispatch(push("/leads/csv-upload"))}
+    />
+    <Button
+      label="csv mapping"
+      onClick={() => props.dispatch(push("/leads/csv-mapping"))}
+    />
+    <Button
+      label="checkout"
+      onClick={() => props.dispatch(push("/leads/checkout"))}
+    />
+    <Button
+      label="lead dispute"
+      onClick={() => props.dispatch(push("/leads/1/dispute"))}
     />
     <br />
     <br />

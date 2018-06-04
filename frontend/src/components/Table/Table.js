@@ -17,7 +17,9 @@ class Table extends React.Component {
   }
   componentWillReceiveProps(nextProps) {
     this.setState({
-      records: nextProps.records
+      records: nextProps.records,
+      isAllSelected:
+        this.state.selectedRecords.size === nextProps.records.length
     });
   }
   toggleRecord = id => {

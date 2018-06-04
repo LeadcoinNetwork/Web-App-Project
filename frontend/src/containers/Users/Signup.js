@@ -4,7 +4,7 @@ import Button from "Components/Button";
 import TextField from "Components/TextField";
 import SSOContainer from "Components/SSOContainer";
 
-class SignupForm extends React.Component {
+class Signup extends React.Component {
   state = {
     email: "",
     password: "",
@@ -108,4 +108,4 @@ class SignupForm extends React.Component {
   }
 }
 
-export default SignupForm;
+export default Signup;
