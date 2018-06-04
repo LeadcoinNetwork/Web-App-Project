@@ -42,30 +42,30 @@ module.exports = {
       },
       {
         test: /\.(scss|css)$/,
-        use: ExtractTextPlugin.extract({
-          fallback: "style-loader",
-          use: [
-            {
-              loader: "css-loader",
-              options: {
-                minimize: true,
-                sourceMap: true
-              }
-            },
-            {
-              loader: "postcss-loader",
-              options: {
-                sourceMap: true
-              }
-            },
-            {
-              loader: "sass-loader",
-              options: {
-                sourceMap: true
-              }
-            }
-          ]
-        })
+        use: ["style-loader", "css-loader", "sass-loader"]
+        // fallback: "style-loader",
+        // use: [
+        //   {
+        //     loader: "css-loader",
+        //     options: {
+        //       minimize: true,
+        //       sourceMap: true
+        //     }
+        //   },
+        //   {
+        //     loader: "postcss-loader",
+        //     options: {
+        //       sourceMap: true
+        //     }
+        //   },
+        //   {
+        //     loader: "sass-loader",
+        //     options: {
+        //       sourceMap: true
+        //     }
+        //   }
+        // ]
+        // })
       },
       {
         test: /\.(jpg|png|svg)$/,
