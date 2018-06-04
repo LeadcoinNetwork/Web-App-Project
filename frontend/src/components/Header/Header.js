@@ -5,7 +5,22 @@ import { push } from "react-router-redux";
 const Header = props => (
   <div>
     <Button label="home" onClick={() => props.dispatch(push("/"))} />
-    <Button label="admin" onClick={() => props.dispatch(push("/admin"))} />
+    <Button
+      label="admin - login"
+      onClick={() => props.dispatch(push("/admin/login"))}
+    />
+    <Button
+      label="admin - users"
+      onClick={() => props.dispatch(push("/admin/users"))}
+    />
+    <Button
+      label="admin - leads"
+      onClick={() => props.dispatch(push("/admin/leads"))}
+    />
+    <Button
+      label="admin - transactions"
+      onClick={() => props.dispatch(push("/admin/transactions"))}
+    />
     <Button
       label="signup"
       onClick={() => props.dispatch(push("/users/signup"))}
@@ -21,6 +36,22 @@ const Header = props => (
     <Button
       label="login"
       onClick={() => props.dispatch(push("/users/login"))}
+    />
+    <Button
+      label="Settings"
+      onClick={() => props.dispatch(push("/users/settings"))}
+    />
+    <Button
+      label="Notifications"
+      onClick={() => props.dispatch(push("/users/notifications"))}
+    />
+    <Button
+      label="Payments"
+      onClick={() => props.dispatch(push("/users/payments"))}
+    />
+    <Button
+      label="Withdrawal"
+      onClick={() => props.dispatch(push("/users/withdrawal"))}
     />
     <Button
       label="buy leads"
@@ -45,6 +76,10 @@ const Header = props => (
     <Button
       label="csv mapping"
       onClick={() => props.dispatch(push("/leads/csv-mapping"))}
+    />
+    <Button
+      label="checkout"
+      onClick={() => props.dispatch(push("/leads/checkout"))}
     />
     <Button
       label="lead dispute"
