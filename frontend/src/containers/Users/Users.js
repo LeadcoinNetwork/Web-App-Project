@@ -4,6 +4,10 @@ import Signup from "./Signup";
 import EmailConfirmation from "./EmailConfirmation";
 import CompleteRegistration from "./CompleteRegistration";
 import Login from "./Login";
+import Settings from "./Settings";
+import Notifications from "./Notifications";
+import Payments from "./Payments";
+import Withdrawal from "./Withdrawal";
 
 const Users = () => (
   <Switch>
@@ -14,6 +18,10 @@ const Users = () => (
       component={CompleteRegistration}
     />
     <Route path="/users/login" component={Login} />
+    <Route path="/users/settings" component={Settings} />
+    <Route path="/users/notifications" component={Notifications} />
+    <Route path="/users/payments" component={Payments} />
+    <Route path="/users/withdrawal" component={Withdrawal} />
   </Switch>
 );
 

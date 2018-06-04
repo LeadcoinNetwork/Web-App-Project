@@ -6,6 +6,7 @@ import My from "./My";
 import New from "./New";
 import CSVUload from "./CSVUpload";
 import CSVMapping from "./CSVMapping";
+import Checkout from "./Checkout";
 import Dispute from "./Dispute";
 
 const Leads = () => (
@@ -16,6 +17,7 @@ const Leads = () => (
     <Route path="/leads/new" component={New} />
     <Route path="/leads/csv-upload" component={CSVUload} />
     <Route path="/leads/csv-mapping" component={CSVMapping} />
+    <Route path="/leads/checkout/" component={Checkout} />
     <Route path="/leads/:id/dispute" component={Dispute} />
   </Switch>
 );
