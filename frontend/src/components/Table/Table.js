@@ -79,6 +79,7 @@ class Table extends React.Component {
           staticColsWidth={widthOfStaticCols}
           toggleAll={this.toggleAll}
           isAllSelected={isAllSelected}
+          onSort={props.onSort}
         />
         <TBody
           fields={fields}

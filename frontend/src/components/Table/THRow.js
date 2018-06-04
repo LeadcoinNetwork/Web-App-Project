@@ -16,6 +16,7 @@ const THRow = props => (
         colCount={props.colCount}
         staticColsWidth={props.staticColsWidth}
         field={f}
+        onSort={props.onSort}
       />
     ))}
   </div>
