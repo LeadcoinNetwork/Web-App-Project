@@ -23,3 +23,15 @@ createStoryInDesignDecoration("Table").add("with leads", () => (
     onScrollBottom={cb => cb()}
   />
 ));
+createStoryInDesignDecoration("Table").add("without leads", () => (
+  <Table
+    fields={fields}
+    showOnZeroRecords={<div>No Leads</div>}
+    records={[]}
+    multipleSelectionButton="Buy Selected Leads"
+    multipleSelectionAction={console.log}
+    recordMainButton="Buy"
+    recordMainAction={console.log}
+    onScrollBottom={cb => cb()}
+  />
+));
