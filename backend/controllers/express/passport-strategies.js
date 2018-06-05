@@ -26,9 +26,16 @@ const localStrategy = new LocalStrategy(
   }
 );
 
+const extactFromCookie = request => {
+  let token = null;
+  if (request && request.cookies) token = request.cookies["token"];
+  console.log({ token });
+  return token;
+};
+
 const jwtStrategy = new JWTStrategy(
   {
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    jwtFromRequest: ExtractJwt.fromExtractors([extactFromCookie]),
     secretOrKey: config.auth.jwt.secret
   },
   async (jwt, done) => {

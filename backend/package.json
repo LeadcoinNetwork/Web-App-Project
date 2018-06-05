@@ -11,6 +11,7 @@
     "bcrypt": "^2.0.1",
     "body-parser": "^1.18.2",
     "commander": "^2.15.1",
+    "cookie-parser": "^1.4.3",
     "csv": "^3.1.0",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
@@ -51,9 +52,7 @@
     "precommit": "pretty-quick --staged"
   },
   "nodemonConfig": {
-    "ignore": [
-      "upload/*"
-    ]
+    "ignore": ["upload/*"]
   },
   "bugs": {
     "url": "https://github.com/LeadcoinNetwork/leadcoin-web/issues"

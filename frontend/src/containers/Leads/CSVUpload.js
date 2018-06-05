@@ -21,8 +21,6 @@ class CSVUpload extends React.Component {
   submit() {
     axios.defaults.withCredentials = true;
 
-    axios.defaults.headers.common["Authorization"] =
-      "Bearer " + this.props.token;
     const { file } = this.state;
     const formData = new FormData();
     formData.append("file", file);
