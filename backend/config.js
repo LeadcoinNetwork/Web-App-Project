@@ -9,6 +9,7 @@ module.exports = {
   env: process.env.NODE_ENV,
   backend: process.env.BACKEND,
   frontend: process.env.FRONTEND,
+  upload: process.env.UPLOAD_DIR,
   app: {
     port: 3000
   },

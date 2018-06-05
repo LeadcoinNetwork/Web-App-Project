@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const multer = require("multer");
 const url = require("url");
+const cookieParser = require("cookie-parser");
 
 // Internal Modules
 const config = require("../../config");
@@ -17,12 +18,13 @@ const app = express();
 var httpServer = http.createServer(app);
 io.connectToHTTP(httpServer);
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 if (config.env === "development") {
   console.log("Allowing orphan SSL certificates");
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 }
-// console.log("Allowing cross-origin requests");
+// console.log("Allowing cross-origin requests")
 app.use((req, res, next) => {
   res.header(
     "Access-Control-Allow-Origin",

@@ -15,7 +15,6 @@ module.exports = merge(common, {
     },
     port: process.env.PORT,
     host: "0.0.0.0",
-    disableHostCheck: true,
-    hot: true
+    disableHostCheck: true
   }
 });
