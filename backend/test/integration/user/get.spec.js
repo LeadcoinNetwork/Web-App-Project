@@ -6,11 +6,11 @@ const config = require("../../../app/config");
 const { testUser } = require("../util");
 
 const request = require("request-promise-native").defaults({
-  baseUrl: "http://localhost:" + config.app.port + config.baseURI,
+  baseUrl: config.backend,
   resolveWithFullResponse: true
 });
 
-describe(`Get ${config.baseURI}/user`, () => {
+describe(`Get ${config.backend}/user`, () => {
   it("Should get the user", async () => {
     // first, add a user
     var user = await User.register(testUser);

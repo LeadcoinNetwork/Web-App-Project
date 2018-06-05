@@ -1,16 +1,22 @@
-const merge = require('webpack-merge');
-const common = require('./webpack.common.js');
+const merge = require("webpack-merge");
+const common = require("./webpack.common.js");
+var dotenv = require("dotenv");
+dotenv.config();
 
 module.exports = merge(common, {
-  devtool: 'inline-sorce-map',
-  mode: 'development',
+  devtool: "cheap-module-eval-source-map",
+  mode: "development",
+  plugins: [new webpack.NamedModulesPlugin()],
   devServer: {
-    contentBase: './dist',
+    contentBase: "./dist",
     historyApiFallback: true,
     stats: {
       colors: true,
-      env: true,
+      env: true
     },
-    host: '0.0.0.0'
+    port: process.env.PORT,
+    host: "0.0.0.0",
+    disableHostCheck: true,
+    hot: true
   }
 });

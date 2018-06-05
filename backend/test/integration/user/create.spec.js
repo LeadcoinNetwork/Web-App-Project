@@ -6,10 +6,10 @@ const User = require("../../../app/controller/user");
 const { testUser } = require("../util");
 
 const request = require("request-promise-native").defaults({
-  baseUrl: "http://localhost:" + config.app.port + config.baseURI
+  baseUrl: config.backend
 });
 
-describe(`Create ${config.baseURI}/user`, () => {
+describe(`Create ${config.backend}/user`, () => {
   it("Should create a new user", async () => {
     var user = await request.post("/user", {
       json: testUser

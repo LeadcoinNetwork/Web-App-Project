@@ -1,27 +1,29 @@
-const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require("path");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
   entry: {
-    app: './src/index.js',
+    app: "./src/index.js"
   },
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: '/'
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "dist"),
+    publicPath: "/"
   },
   plugins: [
-    new ExtractTextPlugin('bundle.css'),
-    new CleanWebpackPlugin(['dist']),
+    new Dotenv({ systemvars: true, safe: true }),
+    new ExtractTextPlugin("bundle.css"),
+    new CleanWebpackPlugin(["dist"]),
     new HtmlWebpackPlugin({
       inject: false,
-      template: require('html-webpack-template'),
-      lang: 'en-US',
-      title: 'Leadcoin',
+      template: require("html-webpack-template"),
+      lang: "en-US",
+      title: "Leadcoin",
       mobile: true,
-      appMountId: 'root',
+      appMountId: "root"
     })
   ],
   module: {
@@ -31,64 +33,58 @@ module.exports = {
         exclude: /(node_modules)/,
         loader: "babel-loader",
         query: {
-          presets: [
-            '@babel/preset-env',
-            '@babel/preset-react',
-          ],
+          presets: ["@babel/preset-env", "@babel/preset-react"],
           plugins: [
-            '@babel/plugin-proposal-object-rest-spread',
-            'transform-class-properties',
-          ],
+            "@babel/plugin-proposal-object-rest-spread",
+            "transform-class-properties"
+          ]
         }
       },
       {
         test: /\.(scss|css)$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                minimize: true,
-                sourceMap: true
-              }
-            },
-            {
-              loader: 'postcss-loader',
-              options: {
-                sourceMap: true
-              }
-            },
-            {
-              loader: 'sass-loader',
-              options: {
-                sourceMap: true
-              }
-            }
-          ]
-        })
+        use: ["style-loader", "css-loader", "sass-loader"]
+        // fallback: "style-loader",
+        // use: [
+        //   {
+        //     loader: "css-loader",
+        //     options: {
+        //       minimize: true,
+        //       sourceMap: true
+        //     }
+        //   },
+        //   {
+        //     loader: "postcss-loader",
+        //     options: {
+        //       sourceMap: true
+        //     }
+        //   },
+        //   {
+        //     loader: "sass-loader",
+        //     options: {
+        //       sourceMap: true
+        //     }
+        //   }
+        // ]
+        // })
       },
       {
         test: /\.(jpg|png|svg)$/,
-        loader: 'file-loader',
+        loader: "file-loader",
         options: {
-          name: '[path][name].[hash].[ext]',
-        },
-      },
+          name: "[path][name].[hash].[ext]"
+        }
+      }
     ]
   },
   resolve: {
-    modules: [
-      'node_modules',
-      path.resolve(__dirname, 'src'),
-    ],
-    extensions: [
-      '.js',
-    ],
+    modules: ["node_modules", path.resolve(__dirname, "src")],
+    extensions: [".js"],
     alias: {
-      Components: path.resolve(__dirname, 'src/components/'),
-      Containers: path.resolve(__dirname, 'src/containers/'),
-      Styles: path.resolve(__dirname, 'src/styles/'),
-    },
-  },
+      Components: path.resolve(__dirname, "src/components/"),
+      Containers: path.resolve(__dirname, "src/containers/"),
+      HOC: path.resolve(__dirname, "src/HOC/"),
+      Styles: path.resolve(__dirname, "src/styles/"),
+      Mocks: path.resolve(__dirname, "src/mocks/")
+    }
+  }
 };

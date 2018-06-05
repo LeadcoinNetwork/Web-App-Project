@@ -4,13 +4,14 @@ const User = require("../../../app/controller/user");
 const { Token } = require("../../../app/model");
 const expect = require("chai").expect;
 const { testUser } = require("../util");
+const config = require("../../../app/config");
 
 const request = require("request-promise-native").defaults({
-  baseUrl: "http://localhost:" + config.app.port + config.baseURI,
+  baseUrl: config.backend,
   resolveWithFullResponse: true
 });
 
-describe(`Delete ${config.baseURI}/user`, () => {
+describe(`Delete ${config.backend}/user`, () => {
   it("Should delete a user", async () => {
     // first, add a user
     var user = await User.register(testUser);

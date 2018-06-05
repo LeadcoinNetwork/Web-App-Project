@@ -7,10 +7,10 @@ const { Token } = require("../../../app/model");
 const { testUser } = require("../util");
 
 const request = require("request-promise-native").defaults({
-  baseUrl: "http://localhost:" + config.app.port + config.baseURI
+  baseUrl: config.backend
 });
 
-describe(`Login ${config.baseURI}/auth/login`, () => {
+describe(`Login ${config.backend}/auth/login`, () => {
   const { email, password } = testUser;
 
   it("Should return a JSON Web Token", async () => {
