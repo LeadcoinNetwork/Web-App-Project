@@ -6,7 +6,6 @@ dotenv.config();
 module.exports = merge(common, {
   devtool: "cheap-module-eval-source-map",
   mode: "development",
-  plugins: [new webpack.NamedModulesPlugin()],
   devServer: {
     contentBase: "./dist",
     historyApiFallback: true,
@@ -16,7 +15,6 @@ module.exports = merge(common, {
     },
     port: process.env.PORT,
     host: "0.0.0.0",
-    disableHostCheck: true,
-    hot: true
+    disableHostCheck: true
   }
 });
