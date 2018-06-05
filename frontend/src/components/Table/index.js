@@ -1,5 +1,5 @@
-import './Table.scss';
+import "./Table.scss";
 
-import Table from './Table';
+import Table from "./Table";
 
 export default Table;

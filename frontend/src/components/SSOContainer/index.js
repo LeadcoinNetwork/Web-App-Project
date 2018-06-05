@@ -1,5 +1,5 @@
-import './SSOContainer.scss';
+import "./SSOContainer.scss";
 
-import SSOContainer from './SSOContainer';
+import SSOContainer from "./SSOContainer";
 
 export default SSOContainer;

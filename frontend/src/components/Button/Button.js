@@ -1,5 +1,5 @@
-import React from 'react'
-import MaterialButton from 'material-ui/RaisedButton';
+import React from "react";
+import MaterialButton from "material-ui/RaisedButton";
 
 const Button = ({
   type,
@@ -7,16 +7,16 @@ const Button = ({
   children,
   label,
   containerElement,
-  disabled,
+  disabled
 }) => (
-    <MaterialButton
-      children={children}
-      type={type}
-      label={label}
-      onClick={onClick}
-      containerElement={containerElement}
-      disabled={disabled}
-    />
-  );
+  <MaterialButton
+    children={children}
+    type={type}
+    label={label}
+    onClick={onClick}
+    containerElement={containerElement}
+    disabled={disabled}
+  />
+);
 
 export default Button;
