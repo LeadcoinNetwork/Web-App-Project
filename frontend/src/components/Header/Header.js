@@ -28,7 +28,8 @@ class Header extends React.Component {
     return { color, backgroundColor };
   }
   render() {
-    let currentNotification = this.props.notifications.current;
+    let props = this.props,
+      currentNotification = props.notifications.current;
     currentNotification.style = this.getSnackbarStyle(currentNotification.type);
 
     return (
