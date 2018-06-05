@@ -82,17 +82,21 @@ class Table extends React.Component {
           onSort={props.onSort}
           sortedBy={props.sortedBy}
         />
-        <TBody
-          fields={fields}
-          records={records}
-          colCount={dinamicColsCount}
-          staticColsWidth={widthOfStaticCols}
-          toggleRecord={this.toggleRecord}
-          selectedRecords={selectedRecords}
-          recordMainButton={props.recordMainButton}
-          recordMainAction={props.recordMainAction}
-          isAllSelected={isAllSelected}
-        />
+        {props.records.length > 0 ? (
+          <TBody
+            fields={fields}
+            records={records}
+            colCount={dinamicColsCount}
+            staticColsWidth={widthOfStaticCols}
+            toggleRecord={this.toggleRecord}
+            selectedRecords={selectedRecords}
+            recordMainButton={props.recordMainButton}
+            recordMainAction={props.recordMainAction}
+            isAllSelected={isAllSelected}
+          />
+        ) : (
+          props.showOnZeroRecords
+        )}
         <div className="t-footer" />
       </section>
     );
