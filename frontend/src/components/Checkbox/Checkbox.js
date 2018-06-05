@@ -1,5 +1,5 @@
-import React from 'react'
-import MaterialCheckbox from 'material-ui/Checkbox';
+import React from "react";
+import MaterialCheckbox from "material-ui/Checkbox";
 
 const Checkbox = props => (
   <MaterialCheckbox
