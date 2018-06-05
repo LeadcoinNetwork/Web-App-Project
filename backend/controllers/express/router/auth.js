@@ -16,15 +16,17 @@ const authOptions = {
 };
 
 router.post("/auth/login", passport.authenticate("local", authOptions), login);
+router.post("/auth/logout", passport.authenticate("jwt", authOptions), logout);
 router.get("/auth/confirm-email", confirmEmail, login);
+router.get("/auth/confirm-email-update", confirmEmailUpdate);
+router.post("/auth/forgot-password", forgotPassword);
+router.post("/auth/reset-password", resetPassword, login);
+
 router.get(
   "/auth/resend-email",
   passport.authenticate("jwt", authOptions),
   resendEmail
 );
-router.get("/auth/confirm-email-update", confirmEmailUpdate);
-router.post("/auth/forgot-password", forgotPassword);
-router.post("/auth/reset-password", resetPassword, login);
 
 router.get(
   ["/auth/google", "/auth/google/callback"],
@@ -69,6 +71,12 @@ async function login(req, res, next) {
   } catch (e) {
     next(e);
   }
+}
+
+async function logout(req, res) {
+  res.cookie("token", null);
+  res.cookie("user", null);
+  res.json({ logout: "success" });
 }
 
 async function confirmEmail(req, res, next) {
