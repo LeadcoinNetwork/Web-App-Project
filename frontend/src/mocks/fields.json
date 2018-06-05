@@ -36,8 +36,8 @@
     "name": "state",
     "sortable": true,
     "editable": false,
-    "maxWidth": "50px",
-    "minWidth": "50px"
+    "maxWidth": "80px",
+    "minWidth": "80px"
   },
   {
     "key": "city",

@@ -9,6 +9,9 @@
     "precommit": "pretty-quick --staged"
   },
   "dependencies": {
+    "@fortawesome/fontawesome": "^1.1.8",
+    "@fortawesome/fontawesome-free-solid": "^5.0.13",
+    "@fortawesome/react-fontawesome": "0.0.20",
     "axios": "^0.18.0",
     "dotenv-webpack": "^1.5.5",
     "history": "^4.7.2",
