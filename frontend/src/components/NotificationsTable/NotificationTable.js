@@ -1,13 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
+import { format } from "../../utils/timeformat";
 
-class NotificationsTable extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-  render() {
-    return <div>Here you should see the notification table</div>;
-  }
-}
+const NotificationsTable = props =>
+  props.notifications.map(notification => (
+    <div key={notification.id}>
+      <b>{format(notification.timestamp)}</b> {notification.message}
+    </div>
+  ));
 
 export default NotificationsTable;
