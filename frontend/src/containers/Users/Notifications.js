@@ -1,8 +1,13 @@
 import React from "react";
+import { connect } from "react-redux";
 
 class Notifications extends React.Component {
   render() {
-    return <h1>Notifications</h1>;
+    return (
+      <div>
+        <h1>Notifications</h1>
+      </div>
+    );
   }
 }
 
