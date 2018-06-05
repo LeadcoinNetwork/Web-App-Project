@@ -40,8 +40,8 @@ createStoryInDesignDecoration("Table")
     <Table
       fields={fields}
       showOnZeroRecords={<div>No Leads</div>}
-      onSort={key => {
-        alert("sorted by field.key: " + key);
+      onSort={(key, direction) => {
+        alert("sorted by field.key: " + key + " - " + direction);
       }}
       records={leads}
       multipleSelectionButton="Buy Selected Leads"

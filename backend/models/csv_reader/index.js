@@ -4,7 +4,8 @@ const fs = require("fs");
 const program = require("commander");
 
 // internal modules
-const { LeadsUpload } = require("../leads-upload/leads_upload");
+const LeadsUpload = require("../leads-upload/leads_upload");
+const config = require("../../config");
 
 const parse_csv_file = (user_id, filename, field_names = []) => {
   return new Promise((resolve, reject) => {
@@ -41,12 +42,14 @@ const parse_csv_file = (user_id, filename, field_names = []) => {
       resolve({ x: data.length, batch_id, field_list });
     });
     try {
-      fs.createReadStream(__dirname + "/" + filename).pipe(parser);
+      const onlyFileName = filename.split("/").pop();
+      fs.createReadStream(config.upload + "/" + onlyFileName).pipe(parser);
     } catch (e) {
       reject(e);
     }
   });
 };
+
 program
   .version("0.0.1")
   .option("-u, --user", "User_id")

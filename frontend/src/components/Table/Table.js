@@ -80,6 +80,7 @@ class Table extends React.Component {
           toggleAll={this.toggleAll}
           isAllSelected={isAllSelected}
           onSort={props.onSort}
+          sortedBy={props.sortedBy}
         />
         <TBody
           fields={fields}
