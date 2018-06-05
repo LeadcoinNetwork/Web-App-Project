@@ -1,8 +1,8 @@
-import React from 'react';
-import THRow from './THRow';
+import React from "react";
+import THRow from "./THRow";
 
 const THead = props => (
-  <div className='t-head'>
+  <div className="t-head">
     <THRow {...props} />
   </div>
 );

@@ -1,5 +1,5 @@
-import './LinkedinLogin.scss';
+import "./LinkedinLogin.scss";
 
-import LinkedinLogin from './LinkedinLogin';
+import LinkedinLogin from "./LinkedinLogin";
 
 export default LinkedinLogin;

@@ -1,6 +1,6 @@
-import React from 'react';;
-import GoogleLogin from 'Components/GoogleLogin';
-import LinkedinLogin from 'Components/LinkedinLogin';
+import React from "react";
+import GoogleLogin from "Components/GoogleLogin";
+import LinkedinLogin from "Components/LinkedinLogin";
 
 class SSOContainer extends React.Component {
   render() {
@@ -9,7 +9,7 @@ class SSOContainer extends React.Component {
         <GoogleLogin />
         <LinkedinLogin />
       </div>
-    )
+    );
   }
 }
 
