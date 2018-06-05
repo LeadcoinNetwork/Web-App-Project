@@ -5,10 +5,7 @@
   "scripts": {
     "start": "webpack-dev-server --progress --hot --config webpack.dev.js",
     "build": "./node_modules/.bin/webpack --progress --config webpack.prod.js",
-    "storybook": "start-storybook -p 9001 -c .storybook",
-    "precommit": "pretty-quick --staged",
-    "postmerge": "echo postmerge",
-    "postcheckout": "echo postcheckout"
+    "storybook": "start-storybook -p 9001 -c .storybook"
   },
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.8",

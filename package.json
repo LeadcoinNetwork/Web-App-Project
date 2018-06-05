@@ -6,7 +6,10 @@
   },
   "name": "leadcoin-web",
   "scripts": {
-    "precommit": "pretty-quick --staged"
+    "precommit": "pretty-quick --staged",
+    "postmerge": "npm run abc",
+    "postcheckout": "npm run abc",
+    "abc": "echo abc"
   },
   "version": "1.0.0",
   "main": "index.js",
