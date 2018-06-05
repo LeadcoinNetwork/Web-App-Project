@@ -7,9 +7,10 @@
   "name": "leadcoin-web",
   "scripts": {
     "precommit": "pretty-quick --staged",
-    "postmerge": "npm run abc",
-    "postcheckout": "npm run abc",
-    "abc": "echo abc"
+    "postmerge": "npm run githook",
+    "postcheckout": "npm run githook",
+    "githook":
+      "Check the git log if you need to do `npm i`, and even remove your node_modules"
   },
   "version": "1.0.0",
   "main": "index.js",
