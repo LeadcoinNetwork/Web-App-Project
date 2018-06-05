@@ -4,7 +4,7 @@ const fs = require("fs");
 const program = require("commander");
 
 // internal modules
-const { LeadsUpload } = require("../leads-upload/leads_upload");
+const LeadsUpload = require("../leads-upload/leads_upload");
 const config = require("../../config");
 
 const parse_csv_file = (user_id, filename, field_names = []) => {
@@ -42,8 +42,8 @@ const parse_csv_file = (user_id, filename, field_names = []) => {
       resolve({ x: data.length, batch_id, field_list });
     });
     try {
-      console.log({ __dirname, filename }, config.upload);
-      fs.createReadStream(config.upload + "/" + filename).pipe(parser);
+      const onlyFileName = filename.split("/").pop();
+      fs.createReadStream(config.upload + "/" + onlyFileName).pipe(parser);
     } catch (e) {
       reject(e);
     }
