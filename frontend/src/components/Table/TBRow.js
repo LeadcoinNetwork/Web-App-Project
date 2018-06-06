@@ -4,17 +4,18 @@ import Button from "Components/Button";
 import TBRCol from "./TBRCol";
 
 const TBRow = props => (
-  <div className="tb-row" onClick={e => props.toggleRecord(e, props.id)}>
+  <div className="tb-row" onClick={() => props.toggleRecord(props.id)}>
     <div className="tbr-checkbox">
       <Checkbox checked={props.selectedRecords.has(props.id)} />
     </div>
     <div className="tbr-buttons">
-      {props.recordMainButton ? (
+      {props.buttons.map(button => (
         <Button
-          label={props.recordMainButton}
-          onClick={() => props.recordMainAction(props.id)}
+          key={button.value}
+          label={button.value}
+          onClick={() => button.onClick(props.id)}
         />
-      ) : null}
+      ))}
     </div>
     {props.fields.map(f => (
       <TBRCol
