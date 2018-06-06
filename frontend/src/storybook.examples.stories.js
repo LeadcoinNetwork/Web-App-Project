@@ -8,11 +8,9 @@ import { linkTo } from "@storybook/addon-links";
 import { withInfo } from "@storybook/addon-info";
 import { withState } from "@dump247/storybook-state";
 
-// Internal Modules
-import createStory from "./utils/createStory";
-
 // https://github.com/storybooks/storybook/tree/release/3.4/addons/knobs
 import {
+  withKnobs,
   text,
   boolean,
   number,
@@ -24,26 +22,14 @@ import {
   button
 } from "@storybook/addon-knobs/react";
 
-createStory("Example Stories", module)
+// createStory("Example Stories", module)
+storiesOf("Example Stories", module)
   .add("action", () => (
     <div onClick={action("clicked")}>Click Here to see an example action</div>
   ))
   .add("link", () => (
     <div onClick={linkTo("Example Stories", "action")}>
       Click here to link to other story
-    </div>
-  ))
-  .add("With Knob", () => (
-    <div>
-      Boolean:{boolean("Boolean:") ? "true" : "false"} <br />
-      Text: {text("Text", "default value")} <br />
-      Number: {number("number", 10, "group2")} <br />
-      Color: {color("color", "red", "group2")} <br />
-      Array: {array("array", ["value1"])} <br />
-      object: {JSON.stringify(object("object", { color: "red" }))} <br />
-      selectv2: {selectV2("selectv2", { a: "optiona", b: "optionb" })} <br />
-      date: {date("date", new Date())} <br />
-      button: {button("button", action("button clicked"))} <br />
     </div>
   ))
   .add(
@@ -66,3 +52,19 @@ createStory("Example Stories", module)
       </div>
     ))
   );
+
+storiesOf("Example Stories/with nobs")
+  .addDecorator(withKnobs)
+  .add("With Knob", () => (
+    <div>
+      Boolean:{boolean("Boolean:") ? "true" : "false"} <br />
+      Text: {text("Text", "default value")} <br />
+      Number: {number("number", 10, "group2")} <br />
+      Color: {color("color", "red", "group2")} <br />
+      Array: {array("array", ["value1"])} <br />
+      object: {JSON.stringify(object("object", { color: "red" }))} <br />
+      selectv2: {selectV2("selectv2", { a: "optiona", b: "optionb" })} <br />
+      date: {date("date", new Date())} <br />
+      button: {button("button", action("button clicked"))} <br />
+    </div>
+  ));
