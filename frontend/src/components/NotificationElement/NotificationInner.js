@@ -1,14 +1,20 @@
 import React, { Component } from "react";
 
-import { format } from "../../utils/timeformat";
+import { Time } from "../../utils/time";
 
 const NotificationInner = props => (
   <div className="notification-inner">
     {props.notifications.map(notification => (
-      <div key={notification.id}>
-        <b>{format(notification.timestamp)}</b> {notification.message}
+      <div
+        className={"ni-row" + (notification.unread ? " unread" : "")}
+        key={notification.id}
+      >
+        <b>{Time.fromNow(notification.timestamp)}</b> {notification.message}
       </div>
     ))}
+    <div className="see-all" onClick={props.seeAll}>
+      See All...
+    </div>
   </div>
 );
 

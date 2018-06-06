@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { format } from "../../utils/timeformat";
+import { Time } from "../../utils/time";
 
 const PaymentsHistory = props =>
   props.payments.map(payment => (
     <div key={payment.id}>
-      <b>{format(payment.timestamp)}</b> {payment.message}
+      <b>{Time.format(payment.timestamp)}</b> {payment.message}
     </div>
   ));
 

@@ -59,6 +59,9 @@ createStoryInDesignDecoration("Notification Element")
         toggle={() => {
           alert("toggle clicked");
         }}
+        seeAll={() => {
+          alert("See all clicked");
+        }}
       />
     );
   });
