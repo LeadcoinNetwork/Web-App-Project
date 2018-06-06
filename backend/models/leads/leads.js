@@ -20,8 +20,7 @@ async function update(_id, lead) {
   return status.affectedRows != 0;
 }
 
-async function find(condition, fields, where_additions = []) {
-  // convert condition to WHERE clause
+async function find(condition, fields, options) {
   condition = Object.keys(condition)
     .map(key => {
       return `${key} = '${condition[key]}'`;
@@ -30,16 +29,19 @@ async function find(condition, fields, where_additions = []) {
     .join(" AND ");
 
   if (condition) condition = `WHERE ${condition}`;
-
-  // convert fields to SELECT statement
+  const { where_additions, sort_by } = options;
   if (Array.isArray(fields) && fields.length) {
     fields = fields.join(", ");
   } else {
     fields = "*";
   }
-
-  let rows = await mysqlPool.query(`SELECT ${fields} FROM leads ${condition}`);
-  rows = rows.map(row => Object.assign({}, row)); // remove RowDataPacket class
+  let sql = `SELECT ${fields} FROM leads ${condition}`;
+  if (Array.isArray(sort_by) && sort_by.length) {
+    sql += ` ORDER BY ${sort_by[0]} ${sort_by[1]}`;
+  }
+  console.log({ sql });
+  let rows = await mysqlPool.query(sql);
+  rows = rows.map(row => Object.assign({}, row));
   return rows;
 }
 

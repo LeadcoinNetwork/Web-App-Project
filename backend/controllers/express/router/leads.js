@@ -70,12 +70,13 @@ async function buy_leads(req, res, next) {
 router.get("/leads/bought", passport.authenticate("jwt", authOptions), buy);
 async function buy(req, res, next) {
   const { user } = req;
+  const { sort_by } = req.body;
+  const where_condition = "JSON_EXTRACT(ext_data, '$.bought_from')";
   try {
-    const my_leads = await leads.find(
-      { user_id: user.id },
-      "*",
-      "JSON_EXTRACT(ext_data, '$.bought_from')"
-    );
+    const my_leads = await leads.find({ user_id: user.id }, "*", {
+      where_condition,
+      sort_by
+    });
     const flat_leads = my_leads.map(flatten_lead);
     return res.json(flat_leads);
   } catch (e) {
@@ -86,8 +87,12 @@ async function buy(req, res, next) {
 router.get("/leads/sold", passport.authenticate("jwt", authOptions), sell);
 async function sell(req, res, next) {
   const { user } = req;
+  const { sort_by } = req.body;
   try {
-    const my_leads = await leads.find({ user_id: user.id, active: 0 });
+    const my_leads = await leads.find(
+      { user_id: user.id, active: 0 },
+      { sort_by }
+    );
     const flat_leads = my_leads.map(flatten_lead);
     return res.json(flat_leads);
   } catch (e) {
@@ -98,8 +103,9 @@ async function sell(req, res, next) {
 router.get("/leads/my", passport.authenticate("jwt", authOptions), my_leads);
 async function my_leads(req, res, next) {
   const { user } = req;
+  const { sort_by } = req.body;
   try {
-    const my_leads = await leads.find({ user_id: user.id });
+    const my_leads = await leads.find({ user_id: user.id }, "*", { sort_by });
     const flat_leads = my_leads.map(flatten_lead);
     return res.json(my_leads);
   } catch (e) {
