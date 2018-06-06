@@ -9,36 +9,31 @@ class Table extends React.Component {
     super(props);
 
     this.state = {
-      fields: props.fields,
-      records: props.records,
-      selectedRecords: new Set(),
-      isAllSelected: false
+      selectedRecords: new Set()
     };
   }
   componentWillReceiveProps(nextProps) {
     this.setState({
-      records: nextProps.records,
-      isAllSelected:
-        this.state.selectedRecords.size === nextProps.records.length
+      records: nextProps.records
     });
   }
+  isAllSelected = () => {
+    return this.state.selectedRecords.size === this.props.records.length;
+  };
   toggleRecord = id => {
     let selectedRecords = new Set(this.state.selectedRecords);
 
     selectedRecords.delete(id) ? null : selectedRecords.add(id);
 
-    this.setState({
-      selectedRecords,
-      isAllSelected: selectedRecords.size === this.state.records.length
-    });
+    this.setState({ selectedRecords });
   };
   toggleAll = () => {
     if (this.state.selectedRecords.size === this.state.records.length) {
-      this.setState({ selectedRecords: new Set(), isAllSelected: false });
+      this.setState({ selectedRecords: new Set() });
     } else {
       let selectedRecords = new Set();
       this.state.records.forEach(r => selectedRecords.add(r.id));
-      this.setState({ selectedRecords, isAllSelected: true });
+      this.setState({ selectedRecords });
     }
   };
   getDinamicColsCount(fields) {
@@ -56,25 +51,25 @@ class Table extends React.Component {
     return width;
   }
   render() {
-    let { fields, records, selectedRecords, isAllSelected } = this.state;
-    let props = this.props;
-    let dinamicColsCount = this.getDinamicColsCount(fields);
-    let widthOfStaticCols = this.getWidthOfStaticCols(fields);
+    let props = this.props,
+      state = this.state,
+      dinamicColsCount = this.getDinamicColsCount(props.fields),
+      widthOfStaticCols = this.getWidthOfStaticCols(props.fields),
+      isAllSelected = this.isAllSelected();
 
     return (
       <section className="ldc-table">
         {props.title ? <h1>{props.title}</h1> : null}
-        {props.multipleSelectionButton ? (
+        {props.buttons.table.map(button => (
           <Button
-            label={props.multipleSelectionButton}
-            disabled={!selectedRecords.size}
-            onClick={() =>
-              props.multipleSelectionAction(Array.from(selectedRecords))
-            }
+            key={button.value}
+            label={button.value}
+            onClick={() => button.onClick(Array.from(state.selectedRecords))}
+            disabled={!state.selectedRecords.size}
           />
-        ) : null}
+        ))}
         <THead
-          fields={fields}
+          fields={props.fields}
           colCount={dinamicColsCount}
           staticColsWidth={widthOfStaticCols}
           toggleAll={this.toggleAll}
@@ -82,17 +77,18 @@ class Table extends React.Component {
           onSort={props.onSort}
           sortedBy={props.sortedBy}
         />
-        <TBody
-          fields={fields}
-          records={records}
-          colCount={dinamicColsCount}
-          staticColsWidth={widthOfStaticCols}
-          toggleRecord={this.toggleRecord}
-          selectedRecords={selectedRecords}
-          recordMainButton={props.recordMainButton}
-          recordMainAction={props.recordMainAction}
-          isAllSelected={isAllSelected}
-        />
+        {
+          <TBody
+            fields={props.fields}
+            records={props.records}
+            colCount={dinamicColsCount}
+            staticColsWidth={widthOfStaticCols}
+            toggleRecord={this.toggleRecord}
+            selectedRecords={state.selectedRecords}
+            buttons={props.buttons.record}
+            showOnZeroRecords={props.showOnZeroRecords}
+          />
+        }
         <div className="t-footer" />
       </section>
     );

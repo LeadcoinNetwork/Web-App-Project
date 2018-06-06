@@ -2,27 +2,23 @@ import React, { Component } from "react";
 import NotificationInner from "./NotificationInner";
 import "./Notification.scss";
 
-class NotificationElement extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import faBell from "@fortawesome/fontawesome-free-solid/faBell";
 
-  toggle = () => {
-    this.setState({ opened: !this.state.opened });
-  };
-
-  render() {
-    return (
-      <div className="notification-element" onClick={this.toggle}>
-        <div className="notification-icon">A</div>
-        {this.props.unreadCount && (
-          <div className="notification-badge">{this.props.unreadCount}</div>
-        )}
-        {this.state.opened && <NotificationInner {...this.props} />}
+const NotificationElement = props => (
+  <div className="notification-element" onClick={props.toggle}>
+    <FontAwesomeIcon className="notification-icon" icon={faBell} size={6} />
+    {props.unreadCount > 0 && (
+      <div
+        className={
+          "notification-badge" + (props.unreadCount > 9 ? " plus" : "")
+        }
+      >
+        {props.unreadCount < 10 ? props.unreadCount : "9+"}
       </div>
-    );
-  }
-}
+    )}
+    {props.opened && <NotificationInner {...props} />}
+  </div>
+);
 
 export default NotificationElement;

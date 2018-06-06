@@ -10,13 +10,11 @@ const withInfiniteScroll = onScrollBottom => WrappedComponent => {
         loading: false
       };
     }
-
     componentDidMount() {
       this.onScrollThrottled = throttle(this.onScroll, 200);
       window.addEventListener("scroll", this.onScrollThrottled);
     }
-
-    componentDidMount() {
+    componentWillUnount() {
       window.removeEventListener("scroll", this.onScrollThrottled);
     }
     onScroll = () => {

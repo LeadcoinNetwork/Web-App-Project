@@ -1,9 +1,8 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import PaymentHistory from "./PaymentHistory";
-
-const payments = require("../../mocks/payments.json");
+import { action } from "@storybook/addon-actions";
+import Header from "./Header";
 
 function createStoryInDesignDecoration(nameOfStory) {
   return storiesOf(nameOfStory, module).addDecorator(getStories => (
@@ -11,6 +10,12 @@ function createStoryInDesignDecoration(nameOfStory) {
   ));
 }
 
-createStoryInDesignDecoration("Payment History").add("Table", () => (
-  <PaymentHistory payments={payments} />
-));
+createStoryInDesignDecoration("Notification Status Bar").add(
+  "no elemnts",
+  () => (
+    <Header
+      notifications={{ current: { message: "", type: "" } }}
+      push={action("push")}
+    />
+  )
+);

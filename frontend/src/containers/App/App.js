@@ -4,6 +4,8 @@ import Header from "Components/Header";
 import UserDetails from "Components/userDetails";
 import { connect } from "react-redux";
 import { connectToNotifications } from "../../actions/index";
+import { push } from "react-router-redux";
+import { bindActionCreators } from "redux";
 
 // const cookies = require('js-cookie');
 
@@ -27,6 +29,8 @@ import { connectToNotifications } from "../../actions/index";
 class App extends React.Component {
   constructor(props) {
     super(props);
+
+    this.boundPush = bindActionCreators(push, props.dispatch);
 
     connectToNotifications(props.dispatch);
   }

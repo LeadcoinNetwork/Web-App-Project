@@ -1,17 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 import Table from "Components/Table";
+import { getLeads } from "../../actions";
 
-const fields = require("../../mocks/fields.json");
+const buyLeadsConfig = require("./buy_leads_table.config.json");
 
 class Buy extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      fields: fields,
-      records: props.leads
-    };
+    getLeads(props.dispatch);
   }
   buyLeads = leads => {
     console.log(leads);
@@ -20,29 +18,33 @@ class Buy extends React.Component {
     this.buyLeads([lead]);
   };
   onScrollBottom = cb => {
-    let leads = this.state.records;
+    let { dispatch, leads } = this.props;
 
-    if (leads.length < 70) {
-      setTimeout(() => {
-        this.setState({
-          records: [...leads, ...leads]
-        });
-        cb();
-      }, 1000);
-    }
+    getLeads(dispatch, cb, leads.page + 1);
+  };
+  getButtons = () => {
+    return {
+      table: [
+        {
+          value: "buy selected leads",
+          onClick: this.buyLeads
+        }
+      ],
+      record: [
+        {
+          value: "buy",
+          onClick: this.buyLead
+        }
+      ]
+    };
   };
   render() {
-    let state = this.state;
-
     return (
       <Table
         title="Buy Leads"
-        fields={state.fields}
-        records={state.records}
-        multipleSelectionButton="Buy Selected Leads"
-        multipleSelectionAction={this.buyLeads}
-        recordMainButton="Buy"
-        recordMainAction={this.buyLead}
+        fields={buyLeadsConfig.fields}
+        records={this.props.leads.list}
+        buttons={this.getButtons()}
         onScrollBottom={this.onScrollBottom}
       />
     );
