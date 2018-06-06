@@ -22,7 +22,7 @@ class Table extends React.Component {
         this.state.selectedRecords.size === nextProps.records.length
     });
   }
-  toggleRecord = id => {
+  toggleRecord = (e, id) => {
     let selectedRecords = new Set(this.state.selectedRecords);
 
     selectedRecords.delete(id) ? null : selectedRecords.add(id);
