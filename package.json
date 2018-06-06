@@ -8,9 +8,8 @@
   "scripts": {
     "precommit": "pretty-quick --staged",
     "postmerge": "npm run githook",
-    "postcheckout": "npm run githook",
-    "githook":
-      "Check the git log if you need to do `npm i`, and even remove your node_modules"
+    "postcheckout": "node git-hook-auto-npm-install.js",
+    "githook": "node git-hook-auto-npm-install.js"
   },
   "version": "1.0.0",
   "main": "index.js",
