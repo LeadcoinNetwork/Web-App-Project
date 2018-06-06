@@ -35,12 +35,12 @@ class App extends React.Component {
     connectToNotifications(props.dispatch);
   }
   render() {
-    let { dispatch, notifications } = this.props;
+    let { notifications } = this.props;
 
     return (
       <MuiThemeProvider>
         <div className="ldc-app">
-          <Header notifications={notifications} boundPush={this.boundPush} />
+          <Header notifications={notifications} />
           {this.props.children}
         </div>
       </MuiThemeProvider>
