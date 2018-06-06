@@ -11,7 +11,11 @@ import rootReducer from "./reducers/index";
 
 const history = createBrowserHistory();
 const ROUTER_MIDDLEWARE = routerMiddleware(history);
-const store = createStore(rootReducer, applyMiddleware(ROUTER_MIDDLEWARE));
+const store = createStore(
+  rootReducer,
+  applyMiddleware(ROUTER_MIDDLEWARE),
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 ReactDOM.render(
   <Provider store={store}>

@@ -1,9 +1,12 @@
 import React from "react";
 import Snacbar from "material-ui/Snackbar";
 import Button from "Components/Button";
-import { push } from "react-router-redux";
+import { Link } from "react-router-dom";
 
 class Header extends React.Component {
+  constructor(props, context) {
+    super(props);
+  }
   getSnackbarStyle(type) {
     let color, backgroundColor;
 
@@ -30,90 +33,34 @@ class Header extends React.Component {
   render() {
     let currentNotification = this.props.notifications.current;
     currentNotification.style = this.getSnackbarStyle(currentNotification.type);
-
+    var routes = [
+      "/admin/login",
+      "/admin/leads",
+      "/admin/transactions",
+      "/users/signup",
+      "/users/complete-registration",
+      "/users/email-confirmation",
+      "/users/login",
+      "/users/settings",
+      "/users/notifications",
+      "/users/payments",
+      "/users/withdrawal",
+      "/leads/buy",
+      "/leads/sell",
+      "/leads/my",
+      "/leads/new",
+      "/leads/csv-upload",
+      "/leads/csv-mapping",
+      "/leads/checkout",
+      "/leads/1/dispute"
+    ];
     return (
       <div className="ldc-header">
-        <Button label="home" onClick={() => props.dispatch(push("/"))} />
-        <Button
-          label="admin - login"
-          onClick={() => props.dispatch(push("/admin/login"))}
-        />
-        <Button
-          label="admin - users"
-          onClick={() => props.dispatch(push("/admin/users"))}
-        />
-        <Button
-          label="admin - leads"
-          onClick={() => props.dispatch(push("/admin/leads"))}
-        />
-        <Button
-          label="admin - transactions"
-          onClick={() => props.dispatch(push("/admin/transactions"))}
-        />
-        <Button
-          label="signup"
-          onClick={() => props.dispatch(push("/users/signup"))}
-        />
-        <Button
-          label="complete registration"
-          onClick={() => props.dispatch(push("/users/complete-registration"))}
-        />
-        <Button
-          label="email confirmation"
-          onClick={() => props.dispatch(push("/users/email-confirmation"))}
-        />
-        <Button
-          label="login"
-          onClick={() => props.dispatch(push("/users/login"))}
-        />
-        <Button
-          label="Settings"
-          onClick={() => props.dispatch(push("/users/settings"))}
-        />
-        <Button
-          label="Notifications"
-          onClick={() => props.dispatch(push("/users/notifications"))}
-        />
-        <Button
-          label="Payments"
-          onClick={() => props.dispatch(push("/users/payments"))}
-        />
-        <Button
-          label="Withdrawal"
-          onClick={() => props.dispatch(push("/users/withdrawal"))}
-        />
-        <Button
-          label="buy leads"
-          onClick={() => props.dispatch(push("/leads/buy"))}
-        />
-        <Button
-          label="sell leads"
-          onClick={() => props.dispatch(push("/leads/sell"))}
-        />
-        <Button
-          label="my leads"
-          onClick={() => props.dispatch(push("/leads/my"))}
-        />
-        <Button
-          label="new lead"
-          onClick={() => props.dispatch(push("/leads/new"))}
-        />
-        <Button
-          label="csv upload"
-          onClick={() => props.dispatch(push("/leads/csv-upload"))}
-        />
-        <Button
-          label="csv mapping"
-          onClick={() => props.dispatch(push("/leads/csv-mapping"))}
-        />
-        <Button
-          label="checkout"
-          onClick={() => props.dispatch(push("/leads/checkout"))}
-        />
-        <Button
-          label="lead dispute"
-          onClick={() => props.dispatch(push("/leads/1/dispute"))}
-        />
+        {routes.map(path => (
+          <span>
+            <Link to={path}>{path}</Link>&nbsp;&nbsp;
+          </span>
+        ))}
         <Snacbar
           open={!!currentNotification.message}
           message={currentNotification.message || ""}
