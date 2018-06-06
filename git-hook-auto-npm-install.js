@@ -3,11 +3,11 @@ var params = (process.env.GIT_PARAMS || "").split(" ");
 if (params.length < 2) {
   // it's a merge
   var res = cp.execSync("git diff --name-only HEAD@{1} HEAD").toString();
-  cp.execSync("git diff -U0 HEAD@{1} HEAD pacakge.json", { stdio: [0, 1, 2] });
-  cp.execSync("git diff -U0 HEAD@{1} HEAD frontend/pacakge.json", {
+  cp.execSync("git diff -U0 HEAD@{1} HEAD package.json", { stdio: [0, 1, 2] });
+  cp.execSync("git diff -U0 HEAD@{1} HEAD frontend/package.json", {
     stdio: [0, 1, 2]
   });
-  cp.execSync("git diff -U0 HEAD@{1} HEAD backend/pacakge.json", {
+  cp.execSync("git diff -U0 HEAD@{1} HEAD backend/package.json", {
     stdio: [0, 1, 2]
   });
   parseResult(res);
