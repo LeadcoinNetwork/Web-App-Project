@@ -1,13 +1,11 @@
 import React, { Component } from "react";
+import { format } from "../../utils/timeformat";
 
-class PaymentsHistory extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-  render() {
-    return <div>Here you should see the notification table</div>;
-  }
-}
+const PaymentsHistory = props =>
+  props.payments.map(payment => (
+    <div key={payment.id}>
+      <b>{format(payment.timestamp)}</b> {payment.message}
+    </div>
+  ));
 
 export default PaymentsHistory;

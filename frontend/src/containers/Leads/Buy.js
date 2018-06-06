@@ -2,14 +2,13 @@ import React from "react";
 import { connect } from "react-redux";
 import Table from "Components/Table";
 
-const fields = require("../../mocks/fields.json");
+const buyLeadsConfig = require("./buy_leads_table.config.json");
 
 class Buy extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      fields: fields,
       records: props.leads
     };
   }
@@ -31,14 +30,31 @@ class Buy extends React.Component {
       }, 1000);
     }
   };
+  getButtons = () => {
+    return {
+      table: [
+        {
+          value: "buy selected leads",
+          onClick: this.buyLeads
+        }
+      ],
+      record: [
+        {
+          value: "buy",
+          onClick: this.buyLead
+        }
+      ]
+    };
+  };
   render() {
     let state = this.state;
 
     return (
       <Table
         title="Buy Leads"
-        fields={state.fields}
+        fields={buyLeadsConfig.fields}
         records={state.records}
+        buttons={this.getButtons()}
         multipleSelectionButton="Buy Selected Leads"
         multipleSelectionAction={this.buyLeads}
         recordMainButton="Buy"

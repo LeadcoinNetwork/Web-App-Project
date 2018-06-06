@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "message": "New notification 1",
+    "timestamp": 1528208638722,
+    "unread": true
+  },
+  {
+    "id": 2,
+    "message": "New notification 2",
+    "timestamp": 1528209638722,
+    "unread": true
+  },
+  {
+    "id": 3,
+    "message": "New notification 3",
+    "timestamp": 1528210638722,
+    "unread": true
+  },
+  {
+    "id": 4,
+    "message": "New notification 4",
+    "timestamp": 1528211638722,
+    "unread": true
+  },
+  {
+    "id": 5,
+    "message": "New notification 5",
+    "timestamp": 1528212638722,
+    "unread": false
+  },
+  {
+    "id": 6,
+    "message": "New notification 6",
+    "timestamp": 1528213638722,
+    "unread": false
+  }
+]

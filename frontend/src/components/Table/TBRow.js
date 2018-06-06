@@ -9,12 +9,13 @@ const TBRow = props => (
       <Checkbox checked={props.selectedRecords.has(props.id)} />
     </div>
     <div className="tbr-buttons">
-      {props.recordMainButton ? (
+      {props.buttons.map(button => (
         <Button
-          label={props.recordMainButton}
-          onClick={() => props.recordMainAction(props.id)}
+          key={button.value}
+          label={button.value}
+          onClick={() => button.onClick(props.id)}
         />
-      ) : null}
+      ))}
     </div>
     {props.fields.map(f => (
       <TBRCol

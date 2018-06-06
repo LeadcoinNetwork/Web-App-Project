@@ -3,6 +3,9 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import Header from "Components/Header";
 import UserDetails from "Components/userDetails";
 import { connect } from "react-redux";
+import { connectToNotifications } from "../../actions/index";
+import { push } from "react-router-redux";
+import { bindActionCreators } from "redux";
 
 // const cookies = require('js-cookie');
 
@@ -24,11 +27,20 @@ import { connect } from "react-redux";
 // }
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.boundPush = bindActionCreators(push, props.dispatch);
+
+    connectToNotifications(props.dispatch);
+  }
   render() {
+    let { dispatch, notifications } = this.props;
+
     return (
       <MuiThemeProvider>
         <div className="ldc-app">
-          <Header dispatch={this.props.dispatch} />
+          <Header notifications={notifications} boundPush={this.boundPush} />
           {this.props.children}
         </div>
       </MuiThemeProvider>
@@ -36,4 +48,8 @@ class App extends React.Component {
   }
 }
 
-export default connect()(App);
+const mapStateToProps = state => ({
+  notifications: state.notifications
+});
+
+export default connect(mapStateToProps)(App);
