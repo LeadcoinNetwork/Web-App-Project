@@ -13,7 +13,10 @@ const TBRow = props => (
         <Button
           key={button.value}
           label={button.value}
-          onClick={() => button.onClick(props.id)}
+          onClick={e => {
+            e.stopPropagation();
+            button.onClick(props.id);
+          }}
         />
       ))}
     </div>
