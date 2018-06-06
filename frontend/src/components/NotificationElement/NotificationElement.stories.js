@@ -14,7 +14,13 @@ function createStoryInDesignDecoration(nameOfStory) {
 
 createStoryInDesignDecoration("Notification Element")
   .add("No Notification", () => (
-    <NotificationElement unreadCount={0} notifications={[]} />
+    <NotificationElement
+      unreadCount={0}
+      notifications={[]}
+      toggle={() => {
+        alert("toggle clicked");
+      }}
+    />
   ))
   .add("6 Notification closed", () => {
     let unreadCount = notifications.filter(notification => notification.unread)
@@ -24,7 +30,21 @@ createStoryInDesignDecoration("Notification Element")
         unreadCount={unreadCount}
         notifications={notifications}
         opened={false}
-        toggel={() => alert("toggel clicked")}
+        toggle={() => {
+          alert("toggle clicked");
+        }}
+      />
+    );
+  })
+  .add("14 Notification closed", () => {
+    return (
+      <NotificationElement
+        unreadCount={14}
+        notifications={notifications}
+        opened={false}
+        toggle={() => {
+          alert("toggle clicked");
+        }}
       />
     );
   })
@@ -36,7 +56,9 @@ createStoryInDesignDecoration("Notification Element")
         unreadCount={unreadCount}
         notifications={notifications}
         opened={true}
-        toggel={() => alert("toggel clicked")}
+        toggle={() => {
+          alert("toggle clicked");
+        }}
       />
     );
   });

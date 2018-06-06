@@ -14,10 +14,16 @@
     right: 0px;
     width: 18px;
     height: 18px;
+    line-height: 20px;
     color: white;
     border-radius: 50%;
     background-color: red;
     text-align: center;
+    &.plus {
+      width: 20px;
+      height: 20px;
+      line-height: 22px;
+    }
   }
   .notification-inner {
     padding: 10px;
