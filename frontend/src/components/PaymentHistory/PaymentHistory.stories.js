@@ -1,7 +1,9 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import NotificationsTable from "./PaymentHistory";
+import PaymentHistory from "./PaymentHistory";
+
+const payments = require("../../mocks/payments.json");
 
 function createStoryInDesignDecoration(nameOfStory) {
   return storiesOf(nameOfStory, module).addDecorator(getStories => (
@@ -9,6 +11,6 @@ function createStoryInDesignDecoration(nameOfStory) {
   ));
 }
 
-createStoryInDesignDecoration("Payment History").add("Empty Table", () => (
-  <NotificationsTable />
+createStoryInDesignDecoration("Payment History").add("Table", () => (
+  <PaymentHistory payments={payments} />
 ));
