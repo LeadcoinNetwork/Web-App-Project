@@ -2,10 +2,13 @@ import React, { Component } from "react";
 import NotificationInner from "./NotificationInner";
 import "./Notification.scss";
 
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import faBell from "@fortawesome/fontawesome-free-solid/faBell";
+
 const NotificationElement = props => (
   <div className="notification-element" onClick={props.toggle && props.toggle}>
-    <div className="notification-icon">A</div>
-    {props.unreadCount && (
+    <FontAwesomeIcon className="notification-icon" icon={faBell} size={6} />
+    {props.unreadCount > 0 && (
       <div className="notification-badge">{props.unreadCount}</div>
     )}
     {props.opened && <NotificationInner {...props} />}
