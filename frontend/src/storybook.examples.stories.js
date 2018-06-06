@@ -8,9 +8,6 @@ import { linkTo } from "@storybook/addon-links";
 import { withInfo } from "@storybook/addon-info";
 import { withState } from "@dump247/storybook-state";
 
-// Internal Modules
-import createStory from "./utils/createStory";
-
 // https://github.com/storybooks/storybook/tree/release/3.4/addons/knobs
 import {
   withKnobs,
