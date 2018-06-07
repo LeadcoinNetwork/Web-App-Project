@@ -1,7 +1,7 @@
 import React from "react";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import Header from "Components/Header";
-import UserDetails from "Components/userDetails";
+import UserDetails from "Components/UserDetails";
 import { connect } from "react-redux";
 import { connectToNotifications } from "../../actions/index";
 import { push } from "react-router-redux";

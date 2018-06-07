@@ -30,35 +30,9 @@ function Header(props) {
 
   var currentNotification = props.notifications.current;
   currentNotification.style = getSnackbarStyle(currentNotification.type);
-  var routes = [
-    "/admin/login",
-    "/admin/leads",
-    "/admin/transactions",
-    "/users/signup",
-    "/users/complete-registration",
-    "/users/email-confirmation",
-    "/users/login",
-    "/users/settings",
-    "/users/notifications",
-    "/users/payments",
-    "/users/withdrawal",
-    "/leads/buy",
-    "/leads/sell",
-    "/leads/my",
-    "/leads/new",
-    "/leads/csv-upload",
-    "/leads/csv-mapping",
-    "/leads/checkout",
-    "/leads/1/dispute"
-  ];
 
   return (
     <div className="ldc-header">
-      {routes.map(path => (
-        <span>
-          <Link to={path}>{path}</Link>&nbsp;&nbsp;
-        </span>
-      ))}
       <Snacbar
         open={!!currentNotification.message}
         message={currentNotification.message || ""}
