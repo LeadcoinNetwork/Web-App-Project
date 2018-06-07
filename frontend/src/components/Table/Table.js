@@ -6,7 +6,7 @@ import TBody from "./TBody";
 
 class Table extends React.Component {
   isAllSelected = () => {
-    return this.props.selected.size === this.props.records.length;
+    return this.props.selected.size > 0 && this.props.selected.size === this.props.records.length;
   };
   toggleRecord = id => {
     let selected = new Set(this.props.selected);
