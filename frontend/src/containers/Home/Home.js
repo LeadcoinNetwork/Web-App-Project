@@ -1,8 +1,10 @@
 import React from "react";
+import { Redirect } from "react-router";
 
 class Home extends React.Component {
   render() {
-    return <h1>Home</h1>;
+    // return <div>Hi{typeof Redirect}</div> //
+    return <Redirect to="/users/signup" />;
   }
 }
 
