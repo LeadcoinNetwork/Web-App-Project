@@ -5,14 +5,47 @@ import THead from "./THead";
 import TBody from "./TBody";
 
 class Table extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      lastSelected: null
+    }
+  }
   isAllSelected = () => {
     return this.props.selected.size > 0 && this.props.selected.size === this.props.records.length;
   };
-  toggleRecord = id => {
+  toggleRecord = (e, id) => {
     let selected = new Set(this.props.selected);
-
-    selected.delete(id) ? null : selected.add(id);
-
+    
+    if (e.shiftKey) {
+      let toggelFunction;
+      if (selected.has(id)) {
+        toggelFunction = Set.prototype.delete.bind(selected);
+      } else {
+        toggelFunction = Set.prototype.add.bind(selected);
+      }
+      let last, now;
+      this.props.records.forEach((element, index) => {
+        if (element.id === id) {
+          now = index;
+        }
+        if (element.id === this.state.lastSelected) {
+          last = index;
+        }
+      })
+      if (now < last) {
+        const temp = now;
+        now = last;
+        last = temp;
+      }
+      for (let i = last; i <= now; i++) {
+        toggelFunction(this.props.records[i].id);
+      }
+    } else {
+      selected.delete(id) ? null : selected.add(id);
+      this.setState({ lastSelected: id });
+    }
+    
     this.props.setSelectedRecords(selected);
   };
   toggleAll = () => {
@@ -38,6 +71,9 @@ class Table extends React.Component {
 
     return width;
   }
+  setButtonLabel(label, amount) {
+    return label ? label.replace('${number} ', amount > 1 ? amount + ' ' : '').slice(0, amount === 1 ? -1 : label.length) : '';
+  }
   render() {
     let props = this.props,
       dinamicColsCount = this.getDinamicColsCount(props.fields),
@@ -49,7 +85,7 @@ class Table extends React.Component {
         {props.buttons && props.buttons.table && props.buttons.table.map(button => (
           <Button
             key={button.value}
-            label={button.value ? button.value.replace('${number} ', props.selected.size > 0 ? props.selected.size + ' ' : '').slice(0, props.selected.size === 1 ? -1 : button.value.length) : ''}
+            label={this.setButtonLabel(button.value, props.selected.size)}
             onClick={button.onClick}
             disabled={!props.selected.size}
           />
