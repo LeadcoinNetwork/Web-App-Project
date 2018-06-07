@@ -2,37 +2,31 @@
   {
     "id": 1,
     "message": "Paid 1LDC",
-    "timestamp": 1528208638722,
-    "unread": true
+    "timestamp": 1528208638722
   },
   {
     "id": 2,
     "message": "Received 2LDC",
-    "timestamp": 1528209638722,
-    "unread": true
+    "timestamp": 1528209638722
   },
   {
     "id": 3,
     "message": "Paid 3LDC",
-    "timestamp": 1528210638722,
-    "unread": true
+    "timestamp": 1528210638722
   },
   {
     "id": 4,
     "message": "Received 4LDC",
-    "timestamp": 1528211638722,
-    "unread": true
+    "timestamp": 1528211638722
   },
   {
     "id": 5,
     "message": "Paid 5LDC",
-    "timestamp": 1528212638722,
-    "unread": false
+    "timestamp": 1528212638722
   },
   {
     "id": 6,
     "message": "Received 6LDC",
-    "timestamp": 1528213638722,
-    "unread": false
+    "timestamp": 1528213638722
   }
 ]
