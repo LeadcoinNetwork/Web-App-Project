@@ -5,6 +5,7 @@ import Table from "./";
 
 const fields = require("../../mocks/fields.json");
 const leads = require("../../mocks/leads.json");
+const selected = new Set();
 
 function createStoryInDesignDecoration(nameOfStory) {
   return storiesOf(nameOfStory, module).addDecorator(getStories => (
@@ -12,11 +13,30 @@ function createStoryInDesignDecoration(nameOfStory) {
   ));
 }
 
+const getButtons = () => {
+  return {
+    table: [
+      {
+        value: "buy selected leads",
+        onClick: () => {alert('Buy leads clicked')}
+      }
+    ],
+    record: [
+      {
+        value: "buy",
+        onClick: () => {alert('Buy leads clicked')}
+      }
+    ]
+  };
+};
+
 createStoryInDesignDecoration("Table")
   .add("with leads", () => (
     <Table
       fields={fields}
+      selected={selected}
       records={leads}
+      buttons={getButtons()}
       multipleSelectionButton="Buy ${number} Leads"
       multipleSelectionAction={console.log}
       recordMainButton="Buy"
@@ -27,8 +47,10 @@ createStoryInDesignDecoration("Table")
   .add("without leads", () => (
     <Table
       fields={fields}
+      selected={selected}
       showOnZeroRecords={<div>No Leads</div>}
       records={[]}
+      buttons={getButtons()}
       multipleSelectionButton="Buy Selected Leads"
       multipleSelectionAction={console.log}
       recordMainButton="Buy"
@@ -39,11 +61,13 @@ createStoryInDesignDecoration("Table")
   .add("with onSort action", () => (
     <Table
       fields={fields}
+      selected={selected}
       showOnZeroRecords={<div>No Leads</div>}
       onSort={(key, direction) => {
         alert("sorted by field.key: " + key + " - " + direction);
       }}
       records={leads}
+      buttons={getButtons()}
       multipleSelectionButton="Buy Selected Leads"
       multipleSelectionAction={console.log}
       recordMainButton="Buy"
@@ -54,9 +78,11 @@ createStoryInDesignDecoration("Table")
   .add("with sort asc", () => (
     <Table
       fields={fields}
+      selected={selected}
       showOnZeroRecords={<div>No Leads</div>}
       sortedBy={{ key: "state", direction: "asc" }}
       records={leads}
+      buttons={getButtons()}
       multipleSelectionButton="Buy Selected Leads"
       multipleSelectionAction={console.log}
       recordMainButton="Buy"
@@ -67,9 +93,11 @@ createStoryInDesignDecoration("Table")
   .add("with sort desc", () => (
     <Table
       fields={fields}
+      selected={selected}
       showOnZeroRecords={<div>No Leads</div>}
       sortedBy={{ key: "state", direction: "desc" }}
       records={leads}
+      buttons={getButtons()}
       multipleSelectionButton="Buy Selected Leads"
       multipleSelectionAction={console.log}
       recordMainButton="Buy"
@@ -97,7 +125,9 @@ createStoryInDesignDecoration("Table")
             </button>
             <Table
               fields={fields}
+              selected={selected}
               records={this.state.records}
+      buttons={getButtons()}
               multipleSelectionButton="Buy ${number} Leads"
               multipleSelectionAction={console.log}
               recordMainButton="Buy"
