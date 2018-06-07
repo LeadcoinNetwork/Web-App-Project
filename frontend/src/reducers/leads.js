@@ -4,7 +4,8 @@ const initialState = {
   page: 1,
   limit: 5,
   total: 0,
-  list: []
+  list: [],
+  selected: new Set()
 };
 
 const leads = (state = initialState, action) => {
@@ -12,7 +13,13 @@ const leads = (state = initialState, action) => {
     case types.GET_LEADS:
       return {
         ...action.payload,
+        selected: state.selected,
         list: [...state.list, ...action.payload.list]
+      };
+    case types.SET_SELECTED_RECORDS:
+      return {
+        ...state,
+        selected: action.payload
       };
     default:
       return state;

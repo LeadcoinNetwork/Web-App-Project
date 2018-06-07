@@ -5,36 +5,24 @@ import THead from "./THead";
 import TBody from "./TBody";
 
 class Table extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      selectedRecords: new Set()
-    };
-  }
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      records: nextProps.records
-    });
-  }
   isAllSelected = () => {
-    return this.state.selectedRecords.size === this.props.records.length;
+    return this.props.selected.size === this.props.records.length;
   };
   toggleRecord = id => {
-    let selectedRecords = new Set(this.state.selectedRecords);
+    let selected = new Set(this.props.selected);
 
-    selectedRecords.delete(id) ? null : selectedRecords.add(id);
+    selected.delete(id) ? null : selected.add(id);
 
-    this.setState({ selectedRecords });
+    this.props.setSelectedRecords(selected);
   };
   toggleAll = () => {
-    if (this.state.selectedRecords.size === this.state.records.length) {
-      this.setState({ selectedRecords: new Set() });
-    } else {
-      let selectedRecords = new Set();
-      this.state.records.forEach(r => selectedRecords.add(r.id));
-      this.setState({ selectedRecords });
+    let selected = new Set();
+
+    if (!this.isAllSelected()) {
+      this.props.records.forEach(r => selected.add(r.id));
     }
+
+    this.props.setSelectedRecords(selected);
   };
   getDinamicColsCount(fields) {
     return fields.filter(f => f.maxWidth === "auto").length;
@@ -52,10 +40,8 @@ class Table extends React.Component {
   }
   render() {
     let props = this.props,
-      state = this.state,
       dinamicColsCount = this.getDinamicColsCount(props.fields),
-      widthOfStaticCols = this.getWidthOfStaticCols(props.fields),
-      isAllSelected = this.isAllSelected();
+      widthOfStaticCols = this.getWidthOfStaticCols(props.fields);
 
     return (
       <section className="ldc-table">
@@ -64,8 +50,8 @@ class Table extends React.Component {
           <Button
             key={button.value}
             label={button.value}
-            onClick={() => button.onClick(Array.from(state.selectedRecords))}
-            disabled={!state.selectedRecords.size}
+            onClick={button.onClick}
+            disabled={!props.selected.size}
           />
         ))}
         <THead
@@ -73,7 +59,7 @@ class Table extends React.Component {
           colCount={dinamicColsCount}
           staticColsWidth={widthOfStaticCols}
           toggleAll={this.toggleAll}
-          isAllSelected={isAllSelected}
+          isAllSelected={this.isAllSelected()}
           onSort={props.onSort}
           sortedBy={props.sortedBy}
         />
@@ -84,7 +70,7 @@ class Table extends React.Component {
             colCount={dinamicColsCount}
             staticColsWidth={widthOfStaticCols}
             toggleRecord={this.toggleRecord}
-            selectedRecords={state.selectedRecords}
+            selected={props.selected}
             buttons={props.buttons.record}
             showOnZeroRecords={props.showOnZeroRecords}
           />

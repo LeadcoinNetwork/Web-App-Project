@@ -5,10 +5,7 @@ import THRCol from "./THRCol";
 const THRow = props => (
   <div className="th-row">
     <div className="thr-checkbox">
-      <Checkbox
-        checked={props.isAllSelected}
-        onClick={() => props.toggleAll()}
-      />
+      <Checkbox checked={props.isAllSelected} onClick={props.toggleAll} />
     </div>
     {props.fields.map(f => (
       <THRCol

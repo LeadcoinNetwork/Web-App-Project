@@ -36,18 +36,6 @@ createStoryInDesignDecoration("Notification Element")
       />
     );
   })
-  .add("14 Notification closed", () => {
-    return (
-      <NotificationElement
-        unreadCount={14}
-        notifications={notifications}
-        opened={false}
-        toggle={() => {
-          alert("toggle clicked");
-        }}
-      />
-    );
-  })
   .add("6 Notification opened", () => {
     let unreadCount = notifications.filter(notification => notification.unread)
       .length;
@@ -61,6 +49,18 @@ createStoryInDesignDecoration("Notification Element")
         }}
         seeAll={() => {
           alert("See all clicked");
+        }}
+      />
+    );
+  })
+  .add("14 Notification closed", () => {
+    return (
+      <NotificationElement
+        unreadCount={14}
+        notifications={notifications}
+        opened={false}
+        toggle={() => {
+          alert("toggle clicked");
         }}
       />
     );

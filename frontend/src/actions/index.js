@@ -11,9 +11,16 @@ const SOCKET = io("http://localhost:3000");
 export const GET_LEADS = "GET_LEADS";
 export const SHOW_NOTIFICATION = "SHOW_NOTIFICATION";
 export const HIDE_NOTIFICATION = "HIDE_NOTIFICATION";
+export const SET_SELECTED_RECORDS = "SET_SELECTED_RECORDS";
 
 // ACTION CREATORS
-export const getLeads = (dispatch, cb, page = 1, limit = 5) => {
+export const setSelectedLeads = leads => ({
+  type: SET_SELECTED_RECORDS,
+  payload: leads
+});
+
+// ASYNC ACTION CREATORS
+export const getLeads = (dispatch, cb, page = 1, limit = 50) => {
   setTimeout(() => {
     dispatch({
       type: GET_LEADS,
@@ -21,10 +28,10 @@ export const getLeads = (dispatch, cb, page = 1, limit = 5) => {
         list: leadsMock,
         page,
         limit,
-        total: leadsMock.length
+        total: leadsMock.length * 3
       }
     });
-    cb();
+    typeof cb === "function" ? cb() : null;
   }, 250);
 };
 

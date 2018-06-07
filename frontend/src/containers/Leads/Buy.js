@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import Table from "Components/Table";
-import { getLeads } from "../../actions";
+import { getLeads, setSelectedLeads } from "../../actions";
 
 const buyLeadsConfig = require("./buy_leads_table.config.json");
 
@@ -11,11 +11,11 @@ class Buy extends React.Component {
 
     getLeads(props.dispatch);
   }
-  buyLeads = leads => {
-    console.log(leads);
+  buyLeads = () => {
+    console.log(Array.from(this.props.leads.selected));
   };
-  buyLead = lead => {
-    this.buyLeads([lead]);
+  buyLead = id => {
+    console.log([id]);
   };
   onScrollBottom = cb => {
     let { dispatch, leads } = this.props;
@@ -38,6 +38,9 @@ class Buy extends React.Component {
       ]
     };
   };
+  setSelectedRecords = selectedLeads => {
+    this.props.dispatch(setSelectedLeads(selectedLeads));
+  };
   render() {
     return (
       <Table
@@ -45,7 +48,9 @@ class Buy extends React.Component {
         fields={buyLeadsConfig.fields}
         records={this.props.leads.list}
         buttons={this.getButtons()}
+        setSelectedRecords={this.setSelectedRecords}
         onScrollBottom={this.onScrollBottom}
+        selected={this.props.leads.selected}
       />
     );
   }
