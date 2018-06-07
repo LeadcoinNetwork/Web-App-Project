@@ -26,7 +26,7 @@ class Buy extends React.Component {
     return {
       table: [
         {
-          value: "buy selected leads",
+          value: "buy ${number} leads",
           onClick: this.buyLeads
         }
       ],

@@ -46,10 +46,10 @@ class Table extends React.Component {
     return (
       <section className="ldc-table">
         {props.title ? <h1>{props.title}</h1> : null}
-        {props.buttons.table.map(button => (
+        {props.buttons && props.buttons.table && props.buttons.table.map(button => (
           <Button
             key={button.value}
-            label={button.value}
+            label={button.value ? button.value.replace('${number} ', props.selected.size > 0 ? props.selected.size + ' ' : '').slice(0, props.selected.size === 1 ? -1 : button.value.length) : ''}
             onClick={button.onClick}
             disabled={!props.selected.size}
           />

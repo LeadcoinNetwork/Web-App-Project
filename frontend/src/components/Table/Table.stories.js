@@ -17,14 +17,14 @@ const getButtons = () => {
   return {
     table: [
       {
-        value: "buy selected leads",
+        value: "buy ${number} leads",
         onClick: () => {alert('Buy leads clicked')}
       }
     ],
     record: [
       {
         value: "buy",
-        onClick: () => {alert('Buy leads clicked')}
+        onClick: () => {alert('Buy lead clicked')}
       }
     ]
   };
@@ -127,8 +127,8 @@ createStoryInDesignDecoration("Table")
               fields={fields}
               selected={selected}
               records={this.state.records}
-      buttons={getButtons()}
-              multipleSelectionButton="Buy ${number} Leads"
+              buttons={getButtons()}
+              multipleSelectionButton="Buy Leads"
               multipleSelectionAction={console.log}
               recordMainButton="Buy"
               recordMainAction={console.log}
