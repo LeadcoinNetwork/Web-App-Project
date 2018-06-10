@@ -4,7 +4,7 @@ const Joi = require("joi").extend(joiPassword)
 
 module.exports = {
   newUser,
-  partialUser
+  partialUser,
 }
 
 const userSchema = Joi.object().keys({
@@ -41,14 +41,14 @@ const userSchema = Joi.object().keys({
     .label("Password"),
   role: Joi.string()
     .only("user", "admin")
-    .label("Role")
+    .label("Role"),
 })
 
 function joiPassword(joi) {
   return {
     name: "password",
     language: {
-      strong: "is too weak"
+      strong: "is too weak",
     },
     rules: [
       {
@@ -59,13 +59,13 @@ function joiPassword(joi) {
               "password.strong",
               { v: value },
               state,
-              options
+              options,
             )
           }
           return value
-        }
-      }
-    ]
+        },
+      },
+    ],
   }
 }
 
@@ -73,7 +73,7 @@ async function newUser(user) {
   return await Joi.validate(
     user,
     userSchema.requiredKeys("fname", "lname", "email", "password"),
-    { abortEarly: false }
+    { abortEarly: false },
   )
 }
 

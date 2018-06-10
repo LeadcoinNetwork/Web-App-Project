@@ -7,7 +7,7 @@ const { Token } = require("../../../app/model")
 const { testUser } = require("../util")
 
 const request = require("request-promise-native").defaults({
-  baseUrl: config.backend
+  baseUrl: config.backend,
 })
 
 describe(`Login ${config.backend}/auth/login`, () => {
@@ -20,7 +20,7 @@ describe(`Login ${config.backend}/auth/login`, () => {
     var dbUser = await User.confirmEmail(token)
 
     var { user, token } = await request.post("/auth/login", {
-      json: { email, password }
+      json: { email, password },
     })
 
     expect(token).to.be.a("string")
@@ -34,8 +34,8 @@ describe(`Login ${config.backend}/auth/login`, () => {
 
     return expect(
       request.post("/auth/login", {
-        json: { email, password }
-      })
+        json: { email, password },
+      }),
     ).to.be.rejectedWith('403 - {"error":"EMAIL_NOT_VERIFIED"}')
   })
 })

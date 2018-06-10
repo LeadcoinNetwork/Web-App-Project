@@ -1,4 +1,4 @@
-import * as Types from "../actions/types"
+import * as types from "../actions/types"
 var initialState = {
   loading: false,
   total: 0,
@@ -6,13 +6,13 @@ var initialState = {
 }
 export default function(state = initialState, action) {
   switch (action) {
-    case Types.ACTION_WITHDRAW_ELEMENT_START_LOADING:
+    case types.ACTION_WITHDRAW_ELEMENT_START_LOADING:
       return {
         loading: true,
         ...state,
       }
       break
-    case Types.ACTION_WITHDRAW_ELEMENT_FINISH_LOADING:
+    case types.ACTION_WITHDRAW_ELEMENT_FINISH_LOADING:
       return {
         loading: false,
         ...state,

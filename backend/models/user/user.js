@@ -16,7 +16,7 @@ module.exports = {
   update,
   confirmEmailUpdate,
   forgotPassword,
-  updateExternal
+  updateExternal,
 }
 
 // returns user
@@ -75,7 +75,7 @@ async function register(user) {
   await Token.insert({
     user_id: user.id,
     token: token,
-    created: Date.now()
+    created: Date.now(),
   })
 
   await mail.confirmEmail(user, token)
@@ -138,7 +138,7 @@ async function update(userId, user) {
       user_id: userId,
       token: token,
       pending_email: email,
-      created: Date.now()
+      created: Date.now(),
     })
     await mail.confirmEmailUpdate(user, token)
     delete user.email
@@ -168,7 +168,7 @@ async function forgotPassword(email) {
   await Token.insert({
     user_id: user.id,
     token: token,
-    created: Date.now()
+    created: Date.now(),
   })
   await mail.forgotPassword(user, token)
 }

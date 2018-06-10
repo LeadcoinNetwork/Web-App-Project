@@ -6,13 +6,13 @@ const User = require("../../../app/controller/user")
 const { testUser } = require("../util")
 
 const request = require("request-promise-native").defaults({
-  baseUrl: config.backend
+  baseUrl: config.backend,
 })
 
 describe(`Create ${config.backend}/user`, () => {
   it("Should create a new user", async () => {
     var user = await request.post("/user", {
-      json: testUser
+      json: testUser,
     })
 
     // test http response
@@ -28,10 +28,10 @@ describe(`Create ${config.backend}/user`, () => {
 
     return expect(
       request.post("/user", {
-        json: testUser
-      })
+        json: testUser,
+      }),
     ).to.be.rejectedWith(
-      '409 - {"error":"Email ' + testUser.email + ' is already in use"}'
+      '409 - {"error":"Email ' + testUser.email + ' is already in use"}',
     )
   })
 })

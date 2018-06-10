@@ -7,7 +7,7 @@ const { testUser } = require("../util")
 
 const request = require("request-promise-native").defaults({
   baseUrl: config.backend,
-  resolveWithFullResponse: true
+  resolveWithFullResponse: true,
 })
 
 describe(`Update ${config.backend}/user`, () => {
@@ -23,12 +23,12 @@ describe(`Update ${config.backend}/user`, () => {
       lname: "Bora",
       email: testUser.email,
       password: "912379231",
-      role: "admin"
+      role: "admin",
     }
 
     const res = await request.put(`/user/${user.id}`, {
       auth: { bearer: token },
-      json: updUser
+      json: updUser,
     })
 
     expect(res.statusCode).to.equal(200, JSON.stringify(res.body))
@@ -36,7 +36,7 @@ describe(`Update ${config.backend}/user`, () => {
       fname: updUser.fname,
       lname: updUser.lname,
       email: updUser.email,
-      role: "admin"
+      role: "admin",
     })
   })
 })

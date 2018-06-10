@@ -3,7 +3,7 @@ const mysqlPool = require("../mysql-pool/mysql-pool")
 module.exports = {
   insert,
   find,
-  remove
+  remove,
 }
 
 async function insert(token) {
@@ -36,7 +36,7 @@ async function find(condition, fields) {
 async function remove(userId) {
   let status = await mysqlPool.query(
     "DELETE FROM tokens WHERE user_id = ?",
-    userId
+    userId,
   )
   return status.affectedRows != 0
 }

@@ -10,7 +10,7 @@ const SOCKET = io("http://localhost:3000")
 
 // ACTION CREATORS
 export const setSelectedLeads = leads => ({
-  type: SET_SELECTED_RECORDS,
+  type: types.SET_SELECTED_RECORDS,
   payload: leads,
 })
 
@@ -18,7 +18,7 @@ export const setSelectedLeads = leads => ({
 export const getLeads = (dispatch, cb, page = 1, limit = 50) => {
   setTimeout(() => {
     dispatch({
-      type: GET_LEADS,
+      type: types.GET_LEADS,
       payload: {
         list: leadsMock,
         page,
@@ -33,7 +33,7 @@ export const getLeads = (dispatch, cb, page = 1, limit = 50) => {
 export const connectToNotifications = dispatch => {
   SOCKET.on("notification", notification => {
     dispatch({
-      type: SHOW_NOTIFICATION,
+      type: types.SHOW_NOTIFICATION,
       payload: notification,
     })
   })

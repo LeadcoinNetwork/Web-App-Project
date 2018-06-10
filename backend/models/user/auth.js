@@ -6,14 +6,14 @@ const jwt = require("jsonwebtoken")
 const config = require("../../config")
 
 const jwtOptions = {
-  expiresIn: config.auth.jwt.expiresIn
+  expiresIn: config.auth.jwt.expiresIn,
 }
 
 module.exports = {
   hashPassword,
   comparePassword,
   generateJWT,
-  generateToken
+  generateToken,
 }
 
 function hashPassword(password) {
@@ -27,7 +27,7 @@ function comparePassword(password, hash) {
 function generateJWT(user) {
   let payload = {
     id: user.id,
-    email: user.email
+    email: user.email,
   }
 
   return jwt.sign(payload, config.auth.jwt.secret, jwtOptions)

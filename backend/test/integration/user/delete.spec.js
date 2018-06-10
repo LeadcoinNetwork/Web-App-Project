@@ -8,7 +8,7 @@ const config = require("../../../app/config")
 
 const request = require("request-promise-native").defaults({
   baseUrl: config.backend,
-  resolveWithFullResponse: true
+  resolveWithFullResponse: true,
 })
 
 describe(`Delete ${config.backend}/user`, () => {
@@ -20,7 +20,7 @@ describe(`Delete ${config.backend}/user`, () => {
     var token = await User.login(user.id)
 
     const res = await request.delete(`/user/${user.id}`, {
-      auth: { bearer: token }
+      auth: { bearer: token },
     })
 
     // test http response
@@ -29,7 +29,7 @@ describe(`Delete ${config.backend}/user`, () => {
     // test database
     const dbSel = await mysqlPool.query(
       "SELECT * FROM users WHERE id = ?",
-      user.id
+      user.id,
     )
 
     expect(dbSel).to.be.an("array").that.is.empty

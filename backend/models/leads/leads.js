@@ -4,7 +4,7 @@ module.exports = {
   insert,
   find,
   remove,
-  update
+  update,
 }
 
 async function insert(lead) {
@@ -15,7 +15,7 @@ async function insert(lead) {
 async function update(_id, lead) {
   let status = await mysqlPool.query("UPDATE leads SET ? WHERE id = ?", [
     lead,
-    _id
+    _id,
   ])
   return status.affectedRows != 0
 }

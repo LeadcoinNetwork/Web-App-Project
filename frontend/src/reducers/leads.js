@@ -1,4 +1,4 @@
-import * as types from "../actions/index"
+import * as types from "../actions/types"
 
 const initialState = {
   page: 1,

@@ -10,7 +10,7 @@ const router = express.Router()
 module.exports = router
 
 const authOptions = {
-  session: false
+  session: false,
 }
 
 const basic_fields = ["date", "name", "phone", "email"]
@@ -23,7 +23,7 @@ const mock_field_list = [
   "budget",
   "bedrooms",
   "floor",
-  "specification"
+  "specification",
 ]
 
 const flatten_lead = lead => {
@@ -40,7 +40,7 @@ async function buy_leads(req, res, next) {
     const _leads = await leads.find(
       { active: 1 },
       "*",
-      "id in (" + bought_ids + ")"
+      "id in (" + bought_ids + ")",
     )
     _leads.forEach(lead => {
       lead.active = 0
@@ -75,7 +75,7 @@ async function buy(req, res, next) {
   try {
     const my_leads = await leads.find({ user_id: user.id }, "*", {
       where_condition,
-      sort_by
+      sort_by,
     })
     const flat_leads = my_leads.map(flatten_lead)
     return res.json(flat_leads)
@@ -91,7 +91,7 @@ async function sell(req, res, next) {
   try {
     const my_leads = await leads.find(
       { user_id: user.id, active: 0 },
-      { sort_by }
+      { sort_by },
     )
     const flat_leads = my_leads.map(flatten_lead)
     return res.json(flat_leads)

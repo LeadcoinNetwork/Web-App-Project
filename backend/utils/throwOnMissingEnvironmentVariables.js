@@ -9,7 +9,7 @@ module.exports = function throwOnMissingEnvironmentVariables() {
     throw new Error(
       "Some process environments variables are defined in .env.example but did not exist: \n" +
         MISSING_VARS.join("\n") +
-        "\n\n"
+        "\n\n",
     )
   }
 }

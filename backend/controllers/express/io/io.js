@@ -1,7 +1,7 @@
 var socketio = require("socket.io")
 
 module.exports = {
-  connectToHTTP
+  connectToHTTP,
 }
 
 function connectToHTTP(httpServer) {
@@ -13,7 +13,7 @@ function connectToHTTP(httpServer) {
     setTimeout(function() {
       socket.emit("notification", {
         message: "asdas",
-        type: "success|error|warning|info"
+        type: "success|error|warning|info",
       })
     }, 3000)
   })
