@@ -1,11 +1,11 @@
-import React from "react";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import Header from "Components/Header";
-import UserDetails from "Components/UserDetails";
-import { connect } from "react-redux";
-import { connectToNotifications } from "../../actions/index";
-import { push } from "react-router-redux";
-import { bindActionCreators } from "redux";
+import React from "react"
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider"
+import Header from "Components/Header"
+import UserDetails from "Components/UserDetails"
+import { connect } from "react-redux"
+import { connectToNotifications } from "../../actions/index"
+import { push } from "react-router-redux"
+import { bindActionCreators } from "redux"
 
 // const cookies = require('js-cookie');
 
@@ -28,14 +28,14 @@ import { bindActionCreators } from "redux";
 
 class App extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
 
-    this.boundPush = bindActionCreators(push, props.dispatch);
+    this.boundPush = bindActionCreators(push, props.dispatch)
 
-    connectToNotifications(props.dispatch);
+    connectToNotifications(props.dispatch)
   }
   render() {
-    let { notifications } = this.props;
+    let { notifications } = this.props
 
     return (
       <MuiThemeProvider>
@@ -44,12 +44,12 @@ class App extends React.Component {
           {this.props.children}
         </div>
       </MuiThemeProvider>
-    );
+    )
   }
 }
 
 const mapStateToProps = state => ({
   notifications: state.notifications
-});
+})
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(App)

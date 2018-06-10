@@ -1,13 +1,13 @@
-import React from "react";
-import { Switch, Route } from "react-router";
-import Signup from "./Signup";
-import EmailConfirmation from "./EmailConfirmation";
-import CompleteRegistration from "./CompleteRegistration";
-import Login from "./Login";
-import Settings from "./Settings";
-import Notifications from "./Notifications";
-import Payments from "./Payments";
-import Withdrawal from "./Withdrawal";
+import React from "react"
+import { Switch, Route } from "react-router"
+import Signup from "./Signup"
+import EmailConfirmation from "./EmailConfirmation"
+import CompleteRegistration from "./CompleteRegistration"
+import Login from "./Login"
+import Settings from "./Settings"
+import Notifications from "./Notifications"
+import Payments from "./Payments"
+import Withdrawal from "./Withdrawal"
 
 const Users = () => (
   <Switch>
@@ -23,6 +23,6 @@ const Users = () => (
     <Route path="/users/payments" component={Payments} />
     <Route path="/users/withdrawal" component={Withdrawal} />
   </Switch>
-);
+)
 
-export default Users;
+export default Users

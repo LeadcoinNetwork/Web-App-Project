@@ -1,9 +1,9 @@
-var dotenv = require("dotenv");
-const url = require("url");
-var utils = require("./utils");
+var dotenv = require("dotenv")
+const url = require("url")
+var utils = require("./utils")
 
-dotenv.config();
-utils.throwOnMissingEnvironmentVariables();
+dotenv.config()
+utils.throwOnMissingEnvironmentVariables()
 
 module.exports = {
   env: process.env.NODE_ENV,
@@ -51,4 +51,4 @@ module.exports = {
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE
   }
-};
+}

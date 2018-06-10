@@ -1,35 +1,35 @@
-import React from "react";
-import Snacbar from "material-ui/Snackbar";
-import Button from "Components/Button";
-import { Link } from "react-router-dom";
+import React from "react"
+import Snacbar from "material-ui/Snackbar"
+import Button from "Components/Button"
+import { Link } from "react-router-dom"
 
 function Header(props) {
   function getSnackbarStyle(type) {
-    let color, backgroundColor;
+    let color, backgroundColor
 
     switch (type) {
       case "error":
-        color = "#721c24";
-        backgroundColor = "#f8d7da";
-        break;
+        color = "#721c24"
+        backgroundColor = "#f8d7da"
+        break
       case "warning":
-        color = "#856404";
-        backgroundColor = "#fff3cd";
-        break;
+        color = "#856404"
+        backgroundColor = "#fff3cd"
+        break
       case "info":
-        color = "#0c5460";
-        backgroundColor = "#d1ecf1";
-        break;
+        color = "#0c5460"
+        backgroundColor = "#d1ecf1"
+        break
       default:
-        color = "#155724";
-        backgroundColor = "#d4edda";
+        color = "#155724"
+        backgroundColor = "#d4edda"
     }
 
-    return { color, backgroundColor };
+    return { color, backgroundColor }
   }
 
-  var currentNotification = props.notifications.current;
-  currentNotification.style = getSnackbarStyle(currentNotification.type);
+  var currentNotification = props.notifications.current
+  currentNotification.style = getSnackbarStyle(currentNotification.type)
 
   return (
     <div className="ldc-header">
@@ -43,7 +43,7 @@ function Header(props) {
       <br />
       <br />
     </div>
-  );
+  )
 }
 
-export default Header;
+export default Header

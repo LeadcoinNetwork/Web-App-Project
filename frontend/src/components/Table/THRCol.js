@@ -1,7 +1,7 @@
-import React from "react";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import faSortUp from "@fortawesome/fontawesome-free-solid/faSortUp";
-import faSortDown from "@fortawesome/fontawesome-free-solid/faSortDown";
+import React from "react"
+import FontAwesomeIcon from "@fortawesome/react-fontawesome"
+import faSortUp from "@fortawesome/fontawesome-free-solid/faSortUp"
+import faSortDown from "@fortawesome/fontawesome-free-solid/faSortDown"
 
 const THRCol = ({ field, colCount, staticColsWidth, onSort, sortedBy }) => (
   <div
@@ -35,6 +35,6 @@ const THRCol = ({ field, colCount, staticColsWidth, onSort, sortedBy }) => (
         />
       )}
   </div>
-);
+)
 
-export default THRCol;
+export default THRCol

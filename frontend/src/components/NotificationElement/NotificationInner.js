@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 
-import { Time } from "../../utils/time";
+import { Time } from "../../utils/time"
 
 const NotificationInner = props => (
   <div className="notification-inner">
@@ -16,6 +16,6 @@ const NotificationInner = props => (
       See All...
     </div>
   </div>
-);
+)
 
-export default NotificationInner;
+export default NotificationInner

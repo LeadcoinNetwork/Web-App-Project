@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 
 const TBRCol = ({ field, value, colCount, staticColsWidth }) => (
   <div
@@ -11,6 +11,6 @@ const TBRCol = ({ field, value, colCount, staticColsWidth }) => (
   >
     {value}
   </div>
-);
+)
 
-export default TBRCol;
+export default TBRCol

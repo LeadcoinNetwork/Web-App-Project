@@ -1,16 +1,16 @@
 // External Modules
-import React from "react";
-import { storiesOf } from "@storybook/react";
-import { createStore, applyMiddleware } from "redux";
-import { MemoryRouter } from "react-router";
-import { Provider } from "react-redux";
+import React from "react"
+import { storiesOf } from "@storybook/react"
+import { createStore, applyMiddleware } from "redux"
+import { MemoryRouter } from "react-router"
+import { Provider } from "react-redux"
 
 // Internal Modules
-import Root from "./containers/Root";
-import rootReducer from "./reducers/index";
+import Root from "./containers/Root"
+import rootReducer from "./reducers/index"
 // const ROUTER_MIDDLEWARE = routerMiddleware(history);
 
-var y = storiesOf("Routes", module);
+var y = storiesOf("Routes", module)
 var routes = [
   "/admin/login",
   "/admin/leads",
@@ -31,19 +31,19 @@ var routes = [
   "/leads/csv-mapping",
   "/leads/checkout",
   "/leads/1/dispute"
-];
-var i = 0;
+]
+var i = 0
 routes.forEach(path => {
   const store = createStore(
     rootReducer,
     // applyMiddleware(ROUTER_MIDDLEWARE),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  );
+  )
   y.add(i++ + ". " + path, () => (
     <Provider store={store}>
       <MemoryRouter initialEntries={[path]} initialIndex={0}>
         <Root />
       </MemoryRouter>
     </Provider>
-  ));
-});
+  ))
+})

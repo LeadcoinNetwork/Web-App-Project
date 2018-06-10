@@ -1,5 +1,5 @@
-import "./GoogleLogin.scss";
+import "./GoogleLogin.scss"
 
-import GoogleLogin from "./GoogleLogin";
+import GoogleLogin from "./GoogleLogin"
 
-export default GoogleLogin;
+export default GoogleLogin

@@ -1,18 +1,18 @@
 // internal modules
-const config = require("../../config");
+const config = require("../../config")
 
-var sendMail;
+var sendMail
 if (config.mail.mailer == "SMTP") {
-  sendMail = mailer.config(config.mail);
+  sendMail = mailer.config(config.mail)
 } else {
-  sendMail = require("../email-console/email-console");
+  sendMail = require("../email-console/email-console")
 }
 
 module.exports = {
   confirmEmail,
   confirmEmailUpdate,
   forgotPassword
-};
+}
 
 function confirmEmail(user, token) {
   return sendMail({
@@ -33,7 +33,7 @@ function confirmEmail(user, token) {
       "</a>" +
       "to confirm your registration" +
       "</p>"
-  });
+  })
 }
 
 function confirmEmailUpdate(user, token) {
@@ -53,7 +53,7 @@ function confirmEmailUpdate(user, token) {
       "here " +
       "</a>" +
       "</p>"
-  });
+  })
 }
 
 function forgotPassword(user, token) {
@@ -74,5 +74,5 @@ function forgotPassword(user, token) {
       "</a>" +
       "to choose a new password" +
       "</p>"
-  });
+  })
 }

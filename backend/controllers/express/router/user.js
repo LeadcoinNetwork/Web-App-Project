@@ -1,87 +1,87 @@
 // external modules
-const express = require("express");
-const passport = require("passport");
+const express = require("express")
+const passport = require("passport")
 
 // internal modules
-const User = require("../../../models/user/user");
-const auth = require("../../../models/user/auth");
+const User = require("../../../models/user/user")
+const auth = require("../../../models/user/auth")
 
-const router = express.Router();
-module.exports = router;
+const router = express.Router()
+module.exports = router
 
 authOptions = {
   session: false,
   // failWithError is not documented (as of Apr 2018)
   // see https://github.com/passport/www.passportjs.org/pull/51
   failWithError: true
-};
+}
 
-router.post("/user", register);
+router.post("/user", register)
 
 router
   .route("/user/:userId")
   .all(passport.authenticate("jwt", authOptions))
   .get(find)
   .put(update)
-  .delete(remove);
+  .delete(remove)
 
 async function register(req, res, next) {
   try {
-    let user = await User.register(req.body);
-    let token = auth.generateJWT(user);
-    res.status(201); // Created
-    res.json({ user, token });
+    let user = await User.register(req.body)
+    let token = auth.generateJWT(user)
+    res.status(201) // Created
+    res.json({ user, token })
   } catch (e) {
-    next(e);
+    next(e)
   }
 }
 
 async function remove(req, res, next) {
   try {
-    let status = await User.remove(req.params.userId);
+    let status = await User.remove(req.params.userId)
     if (status) {
       res.status(200).json({
         ok: true
-      });
+      })
     } else {
       res.status(404).json({
         path: "remove",
         error: "Not Found"
-      });
+      })
     }
   } catch (e) {
-    next(e);
+    next(e)
   }
 }
 
 async function find(req, res, next) {
   try {
-    let [user] = await User.find({ id: req.params.userId });
+    let [user] = await User.find({ id: req.params.userId })
     if (user) {
-      res.status(200).json(user);
+      res.status(200).json(user)
     } else {
       res.status(404).json({
         path: "find",
         error: "Not Found"
-      });
+      })
     }
   } catch (e) {
-    next(e);
+    next(e)
   }
 }
 
 async function update(req, res, next) {
   try {
-    let user = await User.update(req.params.userId, req.body);
+    let user = await User.update(req.params.userId, req.body)
     if (user) {
-      res.status(200).json(user);
+      res.status(200).json(user)
     } else {
       res.status(404).json({
         path: "update",
         error: "Not Found"
-      });
+      })
     }
   } catch (e) {
-    next(e);
+    next(e)
   }
 }

@@ -1,5 +1,5 @@
-const mysqlPool = require("../mysql-pool/mysql-pool");
-import "./notification.test.js";
+const mysqlPool = require("../mysql-pool/mysql-pool")
+import "./notification.test.js"
 
 /**
  * @typedef RealTimeSender
@@ -24,4 +24,4 @@ class Notifications {
   MarkAllNotificationAsReadForUser() {}
 }
 
-module.exports = { Notifications };
+module.exports = { Notifications }

@@ -1,11 +1,11 @@
 // external modules
-const zxcvbn = require("zxcvbn");
-const Joi = require("joi").extend(joiPassword);
+const zxcvbn = require("zxcvbn")
+const Joi = require("joi").extend(joiPassword)
 
 module.exports = {
   newUser,
   partialUser
-};
+}
 
 const userSchema = Joi.object().keys({
   phone: Joi.string()
@@ -42,7 +42,7 @@ const userSchema = Joi.object().keys({
   role: Joi.string()
     .only("user", "admin")
     .label("Role")
-});
+})
 
 function joiPassword(joi) {
   return {
@@ -60,13 +60,13 @@ function joiPassword(joi) {
               { v: value },
               state,
               options
-            );
+            )
           }
-          return value;
+          return value
         }
       }
     ]
-  };
+  }
 }
 
 async function newUser(user) {
@@ -74,9 +74,9 @@ async function newUser(user) {
     user,
     userSchema.requiredKeys("fname", "lname", "email", "password"),
     { abortEarly: false }
-  );
+  )
 }
 
 async function partialUser(user) {
-  return await Joi.validate(user, userSchema.min(1), { abortEarly: false });
+  return await Joi.validate(user, userSchema.min(1), { abortEarly: false })
 }

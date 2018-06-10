@@ -1,10 +1,10 @@
-import React from "react";
-import { Switch, Route } from "react-router";
-import App from "Containers/App";
-import Home from "Containers/Home";
-import Admin from "Containers/Admin";
-import Leads from "Containers/Leads";
-import Users from "Containers/Users";
+import React from "react"
+import { Switch, Route } from "react-router"
+import App from "Containers/App"
+import Home from "Containers/Home"
+import Admin from "Containers/Admin"
+import Leads from "Containers/Leads"
+import Users from "Containers/Users"
 
 const Root = () => (
   <App>
@@ -15,6 +15,6 @@ const Root = () => (
       <Route path="/users" component={Users} />
     </Switch>
   </App>
-);
+)
 
-export default Root;
+export default Root

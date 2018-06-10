@@ -1,5 +1,5 @@
-import "./UserDetails.scss";
+import "./UserDetails.scss"
 
-import UserDetails from "./UserDetails";
+import UserDetails from "./UserDetails"
 
-export default UserDetails;
+export default UserDetails

@@ -1,5 +1,5 @@
-const common = require("../webpack.common");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const common = require("../webpack.common")
+const ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 module.exports = {
   plugins: [new ExtractTextPlugin("bundle.css")],
@@ -10,4 +10,4 @@ module.exports = {
   devServer: {
     hot: true
   }
-};
+}

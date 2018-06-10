@@ -1,16 +1,16 @@
 // External Modules
-const LocalStrategy = require("passport-local").Strategy;
-const JWTStrategy = require("passport-jwt").Strategy;
-const ExtractJwt = require("passport-jwt").ExtractJwt;
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const FacebookStrategy = require("passport-facebook").Strategy;
-const LinkedInStrategy = require("passport-linkedin-oauth2").Strategy;
+const LocalStrategy = require("passport-local").Strategy
+const JWTStrategy = require("passport-jwt").Strategy
+const ExtractJwt = require("passport-jwt").ExtractJwt
+const GoogleStrategy = require("passport-google-oauth20").Strategy
+const FacebookStrategy = require("passport-facebook").Strategy
+const LinkedInStrategy = require("passport-linkedin-oauth2").Strategy
 
 // Internal Modules
-const config = require("../../config");
-const auth = require("../../models/user/auth");
-const User = require("../../models/user/user");
-const utils = require("../../utils");
+const config = require("../../config")
+const auth = require("../../models/user/auth")
+const User = require("../../models/user/user")
+const utils = require("../../utils")
 
 const localStrategy = new LocalStrategy(
   {
@@ -18,20 +18,20 @@ const localStrategy = new LocalStrategy(
   },
   async (email, password, done) => {
     try {
-      let user = await User.authenticatePassword(email, password);
-      done(null, user);
+      let user = await User.authenticatePassword(email, password)
+      done(null, user)
     } catch (e) {
-      done(e);
+      done(e)
     }
   }
-);
+)
 
 const extactFromCookie = request => {
-  let token = null;
-  if (request && request.cookies) token = request.cookies["token"];
-  console.log({ token });
-  return token;
-};
+  let token = null
+  if (request && request.cookies) token = request.cookies["token"]
+  console.log({ token })
+  return token
+}
 
 const jwtStrategy = new JWTStrategy(
   {
@@ -40,18 +40,18 @@ const jwtStrategy = new JWTStrategy(
   },
   async (jwt, done) => {
     try {
-      let [user] = await User.find({ id: jwt.id });
+      let [user] = await User.find({ id: jwt.id })
       if (!user) {
-        let err = new Error("Unauthorized");
-        err.status = 401;
-        throw err;
+        let err = new Error("Unauthorized")
+        err.status = 401
+        throw err
       }
-      done(null, user);
+      done(null, user)
     } catch (e) {
-      done(e);
+      done(e)
     }
   }
-);
+)
 
 const linkedInStrategy = new LinkedInStrategy(
   {
@@ -66,17 +66,17 @@ const linkedInStrategy = new LinkedInStrategy(
       let [user] = await User.find({
         provider_id: profile.id,
         provider: profile.provider
-      });
+      })
       if (!user) {
         // try to find user by email
-        [user] = await User.find({ email: profile.emails[0].value });
+        ;[user] = await User.find({ email: profile.emails[0].value })
         if (user) {
           // user email exists, transfer user to SSO
           let update = {
             provider_id: profile.id,
             provider: profile.provider
-          };
-          user = await User.updateExternal(user.id, update);
+          }
+          user = await User.updateExternal(user.id, update)
         } else {
           // user is new, create user
           user = {
@@ -87,9 +87,9 @@ const linkedInStrategy = new LinkedInStrategy(
             provider: profile.provider,
             created: Date.now(),
             role: "user"
-          };
-          await User.insert(user);
-          [user] = await User.find({ email: user.email });
+          }
+          await User.insert(user)
+          ;[user] = await User.find({ email: user.email })
         }
       } else {
         let update = utils.difference(
@@ -103,17 +103,17 @@ const linkedInStrategy = new LinkedInStrategy(
             lname: profile.name.familyName,
             email: profile.emails[0].value
           }
-        );
+        )
         if (Object.keys(update).length) {
-          user = await User.updateExternal(user.id, update);
+          user = await User.updateExternal(user.id, update)
         }
       }
-      done(null, user);
+      done(null, user)
     } catch (e) {
-      done(e);
+      done(e)
     }
   }
-);
+)
 const googleStrategy = new GoogleStrategy(
   {
     clientID: config.auth.google.clientID,
@@ -127,17 +127,17 @@ const googleStrategy = new GoogleStrategy(
       let [user] = await User.find({
         provider_id: profile.id,
         provider: profile.provider
-      });
+      })
       if (!user) {
         // try to find user by email
-        [user] = await User.find({ email: profile.emails[0].value });
+        ;[user] = await User.find({ email: profile.emails[0].value })
         if (user) {
           // user email exists, transfer user to SSO
           let update = {
             provider_id: profile.id,
             provider: profile.provider
-          };
-          user = await User.updateExternal(user.id, update);
+          }
+          user = await User.updateExternal(user.id, update)
         } else {
           // user is new, create user
           user = {
@@ -148,9 +148,9 @@ const googleStrategy = new GoogleStrategy(
             provider: profile.provider,
             created: Date.now(),
             role: "user"
-          };
-          await User.insert(user);
-          [user] = await User.find({ email: user.email });
+          }
+          await User.insert(user)
+          ;[user] = await User.find({ email: user.email })
         }
       } else {
         let update = utils.difference(
@@ -164,17 +164,17 @@ const googleStrategy = new GoogleStrategy(
             lname: profile.name.familyName,
             email: profile.emails[0].value
           }
-        );
+        )
         if (Object.keys(update).length) {
-          user = await User.updateExternal(user.id, update);
+          user = await User.updateExternal(user.id, update)
         }
       }
-      done(null, user);
+      done(null, user)
     } catch (e) {
-      done(e);
+      done(e)
     }
   }
-);
+)
 
 // Removed but one day we may returned the FacebookStrategy
 // const facebookStrategy = new FacebookStrategy(
@@ -234,4 +234,4 @@ module.exports = {
   linkedInStrategy
   // Removed while one day we may bring it back
   // facebookStrategy
-};
+}

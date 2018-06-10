@@ -1,7 +1,7 @@
 // external modules
-const mailer = require("nodemailer-promise");
+const mailer = require("nodemailer-promise")
 
 // internal modules
-const config = require("../../config");
+const config = require("../../config")
 
-module.exports = mailer.config(config.mail);
+module.exports = mailer.config(config.mail)

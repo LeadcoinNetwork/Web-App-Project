@@ -1,9 +1,9 @@
-import * as types from "../actions/index";
+import * as types from "../actions/index"
 
 const initialState = {
   current: { message: null },
   list: []
-};
+}
 
 const notifications = (state = initialState, action) => {
   switch (action.type) {
@@ -11,10 +11,10 @@ const notifications = (state = initialState, action) => {
       return {
         current: action.payload,
         list: state.list
-      };
+      }
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default notifications;
+export default notifications
