@@ -1,11 +1,11 @@
-import * as types from "../actions/index"
+import * as types from "../actions/types"
 
 const initialState = {
   page: 1,
   limit: 5,
   total: 0,
   list: [],
-  selected: new Set()
+  selected: new Set(),
 }
 
 const leads = (state = initialState, action) => {
@@ -14,12 +14,12 @@ const leads = (state = initialState, action) => {
       return {
         ...action.payload,
         selected: state.selected,
-        list: [...state.list, ...action.payload.list]
+        list: [...state.list, ...action.payload.list],
       }
     case types.SET_SELECTED_RECORDS:
       return {
         ...state,
-        selected: action.payload
+        selected: action.payload,
       }
     default:
       return state

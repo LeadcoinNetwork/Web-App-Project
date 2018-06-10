@@ -1,8 +1,8 @@
-import * as types from "../actions/index"
+import * as types from "../actions/types"
 
 const initialState = {
   current: { message: null },
-  list: []
+  list: [],
 }
 
 const notifications = (state = initialState, action) => {
@@ -10,7 +10,7 @@ const notifications = (state = initialState, action) => {
     case types.SHOW_NOTIFICATION:
       return {
         current: action.payload,
-        list: state.list
+        list: state.list,
       }
     default:
       return state

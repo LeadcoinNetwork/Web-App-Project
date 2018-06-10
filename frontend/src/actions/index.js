@@ -10,21 +10,21 @@ const SOCKET = io("http://localhost:3000")
 
 // ACTION CREATORS
 export const setSelectedLeads = leads => ({
-  type: SET_SELECTED_RECORDS,
-  payload: leads
+  type: types.SET_SELECTED_RECORDS,
+  payload: leads,
 })
 
 // ASYNC ACTION CREATORS
 export const getLeads = (dispatch, cb, page = 1, limit = 50) => {
   setTimeout(() => {
     dispatch({
-      type: GET_LEADS,
+      type: types.GET_LEADS,
       payload: {
         list: leadsMock,
         page,
         limit,
-        total: leadsMock.length * 3
-      }
+        total: leadsMock.length * 3,
+      },
     })
     typeof cb === "function" ? cb() : null
   }, 250)
@@ -33,20 +33,20 @@ export const getLeads = (dispatch, cb, page = 1, limit = 50) => {
 export const connectToNotifications = dispatch => {
   SOCKET.on("notification", notification => {
     dispatch({
-      type: SHOW_NOTIFICATION,
-      payload: notification
+      type: types.SHOW_NOTIFICATION,
+      payload: notification,
     })
   })
 }
 
 export function WithdrawElementOnScreen() {
   return {
-    type: types.ACTION_WITHDRAW_ELEMENT_ON_SCREEN
+    type: types.ACTION_WITHDRAW_ELEMENT_ON_SCREEN,
   }
 }
 
 export function WithdrawElementStartLoading() {
   return {
-    type: types.ACTION_WITHDRAW_ELEMENT_START_LOADING
+    type: types.ACTION_WITHDRAW_ELEMENT_START_LOADING,
   }
 }
