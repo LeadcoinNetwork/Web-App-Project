@@ -15,7 +15,7 @@ class Payments extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  payments: state.user.payments,
+  payments: state.payments,
 })
 
 export default connect(mapStateToProps, {

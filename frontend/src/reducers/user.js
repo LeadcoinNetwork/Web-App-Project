@@ -2,7 +2,6 @@ import * as types from "../actions/types"
 
 const initialState = {
   id: null,
-  payments: [],
 }
 
 const user = (state = initialState, action) => {
@@ -11,11 +10,6 @@ const user = (state = initialState, action) => {
       return {
         ...state,
         ...action.payload,
-      }
-    case types.GET_PAYMENTS:
-      return {
-        ...state,
-        payments: action.payload,
       }
     default:
       return state
