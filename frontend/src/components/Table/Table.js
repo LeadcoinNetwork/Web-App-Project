@@ -74,6 +74,15 @@ class Table extends React.Component {
 
     return width
   }
+  setButtonLabel(label, amount) {
+    if (label) {
+      label = label.replace("${number} ", amount > 0 ? amount + " " : "")
+      if (amount === 1 && label.slice(-1) === "s") {
+        label = label.slice(0, -1)
+      }
+    }
+    return label
+  }
   render() {
     let props = this.props,
       dinamicColsCount = this.getDinamicColsCount(props.fields),
@@ -82,14 +91,16 @@ class Table extends React.Component {
     return (
       <section className="ldc-table">
         {props.title ? <h1>{props.title}</h1> : null}
-        {props.buttons && props.buttons.table && props.buttons.table.map(button => (
-          <Button
-            key={button.value}
-            label={button.value}
-            onClick={button.onClick}
-            disabled={!props.selected.size}
-          />
-        ))}
+        {props.buttons &&
+          props.buttons.table &&
+          props.buttons.table.map(button => (
+            <Button
+              key={button.value}
+              label={this.setButtonLabel(button.value, props.selected.size)}
+              onClick={button.onClick}
+              disabled={!props.selected.size}
+            />
+          ))}
         <THead
           fields={props.fields}
           colCount={dinamicColsCount}
