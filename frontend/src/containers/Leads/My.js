@@ -1,49 +1,65 @@
 import React from "react"
 import { connect } from "react-redux"
 import Table from "Components/Table"
+import { getLeads, setSelectedLeads } from "../../actions"
 
-const fields = require("../../mocks/fields.json")
+const myLeadsConfig = require("./config/my_leads_table.config.json")
 
 class My extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      fields: fields,
-      records: props.leads
-    }
+    getLeads(props.dispatch)
   }
-  buyLeads = leads => {
-    console.log(leads)
+  moveLeadsToSell = () => {
+    console.log(Array.from(this.props.leads.selected))
   }
-  buyLead = lead => {
-    this.buyLeads([lead])
+  moveLeadToSell = id => {
+    console.log([id])
   }
   onScrollBottom = cb => {
-    let leads = this.state.records
+    let { dispatch, leads } = this.props
 
-    if (leads.length < 70) {
-      setTimeout(() => {
-        this.setState({
-          records: [...leads, ...leads]
-        })
-        cb()
-      }, 1000)
+    getLeads(dispatch, cb, leads.page + 1)
+  }
+  buildButtonLabel = amount => {
+    if (amount > 1) {
+      return "move " + amount + " leads to sell"
+    } else if (amount === 1) {
+      return "move lead to sell"
+    } else {
+      return "move leads to sell"
     }
   }
+  getButtons = amountSelected => {
+    return {
+      table: [
+        {
+          value: this.buildButtonLabel(amountSelected),
+          onClick: this.moveLeadsToSell
+        }
+      ],
+      record: [
+        {
+          value: "move to sell",
+          onClick: this.moveLeadToSell
+        }
+      ]
+    }
+  }
+  setSelectedRecords = selectedLeads => {
+    this.props.dispatch(setSelectedLeads(selectedLeads))
+  }
   render() {
-    let state = this.state
-
     return (
       <Table
         title="My Leads"
-        fields={state.fields}
-        records={state.records}
-        multipleSelectionButton="Buy Selected Leads"
-        multipleSelectionAction={this.buyLeads}
-        recordMainButton="Buy"
-        recordMainAction={this.buyLead}
+        fields={myLeadsConfig.fields}
+        records={this.props.leads.list}
+        buttons={this.getButtons(this.props.leads.selected.size)}
+        setSelectedRecords={this.setSelectedRecords}
         onScrollBottom={this.onScrollBottom}
+        selected={this.props.leads.selected}
       />
     )
   }

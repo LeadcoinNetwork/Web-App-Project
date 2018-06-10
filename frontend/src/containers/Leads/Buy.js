@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import Table from "Components/Table"
 import { getLeads, setSelectedLeads } from "../../actions"
 
-const buyLeadsConfig = require("./buy_leads_table.config.json")
+const buyLeadsConfig = require("./config/buy_leads_table.config.json")
 
 class Buy extends React.Component {
   constructor(props) {
@@ -20,15 +20,15 @@ class Buy extends React.Component {
   onScrollBottom = cb => {
     let { dispatch, leads } = this.props
 
-    getLeads(dispatch, cb, leads.page + 1);
-  };
+    getLeads(dispatch, cb, leads.page + 1)
+  }
   buildButtonLabel = amount => {
     if (amount > 1) {
-      return "buy " + amount + " leads";
+      return "buy " + amount + " leads"
     } else if (amount === 1) {
-      return "buy lead";
+      return "buy lead"
     } else {
-      return "buy leads";
+      return "buy leads"
     }
   }
   getButtons = amountSelected => {
