@@ -1,9 +1,23 @@
 import React from "react"
+import { connect } from "react-redux"
+import PaymentsHistory from "Components/PaymentsHistory"
+import { getPayments } from "../../actions"
 
 class Payments extends React.Component {
+  constructor(props) {
+    super(props)
+
+    props.getPayments()
+  }
   render() {
-    return <h1>Payment history</h1>
+    return <PaymentsHistory payments={this.props.payments} />
   }
 }
 
-export default Payments
+const mapStateToProps = state => ({
+  payments: state.user.payments,
+})
+
+export default connect(mapStateToProps, {
+  getPayments,
+})(Payments)

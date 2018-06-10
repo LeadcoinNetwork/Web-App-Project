@@ -4,6 +4,7 @@ import * as types from "./types"
 
 // MOCKS
 const leadsMock = require("../mocks/leads.json")
+const paymentsMock = require("../mocks/payments.json")
 
 // API OBJECTS
 const SOCKET = io("http://localhost:3000")
@@ -12,6 +13,11 @@ const SOCKET = io("http://localhost:3000")
 export const setSelectedLeads = leads => ({
   type: types.SET_SELECTED_RECORDS,
   payload: leads,
+})
+
+export const getPayments = userId => ({
+  type: types.GET_PAYMENTS,
+  payload: paymentsMock,
 })
 
 // ASYNC ACTION CREATORS

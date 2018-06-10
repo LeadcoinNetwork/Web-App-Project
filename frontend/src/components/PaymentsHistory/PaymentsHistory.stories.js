@@ -1,7 +1,7 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider"
-import PaymentHistory from "./PaymentHistory"
+import PaymentsHistory from "./PaymentsHistory"
 
 const payments = require("../../mocks/payments.json")
 
@@ -12,5 +12,5 @@ function createStoryInDesignDecoration(nameOfStory) {
 }
 
 createStoryInDesignDecoration("Payment History").add("Table", () => (
-  <PaymentHistory payments={payments} />
+  <PaymentsHistory payments={payments} />
 ))
