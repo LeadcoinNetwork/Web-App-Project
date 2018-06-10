@@ -1,9 +1,29 @@
 import * as types from "../actions/types"
 
-const payment = (state = [], action) => {
+const initialState = {
+  fetechedAll: false,
+  loading: true,
+  lastRefresh: null,
+  list: [],
+}
+
+const payment = (state = initialState, action) => {
   switch (action.type) {
-    case types.GET_PAYMENTS:
-      return action.payload
+    case types.PAYMENTS_HISTORY_UPDATE:
+      return {
+        ...state,
+        ...action.payload,
+      }
+    case types.PAYMENTS_HISTORY_START:
+      return {
+        ...state,
+        loading: true,
+      }
+    case types.PAYMENTS_HISTORY_FINISH:
+      return {
+        ...state,
+        loading: false,
+      }
     default:
       return state
   }

@@ -15,11 +15,6 @@ export const setSelectedLeads = leads => ({
   payload: leads,
 })
 
-export const getPayments = userId => ({
-  type: types.GET_PAYMENTS,
-  payload: paymentsMock,
-})
-
 // ASYNC ACTION CREATORS
 export const getLeads = (dispatch, cb, page = 1, limit = 50) => {
   setTimeout(() => {
@@ -43,6 +38,21 @@ export const connectToNotifications = dispatch => {
       payload: notification,
     })
   })
+}
+
+export const getPayments = dispatch => {
+  dispatch({ type: types.PAYMENTS_HISTORY_START })
+
+  setTimeout(() => {
+    dispatch({
+      type: types.PAYMENTS_HISTORY_UPDATE,
+      payload: {
+        fetchedAll: false,
+        list: paymentsMock,
+      },
+    })
+    dispatch({ type: types.PAYMENTS_HISTORY_FINISH })
+  }, 500)
 }
 
 export function WithdrawElementOnScreen() {

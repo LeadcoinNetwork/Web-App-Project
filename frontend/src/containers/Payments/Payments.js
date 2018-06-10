@@ -7,7 +7,7 @@ class Payments extends React.Component {
   constructor(props) {
     super(props)
 
-    props.getPayments()
+    getPayments(props.dispatch)
   }
   render() {
     return <PaymentsHistory payments={this.props.payments} />
@@ -18,6 +18,4 @@ const mapStateToProps = state => ({
   payments: state.payments,
 })
 
-export default connect(mapStateToProps, {
-  getPayments,
-})(Payments)
+export default connect(mapStateToProps)(Payments)
