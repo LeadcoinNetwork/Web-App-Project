@@ -51,7 +51,9 @@
     "precommit": "pretty-quick --staged"
   },
   "nodemonConfig": {
-    "ignore": ["upload/*"]
+    "ignore": [
+      "upload/*"
+    ]
   },
   "bugs": {
     "url": "https://github.com/LeadcoinNetwork/leadcoin-web/issues"
