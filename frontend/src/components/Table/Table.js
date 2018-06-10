@@ -71,9 +71,6 @@ class Table extends React.Component {
 
     return width;
   }
-  setButtonLabel(label, amount) {
-    return label ? label.replace('${number} ', amount > 1 ? amount + ' ' : '').slice(0, amount === 1 ? -1 : label.length) : '';
-  }
   render() {
     let props = this.props,
       dinamicColsCount = this.getDinamicColsCount(props.fields),
@@ -85,7 +82,7 @@ class Table extends React.Component {
         {props.buttons && props.buttons.table && props.buttons.table.map(button => (
           <Button
             key={button.value}
-            label={this.setButtonLabel(button.value, props.selected.size)}
+            label={button.value}
             onClick={button.onClick}
             disabled={!props.selected.size}
           />
