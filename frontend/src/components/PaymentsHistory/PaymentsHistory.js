@@ -18,6 +18,7 @@ const PaymentsHistory = ({ payments }) => (
         <br />
       </div>
     ))}
+    {payments.list.length ? "" : "Nothing to show"}
     {payments.loading ? "Loading..." : ""}
   </div>
 )

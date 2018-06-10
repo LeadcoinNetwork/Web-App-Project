@@ -15,6 +15,10 @@ createStoryInDesignDecoration("Payment History").add("List", () => (
   <PaymentsHistory payments={{ list: payments }} />
 ))
 
+createStoryInDesignDecoration("Payment History").add("Empty", () => (
+  <PaymentsHistory payments={{ list: [] }} />
+))
+
 createStoryInDesignDecoration("Payment History").add("Empty loading", () => (
   <PaymentsHistory payments={{ list: [], loading: true }} />
 ))
