@@ -66,7 +66,7 @@ class Sell extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  leads: state.leads
+  leads: state.sellLeads
 })
 
 export default connect(mapStateToProps)(Sell)

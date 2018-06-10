@@ -66,7 +66,7 @@ class My extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  leads: state.leads
+  leads: state.myLeads
 })
 
 export default connect(mapStateToProps)(My)

@@ -5,7 +5,9 @@ import notifications from "./notifications"
 
 const rootReducer = combineReducers({
   routerReducer,
-  leads,
+  buyLeads: leads,
+  sellLeads: leads,
+  myLeads: leads,
   notifications
 })
 

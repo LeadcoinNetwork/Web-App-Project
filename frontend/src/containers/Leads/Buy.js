@@ -66,7 +66,7 @@ class Buy extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  leads: state.leads
+  leads: state.buyLeads
 })
 
 export default connect(mapStateToProps)(Buy)
