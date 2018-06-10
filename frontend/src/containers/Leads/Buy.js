@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import Table from "Components/Table"
 import { getLeads, setSelectedLeads } from "../../actions"
 
-const buyLeadsConfig = require("./buy_leads_table.config.json")
+const buyLeadsConfig = require("./config/buy_leads_table.config.json")
 
 class Buy extends React.Component {
   constructor(props) {
@@ -22,20 +22,29 @@ class Buy extends React.Component {
 
     getLeads(dispatch, cb, leads.page + 1)
   }
-  getButtons = () => {
+  buildButtonLabel = amount => {
+    if (amount > 1) {
+      return "buy " + amount + " leads"
+    } else if (amount === 1) {
+      return "buy lead"
+    } else {
+      return "buy leads"
+    }
+  }
+  getButtons = amountSelected => {
     return {
       table: [
         {
           value: "buy ${number} leads",
-          onClick: this.buyLeads
-        }
+          onClick: this.buyLeads,
+        },
       ],
       record: [
         {
           value: "buy",
-          onClick: this.buyLead
-        }
-      ]
+          onClick: this.buyLead,
+        },
+      ],
     }
   }
   setSelectedRecords = selectedLeads => {
@@ -47,7 +56,7 @@ class Buy extends React.Component {
         title="Buy Leads"
         fields={buyLeadsConfig.fields}
         records={this.props.leads.list}
-        buttons={this.getButtons()}
+        buttons={this.getButtons(this.props.leads.selected.size)}
         setSelectedRecords={this.setSelectedRecords}
         onScrollBottom={this.onScrollBottom}
         selected={this.props.leads.selected}
@@ -57,7 +66,7 @@ class Buy extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  leads: state.leads
+  leads: state.buyLeads,
 })
 
 export default connect(mapStateToProps)(Buy)

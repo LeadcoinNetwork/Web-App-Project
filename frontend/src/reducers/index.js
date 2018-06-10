@@ -8,7 +8,11 @@ const rootReducer = combineReducers({
   routerReducer,
   leads,
   notifications,
-  balance
+  balance,
+  buyLeads: leads,
+  sellLeads: leads,
+  myLeads: leads,
+  notifications,
 })
 
 export default rootReducer

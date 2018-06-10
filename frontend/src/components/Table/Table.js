@@ -8,7 +8,7 @@ class Table extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      lastSelected: null
+      lastSelected: null,
     }
   }
   isAllSelected = () => {
@@ -75,11 +75,13 @@ class Table extends React.Component {
     return width
   }
   setButtonLabel(label, amount) {
+    if (label) {
+      label = label.replace("${number} ", amount > 0 ? amount + " " : "")
+      if (amount === 1 && label.slice(-1) === "s") {
+        label = label.slice(0, -1)
+      }
+    }
     return label
-      ? label
-          .replace("${number} ", amount > 1 ? amount + " " : "")
-          .slice(0, amount === 1 ? -1 : label.length)
-      : ""
   }
   render() {
     let props = this.props,
