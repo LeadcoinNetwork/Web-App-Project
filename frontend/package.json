@@ -12,6 +12,7 @@
     "@fortawesome/fontawesome-free-solid": "^5.0.13",
     "@fortawesome/react-fontawesome": "0.0.20",
     "axios": "^0.18.0",
+    "babel-polyfill": "^6.26.0",
     "dotenv-webpack": "^1.5.5",
     "history": "^4.7.2",
     "js-cookie": "^2.2.0",
@@ -24,6 +25,7 @@
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.9",
     "redux": "^4.0.0",
+    "redux-saga": "^0.16.0",
     "socket.io-client": "^2.1.1",
     "storybook-addon-jsx": "^5.3.0",
     "storybook-addon-material-ui": "^0.8.2"
