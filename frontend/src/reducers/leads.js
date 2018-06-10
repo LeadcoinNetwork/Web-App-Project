@@ -1,4 +1,4 @@
-import * as types from "../actions/index";
+import * as types from "../actions/index"
 
 const initialState = {
   page: 1,
@@ -6,7 +6,7 @@ const initialState = {
   total: 0,
   list: [],
   selected: new Set()
-};
+}
 
 const leads = (state = initialState, action) => {
   switch (action.type) {
@@ -15,15 +15,15 @@ const leads = (state = initialState, action) => {
         ...action.payload,
         selected: state.selected,
         list: [...state.list, ...action.payload.list]
-      };
+      }
     case types.SET_SELECTED_RECORDS:
       return {
         ...state,
         selected: action.payload
-      };
+      }
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default leads;
+export default leads

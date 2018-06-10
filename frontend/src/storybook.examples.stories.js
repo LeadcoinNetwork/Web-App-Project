@@ -1,12 +1,12 @@
 // External Modules
-import React from "react";
-import { storiesOf } from "@storybook/react";
+import React from "react"
+import { storiesOf } from "@storybook/react"
 
 // Optional modules, if you use in your stories
-import { action, configureActions } from "@storybook/addon-actions";
-import { linkTo } from "@storybook/addon-links";
-import { withInfo } from "@storybook/addon-info";
-import { withState } from "@dump247/storybook-state";
+import { action, configureActions } from "@storybook/addon-actions"
+import { linkTo } from "@storybook/addon-links"
+import { withInfo } from "@storybook/addon-info"
+import { withState } from "@dump247/storybook-state"
 
 // https://github.com/storybooks/storybook/tree/release/3.4/addons/knobs
 import {
@@ -20,7 +20,7 @@ import {
   selectV2,
   date,
   button
-} from "@storybook/addon-knobs/react";
+} from "@storybook/addon-knobs/react"
 
 // createStory("Example Stories", module)
 storiesOf("Example Stories", module)
@@ -37,7 +37,7 @@ storiesOf("Example Stories", module)
     withState({})(({ store }) => (
       <div
         onClick={() => {
-          store.set({ clicked: !store.state.clicked });
+          store.set({ clicked: !store.state.clicked })
         }}
       >
         Click to toggle - {store.state.clicked ? "off" : "on"}
@@ -51,7 +51,7 @@ storiesOf("Example Stories", module)
         {boolean(0, 1)} - {text("a", "b")}
       </div>
     ))
-  );
+  )
 
 storiesOf("Example Stories/with nobs")
   .addDecorator(withKnobs)
@@ -67,4 +67,4 @@ storiesOf("Example Stories/with nobs")
       date: {date("date", new Date())} <br />
       button: {button("button", action("button clicked"))} <br />
     </div>
-  ));
+  ))

@@ -1,29 +1,29 @@
-import React from "react";
-import axios from "axios";
-import MenuItem from "material-ui/MenuItem";
-import SelectField from "material-ui/SelectField";
-import Button from "Components/Button";
-import TextField from "Components/TextField";
+import React from "react"
+import axios from "axios"
+import MenuItem from "material-ui/MenuItem"
+import SelectField from "material-ui/SelectField"
+import Button from "Components/Button"
+import TextField from "Components/TextField"
 
 class CSVUpload extends React.Component {
   state = {
     response: null,
     currentStep: "upload",
     field_map: {}
-  };
+  }
 
   pickFile = e => {
     this.setState({
       file: e.target.files[0]
-    });
-  };
+    })
+  }
 
   submit() {
-    axios.defaults.withCredentials = true;
+    axios.defaults.withCredentials = true
 
-    const { file } = this.state;
-    const formData = new FormData();
-    formData.append("file", file);
+    const { file } = this.state
+    const formData = new FormData()
+    formData.append("file", file)
     axios
       .post(`${process.env.BACKEND}/csv/upload`, formData, {
         headers: {
@@ -32,54 +32,54 @@ class CSVUpload extends React.Component {
         withCredentials: true
       })
       .then(response => {
-        const { data, db_field_list } = response.data;
-        const { x, field_list, batch_id } = data;
+        const { data, db_field_list } = response.data
+        const { x, field_list, batch_id } = data
         this.setState({
           x,
           file_field_list: field_list,
           currentStep: "fieldMap",
           batch_id,
           db_field_list
-        });
+        })
       })
       .catch(error => {
         if (error.response) {
           // error originated from server
           if (error.response.data.error) {
-            const errors = error.response.data.error.split("; ");
-            this.setState({ errors: errors });
+            const errors = error.response.data.error.split("; ")
+            this.setState({ errors: errors })
             setTimeout(() => {
-              this.setState({ errors: null });
-            }, errors.length * 2250);
+              this.setState({ errors: null })
+            }, errors.length * 2250)
           }
         } else if (error.request) {
           // request made, no response though
         } else {
           // error was thrown during request setup
         }
-      });
+      })
   }
 
   handleChange(fieldName, value) {
-    const { field_map } = this.state;
-    field_map[fieldName] = value;
-    this.setState(field_map);
+    const { field_map } = this.state
+    field_map[fieldName] = value
+    this.setState(field_map)
   }
 
   listItems(fieldName) {
-    const { field_map, file_field_list } = this.state;
+    const { field_map, file_field_list } = this.state
     if (file_field_list) {
-      let value = "";
-      if (field_map && field_map[fieldName]) value = field_map[fieldName];
+      let value = ""
+      if (field_map && field_map[fieldName]) value = field_map[fieldName]
       const items = file_field_list.map((field, i) => {
-        return <MenuItem value={field} key={i} primaryText={field} />;
-      });
+        return <MenuItem value={field} key={i} primaryText={field} />
+      })
       return (
         <SelectField
           floatingLabelText="Choose"
           value={value}
           onChange={(e, index, value) => {
-            this.handleChange(fieldName, value);
+            this.handleChange(fieldName, value)
           }}
         >
           <MenuItem
@@ -89,42 +89,42 @@ class CSVUpload extends React.Component {
           />
           {items}
         </SelectField>
-      );
+      )
     }
-    return;
+    return
   }
 
   field_map_submit() {
-    axios.defaults.withCredentials = true;
-    const { field_map, batch_id, lead_price } = this.state;
+    axios.defaults.withCredentials = true
+    const { field_map, batch_id, lead_price } = this.state
     axios.defaults.headers.common["Authorization"] =
-      "Bearer " + this.props.token;
+      "Bearer " + this.props.token
     axios
       .post(`${process.env.BACKEND}/csv/mapper/` + batch_id, {
         field_map,
         lead_price
       })
       .then(response => {
-        const { done } = response.data;
-        console.log(done);
+        const { done } = response.data
+        console.log(done)
         //TODO: finish upload screen
       })
       .catch(error => {
         if (error.response) {
           if (error.response.data.error) {
-            const errors = error.response.data.error.split("; ");
-            this.setState({ errors: errors });
+            const errors = error.response.data.error.split("; ")
+            this.setState({ errors: errors })
             setTimeout(() => {
-              this.setState({ errors: null });
-            }, errors.length * 2250);
+              this.setState({ errors: null })
+            }, errors.length * 2250)
           }
         }
-      });
+      })
   }
 
   fieldMapper() {
-    const { db_field_list } = this.state;
-    let fields;
+    const { db_field_list } = this.state
+    let fields
     if (db_field_list)
       fields = db_field_list.map((f, i) => {
         return (
@@ -132,8 +132,8 @@ class CSVUpload extends React.Component {
             <div className="fieldLabel">{f} </div>
             {this.listItems(f)}
           </div>
-        );
-      });
+        )
+      })
     return (
       <div className="fields_mapper">
         <div className="header">Map Columns in your CSV to Leads </div>
@@ -165,7 +165,7 @@ class CSVUpload extends React.Component {
           <div>
             <Button
               onClick={() => {
-                this.field_map_submit();
+                this.field_map_submit()
               }}
               containerElement="label"
               label="Submit"
@@ -173,22 +173,22 @@ class CSVUpload extends React.Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 
   generalError() {
-    const { errors } = this.state;
+    const { errors } = this.state
     if (errors && errors.length > 0) {
       const errorMsgs = errors.map((e, i) => {
-        return <div key={i}>{e}</div>;
-      });
-      return <div className="error">{errorMsgs}</div>;
+        return <div key={i}>{e}</div>
+      })
+      return <div className="error">{errorMsgs}</div>
     }
-    return;
+    return
   }
 
   file_upload() {
-    const fileLabel = this.state.file ? this.state.file.name : "Choose File";
+    const fileLabel = this.state.file ? this.state.file.name : "Choose File"
     return (
       <div className="csvUpload">
         <div className="file_pick">
@@ -206,14 +206,14 @@ class CSVUpload extends React.Component {
         <div className="submit">
           <Button
             onClick={() => {
-              this.submit();
+              this.submit()
             }}
             containerElement="label"
             label="Submit"
           />
         </div>
       </div>
-    );
+    )
   }
 
   nextStep() {}
@@ -221,11 +221,11 @@ class CSVUpload extends React.Component {
   prevStep() {}
 
   render() {
-    const { currentStep } = this.state;
-    let currentComponent = this.file_upload();
+    const { currentStep } = this.state
+    let currentComponent = this.file_upload()
     switch (currentStep) {
       case "fieldMap":
-        currentComponent = this.fieldMapper();
+        currentComponent = this.fieldMapper()
     }
     return (
       <div>
@@ -233,20 +233,20 @@ class CSVUpload extends React.Component {
         <div className="flexed">
           <Button
             onClick={() => {
-              this.submit();
+              this.submit()
             }}
             label="&lt;"
           />
           <Button
             onClick={() => {
-              this.submit();
+              this.submit()
             }}
             label="&gt;"
           />
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default CSVUpload;
+export default CSVUpload

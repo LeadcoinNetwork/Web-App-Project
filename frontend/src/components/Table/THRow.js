@@ -1,6 +1,6 @@
-import React from "react";
-import Checkbox from "Components/Checkbox";
-import THRCol from "./THRCol";
+import React from "react"
+import Checkbox from "Components/Checkbox"
+import THRCol from "./THRCol"
 
 const THRow = props => (
   <div className="th-row">
@@ -18,6 +18,6 @@ const THRow = props => (
       />
     ))}
   </div>
-);
+)
 
-export default THRow;
+export default THRow

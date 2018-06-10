@@ -1,9 +1,9 @@
-import React from "react";
+import React from "react"
 
 class New extends React.Component {
   render() {
-    return <h1>New Lead</h1>;
+    return <h1>New Lead</h1>
   }
 }
 
-export default New;
+export default New

@@ -1,5 +1,5 @@
-import React from "react";
-import MaterialTextField from "material-ui/TextField";
+import React from "react"
+import MaterialTextField from "material-ui/TextField"
 
 const TextField = ({ label, hintText, value, type, fullWidth, onChange }) => (
   <MaterialTextField
@@ -10,6 +10,6 @@ const TextField = ({ label, hintText, value, type, fullWidth, onChange }) => (
     fullWidth={fullWidth}
     onChange={onChange}
   />
-);
+)
 
-export default TextField;
+export default TextField

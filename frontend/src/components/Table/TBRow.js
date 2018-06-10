@@ -1,10 +1,10 @@
-import React from "react";
-import Checkbox from "Components/Checkbox";
-import Button from "Components/Button";
-import TBRCol from "./TBRCol";
+import React from "react"
+import Checkbox from "Components/Checkbox"
+import Button from "Components/Button"
+import TBRCol from "./TBRCol"
 
 const TBRow = props => (
-  <div className="tb-row" onClick={(e) => props.toggleRecord(e, props.id)}>
+  <div className="tb-row" onClick={e => props.toggleRecord(e, props.id)}>
     <div className="tbr-checkbox">
       <Checkbox checked={props.selected.has(props.id)} />
     </div>
@@ -14,8 +14,8 @@ const TBRow = props => (
           key={button.value}
           label={button.value}
           onClick={e => {
-            e.stopPropagation();
-            button.onClick(props.id);
+            e.stopPropagation()
+            button.onClick(props.id)
           }}
         />
       ))}
@@ -30,6 +30,6 @@ const TBRow = props => (
       />
     ))}
   </div>
-);
+)
 
-export default TBRow;
+export default TBRow

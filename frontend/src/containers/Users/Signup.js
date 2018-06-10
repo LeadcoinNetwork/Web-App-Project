@@ -1,8 +1,8 @@
-import React from "react";
-import axios from "axios";
-import Button from "Components/Button";
-import TextField from "Components/TextField";
-import SSOContainer from "Components/SSOContainer";
+import React from "react"
+import axios from "axios"
+import Button from "Components/Button"
+import TextField from "Components/TextField"
+import SSOContainer from "Components/SSOContainer"
 
 class Signup extends React.Component {
   state = {
@@ -11,16 +11,16 @@ class Signup extends React.Component {
     fname: "",
     lname: "",
     errors: []
-  };
+  }
 
   handleChange = name => {
     return event => {
-      this.setState({ [name]: event.target.value });
-    };
-  };
+      this.setState({ [name]: event.target.value })
+    }
+  }
 
   submit = () => {
-    const { fname, lname, password, email } = this.state;
+    const { fname, lname, password, email } = this.state
     axios
       .post(`${process.env.BACKEND}/user`, {
         fname,
@@ -29,24 +29,24 @@ class Signup extends React.Component {
         password
       })
       .then(({ data }) => {
-        const { token, user } = data;
-        this.props.setUser(user);
-        this.props.saveToken(token);
+        const { token, user } = data
+        this.props.setUser(user)
+        this.props.saveToken(token)
       })
       .catch(error => {
         if (error.response) {
           // error originated from server
           if (error.response.data.error) {
-            let errors = error.response.data.error.split("; ");
-            this.setState({ errors: errors });
+            let errors = error.response.data.error.split("; ")
+            this.setState({ errors: errors })
           }
         } else if (error.request) {
           // request made, no response though
         } else {
           // error was thrown during request setup
         }
-      });
-  };
+      })
+  }
 
   passwordField() {
     return (
@@ -59,18 +59,18 @@ class Signup extends React.Component {
         />
         <br />
       </div>
-    );
+    )
   }
 
   generalError() {
-    const { errors } = this.state;
+    const { errors } = this.state
     if (errors.length > 0) {
       const errorMsgs = errors.map((e, i) => {
-        return <div key={i}>{e}</div>;
-      });
-      return <div className="error">{errorMsgs}</div>;
+        return <div key={i}>{e}</div>
+      })
+      return <div className="error">{errorMsgs}</div>
     }
-    return;
+    return
   }
 
   render() {
@@ -104,8 +104,8 @@ class Signup extends React.Component {
           <Button onClick={this.submit}>SignUp</Button>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default Signup;
+export default Signup

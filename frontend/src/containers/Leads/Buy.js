@@ -1,24 +1,24 @@
-import React from "react";
-import { connect } from "react-redux";
-import Table from "Components/Table";
-import { getLeads, setSelectedLeads } from "../../actions";
+import React from "react"
+import { connect } from "react-redux"
+import Table from "Components/Table"
+import { getLeads, setSelectedLeads } from "../../actions"
 
-const buyLeadsConfig = require("./buy_leads_table.config.json");
+const buyLeadsConfig = require("./buy_leads_table.config.json")
 
 class Buy extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
 
-    getLeads(props.dispatch);
+    getLeads(props.dispatch)
   }
   buyLeads = () => {
-    console.log(Array.from(this.props.leads.selected));
-  };
+    console.log(Array.from(this.props.leads.selected))
+  }
   buyLead = id => {
-    console.log([id]);
-  };
+    console.log([id])
+  }
   onScrollBottom = cb => {
-    let { dispatch, leads } = this.props;
+    let { dispatch, leads } = this.props
 
     getLeads(dispatch, cb, leads.page + 1);
   };
@@ -45,11 +45,11 @@ class Buy extends React.Component {
           onClick: this.buyLead
         }
       ]
-    };
-  };
+    }
+  }
   setSelectedRecords = selectedLeads => {
-    this.props.dispatch(setSelectedLeads(selectedLeads));
-  };
+    this.props.dispatch(setSelectedLeads(selectedLeads))
+  }
   render() {
     return (
       <Table
@@ -61,12 +61,12 @@ class Buy extends React.Component {
         onScrollBottom={this.onScrollBottom}
         selected={this.props.leads.selected}
       />
-    );
+    )
   }
 }
 
 const mapStateToProps = state => ({
   leads: state.leads
-});
+})
 
-export default connect(mapStateToProps)(Buy);
+export default connect(mapStateToProps)(Buy)

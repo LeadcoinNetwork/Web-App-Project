@@ -1,9 +1,9 @@
-import React from "react";
-import Button from "Components/Button";
+import React from "react"
+import Button from "Components/Button"
 
 class GoogleLogin extends React.Component {
   loginGoogle() {
-    window.open(`${process.env.BACKEND}/auth/google`, "_top");
+    window.open(`${process.env.BACKEND}/auth/google`, "_top")
   }
 
   render() {
@@ -14,8 +14,8 @@ class GoogleLogin extends React.Component {
           <Button onClick={this.loginGoogle}> Google </Button>{" "}
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default GoogleLogin;
+export default GoogleLogin

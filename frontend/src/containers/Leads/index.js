@@ -1,3 +1,3 @@
-import Leads from "./Leads";
+import Leads from "./Leads"
 
-export default Leads;
+export default Leads

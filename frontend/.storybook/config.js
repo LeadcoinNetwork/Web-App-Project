@@ -1,10 +1,10 @@
-import { configure } from "@storybook/react";
-import "../src/styles/global.scss";
+import { configure } from "@storybook/react"
+import "../src/styles/global.scss"
 
-var name = "";
-const req = require.context("../src/", true, /.stories.js/);
+var name = ""
+const req = require.context("../src/", true, /.stories.js/)
 function loadStories() {
-  req.keys().forEach(filename => req(filename));
+  req.keys().forEach(filename => req(filename))
 }
 
-configure(loadStories, module);
+configure(loadStories, module)

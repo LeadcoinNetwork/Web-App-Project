@@ -1,5 +1,5 @@
-import React from "react";
-import MaterialButton from "material-ui/RaisedButton";
+import React from "react"
+import MaterialButton from "material-ui/RaisedButton"
 
 const Button = ({
   type,
@@ -17,6 +17,6 @@ const Button = ({
     containerElement={containerElement}
     disabled={disabled}
   />
-);
+)
 
-export default Button;
+export default Button

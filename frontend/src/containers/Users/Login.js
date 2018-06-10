@@ -1,9 +1,9 @@
-import React from "react";
-import axios from "axios";
-import Button from "Components/Button";
-import TextField from "Components/TextField";
-import Checkbox from "Components/Checkbox";
-import SSOContainer from "Components/SSOContainer";
+import React from "react"
+import axios from "axios"
+import Button from "Components/Button"
+import TextField from "Components/TextField"
+import Checkbox from "Components/Checkbox"
+import SSOContainer from "Components/SSOContainer"
 
 class Login extends React.Component {
   state = {
@@ -11,61 +11,61 @@ class Login extends React.Component {
     password: "",
     remember: true,
     needEmailVerification: false
-  };
+  }
 
   pwordChange = event => {
     this.setState({
       password: event.target.value
-    });
-  };
+    })
+  }
 
   emailChange = event => {
     this.setState({
       email: event.target.value
-    });
-  };
+    })
+  }
 
   navigate() {
-    this.props.navigate("signup");
+    this.props.navigate("signup")
   }
 
   updateCheck = value => {
-    this.setState({ remember: value });
-  };
+    this.setState({ remember: value })
+  }
 
   login() {
-    const { password, email } = this.state;
-    axios.defaults.withCredentials = true;
+    const { password, email } = this.state
+    axios.defaults.withCredentials = true
     axios
       .post(`${process.env.BACKEND}/auth/login`, {
         email,
         password
       })
       .then(response => {
-        const { user, token } = response.data;
-        const { phone, country, company } = user;
-        this.props.setUser(user);
-        this.props.saveToken(token);
+        const { user, token } = response.data
+        const { phone, country, company } = user
+        this.props.setUser(user)
+        this.props.saveToken(token)
         if (user.disabled) {
-          this.props.navigate("emailVerification");
+          this.props.navigate("emailVerification")
         } else if (phone && country && company) {
-          this.props.navigate("dashboard");
+          this.props.navigate("dashboard")
         } else {
-          this.props.navigate("userDetails");
+          this.props.navigate("userDetails")
         }
       })
       .catch(e => {
         if (e.response) {
           // error originated from server
           if (e.response.data.error) {
-            const { error } = e.response.data;
+            const { error } = e.response.data
             switch (error) {
               case "Unauthorized":
-                this.setState({ error });
-                break;
+                this.setState({ error })
+                break
               case "EMAIL_NOT_VERIFIED":
-                this.props.navigate("emailVerification");
-                break;
+                this.props.navigate("emailVerification")
+                break
             }
           }
         } else if (e.request) {
@@ -73,7 +73,7 @@ class Login extends React.Component {
         } else {
           // error was thrown during request setup
         }
-      });
+      })
   }
 
   render() {
@@ -86,9 +86,9 @@ class Login extends React.Component {
             <form
               className="lo"
               onSubmit={e => {
-                this.login();
-                e.preventDefault();
-                e.stopPropagation();
+                this.login()
+                e.preventDefault()
+                e.stopPropagation()
               }}
             >
               <div> Or enter your details. </div>
@@ -127,8 +127,8 @@ class Login extends React.Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default Login;
+export default Login

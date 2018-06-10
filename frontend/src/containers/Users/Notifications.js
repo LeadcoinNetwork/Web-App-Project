@@ -1,5 +1,5 @@
-import React from "react";
-import { connect } from "react-redux";
+import React from "react"
+import { connect } from "react-redux"
 
 class Notifications extends React.Component {
   render() {
@@ -7,8 +7,8 @@ class Notifications extends React.Component {
       <div>
         <h1>Notifications</h1>
       </div>
-    );
+    )
   }
 }
 
-export default Notifications;
+export default Notifications

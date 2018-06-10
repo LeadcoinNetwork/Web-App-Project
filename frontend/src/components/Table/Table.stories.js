@@ -1,16 +1,16 @@
-import React from "react";
-import { storiesOf } from "@storybook/react";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import Table from "./";
+import React from "react"
+import { storiesOf } from "@storybook/react"
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider"
+import Table from "./"
 
-const fields = require("../../mocks/fields.json");
-const leads = require("../../mocks/leads.json");
-const selected = new Set();
+const fields = require("../../mocks/fields.json")
+const leads = require("../../mocks/leads.json")
+const selected = new Set()
 
 function createStoryInDesignDecoration(nameOfStory) {
   return storiesOf(nameOfStory, module).addDecorator(getStories => (
     <MuiThemeProvider children={getStories()} />
-  ));
+  ))
 }
 
 const getButtons = () => {
@@ -18,17 +18,21 @@ const getButtons = () => {
     table: [
       {
         value: "buy ${number} leads",
-        onClick: () => {alert('Buy leads clicked')}
+        onClick: () => {
+          alert("Buy leads clicked")
+        }
       }
     ],
     record: [
       {
         value: "buy",
-        onClick: () => {alert('Buy lead clicked')}
+        onClick: () => {
+          alert("Buy lead clicked")
+        }
       }
     ]
-  };
-};
+  }
+}
 
 createStoryInDesignDecoration("Table")
   .add("with leads", () => (
@@ -64,7 +68,7 @@ createStoryInDesignDecoration("Table")
       selected={selected}
       showOnZeroRecords={<div>No Leads</div>}
       onSort={(key, direction) => {
-        alert("sorted by field.key: " + key + " - " + direction);
+        alert("sorted by field.key: " + key + " - " + direction)
       }}
       records={leads}
       buttons={getButtons()}
@@ -108,15 +112,15 @@ createStoryInDesignDecoration("Table")
   .add("with more button", () => {
     class TableWithButtonForMoreStories extends React.Component {
       constructor(props) {
-        super(props);
-        this.state = { records: leads.slice(0, 5) };
+        super(props)
+        this.state = { records: leads.slice(0, 5) }
       }
       loadMore = () => {
         this.setState({
           records: leads.slice(0, 10),
           loaded: true
-        });
-      };
+        })
+      }
       render() {
         return (
           <div>
@@ -135,8 +139,8 @@ createStoryInDesignDecoration("Table")
               onScrollBottom={cb => cb()}
             />
           </div>
-        );
+        )
       }
     }
-    return <TableWithButtonForMoreStories />;
-  });
+    return <TableWithButtonForMoreStories />
+  })

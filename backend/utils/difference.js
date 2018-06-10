@@ -1,4 +1,4 @@
-const { transform, isEqual, isObject } = require("lodash");
+const { transform, isEqual, isObject } = require("lodash")
 
 /**
  * Deep diff between two object, using lodash
@@ -12,9 +12,9 @@ function difference(object, base) {
       result[key] =
         isObject(value) && isObject(base[key])
           ? difference(value, base[key])
-          : value;
+          : value
     }
-  });
+  })
 }
 
-module.exports = difference;
+module.exports = difference

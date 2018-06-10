@@ -1,7 +1,7 @@
-const merge = require("webpack-merge");
-const common = require("./webpack.common.js");
-var dotenv = require("dotenv");
-dotenv.config();
+const merge = require("webpack-merge")
+const common = require("./webpack.common.js")
+var dotenv = require("dotenv")
+dotenv.config()
 
 module.exports = merge(common, {
   devtool: "cheap-module-eval-source-map",
@@ -17,4 +17,4 @@ module.exports = merge(common, {
     host: "0.0.0.0",
     disableHostCheck: true
   }
-});
+})
