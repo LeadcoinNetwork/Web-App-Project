@@ -5,6 +5,7 @@ import Home from "Containers/Home"
 import Admin from "Containers/Admin"
 import Leads from "Containers/Leads"
 import Users from "Containers/Users"
+import Payments from "Containers/Payments"
 
 const Root = () => (
   <App>
@@ -13,6 +14,7 @@ const Root = () => (
       <Route path="/admin" component={Admin} />
       <Route path="/leads" component={Leads} />
       <Route path="/users" component={Users} />
+      <Route path="/payments" component={Payments} />
     </Switch>
   </App>
 )
