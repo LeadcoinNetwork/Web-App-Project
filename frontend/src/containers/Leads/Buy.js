@@ -22,20 +22,11 @@ class Buy extends React.Component {
 
     getLeads(dispatch, cb, leads.page + 1);
   };
-  buildButtonLabel = amount => {
-    if (amount > 1) {
-      return "buy " + amount + " leads";
-    } else if (amount === 1) {
-      return "buy lead";
-    } else {
-      return "buy leads";
-    }
-  }
-  getButtons = amountSelected => {
+  getButtons = () => {
     return {
       table: [
         {
-          value: this.buildButtonLabel(amountSelected),
+          value: 'buy ${number} leads',
           onClick: this.buyLeads
         }
       ],
