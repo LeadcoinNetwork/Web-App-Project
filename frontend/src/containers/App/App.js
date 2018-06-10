@@ -49,7 +49,7 @@ class App extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  notifications: state.notifications
+  notifications: state.notifications,
 })
 
 export default connect(mapStateToProps)(App)

@@ -8,7 +8,7 @@ class CompleteRegistration extends React.Component {
     company: "",
     country: "",
     phone: "",
-    errors: []
+    errors: [],
   }
 
   handleChange = name => {
@@ -27,7 +27,7 @@ class CompleteRegistration extends React.Component {
       .put(`${process.env.BACKEND}/user/${user.id}`, {
         company,
         country,
-        phone
+        phone,
       })
       .then(response => {
         console.log(response)

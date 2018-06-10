@@ -6,12 +6,12 @@ const Dotenv = require("dotenv-webpack")
 
 module.exports = {
   entry: {
-    app: "./src/index.js"
+    app: "./src/index.js",
   },
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
-    publicPath: "/"
+    publicPath: "/",
   },
   plugins: [
     new Dotenv({ systemvars: true, safe: true }),
@@ -23,15 +23,15 @@ module.exports = {
       lang: "en-US",
       title: "Leadcoin",
       mobile: true,
-      appMountId: "root"
-    })
+      appMountId: "root",
+    }),
   ],
   module: {
     rules: [
       {
         test: /\.stories\.jsx?$/,
         loaders: [require.resolve("@storybook/addon-storysource/loader")],
-        enforce: "pre"
+        enforce: "pre",
       },
       {
         test: /\.js$/,
@@ -41,13 +41,13 @@ module.exports = {
           presets: ["@babel/preset-env", "@babel/preset-react"],
           plugins: [
             "@babel/plugin-proposal-object-rest-spread",
-            "transform-class-properties"
-          ]
-        }
+            "transform-class-properties",
+          ],
+        },
       },
       {
         test: /\.(scss|css)$/,
-        use: ["style-loader", "css-loader", "sass-loader"]
+        use: ["style-loader", "css-loader", "sass-loader"],
         // fallback: "style-loader",
         // use: [
         //   {
@@ -76,10 +76,10 @@ module.exports = {
         test: /\.(jpg|png|svg)$/,
         loader: "file-loader",
         options: {
-          name: "[path][name].[hash].[ext]"
-        }
-      }
-    ]
+          name: "[path][name].[hash].[ext]",
+        },
+      },
+    ],
   },
   resolve: {
     modules: ["node_modules", path.resolve(__dirname, "src")],
@@ -89,7 +89,7 @@ module.exports = {
       Containers: path.resolve(__dirname, "src/containers/"),
       HOC: path.resolve(__dirname, "src/HOC/"),
       Styles: path.resolve(__dirname, "src/styles/"),
-      Mocks: path.resolve(__dirname, "src/mocks/")
-    }
-  }
+      Mocks: path.resolve(__dirname, "src/mocks/"),
+    },
+  },
 }

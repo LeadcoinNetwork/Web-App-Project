@@ -4,7 +4,7 @@ import Button from "Components/Button"
 
 class EmailConfirmation extends React.Component {
   state = {
-    response: null
+    response: null,
   }
 
   resendEmail = () => {

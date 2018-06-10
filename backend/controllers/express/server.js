@@ -28,13 +28,15 @@ if (config.env === "development") {
 app.use((req, res, next) => {
   res.header(
     "Access-Control-Allow-Origin",
-    url.parse(config.frontend).protocol + "//" + url.parse(config.frontend).host
+    url.parse(config.frontend).protocol +
+      "//" +
+      url.parse(config.frontend).host,
   )
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS")
   res.header("Access-Control-Allow-Credentials", true)
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization",
   )
   next()
 })
@@ -52,7 +54,7 @@ passport.use(strategies.linkedInStrategy)
 app.use((req, res, next) => {
   res.status(404).json({
     path: "General",
-    error: "Not Found"
+    error: "Not Found",
   })
 })
 
@@ -66,7 +68,7 @@ app.use((err, req, res, next) => {
 
   // respond with json body
   res.status(err.status || 500).json({
-    error: err.message
+    error: err.message,
   })
   next(err)
 })

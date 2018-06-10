@@ -7,7 +7,7 @@ const { testUser } = require("../util")
 
 const request = require("request-promise-native").defaults({
   baseUrl: config.backend,
-  resolveWithFullResponse: true
+  resolveWithFullResponse: true,
 })
 
 describe(`Get ${config.backend}/user`, () => {
@@ -20,7 +20,7 @@ describe(`Get ${config.backend}/user`, () => {
 
     const res = await request.get(`/user/${user.id}`, {
       auth: { bearer: token },
-      json: true
+      json: true,
     })
 
     expect(res.statusCode).to.equal(200, JSON.stringify(res.body))

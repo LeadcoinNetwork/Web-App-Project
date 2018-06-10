@@ -7,7 +7,7 @@ const withInfiniteScroll = onScrollBottom => WrappedComponent => {
       super(props)
 
       this.state = {
-        loading: false
+        loading: false,
       }
     }
     componentDidMount() {
@@ -24,13 +24,13 @@ const withInfiniteScroll = onScrollBottom => WrappedComponent => {
 
         if (rect.height - Math.abs(rect.top) <= clientHeight + 20) {
           this.setState({
-            loading: true
+            loading: true,
           })
 
           this.props.onScrollBottom(() =>
             this.setState({
-              loading: false
-            })
+              loading: false,
+            }),
           )
         }
       }

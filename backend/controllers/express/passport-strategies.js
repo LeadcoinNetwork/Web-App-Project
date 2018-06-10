@@ -14,7 +14,7 @@ const utils = require("../../utils")
 
 const localStrategy = new LocalStrategy(
   {
-    usernameField: "email"
+    usernameField: "email",
   },
   async (email, password, done) => {
     try {
@@ -23,7 +23,7 @@ const localStrategy = new LocalStrategy(
     } catch (e) {
       done(e)
     }
-  }
+  },
 )
 
 const extactFromCookie = request => {
@@ -36,7 +36,7 @@ const extactFromCookie = request => {
 const jwtStrategy = new JWTStrategy(
   {
     jwtFromRequest: ExtractJwt.fromExtractors([extactFromCookie]),
-    secretOrKey: config.auth.jwt.secret
+    secretOrKey: config.auth.jwt.secret,
   },
   async (jwt, done) => {
     try {
@@ -50,7 +50,7 @@ const jwtStrategy = new JWTStrategy(
     } catch (e) {
       done(e)
     }
-  }
+  },
 )
 
 const linkedInStrategy = new LinkedInStrategy(
@@ -58,14 +58,14 @@ const linkedInStrategy = new LinkedInStrategy(
     clientID: config.auth.linkedin.clientID,
     clientSecret: config.auth.linkedin.clientSecret,
     callbackURL: config.auth.linkedin.callbackURL,
-    scope: ["r_emailaddress", "r_basicprofile"]
+    scope: ["r_emailaddress", "r_basicprofile"],
   },
   async function(accessToken, refreshToken, profile, done) {
     try {
       // try to find user by provider
       let [user] = await User.find({
         provider_id: profile.id,
-        provider: profile.provider
+        provider: profile.provider,
       })
       if (!user) {
         // try to find user by email
@@ -74,7 +74,7 @@ const linkedInStrategy = new LinkedInStrategy(
           // user email exists, transfer user to SSO
           let update = {
             provider_id: profile.id,
-            provider: profile.provider
+            provider: profile.provider,
           }
           user = await User.updateExternal(user.id, update)
         } else {
@@ -86,7 +86,7 @@ const linkedInStrategy = new LinkedInStrategy(
             provider_id: profile.id,
             provider: profile.provider,
             created: Date.now(),
-            role: "user"
+            role: "user",
           }
           await User.insert(user)
           ;[user] = await User.find({ email: user.email })
@@ -96,13 +96,13 @@ const linkedInStrategy = new LinkedInStrategy(
           {
             fname: user.fname,
             lname: user.lname,
-            email: user.email
+            email: user.email,
           },
           {
             fname: profile.name.givenName,
             lname: profile.name.familyName,
-            email: profile.emails[0].value
-          }
+            email: profile.emails[0].value,
+          },
         )
         if (Object.keys(update).length) {
           user = await User.updateExternal(user.id, update)
@@ -112,21 +112,21 @@ const linkedInStrategy = new LinkedInStrategy(
     } catch (e) {
       done(e)
     }
-  }
+  },
 )
 const googleStrategy = new GoogleStrategy(
   {
     clientID: config.auth.google.clientID,
     clientSecret: config.auth.google.clientSecret,
     callbackURL: config.auth.google.callbackURL,
-    scope: ["profile", "email"]
+    scope: ["profile", "email"],
   },
   async function(accessToken, refreshToken, profile, done) {
     try {
       // try to find user by provider
       let [user] = await User.find({
         provider_id: profile.id,
-        provider: profile.provider
+        provider: profile.provider,
       })
       if (!user) {
         // try to find user by email
@@ -135,7 +135,7 @@ const googleStrategy = new GoogleStrategy(
           // user email exists, transfer user to SSO
           let update = {
             provider_id: profile.id,
-            provider: profile.provider
+            provider: profile.provider,
           }
           user = await User.updateExternal(user.id, update)
         } else {
@@ -147,7 +147,7 @@ const googleStrategy = new GoogleStrategy(
             provider_id: profile.id,
             provider: profile.provider,
             created: Date.now(),
-            role: "user"
+            role: "user",
           }
           await User.insert(user)
           ;[user] = await User.find({ email: user.email })
@@ -157,13 +157,13 @@ const googleStrategy = new GoogleStrategy(
           {
             fname: user.fname,
             lname: user.lname,
-            email: user.email
+            email: user.email,
           },
           {
             fname: profile.name.givenName,
             lname: profile.name.familyName,
-            email: profile.emails[0].value
-          }
+            email: profile.emails[0].value,
+          },
         )
         if (Object.keys(update).length) {
           user = await User.updateExternal(user.id, update)
@@ -173,7 +173,7 @@ const googleStrategy = new GoogleStrategy(
     } catch (e) {
       done(e)
     }
-  }
+  },
 )
 
 // Removed but one day we may returned the FacebookStrategy
@@ -231,7 +231,7 @@ module.exports = {
   localStrategy,
   jwtStrategy,
   googleStrategy,
-  linkedInStrategy
+  linkedInStrategy,
   // Removed while one day we may bring it back
   // facebookStrategy
 }

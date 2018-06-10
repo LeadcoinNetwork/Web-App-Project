@@ -12,7 +12,7 @@ const router = express.Router()
 module.exports = router
 
 const authOptions = {
-  session: false
+  session: false,
 }
 
 router.post("/auth/login", passport.authenticate("local", authOptions), login)
@@ -25,25 +25,25 @@ router.post("/auth/reset-password", resetPassword, login)
 router.get(
   "/auth/resend-email",
   passport.authenticate("jwt", authOptions),
-  resendEmail
+  resendEmail,
 )
 
 router.get(
   ["/auth/google", "/auth/google/callback"],
   passport.authenticate("google", authOptions),
-  login
+  login,
 )
 
 router.get(
   ["/auth/linkedin", "/auth/linkedin/callback"],
   passport.authenticate("linkedin", authOptions),
-  login
+  login,
 )
 
 router.get(
   ["/auth/facebook", "/auth/facebook/callback"],
   passport.authenticate("facebook", authOptions),
-  login
+  login,
 )
 
 async function resendEmail(req, res, next) {
@@ -89,7 +89,7 @@ async function confirmEmail(req, res, next) {
     } else {
       res.status(404).json({
         path: "confirmMail",
-        error: "Not Found"
+        error: "Not Found",
       })
     }
   } catch (e) {
@@ -127,7 +127,7 @@ async function resetPassword(req, res, next) {
     } else {
       res.status(404).json({
         path: "resetPass",
-        error: "Not Found"
+        error: "Not Found",
       })
     }
   } catch (e) {

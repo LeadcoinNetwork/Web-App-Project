@@ -4,9 +4,9 @@ const testUser = {
   fname: "John",
   lname: "Doe",
   email: config.mail.auth.user,
-  password: "912379233"
+  password: "912379233",
 }
 
 module.exports = {
-  testUser
+  testUser,
 }

@@ -10,18 +10,18 @@ class Login extends React.Component {
     email: "",
     password: "",
     remember: true,
-    needEmailVerification: false
+    needEmailVerification: false,
   }
 
   pwordChange = event => {
     this.setState({
-      password: event.target.value
+      password: event.target.value,
     })
   }
 
   emailChange = event => {
     this.setState({
-      email: event.target.value
+      email: event.target.value,
     })
   }
 
@@ -39,7 +39,7 @@ class Login extends React.Component {
     axios
       .post(`${process.env.BACKEND}/auth/login`, {
         email,
-        password
+        password,
       })
       .then(response => {
         const { user, token } = response.data

@@ -6,7 +6,7 @@ const TBRCol = ({ field, value, colCount, staticColsWidth }) => (
     style={{
       width: `calc((100% - ${staticColsWidth}px) / ${colCount})`,
       maxWidth: field.maxWidth,
-      minWidth: field.minWidth
+      minWidth: field.minWidth,
     }}
   >
     {value}

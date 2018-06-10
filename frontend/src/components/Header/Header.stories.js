@@ -17,5 +17,5 @@ createStoryInDesignDecoration("Notification Status Bar").add(
       notifications={{ current: { message: "", type: "" } }}
       push={action("push")}
     />
-  )
+  ),
 )

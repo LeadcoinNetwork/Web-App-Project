@@ -12,7 +12,7 @@ module.exports = mysql.createPool(config.mysql)
     .createConnection({
       host: config.mysql.host,
       user: config.mysql.user,
-      password: config.mysql.password
+      password: config.mysql.password,
     })
     .then(conn => {
       if (config.env != "test") {

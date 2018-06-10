@@ -12,7 +12,7 @@ function connectToHTTP(httpServer) {
     console.log("a user connected")
     setTimeout(function() {
       socket.emit("notification", {
-        message: "test",
+        message: "asdas",
         type: "success|error|warning|info",
       })
     }, 3000)

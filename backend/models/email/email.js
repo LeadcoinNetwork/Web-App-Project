@@ -11,7 +11,7 @@ if (config.mail.mailer == "SMTP") {
 module.exports = {
   confirmEmail,
   confirmEmailUpdate,
-  forgotPassword
+  forgotPassword,
 }
 
 function confirmEmail(user, token) {
@@ -32,7 +32,7 @@ function confirmEmail(user, token) {
       "here " +
       "</a>" +
       "to confirm your registration" +
-      "</p>"
+      "</p>",
   })
 }
 
@@ -52,7 +52,7 @@ function confirmEmailUpdate(user, token) {
       '">' +
       "here " +
       "</a>" +
-      "</p>"
+      "</p>",
   })
 }
 
@@ -73,6 +73,6 @@ function forgotPassword(user, token) {
       "here " +
       "</a>" +
       "to choose a new password" +
-      "</p>"
+      "</p>",
   })
 }

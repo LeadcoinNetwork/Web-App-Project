@@ -10,7 +10,7 @@ class Signup extends React.Component {
     password: "",
     fname: "",
     lname: "",
-    errors: []
+    errors: [],
   }
 
   handleChange = name => {
@@ -26,7 +26,7 @@ class Signup extends React.Component {
         fname,
         lname,
         email,
-        password
+        password,
       })
       .then(({ data }) => {
         const { token, user } = data

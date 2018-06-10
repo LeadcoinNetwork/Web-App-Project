@@ -10,7 +10,7 @@ const config = require("../../config")
 const parse_csv_file = (user_id, filename, field_names = []) => {
   return new Promise((resolve, reject) => {
     const opts = {
-      delimiter: ","
+      delimiter: ",",
     }
     let field_list
     if (field_names.length < 1) opts["columns"] = true
@@ -33,7 +33,7 @@ const parse_csv_file = (user_id, filename, field_names = []) => {
             user_id,
             batch_id,
             json: JSON.stringify(json_obj),
-            created: new Date().valueOf()
+            created: new Date().valueOf(),
           })
         } catch (e) {
           reject(e)
@@ -68,7 +68,7 @@ if (program.user && program.file && program.fields) {
   parse_csv_file(user_id, filename, field_names.split(",")).then(
     lines_added => {
       console.log("Lines added:", lines_added)
-    }
+    },
   )
 }
 

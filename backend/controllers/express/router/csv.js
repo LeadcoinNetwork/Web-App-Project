@@ -12,7 +12,7 @@ const router = express.Router()
 module.exports = router
 
 const authOptions = {
-  session: false
+  session: false,
 }
 var multer = require("multer")
 var _upload = multer({ dest: "uploads/" })
@@ -27,13 +27,13 @@ const mock_field_list = [
   "budget",
   "bedrooms",
   "floor",
-  "specification"
+  "specification",
 ]
 
 router.post(
   "/csv/upload",
   [passport.authenticate("jwt", authOptions), _upload.any("file")],
-  upload
+  upload,
 )
 async function upload(req, res, next) {
   try {
@@ -42,7 +42,7 @@ async function upload(req, res, next) {
       .then(response => {
         res.json({
           data: response,
-          db_field_list: basic_fields.concat(mock_field_list)
+          db_field_list: basic_fields.concat(mock_field_list),
         })
       })
       .catch(e => {
@@ -56,7 +56,7 @@ async function upload(req, res, next) {
 router.post(
   "/csv/mapper/:batchId",
   passport.authenticate("jwt", authOptions),
-  mapper
+  mapper,
 )
 async function mapper(req, res, next) {
   try {
@@ -64,13 +64,13 @@ async function mapper(req, res, next) {
     const { field_map, batch_id, lead_price } = req.body
 
     let lead_uploads = await leads_upload.find({
-      batch_id: req.params.batchId
+      batch_id: req.params.batchId,
     })
     lead_promises = lead_uploads.map(lead => {
       let insert_params = {
         user_id: req.user.id,
         created: new Date().valueOf(),
-        ext_data: {}
+        ext_data: {},
       }
       let fields = Object.keys(field_map)
       fields.forEach(our_field => {

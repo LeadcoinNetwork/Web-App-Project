@@ -8,7 +8,7 @@ describe("Validate", () => {
     fname: "John",
     lname: "Doe",
     email: "john@doe.com",
-    password: "912379233"
+    password: "912379233",
   }
 
   describe("newUser", () => {
@@ -18,7 +18,7 @@ describe("Validate", () => {
         expect(validate.newUser(omit(user, "fname"))).to.be.rejected,
         expect(validate.newUser(omit(user, "lname"))).to.be.rejected,
         expect(validate.newUser(omit(user, "email"))).to.be.rejected,
-        expect(validate.newUser(omit(user, "password"))).to.be.rejected
+        expect(validate.newUser(omit(user, "password"))).to.be.rejected,
       ])
     })
   })
