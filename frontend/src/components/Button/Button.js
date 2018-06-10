@@ -7,7 +7,7 @@ const Button = ({
   children,
   label,
   containerElement,
-  disabled
+  disabled,
 }) => (
   <MaterialButton
     children={children}

@@ -9,12 +9,12 @@ class CSVUpload extends React.Component {
   state = {
     response: null,
     currentStep: "upload",
-    field_map: {}
+    field_map: {},
   }
 
   pickFile = e => {
     this.setState({
-      file: e.target.files[0]
+      file: e.target.files[0],
     })
   }
 
@@ -27,9 +27,9 @@ class CSVUpload extends React.Component {
     axios
       .post(`${process.env.BACKEND}/csv/upload`, formData, {
         headers: {
-          "content-type": "multipart/form-data"
+          "content-type": "multipart/form-data",
         },
-        withCredentials: true
+        withCredentials: true,
       })
       .then(response => {
         const { data, db_field_list } = response.data
@@ -39,7 +39,7 @@ class CSVUpload extends React.Component {
           file_field_list: field_list,
           currentStep: "fieldMap",
           batch_id,
-          db_field_list
+          db_field_list,
         })
       })
       .catch(error => {
@@ -102,7 +102,7 @@ class CSVUpload extends React.Component {
     axios
       .post(`${process.env.BACKEND}/csv/mapper/` + batch_id, {
         field_map,
-        lead_price
+        lead_price,
       })
       .then(response => {
         const { done } = response.data

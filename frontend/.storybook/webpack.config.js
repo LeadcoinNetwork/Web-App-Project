@@ -5,9 +5,9 @@ module.exports = {
   plugins: [new ExtractTextPlugin("bundle.css")],
   module: common.module,
   resolve: {
-    alias: common.resolve.alias
+    alias: common.resolve.alias,
   },
   devServer: {
-    hot: true
-  }
+    hot: true,
+  },
 }

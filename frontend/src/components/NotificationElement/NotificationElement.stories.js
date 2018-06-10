@@ -76,5 +76,5 @@ createStoryInDesignDecoration("Notification Element/inner").add(
         notifications={notifications}
       />
     )
-  }
+  },
 )

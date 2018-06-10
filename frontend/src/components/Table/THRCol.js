@@ -11,7 +11,7 @@ const THRCol = ({ field, colCount, staticColsWidth, onSort, sortedBy }) => (
       width: `calc((100% - ${staticColsWidth}px) / ${colCount})`,
       maxWidth: field.maxWidth,
       minWidth: field.minWidth,
-      fontWeight: sortedBy && sortedBy.key === field.name ? 700 : 400
+      fontWeight: sortedBy && sortedBy.key === field.name ? 700 : 400,
     }}
     onClick={
       field.sortable && onSort
@@ -22,7 +22,7 @@ const THRCol = ({ field, colCount, staticColsWidth, onSort, sortedBy }) => (
                 ? "asc"
                 : sortedBy.direction === "asc"
                   ? "desc"
-                  : "asc"
+                  : "asc",
             )
         : undefined
     }

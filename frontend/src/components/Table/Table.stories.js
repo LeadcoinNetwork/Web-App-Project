@@ -20,17 +20,17 @@ const getButtons = () => {
         value: "buy ${number} leads",
         onClick: () => {
           alert("Buy leads clicked")
-        }
-      }
+        },
+      },
     ],
     record: [
       {
         value: "buy",
         onClick: () => {
           alert("Buy lead clicked")
-        }
-      }
-    ]
+        },
+      },
+    ],
   }
 }
 
@@ -118,7 +118,7 @@ createStoryInDesignDecoration("Table")
       loadMore = () => {
         this.setState({
           records: leads.slice(0, 10),
-          loaded: true
+          loaded: true,
         })
       }
       render() {

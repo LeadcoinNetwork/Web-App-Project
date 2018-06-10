@@ -11,10 +11,10 @@ module.exports = merge(common, {
     historyApiFallback: true,
     stats: {
       colors: true,
-      env: true
+      env: true,
     },
     port: process.env.PORT,
     host: "0.0.0.0",
-    disableHostCheck: true
-  }
+    disableHostCheck: true,
+  },
 })

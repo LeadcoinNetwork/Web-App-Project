@@ -1,14 +1,14 @@
-// External Modules
+// // External Modules
 import React from "react"
 import { storiesOf } from "@storybook/react"
 
-// Optional modules, if you use in your stories
+// // Optional modules, if you use in your stories
 import { action, configureActions } from "@storybook/addon-actions"
 import { linkTo } from "@storybook/addon-links"
-import { withInfo } from "@storybook/addon-info"
-import { withState } from "@dump247/storybook-state"
+// import { withInfo } from "@storybook/addon-info"
+// import { withState } from "@dump247/storybook-state"
 
-// https://github.com/storybooks/storybook/tree/release/3.4/addons/knobs
+// // https://github.com/storybooks/storybook/tree/release/3.4/addons/knobs
 import {
   withKnobs,
   text,
@@ -19,10 +19,10 @@ import {
   array,
   selectV2,
   date,
-  button
+  button,
 } from "@storybook/addon-knobs/react"
 
-// createStory("Example Stories", module)
+// // createStory("Example Stories", module)
 storiesOf("Example Stories", module)
   .add("action", () => (
     <div onClick={action("clicked")}>Click Here to see an example action</div>
@@ -32,28 +32,28 @@ storiesOf("Example Stories", module)
       Click here to link to other story
     </div>
   ))
-  .add(
-    "with state",
-    withState({})(({ store }) => (
-      <div
-        onClick={() => {
-          store.set({ clicked: !store.state.clicked })
-        }}
-      >
-        Click to toggle - {store.state.clicked ? "off" : "on"}
-      </div>
-    ))
-  )
-  .add(
-    "With Info",
-    withInfo("This is the info")(() => (
-      <div>
-        {boolean(0, 1)} - {text("a", "b")}
-      </div>
-    ))
-  )
+// .add(
+//   "with state",
+//   withState({})(({ store }) => (
+//     <div
+//       onClick={() => {
+//         store.set({ clicked: !store.state.clicked })
+//       }}
+//     >
+//       Click to toggle - {store.state.clicked ? "off" : "on"}
+//     </div>
+//   )),
+// )
+//   .add(
+//     "With Info",
+//     withInfo("This is the info")(() => (
+//       <div>
+//         {boolean(0, 1)} - {text("a", "b")}
+//       </div>
+//     )),
+//   )
 
-storiesOf("Example Stories/with nobs")
+storiesOf("Example Stories/with nobs", module)
   .addDecorator(withKnobs)
   .add("With Knob", () => (
     <div>
