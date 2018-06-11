@@ -22,8 +22,6 @@ import RootReducer from "../../reducers"
 
 import * as types from "../../actions/types"
 
-import "babel-polyfill"
-
 import { storyReduxLogger } from "../../storybook-utils/withRedux"
 
 function getPaymentsSaga(mockType) {
