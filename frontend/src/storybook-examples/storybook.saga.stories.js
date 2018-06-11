@@ -4,7 +4,6 @@ import { storyReduxLogger } from "../storybook-utils/withRedux"
 import { createStore, applyMiddleware } from "redux"
 import { call, put, take, takeEvery, takeLatest } from "redux-saga/effects"
 import createSagaMiddleware from "redux-saga"
-import "babel-polyfill"
 
 storiesOf("Example Stories/saga").add("saga", () => {
   // Create Saga Middleware

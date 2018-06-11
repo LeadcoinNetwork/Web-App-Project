@@ -2,6 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import PaymentsHistory from "Components/PaymentsHistory"
 import { getPayments } from "../../actions"
+import * as actions from "../../actions"
 
 class Payments extends React.Component {
   constructor(props) {
@@ -10,12 +11,13 @@ class Payments extends React.Component {
     getPayments(props.dispatch)
   }
   render() {
-    return <PaymentsHistory payments={this.props.payments} />
+    return <PaymentsHistory {...this.props} />
   }
 }
 
 const mapStateToProps = state => ({
   payments: state.payments,
+  isDeleteable: state.user.DeleteAllow || state.user.isAdmin,
 })
 
 export default connect(mapStateToProps)(Payments)
