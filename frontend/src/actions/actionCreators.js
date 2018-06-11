@@ -42,5 +42,8 @@ export const getPayments = dispatch => {
 
 import * as PaymentHistory from "./paymentHistory"
 import * as WithdrawElement from "./WithdrawElement"
+import * as signup from "./signup"
 
+export { signup }
+export { types }
 export { PaymentHistory, WithdrawElement }

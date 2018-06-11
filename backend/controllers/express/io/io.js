@@ -12,8 +12,8 @@ function connectToHTTP(httpServer) {
     console.log("a user connected")
     setTimeout(function() {
       socket.emit("notification", {
-        message: "asdas",
-        type: "success|error|warning|info",
+        message: "Hello!",
+        type: "success",
       })
     }, 3000)
   })
