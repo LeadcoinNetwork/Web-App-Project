@@ -31,6 +31,7 @@
     "storybook-addon-material-ui": "^0.8.2"
   },
   "devDependencies": {
+    "redux-devtools-extension": "^2.13.2",
     "@babel/core": "^7.0.0-beta.49",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.49",
     "@babel/preset-env": "^7.0.0-beta.49",
