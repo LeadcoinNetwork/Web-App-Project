@@ -2,6 +2,7 @@ import React from "react"
 import { storiesOf } from "@storybook/react"
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider"
 import PaymentsHistory from "./PaymentsHistory"
+import { action, configureActions } from "@storybook/addon-actions"
 
 const payments = require("../../mocks/payments.json")
 
@@ -11,18 +12,30 @@ function createStoryInDesignDecoration(nameOfStory) {
   ))
 }
 
-createStoryInDesignDecoration("Payment History").add("List", () => (
-  <PaymentsHistory payments={{ list: payments }} />
-))
+createStoryInDesignDecoration("Payment History")
+  .add("List", () => <PaymentsHistory payments={{ list: payments }} />)
 
-createStoryInDesignDecoration("Payment History").add("Empty", () => (
-  <PaymentsHistory payments={{ list: [] }} />
-))
+  .add("Empty", () => <PaymentsHistory payments={{ list: [] }} />)
 
-createStoryInDesignDecoration("Payment History").add("Empty loading", () => (
-  <PaymentsHistory payments={{ list: [], loading: true }} />
-))
+  .add("Empty loading", () => (
+    <PaymentsHistory payments={{ list: [], loading: true }} />
+  ))
 
-createStoryInDesignDecoration("Payment History").add("Full loading", () => (
-  <PaymentsHistory payments={{ list: payments, loading: true }} />
-))
+  .add("Full loading", () => (
+    <PaymentsHistory payments={{ list: payments, loading: true }} />
+  ))
+
+  .add("Test Refresh Button", () => (
+    <PaymentsHistory
+      onRefresh={action("Refresh Clicked")}
+      payments={{ list: payments, loading: true }}
+    />
+  ))
+
+  .add("Test Edit Button when isDeleteable", () => (
+    <PaymentsHistory
+      isDeleteable={true}
+      onRefresh={action("Refresh Clicked")}
+      payments={{ list: payments, loading: true }}
+    />
+  ))
