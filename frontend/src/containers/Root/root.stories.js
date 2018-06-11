@@ -1,28 +1,18 @@
 import React from "react"
-import { storiesOf } from "@storybook/react"
-// import MuiThemeProvider from "material-ui/styles/MuiThemeProvider"
-
-import { createStore, applyMiddleware, combineReducers } from "redux"
-import Root from "./index"
-import { Provider } from "react-redux"
-import { MemoryRouter } from "react-router"
+import { createStore, applyMiddleware } from "redux"
+import rootReducer from "../../reducers"
 import createSagaMiddleware from "redux-saga"
 import { composeWithDevTools } from "redux-devtools-extension"
-
-import { call, put, take, takeEvery, takeLatest } from "redux-saga/effects"
-import { delay } from "redux-saga"
-
-import { PaymentReducer } from "../../reducers/payments"
-
-// MOCKS
-// const leadsMock = require("../mocks/leads.json")
-const paymentsMock = require("../../mocks/payments.json")
-
-import RootReducer from "../../reducers"
-
 import * as types from "../../actions/types"
-
+import { Provider } from "react-redux"
+import { MemoryRouter } from "react-router"
+import Root from "./index"
+import { put, take } from "redux-saga/effects"
+import { delay } from "redux-saga"
+import { storiesOf } from "@storybook/react"
 import { storyReduxLogger } from "../../storybook-utils/withRedux"
+
+const paymentsMock = require("../../mocks/payments.json")
 
 function getPaymentsSaga(mockType) {
   return function*() {
@@ -45,31 +35,26 @@ function getPaymentsSaga(mockType) {
   }
 }
 
-storiesOf("Dev-Containers")
-  .add("payments Page", () => {
-    const sagaMiddleware = createSagaMiddleware()
-    var store = createStore(
-      RootReducer,
-      composeWithDevTools(applyMiddleware(sagaMiddleware, storyReduxLogger)),
-    )
-    sagaMiddleware.run(getPaymentsSaga(2))
+const sagaMiddleware = createSagaMiddleware()
 
+var store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(sagaMiddleware, storyReduxLogger)),
+)
+
+sagaMiddleware.run(getPaymentsSaga(2))
+
+storiesOf("App")
+  .add("home", () => {
     return (
       <Provider store={store}>
-        <MemoryRouter initialEntries={["/payments"]} initialIndex={0}>
+        <MemoryRouter initialEntries={["/"]} initialIndex={0}>
           <Root />
         </MemoryRouter>
       </Provider>
     )
   })
-  .add("payments Page 100 items", () => {
-    const sagaMiddleware = createSagaMiddleware()
-    var store = createStore(
-      RootReducer,
-      composeWithDevTools(applyMiddleware(sagaMiddleware, storyReduxLogger)),
-    )
-    sagaMiddleware.run(getPaymentsSaga(50))
-
+  .add("payments Page", () => {
     return (
       <Provider store={store}>
         <MemoryRouter initialEntries={["/payments"]} initialIndex={0}>

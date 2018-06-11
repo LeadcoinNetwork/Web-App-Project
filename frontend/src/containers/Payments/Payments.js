@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import PaymentsHistory from "Components/PaymentsHistory"
 import { getPayments } from "../../actions"
 import * as actions from "../../actions"
+
 class Payments extends React.Component {
   constructor(props) {
     super(props)
