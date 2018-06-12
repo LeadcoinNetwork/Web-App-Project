@@ -26,6 +26,13 @@ module.exports = {
       template: require("html-webpack-template"),
       lang: "en-US",
       title: "Leadcoin",
+      links: [
+        {
+          href:
+            "https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,600",
+          rel: "stylesheet",
+        },
+      ],
       mobile: true,
       appMountId: "root",
     }),
