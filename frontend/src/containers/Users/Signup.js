@@ -1,6 +1,6 @@
 import { connect } from "react-redux"
 import SignupForm from "Components/SignupForm"
-import { signup } from "../../actions"
+import { signup } from "Actions"
 
 var mapStateToProps = state => ({
   signup: state.signup,
