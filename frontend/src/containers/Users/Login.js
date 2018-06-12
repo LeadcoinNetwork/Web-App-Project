@@ -3,7 +3,7 @@ import axios from "axios"
 import Button from "Components/Button"
 import TextField from "Components/TextField"
 import Checkbox from "Components/Checkbox"
-import SSOContainer from "Components/SSOContainer"
+import SocialLogin from "Components/SocialLogin"
 
 class Login extends React.Component {
   state = {
@@ -81,7 +81,8 @@ class Login extends React.Component {
       <div className="loginForm">
         <div className="login_containers">
           <div className="login_header"> Login.</div>
-          <SSOContainer />
+          <SocialLogin provider="google" />
+          <SocialLogin provider="linkedin" />
           <div className="localLogin">
             <form
               className="lo"

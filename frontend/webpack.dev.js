@@ -7,7 +7,7 @@ module.exports = merge(common, {
   devtool: "cheap-module-eval-source-map",
   mode: "development",
   devServer: {
-    contentBase: "./dist",
+    contentBase: "./src/static",
     historyApiFallback: true,
     stats: {
       colors: true,
