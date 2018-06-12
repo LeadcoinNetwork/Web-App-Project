@@ -20,6 +20,16 @@ const signup = (state = initialState, action) => {
         ...state,
         error: action.payload,
       }
+    case types.SIGNUP_LOADING:
+      return {
+        ...state,
+        loading: true,
+      }
+    case types.SIGNUP_FINISH:
+      return {
+        ...state,
+        loading: false,
+      }
     default:
       return state
   }

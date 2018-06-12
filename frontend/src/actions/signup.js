@@ -7,8 +7,19 @@ export function signupFormHandleChange(name, value) {
   }
 }
 
-export function SignUpFormUserSubmitStart() {
-  return (dispatch, getState) => {
+export function SignUpFormUserSubmit() {
+  return {
+    type: types.SIGNUP_SUBMIT,
+  }
+}
+
+export function SIGNUP_LOADING() {
+  return {
+    type: types.SIGNUP_LOADING,
+  }
+}
+
+/* return (dispatch, getState) => {
     dispatch({ type: "SIGNUP_AJAX_START1" })
 
     const { fname, lname, password, email } = getState().users.signup
@@ -40,4 +51,4 @@ export function SignUpFormUserSubmitStart() {
         //     });
       })
   }
-}
+} */
