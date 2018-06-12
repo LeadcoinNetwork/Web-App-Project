@@ -2,7 +2,6 @@ import React from "react"
 import MaterialTextField from "material-ui/TextField"
 
 const TextField = ({
-  name,
   label,
   hintText,
   value,
@@ -11,7 +10,6 @@ const TextField = ({
   onChange,
 }) => (
   <MaterialTextField
-    name={name}
     value={value}
     type={type}
     floatingLabelText={label}
