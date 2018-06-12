@@ -3,64 +3,31 @@ import Button from "Components/Button"
 import TextField from "Components/TextField"
 import SSOContainer from "Components/SSOContainer"
 
-const Signup = ({
-  handleChange,
-  submit,
-  email,
-  password,
-  fname,
-  lname,
-  errors,
-}) => {
+const Signup = ({ name, email, password, error, handleChange, submit }) => {
   const handleChangeBind = name => event =>
     handleChange(name, event.target.value)
 
-  const generalError = () => {
-    if (errors && errors.length > 0) {
-      const errorMsgs = errors.map((e, i) => {
-        return <div key={i}>{e}</div>
-      })
-      return <div className="error">{errorMsgs}</div>
-    }
-  }
-
   return (
-    <div className="signupForm">
+    <div>
       <SSOContainer />
-      <div className="signupDetails">
-        <div>
-          <TextField
-            label="First Name"
-            value={fname}
-            onChange={handleChangeBind("fname")}
-          />
-        </div>
-        <div>
-          <TextField
-            label="Last Name"
-            value={lname}
-            onChange={handleChangeBind("lname")}
-          />
-        </div>
-        <div>
-          <TextField
-            label="Email"
-            value={email}
-            onChange={handleChangeBind("email")}
-          />
-        </div>
-        <TextField
-          label="Password"
-          value={password}
-          onChange={handleChange("password")}
-          type="password"
-        />
-        {generalError()}
-        {props["SIGNUP-ERROR"] && (
-          <div className="error">{props["SIGNUP-ERROR"]}</div>
-        )};
-        <Button onClick={submit}>SignUp</Button>
-      </div>
+      <TextField
+        label="name"
+        value={name}
+        onChange={handleChangeBind("name")}
+      />
+      <TextField
+        label="email"
+        value={email}
+        onChange={handleChangeBind("email")}
+      />
+      <TextField
+        label="Password"
+        value={password}
+        onChange={handleChangeBind("password")}
+        type="password"
+      />
+      <div>{error}</div>
+      <Button onClick={submit}>SignUp</Button>
     </div>
   )
 }
