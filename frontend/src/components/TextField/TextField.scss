@@ -1,0 +1,14 @@
+@import "~Styles/variables";
+
+.ldc-textfield {
+  padding: 10px;
+  width: 250px;
+  border-radius: 20px;
+  margin: 10px;
+  outline: none;
+  font-size: 20px;
+  font-family: "Sans Pro";
+  &:focus {
+    border: 3px solid #7c4be7;
+  }
+}
