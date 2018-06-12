@@ -3,7 +3,7 @@ import Button from "Components/Button"
 import TextField from "Components/TextField"
 import SSOContainer from "Components/SSOContainer"
 
-const Signup = ({ name, email, password, error, handleChange, submit }) => {
+const SignupForm = ({ name, email, password, error, handleChange, submit }) => {
   const handleChangeBind = name => event =>
     handleChange(name, event.target.value)
 
@@ -32,4 +32,4 @@ const Signup = ({ name, email, password, error, handleChange, submit }) => {
   )
 }
 
-export default Signup
+export default SignupForm
