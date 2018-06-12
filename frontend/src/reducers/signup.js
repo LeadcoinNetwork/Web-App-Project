@@ -18,6 +18,7 @@ const signup = (state = initialState, action) => {
     case types.SIGNUP_ERROR:
       return {
         ...state,
+        loading: false,
         error: action.payload,
       }
     case types.SIGNUP_LOADING:
@@ -29,6 +30,12 @@ const signup = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+      }
+    case types.SIGNUP_FORM_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.message,
       }
     default:
       return state

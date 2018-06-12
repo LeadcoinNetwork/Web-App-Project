@@ -229,6 +229,21 @@ storiesOf("App/SignUp")
       </Provider>
     )
   })
+  .add("error form", () => {
+    const store = createStore(
+      rootReducer,
+      { signup: { error: "this is an example error; this is 2nd error" } },
+      composeWithDevTools(applyMiddleware(sagaMiddleware, storyReduxLogger)),
+    )
+
+    return (
+      <Provider store={store}>
+        <MemoryRouter initialEntries={["/users/signup"]} initialIndex={0}>
+          <Root />
+        </MemoryRouter>
+      </Provider>
+    )
+  })
 
 storiesOf("App")
   .add("Users - complete registration", () => {

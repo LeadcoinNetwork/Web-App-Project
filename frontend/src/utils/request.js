@@ -7,5 +7,12 @@ export default function fetchBackend(method, url, data) {
       data,
       withCredentials: true,
     })
+      .then(a => {
+        return a
+      })
+      .catch(e => {
+        e.response.isError = data
+        return e.response
+      })
   }
 }

@@ -8,14 +8,17 @@ export default function* signup() {
     yield take(types.SIGNUP_SUBMIT)
     yield put(Actions.signup.SIGNUP_LOADING())
     var { fname, lname, email, password } = yield select(state => state.signup)
-    console.log(0)
     var ans = yield call(request, "POST", "/user", {
       fname,
       lname,
       email,
       password,
     })
-    console.log(1)
-    console.log(ans)
+    if (ans.isError) {
+      yield put(Actions.signup.SIGNUP_FORM_ERROR(ans.data.error))
+    }
+    // else {
+    // 	yield put(Actions.signup.complete())
+    // }
   }
 }

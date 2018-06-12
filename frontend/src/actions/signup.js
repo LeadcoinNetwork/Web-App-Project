@@ -19,6 +19,15 @@ export function SIGNUP_LOADING() {
   }
 }
 
+export function SIGNUP_FORM_ERROR(message) {
+  return {
+    type: types.SIGNUP_FORM_ERROR,
+    payload: {
+      message,
+    },
+  }
+}
+
 /* return (dispatch, getState) => {
     dispatch({ type: "SIGNUP_AJAX_START1" })
 

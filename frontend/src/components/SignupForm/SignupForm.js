@@ -4,7 +4,8 @@ import TextField from "Components/TextField"
 import SocialLogin from "Components/SocialLogin"
 
 const SignupForm = ({
-  name,
+  fname,
+  lname,
   email,
   password,
   error,
@@ -22,9 +23,14 @@ const SignupForm = ({
       <SocialLogin provider={"linkedin"} />
       <br />
       <TextField
-        label="name"
-        value={name}
-        onChange={handleChangeBind("name")}
+        label="fname"
+        value={fname}
+        onChange={handleChangeBind("fname")}
+      />
+      <TextField
+        label="fname"
+        value={lname}
+        onChange={handleChangeBind("lname")}
       />
       <br />
       <TextField
@@ -39,7 +45,8 @@ const SignupForm = ({
         onChange={handleChangeBind("password")}
         type="password"
       />
-      <div>{error}</div>
+      <div />
+      {error && error.split(";").map(e => <div>{e}</div>)}
       <Button loading={loading} onClick={submit} label="signup" />
     </div>
   )
