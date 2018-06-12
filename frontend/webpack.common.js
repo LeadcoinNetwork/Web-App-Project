@@ -3,6 +3,10 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin")
 const CleanWebpackPlugin = require("clean-webpack-plugin")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const Dotenv = require("dotenv-webpack")
+const fs = require("fs")
+const webpackUtils = require("./webpack.utils.js")
+
+webpackUtils.JestUpdateModuleResoultionPacker()
 
 module.exports = {
   entry: {
@@ -24,8 +28,7 @@ module.exports = {
       title: "Leadcoin",
       links: [
         {
-          href:
-            "https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,600",
+          href: "/fonts/source-sans.css",
           rel: "stylesheet",
         },
       ],
@@ -91,17 +94,6 @@ module.exports = {
   resolve: {
     modules: ["node_modules", path.resolve(__dirname, "src")],
     extensions: [".js"],
-    alias: {
-      Actions: path.resolve(__dirname, "src/actions/"),
-      Components: path.resolve(__dirname, "src/components/"),
-      Containers: path.resolve(__dirname, "src/containers/"),
-      HOC: path.resolve(__dirname, "src/HOC/"),
-      Images: path.resolve(__dirname, "src/images/"),
-      Mocks: path.resolve(__dirname, "src/mocks/"),
-      Redusers: path.resolve(__dirname, "src/reducers"),
-      Sagas: path.resolve(__dirname, "src/sagas"),
-      Styles: path.resolve(__dirname, "src/styles/"),
-      Utils: path.resolve(__dirname, "src/utils/"),
-    },
+    alias: webpackUtils.getAliasesFromRootSrcForWebPack(),
   },
 }
