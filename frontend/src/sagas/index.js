@@ -1,5 +1,6 @@
 import saga1 from "./saga1"
 import saga2 from "./saga2"
+import signup from "./signup"
 import { spawn } from "redux-saga/effects"
 
 export default function* rootSaga() {
@@ -11,6 +12,8 @@ export default function* rootSaga() {
    * because we launched it using `spawn`
    * If he launched it using `fork` one saga fall down will take all the saga with it.
    */
-  yield spawn(saga1)
-  yield spawn(saga2)
+  var sagas = [saga1, saga2, signup]
+  for (var i in sagas) {
+    yield spawn(sagas[i])
+  }
 }
