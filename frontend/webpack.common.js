@@ -28,8 +28,7 @@ module.exports = {
       title: "Leadcoin",
       links: [
         {
-          href:
-            "https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,600",
+          href: "/fonts/source-sans.css",
           rel: "stylesheet",
         },
       ],
@@ -95,6 +94,6 @@ module.exports = {
   resolve: {
     modules: ["node_modules", path.resolve(__dirname, "src")],
     extensions: [".js"],
-    alias: webpackUtils.getAliasesFromRootSrcForWebPack,
+    alias: webpackUtils.getAliasesFromRootSrcForWebPack(),
   },
 }

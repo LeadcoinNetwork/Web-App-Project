@@ -44,6 +44,7 @@
       "^Mocks(.*)$": "<rootDir>/src/mocks$1",
       "^Reducers(.*)$": "<rootDir>/src/reducers$1",
       "^Sagas(.*)$": "<rootDir>/src/sagas$1",
+      "^Static(.*)$": "<rootDir>/src/static$1",
       "^Storybook-examples(.*)$": "<rootDir>/src/storybook-examples$1",
       "^Storybook-utils(.*)$": "<rootDir>/src/storybook-utils$1",
       "^Styles(.*)$": "<rootDir>/src/styles$1",

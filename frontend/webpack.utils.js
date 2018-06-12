@@ -1,3 +1,5 @@
+var fs = require("fs")
+
 function JestUpdateModuleResoultionPacker() {
   var dirs = getRootDirectories()
   var packgeJson = require("./package.json")
@@ -12,7 +14,6 @@ function JestUpdateModuleResoultionPacker() {
   packgeJson.jest.moduleNameMapper = o
   var newJson = JSON.stringify(packgeJson, null, 2)
   fs.writeFileSync("./package.json", newJson)
-  // console.log(newJson)
 }
 function toCamelcase(item) {
   return item[0].toUpperCase() + item.slice(1)
