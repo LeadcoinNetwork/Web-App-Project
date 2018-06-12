@@ -1,48 +1,27 @@
 import React from "react"
-import axios from "axios"
 import Button from "Components/Button"
 import TextField from "Components/TextField"
 import SSOContainer from "Components/SSOContainer"
 
-function Signup(props) {
-  var {
-    handleChange,
-    submit,
-    email,
-    password,
-    fname,
-    lname,
-    errors = [],
-  } = props
-  function handleChangeBind(name) {
-    return event => {
-      handleChange(name, event.target.value)
+const Signup = ({
+  handleChange,
+  submit,
+  email,
+  password,
+  fname,
+  lname,
+  errors,
+}) => {
+  const handleChangeBind = name => event =>
+    handleChange(name, event.target.value)
+
+  const generalError = () => {
+    if (errors && errors.length > 0) {
+      const errorMsgs = errors.map((e, i) => {
+        return <div key={i}>{e}</div>
+      })
+      return <div className="error">{errorMsgs}</div>
     }
-  }
-
-  function passwordField() {
-    return (
-      <div>
-        {/* <TextField
-          label="Password"
-          value={this.state.password}
-          onChange={this.handleChange("password")}
-          type="password"
-        />
-        <br /> */}
-      </div>
-    )
-  }
-
-  function generalError() {
-    // const { errors } = this.state;
-    // if (errors.length > 0) {
-    //   const errorMsgs = errors.map((e, i) => {
-    //     return <div key={i}>{e}</div>;
-    //   });
-    //   return <div className="error">{errorMsgs}</div>;
-    // }
-    return
   }
 
   return (
@@ -70,7 +49,12 @@ function Signup(props) {
             onChange={handleChangeBind("email")}
           />
         </div>
-        {passwordField()}
+        <TextField
+          label="Password"
+          value={password}
+          onChange={handleChange("password")}
+          type="password"
+        />
         {generalError()}
         {props["SIGNUP-ERROR"] && (
           <div className="error">{props["SIGNUP-ERROR"]}</div>

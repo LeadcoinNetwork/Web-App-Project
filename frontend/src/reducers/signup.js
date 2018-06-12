@@ -1,27 +1,28 @@
-import * as Actions from "../actions"
+import { types } from "../actions"
 
-export default function UserSignUpReducer(state, action) {
-  var newState = Object.assign(
-    {
-      fname: "",
-      lname: "",
-      password: "",
-      email: "a@a.com",
-    },
-    state,
-  )
-  switch (action.type) {
-    case Actions.types.SIGNUP_FORM_HANDLE_CHANGE:
-      newState[action.payload.name] = action.payload.value
-      delete newState["SIGNUP-ERROR"]
-      break
-
-    case "SIGNUP ERROR":
-      newState["SIGNUP-ERROR"] = action.message
-
-    default:
-      break
-  }
-
-  return newState
+const initialState = {
+  name: "",
+  email: "",
+  password: "",
+  error: "",
 }
+
+const signup = (state = initialState, action) => {
+  switch (action.type) {
+    case types.SIGNUP_FORM_HANDLE_CHANGE:
+      return {
+        ...state,
+        error: "",
+        [action.payload.name]: action.payload.value,
+      }
+    case types.SIGNUP_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+      }
+    default:
+      return state
+  }
+}
+
+export default signup
