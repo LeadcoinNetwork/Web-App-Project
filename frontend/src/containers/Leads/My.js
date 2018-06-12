@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import Table from "Components/Table"
-import { getLeads, setSelectedLeads } from "../../actions"
+import { leads } from "../../actions"
 
 const myLeadsConfig = require("./config/my_leads_table.config.json")
 
@@ -9,7 +9,7 @@ class My extends React.Component {
   constructor(props) {
     super(props)
 
-    getLeads(props.dispatch)
+    leads.getLeads(props.dispatch)
   }
   moveLeadsToSell = () => {
     console.log(Array.from(this.props.leads.selected))
@@ -48,7 +48,7 @@ class My extends React.Component {
     }
   }
   setSelectedRecords = selectedLeads => {
-    this.props.dispatch(setSelectedLeads(selectedLeads))
+    this.props.dispatch(leads.setSelectedLeads(selectedLeads))
   }
   render() {
     return (

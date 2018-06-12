@@ -1,4 +1,5 @@
 import * as types from "./types"
+
 export function signupFormHandleChange(name, value) {
   return {
     type: types.SIGNUP_FORM_HANDLE_CHANGE,
@@ -9,7 +10,9 @@ export function signupFormHandleChange(name, value) {
 export function SignUpFormUserSubmitStart() {
   return (dispatch, getState) => {
     dispatch({ type: "SIGNUP_AJAX_START1" })
+
     const { fname, lname, password, email } = getState().users.signup
+
     var data = fetchBackend("POST", "/user", {
       fname,
       lname,
