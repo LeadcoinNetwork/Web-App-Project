@@ -10,8 +10,8 @@ const SignupForm = ({ name, email, password, error, handleChange, submit }) => {
   return (
     <div className="ldc-signup-form">
       <h1>Register to LeadCoin</h1>
-      <SocialLogin provider={"linkedin"} />
       <SocialLogin provider={"google"} />
+      <SocialLogin provider={"linkedin"} />
       <TextField
         label="name"
         value={name}
@@ -29,7 +29,7 @@ const SignupForm = ({ name, email, password, error, handleChange, submit }) => {
         type="password"
       />
       <div>{error}</div>
-      <Button onClick={submit}>SignUp</Button>
+      <Button onClick={submit} label="signup" />
     </div>
   )
 }
