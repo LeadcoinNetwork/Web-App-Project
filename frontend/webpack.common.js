@@ -85,11 +85,16 @@ module.exports = {
     modules: ["node_modules", path.resolve(__dirname, "src")],
     extensions: [".js"],
     alias: {
+      Actions: path.resolve(__dirname, "src/actions/"),
       Components: path.resolve(__dirname, "src/components/"),
       Containers: path.resolve(__dirname, "src/containers/"),
       HOC: path.resolve(__dirname, "src/HOC/"),
-      Styles: path.resolve(__dirname, "src/styles/"),
+      Images: path.resolve(__dirname, "src/images/"),
       Mocks: path.resolve(__dirname, "src/mocks/"),
+      Redusers: path.resolve(__dirname, "src/reducers"),
+      Sagas: path.resolve(__dirname, "src/sagas"),
+      Styles: path.resolve(__dirname, "src/styles/"),
+      Utils: path.resolve(__dirname, "src/utils/"),
     },
   },
 }

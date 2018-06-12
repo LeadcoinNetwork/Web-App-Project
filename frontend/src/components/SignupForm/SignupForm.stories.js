@@ -1,10 +1,10 @@
 import React from "react"
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider"
 import { storiesOf } from "@storybook/react"
-import UserSignUp from "./UserSignup"
+import SignupForm from "./SignupForm"
 
 storiesOf("users/signup").add("form", () => (
   <MuiThemeProvider>
-    <UserSignUp />
+    <SignupForm />
   </MuiThemeProvider>
 ))

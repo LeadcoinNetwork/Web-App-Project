@@ -1,20 +1,17 @@
 import { connect } from "react-redux"
-import UserSignUp from "../../components/UserSignup/UserSignup"
-import * as Actions from "../../actions"
+import SignupForm from "Components/SignupForm"
+import { signup } from "Actions"
 
-var mapStateToProps = state => {
-  return state.signup
-}
+var mapStateToProps = state => ({
+  signup: state.signup,
+})
 
 var mapDispatchToProps = {
-  handleChange: Actions.signup.signupFormHandleChange,
-  submit: Actions.signup.SignUpFormUserSubmit,
+  handleChange: signup.signupFormHandleChange,
+  submit: signup.SignUpFormUserSubmit,
 }
 
-var SignupConnected = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(UserSignUp)
+var SignupConnected = connect(mapStateToProps, mapDispatchToProps)(SignupForm)
 
 export default SignupConnected
 
