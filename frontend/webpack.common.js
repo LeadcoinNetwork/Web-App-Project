@@ -6,7 +6,7 @@ const Dotenv = require("dotenv-webpack")
 
 module.exports = {
   entry: {
-    app: "./src/index.js",
+    app: ["babel-polyfill", "./src/index.js"],
   },
   output: {
     filename: "bundle.js",

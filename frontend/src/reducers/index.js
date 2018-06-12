@@ -5,6 +5,7 @@ import user from "./user"
 import payments from "./payments"
 import notifications from "./notifications"
 import balance from "./balance"
+import signup from "./signup"
 
 const rootReducer = combineReducers({
   routerReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   sellLeads: leads,
   myLeads: leads,
   notifications,
+  signup,
 })
 
 export default rootReducer

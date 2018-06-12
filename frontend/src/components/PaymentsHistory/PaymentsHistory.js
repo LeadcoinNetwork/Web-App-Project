@@ -1,8 +1,10 @@
 import React, { Component } from "react"
 import { Time } from "../../utils/time"
+import * as Actions from "../../actions"
 
-const PaymentsHistory = ({ payments }) => (
+const PaymentsHistory = ({ onRefresh, payments, isDeleteable }) => (
   <div>
+    {onRefresh && <div onClick={onRefresh}>_Referesh_</div>}
     {payments.list.map(p => (
       <div key={p.id}>
         <time>{new Date(p.timestamp).toLocaleString()}</time>
@@ -18,6 +20,7 @@ const PaymentsHistory = ({ payments }) => (
         <br />
       </div>
     ))}
+    {isDeleteable && <div>Delete</div>}
     {payments.list.length ? "" : "Nothing to show"}
     {payments.loading ? "Loading..." : ""}
   </div>
