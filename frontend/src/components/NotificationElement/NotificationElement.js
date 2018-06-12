@@ -1,24 +1,47 @@
 import React, { Component } from "react"
 import NotificationInner from "./NotificationInner"
-import "./Notification.scss"
 
 import FontAwesomeIcon from "@fortawesome/react-fontawesome"
-import faBell from "@fortawesome/fontawesome-free-solid/faBell"
+import faBell from "@fortawesome/fontawesome-free-regular/faBell"
+import Popover from 'material-ui/Popover';
 
-const NotificationElement = props => (
-  <div className="notification-element" onClick={props.toggle}>
-    <FontAwesomeIcon className="notification-icon" icon={faBell} size={6} />
-    {props.unreadCount > 0 && (
-      <div
-        className={
-          "notification-badge" + (props.unreadCount > 9 ? " plus" : "")
-        }
-      >
-        {props.unreadCount < 10 ? props.unreadCount : "9+"}
+class NotificationElement extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {}
+  }
+  handleClick = (e) => {
+    e.preventDefault();
+    this.props.handleToggle();
+    this.setState({ anchorEl: e.currentTarget });
+  }
+  render(){
+    var props=this.props
+
+    return <div>
+    <div className="notification-element" onClick={this.handleClick}>
+      <FontAwesomeIcon className="notification-icon" icon={faBell} color="black" size={'3x'} />
+      {props.unreadCount > 0 && (
+        <div
+          className={
+            "notification-badge" + (props.unreadCount > 9 ? " plus" : "")
+          }
+        >
+          {props.unreadCount < 10 ? props.unreadCount : "9+"}
+        </div>
+      )}
       </div>
-    )}
-    {props.opened && <NotificationInner {...props} />}
-  </div>
-)
+      <Popover
+        open={props.opened}
+        anchorEl={this.state.anchorEl}
+        anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+        targetOrigin={{horizontal: 'right', vertical: 'top'}}
+        onRequestClose={props.handleToggle}
+      >
+        <NotificationInner {...props} />
+      </Popover>
+    </div>
+ }
+}
 
 export default NotificationElement

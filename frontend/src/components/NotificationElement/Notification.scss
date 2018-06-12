@@ -25,24 +25,22 @@
       line-height: 22px;
     }
   }
-  .notification-inner {
-    padding: 10px;
-    position: absolute;
-    top: 20px;
-    width: 300px;
-    height: 150px;
-    background: white;
-    border: 1px solid gray;
+}
+.notification-inner {
+  padding: 10px;
+  width: 300px;
+  height: 150px;
+  background: white;
+  border: 1px solid gray;
 
-    .ni-row {
-      &.unread {
-        background: #89b9f5;
-      }
+  .ni-row {
+    &.unread {
+      background: #89b9f5;
     }
+  }
 
-    .see-all {
-      color: blue;
-      cursor: pointer;
-    }
+  .see-all {
+    color: blue;
+    cursor: pointer;
   }
 }
