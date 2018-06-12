@@ -21,7 +21,7 @@ class App extends React.Component {
       <MuiThemeProvider>
         <div className="ldc-app">
           <Header notifications={notifications} />
-          {this.props.children}
+          <main>{this.props.children}</main>
         </div>
       </MuiThemeProvider>
     )
