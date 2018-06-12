@@ -38,7 +38,7 @@ function getPaymentsSaga(mockType) {
 
 const sagaMiddleware = createSagaMiddleware()
 
-storiesOf("App - Containers")
+storiesOf("App")
   .add("Home", () => {
     const store = createStore(
       rootReducer,
@@ -199,13 +199,12 @@ storiesOf("App - Containers")
       </Provider>
     )
   })
-  .add("Users - signup", () => {
+storiesOf("App/SignUp")
+  .add("empty form", () => {
     const store = createStore(
       rootReducer,
       composeWithDevTools(applyMiddleware(sagaMiddleware, storyReduxLogger)),
     )
-
-    sagaMiddleware.run(getPaymentsSaga(2))
 
     return (
       <Provider store={store}>
@@ -215,6 +214,23 @@ storiesOf("App - Containers")
       </Provider>
     )
   })
+  .add("loading state", () => {
+    const store = createStore(
+      rootReducer,
+      { signup: { loading: true } },
+      composeWithDevTools(applyMiddleware(sagaMiddleware, storyReduxLogger)),
+    )
+
+    return (
+      <Provider store={store}>
+        <MemoryRouter initialEntries={["/users/signup"]} initialIndex={0}>
+          <Root />
+        </MemoryRouter>
+      </Provider>
+    )
+  })
+
+storiesOf("App")
   .add("Users - complete registration", () => {
     const store = createStore(
       rootReducer,
