@@ -22,7 +22,7 @@ class TextFieldState extends React.Component {
           this.setState({ value: e.target.value })
         }}
         label={this.props.label}
-        hintText={this.props.hintText}
+        placeholder={this.props.placeholder}
       />
     )
   }
@@ -31,5 +31,5 @@ class TextFieldState extends React.Component {
 createStoryInDesignDecoration("UI/TextField")
   .add("add text", () => <TextFieldState label="Text Field" />)
   .add("add with hint", () => (
-    <TextFieldState label="Hinted Text Field" hintText="Hint!" />
+    <TextFieldState label="Hinted Text Field" placeholder="Hint!" />
   ))

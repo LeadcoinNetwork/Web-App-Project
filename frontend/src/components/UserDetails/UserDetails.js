@@ -64,7 +64,7 @@ class UserDetails extends React.Component {
         <div>Please complete your sign-up by filling these details:</div>
         <div>
           <TextField
-            label="Company Name"
+            placeholder="Company Name"
             value={this.state.company}
             onChange={this.handleChange("company")}
             type="text"
@@ -72,7 +72,7 @@ class UserDetails extends React.Component {
         </div>
         <div>
           <TextField
-            label="Country"
+            placeholder="Country"
             value={this.state.country}
             onChange={this.handleChange("country")}
             type="text"
@@ -80,7 +80,7 @@ class UserDetails extends React.Component {
         </div>
         <div>
           <TextField
-            label="Phone"
+            placeholder="Phone"
             value={this.state.phone}
             onChange={this.handleChange("phone")}
             type="text"

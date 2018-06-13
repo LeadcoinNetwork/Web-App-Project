@@ -1,4 +1,4 @@
-import "./Notification.scss"
+import "./NotificationElement.scss"
 
 import NotificationElement from "./NotificationElement"
 

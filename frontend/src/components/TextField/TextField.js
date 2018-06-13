@@ -1,15 +1,11 @@
 import React from "react"
-import MaterialTextField from "material-ui/TextField"
 
-const TextField = ({ label, hintText, value, type, fullWidth, onChange }) => (
+const TextField = ({ placeholder, value, type, onChange }) => (
   <input
     className="ldc-textfield"
     value={value}
     type={type}
-    placeholder={label}
-    // floatingLabelText={label}
-    title={hintText}
-    // fullWidth={fullWidth}
+    placeholder={placeholder}
     onChange={onChange}
   />
 )
