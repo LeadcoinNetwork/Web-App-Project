@@ -1,5 +1,4 @@
 import React from "react"
-import MaterialButton from "material-ui/RaisedButton"
 
 class Button extends React.Component {
   componentDidMount() {
@@ -12,35 +11,23 @@ class Button extends React.Component {
       type,
       onClick,
       children,
-      label,
-      containerElement,
       disabled,
-      loadingText,
+      label,
+      loadingLabel,
       loading,
     } = this.props
 
-    if (loading) {
-      return (
-        <button style={{ width: this.width, minWidth: 80 }} disabled={disabled}>
-          ...
-        </button>
-      )
-    } else {
-      return (
-        <button
-          children={children}
-          ref="btn"
-          type={type}
-          label={label}
-          onClick={onClick}
-          // containerElement={containerElement}
-          disabled={disabled}
-        >
-          {label}
-          {this.props.children}
-        </button>
-      )
-    }
+    return (
+      <button style={{ width: this.width, minWidth: 80 }}
+      ref="btn"
+      type={type}
+        onClick={onClick}
+        disabled={disabled}
+      >
+        {label ? (loading ? loadingLabel : label) : ''}
+        {children}
+      </button>
+    )
   }
 }
 
