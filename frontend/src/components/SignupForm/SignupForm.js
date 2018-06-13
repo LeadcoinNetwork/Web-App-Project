@@ -23,24 +23,24 @@ const SignupForm = ({
       <SocialLogin provider={"linkedin"} />
       <br />
       <TextField
-        label="First Name"
+        placeholder="First Name"
         value={fname}
         onChange={handleChangeBind("fname")}
       />
       <TextField
-        label="Last Name"
+        placeholder="Last Name"
         value={lname}
         onChange={handleChangeBind("lname")}
       />
       <br />
       <TextField
-        label="Email"
+        placeholder="Email"
         value={email}
         onChange={handleChangeBind("email")}
       />
       <br />
       <TextField
-        label="Password"
+        placeholder="Password"
         value={password}
         onChange={handleChangeBind("password")}
         type="password"

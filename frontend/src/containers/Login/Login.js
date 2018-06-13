@@ -27,16 +27,14 @@ function LoginForm({ email, password, remember, error, handleChange, submit }) {
             <div> Or enter your details. </div>
             <div>
               <TextField
-                label="Email"
-                fullWidth={true}
+                placeholder="Email"
                 value={email}
                 onChange={handleChangeBind("email")}
               />
             </div>
             <div>
               <TextField
-                label="Password"
-                fullWidth={true}
+                placeholder="Password"
                 value={password}
                 onChange={handleChangeBind("password")}
                 type="password"
@@ -78,9 +76,6 @@ var mapDispatchToProps = {
   submit: actions.login.loginFormUserSubmit,
 }
 
-var LoginFormConnected = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(LoginForm)
+var LoginFormConnected = connect(mapStateToProps, mapDispatchToProps)(LoginForm)
 
 export default LoginFormConnected
