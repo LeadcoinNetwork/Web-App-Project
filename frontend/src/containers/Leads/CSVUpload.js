@@ -147,7 +147,7 @@ class CSVUpload extends React.Component {
         <div className="price">
           <span>Lead price</span>
           <TextField
-            hintText="Hint Text"
+            placeholder="Hint Text"
             floatingLabelText="Floating Label Text"
           />
         </div>

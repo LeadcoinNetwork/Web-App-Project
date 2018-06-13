@@ -26,7 +26,7 @@ function UserSettings({
         <TextField
           label="Current Password"
           value={currentPassword}
-          hintText={"Enter Your Current Password"}
+          placeholder={"Enter Your Current Password"}
           onChange={updateText("currentPassword")}
           type="password"
         />
@@ -35,7 +35,7 @@ function UserSettings({
         <TextField
           label="New Password"
           value={newPassword}
-          hintText={"Enter Your New Password"}
+          placeholder={"Enter Your New Password"}
           onChange={updateText("newPassword")}
           type="password"
         />
@@ -44,15 +44,23 @@ function UserSettings({
         <TextField
           label="Confirm Password"
           value={confirmPassword}
-          hintText={"Confirm Your New Password"}
+          placeholder={"Confirm Your New Password"}
           onChange={updateText("confirmPassword")}
           type="password"
         />
       </div>
       <div>
         <Button onClick={onSubmit} disabled={loading}>
-          <div className="submit-content">{loading ? 'SUBMITING...' : 'SUBMIT'}
-            {loading && <ReactLoading type="spin" color="#000000" height={23} width={23} />}
+          <div className="submit-content">
+            {loading ? "SUBMITING..." : "SUBMIT"}
+            {loading && (
+              <ReactLoading
+                type="spin"
+                color="#000000"
+                height={23}
+                width={23}
+              />
+            )}
           </div>
         </Button>
       </div>
