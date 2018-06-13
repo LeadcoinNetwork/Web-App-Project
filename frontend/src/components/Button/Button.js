@@ -1,10 +1,17 @@
 import React from "react"
 
-const Button = ({ type, disabled, label, loadingLabel, loading, onClick }) => (
+const Button = ({
+  type,
+  disabled,
+  label,
+  loadingLabel = "Loading",
+  loading,
+  onClick,
+}) => (
   <button
-    className="ldc-button"
+    className={`ldc-button${loading ? " b-loading" : ""}`}
     type={type || "button"}
-    disabled={disabled}
+    disabled={disabled || loading}
     onClick={onClick}
   >
     {loading ? loadingLabel : label}

@@ -11,10 +11,37 @@
   padding: 0 30px;
   font-weight: 300;
   border: none;
+  outline: none;
   transition: all 300ms ease;
   cursor: pointer;
 
   &:hover {
     opacity: 0.8;
+  }
+
+  &.b-loading {
+    &::after {
+      content: "";
+      position: relative;
+      top: 3px;
+      left: 6px;
+      display: inline-block;
+      height: 15px;
+      width: 15px;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      border-right-color: #fff;
+      border-radius: 50%;
+      margin-left: 5px;
+      animation: loading-spinner 700ms linear infinite;
+    }
+  }
+}
+
+@keyframes loading-spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
