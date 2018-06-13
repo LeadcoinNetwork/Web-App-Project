@@ -6,13 +6,15 @@ import faBell from "@fortawesome/fontawesome-free-regular/faBell"
 
 const NotificationElement = ({
   unreadCount,
-  handleToggle,
-  notifications,
+  list,
   isOpen,
+  showNotifications,
+  hideNotifications,
 }) => {
+  debugger
   return (
     <div>
-      <div className="notification-element" onClick={handleToggle}>
+      <div className="notification-element" onClick={isOpen ? hideNotifications : showNotifications}>
         <FontAwesomeIcon
           className="notification-icon"
           icon={faBell}
@@ -27,7 +29,7 @@ const NotificationElement = ({
           </div>
         )}
       </div>
-      {isOpen && <NotificationInner notifications={notifications} />}
+      {isOpen && <NotificationInner list={list} />}
     </div>
   )
 }

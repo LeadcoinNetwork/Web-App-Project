@@ -9,3 +9,22 @@ export const connectToNotifications = dispatch => {
     })
   })
 }
+
+export function showNotifications() {
+  return {
+    type: types.SHOW_NOTIFICATIONS,
+  }
+}
+
+export function hideNotifications() {
+  return {
+    type: types.HIDE_NOTIFICATIONS,
+  }
+}
+
+export function updateNotifications(list, unreadCount) {
+  return {
+    type: types.UPDATE_NOTIFICATIONS,
+    payload: { list, unreadCount }
+  }
+}
