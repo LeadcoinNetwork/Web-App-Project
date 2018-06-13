@@ -6,6 +6,7 @@ const TextField = ({ label, hintText, value, type, fullWidth, onChange }) => (
     className="ldc-textfield"
     value={value}
     type={type}
+    placeholder={label}
     // floatingLabelText={label}
     title={hintText}
     // fullWidth={fullWidth}

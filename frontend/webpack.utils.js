@@ -6,10 +6,10 @@ function JestUpdateModuleResoultionPacker() {
   // "moduleNameMapper": {
   // "\\.s?css$": "<rootDir>/src/actions/types"
   var o = {}
-  dirs.forEach(
-    dir =>
-      (o["^" + toCamelcase(dir) + "(.*)$"] = "<rootDir>/src/" + dir + "$1"),
-  )
+  dirs.forEach(dir => {
+    o["^" + toCamelcase(dir) + "(.*)$"] = "<rootDir>/src/" + dir + "$1"
+    o["^" + dir + "(.*)$"] = "<rootDir>/src/" + dir + "$1"
+  })
   o["\\.s?css$"] = "<rootDir>/src/actions/types"
   packgeJson.jest.moduleNameMapper = o
   var newJson = JSON.stringify(packgeJson, null, 2)
@@ -23,6 +23,7 @@ function getAliasesFromRootSrcForWebPack() {
   var filesAndFolder = getRootDirectories()
   filesAndFolder.forEach(item => {
     aliases[toCamelcase(item)] = __dirname + "/src/" + item
+    aliases[item] = __dirname + "/src/" + item
   })
   return aliases
 }

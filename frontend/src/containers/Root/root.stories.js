@@ -199,51 +199,6 @@ storiesOf("App")
       </Provider>
     )
   })
-storiesOf("App/SignUp")
-  .add("empty form", () => {
-    const store = createStore(
-      rootReducer,
-      composeWithDevTools(applyMiddleware(sagaMiddleware, storyReduxLogger)),
-    )
-
-    return (
-      <Provider store={store}>
-        <MemoryRouter initialEntries={["/users/signup"]} initialIndex={0}>
-          <Root />
-        </MemoryRouter>
-      </Provider>
-    )
-  })
-  .add("loading state", () => {
-    const store = createStore(
-      rootReducer,
-      { signup: { loading: true } },
-      composeWithDevTools(applyMiddleware(sagaMiddleware, storyReduxLogger)),
-    )
-
-    return (
-      <Provider store={store}>
-        <MemoryRouter initialEntries={["/users/signup"]} initialIndex={0}>
-          <Root />
-        </MemoryRouter>
-      </Provider>
-    )
-  })
-  .add("error form", () => {
-    const store = createStore(
-      rootReducer,
-      { signup: { error: "this is an example error; this is 2nd error" } },
-      composeWithDevTools(applyMiddleware(sagaMiddleware, storyReduxLogger)),
-    )
-
-    return (
-      <Provider store={store}>
-        <MemoryRouter initialEntries={["/users/signup"]} initialIndex={0}>
-          <Root />
-        </MemoryRouter>
-      </Provider>
-    )
-  })
 
 storiesOf("App")
   .add("Users - complete registration", () => {

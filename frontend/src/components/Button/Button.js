@@ -37,6 +37,7 @@ class Button extends React.Component {
           disabled={disabled}
         >
           {label}
+          {this.props.children}
         </button>
       )
     }
