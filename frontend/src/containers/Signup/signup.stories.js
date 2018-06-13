@@ -3,7 +3,13 @@ import { storiesOf } from "@storybook/react"
 import * as actions from "actions"
 import { createStoreAndStory } from "storybook-utils/withRouter"
 
+function* mySaga() {}
 storiesOf("App/SignUp", module)
+  .add("connected to saga", () => {
+    var { store, story, saga } = createStoreAndStory({ path: "/users/signup" })
+    return story
+  })
+
   .add("empty form", () => {
     var { store, story } = createStoreAndStory({ path: "/users/signup" })
     return story

@@ -20,7 +20,7 @@ export function createStoreAndStory({ path, component }) {
         <div>
           {path && (
             <MemoryRouter initialEntries={[path]} initialIndex={0}>
-              <Root />}
+              <Root />
             </MemoryRouter>
           )}
           {component && <UpperCaseComponent />}
