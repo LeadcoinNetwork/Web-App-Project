@@ -19,35 +19,36 @@ const SignupForm = ({
   return (
     <div className="ldc-signup-form">
       <h1>Register to LeadCoin</h1>
-      <SocialLogin provider={"google"} />
-      <SocialLogin provider={"linkedin"} />
-      <br />
-      <TextField
-        placeholder="First Name"
-        value={fname}
-        onChange={handleChangeBind("fname")}
-      />
-      <TextField
-        placeholder="Last Name"
-        value={lname}
-        onChange={handleChangeBind("lname")}
-      />
-      <br />
-      <TextField
-        placeholder="Email"
-        value={email}
-        onChange={handleChangeBind("email")}
-      />
-      <br />
-      <TextField
-        placeholder="Password"
-        value={password}
-        onChange={handleChangeBind("password")}
-        type="password"
-      />
+      <div className="sf-social-buttons">
+        <SocialLogin provider={"google"} />
+        <SocialLogin provider={"linkedin"} />
+      </div>
+      <div className="sf-form">
+        <TextField
+          placeholder="First Name"
+          value={fname}
+          onChange={handleChangeBind("fname")}
+        />
+        <TextField
+          placeholder="Last Name"
+          value={lname}
+          onChange={handleChangeBind("lname")}
+        />
+        <TextField
+          placeholder="Email"
+          value={email}
+          onChange={handleChangeBind("email")}
+        />
+        <TextField
+          placeholder="Password"
+          value={password}
+          onChange={handleChangeBind("password")}
+          type="password"
+        />
+      </div>
       <div />
-      {error && error.split(";").map(e => <div>{e}</div>)}
       <Button loading={loading} onClick={submit} label="signup" />
+      {error && error.split(";").map(e => <div>{e}</div>)}
     </div>
   )
 }
