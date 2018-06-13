@@ -53,14 +53,12 @@ function LoginForm({ email, password, remember, error, handleChange, submit }) {
             </div>
             <div className="alignRight">
               <Button
-                type="submit"
+                label="Login"
                 onClick={e => {
                   e.preventDefault()
                   submit()
                 }}
-              >
-                Login
-              </Button>
+              />
             </div>
           </form>
         </div>

@@ -1,5 +1,29 @@
 @import "~Styles/variables";
 
 .ldc-signup-form {
-  border-right: 1px solid $buffer-color;
+  margin-top: 40px;
+  padding-right: 60px;
+  border-right: 1px solid #6275a7;
+  max-width: 70%;
+
+  h1 {
+    font-size: 72px;
+    font-weight: 400;
+    letter-spacing: 2.5px;
+    margin-bottom: 40px;
+  }
+
+  .sf-social-buttons {
+    margin-bottom: 30px;
+  }
+
+  .sf-form {
+    display: flow-root;
+    width: calc(100% - 120px);
+
+    button {
+      margin-top: 40px;
+      float: right;
+    }
+  }
 }
