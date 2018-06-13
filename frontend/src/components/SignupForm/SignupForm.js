@@ -24,6 +24,7 @@ const SignupForm = ({
         <SocialLogin provider={"linkedin"} />
       </div>
       <div className="sf-form">
+        <p>Or enter your details:</p>
         <TextField
           placeholder="First Name"
           value={fname}
@@ -46,8 +47,15 @@ const SignupForm = ({
           type="password"
         />
         <Button loading={loading} onClick={submit} label="register" />
-        {error && error.split(";").map(e => <div>{e}</div>)}
+        <p className="sff-agree">
+          By clicking this button, you agree to our
+          <br />
+          <a href="www.google.com">Terms & conditions</a>
+          &nbsp;and&nbsp;
+          <a href="www.google.com">Privacy Policy</a>
+        </p>
       </div>
+      {error && error.split(";").map(e => <div>{e}</div>)}
       <div />
     </div>
   )

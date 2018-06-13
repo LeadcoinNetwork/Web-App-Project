@@ -13,8 +13,15 @@
     margin-bottom: 40px;
   }
 
+  p {
+    padding-left: 25px;
+    font-weight: 300;
+    font-size: 20px;
+    letter-spacing: 0.5px;
+  }
+
   .sf-social-buttons {
-    margin-bottom: 30px;
+    margin-bottom: 40px;
   }
 
   .sf-form {
@@ -22,8 +29,14 @@
     width: calc(100% - 120px);
 
     button {
-      margin-top: 40px;
+      margin-top: 34px;
       float: right;
+    }
+
+    .sff-agree {
+      display: inline-block;
+      margin-top: 26px;
+      line-height: 1.5;
     }
   }
 }
