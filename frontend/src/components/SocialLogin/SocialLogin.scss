@@ -20,8 +20,16 @@
   i {
     position: relative;
     left: -10px;
-    top: 1px;
-    font-size: 20px;
+
+    &[class*="google"] {
+      top: 1px;
+      font-size: 19px;
+    }
+
+    &[class*="linkedin"] {
+      top: 3px;
+      font-size: 23px;
+    }
   }
 
   &:hover {
