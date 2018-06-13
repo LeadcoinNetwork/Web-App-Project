@@ -1,13 +1,16 @@
 @import "~Styles/variables";
 
 .ldc-signup-form {
-  padding-top: 40px;
+  margin-top: 40px;
+  padding-right: 60px;
+  border-right: 1px solid #6275a7;
+  max-width: 70%;
 
   h1 {
-    font-size: 60px;
+    font-size: 72px;
     font-weight: 400;
     letter-spacing: 2.5px;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
   }
 
   .sf-social-buttons {
@@ -15,6 +18,12 @@
   }
 
   .sf-form {
-    margin-bottom: 30px;
+    display: flow-root;
+    width: calc(100% - 120px);
+
+    button {
+      margin-top: 40px;
+      float: right;
+    }
   }
 }

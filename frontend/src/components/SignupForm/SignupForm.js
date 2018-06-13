@@ -45,10 +45,10 @@ const SignupForm = ({
           onChange={handleChangeBind("password")}
           type="password"
         />
+        <Button loading={loading} onClick={submit} label="signup" />
+        {error && error.split(";").map(e => <div>{e}</div>)}
       </div>
       <div />
-      <Button loading={loading} onClick={submit} label="signup" />
-      {error && error.split(";").map(e => <div>{e}</div>)}
     </div>
   )
 }
