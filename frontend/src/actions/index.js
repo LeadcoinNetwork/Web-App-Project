@@ -1,9 +1,19 @@
 import * as types from "./types"
 import * as payments from "./payments"
-import * as withdrawl from "./withdrawl"
+import * as withdrawl from "./withdraw"
 import * as signup from "./signup"
 import * as notifications from "./notifications"
 import * as leads from "./leads"
 import * as login from "./login"
+import * as balance from "./balance"
 
-export { types, signup, payments, withdrawl, notifications, leads, login }
+export {
+  types,
+  balance,
+  signup,
+  payments,
+  withdrawl,
+  notifications,
+  leads,
+  login,
+}

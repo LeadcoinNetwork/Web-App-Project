@@ -33,3 +33,6 @@ export const LOGIN_SUBMIT = "LOGIN_SUBMIT"
 export const LOGIN_LOADING = "LOGIN_LOADING"
 export const LOGIN_FINISH = "LOGIN_FINISH"
 export const LOGIN_FORM_ERROR = "LOGIN_FORM_ERROR"
+
+// Fill Balance
+export const UPDATE_USER_BALANCE = "UPDATE_USER_BALANCE"

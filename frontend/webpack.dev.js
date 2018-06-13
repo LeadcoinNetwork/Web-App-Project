@@ -10,6 +10,7 @@ module.exports = merge(common, {
     contentBase: "./src/static",
     historyApiFallback: true,
     stats: {
+      stats: "errors-only",
       colors: true,
       env: true,
     },
