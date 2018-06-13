@@ -11,10 +11,12 @@ const NotificationElement = ({
   showNotifications,
   hideNotifications,
 }) => {
-  debugger
   return (
     <div>
-      <div className="notification-element" onClick={isOpen ? hideNotifications : showNotifications}>
+      <div
+        className="notification-element"
+        onClick={isOpen ? hideNotifications : showNotifications}
+      >
         <FontAwesomeIcon
           className="notification-icon"
           icon={faBell}
