@@ -20,7 +20,7 @@ class NotificationElement extends Component {
 
     return <div>
     <div className="notification-element" onClick={this.handleClick}>
-      <FontAwesomeIcon className="notification-icon" icon={faBell} color="black" size={'3x'} />
+      <FontAwesomeIcon className="notification-icon" icon={faBell} color="white" size={'3x'} />
       {props.unreadCount > 0 && (
         <div
           className={
