@@ -7,7 +7,7 @@ const PaymentsHistory = ({ onRefresh, payments, isDeleteable }) => (
     {onRefresh && <div onClick={onRefresh}>_Referesh_</div>}
     {payments.list.map(p => (
       <div key={p.id}>
-        <time>{new Date(p.timestamp).toLocaleString()}</time>
+        <time>{Time.localeString(p.timestamp)}</time>
         <div>{p.message}</div>
         <div>
           <b>Escrow balance:</b>
