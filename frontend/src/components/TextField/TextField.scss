@@ -1,5 +1,15 @@
 @import "~Styles/variables";
 
 .ldc-textfield {
+  display: inline-block;
   width: 100%;
+  height: 50px;
+  background-color: #fff;
+  font-size: 18px;
+  border: none;
+  border-radius: 25px;
+  outline: none;
+  color: $bg-color;
+  margin: 16px 0;
+  padding: 0 25px;
 }

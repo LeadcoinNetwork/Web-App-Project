@@ -3,7 +3,7 @@ import { Time } from "../../utils/time"
 
 const NotificationInner = props => (
   <div className="notification-inner">
-    {props.notifications.map(notification => (
+    {props.list.map(notification => (
       <div
         className={"ni-row" + (notification.unread ? " unread" : "")}
         key={notification.id}

@@ -1,5 +1,4 @@
 import React from "react"
-import axios from "axios"
 import Button from "Components/Button"
 import TextField from "Components/TextField"
 import Checkbox from "Components/Checkbox"
@@ -53,14 +52,12 @@ function LoginForm({ email, password, remember, error, handleChange, submit }) {
             </div>
             <div className="alignRight">
               <Button
-                type="submit"
+                label="Login"
                 onClick={e => {
                   e.preventDefault()
                   submit()
                 }}
-              >
-                Login
-              </Button>
+              />
             </div>
           </form>
         </div>
@@ -76,6 +73,9 @@ var mapDispatchToProps = {
   submit: actions.login.loginFormUserSubmit,
 }
 
-var LoginFormConnected = connect(mapStateToProps, mapDispatchToProps)(LoginForm)
+var LoginFormConnected = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(LoginForm)
 
 export default LoginFormConnected

@@ -55,14 +55,6 @@ function UserSettings({
         <Button onClick={onSubmit} disabled={loading}>
           <div className="submit-content">
             {loading ? "SUBMITING..." : "SUBMIT"}
-            {loading && (
-              <ReactLoading
-                type="spin"
-                color="#000000"
-                height={23}
-                width={23}
-              />
-            )}
           </div>
         </Button>
       </div>

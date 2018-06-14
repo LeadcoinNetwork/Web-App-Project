@@ -1,0 +1,49 @@
+@import "~Styles/variables";
+
+section.ldc-signup {
+  display: flex;
+
+  .s-main {
+    margin-top: 40px;
+    padding-right: 60px;
+    border-right: 1px solid #6275a7;
+    max-width: 70%;
+
+    h1 {
+      font-size: 72px;
+      font-weight: 400;
+      letter-spacing: 2.5px;
+      margin-bottom: 40px;
+    }
+
+    p {
+      padding-left: 25px;
+      font-weight: 300;
+      font-size: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .sm-social-buttons {
+      margin-bottom: 40px;
+    }
+
+    .sm-form {
+      display: flow-root;
+      width: calc(100% - 120px);
+
+      button {
+        margin-top: 34px;
+        float: right;
+      }
+
+      .smf-agree {
+        display: inline-block;
+        margin-top: 26px;
+        line-height: 1.5;
+      }
+    }
+  }
+
+  aside {
+  }
+}
