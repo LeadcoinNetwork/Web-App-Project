@@ -1,81 +1,80 @@
 import React from "react"
+import { connect } from "react-redux"
 import Button from "Components/Button"
 import TextField from "Components/TextField"
 import Checkbox from "Components/Checkbox"
 import SocialLogin from "Components/SocialLogin"
-import { connect } from "react-redux"
-import * as actions from "Actions"
+import { login } from "Actions"
+import t from "Images/t.jpg"
 
-function LoginForm({ email, password, remember, error, handleChange, submit }) {
-  const handleChangeBind = name => event => {
-    if (typeof event == "boolean") {
-      handleChange(name, event)
-    } else {
-      handleChange(name, event.target.value)
-    }
+class Login extends React.Component {
+  handleChange = event => {
+    let target = event.target,
+      value = target.type === "checkbox" ? target.checked : target.value
+
+    this.props.handleChange(target.name, value)
   }
+  render() {
+    let { email, password, remember, loading, error } = this.props.login
 
-  return (
-    <div className="loginForm">
-      <div className="login_containers">
-        <div className="login_header"> Login.</div>
-        <SocialLogin provider="google" />
-        <SocialLogin provider="linkedin" />
-        <div className="localLogin">
-          <form className="lo" onSubmit={submit}>
-            <div> Or enter your details. </div>
-            <div>
-              <TextField
-                placeholder="Email"
-                value={email}
-                onChange={handleChangeBind("email")}
-              />
-            </div>
-            <div>
-              <TextField
-                placeholder="Password"
-                value={password}
-                onChange={handleChangeBind("password")}
-                type="password"
-              />
-            </div>
-            <div className="flexed login_helpers">
-              <div className="remember_me">
-                <Checkbox
-                  label="Simple with controlled value"
-                  checked={remember}
-                  onClick={handleChangeBind("remember")}
-                />
-                <span> Remember me? </span>
-              </div>
-              <div className=""> Forgot your password? </div>
-            </div>
-            <div className="alignRight">
-              <Button
-                label="Login"
-                onClick={e => {
-                  e.preventDefault()
-                  submit()
-                }}
-              />
-            </div>
-          </form>
+    return (
+      <section className="ldc-login">
+        <div className="l-main">
+          <h1>Login</h1>
+          <div className="lm-social-buttons">
+            <SocialLogin provider="google" />
+            <SocialLogin provider="linkedin" />
+          </div>
+          <div className="lm-form">
+            <p>Or enter your details:</p>
+            <TextField
+              placeholder="Email"
+              name="email"
+              value={email}
+              onChange={this.handleChange}
+            />
+            <TextField
+              placeholder="Password"
+              name="password"
+              value={password}
+              onChange={this.handleChange}
+              type="password"
+            />
+            <Checkbox
+              label="Remember me"
+              checked={remember}
+              onClick={this.handleChange}
+            />
+            <Button
+              label="login"
+              loading={loading}
+              onClick={this.props.submit}
+            />
+            {error && error.split(";").map(e => <div>{e}</div>)}
+          </div>
         </div>
-      </div>
-    </div>
-  )
+        <aside>
+          <h3>LeadCoin is the promised land for marketers</h3>
+          <q>
+            Collaborating with other marketers & sharing leads is 10X more
+            effcient than giving away my budget to Google & Facebook.
+          </q>
+          <label style={{ backgroundImage: `url(${t})` }}>
+            <span>
+              Meir Cohen<br />CEO of Crypto
+            </span>
+          </label>
+        </aside>
+      </section>
+    )
+  }
 }
 
-var mapStateToProps = state => state.login
+const mapStateToProps = state => ({
+  login: state.login,
+})
 
-var mapDispatchToProps = {
-  handleChange: actions.login.loginFormHandleChange,
-  submit: actions.login.loginFormUserSubmit,
-}
-
-var LoginFormConnected = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(LoginForm)
-
-export default LoginFormConnected
+export default connect(mapStateToProps, {
+  handleChange: login.loginFormHandleChange,
+  submit: login.loginFormUserSubmit,
+})(Login)

@@ -17,6 +17,7 @@ import Dispute from "Containers/Dispute"
 import Checkout from "Containers/Checkout"
 import NotificationTable from "containers/NotificationsTable"
 import Signup from "Containers/Signup"
+import Login from "Containers/Login"
 import EmailConfirmation from "containers/EmailConfirmation"
 import CompleteRegistration from "containers/CompleteRegistration"
 import Withdraw from "containers/Withdraw"
@@ -26,6 +27,7 @@ const Root = () => (
     <Switch>
       <Route path="/" exact component={Home} />
       <Route path="/signup" component={Signup} />
+      <Route path="/login" component={Login} />
       <Route path="/admin" component={Admin} />
       <Route path="/byleads" component={MyLeads} />
       <Route path="/sellleads" component={SellLeads} />

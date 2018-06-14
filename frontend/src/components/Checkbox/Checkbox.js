@@ -5,11 +5,7 @@ const Checkbox = props => (
   <MaterialCheckbox
     label={props.label}
     checked={props.checked}
-    onCheck={e => {
-      if (props.onClick) {
-        props.onClick(e.currentTarget.checked)
-      }
-    }}
+    onCheck={props.onClick}
   />
 )
 
