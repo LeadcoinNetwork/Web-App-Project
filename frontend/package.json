@@ -37,13 +37,13 @@
   },
   "jest": {
     "moduleNameMapper": {
+      "^HOC(.*)$": "<rootDir>/src/HOC$1",
       "^Actions(.*)$": "<rootDir>/src/actions$1",
       "^actions(.*)$": "<rootDir>/src/actions$1",
       "^Components(.*)$": "<rootDir>/src/components$1",
       "^components(.*)$": "<rootDir>/src/components$1",
       "^Containers(.*)$": "<rootDir>/src/containers$1",
       "^containers(.*)$": "<rootDir>/src/containers$1",
-      "^HOC(.*)$": "<rootDir>/src/HOC$1",
       "^Images(.*)$": "<rootDir>/src/images$1",
       "^images(.*)$": "<rootDir>/src/images$1",
       "^Mocks(.*)$": "<rootDir>/src/mocks$1",

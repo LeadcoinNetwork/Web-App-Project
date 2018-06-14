@@ -13,7 +13,7 @@ function createStoryInDesignDecoration(nameOfStory) {
   ))
 }
 
-createStoryInDesignDecoration("Notification Element")
+storiesOf("Containers/Notification Element")
   .add("No Notification", () => (
     <NotificationElement
       unreadCount={0}
@@ -66,34 +66,26 @@ createStoryInDesignDecoration("Notification Element")
       />
     )
   })
-  .add("6 Notification with state", withState({
-    opened: false,
-    notifications,
-  })(({ store }) => {
-    let unreadCount = store.state.notifications.filter(notification => notification.unread).length
-    return (
-      <NotificationElement
-        unreadCount={unreadCount}
-        notifications={notifications}
-        opened={store.state.opened}
-        anchorEl={store.state.anchorEl}
-        handleToggle={() => store.set({ opened: !store.state.opened })}
-        handleSeeAll={() => {
-          alert("See all clicked")
-        }}
-      />
-    )
-  }))
-createStoryInDesignDecoration("Notification Element/inner").add(
-  "6 Inner Notification",
-  () => {
-    let unreadCount = notifications.filter(notification => notification.unread)
-      .length
-    return (
-      <NotificationInner
-        unreadCount={unreadCount}
-        notifications={notifications}
-      />
-    )
-  },
-)
+  .add(
+    "6 Notification with state",
+    withState({
+      opened: false,
+      notifications,
+    })(({ store }) => {
+      let unreadCount = store.state.notifications.filter(
+        notification => notification.unread,
+      ).length
+      return (
+        <NotificationElement
+          unreadCount={unreadCount}
+          notifications={notifications}
+          opened={store.state.opened}
+          anchorEl={store.state.anchorEl}
+          handleToggle={() => store.set({ opened: !store.state.opened })}
+          handleSeeAll={() => {
+            alert("See all clicked")
+          }}
+        />
+      )
+    }),
+  )

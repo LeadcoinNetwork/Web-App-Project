@@ -28,7 +28,7 @@ class TextFieldState extends React.Component {
   }
 }
 
-createStoryInDesignDecoration("UI/TextField")
+createStoryInDesignDecoration("Components/TextField")
   .add("add text", () => <TextFieldState label="Text Field" />)
   .add("add with hint", () => (
     <TextFieldState label="Hinted Text Field" placeholder="Hint!" />

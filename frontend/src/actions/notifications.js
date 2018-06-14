@@ -31,7 +31,7 @@ export function clickNotifications() {
 export function updateNotifications(list, unreadCount) {
   return {
     type: types.UPDATE_NOTIFICATIONS,
-    payload: { list, unreadCount }
+    payload: { list, unreadCount },
   }
 }
 

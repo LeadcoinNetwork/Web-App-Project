@@ -1,3 +1,4 @@
+import "./Signup.scss"
 import React from "react"
 import { storiesOf } from "@storybook/react"
 import * as actions from "actions"
@@ -7,7 +8,7 @@ function* fakeSaga() {
   console.log("fake saga is running")
 }
 
-storiesOf("App/SignUp", module)
+storiesOf("Containers/SignUp", module)
   .add("connected to production saga", () => {
     var { store, story } = createStoreAndStory({
       path: "/users/signup",

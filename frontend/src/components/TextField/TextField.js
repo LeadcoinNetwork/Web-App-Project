@@ -1,8 +1,9 @@
 import React from "react"
 
-const TextField = ({ placeholder, value, type, onChange }) => (
+const TextField = ({ placeholder, name, value, type, onChange }) => (
   <input
     className="ldc-textfield"
+    name={name}
     value={value}
     type={type}
     placeholder={placeholder}

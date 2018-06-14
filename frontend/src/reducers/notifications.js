@@ -21,7 +21,7 @@ const notifications = (state = initialState, action) => {
     case types.SHOW_NOTIFICATIONS:
       return {
         ...state,
-        isOpen: true
+        isOpen: true,
       }
     case types.HIDE_NOTIFICATIONS:
       return {

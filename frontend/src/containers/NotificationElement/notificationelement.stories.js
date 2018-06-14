@@ -6,9 +6,11 @@ import NotificationElement from "Containers/NotificationElement"
 
 const notifications = require("../../mocks/notifications.json")
 
-storiesOf("App/Notification Element", module)
+storiesOf("Containers/Notification Element", module)
   .add("empty", () => {
-    var { store, story } = createStoreAndStory({ component: NotificationElement })
+    var { store, story } = createStoreAndStory({
+      component: NotificationElement,
+    })
     return story
   })
 

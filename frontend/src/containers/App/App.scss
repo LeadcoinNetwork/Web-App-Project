@@ -1,13 +1,28 @@
 @import "~Styles/variables";
 
 .ldc-app {
-  background-color: $bg-color;
+  position: relative;
   min-height: 100vh;
   min-width: 100vw;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-image: url(~Images/bg_shape.png);
+    background-repeat: no-repeat;
+    background-size: 90% auto;
+    background-position: center;
+    opacity: 0.4;
+    z-index: -1;
+  }
 
   main {
     max-width: 1200px;
     margin: auto;
-    padding: 0 30px;
+    padding: 0 30px 80px;
   }
 }

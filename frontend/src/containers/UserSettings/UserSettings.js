@@ -1,6 +1,8 @@
 import React from "react"
-import TextField from "../TextField"
-import Button from "../Button"
+import TextField from "Components/TextField"
+import Button from "Components/Button"
+import { connect } from "react-redux"
+import { types } from "actions"
 
 function UserSettings({
   currentPassword,
@@ -60,4 +62,9 @@ function UserSettings({
   )
 }
 
-export default UserSettings
+const mapStateToProps = state => state.userSettings
+const mapDispatchToProps = {
+  handleChange: types.us,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserSettings)

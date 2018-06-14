@@ -5,12 +5,6 @@ import NotificationsTable from "./NotificationTable"
 
 const notifications = require("../../mocks/notifications.json")
 
-function createStoryInDesignDecoration(nameOfStory) {
-  return storiesOf(nameOfStory, module).addDecorator(getStories => (
-    <MuiThemeProvider children={getStories()} />
-  ))
-}
-
-createStoryInDesignDecoration("Notification Table").add("Table", () => (
+storiesOf("Containers/Notification Table").add("Table", () => (
   <NotificationsTable notifications={notifications} />
 ))
