@@ -2,13 +2,14 @@
 
 section.ldc-signup,
 section.ldc-login {
-  display: flex;
+  position: relative;
   margin-top: 40px;
 
   .s-main,
   .l-main {
     padding-right: 50px;
     border-right: 1px solid #6275a7;
+    width: calc(100% - 450px);
 
     h1 {
       font-size: 72px;
@@ -54,7 +55,9 @@ section.ldc-login {
 
   aside {
     padding: 20px 0 0 50px;
-    max-width: 750px;
+    position: absolute;
+    left: calc(100% - 450px);
+    top: 0;
 
     h3 {
       font-size: 28px;
@@ -142,7 +145,6 @@ section.ldc-login {
 @media (max-width: $screen-sm) and (min-width: $screen-tablets) {
   section.ldc-signup,
   section.ldc-login {
-    display: block;
     margin-top: 40px;
 
     .s-main,
@@ -151,6 +153,7 @@ section.ldc-login {
       padding-bottom: 60px;
       border-right: none;
       border-bottom: 1px solid #6275a7;
+      width: 100%;
 
       h1 {
         font-size: 48px;
@@ -163,6 +166,7 @@ section.ldc-login {
     }
 
     aside {
+      position: static;
       padding: 60px 0 0 0;
       max-width: 410px;
     }
@@ -172,7 +176,6 @@ section.ldc-login {
 @media (max-width: $screen-tablets) {
   section.ldc-signup,
   section.ldc-login {
-    display: block;
     margin-top: 20px;
 
     .s-main,
@@ -181,6 +184,7 @@ section.ldc-login {
       padding-bottom: 50px;
       border-right: none;
       border-bottom: 1px solid #6275a7;
+      width: 100%;
 
       h1 {
         font-size: 36px;
@@ -225,6 +229,7 @@ section.ldc-login {
     }
 
     aside {
+      position: static;
       padding: 50px 0 0 0;
       max-width: 450px;
     }
