@@ -18,7 +18,7 @@ storiesOf("Containers/Notification Element", module)
     var { store, story } = createStoreAndStory({
       component: NotificationElement,
     })
-    store.dispatch(actions.notifications.showNotifications([], 0))
+    store.dispatch(actions.notifications.notificationsShow([], 0))
     return story
   })
 
@@ -26,7 +26,7 @@ storiesOf("Containers/Notification Element", module)
     var { store, story } = createStoreAndStory({
       component: NotificationElement,
     })
-    store.dispatch(actions.notifications.showNotifications([], 0))
+    store.dispatch(actions.notifications.notificationsShow([], 0))
     return story
   })
 
@@ -35,7 +35,7 @@ storiesOf("Containers/Notification Element", module)
       component: NotificationElement,
     })
     store.dispatch(
-      actions.notifications.updateNotifications(
+      actions.notifications.notificationsUpdate(
         mockdata.noti6un4,
         mockdata.noti6un4.filter(notification => notification.unread).length,
       ),
@@ -48,12 +48,12 @@ storiesOf("Containers/Notification Element", module)
       component: NotificationElement,
     })
     store.dispatch(
-      actions.notifications.updateNotifications(
+      actions.notifications.notificationsUpdate(
         mockdata.noti6un4,
         mockdata.noti6un4.filter(notification => notification.unread).length,
       ),
     )
-    store.dispatch(actions.notifications.showNotifications())
+    store.dispatch(actions.notifications.notificationsShow())
     return story
   })
 
@@ -62,7 +62,7 @@ storiesOf("Containers/Notification Element", module)
       component: NotificationElement,
     })
     store.dispatch(
-      actions.notifications.updateNotifications(
+      actions.notifications.notificationsUpdate(
         mockdata.noti15un14,
         mockdata.noti15un14.filter(notification => notification.unread).length,
       ),

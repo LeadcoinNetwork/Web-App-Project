@@ -9,31 +9,31 @@ const initialState = {
 
 const notifications = (state = initialState, action) => {
   switch (action.type) {
-    case types.SHOW_NOTIFICATION:
+    case types.NOTIFICATION_SHOW:
       return {
         ...state,
         current: action.payload,
       }
-    case types.HIDE_NOTIFICATION:
+    case types.NOTIFICATION_HIDE:
       return {
         ...state,
       }
-    case types.SHOW_NOTIFICATIONS:
+    case types.NOTIFICATIONS_SHOW:
       return {
         ...state,
         isOpen: true,
       }
-    case types.HIDE_NOTIFICATIONS:
+    case types.NOTIFICATIONS_HIDE:
       return {
         ...state,
         isOpen: false,
       }
-    case types.CLICK_NOTIFICATIONS:
+    case types.NOTIFICATIONS_CLICK:
       return {
         ...state,
         isOpen: !state.isOpen,
       }
-    case types.UPDATE_NOTIFICATIONS:
+    case types.NOTIFICATIONS_UPDATE:
       return {
         ...state,
         list: action.payload.list,
