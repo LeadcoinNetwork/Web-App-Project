@@ -1,11 +1,8 @@
 import React from "react"
 import { Switch, Route } from "react-router"
-import EmailConfirmation from "./EmailConfirmation"
-import CompleteRegistration from "./CompleteRegistration"
+import EmailConfirmation from "../EmailConfirmation"
+import CompleteRegistration from "../CompleteRegistration"
 import Login from "../Login/Login"
-import Settings from "./Settings"
-import Notifications from "./Notifications"
-import Withdrawal from "./Withdrawal"
 
 const Users = () => (
   <Switch>
@@ -15,9 +12,6 @@ const Users = () => (
       component={CompleteRegistration}
     />
     <Route path="/users/login" component={Login} />
-    <Route path="/users/settings" component={Settings} />
-    <Route path="/users/notifications" component={Notifications} />
-    <Route path="/users/withdrawal" component={Withdrawal} />
   </Switch>
 )
 
