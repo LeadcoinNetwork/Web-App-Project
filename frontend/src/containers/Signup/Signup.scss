@@ -56,6 +56,7 @@ section.ldc-signup {
       font-weight: 500;
       letter-spacing: 0.8px;
       margin-bottom: 20px;
+      text-transform: capitalize;
     }
 
     q {
@@ -87,8 +88,126 @@ section.ldc-signup {
   }
 }
 
-@media (max-width: $screen-xl) {
+@media (max-width: $screen-xl) and (min-width: $screen-md) {
   section.ldc-signup {
-    color: red;
+    .s-main {
+      padding-right: 40px;
+
+      h1 {
+        font-size: 64px;
+      }
+
+      .sm-form {
+        width: calc(100% - 100px);
+      }
+    }
+
+    aside {
+      padding: 20px 0 0 50px;
+    }
+  }
+}
+
+@media (max-width: $screen-md) and (min-width: $screen-sm) {
+  section.ldc-signup {
+    .s-main {
+      padding-right: 40px;
+
+      h1 {
+        font-size: 52px;
+      }
+
+      .sm-form {
+        width: 100%;
+      }
+    }
+
+    aside {
+      padding: 20px 0 0 40px;
+    }
+  }
+}
+
+@media (max-width: $screen-sm) and (min-width: $screen-tablets) {
+  section.ldc-signup {
+    display: block;
+    margin-top: 40px;
+
+    .s-main {
+      padding-right: 0;
+      padding-bottom: 60px;
+      border-right: none;
+      border-bottom: 1px solid #6275a7;
+
+      h1 {
+        font-size: 48px;
+      }
+
+      .sm-form {
+        width: 100%;
+      }
+    }
+
+    aside {
+      padding: 60px 0 0 0;
+      max-width: 410px;
+    }
+  }
+}
+
+@media (max-width: $screen-tablets) {
+  section.ldc-signup {
+    display: block;
+    margin-top: 20px;
+
+    .s-main {
+      padding-right: 0;
+      padding-bottom: 50px;
+      border-right: none;
+      border-bottom: 1px solid #6275a7;
+
+      h1 {
+        font-size: 36px;
+      }
+
+      .sm-social-buttons {
+        margin-bottom: 40px;
+
+        .ldc-social-login {
+          display: block;
+        }
+
+        .ldc-social-login:first-of-type {
+          margin-right: 0;
+          margin-bottom: 20px;
+        }
+      }
+
+      .sm-form {
+        display: block;
+        width: 100%;
+
+        button {
+          width: 100%;
+          margin-top: 20px;
+          float: none;
+          position: relative;
+          top: 47px;
+        }
+
+        .smf-agree {
+          display: block;
+          margin-top: 0;
+          position: relative;
+          top: -65px;
+          font-size: 14px;
+        }
+      }
+    }
+
+    aside {
+      padding: 50px 0 0 0;
+      max-width: 450px;
+    }
   }
 }

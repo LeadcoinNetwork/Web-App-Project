@@ -1,1 +1,2 @@
-module.exports = require("./EmailConfirmation")
+import EmailConfirmation from "./EmailConfirmation"
+export default EmailConfirmation

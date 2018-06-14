@@ -1,5 +1,6 @@
 import React from "react"
 import SnacbarMui from "material-ui/Snackbar"
+import { connect } from "react-redux"
 
 function Snacbar(props) {
   function getSnackbarStyle(type) {
@@ -26,6 +27,9 @@ function Snacbar(props) {
     return { color, backgroundColor }
   }
 
+  if (!props.notifications.current.message) {
+    return <div />
+  }
   var currentNotification = props.notifications.current
   currentNotification.style = getSnackbarStyle(currentNotification.type)
 
@@ -40,4 +44,9 @@ function Snacbar(props) {
   )
 }
 
-export default Snacbar
+const mapStateToProps = state => ({
+  notifications: state.notifications,
+})
+
+const SnacbarConnected = connect(mapStateToProps)(Snacbar)
+export default SnacbarConnected
