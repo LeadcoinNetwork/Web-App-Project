@@ -2,6 +2,8 @@
   position: relative;
   width: 50px;
   height: 50px;
+  left: 500px;
+  cursor: pointer;
 
   .notification-icon {
     position: relative;
@@ -25,22 +27,47 @@
       line-height: 22px;
     }
   }
-}
-.notification-inner {
-  padding: 10px;
-  width: 300px;
-  height: 150px;
-  background: #433190;
-  border: 1px solid gray;
+  .notification-inner {
+    position: absolute;
+    width: 300px;
+    top: 70px;
+    left: -250px;
+    background: #433190;
+    border: 1px solid gray;
 
-  .ni-row {
-    &.unread {
-      background: #b7adef;
+    .small-arrow {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      top: -6px;
+      right: 15px;
+      background: #433190;
+      transform: rotateZ(45deg);
+      z-index: -1;
     }
-  }
+  
+    .ni-row {
+      padding: 15px;
+      border-bottom: 1px solid #6a56bb;
 
-  .see-all {
-    color: blue;
-    cursor: pointer;
+      &.unread {
+        background: #b7adef;
+      }
+
+      .nr-time {
+        font-weight: 700;
+      }
+    }
+  
+    .view-all {
+      padding: 15px;
+      color: white;
+      
+      .view-all-text {
+        margin-left: 10px;
+        font-weight: 700;
+      }
+    }
+
   }
 }

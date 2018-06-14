@@ -28,6 +28,11 @@ const notifications = (state = initialState, action) => {
         ...state,
         isOpen: false,
       }
+    case types.CLICK_NOTIFICATIONS:
+      return {
+        ...state,
+        isOpen: !state.isOpen,
+      }
     case types.UPDATE_NOTIFICATIONS:
       return {
         ...state,

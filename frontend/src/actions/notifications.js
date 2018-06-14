@@ -22,9 +22,21 @@ export function hideNotifications() {
   }
 }
 
+export function clickNotifications() {
+  return {
+    type: types.CLICK_NOTIFICATIONS,
+  }
+}
+
 export function updateNotifications(list, unreadCount) {
   return {
     type: types.UPDATE_NOTIFICATIONS,
     payload: { list, unreadCount },
+  }
+}
+
+export function viewAllNotifications() {
+  return {
+    type: types.VIEW_ALL_NOTIFICATIONS,
   }
 }

@@ -89,13 +89,6 @@ module.exports = {
           name: "[path][name].[hash].[ext]",
         },
       },
-      {
-        test: /\.png$/,
-        loader: "url-loader",
-        options: {
-          mimetype: "image/png",
-        },
-      },
     ],
   },
   resolve: {

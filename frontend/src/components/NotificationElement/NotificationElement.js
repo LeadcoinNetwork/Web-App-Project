@@ -8,15 +8,12 @@ const NotificationElement = ({
   unreadCount,
   list,
   isOpen,
-  showNotifications,
-  hideNotifications,
+  clickNotifications,
+  viewAllNotifications,
 }) => {
   return (
     <div>
-      <div
-        className="notification-element"
-        onClick={isOpen ? hideNotifications : showNotifications}
-      >
+      <div className="notification-element" onClick={clickNotifications}>
         <FontAwesomeIcon
           className="notification-icon"
           icon={faBell}
@@ -30,8 +27,8 @@ const NotificationElement = ({
             {unreadCount < 10 ? unreadCount : "9+"}
           </div>
         )}
+        {isOpen && <NotificationInner list={list} viewAllNotifications={viewAllNotifications} />}
       </div>
-      {isOpen && <NotificationInner list={list} />}
     </div>
   )
 }
