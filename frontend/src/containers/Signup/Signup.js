@@ -77,8 +77,7 @@ class Signup extends React.Component {
             Collaborating with other marketers & sharing leads is 10X more
             effcient than giving away my budget to Google & Facebook.
           </q>
-          <img />
-          <label>
+          <label style={{ backgroundImage: `url()` }}>
             Meir Cohen<br />CEO New-Crypto
           </label>
         </aside>

@@ -37,13 +37,13 @@
   },
   "jest": {
     "moduleNameMapper": {
+      "^HOC(.*)$": "<rootDir>/src/HOC$1",
       "^Actions(.*)$": "<rootDir>/src/actions$1",
       "^actions(.*)$": "<rootDir>/src/actions$1",
       "^Components(.*)$": "<rootDir>/src/components$1",
       "^components(.*)$": "<rootDir>/src/components$1",
       "^Containers(.*)$": "<rootDir>/src/containers$1",
       "^containers(.*)$": "<rootDir>/src/containers$1",
-      "^HOC(.*)$": "<rootDir>/src/HOC$1",
       "^Images(.*)$": "<rootDir>/src/images$1",
       "^images(.*)$": "<rootDir>/src/images$1",
       "^Mocks(.*)$": "<rootDir>/src/mocks$1",
@@ -96,6 +96,7 @@
     "redux-devtools-extension": "^2.13.2",
     "sass-loader": "^7.0.1",
     "style-loader": "^0.21.0",
+    "url-loader": "^1.0.1",
     "webpack": "^4.9.1",
     "webpack-cli": "^2.1.4",
     "webpack-dev-server": "^3.1.4",
