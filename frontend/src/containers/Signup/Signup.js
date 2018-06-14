@@ -4,6 +4,7 @@ import Button from "Components/Button"
 import TextField from "Components/TextField"
 import SocialLogin from "Components/SocialLogin"
 import { signup } from "Actions"
+import t from "Images/t.jpg"
 
 class Signup extends React.Component {
   handleChange = event => {
@@ -77,7 +78,7 @@ class Signup extends React.Component {
             Collaborating with other marketers & sharing leads is 10X more
             effcient than giving away my budget to Google & Facebook.
           </q>
-          <label style={{ backgroundImage: `url()` }}>
+          <label style={{ backgroundImage: `url(${t})` }}>
             Meir Cohen<br />CEO New-Crypto
           </label>
         </aside>
@@ -95,7 +96,4 @@ var mapDispatchToProps = {
   submit: signup.SignUpFormUserSubmit,
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Signup)
+export default connect(mapStateToProps, mapDispatchToProps)(Signup)
