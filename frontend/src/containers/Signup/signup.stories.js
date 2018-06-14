@@ -1,3 +1,4 @@
+import "./Signup.scss"
 import React from "react"
 import { storiesOf } from "@storybook/react"
 import * as actions from "actions"

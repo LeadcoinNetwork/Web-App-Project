@@ -1,6 +1,6 @@
 @import "~Styles/variables";
 
-.ldc-signup-form {
+section.ldc-signup {
   margin-top: 40px;
   padding-right: 60px;
   border-right: 1px solid #6275a7;
@@ -20,11 +20,11 @@
     letter-spacing: 0.5px;
   }
 
-  .sf-social-buttons {
+  .s-social-buttons {
     margin-bottom: 40px;
   }
 
-  .sf-form {
+  .s-form {
     display: flow-root;
     width: calc(100% - 120px);
 
@@ -33,7 +33,7 @@
       float: right;
     }
 
-    .sff-agree {
+    .sf-agree {
       display: inline-block;
       margin-top: 26px;
       line-height: 1.5;
