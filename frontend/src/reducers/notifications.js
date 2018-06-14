@@ -8,7 +8,6 @@ const initialState = {
 }
 
 const notifications = (state = initialState, action) => {
-  debugger
   switch (action.type) {
     case types.SHOW_NOTIFICATION:
       return {
@@ -28,6 +27,11 @@ const notifications = (state = initialState, action) => {
       return {
         ...state,
         isOpen: false,
+      }
+    case types.CLICK_NOTIFICATIONS:
+      return {
+        ...state,
+        isOpen: !state.isOpen,
       }
     case types.UPDATE_NOTIFICATIONS:
       return {
