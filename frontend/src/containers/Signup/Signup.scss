@@ -25,11 +25,15 @@ section.ldc-signup {
 
     .sm-social-buttons {
       margin-bottom: 40px;
+
+      .ldc-social-login:first-of-type {
+        margin-right: 20px;
+      }
     }
 
     .sm-form {
       display: flow-root;
-      width: calc(100% - 120px);
+      width: calc(100% - 50px);
 
       button {
         margin-top: 34px;
@@ -60,6 +64,25 @@ section.ldc-signup {
       margin-bottom: 33px;
       font-weight: 300;
       line-height: 1.2;
+    }
+
+    label {
+      position: relative;
+      display: inline-block;
+      border-radius: 50%;
+      height: 100px;
+      width: 100px;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+
+      span {
+        position: absolute;
+        width: 200px;
+        left: calc(100% + 15px);
+        top: 50%;
+        transform: translateY(-50%);
+      }
     }
   }
 }

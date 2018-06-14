@@ -79,7 +79,9 @@ class Signup extends React.Component {
             effcient than giving away my budget to Google & Facebook.
           </q>
           <label style={{ backgroundImage: `url(${t})` }}>
-            Meir Cohen<br />CEO New-Crypto
+            <span>
+              Meir Cohen<br />CEO New-Crypto
+            </span>
           </label>
         </aside>
       </section>
