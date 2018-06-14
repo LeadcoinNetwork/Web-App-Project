@@ -4,22 +4,22 @@ import * as actions from "actions"
 import { createStoreAndStory } from "storybook-utils/withRouter"
 
 storiesOf("Containers/Complete registration")
-  .add("Complete registration - empty", () => {
+  .add("empty", () => {
     var { store, story } = createStoreAndStory({
-      path: "/users/complete-registration",
+      path: "/complete-registration",
     })
     return story
   })
-  .add("Complete registration - loading", () => {
+  .add("loading", () => {
     var { store, story } = createStoreAndStory({
-      path: "/users/complete-registration",
+      path: "/complete-registration",
     })
     return story
   })
 
-  .add("Complete registration - error", () => {
+  .add("error", () => {
     var { store, story } = createStoreAndStory({
-      path: "/users/complete-registration",
+      path: "/complete-registration",
     })
     return story
   })

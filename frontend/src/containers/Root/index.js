@@ -11,12 +11,15 @@ import BuyLeads from "Containers/BuyLeads"
 import Users from "Containers/Users"
 import Payments from "Containers/Payments"
 import UploadForm from "containers/UploadForm"
-import CSVUload from "Containers/CSVUpload"
+import CSVUpload from "Containers/CSVUpload"
 import CSVMapping from "Containers/CSVMapping"
 import Dispute from "Containers/Dispute"
 import Checkout from "Containers/Checkout"
 import NotificationTable from "containers/NotificationsTable"
 import Signup from "Containers/Signup"
+import EmailConfirmation from "containers/EmailConfirmation"
+import CompleteRegistration from "containers/CompleteRegistration"
+import Withdraw from "containers/Withdraw"
 
 const Root = () => (
   <App>
@@ -29,9 +32,11 @@ const Root = () => (
       <Route path="/myleads" component={BuyLeads} />
       <Route path="/users" component={Users} />
       <Route path="/payments" component={Payments} />
-
+      <Route path="/withdraw" component={Withdraw} />
+      <Route path="/email-confirmation" component={EmailConfirmation} />
+      <Route path="/complete-registration" component={CompleteRegistration} />
       <Route path="/uploadform" component={UploadForm} />
-      <Route path="/csv-upload" component={CSVUload} />
+      <Route path="/csv-upload" component={CSVUpload} />
       <Route path="/csv-mapping" component={CSVMapping} />
       <Route path="/checkout/" component={Checkout} />
       <Route path="/dispute" component={Dispute} />

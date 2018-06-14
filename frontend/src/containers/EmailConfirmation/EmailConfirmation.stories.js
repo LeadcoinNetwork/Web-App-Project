@@ -3,36 +3,36 @@ import { storiesOf } from "@storybook/react"
 import * as actions from "actions"
 import { createStoreAndStory } from "storybook-utils/withRouter"
 
-storiesOf("Containers/complete registration")
-  .add("Email Confirmation - empty", () => {
+storiesOf("Containers/Email Confirmations")
+  .add("Empty", () => {
     var { store, story } = createStoreAndStory({
-      path: "/users/complete-registration",
+      path: "/email-confirmation",
     })
     return story
   })
-  .add("Complete registration - Already Confirmed", () => {
+  .add("Already Confirmed", () => {
     var { store, story } = createStoreAndStory({
-      path: "/users/complete-registration",
-    })
-    return story
-  })
-
-  .add("Complete registration - Resending", () => {
-    var { store, story } = createStoreAndStory({
-      path: "/users/complete-registration",
+      path: "/email-confirmation",
     })
     return story
   })
 
-  .add("Complete registration - sent success", () => {
+  .add("Resending", () => {
     var { store, story } = createStoreAndStory({
-      path: "/users/complete-registration",
+      path: "/email-confirmation",
     })
     return story
   })
-  .add("Complete registration - sent errro", () => {
+
+  .add("sent success", () => {
     var { store, story } = createStoreAndStory({
-      path: "/users/complete-registration",
+      path: "/email-confirmation",
+    })
+    return story
+  })
+  .add("sent errro", () => {
+    var { store, story } = createStoreAndStory({
+      path: "/email-confirmation",
     })
     return story
   })
