@@ -5,9 +5,8 @@ section.ldc-signup {
   margin-top: 40px;
 
   .s-main {
-    padding-right: 60px;
+    padding-right: 50px;
     border-right: 1px solid #6275a7;
-    max-width: 70%;
 
     h1 {
       font-size: 72px;
@@ -33,7 +32,7 @@ section.ldc-signup {
 
     .sm-form {
       display: flow-root;
-      width: calc(100% - 50px);
+      width: calc(100% - 130px);
 
       button {
         margin-top: 34px;
@@ -49,7 +48,8 @@ section.ldc-signup {
   }
 
   aside {
-    padding: 20px 0 0 70px;
+    padding: 20px 0 0 50px;
+    max-width: 750px;
 
     h3 {
       font-size: 28px;
@@ -84,5 +84,11 @@ section.ldc-signup {
         transform: translateY(-50%);
       }
     }
+  }
+}
+
+@media (max-width: $screen-xl) {
+  section.ldc-signup {
+    color: red;
   }
 }

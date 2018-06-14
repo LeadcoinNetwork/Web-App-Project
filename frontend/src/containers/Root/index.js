@@ -6,11 +6,13 @@ import Admin from "Containers/Admin"
 import Leads from "Containers/Leads"
 import Users from "Containers/Users"
 import Payments from "Containers/Payments"
+import Signup from "Containers/Signup"
 
 const Root = () => (
   <App>
     <Switch>
       <Route path="/" exact component={Home} />
+      <Route path="/signup" component={Signup} />
       <Route path="/admin" component={Admin} />
       <Route path="/leads" component={Leads} />
       <Route path="/users" component={Users} />
