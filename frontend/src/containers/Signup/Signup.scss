@@ -102,18 +102,20 @@ section.ldc-login {
     .s-main,
     .l-main {
       padding-right: 40px;
+      width: calc(100% - 410px);
 
       h1 {
-        font-size: 64px;
+        font-size: 58px;
       }
 
       .sm-form,
       .lm-form {
-        width: calc(100% - 100px);
+        width: calc(100% - 56px);
       }
     }
 
     aside {
+      left: calc(100% - 410px);
       padding: 20px 0 0 50px;
     }
   }
@@ -125,6 +127,7 @@ section.ldc-login {
     .s-main,
     .l-main {
       padding-right: 40px;
+      width: calc(100% - 300px);
 
       h1 {
         font-size: 52px;
@@ -138,6 +141,7 @@ section.ldc-login {
 
     aside {
       padding: 20px 0 0 40px;
+      left: calc(100% - 300px);
     }
   }
 }
