@@ -15,7 +15,7 @@ import CSVUload from "Containers/CSVUpload"
 import CSVMapping from "Containers/CSVMapping"
 import Dispute from "Containers/Dispute"
 import Checkout from "Containers/Checkout"
-
+import NotificationTable from "containers/NotificationsTable"
 const Root = () => (
   <App>
     <Switch>
@@ -32,6 +32,7 @@ const Root = () => (
       <Route path="/csv-mapping" component={CSVMapping} />
       <Route path="/checkout/" component={Checkout} />
       <Route path="/dispute" component={Dispute} />
+      <Route path="/notifications" component={NotificationTable} />
     </Switch>
   </App>
 )

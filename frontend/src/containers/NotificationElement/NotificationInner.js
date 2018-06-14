@@ -3,10 +3,7 @@ import FontAwesomeIcon from "@fortawesome/react-fontawesome"
 import faEye from "@fortawesome/fontawesome-free-solid/faEye"
 import { Time } from "../../utils/time"
 
-const NotificationInner = ({
-  list,
-  viewAllNotifications
-}) => (
+const NotificationInner = ({ list, viewAllNotifications }) => (
   <div className="notification-inner" onClick={viewAllNotifications}>
     <div className="small-arrow" />
     {list.map(notification => (
@@ -15,7 +12,10 @@ const NotificationInner = ({
           className={"ni-row" + (notification.unread ? " unread" : "")}
           key={notification.id}
         >
-          <span className="nr-time">{Time.fromNow(notification.timestamp)}</span> {notification.message}
+          <span className="nr-time">
+            {Time.fromNow(notification.timestamp)}
+          </span>{" "}
+          {notification.message}
         </div>
         {/* <div className="seperation-line" /> */}
       </div>
