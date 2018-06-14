@@ -1,3 +1,3 @@
-import NotificationElement from './NotificationElement'
+import NotificationElement from "./NotificationElement"
 
 export default NotificationElement

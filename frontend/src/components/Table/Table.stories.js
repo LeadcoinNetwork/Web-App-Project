@@ -34,7 +34,7 @@ const getButtons = () => {
   }
 }
 
-createStoryInDesignDecoration("UI/Table")
+createStoryInDesignDecoration("Components/Table")
   .add("with leads", () => (
     <Table
       fields={fields}

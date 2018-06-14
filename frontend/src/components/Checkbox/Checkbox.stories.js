@@ -25,6 +25,7 @@ class CheckboxState extends React.Component {
     )
   }
 }
-createStoryInDesignDecoration("UI/Checkbox").add("check checkbox", () => (
-  <CheckboxState />
-))
+createStoryInDesignDecoration("Components/Checkbox").add(
+  "check checkbox",
+  () => <CheckboxState />,
+)

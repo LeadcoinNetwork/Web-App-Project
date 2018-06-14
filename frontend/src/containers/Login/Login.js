@@ -73,6 +73,9 @@ var mapDispatchToProps = {
   submit: actions.login.loginFormUserSubmit,
 }
 
-var LoginFormConnected = connect(mapStateToProps, mapDispatchToProps)(LoginForm)
+var LoginFormConnected = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(LoginForm)
 
 export default LoginFormConnected

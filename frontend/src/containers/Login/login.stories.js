@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react"
 import * as actions from "actions"
 import { createStoreAndStory } from "storybook-utils/withRouter"
 
-storiesOf("App/Login", module)
+storiesOf("Containers/Login", module)
   .add("empty form", () => {
     var { store, story } = createStoreAndStory({ path: "/users/login" })
     return story

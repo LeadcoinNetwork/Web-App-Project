@@ -12,7 +12,7 @@ function createStoryInDesignDecoration(nameOfStory) {
   ))
 }
 
-createStoryInDesignDecoration("Payment History")
+storiesOf("Containers/Payment History")
   .add("List", () => <PaymentsHistory payments={{ list: payments }} />)
 
   .add("Empty", () => <PaymentsHistory payments={{ list: [] }} />)

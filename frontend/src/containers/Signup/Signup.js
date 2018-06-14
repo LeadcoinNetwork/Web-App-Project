@@ -95,4 +95,7 @@ var mapDispatchToProps = {
   submit: signup.SignUpFormUserSubmit,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Signup)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Signup)

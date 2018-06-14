@@ -6,26 +6,44 @@ import NotificationElement from "Containers/NotificationElement"
 
 const notifications = require("../../mocks/notifications.json")
 
-storiesOf("App/Notification Element", module)
+storiesOf("Containers/Notification Element", module)
   .add("empty", () => {
-    var { store, story } = createStoreAndStory({ component: NotificationElement })
+    var { store, story } = createStoreAndStory({
+      component: NotificationElement,
+    })
     return story
   })
 
   .add("empty opened", () => {
-    var { store, story } = createStoreAndStory({ component: NotificationElement })
+    var { store, story } = createStoreAndStory({
+      component: NotificationElement,
+    })
     return story
   })
 
   .add("have 6 unread 4", () => {
-    var { store, story } = createStoreAndStory({ component: NotificationElement })
-    store.dispatch(actions.notifications.updateNotifications(notifications, notifications.filter(notification => notification.unread).length))
+    var { store, story } = createStoreAndStory({
+      component: NotificationElement,
+    })
+    store.dispatch(
+      actions.notifications.updateNotifications(
+        notifications,
+        notifications.filter(notification => notification.unread).length,
+      ),
+    )
     return story
   })
 
   .add("have 6 unread 4 opened", () => {
-    var { store, story } = createStoreAndStory({ component: NotificationElement })
-    store.dispatch(actions.notifications.updateNotifications(notifications, notifications.filter(notification => notification.unread).length))
+    var { store, story } = createStoreAndStory({
+      component: NotificationElement,
+    })
+    store.dispatch(
+      actions.notifications.updateNotifications(
+        notifications,
+        notifications.filter(notification => notification.unread).length,
+      ),
+    )
     store.dispatch(actions.notifications.showNotifications())
     return story
   })
