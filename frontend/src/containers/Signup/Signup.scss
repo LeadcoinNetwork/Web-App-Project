@@ -2,9 +2,9 @@
 
 section.ldc-signup {
   display: flex;
+  margin-top: 40px;
 
   .s-main {
-    margin-top: 40px;
     padding-right: 60px;
     border-right: 1px solid #6275a7;
     max-width: 70%;
@@ -45,5 +45,21 @@ section.ldc-signup {
   }
 
   aside {
+    padding: 20px 0 0 70px;
+
+    h3 {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: 0.8px;
+      margin-bottom: 20px;
+    }
+
+    q {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 33px;
+      font-weight: 300;
+      line-height: 1.2;
+    }
   }
 }
