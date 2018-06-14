@@ -1,5 +1,4 @@
 import React from "react"
-import ReactLoading from "react-loading"
 import TextField from "Components/TextField"
 import Button from "Components/Button"
 import { connect } from "react-redux"
@@ -68,7 +67,4 @@ const mapDispatchToProps = {
   handleChange: types.us,
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(UserSettings)
+export default connect(mapStateToProps, mapDispatchToProps)(UserSettings)
