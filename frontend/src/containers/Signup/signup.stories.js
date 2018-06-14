@@ -7,7 +7,7 @@ function* fakeSaga() {
   console.log("fake saga is running")
 }
 
-storiesOf("App/SignUp", module)
+storiesOf("Containers/SignUp", module)
   .add("connected to production saga", () => {
     var { store, story } = createStoreAndStory({
       path: "/users/signup",

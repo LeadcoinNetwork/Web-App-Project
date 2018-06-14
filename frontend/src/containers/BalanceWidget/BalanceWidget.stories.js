@@ -5,7 +5,7 @@ import BalanceWidget from "./"
 import { createStoreAndStory } from "storybook-utils/withRouter"
 import * as actions from "actions"
 
-storiesOf("App/Balance Widget", module)
+storiesOf("Containers/Balance Widget", module)
   .add("balance 0", () => {
     var { store, story } = createStoreAndStory({ component: BalanceWidget })
     store.dispatch(actions.balance.updateUserBalance(0, 0))

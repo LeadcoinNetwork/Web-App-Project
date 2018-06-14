@@ -9,7 +9,7 @@ function createStoryInDesignDecoration(nameOfStory) {
   ))
 }
 
-createStoryInDesignDecoration("UI/Button")
+createStoryInDesignDecoration("Components/Button")
   .add("with label", () => <Button label="Hello" />)
   .add("with click", () => (
     <Button label="Click me" onClick={() => alert("Clicked!")} />

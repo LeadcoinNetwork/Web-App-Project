@@ -7,7 +7,7 @@ function abc() {
   return <div>hi</div>
 }
 
-storiesOf("App/Notification Element", module)
+storiesOf("Containers/Notification Element", module)
   .add("empty", () => {
     var { store, story } = createStoreAndStory({ component: abc })
     return story

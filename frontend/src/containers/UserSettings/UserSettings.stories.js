@@ -5,20 +5,12 @@ import UserSettings from "./"
 import { action } from "@storybook/addon-actions"
 import { withState } from "@dump247/storybook-state"
 
-function createStoryInDesignDecoration(nameOfStory) {
-  return storiesOf(nameOfStory, module).addDecorator(getStories => (
-    <MuiThemeProvider children={getStories()} />
-  ))
-}
-
-createStoryInDesignDecoration("User Settings")
-  .add("Change Password", () => (
-    <UserSettings onSubmit={action("Submit Password")} />
-  ))
+storiesOf("Containers/User Settings")
   .add("Example Password", () => (
     <UserSettings currentPassword="123" onSubmit={action("Submit Password")} />
   ))
-  .add("Change Password with state",
+  .add(
+    "Change Password with state",
     withState({})(({ store }) => {
       return (
         <UserSettings
@@ -32,9 +24,10 @@ createStoryInDesignDecoration("User Settings")
           loading={false}
         />
       )
-    })
+    }),
   )
-  .add("Change Password with loading state",
+  .add(
+    "Change Password with loading state",
     withState({ loading: true })(({ store }) => {
       return (
         <UserSettings
@@ -48,9 +41,10 @@ createStoryInDesignDecoration("User Settings")
           loading={store.state.loading}
         />
       )
-    })
+    }),
   )
-  .add("Change Password with submit state",
+  .add(
+    "Change Password with submit state",
     withState({ loading: false })(({ store }) => {
       return (
         <div>
@@ -67,12 +61,8 @@ createStoryInDesignDecoration("User Settings")
             }}
             loading={store.state.loading}
           />
-          <button onClick={
-            () => store.reset()
-          }>
-          RESET
-          </button>
+          <button onClick={() => store.reset()}>RESET</button>
         </div>
       )
-    })
+    }),
   )
