@@ -5,6 +5,7 @@ import leads from "./leads"
 import user from "./user"
 import payments from "./payments"
 import notifications from "./notifications"
+import notificationsTable from "./notifications-table"
 import signup from "./signup"
 import login from "./login"
 import balance from "./balance"
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   sellLeads: leads,
   myLeads: leads,
   notifications,
+  notificationsTable,
   signup,
   login,
 })

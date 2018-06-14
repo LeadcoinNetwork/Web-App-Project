@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react"
 import * as actions from "actions"
 import { createStoreAndStory } from "storybook-utils/withRouter"
 
-const notifications = require("../../mocks/notifications.json")
+const mockdata = require("../../mocks/notifications.json")
 
 storiesOf("Containers/Notification Table")
   .add("Empty", () => {
@@ -12,16 +12,22 @@ storiesOf("Containers/Notification Table")
     })
     return story
   })
-  .add("5 Elements", () => {
+  .add("6 Elements", () => {
     var { store, story } = createStoreAndStory({
       path: "/notifications",
     })
+    store.dispatch(actions.notificationsTable.notificationsTableLoadingStart())
+    store.dispatch(
+      actions.notificationsTable.notificationsTableUpdate(mockdata.noti6un4),
+    )
+    store.dispatch(actions.notificationsTable.notificationsTableLoadingEnd())
     return story
   })
   .add("Loading", () => {
     var { store, story } = createStoreAndStory({
       path: "/notifications",
     })
+    store.dispatch(actions.notificationsTable.notificationsTableLoadingStart())
     return story
   })
 
@@ -29,5 +35,12 @@ storiesOf("Containers/Notification Table")
     var { store, story } = createStoreAndStory({
       path: "/notifications",
     })
+    store.dispatch(actions.notificationsTable.notificationsTableLoadingStart())
+    store.dispatch(actions.notificationsTable.notificationsTableLoadingEnd())
+    store.dispatch(
+      actions.notificationsTable.notificationsTableError(
+        "Error receiving notifications",
+      ),
+    )
     return story
   })

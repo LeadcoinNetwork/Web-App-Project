@@ -10,12 +10,12 @@ const NotificationElement = ({
   unreadCount,
   list,
   isOpen,
-  clickNotifications,
-  viewAllNotifications,
+  notificationsClick,
+  notificationsViewAll,
 }) => {
   return (
     <div>
-      <div className="notification-element" onClick={clickNotifications}>
+      <div className="notification-element" onClick={notificationsClick}>
         <FontAwesomeIcon
           className="notification-icon"
           icon={faBell}
@@ -32,7 +32,7 @@ const NotificationElement = ({
         {isOpen && (
           <NotificationInner
             list={list}
-            viewAllNotifications={viewAllNotifications}
+            notificationsViewAll={notificationsViewAll}
           />
         )}
       </div>
@@ -43,8 +43,8 @@ const NotificationElement = ({
 const mapStateToProps = state => state.notifications
 
 const mapDispatchToProps = {
-  clickNotifications: notifications.clickNotifications,
-  viewAllNotifications: notifications.viewAllNotifications,
+  notificationsClick: notifications.notificationsClick,
+  notificationsViewAll: notifications.notificationsViewAll,
 }
 
 const NotificationElementConnected = connect(

@@ -1,14 +1,16 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider"
 import UserSettings from "./"
-import { action } from "@storybook/addon-actions"
+import { createStoreAndStory } from "storybook-utils/withRouter"
 import { withState } from "@dump247/storybook-state"
 
 storiesOf("Containers/User Settings")
-  .add("Example Password", () => (
-    <UserSettings currentPassword="123" onSubmit={action("Submit Password")} />
-  ))
+  .add("Example Password", () => {
+    var { store, story } = createStoreAndStory({
+      component: UserSettings,
+    })
+    return story
+  })
   .add(
     "Change Password with state",
     withState({})(({ store }) => {
@@ -45,6 +47,29 @@ storiesOf("Containers/User Settings")
   )
   .add(
     "Change Password with submit state",
+    withState({ loading: false })(({ store }) => {
+      return (
+        <div>
+          <UserSettings
+            currentPassword={store.state.currentPassword}
+            newPassword={store.state.newPassword}
+            confirmPassword={store.state.confirmPassword}
+            onSubmit={() => {
+              store.set({ loading: true })
+              action("Submit Password")
+            }}
+            onUpdate={(name, value) => {
+              store.set({ [name]: value })
+            }}
+            loading={store.state.loading}
+          />
+          <button onClick={() => store.reset()}>RESET</button>
+        </div>
+      )
+    }),
+  )
+  .add(
+    "Error state",
     withState({ loading: false })(({ store }) => {
       return (
         <div>

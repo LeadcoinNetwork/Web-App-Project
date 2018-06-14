@@ -1,13 +1,14 @@
 import React from "react"
 import { connect } from "react-redux"
 import * as Actions from "../../actions"
+import { Time } from "../../utils/time"
 
 const PaymentsHistory = ({ onRefresh, payments, isDeleteable }) => (
   <div>
     {onRefresh && <div onClick={onRefresh}>_Referesh_</div>}
     {payments.list.map(p => (
       <div key={p.id}>
-        <time>{new Date(p.timestamp).toLocaleString()}</time>
+        <time>{Time.localeString(p.timestamp)}</time>
         <div>{p.message}</div>
         <div>
           <b>Escrow balance:</b>
