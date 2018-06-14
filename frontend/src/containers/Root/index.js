@@ -16,10 +16,13 @@ import CSVMapping from "Containers/CSVMapping"
 import Dispute from "Containers/Dispute"
 import Checkout from "Containers/Checkout"
 import NotificationTable from "containers/NotificationsTable"
+import Signup from "Containers/Signup"
+
 const Root = () => (
   <App>
     <Switch>
       <Route path="/" exact component={Home} />
+      <Route path="/signup" component={Signup} />
       <Route path="/admin" component={Admin} />
       <Route path="/byleads" component={MyLeads} />
       <Route path="/sellleads" component={SellLeads} />
