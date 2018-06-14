@@ -157,40 +157,6 @@ storiesOf("Containers/CSV Upload").add("Leads - csv upload", () => {
   )
 })
 
-storiesOf("Containers/CSV Mapping").add("Leads - csv mapping", () => {
-  const store = createStore(
-    rootReducer,
-    composeWithDevTools(applyMiddleware(sagaMiddleware, storyReduxLogger)),
-  )
-
-  sagaMiddleware.run(getPaymentsSaga(2))
-
-  return (
-    <Provider store={store}>
-      <MemoryRouter initialEntries={["/leads/csv-mapping"]} initialIndex={0}>
-        <Root />
-      </MemoryRouter>
-    </Provider>
-  )
-})
-
-storiesOf("Containers/Checkout").add("Leads - checkout", () => {
-  const store = createStore(
-    rootReducer,
-    composeWithDevTools(applyMiddleware(sagaMiddleware, storyReduxLogger)),
-  )
-
-  sagaMiddleware.run(getPaymentsSaga(2))
-
-  return (
-    <Provider store={store}>
-      <MemoryRouter initialEntries={["/leads/checkout"]} initialIndex={0}>
-        <Root />
-      </MemoryRouter>
-    </Provider>
-  )
-})
-
 storiesOf("Containers/Dispute").add("Leads - dispute - lead 1", () => {
   const store = createStore(
     rootReducer,

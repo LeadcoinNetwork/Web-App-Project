@@ -3,18 +3,18 @@ import { connect } from "react-redux"
 import Table from "Components/Table"
 import { leads } from "../../actions"
 
-const sellLeadsConfig = require("./config/sell_leads_table.config.json")
+const buyLeadsConfig = require("./buy_leads_table.config.json")
 
-class Sell extends React.Component {
+class Buy extends React.Component {
   constructor(props) {
     super(props)
 
     leads.getLeads(props.dispatch)
   }
-  sellLeads = () => {
+  buyLeads = () => {
     console.log(Array.from(this.props.leads.selected))
   }
-  sellLead = id => {
+  buyLead = id => {
     console.log([id])
   }
   onScrollBottom = cb => {
@@ -24,25 +24,25 @@ class Sell extends React.Component {
   }
   buildButtonLabel = amount => {
     if (amount > 1) {
-      return "sell " + amount + " leads"
+      return "buy " + amount + " leads"
     } else if (amount === 1) {
-      return "sell lead"
+      return "buy lead"
     } else {
-      return "sell leads"
+      return "buy leads"
     }
   }
   getButtons = amountSelected => {
     return {
       table: [
         {
-          value: this.buildButtonLabel(amountSelected),
-          onClick: this.sellLeads,
+          value: "buy ${number} leads",
+          onClick: this.buyLeads,
         },
       ],
       record: [
         {
-          value: "sell",
-          onClick: this.sellLead,
+          value: "buy",
+          onClick: this.buyLead,
         },
       ],
     }
@@ -53,8 +53,8 @@ class Sell extends React.Component {
   render() {
     return (
       <Table
-        title="Sell Leads"
-        fields={sellLeadsConfig.fields}
+        title="Buy Leads"
+        fields={buyLeadsConfig.fields}
         records={this.props.leads.list}
         buttons={this.getButtons(this.props.leads.selected.size)}
         setSelectedRecords={this.setSelectedRecords}
@@ -66,7 +66,7 @@ class Sell extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  leads: state.sellLeads,
+  leads: state.buyLeads,
 })
 
-export default connect(mapStateToProps)(Sell)
+export default connect(mapStateToProps)(Buy)
