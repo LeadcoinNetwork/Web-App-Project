@@ -39,6 +39,10 @@ section.ldc-login {
       display: flow-root;
       width: calc(100% - 130px);
 
+      .ldc-error-text {
+        margin-top: 20px;
+      }
+
       button {
         margin-top: 24px;
         float: right;
@@ -225,6 +229,11 @@ section.ldc-login {
       .lm-form {
         display: block;
         width: 100%;
+
+        &.sm-form .ldc-error-text {
+          position: relative;
+          top: -10px;
+        }
 
         button {
           width: 100%;

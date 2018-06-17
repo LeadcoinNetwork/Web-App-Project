@@ -10,6 +10,13 @@ class Signup extends React.Component {
   handleChange = event => {
     this.props.handleChange(event.target.name, event.target.value)
   }
+  getErrors(errors) {
+    return (
+      <ul className="ldc-error-text">
+        {errors.split(";").map(e => <li>{e}</li>)}
+      </ul>
+    )
+  }
   render() {
     let { fname, lname, email, password, error, loading } = this.props.signup
 
@@ -48,6 +55,7 @@ class Signup extends React.Component {
               onChange={this.handleChange}
               type="password"
             />
+            {error && this.getErrors(error)}
             <Button
               label="register"
               loading={loading}
@@ -65,7 +73,6 @@ class Signup extends React.Component {
               </a>
             </p>
           </div>
-          {error && error.split(";").map(e => <div>{e}</div>)}
           <div />
         </div>
         <aside>

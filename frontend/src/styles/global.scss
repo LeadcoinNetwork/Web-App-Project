@@ -1,3 +1,5 @@
+@import "~Styles/helpers";
+
 * {
   box-sizing: border-box;
 }
@@ -30,5 +32,14 @@ body {
   a {
     color: #3190fc;
     text-decoration: none;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+
+    li {
+      list-style-type: none;
+    }
   }
 }

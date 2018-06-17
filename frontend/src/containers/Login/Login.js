@@ -15,6 +15,13 @@ class Login extends React.Component {
 
     this.props.handleChange(target.name, value)
   }
+  getErrors(errors) {
+    return (
+      <ul className="ldc-error-text">
+        {errors.split(";").map(e => <li>{e}</li>)}
+      </ul>
+    )
+  }
   render() {
     let { email, password, remember, loading, error } = this.props.login
 
@@ -50,13 +57,13 @@ class Login extends React.Component {
               />
               <Link to="/">Forgot your password?</Link>
             </p>
+            {error && this.getErrors(error)}
             <Button
               label="login"
               loading={loading}
               onClick={this.props.submit}
             />
           </div>
-          {error && error.split(";").map(e => <div>{e}</div>)}
         </div>
         <aside>
           <h3>LeadCoin is the promised land for marketers</h3>
