@@ -22,7 +22,7 @@ class Signup extends React.Component {
             <SocialLogin provider={"linkedin"} />
           </div>
           <div className="sm-form">
-            <p>Or enter your details:</p>
+            <h4>Or enter your details:</h4>
             <TextField
               placeholder="First Name"
               value={fname}

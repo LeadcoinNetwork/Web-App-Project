@@ -4,6 +4,7 @@ import Button from "Components/Button"
 import TextField from "Components/TextField"
 import Checkbox from "Components/Checkbox"
 import SocialLogin from "Components/SocialLogin"
+import { Link } from "react-router-dom"
 import { login } from "Actions"
 import t from "Images/t.jpg"
 
@@ -26,7 +27,7 @@ class Login extends React.Component {
             <SocialLogin provider="linkedin" />
           </div>
           <div className="lm-form">
-            <p>Or enter your details:</p>
+            <h4>Or enter your details:</h4>
             <TextField
               placeholder="Email"
               name="email"
@@ -40,11 +41,6 @@ class Login extends React.Component {
               onChange={this.handleChange}
               type="password"
             />
-            <Button
-              label="login"
-              loading={loading}
-              onClick={this.props.submit}
-            />
             <p className="lmf-remember">
               <Checkbox
                 name="remember"
@@ -52,7 +48,13 @@ class Login extends React.Component {
                 checked={remember}
                 onClick={this.handleChange}
               />
+              <Link to="/">Forgot your password?</Link>
             </p>
+            <Button
+              label="login"
+              loading={loading}
+              onClick={this.props.submit}
+            />
             {error && error.split(";").map(e => <div>{e}</div>)}
           </div>
         </div>
