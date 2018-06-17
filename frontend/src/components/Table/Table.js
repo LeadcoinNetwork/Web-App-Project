@@ -12,53 +12,59 @@ class Table extends React.Component {
     }
   }
   isAllSelected = () => {
-    return (
-      this.props.selected.size > 0 &&
-      this.props.selected.size === this.props.records.length
-    )
+    if (this.props.isSelectable) {
+      return (
+        this.props.selected.size > 0 &&
+        this.props.selected.size === this.props.records.length
+      )
+    }
   }
   toggleRecord = (e, id) => {
-    let selected = new Set(this.props.selected)
+    if (this.props.isSelectable) {
+      let selected = new Set(this.props.selected)
 
-    if (e.shiftKey) {
-      let toggelFunction
-      if (selected.has(id)) {
-        toggelFunction = Set.prototype.delete.bind(selected)
+      if (e.shiftKey) {
+        let toggelFunction
+        if (selected.has(id)) {
+          toggelFunction = Set.prototype.delete.bind(selected)
+        } else {
+          toggelFunction = Set.prototype.add.bind(selected)
+        }
+        let last, now
+        this.props.records.forEach((element, index) => {
+          if (element.id === id) {
+            now = index
+          }
+          if (element.id === this.state.lastSelected) {
+            last = index
+          }
+        })
+        if (now < last) {
+          const temp = now
+          now = last
+          last = temp
+        }
+        for (let i = last; i <= now; i++) {
+          toggelFunction(this.props.records[i].id)
+        }
       } else {
-        toggelFunction = Set.prototype.add.bind(selected)
+        selected.delete(id) ? null : selected.add(id)
+        this.setState({ lastSelected: id })
       }
-      let last, now
-      this.props.records.forEach((element, index) => {
-        if (element.id === id) {
-          now = index
-        }
-        if (element.id === this.state.lastSelected) {
-          last = index
-        }
-      })
-      if (now < last) {
-        const temp = now
-        now = last
-        last = temp
-      }
-      for (let i = last; i <= now; i++) {
-        toggelFunction(this.props.records[i].id)
-      }
-    } else {
-      selected.delete(id) ? null : selected.add(id)
-      this.setState({ lastSelected: id })
-    }
 
-    this.props.setSelectedRecords(selected)
+      this.props.setSelectedRecords(selected)
+    }
   }
   toggleAll = () => {
-    let selected = new Set()
+    if (this.props.isSelectable) {
+      let selected = new Set()
 
-    if (!this.isAllSelected()) {
-      this.props.records.forEach(r => selected.add(r.id))
+      if (!this.isAllSelected()) {
+        this.props.records.forEach(r => selected.add(r.id))
+      }
+
+      this.props.setSelectedRecords(selected)
     }
-
-    this.props.setSelectedRecords(selected)
   }
   getDinamicColsCount(fields) {
     return fields.filter(f => f.maxWidth === "auto").length
@@ -109,6 +115,7 @@ class Table extends React.Component {
           isAllSelected={this.isAllSelected()}
           onSort={props.onSort}
           sortedBy={props.sortedBy}
+          isSelectable={props.isSelectable}
         />
         {
           <TBody
@@ -120,6 +127,7 @@ class Table extends React.Component {
             selected={props.selected}
             buttons={props.buttons.record}
             showOnZeroRecords={props.showOnZeroRecords}
+            isSelectable={props.isSelectable}
           />
         }
         <div className="t-footer" />
