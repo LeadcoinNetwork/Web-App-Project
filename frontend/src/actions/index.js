@@ -7,6 +7,7 @@ import * as notificationsTable from "./notificationsTable"
 import * as leads from "./leads"
 import * as login from "./login"
 import * as balance from "./balance"
+import * as emailConfirmation from "./emailConfirmation"
 
 export {
   types,
@@ -18,4 +19,5 @@ export {
   notificationsTable,
   leads,
   login,
+  emailConfirmation,
 }
