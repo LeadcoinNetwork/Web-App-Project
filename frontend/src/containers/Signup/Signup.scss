@@ -1,12 +1,15 @@
 @import "~Styles/variables";
 
-section.ldc-signup {
-  display: flex;
+section.ldc-signup,
+section.ldc-login {
+  position: relative;
   margin-top: 40px;
 
-  .s-main {
+  .s-main,
+  .l-main {
     padding-right: 50px;
     border-right: 1px solid #6275a7;
+    width: calc(100% - 450px);
 
     h1 {
       font-size: 72px;
@@ -22,7 +25,8 @@ section.ldc-signup {
       letter-spacing: 0.5px;
     }
 
-    .sm-social-buttons {
+    .sm-social-buttons,
+    .lm-social-buttons {
       margin-bottom: 40px;
 
       .ldc-social-login:first-of-type {
@@ -30,7 +34,8 @@ section.ldc-signup {
       }
     }
 
-    .sm-form {
+    .sm-form,
+    .lm-form {
       display: flow-root;
       width: calc(100% - 130px);
 
@@ -39,7 +44,8 @@ section.ldc-signup {
         float: right;
       }
 
-      .smf-agree {
+      .smf-agree,
+      .lmf-remember {
         display: inline-block;
         margin-top: 26px;
         line-height: 1.5;
@@ -49,7 +55,9 @@ section.ldc-signup {
 
   aside {
     padding: 20px 0 0 50px;
-    max-width: 750px;
+    position: absolute;
+    left: calc(100% - 450px);
+    top: 0;
 
     h3 {
       font-size: 28px;
@@ -89,66 +97,80 @@ section.ldc-signup {
 }
 
 @media (max-width: $screen-xl) and (min-width: $screen-md) {
-  section.ldc-signup {
-    .s-main {
+  section.ldc-signup,
+  section.ldc-login {
+    .s-main,
+    .l-main {
       padding-right: 40px;
+      width: calc(100% - 410px);
 
       h1 {
-        font-size: 64px;
+        font-size: 58px;
       }
 
-      .sm-form {
-        width: calc(100% - 100px);
+      .sm-form,
+      .lm-form {
+        width: calc(100% - 56px);
       }
     }
 
     aside {
+      left: calc(100% - 410px);
       padding: 20px 0 0 50px;
     }
   }
 }
 
 @media (max-width: $screen-md) and (min-width: $screen-sm) {
-  section.ldc-signup {
-    .s-main {
+  section.ldc-signup,
+  section.ldc-login {
+    .s-main,
+    .l-main {
       padding-right: 40px;
+      width: calc(100% - 300px);
 
       h1 {
         font-size: 52px;
       }
 
-      .sm-form {
+      .sm-form,
+      .lm-form {
         width: 100%;
       }
     }
 
     aside {
       padding: 20px 0 0 40px;
+      left: calc(100% - 300px);
     }
   }
 }
 
 @media (max-width: $screen-sm) and (min-width: $screen-tablets) {
-  section.ldc-signup {
-    display: block;
+  section.ldc-signup,
+  section.ldc-login {
     margin-top: 40px;
 
-    .s-main {
+    .s-main,
+    .l-main {
       padding-right: 0;
       padding-bottom: 60px;
       border-right: none;
       border-bottom: 1px solid #6275a7;
+      width: 100%;
 
       h1 {
         font-size: 48px;
       }
 
-      .sm-form {
+      .sm-form,
+      .lm-form {
         width: 100%;
       }
     }
 
     aside {
+      position: static;
       padding: 60px 0 0 0;
       max-width: 410px;
     }
@@ -156,21 +178,24 @@ section.ldc-signup {
 }
 
 @media (max-width: $screen-tablets) {
-  section.ldc-signup {
-    display: block;
+  section.ldc-signup,
+  section.ldc-login {
     margin-top: 20px;
 
-    .s-main {
+    .s-main,
+    .l-main {
       padding-right: 0;
       padding-bottom: 50px;
       border-right: none;
       border-bottom: 1px solid #6275a7;
+      width: 100%;
 
       h1 {
         font-size: 36px;
       }
 
-      .sm-social-buttons {
+      .sm-social-buttons,
+      .lm-social-buttons {
         margin-bottom: 40px;
 
         .ldc-social-login {
@@ -183,7 +208,8 @@ section.ldc-signup {
         }
       }
 
-      .sm-form {
+      .sm-form,
+      .lm-form {
         display: block;
         width: 100%;
 
@@ -195,7 +221,8 @@ section.ldc-signup {
           top: 47px;
         }
 
-        .smf-agree {
+        .smf-agree,
+        .lmf-remember {
           display: block;
           margin-top: 0;
           position: relative;
@@ -206,6 +233,7 @@ section.ldc-signup {
     }
 
     aside {
+      position: static;
       padding: 50px 0 0 0;
       max-width: 450px;
     }

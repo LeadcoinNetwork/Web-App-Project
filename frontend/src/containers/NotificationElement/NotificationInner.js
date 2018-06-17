@@ -3,8 +3,8 @@ import FontAwesomeIcon from "@fortawesome/react-fontawesome"
 import faEye from "@fortawesome/fontawesome-free-solid/faEye"
 import { Time } from "../../utils/time"
 
-const NotificationInner = ({ list, viewAllNotifications }) => (
-  <div className="notification-inner" onClick={viewAllNotifications}>
+const NotificationInner = ({ list, notificatiosViewAll }) => (
+  <div className="notification-inner" onClick={notificatiosViewAll}>
     <div className="small-arrow" />
     {list.map(notification => (
       <div>
@@ -17,7 +17,6 @@ const NotificationInner = ({ list, viewAllNotifications }) => (
           </span>{" "}
           {notification.message}
         </div>
-        {/* <div className="seperation-line" /> */}
       </div>
     ))}
     <div className="view-all">

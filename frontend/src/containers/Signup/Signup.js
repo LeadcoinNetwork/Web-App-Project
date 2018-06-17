@@ -11,15 +11,7 @@ class Signup extends React.Component {
     this.props.handleChange(event.target.name, event.target.value)
   }
   render() {
-    let {
-      fname,
-      lname,
-      email,
-      password,
-      error,
-      submit,
-      loading,
-    } = this.props.signup
+    let { fname, lname, email, password, error, loading } = this.props.signup
 
     return (
       <section className="ldc-signup">
@@ -35,28 +27,32 @@ class Signup extends React.Component {
               placeholder="First Name"
               value={fname}
               name="fname"
-              onChange={this.handleChangeBind}
+              onChange={this.handleChange}
             />
             <TextField
               placeholder="Last Name"
               value={lname}
               name="lname"
-              onChange={this.handleChangeBind}
+              onChange={this.handleChange}
             />
             <TextField
               placeholder="Email"
               value={email}
               name="email"
-              onChange={this.handleChangeBind}
+              onChange={this.handleChange}
             />
             <TextField
               placeholder="Password"
               value={password}
               name="password"
-              onChange={this.handleChangeBind}
+              onChange={this.handleChange}
               type="password"
             />
-            <Button loading={loading} onClick={submit} label="register" />
+            <Button
+              label="register"
+              loading={loading}
+              onClick={this.props.submit}
+            />
             <p className="smf-agree">
               By clicking this button, you agree to our
               <br />
@@ -80,7 +76,7 @@ class Signup extends React.Component {
           </q>
           <label style={{ backgroundImage: `url(${t})` }}>
             <span>
-              Meir Cohen<br />CEO New-Crypto
+              Meir Cohen<br />CEO of Crypto
             </span>
           </label>
         </aside>
@@ -89,13 +85,11 @@ class Signup extends React.Component {
   }
 }
 
-var mapStateToProps = state => ({
+const mapStateToProps = state => ({
   signup: state.signup,
 })
 
-var mapDispatchToProps = {
+export default connect(mapStateToProps, {
   handleChange: signup.signupFormHandleChange,
   submit: signup.SignUpFormUserSubmit,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Signup)
+})(Signup)

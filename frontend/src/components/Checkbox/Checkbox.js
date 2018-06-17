@@ -3,13 +3,10 @@ import MaterialCheckbox from "material-ui/Checkbox"
 
 const Checkbox = props => (
   <MaterialCheckbox
+    name={props.name}
     label={props.label}
     checked={props.checked}
-    onCheck={e => {
-      if (props.onClick) {
-        props.onClick(e.currentTarget.checked)
-      }
-    }}
+    onCheck={props.onClick}
   />
 )
 
