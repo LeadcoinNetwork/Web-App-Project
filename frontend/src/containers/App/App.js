@@ -5,7 +5,7 @@ import { connect } from "react-redux"
 import { notifications } from "../../actions/index"
 import { push } from "react-router-redux"
 import { bindActionCreators } from "redux"
-import Snacbar from "containers/Snacbar"
+import Snackbar from "Containers/Snackbar"
 
 class App extends React.Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class App extends React.Component {
         <div className="ldc-app">
           <Header />
           <main>{this.props.children}</main>
-          <Snacbar />
+          <Snackbar />
         </div>
       </MuiThemeProvider>
     )
