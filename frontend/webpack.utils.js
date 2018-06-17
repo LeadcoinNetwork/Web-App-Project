@@ -31,6 +31,7 @@ function getRootDirectories() {
   return fs
     .readdirSync(__dirname + "/src")
     .filter(item => fs.lstatSync(__dirname + "/src/" + item).isDirectory())
+    .sort()
 }
 
 module.exports = {
