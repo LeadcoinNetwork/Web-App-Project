@@ -47,6 +47,7 @@ class Login extends React.Component {
             />
             <p className="lmf-remember">
               <Checkbox
+                name="remember"
                 label="Remember me"
                 checked={remember}
                 onClick={this.handleChange}
