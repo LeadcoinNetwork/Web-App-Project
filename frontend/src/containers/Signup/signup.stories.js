@@ -3,9 +3,11 @@ import React from "react"
 import { storiesOf } from "@storybook/react"
 import * as actions from "actions"
 import { createStoreAndStory } from "storybook-utils/withRouter"
+import { routerMiddleware, go, push } from "react-router-redux"
+import { select, take, put, call } from "redux-saga/effects"
 
 function* fakeSaga() {
-  console.log("fake saga is running")
+  // yield put(push("/email-confirmation"))
 }
 
 storiesOf("Containers/SignUp", module)
@@ -22,6 +24,10 @@ storiesOf("Containers/SignUp", module)
       path: "/signup",
       sagaFunction: fakeSaga,
     })
+    setTimeout(function() {
+      console.log("here!")
+      store.dispatch(push("/email-confirmation"))
+    }, 1500)
     return story
   })
 
