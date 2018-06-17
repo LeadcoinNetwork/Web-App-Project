@@ -10,6 +10,13 @@ class Signup extends React.Component {
   handleChange = event => {
     this.props.handleChange(event.target.name, event.target.value)
   }
+  getErrors(errors) {
+    return (
+      <ul className="ldc-error-text">
+        {errors.split(";").map(e => <li>{e}</li>)}
+      </ul>
+    )
+  }
   render() {
     let { fname, lname, email, password, error, loading } = this.props.signup
 
@@ -22,7 +29,7 @@ class Signup extends React.Component {
             <SocialLogin provider={"linkedin"} />
           </div>
           <div className="sm-form">
-            <p>Or enter your details:</p>
+            <h4>Or enter your details:</h4>
             <TextField
               placeholder="First Name"
               value={fname}
@@ -48,6 +55,7 @@ class Signup extends React.Component {
               onChange={this.handleChange}
               type="password"
             />
+            {error && this.getErrors(error)}
             <Button
               label="register"
               loading={loading}
@@ -65,7 +73,6 @@ class Signup extends React.Component {
               </a>
             </p>
           </div>
-          {error && error.split(";").map(e => <div>{e}</div>)}
           <div />
         </div>
         <aside>
