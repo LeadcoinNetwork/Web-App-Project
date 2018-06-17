@@ -4,7 +4,7 @@ const Button = ({
   type,
   disabled,
   label,
-  loadingLabel = "Loading",
+  loadingLabel = "Wait",
   loading,
   onClick,
 }) => (

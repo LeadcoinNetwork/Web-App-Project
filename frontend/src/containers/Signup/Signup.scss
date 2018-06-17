@@ -18,8 +18,8 @@ section.ldc-login {
       margin-bottom: 40px;
     }
 
-    p {
-      padding-left: 25px;
+    h4 {
+      padding: 0 25px;
       font-weight: 300;
       font-size: 20px;
       letter-spacing: 0.5px;
@@ -39,16 +39,33 @@ section.ldc-login {
       display: flow-root;
       width: calc(100% - 130px);
 
+      .ldc-error-text {
+        margin-top: 20px;
+      }
+
       button {
-        margin-top: 34px;
+        margin-top: 24px;
         float: right;
       }
 
       .smf-agree,
       .lmf-remember {
-        display: inline-block;
-        margin-top: 26px;
+        margin-top: 15px;
         line-height: 1.5;
+        font-weight: 300;
+        font-size: 20px;
+        letter-spacing: 0.5px;
+      }
+
+      .smf-agree {
+        display: inline-block;
+        margin-top: 15px;
+      }
+
+      .lmf-remember {
+        a {
+          float: right;
+        }
       }
     }
   }
@@ -213,16 +230,27 @@ section.ldc-login {
         display: block;
         width: 100%;
 
+        &.sm-form .ldc-error-text {
+          position: relative;
+          top: -10px;
+        }
+
         button {
           width: 100%;
           margin-top: 20px;
           float: none;
           position: relative;
+        }
+
+        &.sm-form button {
           top: 47px;
         }
 
-        .smf-agree,
-        .lmf-remember {
+        &.lm-form button {
+          top: 15px;
+        }
+
+        .smf-agree {
           display: block;
           margin-top: 0;
           position: relative;

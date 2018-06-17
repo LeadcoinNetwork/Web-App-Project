@@ -4,6 +4,7 @@ import Button from "Components/Button"
 import TextField from "Components/TextField"
 import Checkbox from "Components/Checkbox"
 import SocialLogin from "Components/SocialLogin"
+import { Link } from "react-router-dom"
 import { login } from "Actions"
 import t from "Images/t.jpg"
 
@@ -13,6 +14,13 @@ class Login extends React.Component {
       value = target.type === "checkbox" ? target.checked : target.value
 
     this.props.handleChange(target.name, value)
+  }
+  getErrors(errors) {
+    return (
+      <ul className="ldc-error-text">
+        {errors.split(";").map(e => <li>{e}</li>)}
+      </ul>
+    )
   }
   render() {
     let { email, password, remember, loading, error } = this.props.login
@@ -26,7 +34,7 @@ class Login extends React.Component {
             <SocialLogin provider="linkedin" />
           </div>
           <div className="lm-form">
-            <p>Or enter your details:</p>
+            <h4>Or enter your details:</h4>
             <TextField
               placeholder="Email"
               name="email"
@@ -40,11 +48,6 @@ class Login extends React.Component {
               onChange={this.handleChange}
               type="password"
             />
-            <Button
-              label="login"
-              loading={loading}
-              onClick={this.props.submit}
-            />
             <p className="lmf-remember">
               <Checkbox
                 name="remember"
@@ -52,8 +55,14 @@ class Login extends React.Component {
                 checked={remember}
                 onClick={this.handleChange}
               />
+              <Link to="/">Forgot your password?</Link>
             </p>
-            {error && error.split(";").map(e => <div>{e}</div>)}
+            {error && this.getErrors(error)}
+            <Button
+              label="login"
+              loading={loading}
+              onClick={this.props.submit}
+            />
           </div>
         </div>
         <aside>
