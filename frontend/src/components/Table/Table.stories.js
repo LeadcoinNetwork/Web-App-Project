@@ -46,6 +46,7 @@ createStoryInDesignDecoration("Components/Table")
       recordMainButton="Buy"
       recordMainAction={console.log}
       onScrollBottom={cb => cb()}
+      isSelectable={true}
     />
   ))
   .add("without leads", () => (
@@ -60,6 +61,7 @@ createStoryInDesignDecoration("Components/Table")
       recordMainButton="Buy"
       recordMainAction={console.log}
       onScrollBottom={cb => cb()}
+      isSelectable={true}
     />
   ))
   .add("with onSort action", () => (
@@ -77,6 +79,7 @@ createStoryInDesignDecoration("Components/Table")
       recordMainButton="Buy"
       recordMainAction={console.log}
       onScrollBottom={cb => cb()}
+      isSelectable={true}
     />
   ))
   .add("with sort asc", () => (
@@ -92,6 +95,7 @@ createStoryInDesignDecoration("Components/Table")
       recordMainButton="Buy"
       recordMainAction={console.log}
       onScrollBottom={cb => cb()}
+      isSelectable={true}
     />
   ))
   .add("with sort desc", () => (
@@ -107,6 +111,7 @@ createStoryInDesignDecoration("Components/Table")
       recordMainButton="Buy"
       recordMainAction={console.log}
       onScrollBottom={cb => cb()}
+      isSelectable={true}
     />
   ))
   .add("with more button", () => {
@@ -137,6 +142,7 @@ createStoryInDesignDecoration("Components/Table")
               recordMainButton="Buy"
               recordMainAction={console.log}
               onScrollBottom={cb => cb()}
+              isSelectable={true}
             />
           </div>
         )

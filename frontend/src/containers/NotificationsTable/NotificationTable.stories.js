@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react"
 import * as actions from "actions"
 import { createStoreAndStory } from "storybook-utils/withRouter"
 
-const mockdata = require("../../mocks/notifications.json")
+const mockData = require("../../mocks/notifications.json")
 
 storiesOf("Containers/Notification Table")
   .add("Empty", () => {
@@ -18,7 +18,7 @@ storiesOf("Containers/Notification Table")
     })
     store.dispatch(actions.notificationsTable.notificationsTableLoadingStart())
     store.dispatch(
-      actions.notificationsTable.notificationsTableUpdate(mockdata.noti6un4),
+      actions.notificationsTable.notificationsTableUpdate(mockData.noti6un4),
     )
     store.dispatch(actions.notificationsTable.notificationsTableLoadingEnd())
     return story

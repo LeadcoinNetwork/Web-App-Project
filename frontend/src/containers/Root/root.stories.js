@@ -19,7 +19,7 @@ const paymentsMock = require("../../mocks/payments.json")
 //   return function*() {
 //     while (true) {
 //       yield take("GET_PAYMENTS")
-//       yield put({ type: types.PAYMENTS_HISTORY_START })
+//       yield put({ type: types.PAYMENTS_HISTORY_LOADING_START })
 //       yield delay(500)
 //       yield put({
 //         type: types.PAYMENTS_HISTORY_UPDATE,
@@ -29,7 +29,7 @@ const paymentsMock = require("../../mocks/payments.json")
 //         },
 //       })
 //       yield put({
-//         type: types.PAYMENTS_HISTORY_FINISH,
+//         type: types.PAYMENTS_HISTORY_LOADING_END,
 //       })
 //       console.log(store.getState())
 //     }

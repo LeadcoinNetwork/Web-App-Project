@@ -5,9 +5,11 @@ import TBRCol from "./TBRCol"
 
 const TBRow = props => (
   <div className="tb-row" onClick={e => props.toggleRecord(e, props.id)}>
-    <div className="tbr-checkbox">
-      <Checkbox checked={props.selected.has(props.id)} />
-    </div>
+    {props.isSelectable && (
+      <div className="tbr-checkbox">
+        <Checkbox checked={props.selected.has(props.id)} />
+      </div>
+    )}
     <div className="tbr-buttons">
       {props.buttons.map(button => (
         <Button

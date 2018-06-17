@@ -12,18 +12,35 @@ storiesOf("Containers/Payments")
     var { store, story } = createStoreAndStory({
       path: "/payments",
     })
+    store.dispatch(actions.payments.paymentsHistoryLoadingStart())
+    store.dispatch(actions.payments.paymentsHistoryLoadingEnd())
+    store.dispatch(actions.payments.paymentsHistoryUpdate([]))
     return story
   })
   .add("loading", () => {
     var { store, story } = createStoreAndStory({
       path: "/payments",
     })
+    store.dispatch(actions.payments.paymentsHistoryLoadingStart())
     return story
   })
-
+  .add("full", () => {
+    var { store, story } = createStoreAndStory({
+      path: "/payments",
+    })
+    store.dispatch(actions.payments.paymentsHistoryLoadingStart())
+    store.dispatch(actions.payments.paymentsHistoryLoadingEnd())
+    store.dispatch(actions.payments.paymentsHistoryUpdate(mockData))
+    return story
+  })
   .add("error", () => {
     var { store, story } = createStoreAndStory({
       path: "/payments",
     })
+    store.dispatch(actions.payments.paymentsHistoryLoadingStart())
+    store.dispatch(actions.payments.paymentsHistoryLoadingEnd())
+    store.dispatch(
+      actions.payments.paymentsHistoryError("Error retriving records"),
+    )
     return story
   })

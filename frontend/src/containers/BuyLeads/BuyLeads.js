@@ -60,6 +60,7 @@ class Buy extends React.Component {
         setSelectedRecords={this.setSelectedRecords}
         onScrollBottom={this.onScrollBottom}
         selected={this.props.leads.selected}
+        isSelectable={true}
       />
     )
   }
