@@ -1,0 +1,36 @@
+{
+  "fields": [
+    {
+      "key": "timestamp",
+      "name": "timestamp",
+      "sortable": true,
+      "editable": false,
+      "maxWidth": "80px",
+      "minWidth": "80px"
+    },
+    {
+      "key": "message",
+      "name": "action",
+      "sortable": true,
+      "editable": false,
+      "maxWidth": "auto",
+      "minWidth": "100px"
+    },
+    {
+      "key": "escrowBalance",
+      "name": "escrow balance",
+      "sortable": true,
+      "editable": false,
+      "maxWidth": "auto",
+      "minWidth": "50px"
+    },
+    {
+      "key": "balance",
+      "name": "total balance",
+      "sortable": true,
+      "editable": false,
+      "maxWidth": "auto",
+      "minWidth": "50px"
+    }
+  ]
+}
