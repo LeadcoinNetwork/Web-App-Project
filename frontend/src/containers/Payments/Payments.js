@@ -6,12 +6,12 @@ import Table from "../../components/Table"
 
 const paymentsConfig = require("./payments_table.config.json")
 
-const getButtons = exportPayment => {
+const getButtons = exportPayments => {
   // return {
   //   table: [
   //     {
   //       value: "export",
-  //       onClick: exportPayment,
+  //       onClick: exportPayments,
   //       actionPerSelected: false,
   //     },
   //   ],
@@ -23,7 +23,7 @@ const PaymentsHistory = ({
   list,
   loading,
   error,
-  exportPayment,
+  exportPayments,
   onScrollBottom,
 }) => (
   <div className="payment-history">
@@ -31,7 +31,7 @@ const PaymentsHistory = ({
       title="Payments History"
       fields={paymentsConfig.fields}
       records={list}
-      buttons={getButtons(exportPayment)}
+      buttons={getButtons(exportPayments)}
       onScrollBottom={onScrollBottom}
       showOnZeroRecords={
         loading ? (
@@ -48,7 +48,7 @@ const PaymentsHistory = ({
 )
 
 const mapDispatchToProps = {
-  exportPayment: Actions.payments.PaymentsHistoryExportPayment,
+  exportPayments: Actions.payments.paymentsHistoryExportPayments,
   onScrollBottom: Actions.payments.paymentsHistoryOnScrollBottom,
 }
 
