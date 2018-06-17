@@ -26,10 +26,9 @@ export function paymentsHistoryError(message) {
   }
 }
 
-export function paymentsHistoryExportPayment(id) {
+export function paymentsHistoryExportPayments() {
   return {
-    type: types.PAYMENTS_HISTORY_EXPORT_PAYMENT,
-    payload: id,
+    type: types.PAYMENTS_HISTORY_EXPORT_PAYMENTS,
   }
 }
 

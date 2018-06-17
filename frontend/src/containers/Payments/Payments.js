@@ -6,51 +6,53 @@ import Table from "../../components/Table"
 
 const paymentsConfig = require("./payments_table.config.json")
 
-const getButtons = exportPayment => {
-  return {
-    record: [
-      {
-        value: "export",
-        onClick: exportPayment,
-      },
-    ],
-  }
+const getButtons = exportPayments => {
+  // return {
+  //   table: [
+  //     {
+  //       value: "export",
+  //       onClick: exportPayments,
+  //       actionPerSelected: false,
+  //     },
+  //   ],
+  // }
+  return {}
 }
 
 const PaymentsHistory = ({
-  payments,
-  onRefresh,
-  isDeleteable,
-  exportPayment,
+  list,
+  loading,
+  error,
+  exportPayments,
+  onScrollBottom,
 }) => (
-  <div>
-    {!payments.loading &&
-      !payments.error && (
-        <Table
-          title="Payments History"
-          fields={paymentsConfig.fields}
-          records={payments.list}
-          buttons={getButtons(exportPayment)}
-          // TODO: onScrollBottom={onScrollBottom}
-          onZeroRecords={<div>Nothing to show</div>}
-          isSelectable={false}
-        />
-      )}
-    {/* {isDeleteable && <div>Delete</div>} */}
-    {payments.loading ? <div>Loading...</div> : ""}
-    {payments.error && <div>{payments.error}</div>}
+  <div className="payment-history">
+    <Table
+      title="Payments History"
+      fields={paymentsConfig.fields}
+      records={list}
+      buttons={getButtons(exportPayments)}
+      onScrollBottom={onScrollBottom}
+      showOnZeroRecords={
+        loading ? (
+          <div>Loading...</div>
+        ) : error ? (
+          <div>{error}</div>
+        ) : (
+          <div>Nothing to show</div>
+        )
+      }
+      isSelectable={false}
+    />
   </div>
 )
 
 const mapDispatchToProps = {
-  exportPayment: Actions.payments.PaymentsHistoryExportPayment,
+  exportPayments: Actions.payments.paymentsHistoryExportPayments,
   onScrollBottom: Actions.payments.paymentsHistoryOnScrollBottom,
 }
 
-const mapStateToProps = state => ({
-  payments: state.payments,
-  isDeleteable: state.user.DeleteAllow || state.user.isAdmin,
-})
+const mapStateToProps = state => state.payments
 
 export default connect(
   mapStateToProps,
