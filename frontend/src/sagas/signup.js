@@ -2,6 +2,7 @@ import { types } from "Actions"
 import * as Actions from "Actions"
 import { select, take, put, call } from "redux-saga/effects"
 import request from "Utils/request"
+import { routerMiddleware, push } from "react-router-redux"
 
 export default function* signup() {
   while (true) {
@@ -16,9 +17,8 @@ export default function* signup() {
     })
     if (ans.isError) {
       yield put(Actions.signup.SIGNUP_FORM_ERROR(ans.data.error))
+    } else {
+      yield put(push("/email-confirmation"))
     }
-    // else {
-    // 	yield put(Actions.signup.complete())
-    // }
   }
 }
