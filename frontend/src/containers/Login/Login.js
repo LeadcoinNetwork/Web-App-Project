@@ -55,8 +55,8 @@ class Login extends React.Component {
               loading={loading}
               onClick={this.props.submit}
             />
-            {error && error.split(";").map(e => <div>{e}</div>)}
           </div>
+          {error && error.split(";").map(e => <div>{e}</div>)}
         </div>
         <aside>
           <h3>LeadCoin is the promised land for marketers</h3>
