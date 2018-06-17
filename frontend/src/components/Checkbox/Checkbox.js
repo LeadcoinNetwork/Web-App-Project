@@ -1,13 +1,11 @@
 import React from "react"
-import MaterialCheckbox from "material-ui/Checkbox"
 
-const Checkbox = props => (
-  <MaterialCheckbox
-    name={props.name}
-    label={props.label}
-    checked={props.checked}
-    onCheck={props.onClick}
-  />
+const Checkbox = ({ name, label, checked, onClick }) => (
+  <label className="ldc-checkbox">
+    <input type="checkbox" name={name} checked={checked} onChange={onClick} />
+    <span />
+    {label}
+  </label>
 )
 
 export default Checkbox
