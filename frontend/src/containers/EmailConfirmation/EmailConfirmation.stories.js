@@ -2,37 +2,43 @@ import React from "react"
 import { storiesOf } from "@storybook/react"
 import * as actions from "actions"
 import { createStoreAndStory } from "storybook-utils/withRouter"
+import EmailConfirmation from "../EmailConfirmation"
 
 storiesOf("Containers/Email Confirmations")
   .add("Empty", () => {
-    var { store, story } = createStoreAndStory({
-      path: "/email-confirmation",
+    let {store, story} = createStoreAndStory({
+      component: EmailConfirmation,
     })
     return story
   })
   .add("Already Confirmed", () => {
-    var { store, story } = createStoreAndStory({
-      path: "/email-confirmation",
+    let { store, story } = createStoreAndStory({
+      component: EmailConfirmation,
     })
+    store.dispatch(actions.emailConfirmation.emailConfirmationConfirmed())
     return story
   })
 
-  .add("Resending", () => {
-    var { store, story } = createStoreAndStory({
-      path: "/email-confirmation",
+  .add("Resend", () => {
+    let {store, story} = createStoreAndStory({
+      component: EmailConfirmation,
     })
+    store.dispatch(actions.emailConfirmation.emailConfirmationResend())
     return story
   })
 
   .add("sent success", () => {
-    var { store, story } = createStoreAndStory({
-      path: "/email-confirmation",
+    let {store, story} = createStoreAndStory({
+      component: EmailConfirmation,
     })
+    store.dispatch(actions.emailConfirmation.emailConfirmationSent())
     return story
   })
-  .add("sent errro", () => {
-    var { store, story } = createStoreAndStory({
-      path: "/email-confirmation",
+  .add("sent error", () => {
+    let {store, story} = createStoreAndStory({
+      component: EmailConfirmation,
     })
+    store.dispatch(actions.emailConfirmation.emailConfirmationError([]))
     return story
+
   })

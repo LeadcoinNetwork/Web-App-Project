@@ -14,7 +14,6 @@ class EmailConfirmation extends React.Component {
     axios
       .get(`${process.env.BACKEND}/auth/resend-email`)
       .then(response => {
-        console.log(response)
         this.setState({ response: "Email Sent!" })
       })
       .catch(error => {
@@ -39,11 +38,15 @@ class EmailConfirmation extends React.Component {
         <div> Please click on the link </div>
         <div className="resend_button">
           <div>
-            {" "}
-            <Button onClick={this.resendEmail}> Resend </Button>{" "}
+            &nbsp;
+            <Button
+              onClick={this.resendEmail}
+              label="Resend"
+              /> 
+            &nbsp;
           </div>
         </div>
-        <div className="response">{this.state.response}</div>
+        <div className="response">{this.props.confirmation_sent}</div>
       </div>
     )
   }
