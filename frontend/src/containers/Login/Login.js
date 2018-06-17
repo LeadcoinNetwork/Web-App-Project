@@ -40,16 +40,18 @@ class Login extends React.Component {
               onChange={this.handleChange}
               type="password"
             />
-            <Checkbox
-              label="Remember me"
-              checked={remember}
-              onClick={this.handleChange}
-            />
             <Button
               label="login"
               loading={loading}
               onClick={this.props.submit}
             />
+            <p className="lmf-remember">
+              <Checkbox
+                label="Remember me"
+                checked={remember}
+                onClick={this.handleChange}
+              />
+            </p>
             {error && error.split(";").map(e => <div>{e}</div>)}
           </div>
         </div>
