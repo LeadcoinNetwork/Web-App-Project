@@ -37,6 +37,7 @@ class Sell extends React.Component {
         {
           value: this.buildButtonLabel(amountSelected),
           onClick: this.sellLeads,
+          actionPerSelected: true,
         },
       ],
       record: [
