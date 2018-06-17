@@ -1,17 +1,10 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider"
 import Table from "./"
 
 const fields = require("../../mocks/fields.json")
 const leads = require("../../mocks/leads.json")
 const selected = new Set()
-
-function createStoryInDesignDecoration(nameOfStory) {
-  return storiesOf(nameOfStory, module).addDecorator(getStories => (
-    <MuiThemeProvider children={getStories()} />
-  ))
-}
 
 const getButtons = () => {
   return {
@@ -34,7 +27,7 @@ const getButtons = () => {
   }
 }
 
-createStoryInDesignDecoration("Components/Table")
+storiesOf("Components/Table")
   .add("with leads", () => (
     <Table
       fields={fields}

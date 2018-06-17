@@ -1,13 +1,6 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider"
 import TextField from "./TextField"
-
-function createStoryInDesignDecoration(nameOfStory) {
-  return storiesOf(nameOfStory, module).addDecorator(getStories => (
-    <MuiThemeProvider children={getStories()} />
-  ))
-}
 
 class TextFieldState extends React.Component {
   constructor(props) {
@@ -28,7 +21,7 @@ class TextFieldState extends React.Component {
   }
 }
 
-createStoryInDesignDecoration("Components/TextField")
+storiesOf("Components/TextField")
   .add("add text", () => <TextFieldState label="Text Field" />)
   .add("add with hint", () => (
     <TextFieldState label="Hinted Text Field" placeholder="Hint!" />

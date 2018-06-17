@@ -1,5 +1,4 @@
 import React from "react"
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider"
 import Header from "Components/Header"
 import { connect } from "react-redux"
 import { notifications } from "../../actions/index"
@@ -15,13 +14,11 @@ class App extends React.Component {
   }
   render() {
     return (
-      <MuiThemeProvider>
-        <div className="ldc-app">
-          <Header />
-          <main>{this.props.children}</main>
-          <Snackbar />
-        </div>
-      </MuiThemeProvider>
+      <div className="ldc-app">
+        <Header />
+        <main>{this.props.children}</main>
+        <Snackbar />
+      </div>
     )
   }
 }
