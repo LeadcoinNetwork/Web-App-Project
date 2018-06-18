@@ -3,7 +3,7 @@ const express = require("express")
 const passport = require("passport")
 
 // internal modules
-const auth = require("../../../models/user/auth")
+const auth = require("../../../models/auth/auth")
 const leads = require("../../../models/leads/leads")
 
 const router = express.Router()

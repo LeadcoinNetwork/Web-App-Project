@@ -5,6 +5,7 @@ import { createStoreAndStory } from "storybook-utils/withRouter"
 
 import { specs, describe, it } from "storybook-addon-specifications"
 import { mount } from "enzyme"
+import { types } from "actions"
 import expect from "expect"
 
 import UserMenu from "./UserMenu"
@@ -24,26 +25,39 @@ storiesOf("Containers/User Menu")
     return story
   })
 
-  .add("should dispatch a function on click", () => {
+  .add("should change state getState().usermenu.open onClick", () => {
     var { store, story } = createStoreAndStory({
       component: UserMenu,
     })
 
     specs(() =>
-      describe("should dispatch a function on click", function() {
-        it("check that getState().usermenu.open is true after click", function(done) {
+      describe("", function() {
+        it("check that USER_MENU_OPEN action has dispatched", done => {
+          // We test the container, and the actionCreator.
           let output = mount(story)
-          var executed = false
-          store.subscribe(function(a, b, c) {
-            if (store.getState().usermenu.open) done()
-            else {
-              done(new Error("state did not changed"))
-            }
-            executed = true
-          })
-          store.dispatch({ type: "asdsa" })
-          output.simulate("click")
-          if (!executed) done(new Error("action did not executed"))
+          var ok = 0
+          // store.replaceReducer((state, action) => {
+          //   if (action.type == types.USER_MENU_OPEN) {
+          //     ok = true
+          //   }
+          // })
+          output.find(".click-handler").simulate("click")
+          if (store.getState().user.menu.open) {
+            done()
+          } else {
+            done(new Error("state did not changed"))
+          }
+        })
+        it("check that USER_MENU_OPEN action has ", done => {
+          // We test the container, and the actionCreator.
+          let output = mount(story)
+          var ok = 0
+          output.find(".click-handler").simulate("click")
+          if (store.getState().user.menu.open) {
+            done()
+          } else {
+            done(new Error("state did not changed"))
+          }
         })
       }),
     )

@@ -3,7 +3,7 @@ const express = require("express")
 const passport = require("passport")
 
 // internal modules
-const auth = require("../../../models/user/auth")
+const auth = require("../../../models/auth/auth")
 const leads_upload = require("../../../models/leads-upload/leads_upload")
 const leads = require("../../../models/leads/leads")
 const csv_reader = require("../../../models/csv_reader/index")

@@ -11,6 +11,14 @@ export default function fetchBackend(method, url, data) {
         return a
       })
       .catch(e => {
+        if (!e.response) {
+          return {
+            isError: true,
+            data: {
+              error: "NETWORK ERROR",
+            },
+          }
+        }
         e.response.isError = data
         return e.response
       })

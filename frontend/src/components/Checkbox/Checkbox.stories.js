@@ -1,6 +1,7 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
 import Checkbox from "./Checkbox"
+import { action, configureActions } from "@storybook/addon-actions"
 
 class CheckboxState extends React.Component {
   constructor() {
@@ -10,6 +11,7 @@ class CheckboxState extends React.Component {
   render() {
     return (
       <Checkbox
+        {...this.props}
         checked={this.state.checked}
         onClick={() => {
           this.setState({ checked: !this.state.checked })
@@ -19,3 +21,11 @@ class CheckboxState extends React.Component {
   }
 }
 storiesOf("Components/Checkbox").add("check checkbox", () => <CheckboxState />)
+
+storiesOf("Components/Checkbox").add("checkbox with label", () => (
+  <CheckboxState label={"With Label"} />
+))
+
+storiesOf("Components/Checkbox").add("checkbox with onclick", () => (
+  <Checkbox onClick={action("onClick")} />
+))

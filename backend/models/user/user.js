@@ -1,204 +1,206 @@
-const auth = require("./auth")
-const validate = require("./validate")
-const mail = require("../email/email")
-const Token = require("../token-mysql/token-mysql")
-const User = require("./user-mysql")
+//@ts-check
 
-module.exports = {
-  insert,
-  find,
-  remove,
-  login,
-  register,
-  confirmEmail,
-  resendEmail,
-  authenticatePassword,
-  update,
-  confirmEmailUpdate,
-  forgotPassword,
-  updateExternal,
-}
+const auth = require("../auth/auth")
+const validate = require("../validate/validate")
+const TokenMySQL = require("../token-mysql/token-mysql")
+const UserMySQL = require("../user-mysql/user-mysql")
 
-// returns user
-async function insert(user) {
-  let { email } = user
-  await uniqueEmail(email)
+class User {
+  constructor({ email }) {
+    this.email = email
+  }
 
-  user.created = Date.now()
-  await User.insert(user)
-  ;[user] = await find({ email })
-  return user
-}
+  // returns user
+  async insert(user) {
+    let { email } = user
+    await this.uniqueEmail(email)
 
-// returns [user]
-async function find(condition, fields) {
-  let users = await User.find(condition, fields)
-  users = users.map(user => {
-    delete user.password
+    user.created = Date.now()
+    await UserMySQL.insert(user)
+    ;[user] = await this.find({ email })
     return user
-  })
-  return users
-}
+  }
 
-// returns true/false
-async function remove(userId) {
-  return await User.remove(userId)
-}
+  // returns [user]
+  async find(condition, fields) {
+    let users = await UserMySQL.find(condition, fields)
+    users = users.map(user => {
+      delete user.password
+      return user
+    })
+    return users
+  }
 
-async function login(userId) {
-  let [user] = await find({ id: userId })
-  let token = auth.generateJWT(user)
-  if (user.disabled) {
+  // returns true/false
+  async remove(userId) {
+    return await UserMySQL.remove(userId)
+  }
+
+  async login(userId) {
+    let [user] = await this.find({ id: userId })
+    let token = auth.generateJWT(user)
+    if (user.disabled) {
+      return token
+    }
+
+    // update login timestamp
+    await UserMySQL.update(user.id, { login: Date.now() })
+
     return token
   }
 
-  // update login timestamp
-  await User.update(user.id, { login: Date.now() })
+  // ----------------------------- ONLY LOCAL USERS -----------------------------
 
-  return token
-}
+  // returns user
+  async register(user) {
+    var _user = await validate.newUser(user)
 
-// ----------------------------- ONLY LOCAL USERS -----------------------------
+    let { email } = _user
 
-// returns user
-async function register(user) {
-  user = await validate.newUser(user)
-
-  let { email } = user
-
-  user.password = auth.hashPassword(user.password)
-  user.disabled = "EMAIL_NOT_VERIFIED"
-  let token = auth.generateToken()
-
-  user = await insert(user)
-
-  await Token.insert({
-    user_id: user.id,
-    token: token,
-    created: Date.now(),
-  })
-
-  await mail.confirmEmail(user, token)
-
-  return user
-}
-
-// returns user
-async function resendEmail(token) {
-  let [user] = await Token.find({ token })
-  if (!user) {
-    let err = new Error("Not Found")
-    err.status = 404
-    throw err
-  }
-  await mail.confirmEmail(user, token)
-  return user
-}
-
-// returns user
-async function confirmEmail(token) {
-  let [{ user_id: userId }] = await Token.find({ token })
-  if (!userId) {
-    let err = new Error("Not Found")
-    err.status = 404
-    throw err
-  }
-  await Token.remove(userId)
-  await User.update(userId, { disabled: null })
-  let [user] = await find({ id: userId })
-  return user
-}
-
-// returns user
-async function authenticatePassword(email, password) {
-  let [user] = await User.find({ email })
-  if (user && auth.comparePassword(password, user.password)) {
-    delete user.password
-    return user
-  } else {
-    let err = new Error("Unauthorized")
-    err.status = 401
-    throw err
-  }
-}
-
-// returns user
-async function update(userId, user) {
-  user = await validate.partialUser(user)
-  let { email, password } = user
-
-  if (password) {
-    password = auth.hashPassword(password)
-  }
-
-  if (email) {
-    await uniqueEmail(email, userId)
+    _user.password = auth.hashPassword(_user.password)
+    _user.disabled = "EMAIL_NOT_VERIFIED"
     let token = auth.generateToken()
-    await Token.insert({
-      user_id: userId,
+
+    _user = await this.insert(_user)
+
+    await TokenMySQL.insert({
+      user_id: _user.id,
       token: token,
-      pending_email: email,
       created: Date.now(),
     })
-    await mail.confirmEmailUpdate(user, token)
-    delete user.email
+
+    await this.email.confirmEmail(_user, token)
+
+    return _user
   }
 
-  await User.update(userId, user)
-  ;[user] = await find({ id: userId })
-  return user
-}
-
-// returns undefined
-async function confirmEmailUpdate(token) {
-  let { user_id: userId, pending_email: email } = await Token.find({ token })
-  await User.update(userId, { email })
-  await Token.remove(token)
-}
-
-// returns undefined
-async function forgotPassword(email) {
-  let [user] = find({ email })
-  if (!user) {
-    let err = new Error("Not Found")
-    err.status = 404
-    throw err
+  // returns user
+  async resendEmail(token) {
+    let [user] = await TokenMySQL.find({ token })
+    if (!user) {
+      let err = new Error("Not Found")
+      //@ts-ignore
+      err.status = 404
+      throw err
+    }
+    await this.email.confirmEmail(user, token)
+    return user
   }
-  let token = auth.generateToken()
-  await Token.insert({
-    user_id: user.id,
-    token: token,
-    created: Date.now(),
-  })
-  await mail.forgotPassword(user, token)
-}
 
-// returns user
-async function resetPassword(token, password) {
-  let { user_id: userId } = await Token.find({ token })
-  let user = await update(userId, { password })
-  await Token.remove(token)
-  return user
-}
-
-//  --------------------------- ONLY EXTERNAL USERS ---------------------------
-
-// returns user
-async function updateExternal(userId, user) {
-  let { email } = user
-  if (email) {
-    await uniqueEmail(email)
+  // returns user
+  async confirmEmail(token) {
+    let [{ user_id: userId }] = await TokenMySQL.find({ token })
+    if (!userId) {
+      let err = new Error("Not Found")
+      //@ts-ignore
+      err.status = 404
+      throw err
+    }
+    await TokenMySQL.remove(userId)
+    await UserMySQL.update(userId, { disabled: null })
+    let [user] = await this.find({ id: userId })
+    return user
   }
-  await User.update(userId, user)
-  ;[user] = await find({ id: userId })
-  return user
-}
 
-async function uniqueEmail(email, userId) {
-  let [user] = await User.find({ email })
-  if (user && user.id !== parseInt(userId)) {
-    let err = new Error("Email " + email + " is already in use")
-    err.status = 409
-    throw err
+  // returns user
+  async authenticatePassword(email, password) {
+    let [user] = await UserMySQL.find({ email })
+    if (user && auth.comparePassword(password, user.password)) {
+      delete user.password
+      return user
+    } else {
+      let err = new Error("Unauthorized")
+      //@ts-ignore!!!
+      err.status = 401
+      throw err
+    }
+  }
+
+  // returns user
+  async update(userId, user) {
+    user = await validate.partialUser(user)
+    let { email, password } = user
+
+    if (password) {
+      password = auth.hashPassword(password)
+    }
+
+    if (email) {
+      await this.uniqueEmail(email, userId)
+      let token = auth.generateToken()
+      await TokenMySQL.insert({
+        user_id: userId,
+        token: token,
+        pending_email: email,
+        created: Date.now(),
+      })
+      await this.email.confirmEmailUpdate(user, token)
+      delete user.email
+    }
+
+    await UserMySQL.update(userId, user)
+    ;[user] = await this.find({ id: userId })
+    return user
+  }
+
+  // returns undefined
+  async confirmEmailUpdate(token) {
+    let { user_id: userId, pending_email: email } = await TokenMySQL.find({
+      token,
+    })
+    await UserMySQL.update(userId, { email })
+    await TokenMySQL.remove(token)
+  }
+
+  // returns undefined
+  async forgotPassword(email) {
+    //@ts-ignore
+    let [user] = this.find({ email })
+    if (!user) {
+      let err = new Error("Not Found")
+      //@ts-ignore
+      err.status = 404
+      throw err
+    }
+    let token = auth.generateToken()
+    await TokenMySQL.insert({
+      user_id: user.id,
+      token: token,
+      created: Date.now(),
+    })
+    await this.email.forgotPassword(user, token)
+  }
+
+  // returns user
+  async resetPassword(token, password) {
+    let { user_id: userId } = await TokenMySQL.find({ token })
+    let user = await this.update(userId, { password })
+    await TokenMySQL.remove(token)
+    return user
+  }
+
+  //  --------------------------- ONLY EXTERNAL USERS ---------------------------
+
+  // returns user
+  async updateExternal(userId, user) {
+    let { email } = user
+    if (email) {
+      await this.uniqueEmail(email)
+    }
+    await UserMySQL.update(userId, user)
+    ;[user] = await this.find({ id: userId })
+    return user
+  }
+
+  async uniqueEmail(email, userId) {
+    let [user] = await UserMySQL.find({ email })
+    if (user && user.id !== parseInt(userId)) {
+      let err = new Error("Email " + email + " is already in use")
+      //@ts-ignore
+      err.status = 409
+      throw err
+    }
   }
 }
+
+module.exports = User

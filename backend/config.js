@@ -28,12 +28,6 @@ module.exports = {
       clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
       callbackURL: process.env.BACKEND + "/auth/linkedin/callback",
     },
-    // We removed facebook support for now. We me use it in the near future.
-    // facebook: {
-    //   clientID: process.env.FACEBOOK_CLIENT_ID,
-    //   clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-    //   callbackURL: process.env.BACKEND + "/auth/facebook/callback";
-    // }
   },
   mail: {
     mailer: process.env.MAILER,
