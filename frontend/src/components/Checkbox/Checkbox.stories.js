@@ -1,13 +1,6 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider"
 import Checkbox from "./Checkbox"
-
-function createStoryInDesignDecoration(nameOfStory) {
-  return storiesOf(nameOfStory, module).addDecorator(getStories => (
-    <MuiThemeProvider children={getStories()} />
-  ))
-}
 
 class CheckboxState extends React.Component {
   constructor() {
@@ -25,7 +18,4 @@ class CheckboxState extends React.Component {
     )
   }
 }
-createStoryInDesignDecoration("Components/Checkbox").add(
-  "check checkbox",
-  () => <CheckboxState />,
-)
+storiesOf("Components/Checkbox").add("check checkbox", () => <CheckboxState />)
