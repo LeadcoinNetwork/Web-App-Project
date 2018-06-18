@@ -29,9 +29,9 @@ const Root = () => (
       <Route path="/signup" component={Signup} />
       <Route path="/login" component={Login} />
       <Route path="/admin" component={Admin} />
-      <Route path="/byleads" component={MyLeads} />
-      <Route path="/sellleads" component={SellLeads} />
-      <Route path="/myleads" component={BuyLeads} />
+      <Route path="/buy-leads" component={MyLeads} />
+      <Route path="/sell-leads" component={SellLeads} />
+      <Route path="/my-leads" component={BuyLeads} />
       <Route path="/users" component={Users} />
       <Route path="/payments" component={Payments} />
       <Route path="/withdraw" component={Withdraw} />
