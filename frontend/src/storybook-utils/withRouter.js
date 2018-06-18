@@ -19,13 +19,18 @@ export function createStoreAndStory({
   sagaFunction,
   connectToProductionSaga,
 }) {
-  var history = createMemoryHistory({
-    initialEntries: [path],
-    initialIndex: 0,
-  })
-  const ROUTER_MIDDLEWARE = routerMiddleware(history)
+  var ROUTER_MIDDLEWARE
+  var middlewares = [storyReduxLogger]
 
-  var middlewares = [storyReduxLogger, ROUTER_MIDDLEWARE]
+  if (path) {
+    var history = createMemoryHistory({
+      initialEntries: [path],
+      initialIndex: 0,
+    })
+    ROUTER_MIDDLEWARE = routerMiddleware(history)
+    middlewares.push(ROUTER_MIDDLEWARE)
+  }
+
   if (sagaFunction || connectToProductionSaga) {
     var sagaMiddleware = createSagaMiddleware()
     // middlewares.unshift(sagaMiddleware)
