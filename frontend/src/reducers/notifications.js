@@ -1,7 +1,6 @@
 import * as types from "../actions/types"
 
 const initialState = {
-  current: { message: null },
   list: [],
   unreadCount: 0,
   isOpen: false,
@@ -9,15 +8,6 @@ const initialState = {
 
 const notifications = (state = initialState, action) => {
   switch (action.type) {
-    case types.NOTIFICATION_SHOW:
-      return {
-        ...state,
-        current: action.payload,
-      }
-    case types.NOTIFICATION_HIDE:
-      return {
-        ...state,
-      }
     case types.NOTIFICATIONS_SHOW:
       return {
         ...state,
