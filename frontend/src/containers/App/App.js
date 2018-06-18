@@ -1,5 +1,5 @@
 import React from "react"
-import Header from "Components/Header"
+import Header from "Containers/Header"
 import { connect } from "react-redux"
 import { notifications } from "../../actions/index"
 import { push } from "react-router-redux"
