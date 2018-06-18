@@ -10,7 +10,7 @@ const TBRow = props => (
         <Checkbox checked={props.selected.has(props.id)} />
       </div>
     )}
-    {props.button && (
+    {props.buttons && (
       <div className="tbr-buttons">
         {props.buttons.map(button => (
           <Button

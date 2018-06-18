@@ -120,7 +120,7 @@ class Table extends React.Component {
             staticColsWidth={widthOfStaticCols}
             toggleRecord={this.toggleRecord}
             selected={props.selected}
-            buttons={props.buttons.record}
+            buttons={props.buttons && props.buttons.record}
             showOnZeroRecords={props.showOnZeroRecords}
             isSelectable={props.isSelectable}
           />
