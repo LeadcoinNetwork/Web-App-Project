@@ -80,15 +80,6 @@ class Table extends React.Component {
 
     return width
   }
-  setButtonLabel(label, amount) {
-    if (label) {
-      label = label.replace("${number} ", amount > 0 ? amount + " " : "")
-      if (amount === 1 && label.slice(-1) === "s") {
-        label = label.slice(0, -1)
-      }
-    }
-    return label
-  }
   render() {
     let props = this.props,
       dinamicColsCount = this.getDinamicColsCount(props.fields),
@@ -102,9 +93,13 @@ class Table extends React.Component {
           props.buttons.table.map(button => (
             <Button
               key={button.value}
-              label={this.setButtonLabel(button.value, props.selected.size)}
+              label={button.value}
               onClick={button.onClick}
-              disabled={!props.selected.size}
+              disabled={
+                props.isSelectable && button.actionPerSelected
+                  ? !props.selected.size
+                  : false
+              }
             />
           ))}
         <THead
@@ -125,7 +120,7 @@ class Table extends React.Component {
             staticColsWidth={widthOfStaticCols}
             toggleRecord={this.toggleRecord}
             selected={props.selected}
-            buttons={props.buttons.record}
+            buttons={props.buttons && props.buttons.record}
             showOnZeroRecords={props.showOnZeroRecords}
             isSelectable={props.isSelectable}
           />

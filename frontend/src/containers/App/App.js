@@ -1,11 +1,10 @@
 import React from "react"
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider"
 import Header from "Components/Header"
 import { connect } from "react-redux"
 import { notifications } from "../../actions/index"
 import { push } from "react-router-redux"
 import { bindActionCreators } from "redux"
-import Snacbar from "containers/Snacbar"
+import Snackbar from "Containers/Snackbar"
 
 class App extends React.Component {
   constructor(props) {
@@ -15,13 +14,11 @@ class App extends React.Component {
   }
   render() {
     return (
-      <MuiThemeProvider>
-        <div className="ldc-app">
-          <Header />
-          <main>{this.props.children}</main>
-          <Snacbar />
-        </div>
-      </MuiThemeProvider>
+      <div className="ldc-app">
+        <Header />
+        <main>{this.props.children}</main>
+        <Snackbar />
+      </div>
     )
   }
 }

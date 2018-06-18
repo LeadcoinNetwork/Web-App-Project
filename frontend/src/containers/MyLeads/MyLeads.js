@@ -37,6 +37,7 @@ class My extends React.Component {
         {
           value: this.buildButtonLabel(amountSelected),
           onClick: this.moveLeadsToSell,
+          actionPerSelected: true,
         },
       ],
       record: [

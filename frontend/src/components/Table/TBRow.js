@@ -10,18 +10,20 @@ const TBRow = props => (
         <Checkbox checked={props.selected.has(props.id)} />
       </div>
     )}
-    <div className="tbr-buttons">
-      {props.buttons.map(button => (
-        <Button
-          key={button.value}
-          label={button.value}
-          onClick={e => {
-            e.stopPropagation()
-            button.onClick(props.id)
-          }}
-        />
-      ))}
-    </div>
+    {props.buttons && (
+      <div className="tbr-buttons">
+        {props.buttons.map(button => (
+          <Button
+            key={button.value}
+            label={button.value}
+            onClick={e => {
+              e.stopPropagation()
+              button.onClick(props.id)
+            }}
+          />
+        ))}
+      </div>
+    )}
     {props.fields.map(f => (
       <TBRCol
         key={f.key}

@@ -13,7 +13,7 @@ body {
     font-family: "Source Sans Pro", sans-serif;
   }
 
-  div,
+  div:not([class*="Toastify"]),
   p,
   label {
     color: #fff;
