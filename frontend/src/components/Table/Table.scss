@@ -1,7 +1,10 @@
+@import "~Styles/variables";
+
 .ldc-table {
   font-size: 14px;
   text-align: left;
   padding: 30px;
+  background-color: $bg-level-2;
 
   .t-head,
   .t-body {
@@ -29,6 +32,8 @@
   }
 
   .t-head {
+    background-color: $main-color;
+
     .th-row {
       .thr-col {
         height: 40px;
@@ -41,7 +46,7 @@
   .t-body {
     .tb-row {
       position: relative;
-      background-color: hsl(0, 0%, 95%);
+      background-color: $bg-level-3;
       margin-bottom: 1px;
 
       .tbr-checkbox,
