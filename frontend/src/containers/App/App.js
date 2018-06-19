@@ -12,12 +12,13 @@ class App extends React.Component {
     notifications.connectToNotifications(props.dispatch)
   }
   render() {
-    let loggedIn = !!this.props.user.id
+    let loggedIn = !!this.props.user.id,
+      path = this.props.location.pathname
 
     return (
       <div className="ldc-app">
-        <Header loggedIn={loggedIn} />
-        {loggedIn && <SideMenu />}
+        <Header loggedIn={loggedIn} path={path} />
+        {loggedIn && <SideMenu path={path} />}
         <main className={loggedIn ? "a-app-mode" : ""}>
           {this.props.children}
         </main>
@@ -29,6 +30,7 @@ class App extends React.Component {
 
 const mapStateToProps = state => ({
   user: state.user,
+  location: state.routerReducer.location,
 })
 
 export default connect(mapStateToProps)(App)
