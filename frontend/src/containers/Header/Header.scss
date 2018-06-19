@@ -1,9 +1,12 @@
 @import "~Styles/variables";
 
 header.ldc-header {
+  position: relative;
+  z-index: $header-z;
   height: $header-height;
   line-height: $header-height;
   padding: 0 25px;
+  background-color: $main-color;
 
   .logo-link {
     display: inline-block;
@@ -43,20 +46,25 @@ header.ldc-header {
     }
   }
 
-  &.h-logged-in {
+  &.h-sign-mode {
+    .ham-menu {
+      display: none;
+    }
+  }
+
+  &.h-app-mode {
+    position: fixed;
+    width: 100vw;
+    top: 0;
+    left: 0;
+
     .sign-link {
       display: none;
     }
 
-    .h-user-menu {
+    .ham-menu {
       display: inline-block;
       float: right;
-    }
-  }
-
-  &.h-logged-out {
-    .h-user-menu {
-      display: block;
     }
   }
 }

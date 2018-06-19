@@ -11,7 +11,7 @@ import * as userMenu from "./user-menu"
 import * as leads from "./leads"
 import * as login from "./login"
 import * as balance from "./balance"
-import * as emailConfirmation from "./email-confirmation"
+import * as csvMapping from './csvMapping'
 
 export {
   types,
@@ -27,5 +27,5 @@ export {
   userMenu,
   leads,
   login,
-  emailConfirmation,
+  csvMapping,
 }
