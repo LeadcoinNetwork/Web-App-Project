@@ -69,3 +69,7 @@ export const USER_SETTINGS_FORM_ERROR = "USER_SETTINGS_FORM_ERROR"
 
 // User Menu
 export const USER_MENU_OPEN = "USER_MENU_OPEN"
+
+// USER
+export const LOGGED_IN = "LOGGED_IN"
+export const LOGGED_OUT = "LOGGED_OUT"
