@@ -23,14 +23,14 @@
   main {
     max-width: 1340px;
     margin: auto;
-    padding: 0 30px 80px;
+    padding: $header-height 30px 80px;
   }
 }
 
 @media (max-width: $screen-tablets) {
   .ldc-app {
     main {
-      padding: 0 20px 80px;
+      padding: $header-height 20px 80px;
     }
   }
 }

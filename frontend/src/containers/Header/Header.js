@@ -10,7 +10,7 @@ class Header extends React.Component {
 
     return (
       <header
-        className={`ldc-header${loggedIn ? " h-logged-in" : " h-logged-out"}`}
+        className={`ldc-header${loggedIn ? " h-app-mode" : " h-sign-mode"}`}
       >
         <Link to="/" className="logo-link" />
         {path === "/login" ? (
@@ -24,7 +24,7 @@ class Header extends React.Component {
             <Link to="/login">Login Here</Link>
           </div>
         )}
-        <div className="h-user-menu">
+        <div className="ham-menu">
           <NotificationElement />
         </div>
       </header>
