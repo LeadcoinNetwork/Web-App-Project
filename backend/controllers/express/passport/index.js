@@ -1,7 +1,7 @@
 const strategies = require("./passport-strategies")
 const passport = require("passport")
 
-function start(app, m) {
+function start(app, mailer) {
   app.use(passport.initialize())
 
   passport.use(strategies.localStrategy({ mailer }))

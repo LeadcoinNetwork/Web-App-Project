@@ -23,7 +23,6 @@ const EmailSenderNodeMailer = require("../../models/emailsender-nodemailer/email
 const EmailSenderConsole = require("../../models/emailsender-console/emailsender-console")
 const Email = require("../../models/email/email")
 const User = require("../../models/user/user")
-AppPassports.start(app)
 
 if (config.mail.mailer == "CONSOLE") {
   var EmailSender = new EmailSenderConsole /* {
@@ -33,6 +32,9 @@ if (config.mail.mailer == "CONSOLE") {
     pass: config.mail.auth.pass,
   } */()
 }
+
+AppPassports.start(app, EmailSender)
+
 var email = new Email({
   mailSender: EmailSender,
   backend: config.backend,
