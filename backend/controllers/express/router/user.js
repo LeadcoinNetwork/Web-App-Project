@@ -20,7 +20,12 @@ const authOptions = {
 }
 
 function start({ app, user, email }) {
-  app.post("/user", register)
+  app.route("/user").post(register)
+
+  app
+    .route("/me")
+    .all(passport.authenticate("jwt", authOptions))
+    .get(get)
 
   app
     .route("/user/:userId")
@@ -29,12 +34,17 @@ function start({ app, user, email }) {
     .put(update)
     .delete(remove)
 
+  async function get(req, res, next) {
+    res.send({ user: req.user })
+  }
   async function register(req, res, next) {
     try {
       let _user = await user.register(req.body)
-      let token = auth.generateJWT(user)
+      console.log(_user)
+      let token = auth.generateJWT(_user)
       res.status(201) // Created
-      res.json({ _user, token })
+      res.cookie("token", token)
+      res.json({ user: _user, token })
     } catch (e) {
       next(e)
     }

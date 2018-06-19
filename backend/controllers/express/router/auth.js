@@ -45,7 +45,7 @@ function start({ app, email, user, frontend }) {
       let _user = req.user
       let token = await user.login(_user.id)
       await email.confirmEmail(_user, token)
-      res.json({ _user, token })
+      res.json({ user: _user, token })
     } catch (e) {
       next(e)
     }
@@ -56,11 +56,10 @@ function start({ app, email, user, frontend }) {
       let _user = req.user
       let token = await user.login(_user.id)
       res.cookie("token", token)
-      res.cookie("user", JSON.stringify(_user))
       if (_user.provider) {
         res.redirect(frontend)
       } else {
-        res.json({ _user, token })
+        res.json({ user: _user, token })
       }
     } catch (e) {
       next(e)
@@ -69,7 +68,6 @@ function start({ app, email, user, frontend }) {
 
   async function logout(req, res) {
     res.cookie("token", null)
-    res.cookie("user", null)
     res.json({ logout: "success" })
   }
 
