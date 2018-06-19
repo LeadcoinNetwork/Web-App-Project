@@ -1,7 +1,6 @@
 @import "~Styles/variables";
 
 header.ldc-header {
-  display: flex;
   height: $header-height;
   line-height: $header-height;
   padding: 0 25px;
@@ -17,11 +16,14 @@ header.ldc-header {
   }
 
   .sign-link {
-    padding-left: 60px;
-    font-size: 16px;
-    font-weight: 300;
-    letter-spacing: 0.4px;
-    text-transform: uppercase;
+    float: right;
+
+    span {
+      font-size: 16px;
+      font-weight: 300;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
 
     a {
       display: inline-block;
@@ -37,6 +39,16 @@ header.ldc-header {
 
       &:hover {
         opacity: 0.8;
+      }
+    }
+  }
+}
+
+@media (max-width: $screen-tablets) {
+  header.ldc-header {
+    .sign-link {
+      span {
+        display: none;
       }
     }
   }
