@@ -1,4 +1,5 @@
 import * as types from "./types"
+import * as app from "./app"
 import * as payments from "./payments"
 import * as withdrawl from "./withdraw"
 import * as signup from "./signup"
@@ -11,6 +12,7 @@ import * as emailConfirmation from "./emailConfirmation"
 
 export {
   types,
+  app,
   balance,
   signup,
   payments,

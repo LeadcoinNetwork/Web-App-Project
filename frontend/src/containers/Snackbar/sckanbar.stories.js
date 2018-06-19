@@ -1,7 +1,7 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
-import { types } from "actions"
 import { createStoreAndStory } from "storybook-utils/withRouter"
+import { app, types } from "Actions"
 import Snackbar from "./Snackbar"
 import snackbar from "Sagas/snackbar"
 
@@ -17,15 +17,10 @@ storiesOf("Containers/Snackbar")
     kinds.forEach(kind => {
       timeout += 500
 
-      setTimeout(() => {
-        store.dispatch({
-          type: types.NOTIFICATION_SHOW,
-          payload: {
-            message: kind,
-            type: kind,
-          },
-        })
-      }, timeout)
+      setTimeout(
+        () => store.dispatch(app.notificationShow(kind, kind)),
+        timeout,
+      )
     })
     return story
   })
@@ -34,15 +29,11 @@ storiesOf("Containers/Snackbar")
       component: Snackbar,
       sagaFunction: snackbar,
     })
-    setTimeout(() => {
-      store.dispatch({
-        type: types.NOTIFICATION_SHOW,
-        payload: {
-          message: "Default",
-          type: "default",
-        },
-      })
-    }, 500)
+
+    setTimeout(
+      () => store.dispatch(app.notificationShow("Default", "default")),
+      500,
+    )
     return story
   })
   .add("Success", () => {
@@ -50,15 +41,11 @@ storiesOf("Containers/Snackbar")
       component: Snackbar,
       sagaFunction: snackbar,
     })
-    setTimeout(() => {
-      store.dispatch({
-        type: types.NOTIFICATION_SHOW,
-        payload: {
-          message: "Success",
-          type: "success",
-        },
-      })
-    }, 500)
+
+    setTimeout(
+      () => store.dispatch(app.notificationShow("Success", "success")),
+      500,
+    )
     return story
   })
   .add("Info", () => {
@@ -66,15 +53,8 @@ storiesOf("Containers/Snackbar")
       component: Snackbar,
       sagaFunction: snackbar,
     })
-    setTimeout(() => {
-      store.dispatch({
-        type: types.NOTIFICATION_SHOW,
-        payload: {
-          message: "Info",
-          type: "info",
-        },
-      })
-    }, 500)
+
+    setTimeout(() => store.dispatch(app.notificationShow("Info", "info")), 500)
     return story
   })
   .add("Warning", () => {
@@ -82,15 +62,11 @@ storiesOf("Containers/Snackbar")
       component: Snackbar,
       sagaFunction: snackbar,
     })
-    setTimeout(() => {
-      store.dispatch({
-        type: types.NOTIFICATION_SHOW,
-        payload: {
-          message: "Warning",
-          type: "warning",
-        },
-      })
-    }, 500)
+
+    setTimeout(
+      () => store.dispatch(app.notificationShow("Warning", "warning")),
+      500,
+    )
     return story
   })
   .add("Error", () => {
@@ -98,15 +74,11 @@ storiesOf("Containers/Snackbar")
       component: Snackbar,
       sagaFunction: snackbar,
     })
-    setTimeout(() => {
-      store.dispatch({
-        type: types.NOTIFICATION_SHOW,
-        payload: {
-          message: "Error",
-          type: "error",
-        },
-      })
-    }, 500)
+
+    setTimeout(
+      () => store.dispatch(app.notificationShow("Error", "error")),
+      500,
+    )
     return story
   })
   .add("10 Success", () => {
@@ -116,18 +88,12 @@ storiesOf("Containers/Snackbar")
     })
     let timeout = 0
 
-    for (let i = 0; i < 10; i++) {
-      timeout += 1
-
-      setTimeout(() => {
-        store.dispatch({
-          type: types.NOTIFICATION_SHOW,
-          payload: {
-            message: "Message " + timeout,
-            type: "success",
-          },
-        })
-      }, timeout * 250)
+    for (let i = 1; i <= 10; i++) {
+      setTimeout(
+        () =>
+          store.dispatch(app.notificationShow("Timeout " + i * 250, "success")),
+        i * 250,
+      )
     }
     return story
   })
