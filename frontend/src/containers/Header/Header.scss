@@ -42,6 +42,23 @@ header.ldc-header {
       }
     }
   }
+
+  &.h-logged-in {
+    .sign-link {
+      display: none;
+    }
+
+    .h-user-menu {
+      display: inline-block;
+      float: right;
+    }
+  }
+
+  &.h-logged-out {
+    .h-user-menu {
+      display: block;
+    }
+  }
 }
 
 @media (max-width: $screen-tablets) {

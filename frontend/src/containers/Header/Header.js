@@ -1,14 +1,17 @@
 import React from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
+import NotificationElement from "Containers/NotificationElement"
 
 class Header extends React.Component {
   render() {
-    console.log(this.props.user.id)
-    let path = this.props.location.pathname
+    let path = this.props.location.pathname,
+      loggedIn = !!this.props.user.id
 
     return (
-      <header className="ldc-header">
+      <header
+        className={`ldc-header${loggedIn ? " h-logged-in" : " h-logged-out"}`}
+      >
         <Link to="/" className="logo-link" />
         {path === "/login" ? (
           <div className="sign-link">
@@ -21,6 +24,9 @@ class Header extends React.Component {
             <Link to="/login">Login Here</Link>
           </div>
         )}
+        <div className="h-user-menu">
+          <NotificationElement />
+        </div>
       </header>
     )
   }
