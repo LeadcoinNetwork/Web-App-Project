@@ -9,6 +9,7 @@ import { types } from "actions"
 import expect from "expect"
 
 import UserMenu from "./UserMenu"
+import UserMenuInner from "./UserMenuInner";
 
 storiesOf("Containers/User Menu")
   .add("closed", () => {
@@ -21,7 +22,13 @@ storiesOf("Containers/User Menu")
     var { store, story } = createStoreAndStory({
       component: UserMenu,
     })
-
+    store.dispatch(actions.userMenu.userMenuOpen())
+    return story
+  })
+  .add("inner", () => {
+    var { store, story } = createStoreAndStory({
+      component: UserMenuInner,
+    })
     return story
   })
 

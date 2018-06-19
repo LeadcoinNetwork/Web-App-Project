@@ -7,6 +7,7 @@ import * as signup from "./signup"
 import * as notifications from "./notifications"
 import * as notificationsTable from "./notifications-table"
 import * as userSettings from "./user-settings"
+import * as userMenu from "./user-menu"
 import * as leads from "./leads"
 import * as login from "./login"
 import * as balance from "./balance"
@@ -23,6 +24,7 @@ export {
   notifications,
   notificationsTable,
   userSettings,
+  userMenu,
   leads,
   login,
   emailConfirmation,

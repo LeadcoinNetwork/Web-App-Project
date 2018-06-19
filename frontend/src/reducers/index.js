@@ -10,6 +10,7 @@ import signup from "./signup"
 import login from "./login"
 import balance from "./balance"
 import userSettings from "./user-settings"
+import userMenu from "./user-menu"
 import emailConfirmation from "./email-confirmation"
 
 const rootReducer = combineReducers({
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   signup,
   login,
   userSettings,
+  userMenu,
   emailConfirmation,
 })
 
