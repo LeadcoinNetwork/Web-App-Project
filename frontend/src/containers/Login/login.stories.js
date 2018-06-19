@@ -1,6 +1,6 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
-import * as actions from "actions"
+import { login } from "Actions"
 import { createStoreAndStory } from "storybook-utils/withRouter"
 
 storiesOf("Containers/Login", module)
@@ -11,16 +11,14 @@ storiesOf("Containers/Login", module)
 
   .add("loading state", () => {
     var { store, story } = createStoreAndStory({ path: "/login" })
-    store.dispatch(actions.login.loginLoading())
+    store.dispatch(login.loginLoading())
     return story
   })
 
   .add("error form", () => {
     var { store, story } = createStoreAndStory({ path: "/login" })
     store.dispatch(
-      actions.login.loginFormError(
-        "this is an example error; this is 2nd error",
-      ),
+      login.loginFormError("this is an example error; this is 2nd error"),
     )
     return story
   })

@@ -53,8 +53,6 @@
       "^reducers(.*)$": "<rootDir>/src/reducers$1",
       "^Sagas(.*)$": "<rootDir>/src/sagas$1",
       "^sagas(.*)$": "<rootDir>/src/sagas$1",
-      "^Scripts(.*)$": "<rootDir>/src/scripts$1",
-      "^scripts(.*)$": "<rootDir>/src/scripts$1",
       "^Static(.*)$": "<rootDir>/src/static$1",
       "^static(.*)$": "<rootDir>/src/static$1",
       "^Storybook-examples(.*)$": "<rootDir>/src/storybook-examples$1",

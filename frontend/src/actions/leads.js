@@ -1,6 +1,13 @@
 import * as types from "./types"
 
-const leadsMock = require("../mocks/leads.json")
+let leadsMock = require("../mocks/leads.json")
+
+for (let i = 0; i < 10; i++) {
+  leadsMock.push({
+    ...leadsMock[i],
+    id: i + "t",
+  })
+}
 
 export const setSelectedLeads = leads => ({
   type: types.SET_SELECTED_RECORDS,

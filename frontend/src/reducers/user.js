@@ -1,7 +1,7 @@
 import * as types from "../actions/types"
 
 const initialState = {
-  id: null,
+  id: 1,
 }
 
 const user = (state = initialState, action) => {
