@@ -3,6 +3,7 @@
 section.ldc-signup,
 section.ldc-login {
   position: relative;
+  margin-top: 40px;
 
   .s-main,
   .l-main {
@@ -194,6 +195,8 @@ section.ldc-login {
 @media (max-width: $screen-tablets) {
   section.ldc-signup,
   section.ldc-login {
+    margin-top: 20px;
+
     .s-main,
     .l-main {
       padding-right: 0;

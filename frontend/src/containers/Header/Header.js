@@ -5,12 +5,13 @@ import NotificationElement from "Containers/NotificationElement"
 
 class Header extends React.Component {
   render() {
-    let path = this.props.location.pathname,
-      loggedIn = !!this.props.user.id
+    let path = this.props.location.pathname
 
     return (
       <header
-        className={`ldc-header${loggedIn ? " h-app-mode" : " h-sign-mode"}`}
+        className={`ldc-header${
+          this.props.loggedIn ? " h-app-mode" : " h-sign-mode"
+        }`}
       >
         <Link to="/" className="logo-link" />
         {path === "/login" ? (
@@ -33,7 +34,6 @@ class Header extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.user,
   location: state.routerReducer.location,
 })
 

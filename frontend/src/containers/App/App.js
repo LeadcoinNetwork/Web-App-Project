@@ -13,14 +13,22 @@ class App extends React.Component {
     notifications.connectToNotifications(props.dispatch)
   }
   render() {
+    let loggedIn = !!this.props.user.id
+
     return (
       <div className="ldc-app">
-        <Header />
-        <main>{this.props.children}</main>
+        <Header loggedIn={loggedIn} />
+        <main className={loggedIn ? "a-app-mode" : ""}>
+          {this.props.children}
+        </main>
         <Snackbar />
       </div>
     )
   }
 }
 
-export default connect()(App)
+const mapStateToProps = state => ({
+  user: state.user,
+})
+
+export default connect(mapStateToProps)(App)
