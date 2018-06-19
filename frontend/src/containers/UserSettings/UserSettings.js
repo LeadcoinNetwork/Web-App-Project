@@ -2,23 +2,23 @@ import React from "react"
 import TextField from "Components/TextField"
 import Button from "Components/Button"
 import { connect } from "react-redux"
-import { types } from "actions"
+import { userSettings } from "../../actions"
 
 function UserSettings({
   currentPassword,
   newPassword,
   confirmPassword,
   loading,
-  success,
   error,
-  onUpdate,
+  onChange,
   onSubmit,
 }) {
   function updateText(field_name) {
-    return (e, newValue) => {
-      onUpdate(field_name, newValue)
+    return (e) => {
+      onChange(field_name, e.target.value)
     }
   }
+  
   return (
     <div className="user-settings">
       <h1 className="title">User Settings</h1>
@@ -51,11 +51,11 @@ function UserSettings({
         />
       </div>
       <div>
-        <Button onClick={onSubmit} disabled={loading}>
-          <div className="submit-content">
-            {loading ? "SUBMITING..." : "SUBMIT"}
-          </div>
-        </Button>
+        <Button
+          label="submit"
+          loading={loading}
+          onClick={onSubmit}
+        />
       </div>
       {error && <div className="error">{error}</div>}
     </div>
@@ -64,7 +64,8 @@ function UserSettings({
 
 const mapStateToProps = state => state.userSettings
 const mapDispatchToProps = {
-  handleChange: types.us,
+  onChange: userSettings.userSettingsHandleChange,
+  onSubmit: userSettings.userSettingsSubmit,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserSettings)

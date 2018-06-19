@@ -9,6 +9,8 @@ import notificationsTable from "./notifications-table"
 import signup from "./signup"
 import login from "./login"
 import balance from "./balance"
+import userSettings from "./user-settings"
+import emailConfirmation from "./email-confirmation"
 
 const rootReducer = combineReducers({
   routerReducer,
@@ -25,6 +27,8 @@ const rootReducer = combineReducers({
   notificationsTable,
   signup,
   login,
+  userSettings,
+  emailConfirmation,
 })
 
 export default rootReducer

@@ -4,11 +4,12 @@ import * as payments from "./payments"
 import * as withdrawl from "./withdraw"
 import * as signup from "./signup"
 import * as notifications from "./notifications"
-import * as notificationsTable from "./notificationsTable"
+import * as notificationsTable from "./notifications-table"
+import * as userSettings from "./user-settings"
 import * as leads from "./leads"
 import * as login from "./login"
 import * as balance from "./balance"
-import * as emailConfirmation from "./emailConfirmation"
+import * as emailConfirmation from "./email-confirmation"
 
 export {
   types,
@@ -19,6 +20,7 @@ export {
   withdrawl,
   notifications,
   notificationsTable,
+  userSettings,
   leads,
   login,
   emailConfirmation,
