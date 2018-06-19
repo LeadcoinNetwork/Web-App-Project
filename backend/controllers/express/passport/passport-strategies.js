@@ -1,4 +1,5 @@
 // External Modules
+
 const LocalStrategy = require("passport-local").Strategy
 const JWTStrategy = require("passport-jwt").Strategy
 const ExtractJwt = require("passport-jwt").ExtractJwt
@@ -7,9 +8,8 @@ const LinkedInStrategy = require("passport-linkedin-oauth2").Strategy
 
 // Internal Modules
 const config = require("../../../config")
-const auth = require("../../../models/auth/auth")
 const User = require("../../../models/user/user")
-const utils = require("../../../utils")
+const utils = require("../../../utils/index")
 
 const localStrategy = new LocalStrategy(
   {
