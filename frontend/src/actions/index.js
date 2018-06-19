@@ -10,7 +10,8 @@ import * as userSettings from "./user-settings"
 import * as leads from "./leads"
 import * as login from "./login"
 import * as balance from "./balance"
-import * as emailConfirmation from "./email-confirmation"
+import * as emailConfirmation from "./emailConfirmation"
+import * as csvMapping from './csvMapping'
 
 export {
   types,
@@ -26,4 +27,5 @@ export {
   leads,
   login,
   emailConfirmation,
+  csvMapping,
 }
