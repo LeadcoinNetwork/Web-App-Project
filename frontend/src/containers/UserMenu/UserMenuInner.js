@@ -1,20 +1,26 @@
 import React from "react"
 import { Link } from "react-router-dom"
 
+const menuItems = [
+  { title: 'User Settings', path: '/settings' },
+  { title: 'Payments History', path: '/payments' },
+  { title: 'Withdraw Funds', path: '/withdraw' },
+]
+
 const UserMenuInner = ({
-  menuItems,
   logOut,
 }) => (
   <div className="user-menu-inner">
     <div className="small-arrow" />
     {menuItems.map((item, index) => (
-      <div className="um-row" key={index}>
-        <Link to={item.path}>{item.title}</Link>
-      </div>
+      <Link to={item.path} className="um-row" key={index}>
+        {item.title}
+      </Link>
     ))}
-    <div className="um-row" key={menuItems.length}>
-      <Link to={"/"} onClick={logOut}>Log Out</Link>
-    </div>
+    {/* <Link to={"/"} onClick={logOut}>Log Out</Link> */}
+    <Link to={"/"} onClick={logOut} className="um-row" key={menuItems.length}>
+      Log Out
+    </Link>
   </div>
 )
 

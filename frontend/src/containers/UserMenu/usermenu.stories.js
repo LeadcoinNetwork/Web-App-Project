@@ -8,27 +8,20 @@ import { mount } from "enzyme"
 import { types } from "actions"
 import expect from "expect"
 
-import UserMenu from "./UserMenu"
-import UserMenuInner from "./UserMenuInner";
-
 storiesOf("Containers/User Menu")
   .add("closed", () => {
     var { store, story } = createStoreAndStory({
-      component: UserMenu,
+      path: "/buy-leads",
     })
+    store.dispatch(actions.user.loggedIn({ id: 1 }))
     return story
   })
   .add("opened", () => {
     var { store, story } = createStoreAndStory({
-      component: UserMenu,
+      path: "/buy-leads",
     })
+    store.dispatch(actions.user.loggedIn({ id: 1 }))
     store.dispatch(actions.userMenu.userMenuOpen())
-    return story
-  })
-  .add("inner", () => {
-    var { store, story } = createStoreAndStory({
-      component: UserMenuInner,
-    })
     return story
   })
 
