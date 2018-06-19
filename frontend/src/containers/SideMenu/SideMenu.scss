@@ -1,0 +1,10 @@
+@import "~Styles/variables";
+
+nav.ldc-side-menu {
+  position: fixed;
+  top: $header-height;
+  left: 0;
+  background-color: $main-color;
+  width: $side-menu-width;
+  height: calc(100vh - #{$header-height});
+}
