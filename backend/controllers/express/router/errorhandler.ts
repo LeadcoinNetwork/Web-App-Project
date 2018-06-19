@@ -1,4 +1,4 @@
-module.exports.start = app => {
+export function start(app) {
   app.use((err, req, res, next) => {
     // customize Joi validation errors
     if (err.isJoi) {
