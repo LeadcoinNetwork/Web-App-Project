@@ -15,4 +15,24 @@ header.ldc-header {
     background-repeat: no-repeat;
     background-position: center;
   }
+
+  .sign-link {
+    padding-left: 60px;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+
+    a {
+      display: inline-block;
+      height: 40px;
+      line-height: 40px;
+      background-color: $bg-main-btn;
+      color: #fff;
+      padding: 0 29px;
+      margin-left: 20px;
+      border-radius: 20px;
+      text-transform: capitalize;
+    }
+  }
 }
