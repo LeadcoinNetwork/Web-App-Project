@@ -1,6 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import NotificationElement from "Containers/NotificationElement"
+import UserMenu from "Containers/UserMenu"
 
 const Header = ({ path, loggedIn }) => (
   <header className={`ldc-header${loggedIn ? " h-app-mode" : " h-sign-mode"}`}>
@@ -18,6 +19,7 @@ const Header = ({ path, loggedIn }) => (
     )}
     <div className="ham-menu">
       <NotificationElement />
+      <UserMenu />
     </div>
   </header>
 )

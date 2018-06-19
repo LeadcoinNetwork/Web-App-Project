@@ -21,12 +21,9 @@ const UserMenu = ({
       className="user-icon"
       icon={faUserCircle}
       color="white"
-      size={"3x"}
+      size={"2x"}
     />
-    {isOpen && <UserMenuInner
-      menuItems={menuItems}
-      logOut={logOut}
-    />}
+    {isOpen && <UserMenuInner logOut={logOut} />}
     </div>
 )
 
@@ -34,7 +31,7 @@ const mapStateToProps = state => state.userMenu
 
 const mapDispatchToProps = {
   userMenuClick: userMenu.userMenuClick,
-  logOut: user.logOut,
+  logOut: user.loggedOut,
 }
 
 const UserMenuConnected = connect(
