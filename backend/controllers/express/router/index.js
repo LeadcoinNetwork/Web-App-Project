@@ -10,21 +10,25 @@ const cors = require("./cors")
 const url = require("url")
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
+const AppPassports = require("../passport/index")
 
 module.exports.start = function({ app, frontend, email, user }) {
   app.use(bodyParser.json())
   app.use(cookieParser())
   cors.start(app, frontend)
-  userRouter.start({
-    app,
-    email,
-    user,
-  })
+
+  AppPassports.start({ UserModel: user, app, EmailModel: email })
 
   auth.start({
     app,
     email,
     frontend,
+    user,
+  })
+
+  userRouter.start({
+    app,
+    email,
     user,
   })
 

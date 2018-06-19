@@ -9,7 +9,6 @@ const router = require("./router/index")
 const http = require("http")
 const io = require("./io/io")
 const app = express()
-const AppPassports = require("./passport/index")
 
 if (config.env === "development") {
   console.log("Allowing orpha/n SSL certificates")
@@ -32,8 +31,6 @@ if (config.mail.mailer == "CONSOLE") {
     pass: config.mail.auth.pass,
   } */()
 }
-
-AppPassports.start(app, EmailSender)
 
 var email = new Email({
   mailSender: EmailSender,
