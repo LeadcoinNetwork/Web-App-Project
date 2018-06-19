@@ -33,6 +33,11 @@ header.ldc-header {
       margin-left: 20px;
       border-radius: 20px;
       text-transform: capitalize;
+      transition: all 300ms ease;
+
+      &:hover {
+        opacity: 0.8;
+      }
     }
   }
 }
