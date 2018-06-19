@@ -12,12 +12,12 @@ class Header extends React.Component {
         {path === "/login" ? (
           <div className="sign-link">
             already have an account?
-            <Link to="/signup">Start Now}</Link>
+            <Link to="/signup">Start Now</Link>
           </div>
         ) : (
           <div className="sign-link">
             don't have an account?
-            <Link to="/login">Login Here}</Link>
+            <Link to="/login">Login Here</Link>
           </div>
         )}
       </header>
