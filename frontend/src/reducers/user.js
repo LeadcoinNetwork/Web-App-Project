@@ -1,15 +1,19 @@
 import * as types from "../actions/types"
 
 const initialState = {
-  id: 1,
+  id: null,
 }
 
 const user = (state = initialState, action) => {
   switch (action.type) {
-    case types.GET_USER:
+    case types.LOGGED_IN:
       return {
         ...state,
         ...action.payload,
+      }
+    case types.LOGGED_OUT:
+      return {
+        id: null,
       }
     default:
       return state

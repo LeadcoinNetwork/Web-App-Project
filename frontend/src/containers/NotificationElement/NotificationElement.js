@@ -14,28 +14,26 @@ const NotificationElement = ({
   notificationsViewAll,
 }) => {
   return (
-    <div>
-      <div className="notification-element" onClick={notificationsClick}>
-        <FontAwesomeIcon
-          className="notification-icon"
-          icon={faBell}
-          color="white"
-          size={"3x"}
+    <div className="notification-element" onClick={notificationsClick}>
+      <FontAwesomeIcon
+        className="notification-icon"
+        icon={faBell}
+        color="white"
+        size={"3x"}
+      />
+      {unreadCount > 0 && (
+        <div
+          className={"notification-badge" + (unreadCount > 9 ? " plus" : "")}
+        >
+          {unreadCount < 10 ? unreadCount : "9+"}
+        </div>
+      )}
+      {isOpen && (
+        <NotificationInner
+          list={list}
+          notificationsViewAll={notificationsViewAll}
         />
-        {unreadCount > 0 && (
-          <div
-            className={"notification-badge" + (unreadCount > 9 ? " plus" : "")}
-          >
-            {unreadCount < 10 ? unreadCount : "9+"}
-          </div>
-        )}
-        {isOpen && (
-          <NotificationInner
-            list={list}
-            notificationsViewAll={notificationsViewAll}
-          />
-        )}
-      </div>
+      )}
     </div>
   )
 }

@@ -68,3 +68,7 @@ export const USER_SETTINGS_FINISH = "USER_SETTINGS_FINISH"
 
 // User Menu
 export const USER_MENU_OPEN = "USER_MENU_OPEN"
+
+// USER
+export const LOGGED_IN = "LOGGED_IN"
+export const LOGGED_OUT = "LOGGED_OUT"
