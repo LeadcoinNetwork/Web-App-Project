@@ -1,6 +1,7 @@
 const chance = require("chance")()
 
-var RoutesForTests = require("./routes.for.tests.js")
+import * as RoutesForTests from "./routes.for.tests"
+
 var _ = require("lodash")
 var { request, mockMailSender } = RoutesForTests.create()
 
@@ -35,7 +36,8 @@ test.only("GET /me sign up using username and password [not yet implemented]", a
 
   // Both tokens are equals
   expect(tokenFromBody).toEqual(tokenFromCookie)
-
+  var y = require("./candelete")
+  y.great()
   // Tokens are secured and not empty
   expect(tokenFromBody.length).toBeGreaterThan(10)
 
@@ -44,4 +46,5 @@ test.only("GET /me sign up using username and password [not yet implemented]", a
   })
   expect(_.get(x, "error.text")).toBeFalsy()
   expect(_.get(x, "body.user.fname")).toBe(fname)
+  return true
 })

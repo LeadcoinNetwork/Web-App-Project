@@ -2,13 +2,27 @@
 // external modules
 const passport = require("passport")
 
-module.exports.start = start
-
 const authOptions = {
   session: false,
 }
 
-function start({ app, email, user, frontend }) {
+import EmailCreator from "../../../models/email-creator/email-creator"
+import EmailSender from "../../../models/emailsender-abstraction/emailsender-abstraction"
+import UserActions from "../../../models/user-actions/user-actions"
+
+export function start({
+  app,
+  emailCreator,
+  emailSender,
+  userActions,
+  frontend,
+}: {
+  app
+  emailCreator: EmailCreator
+  emailSender: EmailSender
+  userActions: UserActions
+  frontend
+}) {
   app.post("/auth/login", passport.authenticate("local", authOptions), login)
   app.post("/auth/logout", passport.authenticate("jwt", authOptions), logout)
   app.get("/auth/confirm-email", confirmEmail, login)
@@ -43,8 +57,8 @@ function start({ app, email, user, frontend }) {
   async function resendEmail(req, res, next) {
     try {
       let _user = req.user
-      let token = await user.login(_user.id)
-      await email.confirmEmail(_user, token)
+      let token = await userActions.login(_user.id)
+      await emailCreator.confirmEmail(_user, token)
       res.json({ user: _user, token })
     } catch (e) {
       next(e)
@@ -54,7 +68,7 @@ function start({ app, email, user, frontend }) {
   async function login(req, res, next) {
     try {
       let _user = req.user
-      let token = await user.login(_user.id)
+      let token = await userActions.login(_user.id)
       res.cookie("token", token)
       if (_user.provider) {
         res.redirect(frontend)
@@ -74,7 +88,7 @@ function start({ app, email, user, frontend }) {
   async function confirmEmail(req, res, next) {
     try {
       let { token } = req.query
-      let _user = await user.confirmEmail(token)
+      let _user = await userActions.confirmEmail(token)
       if (_user) {
         req.user = _user
         next()
@@ -92,7 +106,7 @@ function start({ app, email, user, frontend }) {
   async function confirmEmailUpdate(req, res, next) {
     try {
       let { token } = req.query
-      await user.confirmEmailUpdate(token)
+      await userActions.confirmEmailUpdate(token)
       res.json({ ok: true })
     } catch (e) {
       next(e)
@@ -102,7 +116,7 @@ function start({ app, email, user, frontend }) {
   async function forgotPassword(req, res, next) {
     try {
       let { email } = req.body
-      await user.forgotPassword(email)
+      await userActions.forgotPassword(email)
       res.json({ ok: true })
     } catch (e) {
       next(e)
@@ -112,7 +126,7 @@ function start({ app, email, user, frontend }) {
   async function resetPassword(req, res, next) {
     try {
       let { token, password } = req.body
-      let _user = await user.resetPassword(token, password)
+      let _user = await userActions.resetPassword(token, password)
       if (_user) {
         req.user = _user
         next()

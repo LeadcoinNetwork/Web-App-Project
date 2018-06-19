@@ -18,13 +18,14 @@ if (config.env === "development") {
 var httpServer = http.createServer(app)
 io.connectToHTTP(httpServer)
 
-const EmailSenderNodeMailer = require("../../models/emailsender-nodemailer/emailsender-nodemailer")
-const EmailSenderConsole = require("../../models/emailsender-console/emailsender-console")
-const Email = require("../../models/email/email")
-const User = require("../../models/user/user")
+import EmailSenderNodeMailer from "../../models/emailsender-nodemailer/emailsender-nodemailer"
+import EmailSenderConsole from "../../models/emailsender-console/emailsender-console"
+
+import EmailCreator from "../../models/email-creator/email-creator"
+import User from "../../models/user-actions/user-actions"
 
 if (config.mail.mailer == "CONSOLE") {
-  var EmailSender = new EmailSenderConsole /* {
+  var emailSender = new EmailSenderConsole /* {
     host: config.mail.host,
     port: config.mail.port,
     user: config.mail.auth.user,
@@ -32,19 +33,20 @@ if (config.mail.mailer == "CONSOLE") {
   } */()
 }
 
-var email = new Email({
-  mailSender: EmailSender,
+var emailCreator = new EmailCreator({
   backend: config.backend,
   from: config.mail.from,
 })
 
 var user = new User({
-  email,
+  emailSender,
+  emailCreator,
 })
 
 router.start({
   app,
-  email: email,
+  emailSender,
+  emailCreator,
   frontend: config.frontend,
   user,
 })

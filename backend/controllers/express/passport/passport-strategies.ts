@@ -8,17 +8,19 @@ const LinkedInStrategy = require("passport-linkedin-oauth2").Strategy
 
 // Internal Modules
 const config = require("../../../config")
-const User = require("../../../models/user/user")
+const User = require("../../../models/user-actions/user-actions")
 const utils = require("../../../utils/index")
 
-function getStrategies({ UserModel }) {
+import UserActions from "../../../models/user-actions/user-actions"
+
+export function getStrategies({ userActions }: { userActions: UserActions }) {
   const localStrategy = new LocalStrategy(
     {
       usernameField: "email",
     },
     async (email, password, done) => {
       try {
-        let user = await UserModel.authenticatePassword(email, password)
+        let user = await userActions.authenticatePassword(email, password)
         done(null, user)
       } catch (e) {
         done(e)
@@ -39,9 +41,10 @@ function getStrategies({ UserModel }) {
     },
     async (jwt, done) => {
       try {
-        let [user] = await UserModel.find({ id: jwt.id })
+        let user = await userActions.find({ id: jwt.id })[0]
         if (!user) {
           let err = new Error("Unauthorized")
+          //@ts-ignore
           err.status = 401
           throw err
         }
@@ -62,20 +65,20 @@ function getStrategies({ UserModel }) {
     async function(accessToken, refreshToken, profile, done) {
       try {
         // try to find user by provider
-        let [user] = await UserModel.find({
+        let user = (await userActions.find({
           provider_id: profile.id,
           provider: profile.provider,
-        })
+        }))[0]
         if (!user) {
           // try to find user by email
-          ;[user] = await UserModel.find({ email: profile.emails[0].value })
+          user = (await userActions.find({ email: profile.emails[0].value }))[0]
           if (user) {
             // user email exists, transfer user to SSO
             let update = {
               provider_id: profile.id,
               provider: profile.provider,
             }
-            user = await UserModel.updateExternal(user.id, update)
+            user = await userActions.updateExternal(user.id, update)
           } else {
             // user is new, create user
             user = {
@@ -87,8 +90,8 @@ function getStrategies({ UserModel }) {
               created: Date.now(),
               role: "user",
             }
-            await UserModel.insert(user)
-            ;[user] = await UserModel.find({ email: user.email })
+            await userActions.insert(user)
+            user = (await userActions.find({ email: user.email }))[0]
           }
         } else {
           let update = utils.difference(
@@ -104,7 +107,7 @@ function getStrategies({ UserModel }) {
             },
           )
           if (Object.keys(update).length) {
-            user = await UserModel.updateExternal(user.id, update)
+            user = await userActions.updateExternal(user.id, update)
           }
         }
         done(null, user)
@@ -123,20 +126,20 @@ function getStrategies({ UserModel }) {
     async function(accessToken, refreshToken, profile, done) {
       try {
         // try to find user by provider
-        let [user] = await UserModel.find({
+        let user = (await userActions.find({
           provider_id: profile.id,
           provider: profile.provider,
-        })
+        }))[0]
         if (!user) {
           // try to find user by email
-          ;[user] = await UserModel.find({ email: profile.emails[0].value })
+          user = (await userActions.find({ email: profile.emails[0].value }))[0]
           if (user) {
             // user email exists, transfer user to SSO
             let update = {
               provider_id: profile.id,
               provider: profile.provider,
             }
-            user = await UserModel.updateExternal(user.id, update)
+            user = await userActions.updateExternal(user.id, update)
           } else {
             // user is new, create user
             user = {
@@ -148,8 +151,8 @@ function getStrategies({ UserModel }) {
               created: Date.now(),
               role: "user",
             }
-            await UserModel.insert(user)
-            ;[user] = await UserModel.find({ email: user.email })
+            await userActions.insert(user)
+            user = (await userActions.find({ email: user.email }))[0]
           }
         } else {
           let update = utils.difference(
@@ -165,7 +168,7 @@ function getStrategies({ UserModel }) {
             },
           )
           if (Object.keys(update).length) {
-            user = await UserModel.updateExternal(user.id, update)
+            user = await userActions.updateExternal(user.id, update)
           }
         }
         done(null, user)
@@ -182,5 +185,3 @@ function getStrategies({ UserModel }) {
     linkedInStrategy,
   }
 }
-
-module.exports = { getStrategies }

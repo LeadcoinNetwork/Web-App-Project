@@ -9,7 +9,7 @@ const leads = require("../../../models/leads/leads")
 const csv_reader = require("../../../models/csv_reader/index")
 
 const router = express.Router()
-module.exports = router
+export default router
 
 const authOptions = {
   session: false,

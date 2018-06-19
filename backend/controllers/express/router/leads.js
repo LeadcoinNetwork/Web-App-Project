@@ -7,7 +7,7 @@ const auth = require("../../../models/auth/auth")
 const leads = require("../../../models/leads/leads")
 
 const router = express.Router()
-module.exports = router
+export default router
 
 const authOptions = {
   session: false,

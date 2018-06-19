@@ -1,11 +1,22 @@
-class Email {
-  constructor({ mailSender, backend, from }) {
-    this.mailSender = mailSender
+type urlInclueProtocol = string
+type fromIncludeEmail = string
+
+class EmailCreator {
+  backend: urlInclueProtocol
+  from: fromIncludeEmail
+
+  constructor({
+    backend,
+    from,
+  }: {
+    backend: urlInclueProtocol
+    from: fromIncludeEmail
+  }) {
     this.backend = backend
     this.from = from
   }
   confirmEmail(user, token) {
-    return this.mailSender.send({
+    return {
       to: user.email,
       from: this.from,
       subject: "Welcome to Leadcoin Network",
@@ -23,11 +34,12 @@ class Email {
         "</a>" +
         "to confirm your registration" +
         "</p>",
-    })
+    }
   }
 
   confirmEmailUpdate(user, token) {
-    return this.mailSender.send({
+    return {
+      from: this.from,
       to: user.email,
       subject: "Email changed",
       html:
@@ -43,12 +55,13 @@ class Email {
         "here " +
         "</a>" +
         "</p>",
-    })
+    }
   }
 
   forgotPassword(user, token) {
-    return this.mailSender.send({
+    return {
       to: user.email,
+      from: this.from,
       subject: "Reset Password",
       html:
         "<h2>Hello " +
@@ -64,8 +77,8 @@ class Email {
         "</a>" +
         "to choose a new password" +
         "</p>",
-    })
+    }
   }
 }
 
-module.exports = Email
+export default EmailCreator

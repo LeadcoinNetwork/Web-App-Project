@@ -1,18 +1,45 @@
 import React from "react"
 import { connect } from "react-redux"
-import { types } from "actions"
+import { userMenu, user } from "../../actions"
+import FontAwesomeIcon from "@fortawesome/react-fontawesome"
+import faUserCircle from "@fortawesome/fontawesome-free-solid/faUserCircle"
+import UserMenuInner from "./UserMenuInner";
 
-function UserMenu(props) {
-  return (
-    <div
-      className="click-handler"
-      onClick={() => {
-        props.dispatch({ type: types.USER_MENU_OPEN })
-      }}
-    >
-      User Menu
+const menuItems = [
+  { title: 'User Settings', path: '/settings' },
+  { title: 'Payments History', path: '/payments' },
+  { title: 'Withdraw Funds', path: '/withdraw' },
+]
+
+const UserMenu = ({
+  isOpen,
+  userMenuClick,
+  logOut,
+}) => (
+  <div className="user-menu" onClick={userMenuClick}>
+    <FontAwesomeIcon
+      className="user-icon"
+      icon={faUserCircle}
+      color="white"
+      size={"3x"}
+    />
+    {isOpen && <UserMenuInner
+      menuItems={menuItems}
+      logOut={logOut}
+    />}
     </div>
-  )
+)
+
+const mapStateToProps = state => state.userMenu
+
+const mapDispatchToProps = {
+  userMenuClick: userMenu.userMenuClick,
+  logOut: user.logOut,
 }
 
-export default connect()(UserMenu)
+const UserMenuConnected = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(UserMenu)
+
+export default UserMenuConnected

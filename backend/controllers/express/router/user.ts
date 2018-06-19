@@ -1,16 +1,11 @@
 //@ts-check
 
 // external modules
-const express = require("express")
 const passport = require("passport")
 
 // internal modules
-const User = require("../../../models/user/user")
+const User = require("../../../models/user-actions/user-actions")
 const auth = require("../../../models/auth/auth")
-
-module.exports = {
-  start,
-}
 
 const authOptions = {
   session: false,
@@ -19,7 +14,21 @@ const authOptions = {
   failWithError: true,
 }
 
-function start({ app, user, email }) {
+import UserActions from "../../../models/user-actions/user-actions"
+import EmailCreator from "../../../models/email-creator/email-creator"
+import EmailSender from "../../../models/emailsender-abstraction/emailsender-abstraction"
+
+export function start({
+  app,
+  userActions,
+  emailCreator,
+  emailSender,
+}: {
+  app
+  userActions: UserActions
+  emailCreator: EmailCreator
+  emailSender: EmailSender
+}) {
   app.route("/user").post(register)
 
   app
@@ -39,7 +48,7 @@ function start({ app, user, email }) {
   }
   async function register(req, res, next) {
     try {
-      let _user = await user.register(req.body)
+      let _user = await userActions.register(req.body)
       console.log(_user)
       let token = auth.generateJWT(_user)
       res.status(201) // Created
@@ -52,7 +61,7 @@ function start({ app, user, email }) {
 
   async function remove(req, res, next) {
     try {
-      let status = await user.remove(req.params.userId)
+      let status = await userActions.remove(req.params.userId)
       if (status) {
         res.status(200).json({
           ok: true,
@@ -70,7 +79,7 @@ function start({ app, user, email }) {
 
   async function find(req, res, next) {
     try {
-      let [_user] = await user.find({ id: req.params.userId })
+      let _user = (await userActions.find({ id: req.params.userId }))[0]
       if (_user) {
         res.status(200).json(_user)
       } else {
@@ -86,7 +95,7 @@ function start({ app, user, email }) {
 
   async function update(req, res, next) {
     try {
-      let _user = await user.update(req.params.userId, req.body)
+      let _user = await userActions.update(req.params.userId, req.body)
       if (_user) {
         res.status(200).json(_user)
       } else {

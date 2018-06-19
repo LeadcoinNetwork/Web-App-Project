@@ -1,28 +1,44 @@
-//@ts-check
-
 const auth = require("../auth/auth")
 const validate = require("../validate/validate")
 const TokenMySQL = require("../token-mysql/token-mysql")
 const UserMySQL = require("../user-mysql/user-mysql")
 
+import EmailCreator from "../email-creator/email-creator"
+import EmailSender from "../emailsender-abstraction/emailsender-abstraction"
+
+type token = string
+
+export interface BaseUserInterface {
+  id: number
+  fname: string
+  lname: string
+  email: string
+}
+export interface ExistingUserInterface extends BaseUserInterface {
+  id: number
+}
+export interface NewUserInterface extends BaseUserInterface {
+  password: string
+}
+
 class User {
-  constructor({ email }) {
-    this.email = email
+  emailSender: EmailSender
+  emailCreator: EmailCreator
+
+  constructor({ emailSender, emailCreator }) {
+    Object.assign(this, { emailCreator, emailSender })
   }
 
-  // returns user
-  async insert(user) {
+  async insert(user): Promise<[ExistingUserInterface]> {
     let { email } = user
     await this.uniqueEmail(email)
 
     user.created = Date.now()
     await UserMySQL.insert(user)
-    ;[user] = await this.find({ email })
-    return user
+    return await this.find({ email })[0]
   }
 
-  // returns [user]
-  async find(condition, fields) {
+  async find(condition, fields?): Promise<ExistingUserInterface> {
     let users = await UserMySQL.find(condition, fields)
     users = users.map(user => {
       delete user.password
@@ -31,13 +47,13 @@ class User {
     return users
   }
 
-  // returns true/false
-  async remove(userId) {
+  async remove(userId): Promise<boolean> {
     return await UserMySQL.remove(userId)
   }
 
-  async login(userId) {
-    let [user] = await this.find({ id: userId })
+  async login(userId): Promise<token> {
+    let user = (await this.find({ id: userId }))[0]
+
     let token = auth.generateJWT(user)
     if (user.disabled) {
       return token
@@ -69,7 +85,7 @@ class User {
       created: Date.now(),
     })
 
-    await this.email.confirmEmail(_user, token)
+    await this.emailSender.send(this.emailCreator.confirmEmail(_user, token))
 
     return _user
   }
@@ -83,7 +99,7 @@ class User {
       err.status = 404
       throw err
     }
-    await this.email.confirmEmail(user, token)
+    await this.emailSender.send(this.emailCreator.confirmEmail(user, token))
     return user
   }
 
@@ -98,7 +114,7 @@ class User {
     }
     await TokenMySQL.remove(userId)
     await UserMySQL.update(userId, { disabled: null })
-    let [user] = await this.find({ id: userId })
+    let user = (await this.find({ id: userId }))[0]
     return user
   }
 
@@ -116,8 +132,7 @@ class User {
     }
   }
 
-  // returns user
-  async update(userId, user) {
+  async update(userId, user): Promise<ExistingUserInterface> {
     user = await validate.partialUser(user)
     let { email, password } = user
 
@@ -134,13 +149,14 @@ class User {
         pending_email: email,
         created: Date.now(),
       })
-      await this.email.confirmEmailUpdate(user, token)
+      await this.emailSender.send(
+        this.emailCreator.confirmEmailUpdate(user, token),
+      )
       delete user.email
     }
 
     await UserMySQL.update(userId, user)
-    ;[user] = await this.find({ id: userId })
-    return user
+    return (await this.find({ id: userId }))[0]
   }
 
   // returns undefined
@@ -168,7 +184,7 @@ class User {
       token: token,
       created: Date.now(),
     })
-    await this.email.forgotPassword(user, token)
+    await this.emailSender.send(this.emailCreator.forgotPassword(user, token))
   }
 
   // returns user
@@ -181,18 +197,16 @@ class User {
 
   //  --------------------------- ONLY EXTERNAL USERS ---------------------------
 
-  // returns user
-  async updateExternal(userId, user) {
+  async updateExternal(userId, user): Promise<ExistingUserInterface> {
     let { email } = user
     if (email) {
       await this.uniqueEmail(email)
     }
     await UserMySQL.update(userId, user)
-    ;[user] = await this.find({ id: userId })
-    return user
+    return await this.find({ id: userId })[0]
   }
 
-  async uniqueEmail(email, userId) {
+  async uniqueEmail(email, userId?) {
     let [user] = await UserMySQL.find({ email })
     if (user && user.id !== parseInt(userId)) {
       let err = new Error("Email " + email + " is already in use")
@@ -203,4 +217,4 @@ class User {
   }
 }
 
-module.exports = User
+export default User

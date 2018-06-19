@@ -29,6 +29,7 @@
     "passport-local": "^1.0.0",
     "promise-mysql": "^3.2.1",
     "socket.io": "^2.1.1",
+    "typescript": "^2.9.2",
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
@@ -43,20 +44,33 @@
     "request": "^2.85.0",
     "request-promise-native": "^1.0.5",
     "sinon": "^4.4.9",
-    "supertest": "^3.1.0"
+    "supertest": "^3.1.0",
+    "ts-jest": "^22.4.6",
+    "ts-node": "^6.0.3"
   },
   "jest": {
     "testMatch": [
-      "**/*.test.js"
+      "**/*.test.js",
+      "**/*.test.ts"
     ],
-    "bail": true
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "tsconfig.json"
+      }
+    },
+    "bail": true,
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    }
   },
   "scripts": {
-    "start": "nodemon controllers/express/server.js",
-    "develop": "nodemon controllers/express/server.js",
-    "test": "npm run test:unit; npm run test:integration",
-    "test:unit": "mocha test/unit/**",
-    "test:integration": "mocha test/integration/** --timeout 20000",
+    "start": "nodemon",
+    "develop": "nodemon",
     "precommit": "pretty-quick --staged"
   },
   "nodemonConfig": {

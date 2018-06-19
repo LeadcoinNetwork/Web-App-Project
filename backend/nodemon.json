@@ -1,0 +1,5 @@
+{
+  "watch": ["**/*.ts", "**/*.js"],
+  "ignore": ["**/*.test.ts"],
+  "exec": "ts-node ./index"
+}
