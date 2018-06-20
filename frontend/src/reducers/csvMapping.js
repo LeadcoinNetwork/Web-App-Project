@@ -5,7 +5,7 @@ const initialState = {
   batch_id: null,
   file_fields: [],
   fields_map: {},
-  errors: "",
+  errors: [],
   price: "",
   agree_to_terms: false,
 }
@@ -13,7 +13,7 @@ const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
 
-    case types.CSV_MAPPING_FORM_ERROR:
+    case types.CSV_MAPPING_ERROR:
       return {
         ...state,
         errors: action.errors,
@@ -30,6 +30,7 @@ export default function(state = initialState, action) {
     case types.CSV_MAPPING_AGREE_TO_TERMS:
       return {
         ...state,
+        errors: [],
         agree_to_terms: action.agree_to_terms.value
       }
 
@@ -45,7 +46,7 @@ export default function(state = initialState, action) {
     case types.CSV_MAPPING_FORM_HANDLE_CHANGE:
       return {
         ...state,
-        error: "",
+        errors: [],
         [action.payload.name]: action.payload.value,
       }
 

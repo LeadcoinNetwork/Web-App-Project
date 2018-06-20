@@ -2,6 +2,12 @@
 
 .fields_mapper {
   padding: 10px;
+  .error {
+    color: red;
+    label {
+      color: red;
+    }
+  }
   .line {
     margin: 5px 10px;
     height: 30px;

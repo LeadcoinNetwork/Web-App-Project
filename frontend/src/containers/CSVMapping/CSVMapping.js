@@ -25,6 +25,44 @@ class CSVMapping extends React.Component {
     return
   }
 
+  renderPriceElement() {
+    const errors = this.props.errors
+    const error = (errors.indexOf('price') > -1) ? "error" : ""
+    return (
+      <div className={"price "+error}>
+        <span>Lead price</span>
+        <TextField
+          placeholder="Hint Text"
+          floatingLabelText="Floating Label Text"
+          value={this.props.price}
+          onChange={ (e) => {
+            this.props.handleChange('price',e.target.value)
+          }}
+        />
+      </div>
+    )
+
+  }
+
+  renderTerms() {
+    const errors = this.props.errors
+    const error = (errors.indexOf('agree_to_terms') > -1) ? "error" : ""
+    return (
+      <div className={error}>
+        <input
+          type="checkbox"
+          name="agree_to_terms"
+          id="terms_checkbox"
+          value={this.props.agree_to_terms}
+          onChange={(e) => {
+            this.props.agreeToTerms(e.target.checked)
+          }}
+        />
+        <label htmlFor="terms_checkbox">I AGREE THE TERMS</label>
+      </div>
+    )
+  }
+
   render() {
     const { db_fields, batch_id } = this.props
     let fields
@@ -42,6 +80,9 @@ class CSVMapping extends React.Component {
         </div>
       )
     })
+
+    const price_element = this.renderPriceElement()
+    const terms = this.renderTerms()
     return (
       <div className="fields_mapper">
         <div className="header">Map Columns in your CSV to Leads </div>
@@ -53,31 +94,10 @@ class CSVMapping extends React.Component {
         <div className="fields flexed">
           <div>{fields}</div>
         </div>
-        <div className="price">
-          <span>Lead price</span>
-          <TextField
-            placeholder="Hint Text"
-            floatingLabelText="Floating Label Text"
-            value={this.props.price}
-            onChange={ (e) => {
-              this.props.handleChange('price',e.target.value)
-            }}
-          />
-        </div>
+        {price_element}
 
         <div className="field_submit flexed">
-          <div>
-            <input
-              type="checkbox"
-              name="agree_to_terms"
-              id="terms_checkbox"
-              value={this.props.agree_to_terms}
-              onChange={(e) => {
-                this.props.agreeToTerms(e.target.checked)
-              }}
-            />
-            <label htmlFor="terms_checkbox">I AGREE THE TERMS</label>
-          </div>
+          {terms}
           <div>
             <Button
               onClick={() => { 
