@@ -7,12 +7,13 @@ import payments from "./payments"
 import notifications from "./notifications"
 import notificationsTable from "./notifications-table"
 import signup from "./signup"
+import completeRegistration from "./completeRegistration"
 import login from "./login"
 import balance from "./balance"
 import userSettings from "./user-settings"
 import userMenu from "./user-menu"
 import emailConfirmation from "./email-confirmation"
-import csvMapping from './csvMapping'
+import csvMapping from "./csvMapping"
 
 const rootReducer = combineReducers({
   routerReducer,
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   notifications,
   notificationsTable,
   signup,
+  completeRegistration,
   login,
   userSettings,
   userMenu,
