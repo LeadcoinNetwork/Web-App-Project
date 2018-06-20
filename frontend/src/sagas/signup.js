@@ -7,7 +7,7 @@ import { routerMiddleware, push } from "react-router-redux"
 export default function* signup() {
   while (true) {
     yield take(types.SIGNUP_SUBMIT)
-    yield put(Actions.signup.SIGNUP_LOADING())
+    yield put(Actions.signup.signupLoading())
     var { fname, lname, email, password } = yield select(state => state.signup)
     var ans = yield call(request, "POST", "/user", {
       fname,
@@ -16,7 +16,7 @@ export default function* signup() {
       password,
     })
     if (ans.isError) {
-      yield put(Actions.signup.SIGNUP_FORM_ERROR(ans.data.error))
+      yield put(Actions.signup.signupError(ans.data.error))
     } else {
       yield put(push("/email-confirmation"))
     }

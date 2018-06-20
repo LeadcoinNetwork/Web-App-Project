@@ -31,7 +31,7 @@ export default function(state = initialState, action) {
         ...state,
         loading: false,
       }
-    case types.LOGIN_FORM_ERROR:
+    case types.LOGIN_ERROR:
       return {
         ...state,
         loading: false,

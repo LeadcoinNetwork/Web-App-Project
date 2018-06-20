@@ -38,14 +38,14 @@ storiesOf("Containers/SignUp", module)
 
   .add("loading state", () => {
     var { store, story } = createStoreAndStory({ path: "/signup" })
-    store.dispatch(actions.signup.SIGNUP_LOADING())
+    store.dispatch(actions.signup.signupLoading())
     return story
   })
 
   .add("loading state after 500 ms", () => {
     var { store, story } = createStoreAndStory({ path: "/signup" })
     setTimeout(function() {
-      store.dispatch(actions.signup.SIGNUP_LOADING())
+      store.dispatch(actions.signup.signupLoading())
     }, 500)
     return story
   })
@@ -53,7 +53,7 @@ storiesOf("Containers/SignUp", module)
   .add("show user is duplicated after 100 ms", () => {
     var { store, story } = createStoreAndStory({ path: "/signup" })
     setTimeout(function() {
-      store.dispatch(actions.signup.SIGNUP_FORM_ERROR("user is duplicated"))
+      store.dispatch(actions.signup.signupError("user is duplicated"))
     }, 500)
     return story
   })
@@ -61,9 +61,7 @@ storiesOf("Containers/SignUp", module)
   .add("error form", () => {
     var { store, story } = createStoreAndStory({ path: "/signup" })
     store.dispatch(
-      actions.signup.SIGNUP_FORM_ERROR(
-        "this is an example error; this is 2nd error",
-      ),
+      actions.signup.signupError("this is an example error; this is 2nd error"),
     )
     return story
   })

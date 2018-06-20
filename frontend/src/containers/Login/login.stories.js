@@ -18,7 +18,7 @@ storiesOf("Containers/Login", module)
   .add("error form", () => {
     var { store, story } = createStoreAndStory({ path: "/login" })
     store.dispatch(
-      login.loginFormError("this is an example error; this is 2nd error"),
+      login.loginError("this is an example error; this is 2nd error"),
     )
     return story
   })

@@ -15,12 +15,6 @@ const signup = (state = initialState, action) => {
         error: "",
         [action.payload.name]: action.payload.value,
       }
-    case types.SIGNUP_ERROR:
-      return {
-        ...state,
-        loading: false,
-        error: action.payload,
-      }
     case types.SIGNUP_LOADING:
       return {
         ...state,
@@ -31,7 +25,7 @@ const signup = (state = initialState, action) => {
         ...state,
         loading: false,
       }
-    case types.SIGNUP_FORM_ERROR:
+    case types.SIGNUP_ERROR:
       return {
         ...state,
         loading: false,

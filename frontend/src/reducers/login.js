@@ -10,17 +10,11 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case types.LOGIN_FORM_HANDLE_CHANGE:
+    case types.LOGIN_HANDLE_CHANGE:
       return {
         ...state,
         error: "",
         [action.payload.name]: action.payload.value,
-      }
-    case types.LOGIN_ERROR:
-      return {
-        ...state,
-        loading: false,
-        error: action.payload,
       }
     case types.LOGIN_LOADING:
       return {
@@ -32,7 +26,7 @@ export default function(state = initialState, action) {
         ...state,
         loading: false,
       }
-    case types.LOGIN_FORM_ERROR:
+    case types.LOGIN_ERROR:
       return {
         ...state,
         loading: false,

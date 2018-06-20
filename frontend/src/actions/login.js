@@ -1,13 +1,13 @@
 import * as types from "./types"
 
-export function loginFormHandleChange(name, value) {
+export function loginHandleChange(name, value) {
   return {
-    type: types.LOGIN_FORM_HANDLE_CHANGE,
+    type: types.LOGIN_HANDLE_CHANGE,
     payload: { name, value },
   }
 }
 
-export function loginFormUserSubmit() {
+export function loginUserSubmit() {
   return {
     type: types.LOGIN_SUBMIT,
   }
@@ -19,12 +19,9 @@ export function loginLoading() {
   }
 }
 
-/**
- * @param message{string}
- */
-export function loginFormError(message) {
+export function loginError(message) {
   return {
-    type: types.LOGIN_FORM_ERROR,
+    type: types.LOGIN_ERROR,
     payload: {
       message,
     },
