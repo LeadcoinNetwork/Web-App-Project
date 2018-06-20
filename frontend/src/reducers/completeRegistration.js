@@ -1,4 +1,4 @@
-import { types, completeRegistration } from "../actions"
+import { types } from "Actions"
 
 const initialState = {
   company: "",
