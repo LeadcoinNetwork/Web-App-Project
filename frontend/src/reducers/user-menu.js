@@ -21,6 +21,16 @@ const notifications = (state = initialState, action) => {
         ...state,
         isOpen: !state.isOpen,
       }
+    case types.NOTIFICATIONS_SHOW:
+      return {
+        ...state,
+        isOpen: false
+      }
+    case types.NOTIFICATIONS_CLICK:
+      return {
+        ...state,
+        isOpen: false
+      }
     default:
       return state
   }
