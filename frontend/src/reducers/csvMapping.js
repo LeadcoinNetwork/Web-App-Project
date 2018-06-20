@@ -12,6 +12,22 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case types.CSV_MAPPING_SUBMIT:
+      const {errors, price, agree_to_terms} = state
+      if (!price) {
+        errors.push('price') 
+      }
+      if (!agree_to_terms)
+        errors.push('agree_to_terms') 
+      if (errors.length > 0)
+        return {
+          ...state,
+          errors: action.errors,
+        }
+      else 
+        return {
+          
+        }
     case types.CSV_MAPPING_ERROR:
       return {
         ...state,
