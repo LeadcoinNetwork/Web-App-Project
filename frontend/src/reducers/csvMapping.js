@@ -26,7 +26,8 @@ export default function(state = initialState, action) {
         }
       else 
         return {
-          
+          ...state,
+          errors: []
         }
     case types.CSV_MAPPING_ERROR:
       return {

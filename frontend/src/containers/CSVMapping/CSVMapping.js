@@ -100,18 +100,7 @@ class CSVMapping extends React.Component {
           {terms}
           <div>
             <Button
-              onClick={() => { 
-                const {price, agree_to_terms} = this.props
-                console.log(price, agree_to_terms)
-                if (price && agree_to_terms)
-                  this.props.submit(this.props.fields_map) 
-                else {
-                  if (!price)
-                    this.addError('price')
-                  if (!agree_to_terms)
-                    this.addError('agree_to_terms')
-                }
-              }}
+              onClick={() => { this.props.submit(this.props.fields_map) }}
               label="Submit"
             />
           </div>
@@ -125,15 +114,6 @@ class CSVMapping extends React.Component {
       </div>
     )
   }
-
-  addError(error) {
-    const {errors} = this.props.errors
-    if (errors.indexOf(error) < 0) {
-      errors.push(error)
-      this.props.handleErrors(errors)
-    }
-  }
-
 }
 
 const mapStateToProps = state => ({
