@@ -1,6 +1,7 @@
 import saga1 from "./saga1"
 import saga2 from "./saga2"
 import signup from "./signup"
+import csvMapping from "./csvMapping"
 import { spawn } from "redux-saga/effects"
 
 export default function* rootSaga() {
@@ -12,7 +13,7 @@ export default function* rootSaga() {
    * because we launched it using `spawn`
    * If he launched it using `fork` one saga fall down will take all the saga with it.
    */
-  var sagas = [saga1, saga2, signup]
+  var sagas = [saga1, saga2, signup, csvMapping]
   for (var i in sagas) {
     yield spawn(sagas[i])
   }

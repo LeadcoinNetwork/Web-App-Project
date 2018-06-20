@@ -12,6 +12,7 @@ import balance from "./balance"
 import userSettings from "./user-settings"
 import userMenu from "./user-menu"
 import emailConfirmation from "./email-confirmation"
+import csvMapping from './csvMapping'
 
 const rootReducer = combineReducers({
   routerReducer,
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   userSettings,
   userMenu,
   emailConfirmation,
+  csvMapping,
 })
 
 export default rootReducer

@@ -3,14 +3,34 @@ import * as types from "./types"
 export function csvMappingGetDbFields(payload) {
   return {
     type: types.CSV_MAPPING_GET_DB_FIELDS,
-    payload ,
+    db_fields: payload,
+  }
+}
+
+export function csvMappingClearForm() {
+  return {
+    type: types.CSV_MAPPING_CLEAR_FORM
   }
 }
 
 export function csvMappingGetFileFields(payload) {
   return {
     type: types.CSV_MAPPING_GET_FILE_FIELDS,
-    payload,
+    file_fields: payload,
+  }
+}
+
+export function csvMappingMapChange(name, value) {
+  return {
+    type: types.CSV_MAPPING_MAP_HANDLE_CHANGE,
+    map_change: { name, value },
+  }
+}
+
+export function csvMappingAgreeToTerms(value) {
+  return {
+    type: types.CSV_MAPPING_AGREE_TO_TERMS,
+    agree_to_terms: { value },
   }
 }
 
