@@ -41,17 +41,14 @@ export function getStrategies({ userActions }: { userActions: UserActions }) {
     },
     async (jwt, done) => {
       try {
-        let user = await userActions.find({ id: jwt.id })[0]
-        if (!user) {
-          let err = new Error("Unauthorized")
-          //@ts-ignore
-          err.status = 401
-          throw err
-        }
-        done(null, user)
-      } catch (e) {
-        done(e)
+        var user = await userActions.find({ id: jwt.id })
+      } catch (_err) {
+        let err = new Error("Unauthorized")
+        //@ts-ignore
+        err.status = 401
+        done(err)
       }
+      done(null, user)
     },
   )
 

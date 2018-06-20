@@ -1,5 +1,5 @@
 const chance = require("chance")()
-var RoutesForTests = require("./routes.for.tests.js")
+var RoutesForTests = require("./routes.for.tests")
 
 var { request, mockMailSender } = RoutesForTests.create()
 
@@ -30,7 +30,6 @@ test("user sign-up, click link, upload lead. user 2, sign-up, click link, buy le
   var linkMatch = html.match(/href="(.*?)"/)
   expect(linkMatch).toHaveLength(2)
   var link = linkMatch[1]
-  console.log(link)
 })
 
 /** Complete Story

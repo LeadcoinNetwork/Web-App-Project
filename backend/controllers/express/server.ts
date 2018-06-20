@@ -22,7 +22,7 @@ import EmailSenderNodeMailer from "../../models/emailsender-nodemailer/emailsend
 import EmailSenderConsole from "../../models/emailsender-console/emailsender-console"
 
 import EmailCreator from "../../models/email-creator/email-creator"
-import User from "../../models/user-actions/user-actions"
+import UserActions from "../../models/user-actions/user-actions"
 
 if (config.mail.mailer == "CONSOLE") {
   var emailSender = new EmailSenderConsole /* {
@@ -38,7 +38,7 @@ var emailCreator = new EmailCreator({
   from: config.mail.from,
 })
 
-var user = new User({
+var userActions = new UserActions({
   emailSender,
   emailCreator,
 })
@@ -48,7 +48,7 @@ router.start({
   emailSender,
   emailCreator,
   frontend: config.frontend,
-  user,
+  userActions,
 })
 
 module.exports = httpServer.listen(config.app.port, () => {

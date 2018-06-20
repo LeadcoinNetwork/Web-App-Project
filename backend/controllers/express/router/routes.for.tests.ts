@@ -10,16 +10,16 @@ export function create() {
   var app = express()
   var request = supertest(app)
   var mockMailSender = jest.fn()
-  var emailSender = new EmailCreator({
+  var emailCreator = new EmailCreator({
     backend: "https://testbackend.com",
     from: "me@me.com",
   })
-  var emailCreator = new EmailSenderConsole()
+  var emailSender = new EmailSenderConsole()
   Routes.start({
     app,
     frontend: "http://mybackendintest.com",
-    emailCreator: emailSender,
-    emailSender: emailCreator,
+    emailCreator: emailCreator,
+    emailSender: emailSender,
     userActions: new UserActions({ emailSender, emailCreator }),
   })
 

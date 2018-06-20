@@ -1,18 +1,18 @@
 const mysqlPool = require("../mysql-pool/mysql-pool")
 
-module.exports = {
-  insert,
-  update,
-  find,
-  remove,
-}
+import {
+  NewUserInterface,
+  ExistingUserInterface,
+} from "../user-types/user-types"
 
-async function insert(user) {
+export { insert, update, find, remove }
+
+async function insert(user: NewUserInterface): Promise<boolean> {
   let status = await mysqlPool.query("INSERT INTO users SET ?", user)
   return status.affectedRows != 0
 }
 
-async function update(userId, user) {
+async function update(userId: number, user): Promise<boolean> {
   let status = await mysqlPool.query("UPDATE users SET ? WHERE id = ?", [
     user,
     userId,
@@ -20,7 +20,7 @@ async function update(userId, user) {
   return status.affectedRows != 0
 }
 
-async function find(condition, fields) {
+async function find(condition, fields?): Promise<ExistingUserInterface[]> {
   // convert condition to WHERE clause
   condition = Object.keys(condition)
     .map(key => {
@@ -42,7 +42,7 @@ async function find(condition, fields) {
   return rows
 }
 
-async function remove(userId) {
+async function remove(userId): Promise<boolean> {
   let status = await mysqlPool.query("DELETE FROM users WHERE id = ?", userId)
   return status.affectedRows != 0
 }

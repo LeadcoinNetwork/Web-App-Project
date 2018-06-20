@@ -49,7 +49,6 @@ export function start({
   async function register(req, res, next) {
     try {
       let _user = await userActions.register(req.body)
-      console.log(_user)
       let token = auth.generateJWT(_user)
       res.status(201) // Created
       res.cookie("token", token)

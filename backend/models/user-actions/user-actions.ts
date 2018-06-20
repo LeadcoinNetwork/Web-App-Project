@@ -1,57 +1,51 @@
 const auth = require("../auth/auth")
 const validate = require("../validate/validate")
 const TokenMySQL = require("../token-mysql/token-mysql")
-const UserMySQL = require("../user-mysql/user-mysql")
+import * as UserMySQL from "../user-mysql/user-mysql"
 
 import EmailCreator from "../email-creator/email-creator"
 import EmailSender from "../emailsender-abstraction/emailsender-abstraction"
 
-type token = string
-
-export interface BaseUserInterface {
-  id: number
-  fname: string
-  lname: string
-  email: string
-}
-export interface ExistingUserInterface extends BaseUserInterface {
-  id: number
-}
-export interface NewUserInterface extends BaseUserInterface {
-  password: string
-}
+import {
+  NewUserInterface,
+  ExistingUserInterface,
+} from "../user-types/user-types"
 
 class User {
   emailSender: EmailSender
   emailCreator: EmailCreator
 
   constructor({ emailSender, emailCreator }) {
-    Object.assign(this, { emailCreator, emailSender })
+    Object.assign(this, { emailSender, emailCreator })
   }
 
-  async insert(user): Promise<[ExistingUserInterface]> {
+  async insert(user: NewUserInterface): Promise<ExistingUserInterface> {
     let { email } = user
     await this.uniqueEmail(email)
-
     user.created = Date.now()
     await UserMySQL.insert(user)
-    return await this.find({ email })[0]
+    return await this.find({ email })
   }
 
   async find(condition, fields?): Promise<ExistingUserInterface> {
     let users = await UserMySQL.find(condition, fields)
+
     users = users.map(user => {
+      //@ts-ignore
       delete user.password
       return user
     })
-    return users
+    if (users.length > 0) return users[0]
+    else {
+      Promise.reject(new Error("cannot find user"))
+    }
   }
 
   async remove(userId): Promise<boolean> {
     return await UserMySQL.remove(userId)
   }
 
-  async login(userId): Promise<token> {
+  async login(userId): Promise<string> {
     let user = (await this.find({ id: userId }))[0]
 
     let token = auth.generateJWT(user)
@@ -68,7 +62,7 @@ class User {
   // ----------------------------- ONLY LOCAL USERS -----------------------------
 
   // returns user
-  async register(user) {
+  async register(user): Promise<ExistingUserInterface> {
     var _user = await validate.newUser(user)
 
     let { email } = _user
@@ -76,7 +70,6 @@ class User {
     _user.password = auth.hashPassword(_user.password)
     _user.disabled = "EMAIL_NOT_VERIFIED"
     let token = auth.generateToken()
-
     _user = await this.insert(_user)
 
     await TokenMySQL.insert({
@@ -114,7 +107,7 @@ class User {
     }
     await TokenMySQL.remove(userId)
     await UserMySQL.update(userId, { disabled: null })
-    let user = (await this.find({ id: userId }))[0]
+    let user = await this.find({ id: userId })
     return user
   }
 
@@ -122,6 +115,7 @@ class User {
   async authenticatePassword(email, password) {
     let [user] = await UserMySQL.find({ email })
     if (user && auth.comparePassword(password, user.password)) {
+      //@ts-ignore
       delete user.password
       return user
     } else {
@@ -156,11 +150,11 @@ class User {
     }
 
     await UserMySQL.update(userId, user)
-    return (await this.find({ id: userId }))[0]
+    return await this.find({ id: userId })
   }
 
   // returns undefined
-  async confirmEmailUpdate(token) {
+  async confirmEmailUpdate(token: string) {
     let { user_id: userId, pending_email: email } = await TokenMySQL.find({
       token,
     })
@@ -171,13 +165,7 @@ class User {
   // returns undefined
   async forgotPassword(email) {
     //@ts-ignore
-    let [user] = this.find({ email })
-    if (!user) {
-      let err = new Error("Not Found")
-      //@ts-ignore
-      err.status = 404
-      throw err
-    }
+    let user = await this.find({ email })
     let token = auth.generateToken()
     await TokenMySQL.insert({
       user_id: user.id,
@@ -203,7 +191,7 @@ class User {
       await this.uniqueEmail(email)
     }
     await UserMySQL.update(userId, user)
-    return await this.find({ id: userId })[0]
+    return await this.find({ id: userId })
   }
 
   async uniqueEmail(email, userId?) {

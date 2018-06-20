@@ -19,7 +19,7 @@ test("POST /user sign up using username and password [not yet implemented]", asy
     })
 })
 
-test.only("GET /me sign up using username and password [not yet implemented]", async () => {
+test("GET /me sign up using username and password [not yet implemented]", async () => {
   var fname = chance.first()
   var lname = chance.last()
   var x = await request.post("/user").send({
@@ -28,6 +28,8 @@ test.only("GET /me sign up using username and password [not yet implemented]", a
     password: "KGHasdF987654&*^%$#",
     email: chance.email(),
   })
+  expect(_.get(x, "error.text")).toBeFalsy()
+
   expect(x.status).toEqual(201)
   var tokenFromBody = x.body.token
   var TokenCookie = _.get(x, _.toPath("header['set-cookie'][0]"))
@@ -36,8 +38,7 @@ test.only("GET /me sign up using username and password [not yet implemented]", a
 
   // Both tokens are equals
   expect(tokenFromBody).toEqual(tokenFromCookie)
-  var y = require("./candelete")
-  y.great()
+
   // Tokens are secured and not empty
   expect(tokenFromBody.length).toBeGreaterThan(10)
 
