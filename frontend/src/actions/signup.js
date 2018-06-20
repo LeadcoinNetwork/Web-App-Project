@@ -2,7 +2,7 @@ import * as types from "./types"
 
 export function signupHandleChange(name, value) {
   return {
-    type: types.SIGNUP_FORM_HANDLE_CHANGE,
+    type: types.SIGNUP_HANDLE_CHANGE,
     payload: { name, value },
   }
 }

@@ -9,7 +9,7 @@ const initialState = {
 
 const signup = (state = initialState, action) => {
   switch (action.type) {
-    case types.SIGNUP_FORM_HANDLE_CHANGE:
+    case types.SIGNUP_HANDLE_CHANGE:
       return {
         ...state,
         error: "",

@@ -1,32 +1,31 @@
-import { types } from "../actions"
+import { types, completeRegistration } from "../actions"
 
 const initialState = {
-  name: "",
-  email: "",
-  password: "",
+  company: "",
+  country: "",
+  phone: "",
   error: "",
-  remember: true,
 }
 
-const login = (state = initialState, action) => {
+const completeRegistration = (state = initialState, action) => {
   switch (action.type) {
-    case types.LOGIN_HANDLE_CHANGE:
+    case types.COMPLETE_REGISTRATION_HANDLE_CHANGE:
       return {
         ...state,
         error: "",
         [action.payload.name]: action.payload.value,
       }
-    case types.LOGIN_LOADING:
+    case types.COMPLETE_REGISTRATION_LOADING:
       return {
         ...state,
         loading: true,
       }
-    case types.LOGIN_FINISH:
+    case types.COMPLETE_REGISTRATION_FINISH:
       return {
         ...state,
         loading: false,
       }
-    case types.LOGIN_ERROR:
+    case types.COMPLETE_REGISTRATION_ERROR:
       return {
         ...state,
         loading: false,
@@ -37,4 +36,4 @@ const login = (state = initialState, action) => {
   }
 }
 
-export default login
+export default completeRegistration
