@@ -3,36 +3,37 @@ import { connect } from "react-redux"
 import { userMenu, user } from "../../actions"
 import FontAwesomeIcon from "@fortawesome/react-fontawesome"
 import faUserCircle from "@fortawesome/fontawesome-free-solid/faUserCircle"
-import UserMenuInner from "./UserMenuInner";
+import UserMenuInner from "./UserMenuInner"
 
 class UserMenu extends Component {
   constructor(props) {
     super(props)
-
-    this.handleClick = this.handleClick.bind(this)
   }
-  handleClick() {
+
+  handleClick = () => {
     if (this.props.isOpen) {
       this.props.userMenuClick()
     }
   }
+
   componentDidMount() {
     window.addEventListener("click", this.handleClick)
   }
+
   componentWillUnmount() {
     window.removeEventListener("click", this.handleClick)
   }
+
   render() {
-    let {
-      isOpen,
-      userMenuClick,
-      logOut,
-    } = this.props
+    let { isOpen, userMenuClick, logOut } = this.props
     return (
-      <div className="user-menu" onClick={(e) => {
-        e.stopPropagation()
-        userMenuClick()
-      }}>
+      <div
+        className="user-menu"
+        onClick={e => {
+          e.stopPropagation()
+          userMenuClick()
+        }}
+      >
         <FontAwesomeIcon
           className="user-icon"
           icon={faUserCircle}
@@ -40,10 +41,9 @@ class UserMenu extends Component {
           size={"2x"}
         />
         {isOpen && <UserMenuInner logOut={logOut} />}
-      </div >
+      </div>
     )
   }
-  
 }
 
 const mapStateToProps = state => state.userMenu
