@@ -11,31 +11,31 @@
 
   .notification-badge {
     position: absolute;
-    top: 3px;
+    top: 20px;
     right: 0px;
-    width: 18px;
-    height: 18px;
-    line-height: 20px;
+    width: 15px;
+    height: 15px;
+    line-height: 16px;
+    font-size: 12px;
     color: white;
     border-radius: 50%;
     background-color: red;
     text-align: center;
 
     &.plus {
-      width: 20px;
-      height: 20px;
-      line-height: 22px;
+      width: 16px;
+      height: 16px;
     }
   }
-
+  
   .notification-inner {
     position: absolute;
     width: 300px;
     top: 80px;
-    left: -250px;
+    left: -255px;
     background: #433190;
     line-height: 30px;
-
+    
     .small-arrow {
       position: absolute;
       width: 20px;
@@ -46,27 +46,34 @@
       transform: rotateZ(45deg);
       z-index: -1;
     }
-
+    
     .ni-row {
       padding: 15px;
       border-bottom: 1px solid #6a56bb;
-
+      font-weight: 300;
+      
       &.unread {
-        background: #b7adef;
-      }
+        font-weight: 600;
+        background: #604db6;
 
+        .nr-time {
+          font-weight: 500;
+        }
+      }
+      
       .nr-time {
-        font-weight: 700;
+        font-size: 14px;
+        font-weight: 200;
       }
     }
-
+    
     .view-all {
       padding: 15px;
       color: white;
-
+      
       .view-all-text {
         margin-left: 10px;
-        font-weight: 700;
+        font-weight: 500;
       }
     }
   }
