@@ -48,6 +48,5 @@ storiesOf("Containers/CSVMapping")
     ]))
     store.dispatch(actions.csvMapping.csvMappingAgreeToTerms(false))
     store.dispatch(actions.csvMapping.csvMappingFormChange('price',""))
-    store.dispatch(actions.csvMapping.csvMappingSubmit())
     return story
   })
