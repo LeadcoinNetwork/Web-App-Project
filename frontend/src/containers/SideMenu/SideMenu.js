@@ -18,7 +18,7 @@ const SideMenu = ({ path }) => {
         <i className="fas fa-coins" />
       </Link>
       <Link to="/my-leads" className={path === "/my-leads" ? "sm-active" : ""}>
-        <i className="fas fa-file-alt" />
+        <i className="fas fa-clipboard-list" />
       </Link>
     </nav>
   )
