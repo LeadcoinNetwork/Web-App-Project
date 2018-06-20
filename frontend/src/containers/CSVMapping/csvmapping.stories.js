@@ -51,6 +51,7 @@ storiesOf("Containers/CSVMapping")
     store.dispatch(actions.csvMapping.csvMappingError(['price']))
     return story
   })
+
   .add("CSVMapping - terms error", () => {
     var { store, story } = createStoreAndStory({
       component: CSVMapping,
@@ -71,6 +72,7 @@ storiesOf("Containers/CSVMapping")
     store.dispatch(actions.csvMapping.csvMappingError(['agree_to_terms']))
     return story
   })
+
   .add("CSVMapping - multiple errors", () => {
     var { store, story } = createStoreAndStory({
       component: CSVMapping,
