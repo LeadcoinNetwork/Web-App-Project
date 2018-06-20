@@ -2,29 +2,20 @@ import React from "react"
 import { storiesOf } from "@storybook/react"
 import * as actions from "actions"
 import { createStoreAndStory } from "storybook-utils/withRouter"
-import NotificationElement from "Containers/NotificationElement"
 
 const mockdata = require("../../mocks/notifications.json")
 
 storiesOf("Containers/Notification Element", module)
   .add("Empty", () => {
     var { store, story } = createStoreAndStory({
-      component: NotificationElement,
+      path: "/my-leads",
     })
-    return story
-  })
-
-  .add("Error", () => {
-    var { store, story } = createStoreAndStory({
-      component: NotificationElement,
-    })
-    store.dispatch(actions.notifications.notificationsShow([], 0))
     return story
   })
 
   .add("Empty opened", () => {
     var { store, story } = createStoreAndStory({
-      component: NotificationElement,
+      path: "/my-leads",
     })
     store.dispatch(actions.notifications.notificationsShow([], 0))
     return story
@@ -32,7 +23,7 @@ storiesOf("Containers/Notification Element", module)
 
   .add("Have 6 unread 4", () => {
     var { store, story } = createStoreAndStory({
-      component: NotificationElement,
+      path: "/my-leads",
     })
     store.dispatch(
       actions.notifications.notificationsUpdate(
@@ -45,7 +36,7 @@ storiesOf("Containers/Notification Element", module)
 
   .add("have 6 unread 4 opened", () => {
     var { store, story } = createStoreAndStory({
-      component: NotificationElement,
+      path: "/my-leads",
     })
     store.dispatch(
       actions.notifications.notificationsUpdate(
@@ -59,7 +50,7 @@ storiesOf("Containers/Notification Element", module)
 
   .add("have 15 unread 14", () => {
     var { store, story } = createStoreAndStory({
-      component: NotificationElement,
+      path: "/my-leads",
     })
     store.dispatch(
       actions.notifications.notificationsUpdate(

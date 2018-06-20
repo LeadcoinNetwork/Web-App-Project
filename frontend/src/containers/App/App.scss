@@ -26,7 +26,11 @@
     padding: 0 30px 80px;
 
     &.a-app-mode {
+      max-width: 100vw;
+      min-height: 100vh;
+      top: $header-height;
       padding: $header-height 0 0 $side-menu-width;
+      background-color: $bg-level-2;
     }
   }
 }

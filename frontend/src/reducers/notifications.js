@@ -29,6 +29,16 @@ const notifications = (state = initialState, action) => {
         list: action.payload.list,
         unreadCount: action.payload.unreadCount,
       }
+      case types.USER_MENU_OPEN:
+        return {
+          ...state,
+          isOpen: false
+        }
+      case types.USER_MENU_CLICK:
+        return {
+          ...state,
+          isOpen: false
+        }
     default:
       return state
   }

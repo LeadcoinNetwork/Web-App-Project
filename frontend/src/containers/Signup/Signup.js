@@ -97,6 +97,6 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, {
-  handleChange: signup.signupFormHandleChange,
-  submit: signup.SignUpFormUserSubmit,
+  handleChange: signup.signupHandleChange,
+  submit: signup.signupSubmit,
 })(Signup)

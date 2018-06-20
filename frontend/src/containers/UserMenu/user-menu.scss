@@ -32,10 +32,19 @@
       display: block;
       padding: 15px;
       color: white;
-      border-bottom: 1px solid #6a56bb;
+
+      &.log-out {
+        border-top: 1px solid #6a56bb;
+        
+        &:hover {
+          border-top-color: #b7adef;
+        }
+      }
+
 
       &:hover {
         background-color: #b7adef;
+        border-bottom-color: #b7adef;
       }
     }
   }

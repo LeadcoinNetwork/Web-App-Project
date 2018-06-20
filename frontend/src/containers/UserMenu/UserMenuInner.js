@@ -17,8 +17,7 @@ const UserMenuInner = ({
         {item.title}
       </Link>
     ))}
-    {/* <Link to={"/"} onClick={logOut}>Log Out</Link> */}
-    <Link to={"/"} onClick={logOut} className="um-row" key={menuItems.length}>
+    <Link to={"/"} onClick={logOut} className="um-row log-out" key={menuItems.length}>
       Log Out
     </Link>
   </div>

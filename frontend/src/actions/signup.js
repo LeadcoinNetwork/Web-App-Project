@@ -1,27 +1,33 @@
 import * as types from "./types"
 
-export function signupFormHandleChange(name, value) {
+export function signupHandleChange(name, value) {
   return {
-    type: types.SIGNUP_FORM_HANDLE_CHANGE,
+    type: types.SIGNUP_HANDLE_CHANGE,
     payload: { name, value },
   }
 }
 
-export function SignUpFormUserSubmit() {
+export function signupSubmit() {
   return {
     type: types.SIGNUP_SUBMIT,
   }
 }
 
-export function SIGNUP_LOADING() {
+export function signupLoading() {
   return {
     type: types.SIGNUP_LOADING,
   }
 }
 
-export function SIGNUP_FORM_ERROR(message) {
+export function signupFinish() {
   return {
-    type: types.SIGNUP_FORM_ERROR,
+    type: types.SIGNUP_FINISH,
+  }
+}
+
+export function signupError(message) {
+  return {
+    type: types.SIGNUP_ERROR,
     payload: {
       message,
     },

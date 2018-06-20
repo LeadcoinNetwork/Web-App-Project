@@ -9,17 +9,11 @@ const initialState = {
 
 const signup = (state = initialState, action) => {
   switch (action.type) {
-    case types.SIGNUP_FORM_HANDLE_CHANGE:
+    case types.SIGNUP_HANDLE_CHANGE:
       return {
         ...state,
         error: "",
         [action.payload.name]: action.payload.value,
-      }
-    case types.SIGNUP_ERROR:
-      return {
-        ...state,
-        loading: false,
-        error: action.payload,
       }
     case types.SIGNUP_LOADING:
       return {
@@ -31,7 +25,7 @@ const signup = (state = initialState, action) => {
         ...state,
         loading: false,
       }
-    case types.SIGNUP_FORM_ERROR:
+    case types.SIGNUP_ERROR:
       return {
         ...state,
         loading: false,
