@@ -1,11 +1,12 @@
-const chance = require("chance")()
+import * as Chance from "chance"
+import * as _ from "lodash"
 
-import * as RoutesForTests from "./routes.for.tests"
+import * as RoutesForTests from "./utils-tests/routes.for.tests"
+var { request, emailSenderMock } = RoutesForTests.create()
 
-var _ = require("lodash")
-var { request, mockMailSender } = RoutesForTests.create()
+var chance = Chance()
 
-test("POST /user sign up using username and password [not yet implemented]", async () => {
+test("POST /user sign up using wrong username and password", async () => {
   return request
     .post("/user", {
       firstname: "moshe",
@@ -19,7 +20,7 @@ test("POST /user sign up using username and password [not yet implemented]", asy
     })
 })
 
-test("GET /me sign up using username and password [not yet implemented]", async () => {
+test("GET /me sign up using real username and password", async () => {
   var fname = chance.first()
   var lname = chance.last()
   var x = await request.post("/user").send({

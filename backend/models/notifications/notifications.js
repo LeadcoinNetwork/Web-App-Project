@@ -1,5 +1,5 @@
 const mysqlPool = require("../mysql-pool/mysql-pool")
-import "./notification.test.js"
+import "./notification.tes_t"
 
 /**
  * @typedef RealTimeSender

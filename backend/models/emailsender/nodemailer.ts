@@ -1,5 +1,5 @@
 // external modules
-import EmailSenderAbstraction from "../emailsender-abstraction/emailsender-abstraction"
+import EmailSenderAbstraction from "./abstraction"
 const mailer = require("nodemailer-promise")
 
 class EmailSenderNodeMailer implements EmailSenderAbstraction {

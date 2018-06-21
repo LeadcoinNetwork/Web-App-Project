@@ -18,8 +18,8 @@ if (config.env === "development") {
 var httpServer = http.createServer(app)
 io.connectToHTTP(httpServer)
 
-import EmailSenderNodeMailer from "../../models/emailsender-nodemailer/emailsender-nodemailer"
-import EmailSenderConsole from "../../models/emailsender-console/emailsender-console"
+import EmailSenderNodeMailer from "../../models/emailsender/nodemailer"
+import EmailSenderConsole from "../../models/emailsender/console"
 
 import EmailCreator from "../../models/email-creator/email-creator"
 import UserActions from "../../models/user-actions/user-actions"
