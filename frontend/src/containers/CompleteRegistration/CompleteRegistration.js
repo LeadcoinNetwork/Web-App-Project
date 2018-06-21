@@ -49,6 +49,19 @@ class CompleteRegistration extends React.Component {
               value={phone.value}
               defaultCountry={"us"}
               onChange={this.handlePhoneChange}
+              inputStyle={{
+                color: "#180852",
+                border: "none",
+                width: "100%",
+                height: "50px",
+                borderRadius: "25px",
+                fontSize: "18px",
+                paddingLeft: "80px",
+              }}
+              buttonStyle={{
+                width: "64px",
+                borderRadius: "25px 0 0 25px",
+              }}
             />
             {error && this.getErrors(error)}
             <Button label="Submit" loading={loading} />
