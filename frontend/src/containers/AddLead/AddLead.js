@@ -5,26 +5,7 @@ import TextField from "Components/TextField"
 import { connect } from "react-redux"
 import { csvMapping } from "Actions"
 
-class CSVMapping extends React.Component {
-  listItems(fieldName) {
-    const { fields_map, file_fields } = this.props
-    if (file_fields) {
-      let value = ""
-      if (fields_map && fields_map[fieldName]) value = fields_map[fieldName]
-      const items = file_fields.map((field, i) => { return field })
-      items.unshift(['0', "I Don't have this field"])
-      return (
-        <Select
-          options={items}
-          value={value}
-          onChange={(e) => {
-            this.props.handleMapChange(fieldName, e.target.value)
-          }} />
-      )
-    }
-    return
-  }
-
+class AddLead extends React.Component {
   renderPriceElement() {
     const errors = this.props.errors
     const error = (errors.indexOf('price') > -1) ? "error" : ""
@@ -64,19 +45,12 @@ class CSVMapping extends React.Component {
   }
 
   render() {
-    const { db_fields, batch_id } = this.props
+    const { db_fields } = this.props
     let fields
-    if (!batch_id)
-      return (
-        <div className="fields_mapper">
-          <div> LOADING </div>
-        </div>
-      )
     fields = db_fields.map((f, i) => {
       return (
         <div key={i} className="line flexed">
           <div className="fieldLabel">{f} </div>
-          {this.listItems(f)}
         </div>
       )
     })
@@ -85,12 +59,9 @@ class CSVMapping extends React.Component {
     const terms = this.renderTerms()
     return (
       <div className="fields_mapper">
-        <div className="header">Map Columns in your CSV to Leads </div>
-        <div className="header">Personal Identification Information </div>
-        <div className="header">
-          fields that will only be visible to who bought the lead
-        </div>
-
+        <div className="header">Some text </div>
+        <div className="header">More text </div>
+        <div className="header">Even More </div>
         <div className="fields flexed">
           <div>{fields}</div>
         </div>
@@ -124,7 +95,6 @@ export default connect(mapStateToProps, {
   agreeToTerms: csvMapping.csvMappingAgreeToTerms,
   handleMapChange: csvMapping.csvMappingMapChange,
   handleChange: csvMapping.csvMappingFormChange,
-  handleErrors: csvMapping.csvMappingError,
-  clear: csvMapping.csvMappingClearForm,
+  price: csvMapping.csvMappingClearForm,
   submit: csvMapping.csvMappingSubmit,
-})(CSVMapping)
+})(AddLead)

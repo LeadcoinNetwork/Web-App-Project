@@ -1,0 +1,35 @@
+@import "~Styles/variables";
+
+.fields_mapper {
+  padding: 10px;
+  .error {
+    color: red;
+    label {
+      color: red;
+    }
+  }
+  .line {
+    margin: 5px 10px;
+    height: 30px;
+    line-height: 30px;
+    .fieldLabel {
+      width: 200px;
+      margin-right: 5px;
+      text-transform: capitalize;
+    }
+    .ldc-select {
+      background-color: #180852;
+      color: white;
+    }
+  }
+  .price {
+      margin-left: 10px;
+      input {
+        margin-left: 10px;
+        width: 150px;
+      }
+  }
+  .flexed {
+    display: flex;
+  }
+}

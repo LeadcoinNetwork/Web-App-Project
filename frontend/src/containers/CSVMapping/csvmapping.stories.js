@@ -10,6 +10,7 @@ storiesOf("Containers/CSVMapping")
     var { store, story } = createStoreAndStory({
       component: CSVMapping,
     })
+    store.dispatch(actions.csvMapping.csvMappingFormChange('batch_id',null))
     return story
   })
 

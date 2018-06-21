@@ -15,6 +15,7 @@ import userMenu from "./user-menu"
 import emailConfirmation from "./email-confirmation"
 import csvMapping from "./csvMapping"
 import csvUpload from "./csvUpload"
+import addLead from "./addLead"
 
 const rootReducer = combineReducers({
   routerReducer,
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
   emailConfirmation,
   csvMapping,
   csvUpload,
+  addLead,
 })
 
 export default rootReducer

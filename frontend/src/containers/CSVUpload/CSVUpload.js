@@ -43,6 +43,7 @@ class CSVUpload extends React.Component {
           <Button
             loading={loading}
             onClick={() => {
+              if (loading) return false
               this.props.submit()
             }}
             containerElement="label"
