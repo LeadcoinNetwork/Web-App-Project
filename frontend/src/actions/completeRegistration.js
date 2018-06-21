@@ -1,6 +1,6 @@
 import * as types from "./types"
 
-export function completeRegistrationFormHandleChange(name, value) {
+export function completeRegistrationHandleChange(name, value) {
   return {
     type: types.COMPLETE_REGISTRATION_HANDLE_CHANGE,
     payload: { name, value },

@@ -28,7 +28,7 @@ class CompleteRegistration extends React.Component {
     return (
       <section className="ldc-complete-registration">
         <div className="cr-main">
-          <h1>fill your profile</h1>
+          <h1>Fill your Profile</h1>
           <div className="crm-form">
             <TextField
               placeholder="Company Name"
@@ -77,6 +77,6 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   con: console.log,
-  handleChange: completeRegistration.completeRegistrationFormHandleChange,
+  handleChange: completeRegistration.completeRegistrationHandleChange,
   submit: completeRegistration.completeRegistrationSubmit,
 })(CompleteRegistration)
