@@ -15,12 +15,14 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loading,
+        errors: [],
       }
 
     case types.CSV_UPLOAD_PICK_FILE:
       return {
         ...state,
         file: action.file,
+        errors: [],
       }
 
     case types.CSV_UPLOAD_ERROR:

@@ -20,7 +20,6 @@ class CSVUpload extends React.Component {
     let fileLabel = "Choose File"
     const {loading, file} = this.props
     if (file) fileLabel = file.name
-    console.log(file)
     return (
       <div className="csvUpload">
         <div className="file_pick">
@@ -32,7 +31,7 @@ class CSVUpload extends React.Component {
               <input
                 className="displaynone"
                 type="file"
-                onChange={ (e) => {
+                onChange= {(e) => {
                   if (loading) return false
                   this.props.pickFile(e.target.files[0])
                 }}
@@ -50,6 +49,7 @@ class CSVUpload extends React.Component {
             label="Submit"
           />
         </div>
+        {this.generalError()}
       </div>
     )
   }

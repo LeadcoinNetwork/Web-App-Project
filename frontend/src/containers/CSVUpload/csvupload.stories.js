@@ -35,6 +35,6 @@ storiesOf("Containers/CSVUpload")
     var { store, story } = createStoreAndStory({
       component: CSVUpload,
     })
-    store.dispatch(actions.csvUpload.csvUploadError("erez"))
+    store.dispatch(actions.csvUpload.csvUploadError("Error!"))
     return story
   })

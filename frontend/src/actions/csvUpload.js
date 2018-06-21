@@ -21,10 +21,10 @@ export function csvUploadPickFile(file) {
   }
 }
 
-export function csvUploadError(errors) {
+export function csvUploadError(error) {
   return {
     type: types.CSV_UPLOAD_ERROR,
-    errors,
+    error,
   }
 }
 

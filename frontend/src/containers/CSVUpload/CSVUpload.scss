@@ -2,6 +2,16 @@
 
 .csvUpload {
   padding: 10px;
+  .error {
+    padding: 5px;
+    margin: 5px;
+    >div {
+      padding: 5px;
+      margin: 5px;
+      background-color: red;
+      font-weight: bold;
+    }
+  }
   .file_pick {
     margin-bottom: 10px;
     .container_button {
