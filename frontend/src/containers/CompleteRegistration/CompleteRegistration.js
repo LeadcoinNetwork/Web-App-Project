@@ -48,11 +48,10 @@ class CompleteRegistration extends React.Component {
               name="phone"
               value={phone.value}
               defaultCountry={"us"}
-              loading={loading}
               onChange={this.handlePhoneChange}
             />
             {error && this.getErrors(error)}
-            <Button label="Submit" />
+            <Button label="Submit" loading={loading} />
           </div>
         </div>
         <aside>
