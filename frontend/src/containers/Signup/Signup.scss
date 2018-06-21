@@ -37,9 +37,16 @@ section.ldc-complete-registration {
     }
 
     .sm-form,
-    .lm-form {
+    .lm-form,
+    .crm-form {
       display: flow-root;
       width: calc(100% - 130px);
+
+      .react-tel-input {
+        margin: 16px 0;
+        display: inline-block;
+        float: right;
+      }
 
       .ldc-error-text {
         margin-top: 20px;
@@ -117,9 +124,11 @@ section.ldc-complete-registration {
 
 @media (max-width: $screen-xl) and (min-width: $screen-md) {
   section.ldc-signup,
-  section.ldc-login {
+  section.ldc-login,
+  section.ldc-complete-registration {
     .s-main,
-    .l-main {
+    .l-main,
+    .cr-main {
       padding-right: 40px;
       width: calc(100% - 410px);
 
@@ -128,7 +137,8 @@ section.ldc-complete-registration {
       }
 
       .sm-form,
-      .lm-form {
+      .lm-form,
+      .crm-form {
         width: calc(100% - 56px);
       }
     }
@@ -142,9 +152,11 @@ section.ldc-complete-registration {
 
 @media (max-width: $screen-md) and (min-width: $screen-sm) {
   section.ldc-signup,
-  section.ldc-login {
+  section.ldc-login,
+  section.ldc-complete-registration {
     .s-main,
-    .l-main {
+    .l-main,
+    .cr-main {
       padding-right: 40px;
       width: calc(100% - 300px);
 
@@ -153,7 +165,8 @@ section.ldc-complete-registration {
       }
 
       .sm-form,
-      .lm-form {
+      .lm-form,
+      .crm-form {
         width: 100%;
       }
     }
@@ -167,9 +180,11 @@ section.ldc-complete-registration {
 
 @media (max-width: $screen-sm) and (min-width: $screen-tablets) {
   section.ldc-signup,
-  section.ldc-login {
+  section.ldc-login,
+  section.ldc-complete-registration {
     .s-main,
-    .l-main {
+    .l-main,
+    .cr-main {
       padding-right: 0;
       padding-bottom: 60px;
       border-right: none;
@@ -181,7 +196,8 @@ section.ldc-complete-registration {
       }
 
       .sm-form,
-      .lm-form {
+      .lm-form,
+      .crm-form {
         width: 100%;
       }
     }
@@ -196,11 +212,13 @@ section.ldc-complete-registration {
 
 @media (max-width: $screen-tablets) {
   section.ldc-signup,
-  section.ldc-login {
+  section.ldc-login,
+  section.ldc-complete-registration {
     margin-top: 20px;
 
     .s-main,
-    .l-main {
+    .l-main,
+    .cr-main {
       padding-right: 0;
       padding-bottom: 50px;
       border-right: none;
@@ -226,7 +244,8 @@ section.ldc-complete-registration {
       }
 
       .sm-form,
-      .lm-form {
+      .lm-form,
+      .crm-form {
         display: block;
         width: 100%;
 
