@@ -1,4 +1,4 @@
-import EmailSenderAbstraction from "../emailsender-abstraction/emailsender-abstraction"
+import EmailSenderAbstraction from "./abstraction"
 
 class EmailSenderConsole implements EmailSenderAbstraction {
   send({

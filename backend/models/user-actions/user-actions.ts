@@ -4,7 +4,8 @@ const TokenMySQL = require("../token-mysql/token-mysql")
 import * as UserMySQL from "../user-mysql/user-mysql"
 
 import EmailCreator from "../email-creator/email-creator"
-import EmailSender from "../emailsender-abstraction/emailsender-abstraction"
+import EmailSender from "../emailsender/abstraction"
+import EmailSenderError from "../emailsender/error"
 
 import {
   NewUserInterface,
@@ -15,7 +16,19 @@ class User {
   emailSender: EmailSender
   emailCreator: EmailCreator
 
-  constructor({ emailSender, emailCreator }) {
+  constructor({
+    emailSender,
+    emailCreator,
+  }: {
+    emailSender?: EmailSender
+    emailCreator?: EmailCreator
+  }) {
+    if (!emailSender) {
+      emailSender = new EmailSenderError()
+    }
+    if (!emailCreator) {
+      emailCreator = new EmailCreator({ backend: "", from: "" })
+    }
     Object.assign(this, { emailSender, emailCreator })
   }
 
@@ -77,7 +90,6 @@ class User {
       token: token,
       created: Date.now(),
     })
-
     await this.emailSender.send(this.emailCreator.confirmEmail(_user, token))
 
     return _user
@@ -96,6 +108,9 @@ class User {
     return user
   }
 
+  async activateUser({ user_id }: { user_id: number }) {
+    return await UserMySQL.update(user_id, { disabled: null })
+  }
   // returns user
   async confirmEmail(token) {
     let [{ user_id: userId }] = await TokenMySQL.find({ token })

@@ -16,7 +16,7 @@ const authOptions = {
 
 import UserActions from "../../../models/user-actions/user-actions"
 import EmailCreator from "../../../models/email-creator/email-creator"
-import EmailSender from "../../../models/emailsender-abstraction/emailsender-abstraction"
+import EmailSender from "../../../models/emailsender/abstraction"
 
 export function start({
   app,

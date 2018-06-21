@@ -1,8 +1,8 @@
-const chance = require("chance")()
-var RoutesForTests = require("./routes.for.tests")
-
-var { request, mockMailSender } = RoutesForTests.create()
-
+import * as Chance from "chance"
+import * as _ from "lodash"
+import * as RoutesForTests from "./utils-tests/routes.for.tests"
+var { request, emailSenderMock } = RoutesForTests.create()
+var chance = Chance()
 /**
  * Complete Story:
  * User A sign up
@@ -24,9 +24,11 @@ test("user sign-up, click link, upload lead. user 2, sign-up, click link, buy le
     password: "KGHasdF987654&*^%$#",
     email: chance.email(),
   })
+  expect(_.get(x, "error.text")).toBeFalsy()
   expect(x.status).toEqual(201)
-  var lastCall = mockMailSender.mock.calls.pop()
-  var html = lastCall[0].html
+  var lastCall = emailSenderMock.lastCall()
+
+  var html = lastCall.html
   var linkMatch = html.match(/href="(.*?)"/)
   expect(linkMatch).toHaveLength(2)
   var link = linkMatch[1]
