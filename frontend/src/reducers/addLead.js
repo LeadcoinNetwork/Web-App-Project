@@ -43,5 +43,7 @@ export default function(state = initialState, action) {
         ...state,
         db_fields: action.db_fields,
       }
+    default:
+      return state
     }
   }
