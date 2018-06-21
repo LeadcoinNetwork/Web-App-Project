@@ -3,7 +3,9 @@ import { types } from "Actions"
 const initialState = {
   company: "",
   country: "",
-  phone: "",
+  phone: {
+    value: "",
+  },
   error: "",
 }
 
