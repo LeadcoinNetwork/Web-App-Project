@@ -1,2 +1,3 @@
-import a from "./CSVUpload"
-export default a
+import "./CSVUpload.scss"
+import CSVUpload from "./CSVUpload"
+export default CSVUpload

@@ -5,16 +5,19 @@ const Button = ({
   disabled,
   label,
   loadingLabel = "Wait",
+  className,
   loading,
   onClick,
+  children,
 }) => (
   <button
-    className={`ldc-button${loading ? " b-loading" : ""}`}
+    className={className+` ldc-button${loading ? " b-loading" : ""}`}
     type={type || "button"}
     disabled={disabled || loading}
     onClick={onClick}
   >
     {loading ? loadingLabel : label}
+    {children}
   </button>
 )
 

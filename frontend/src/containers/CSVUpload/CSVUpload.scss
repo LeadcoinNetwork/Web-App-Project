@@ -1,0 +1,18 @@
+@import "~Styles/variables";
+
+.csvUpload {
+  padding: 10px;
+  .file_pick {
+    margin-bottom: 10px;
+    .container_button {
+      position: relative;
+      .displaynone {
+        position: absolute;
+        opacity: 0;
+        border-radius: 25px;
+        width: 100%;
+        top: 0; right: 0; bottom: 0; left: 0;
+      }
+    }
+  }
+}

@@ -13,6 +13,7 @@ import * as leads from "./leads"
 import * as login from "./login"
 import * as balance from "./balance"
 import * as csvMapping from "./csvMapping"
+import * as csvUpload from "./csvUpload"
 
 export {
   types,
@@ -30,4 +31,5 @@ export {
   leads,
   login,
   csvMapping,
+  csvUpload,
 }
