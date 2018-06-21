@@ -1,1 +1,34 @@
 @import "~Containers/Signup/Signup";
+
+.react-tel-input.ldc-react-phone-input {
+  input[type="tel"],
+  input[type="text"] {
+    color: $main-color;
+    border: none;
+    width: 100%;
+    height: 50px;
+    border-radius: 25px;
+    font-size: 18px;
+    padding-left: 90px;
+  }
+
+  .flag-dropdown {
+    width: 75px;
+    border-radius: 25px 0 0 25px;
+
+    .selected-flag {
+      width: 75px;
+      border-radius: 25px 0 0 25px;
+      padding: 0 0 0 25px;
+
+      &:hover {
+        background-color: $main-color;
+      }
+
+      .flag {
+        margin-top: 0;
+        transform: translateY(-50%);
+      }
+    }
+  }
+}
