@@ -44,6 +44,7 @@ class Signup extends React.Component {
             />
             <TextField
               placeholder="Email"
+              type="email"
               value={email}
               name="email"
               onChange={this.handleChange}

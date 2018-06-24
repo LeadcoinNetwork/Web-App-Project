@@ -39,6 +39,10 @@
   .ldc-app {
     main {
       padding: 0 20px 80px;
+
+      &.a-app-mode {
+        padding: calc(#{$header-height} + 60px) 0 0 0;
+      }
     }
   }
 }

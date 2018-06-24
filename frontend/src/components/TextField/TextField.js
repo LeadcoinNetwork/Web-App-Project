@@ -7,7 +7,7 @@ const TextField = ({ placeholder, name, value, type, onChange, inverted }) => {
       className={clsName}
       name={name}
       value={value}
-      type={type}
+      type={type || "text"}
       placeholder={placeholder}
       onChange={onChange}
     />)

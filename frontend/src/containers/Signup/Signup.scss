@@ -42,6 +42,9 @@ section.ldc-complete-registration {
       display: flow-root;
       width: calc(100% - 130px);
 
+      input[type="text"],
+      input[type="email"],
+      input[type="password"],
       .react-tel-input {
         margin: 16px 0;
       }

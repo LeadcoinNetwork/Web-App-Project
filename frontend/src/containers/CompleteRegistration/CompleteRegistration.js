@@ -25,6 +25,8 @@ class CompleteRegistration extends React.Component {
       error,
     } = this.props.completeRegistration
 
+    console.log(phone)
+
     return (
       <section className="ldc-complete-registration">
         <div className="cr-main">
