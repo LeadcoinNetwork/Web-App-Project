@@ -14,6 +14,7 @@ storiesOf("Containers/Complete registration", module)
     const change = (key, value, t) =>
       new Promise(resolve => {
         setTimeout(() => {
+          key === "phone" ? (value = { value }) : null
           store.dispatch(
             completeRegistration.completeRegistrationHandleChange(key, value),
           )
@@ -24,36 +25,12 @@ storiesOf("Containers/Complete registration", module)
     let flow = [
       {
         key: "company",
-        values: [
-          "L",
-          "Le",
-          "Lea",
-          "Lead",
-          "Leadc",
-          "Leadco",
-          "Leadcoi",
-          "Leadcoin",
-        ],
+        values: "Leadcoin",
       },
-      { key: "country", values: ["I", "Is", "Isr", "Isra", "Israe", "Israel"] },
+      { key: "country", values: "Israel" },
       {
         key: "phone",
-        values: [
-          { value: "+" },
-          { value: "+9" },
-          { value: "+97" },
-          { value: "+972" },
-          { value: "+972" },
-          { value: "+97205" },
-          { value: "+972058" },
-          { value: "+9720584" },
-          { value: "+97205847" },
-          { value: "+972058470" },
-          { value: "+9720584709" },
-          { value: "+97205847090" },
-          { value: "+972058470909" },
-          { value: "+9720584709090" },
-        ],
+        values: "+9720584709090",
       },
     ]
 
@@ -61,8 +38,9 @@ storiesOf("Containers/Complete registration", module)
       for (let i = 0; i < flow.length; i++) {
         await change(flow[i].key, "", 400)
 
-        for (let j = 0; j < flow[i].values.length; j++) {
-          await change(flow[i].key, flow[i].values[j], 90)
+        for (let j = 0; j <= flow[i].values.length; j++) {
+          console.log(flow[i].values.substr(0, j))
+          await change(flow[i].key, flow[i].values.substr(0, j), 90)
         }
       }
       await change("", "", 400)
