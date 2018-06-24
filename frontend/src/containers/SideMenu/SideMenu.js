@@ -8,16 +8,22 @@ const SideMenu = ({ path }) => {
       <Link
         to="/buy-leads"
         className={path === "/buy-leads" ? "sm-active" : ""}
+        data-text="buy leads"
       >
         <i className="fas fa-cart-plus" />
       </Link>
       <Link
         to="/sell-leads"
         className={path === "/sell-leads" ? "sm-active" : ""}
+        data-text="sell leads"
       >
         <i className="fas fa-coins" />
       </Link>
-      <Link to="/my-leads" className={path === "/my-leads" ? "sm-active" : ""}>
+      <Link
+        to="/my-leads"
+        className={path === "/my-leads" ? "sm-active" : ""}
+        data-text="my leads"
+      >
         <i className="fas fa-clipboard-list" />
       </Link>
     </nav>
