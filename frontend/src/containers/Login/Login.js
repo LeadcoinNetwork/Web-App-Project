@@ -37,6 +37,7 @@ class Login extends React.Component {
             <h4>Or enter your details:</h4>
             <TextField
               placeholder="Email"
+              type="email"
               name="email"
               value={email}
               onChange={this.handleChange}

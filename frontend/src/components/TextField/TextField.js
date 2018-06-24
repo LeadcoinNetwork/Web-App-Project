@@ -5,7 +5,7 @@ const TextField = ({ placeholder, name, value, type, onChange }) => (
     className="ldc-textfield"
     name={name}
     value={value}
-    type={type}
+    type={type || "text"}
     placeholder={placeholder}
     onChange={onChange}
   />
