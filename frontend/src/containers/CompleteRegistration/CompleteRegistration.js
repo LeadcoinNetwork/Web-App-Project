@@ -45,6 +45,7 @@ class CompleteRegistration extends React.Component {
               type="text"
             />
             <ReactPhoneInput
+              containerClass="react-tel-input ldc-react-phone-input"
               name="phone"
               value={phone.value}
               defaultCountry={"us"}
