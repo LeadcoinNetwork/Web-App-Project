@@ -5,11 +5,14 @@ import { createStoreAndStory } from "storybook-utils/withRouter"
 
 const mockdata = require("../../mocks/notifications.json")
 
+import NotificationElement from "./NotificationElement"
+
 storiesOf("Containers/Notification Element", module)
   .add("Empty", () => {
     var { store, story } = createStoreAndStory({
       path: "/my-leads",
     })
+    store.dispatch(actions.user.loggedIn({ id: 123 }))
     return story
   })
 
@@ -17,6 +20,7 @@ storiesOf("Containers/Notification Element", module)
     var { store, story } = createStoreAndStory({
       path: "/my-leads",
     })
+    store.dispatch(actions.user.loggedIn({ id: 123 }))
     store.dispatch(actions.notifications.notificationsShow([], 0))
     return story
   })
@@ -25,6 +29,7 @@ storiesOf("Containers/Notification Element", module)
     var { store, story } = createStoreAndStory({
       path: "/my-leads",
     })
+    store.dispatch(actions.user.loggedIn({ id: 123 }))
     store.dispatch(
       actions.notifications.notificationsUpdate(
         mockdata.noti6un4,
@@ -38,6 +43,7 @@ storiesOf("Containers/Notification Element", module)
     var { store, story } = createStoreAndStory({
       path: "/my-leads",
     })
+    store.dispatch(actions.user.loggedIn({ id: 123 }))
     store.dispatch(
       actions.notifications.notificationsUpdate(
         mockdata.noti6un4,
@@ -52,6 +58,7 @@ storiesOf("Containers/Notification Element", module)
     var { store, story } = createStoreAndStory({
       path: "/my-leads",
     })
+    store.dispatch(actions.user.loggedIn({ id: 123 }))
     store.dispatch(
       actions.notifications.notificationsUpdate(
         mockdata.noti15un14,
