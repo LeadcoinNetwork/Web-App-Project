@@ -12,31 +12,26 @@
     padding-left: 90px;
   }
 
-  .flag-dropdown {
+  .flag-dropdown,
+  .flag-dropdown.open-dropdown {
     width: 75px;
     border-radius: 25px 0 0 25px;
+    background-color: #eaeaea;
+    border: 1px solid #cacaca;
 
     .selected-flag {
       width: 75px;
       border-radius: 25px 0 0 25px;
       padding: 0 0 0 22px;
+      background: transparent;
       transition: all 300ms ease;
-
-      &:hover {
-        background-color: $main-color;
-
-        .flag {
-          .arrow {
-            border-top-color: #fff;
-          }
-        }
-      }
 
       .flag {
         margin-top: 0;
         transform: translateY(-50%);
 
-        .arrow {
+        .arrow,
+        .arrow.up {
           left: 26px;
           border-top: 5px solid $main-color;
           border-right: 5px solid transparent;
@@ -44,6 +39,26 @@
           margin-top: 0;
           transform: translateY(-4px);
           transition: all 300ms ease;
+
+          &.up {
+            border-top: none;
+            border-bottom: 5px solid $main-color;
+            transform: translateY(-3px);
+          }
+        }
+      }
+
+      &:hover {
+        background-color: $main-color;
+
+        .flag {
+          .arrow {
+            border-top-color: #fff;
+
+            &.up {
+              border-bottom-color: #fff;
+            }
+          }
         }
       }
     }
