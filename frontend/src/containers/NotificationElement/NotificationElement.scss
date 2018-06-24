@@ -1,3 +1,5 @@
+@import "~Styles/variables";
+
 .notification-element {
   position: relative;
   display: inline-block;
@@ -9,15 +11,15 @@
 
   .notification-badge {
     position: absolute;
-    top: 20px;
-    right: 0px;
-    width: 15px;
-    height: 15px;
-    line-height: 16px;
-    font-size: 12px;
+    top: -3px;
+    right: 6px;
+    width: 16px;
+    height: 16px;
+    line-height: 15px;
+    font-size: 11px;
     color: white;
     border-radius: 50%;
-    background-color: red;
+    background-color: $ldc-color;
     text-align: center;
 
     &.plus {
