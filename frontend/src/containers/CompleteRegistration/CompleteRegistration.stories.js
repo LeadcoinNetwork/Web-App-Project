@@ -39,7 +39,6 @@ storiesOf("Containers/Complete registration", module)
         await change(flow[i].key, "", 400)
 
         for (let j = 0; j <= flow[i].values.length; j++) {
-          console.log(flow[i].values.substr(0, j))
           await change(flow[i].key, flow[i].values.substr(0, j), 90)
         }
       }
