@@ -35,3 +35,9 @@ nav.ldc-side-menu {
     }
   }
 }
+
+@media (max-width: $screen-tablets) {
+  nav.ldc-side-menu {
+    display: none;
+  }
+}
