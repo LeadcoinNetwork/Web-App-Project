@@ -1,7 +1,10 @@
 import { types } from "../actions"
 
 const initialState = {
-  db_fields: [],
+  db_fields: {
+    private: [],
+    public: [],
+  },
   batch_id: null,
   file_fields: [],
   fields_map: {},
@@ -35,14 +38,6 @@ export default function(state = initialState, action) {
         errors: action.errors,
       }
 
-    case types.CSV_MAPPING_CLEAR_FORM:
-      return {
-        ...state,
-        fields_map: initialState.fields_map,
-        price: initialState.price,
-        agree_to_terms: initialState.agree_to_terms,
-      }
-
     case types.CSV_MAPPING_AGREE_TO_TERMS:
       return {
         ...state,
@@ -50,13 +45,12 @@ export default function(state = initialState, action) {
         agree_to_terms: action.agree_to_terms.value
       }
 
-    case types.CSV_MAPPING_MAP_HANDLE_CHANGE:
+    case types.CSV_MAPPING_CLEAR_FORM:
       return {
         ...state,
-        fields_map: {
-          ...state.fields_map,
-          [action.map_change.name]: action.map_change.value,
-        }
+        fields_map: initialState.fields_map,
+        price: initialState.price,
+        agree_to_terms: initialState.agree_to_terms,
       }
 
     case types.CSV_MAPPING_FORM_HANDLE_CHANGE:
@@ -70,6 +64,15 @@ export default function(state = initialState, action) {
       return {
         ...state,
         db_fields: action.db_fields,
+      }
+
+    case types.CSV_MAPPING_MAP_HANDLE_CHANGE:
+      return {
+        ...state,
+        fields_map: {
+          ...state.fields_map,
+          [action.map_change.name]: action.map_change.value,
+        }
       }
 
     case types.CSV_MAPPING_GET_FILE_FIELDS:

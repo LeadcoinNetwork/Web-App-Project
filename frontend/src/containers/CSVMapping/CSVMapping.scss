@@ -2,6 +2,19 @@
 
 .fields_mapper {
   padding: 10px;
+  .personal {
+    padding-bottom: 10px;
+    border-bottom: solid 1px black;
+  }
+  .public {
+    padding-top: 10px;
+  }
+  .controls {
+    margin: 5px;
+  }
+  .help_text {
+    width: 200px;
+  }
   .error {
     color: red;
     label {
@@ -13,7 +26,7 @@
     height: 30px;
     line-height: 30px;
     .fieldLabel {
-      width: 200px;
+      width: 100px;
       margin-right: 5px;
       text-transform: capitalize;
     }

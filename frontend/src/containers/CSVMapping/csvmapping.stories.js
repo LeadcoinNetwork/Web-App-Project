@@ -24,11 +24,11 @@ storiesOf("Containers/CSVMapping")
       "city", "property type", "size", "budget",
       "bedrooms", "floor", "specification"
     ]))
-    store.dispatch(actions.csvMapping.csvMappingGetDbFields([
-      "date", "name", "phone", "email", "state",
-      "city", "property type", "size", "budget",
-      "bedrooms", "floor", "specification"
-    ]))
+    let mock_fields = {
+      private: ['name', 'phone'],
+      public: ['floor', 'size']
+    }
+    store.dispatch(actions.csvMapping.csvMappingGetDbFields(mock_fields))
     return story
   })
 
@@ -42,11 +42,11 @@ storiesOf("Containers/CSVMapping")
       "city", "property type", "size", "budget",
       "bedrooms", "floor", "specification"
     ]))
-    store.dispatch(actions.csvMapping.csvMappingGetDbFields([
-      "date", "name", "phone", "email", "state",
-      "city", "property type", "size", "budget",
-      "bedrooms", "floor", "specification"
-    ]))
+    let mock_fields = {
+      private: ['name', 'phone'],
+      public: ['floor', 'size']
+    }
+    store.dispatch(actions.csvMapping.csvMappingGetDbFields(mock_fields))
     store.dispatch(actions.csvMapping.csvMappingAgreeToTerms(false))
     store.dispatch(actions.csvMapping.csvMappingFormChange('price',""))
     store.dispatch(actions.csvMapping.csvMappingError(['price']))
@@ -63,11 +63,11 @@ storiesOf("Containers/CSVMapping")
       "city", "property type", "size", "budget",
       "bedrooms", "floor", "specification"
     ]))
-    store.dispatch(actions.csvMapping.csvMappingGetDbFields([
-      "date", "name", "phone", "email", "state",
-      "city", "property type", "size", "budget",
-      "bedrooms", "floor", "specification"
-    ]))
+    let mock_fields = {
+      private: ['name', 'phone'],
+      public: ['floor', 'size']
+    }
+    store.dispatch(actions.csvMapping.csvMappingGetDbFields(mock_fields))
     store.dispatch(actions.csvMapping.csvMappingAgreeToTerms(false))
     store.dispatch(actions.csvMapping.csvMappingFormChange('price',""))
     store.dispatch(actions.csvMapping.csvMappingError(['agree_to_terms']))
@@ -84,11 +84,11 @@ storiesOf("Containers/CSVMapping")
       "city", "property type", "size", "budget",
       "bedrooms", "floor", "specification"
     ]))
-    store.dispatch(actions.csvMapping.csvMappingGetDbFields([
-      "date", "name", "phone", "email", "state",
-      "city", "property type", "size", "budget",
-      "bedrooms", "floor", "specification"
-    ]))
+    let mock_fields = {
+      private: ['name', 'phone'],
+      public: ['floor', 'size']
+    }
+    store.dispatch(actions.csvMapping.csvMappingGetDbFields(mock_fields))
     store.dispatch(actions.csvMapping.csvMappingAgreeToTerms(false))
     store.dispatch(actions.csvMapping.csvMappingFormChange('price',""))
     store.dispatch(actions.csvMapping.csvMappingError(['agree_to_terms', 'price']))

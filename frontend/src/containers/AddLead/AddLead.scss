@@ -1,25 +1,27 @@
 @import "~Styles/variables";
 
-.fields_mapper {
+.add_lead {
   padding: 10px;
-  .error {
-    color: red;
-    label {
-      color: red;
+  .field_submit {
+    margin-top: 5px;
+    .twothirds {
+      width: 242px;
     }
   }
   .line {
-    margin: 5px 10px;
-    height: 30px;
-    line-height: 30px;
+    &.error {
+      .fieldLabel {
+        color: red;
+        font-weight: bold;
+      }
+    }
+    margin: 10px 15px;
+    height: 50px;
+    line-height: 50px;
     .fieldLabel {
       width: 200px;
       margin-right: 5px;
       text-transform: capitalize;
-    }
-    .ldc-select {
-      background-color: #180852;
-      color: white;
     }
   }
   .price {

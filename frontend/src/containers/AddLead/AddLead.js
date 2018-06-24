@@ -3,7 +3,7 @@ import Select from "Components/Select"
 import Button from "Components/Button"
 import TextField from "Components/TextField"
 import { connect } from "react-redux"
-import { csvMapping } from "Actions"
+import { addLead } from "Actions"
 
 class AddLead extends React.Component {
   renderPriceElement() {
@@ -13,8 +13,6 @@ class AddLead extends React.Component {
       <div className={"price "+error}>
         <span>Lead price</span>
         <TextField
-          placeholder="Hint Text"
-          floatingLabelText="Floating Label Text"
           value={this.props.price}
           onChange={ (e) => {
             this.props.handleChange('price',e.target.value)
@@ -26,10 +24,10 @@ class AddLead extends React.Component {
   }
 
   renderTerms() {
-    const errors = this.props.errors
-    const error = (errors.indexOf('agree_to_terms') > -1) ? "error" : ""
+    const {errors} = this.props
+    const error = errors['agree_to_terms'] ? "error" : ""
     return (
-      <div className={error}>
+      <div className={error + " twothirds"}>
         <input
           type="checkbox"
           name="agree_to_terms"
@@ -45,38 +43,51 @@ class AddLead extends React.Component {
   }
 
   render() {
-    const { db_fields } = this.props
+    const { db_fields, values, errors } = this.props
     let fields
     fields = db_fields.map((f, i) => {
+      const isError = errors[f] ? 'error' : ''
       return (
-        <div key={i} className="line flexed">
+        <div key={i} className={isError+" line flexed"}>
           <div className="fieldLabel">{f} </div>
+          <div className="fieldValue">
+            <TextField
+              inverted={true}
+              placeholder=" "
+              value={values[f]}
+              onChange={ (e) => {
+                this.props.handleChange(f, e.target.value)
+              }}
+            />
+           </div>
         </div>
       )
     })
-
-    const price_element = this.renderPriceElement()
+    if (fields.length <1) {
+      return (
+        <div> LOADING </div>
+      )
+    }
     const terms = this.renderTerms()
     return (
-      <div className="fields_mapper">
+      <div className="add_lead">
         <div className="header">Some text </div>
         <div className="header">More text </div>
         <div className="header">Even More </div>
         <div className="fields flexed">
           <div>{fields}</div>
         </div>
-        {price_element}
-
         <div className="field_submit flexed">
           {terms}
           <div>
             <Button
-              onClick={() => { this.props.submit(this.props.fields_map) }}
+              onClick={() => { this.props.submit(values) }}
               label="Submit"
             />
           </div>
           <div>
             <Button
+              inverted={true}
               onClick={() => { this.props.clear() }}
               label="Clear"
             />
@@ -88,13 +99,12 @@ class AddLead extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  ...state.csvMapping
+  ...state.addLead
 })
 
 export default connect(mapStateToProps, {
-  agreeToTerms: csvMapping.csvMappingAgreeToTerms,
-  handleMapChange: csvMapping.csvMappingMapChange,
-  handleChange: csvMapping.csvMappingFormChange,
-  price: csvMapping.csvMappingClearForm,
-  submit: csvMapping.csvMappingSubmit,
+  agreeToTerms: addLead.addLeadAgreeToTerms,
+  handleChange: addLead.addLeadHandleFormChange,
+  submit: addLead.addLeadSubmitForm,
+  clear: addLead.addLeadClearForm,
 })(AddLead)

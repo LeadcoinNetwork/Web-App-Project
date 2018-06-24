@@ -63,16 +63,10 @@ class CSVMapping extends React.Component {
     )
   }
 
-  render() {
-    const { db_fields, batch_id } = this.props
-    let fields
-    if (!batch_id)
-      return (
-        <div className="fields_mapper">
-          <div> LOADING </div>
-        </div>
-      )
-    fields = db_fields.map((f, i) => {
+  private_fields() {
+    const {db_fields} = this.props
+    const fields = db_fields.private
+    return fields.map((f, i) => {
       return (
         <div key={i} className="line flexed">
           <div className="fieldLabel">{f} </div>
@@ -80,23 +74,53 @@ class CSVMapping extends React.Component {
         </div>
       )
     })
+  }
 
+  public_fields() {
+    const {db_fields} = this.props
+    const fields = db_fields.public
+    return fields.map((f, i) => {
+      return (
+        <div key={i} className="line flexed">
+          <div className="fieldLabel">{f} </div>
+          {this.listItems(f)}
+        </div>
+      )
+    })
+  }
+
+  render() {
+    const { batch_id } = this.props
+    if (!batch_id)
+      return (
+        <div className="fields_mapper">
+          <div> LOADING </div>
+        </div>
+      )
     const price_element = this.renderPriceElement()
     const terms = this.renderTerms()
     return (
       <div className="fields_mapper">
-        <div className="header">Map Columns in your CSV to Leads </div>
-        <div className="header">Personal Identification Information </div>
-        <div className="header">
-          fields that will only be visible to who bought the lead
-        </div>
-
-        <div className="fields flexed">
-          <div>{fields}</div>
-        </div>
+        <div className="main_container">
+          <div className="personal flexed">
+            <div className="help_text">
+              <div className="header">Personal Identification Information </div>
+              <div className="header">These fields will only be visible to who bought the lead </div>
+            </div>
+            <div className="fields">
+              {this.private_fields()}
+            </div>
+          </div>
+          <div className="public flexed">
+            <div className="help_text">
+              <div className="header">Public Fields </div>
+            </div>
+            <div className="fields">
+              {this.public_fields()}
+            </div>
+          </div>
         {price_element}
-
-        <div className="field_submit flexed">
+          <div className="controls field_submit flexed">
           {terms}
           <div>
             <Button
@@ -106,10 +130,15 @@ class CSVMapping extends React.Component {
           </div>
           <div>
             <Button
+              inverted={true}
               onClick={() => { this.props.clear() }}
               label="Clear"
             />
           </div>
+          </div>
+
+        </div>
+        <div className="field_submit flexed">
         </div>
       </div>
     )
