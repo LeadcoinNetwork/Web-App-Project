@@ -17,7 +17,7 @@
     width: 75px;
     border-radius: 25px 0 0 25px;
     background-color: #eaeaea;
-    border: 1px solid #cacaca;
+    border: none;
 
     .selected-flag {
       width: 75px;
@@ -49,7 +49,7 @@
       }
 
       &:hover {
-        background-color: $main-color;
+        background-color: $bg-main-btn;
 
         .flag {
           .arrow {
@@ -61,6 +61,15 @@
           }
         }
       }
+    }
+
+    ul.country-list {
+      left: 75px;
+      top: 50px;
+      max-width: calc(100vw - 140px);
+      margin: 0;
+      box-shadow: none;
+      color: $main-color;
     }
   }
 }
