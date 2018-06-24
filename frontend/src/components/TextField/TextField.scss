@@ -4,11 +4,16 @@
   display: inline-block;
   width: 100%;
   height: 50px;
-  background-color: #fff;
+  background-color: white;
   font-size: 18px;
   border: none;
   border-radius: 25px;
   outline: none;
   color: $main-color;
   padding: 0 25px;
+  &.inverted {
+    color: white;
+    background-color: $main-color;
+    border: solid 1px white;
+  }
 }

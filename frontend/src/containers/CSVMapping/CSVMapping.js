@@ -32,8 +32,7 @@ class CSVMapping extends React.Component {
       <div className={"price "+error}>
         <span>Lead price</span>
         <TextField
-          placeholder="Hint Text"
-          floatingLabelText="Floating Label Text"
+          inverted={true}
           value={this.props.price}
           onChange={ (e) => {
             this.props.handleChange('price',e.target.value)

@@ -9,9 +9,14 @@ const Button = ({
   loading,
   onClick,
   children,
-}) => (
+  inverted,
+}) => {
+  let clsName = className || 'ldc-button'
+  clsName += (loading) ? " b-loading" : ""
+  clsName += (inverted) ? " inverted" : ""
+  return (
   <button
-    className={className + ` ldc-button${loading ? " b-loading" : ""}`}
+    className={clsName}
     type={type || "button"}
     disabled={disabled || loading}
     onClick={onClick}
@@ -19,6 +24,7 @@ const Button = ({
     {loading ? loadingLabel : label}
     {children}
   </button>
-)
+  )
+}
 
 export default Button
