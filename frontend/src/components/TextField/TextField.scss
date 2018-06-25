@@ -11,9 +11,15 @@
   outline: none;
   color: $main-color;
   padding: 0 25px;
-  &.inverted {
+  font-weight: 300;
+
+  &.t-app-style {
     color: white;
-    background-color: $main-color;
-    border: solid 1px white;
+    background-color: transparent;
+    border: solid 1px $bg-level-3;
+    border-radius: 0;
+    height: 34px;
+    font-size: 14px;
+    padding: 0 12px;
   }
 }
