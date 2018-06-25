@@ -2,6 +2,19 @@
 
 .add_lead {
   padding: 10px;
+  .personal {
+    padding-bottom: 10px;
+    border-bottom: solid 1px black;
+  }
+  .public {
+    padding-top: 10px;
+  }
+  .controls {
+    margin: 5px;
+  }
+  .help_text {
+    width: 200px;
+  }
   .field_submit {
     margin-top: 5px;
     .twothirds {

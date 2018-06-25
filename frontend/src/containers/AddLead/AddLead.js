@@ -13,6 +13,7 @@ class AddLead extends React.Component {
       <div className={"price "+error}>
         <span>Lead price</span>
         <TextField
+          inverted={true}
           value={this.props.price}
           onChange={ (e) => {
             this.props.handleChange('price',e.target.value)
@@ -91,7 +92,7 @@ class AddLead extends React.Component {
               {this.renderFields(db_fields.public)}
             </div>
           </div>
-        {this.renderPriceElement()}
+          {this.renderPriceElement()}
           <div className="controls field_submit flexed">
           {terms}
           <div>
