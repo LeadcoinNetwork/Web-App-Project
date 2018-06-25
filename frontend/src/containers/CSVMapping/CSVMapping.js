@@ -35,7 +35,7 @@ class CSVMapping extends React.Component {
       <div className={"price " + error}>
         <span>Lead price</span>
         <TextField
-          inverted={true}
+          appStyle={true}
           value={this.props.price}
           onChange={e => {
             this.props.handleChange("price", e.target.value)
@@ -116,7 +116,7 @@ class CSVMapping extends React.Component {
             </div>
             <div>
               <Button
-                inverted={true}
+                appStyle={true}
                 onClick={() => {
                   this.props.clear()
                 }}

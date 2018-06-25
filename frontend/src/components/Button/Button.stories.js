@@ -10,7 +10,7 @@ storiesOf("Components/Button")
   .add("with loading witout text", () => (
     <Button label="Click me" loading={true} Click={() => alert("Clicked!")} />
   ))
-  .add("with inverted", () => <Button label="Click me" inverted={true} />)
+  .add("with App Style", () => <Button label="Click me" appStyle={true} />)
 
   .add("with loading with text text", () => (
     <Button

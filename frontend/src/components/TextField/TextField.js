@@ -7,10 +7,8 @@ const TextField = ({
   type,
   onChange,
   appStyle,
-  inverted,
   disabeld,
 }) => {
-  appStyle = appStyle || inverted
   return (
     <input
       className={`ldc-textfield${appStyle ? " t-app-style" : ""}`}

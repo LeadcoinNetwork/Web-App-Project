@@ -13,7 +13,7 @@ class AddLead extends React.Component {
       <div className={"price " + error}>
         <span>Lead price</span>
         <TextField
-          inverted={true}
+          appStyle={true}
           value={this.props.price}
           onChange={e => {
             this.props.handleChange("price", e.target.value)
@@ -52,7 +52,7 @@ class AddLead extends React.Component {
           <div className="fieldValue">
             <TextField
               disabled={loading}
-              inverted={true}
+              appStyle={true}
               placeholder=" "
               value={values[f]}
               onChange={e => {
@@ -102,7 +102,7 @@ class AddLead extends React.Component {
             <div>
               <Button
                 loading={loading}
-                inverted={true}
+                appStyle={true}
                 onClick={() => {
                   this.props.clear()
                 }}

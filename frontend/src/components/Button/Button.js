@@ -8,11 +8,8 @@ const Button = ({
   loading,
   onClick,
   children,
-  inverted,
   appStyle,
 }) => {
-  appStyle = appStyle || inverted
-
   return (
     <button
       className={`ldc-button${loading ? " b-loading" : ""}${
