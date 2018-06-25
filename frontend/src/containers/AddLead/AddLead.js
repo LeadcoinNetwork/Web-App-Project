@@ -8,7 +8,7 @@ import { addLead } from "Actions"
 class AddLead extends React.Component {
   renderPriceElement() {
     const errors = this.props.errors
-    const error = (errors.indexOf('price') > -1) ? "error" : ""
+    const error = errors['price'] ? "error" : ""
     return (
       <div className={"price "+error}>
         <span>Lead price</span>
@@ -42,10 +42,9 @@ class AddLead extends React.Component {
     )
   }
 
-  render() {
-    const { db_fields, values, errors } = this.props
-    let fields
-    fields = db_fields.map((f, i) => {
+  renderFields(fields) {
+    const {errors, values} = this.props
+    return fields.map((f, i) => {
       const isError = errors[f] ? 'error' : ''
       return (
         <div key={i} className={isError+" line flexed"}>
@@ -63,25 +62,41 @@ class AddLead extends React.Component {
         </div>
       )
     })
-    if (fields.length <1) {
+  }
+
+  render() {
+    const { db_fields, values, errors } = this.props
+    if (!db_fields.private)
       return (
         <div> LOADING </div>
       )
-    }
     const terms = this.renderTerms()
     return (
       <div className="add_lead">
-        <div className="header">Some text </div>
-        <div className="header">More text </div>
-        <div className="header">Even More </div>
-        <div className="fields flexed">
-          <div>{fields}</div>
-        </div>
-        <div className="field_submit flexed">
+        <div className="main_container">
+          <div className="personal flexed">
+            <div className="help_text">
+              <div className="header">Personal Identification Information </div>
+              <div className="header">These fields will only be visible to who bought the lead </div>
+            </div>
+            <div className="fields">
+              {this.renderFields(db_fields.private)}
+            </div>
+          </div>
+          <div className="public flexed">
+            <div className="help_text">
+              <div className="header">Public Fields </div>
+            </div>
+            <div className="fields">
+              {this.renderFields(db_fields.public)}
+            </div>
+          </div>
+        {this.renderPriceElement()}
+          <div className="controls field_submit flexed">
           {terms}
           <div>
             <Button
-              onClick={() => { this.props.submit(values) }}
+              onClick={() => { this.props.submit(this.props.fields_map) }}
               label="Submit"
             />
           </div>
@@ -94,6 +109,7 @@ class AddLead extends React.Component {
           </div>
         </div>
       </div>
+    </div>
     )
   }
 }
