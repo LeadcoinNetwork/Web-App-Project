@@ -18,8 +18,18 @@
     background-color: transparent;
     border: solid 1px $bg-level-3;
     border-radius: 0;
-    height: 34px;
+    height: 40px;
     font-size: 14px;
     padding: 0 12px;
+  }
+}
+
+@media (max-width: $screen-tablets) {
+  .ldc-textfield {
+    &.t-app-style {
+      height: 60px;
+      font-size: 18px;
+      padding: 0 16px;
+    }
   }
 }

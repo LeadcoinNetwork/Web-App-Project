@@ -1,3 +1,5 @@
+@import "~Styles/variables";
+
 section.ldc-user-settings {
   .us-password {
     display: flow-root;
@@ -15,6 +17,22 @@ section.ldc-user-settings {
     .ldc-button {
       margin-top: 30px;
       float: right;
+    }
+  }
+}
+
+@media (max-width: $screen-tablets) {
+  section.ldc-user-settings {
+    .us-password {
+      max-width: 100%;
+
+      .ldc-textfield {
+        margin-top: 20px;
+      }
+
+      .ldc-button {
+        margin-top: 40px;
+      }
     }
   }
 }
