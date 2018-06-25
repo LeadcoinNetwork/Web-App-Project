@@ -44,7 +44,7 @@ class AddLead extends React.Component {
   }
 
   renderFields(fields) {
-    const {errors, values} = this.props
+    const {errors, values, loading} = this.props
     return fields.map((f, i) => {
       const isError = errors[f] ? 'error' : ''
       return (
@@ -52,6 +52,7 @@ class AddLead extends React.Component {
           <div className="fieldLabel">{f} </div>
           <div className="fieldValue">
             <TextField
+              disabled={loading}
               inverted={true}
               placeholder=" "
               value={values[f]}
@@ -66,7 +67,7 @@ class AddLead extends React.Component {
   }
 
   render() {
-    const { db_fields, values, errors } = this.props
+    const { db_fields, loading } = this.props
     if (!db_fields.private)
       return (
         <div> LOADING </div>
@@ -94,23 +95,25 @@ class AddLead extends React.Component {
           </div>
           {this.renderPriceElement()}
           <div className="controls field_submit flexed">
-          {terms}
-          <div>
-            <Button
-              onClick={() => { this.props.submit(this.props.fields_map) }}
-              label="Submit"
-            />
-          </div>
-          <div>
-            <Button
-              inverted={true}
-              onClick={() => { this.props.clear() }}
-              label="Clear"
-            />
+            {terms}
+            <div>
+              <Button
+                loading={loading}
+                onClick={() => { this.props.submit(this.props.fields_map) }}
+                label="Submit"
+              />
+            </div>
+            <div>
+              <Button
+                loading={loading}
+                inverted={true}
+                onClick={() => { this.props.clear() }}
+                label="Clear"
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
     )
   }
 }

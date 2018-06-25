@@ -25,12 +25,13 @@ class CSVUpload extends React.Component {
         <div className="file_pick">
           <div>
             <Button 
-              className="container_button"
+              className="container_button ldc-button"
               loading={loading}
               label={fileLabel} >
               <input
                 className="displaynone"
                 type="file"
+                accept=".csv"
                 onChange= {(e) => {
                   if (loading) return false
                   this.props.pickFile(e.target.files[0])

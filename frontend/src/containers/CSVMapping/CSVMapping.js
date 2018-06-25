@@ -62,22 +62,7 @@ class CSVMapping extends React.Component {
     )
   }
 
-  private_fields() {
-    const {db_fields} = this.props
-    const fields = db_fields.private
-    return fields.map((f, i) => {
-      return (
-        <div key={i} className="line flexed">
-          <div className="fieldLabel">{f} </div>
-          {this.listItems(f)}
-        </div>
-      )
-    })
-  }
-
-  public_fields() {
-    const {db_fields} = this.props
-    const fields = db_fields.public
+  renderFields(fields) {
     return fields.map((f, i) => {
       return (
         <div key={i} className="line flexed">
@@ -89,7 +74,7 @@ class CSVMapping extends React.Component {
   }
 
   render() {
-    const { batch_id } = this.props
+    const { db_fields, batch_id } = this.props
     if (!batch_id)
       return (
         <div className="fields_mapper">
@@ -107,7 +92,7 @@ class CSVMapping extends React.Component {
               <div className="header">These fields will only be visible to who bought the lead </div>
             </div>
             <div className="fields">
-              {this.private_fields()}
+              {this.renderFields(db_fields.private)}
             </div>
           </div>
           <div className="public flexed">
@@ -115,10 +100,10 @@ class CSVMapping extends React.Component {
               <div className="header">Public Fields </div>
             </div>
             <div className="fields">
-              {this.public_fields()}
+              {this.renderFields(db_fields.public)}
             </div>
           </div>
-        {price_element}
+          {price_element}
           <div className="controls field_submit flexed">
           {terms}
           <div>

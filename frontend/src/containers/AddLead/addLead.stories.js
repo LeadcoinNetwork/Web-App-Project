@@ -22,6 +22,17 @@ storiesOf("Containers/AddLead")
     }))
     return story
   })
+  .add("AddLead - after submit", () => {
+    var { store, story } = createStoreAndStory({
+      component: AddLead,
+    })
+    store.dispatch(actions.addLead.addLeadGetDbFields({
+      private: ['name', 'phone'],
+      public: ['floor', 'size']
+    }))
+    store.dispatch(actions.addLead.addLeadLoadingStart())
+    return story
+  })
   .add("AddLead - with erros", () => {
     var { store, story } = createStoreAndStory({
       component: AddLead,

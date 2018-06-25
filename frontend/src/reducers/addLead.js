@@ -5,7 +5,8 @@ const initialState = {
   db_fields: [],
   errors: {},
   agree_to_terms: false,
-  values: {}
+  values: {},
+  loading: false,
 }
 
 export default function(state = initialState, action) {
@@ -24,6 +25,12 @@ export default function(state = initialState, action) {
         ...state,
         errors: [],
         agree_to_terms: action.agree_to_terms.value
+      }
+
+    case types.ADD_LEAD_TOGGLE_LOADING:
+      return {
+        ...state,
+        loading: action.loading,
       }
 
     case types.ADD_LEAD_CLEAR_FORM:
