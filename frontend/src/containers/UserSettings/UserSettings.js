@@ -4,68 +4,72 @@ import Button from "Components/Button"
 import { connect } from "react-redux"
 import { userSettings } from "../../actions"
 
-function UserSettings({
-  currentPassword,
-  newPassword,
-  confirmPassword,
-  loading,
-  error,
-  onChange,
-  onSubmit,
-}) {
-  function updateText(field_name) {
-    return (e) => {
-      onChange(field_name, e.target.value)
-    }
+class UserSettings extends React.Component {
+  handleChange = event => {
+    this.props.handleChange(event.target.name, event.target.value)
   }
-  
-  return (
-    <div className="user-settings">
-      <h1 className="title">User Settings</h1>
-      <h3 className="password-title">Change Your Password</h3>
-      <div>
-        <TextField
-          label="Current Password"
-          value={currentPassword}
-          placeholder={"Enter Your Current Password"}
-          onChange={updateText("currentPassword")}
-          type="password"
-        />
-      </div>
-      <div>
-        <TextField
-          label="New Password"
-          value={newPassword}
-          placeholder={"Enter Your New Password"}
-          onChange={updateText("newPassword")}
-          type="password"
-        />
-      </div>
-      <div>
-        <TextField
-          label="Confirm Password"
-          value={confirmPassword}
-          placeholder={"Confirm Your New Password"}
-          onChange={updateText("confirmPassword")}
-          type="password"
-        />
-      </div>
-      <div>
-        <Button
-          label="submit"
-          loading={loading}
-          onClick={onSubmit}
-        />
-      </div>
-      {error && <div className="error">{error}</div>}
-    </div>
-  )
+  getErrors(errors) {
+    return (
+      <ul className="ldc-error-text">
+        {errors.split(";").map(e => <li>{e}</li>)}
+      </ul>
+    )
+  }
+  render() {
+    let {
+      currentPassword,
+      newPassword,
+      confirmPassword,
+      loading,
+      error,
+    } = this.props.userSettings
+
+    return (
+      <section className="ldc-user-settings">
+        <h1>User Settings</h1>
+        <div className="us-password">
+          <h3>change your password</h3>
+          <TextField
+            appStyle={true}
+            placeholder={"Current Password"}
+            name="currentPassword"
+            value={currentPassword}
+            onChange={this.handleChange}
+            type="password"
+          />
+          <TextField
+            appStyle={true}
+            placeholder={"New Password"}
+            name="newPassword"
+            value={newPassword}
+            onChange={this.handleChange}
+            type="password"
+          />
+          <TextField
+            appStyle={true}
+            placeholder={"Confirm New Password"}
+            name="confirmPassword"
+            value={confirmPassword}
+            onChange={this.handleChange}
+            type="password"
+          />
+          {error && this.getErrors(error)}
+          <Button
+            label="submit"
+            loading={loading}
+            onClick={this.props.onSubmit}
+          />
+        </div>
+      </section>
+    )
+  }
 }
 
-const mapStateToProps = state => state.userSettings
-const mapDispatchToProps = {
+const mapStateToProps = state => ({
+  userSettings: state.userSettings,
+})
+
+export default connect(mapStateToProps, {
   onChange: userSettings.userSettingsHandleChange,
   onSubmit: userSettings.userSettingsSubmit,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserSettings)
+})(UserSettings)

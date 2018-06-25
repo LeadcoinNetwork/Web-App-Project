@@ -1,4 +1,3 @@
-
 import * as types from "./types"
 
 export function addLeadAddError(name, value) {
@@ -22,10 +21,24 @@ export function addLeadAgreeToTerms(value) {
   }
 }
 
+export function addLeadLoadingEnd() {
+  return {
+    type: types.ADD_LEAD_TOGGLE_LOADING,
+    loading: false,
+  }
+}
+
+export function addLeadLoadingStart() {
+  return {
+    type: types.ADD_LEAD_TOGGLE_LOADING,
+    loading: true,
+  }
+}
+
 export function addLeadClearForm() {
   return {
     type: types.ADD_LEAD_CLEAR_FORM,
-    values: {}
+    values: {},
   }
 }
 

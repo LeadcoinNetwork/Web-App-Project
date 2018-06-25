@@ -6,9 +6,7 @@ import { routerMiddleware, push } from "react-router-redux"
 
 export default function* csvMapping() {
   while (true) {
-    alert('1')
     const data = yield take(types.CSV_MAPPING_SUBMIT)
-    alert('2')
     //yield put(Actions.csvMapping.csvMappingSubmit(data))
     /*
     var { fname, lname, email, password } = yield select(state => state.signup)

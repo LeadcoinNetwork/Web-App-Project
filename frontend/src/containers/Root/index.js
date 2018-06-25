@@ -30,9 +30,9 @@ const Root = () => (
       <Route path="/user-settings" component={UserSettings} />
       <Route path="/login" component={Login} />
       <Route path="/admin" component={Admin} />
-      <Route path="/buy-leads" component={MyLeads} />
+      <Route path="/buy-leads" component={BuyLeads} />
       <Route path="/sell-leads" component={SellLeads} />
-      <Route path="/my-leads" component={BuyLeads} />
+      <Route path="/my-leads" component={MyLeads} />
       <Route path="/payments" component={Payments} />
       <Route path="/withdraw" component={Withdraw} />
       <Route path="/uploadform" component={UploadForm} />

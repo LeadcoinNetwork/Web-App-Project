@@ -87,7 +87,6 @@ class Table extends React.Component {
 
     return (
       <section className="ldc-table">
-        {props.title ? <h1>{props.title}</h1> : null}
         {props.buttons &&
           props.buttons.table &&
           props.buttons.table.map(button => (

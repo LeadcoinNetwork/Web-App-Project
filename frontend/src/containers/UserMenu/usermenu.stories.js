@@ -1,11 +1,10 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
-import * as actions from "actions"
+import { userMenu, types } from "Actions"
 import { createStoreAndStory } from "storybook-utils/withRouter"
 
 import { specs, describe, it } from "storybook-addon-specifications"
 import { mount } from "enzyme"
-import { types } from "actions"
 import expect from "expect"
 import UserMenu from "./UserMenu"
 
@@ -13,16 +12,16 @@ storiesOf("Containers/User Menu")
   .add("closed", () => {
     var { store, story } = createStoreAndStory({
       path: "/buy-leads",
+      loggedIn: true,
     })
-    store.dispatch(actions.user.loggedIn({ id: 1 }))
     return story
   })
   .add("opened", () => {
     var { store, story } = createStoreAndStory({
       path: "/buy-leads",
+      loggedIn: true,
     })
-    store.dispatch(actions.user.loggedIn({ id: 1 }))
-    store.dispatch(actions.userMenu.userMenuOpen())
+    store.dispatch(userMenu.userMenuOpen())
     return story
   })
 

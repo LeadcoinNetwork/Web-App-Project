@@ -11,15 +11,18 @@ class CSVMapping extends React.Component {
     if (file_fields) {
       let value = ""
       if (fields_map && fields_map[fieldName]) value = fields_map[fieldName]
-      const items = file_fields.map((field, i) => { return field })
-      items.unshift(['0', "I Don't have this field"])
+      const items = file_fields.map((field, i) => {
+        return field
+      })
+      items.unshift(["0", "I Don't have this field"])
       return (
         <Select
           options={items}
           value={value}
-          onChange={(e) => {
+          onChange={e => {
             this.props.handleMapChange(fieldName, e.target.value)
-          }} />
+          }}
+        />
       )
     }
     return
@@ -27,25 +30,24 @@ class CSVMapping extends React.Component {
 
   renderPriceElement() {
     const errors = this.props.errors
-    const error = (errors.indexOf('price') > -1) ? "error" : ""
+    const error = errors.indexOf("price") > -1 ? "error" : ""
     return (
-      <div className={"price "+error}>
+      <div className={"price " + error}>
         <span>Lead price</span>
         <TextField
           inverted={true}
           value={this.props.price}
-          onChange={ (e) => {
-            this.props.handleChange('price',e.target.value)
+          onChange={e => {
+            this.props.handleChange("price", e.target.value)
           }}
         />
       </div>
     )
-
   }
 
   renderTerms() {
     const errors = this.props.errors
-    const error = (errors.indexOf('agree_to_terms') > -1) ? "error" : ""
+    const error = errors.indexOf("agree_to_terms") > -1 ? "error" : ""
     return (
       <div className={error}>
         <input
@@ -53,7 +55,7 @@ class CSVMapping extends React.Component {
           name="agree_to_terms"
           id="terms_checkbox"
           value={this.props.agree_to_terms}
-          onChange={(e) => {
+          onChange={e => {
             this.props.agreeToTerms(e.target.checked)
           }}
         />
@@ -62,22 +64,7 @@ class CSVMapping extends React.Component {
     )
   }
 
-  private_fields() {
-    const {db_fields} = this.props
-    const fields = db_fields.private
-    return fields.map((f, i) => {
-      return (
-        <div key={i} className="line flexed">
-          <div className="fieldLabel">{f} </div>
-          {this.listItems(f)}
-        </div>
-      )
-    })
-  }
-
-  public_fields() {
-    const {db_fields} = this.props
-    const fields = db_fields.public
+  renderFields(fields) {
     return fields.map((f, i) => {
       return (
         <div key={i} className="line flexed">
@@ -89,7 +76,7 @@ class CSVMapping extends React.Component {
   }
 
   render() {
-    const { batch_id } = this.props
+    const { db_fields, batch_id } = this.props
     if (!batch_id)
       return (
         <div className="fields_mapper">
@@ -104,48 +91,48 @@ class CSVMapping extends React.Component {
           <div className="personal flexed">
             <div className="help_text">
               <div className="header">Personal Identification Information </div>
-              <div className="header">These fields will only be visible to who bought the lead </div>
+              <div className="header">
+                These fields will only be visible to who bought the lead{" "}
+              </div>
             </div>
-            <div className="fields">
-              {this.private_fields()}
-            </div>
+            <div className="fields">{this.renderFields(db_fields.private)}</div>
           </div>
           <div className="public flexed">
             <div className="help_text">
               <div className="header">Public Fields </div>
             </div>
-            <div className="fields">
-              {this.public_fields()}
+            <div className="fields">{this.renderFields(db_fields.public)}</div>
+          </div>
+          {price_element}
+          <div className="controls field_submit flexed">
+            {terms}
+            <div>
+              <Button
+                onClick={() => {
+                  this.props.submit(this.props.fields_map)
+                }}
+                label="Submit"
+              />
+            </div>
+            <div>
+              <Button
+                inverted={true}
+                onClick={() => {
+                  this.props.clear()
+                }}
+                label="Clear"
+              />
             </div>
           </div>
-        {price_element}
-          <div className="controls field_submit flexed">
-          {terms}
-          <div>
-            <Button
-              onClick={() => { this.props.submit(this.props.fields_map) }}
-              label="Submit"
-            />
-          </div>
-          <div>
-            <Button
-              inverted={true}
-              onClick={() => { this.props.clear() }}
-              label="Clear"
-            />
-          </div>
-          </div>
-
         </div>
-        <div className="field_submit flexed">
-        </div>
+        <div className="field_submit flexed" />
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  ...state.csvMapping
+  ...state.csvMapping,
 })
 
 export default connect(mapStateToProps, {

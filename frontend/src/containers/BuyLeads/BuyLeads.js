@@ -5,7 +5,7 @@ import { leads } from "../../actions"
 
 const buyLeadsConfig = require("./buy_leads_table.config.json")
 
-class Buy extends React.Component {
+class BuyLeads extends React.Component {
   constructor(props) {
     super(props)
 
@@ -53,16 +53,18 @@ class Buy extends React.Component {
   }
   render() {
     return (
-      <Table
-        title="Buy Leads"
-        fields={buyLeadsConfig.fields}
-        records={this.props.leads.list}
-        buttons={this.getButtons(this.props.leads.selected.size)}
-        setSelectedRecords={this.setSelectedRecords}
-        onScrollBottom={this.onScrollBottom}
-        selected={this.props.leads.selected}
-        isSelectable={true}
-      />
+      <>
+        <h1>Buy Leads</h1>
+        <Table
+          fields={buyLeadsConfig.fields}
+          records={this.props.leads.list}
+          buttons={this.getButtons(this.props.leads.selected.size)}
+          setSelectedRecords={this.setSelectedRecords}
+          onScrollBottom={this.onScrollBottom}
+          selected={this.props.leads.selected}
+          isSelectable={true}
+        />
+      </>
     )
   }
 }
@@ -71,4 +73,4 @@ const mapStateToProps = state => ({
   leads: state.buyLeads,
 })
 
-export default connect(mapStateToProps)(Buy)
+export default connect(mapStateToProps)(BuyLeads)

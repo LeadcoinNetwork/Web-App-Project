@@ -1,12 +1,15 @@
-.user-settings {
-  .submit-content {
-    width: 200px;
+section.ldc-user-settings {
+  .us-password {
+    h3 {
+      font-size: 18px;
+      font-weight: 400;
+      padding-bottom: 18px;
+    }
 
-    div {
-      display: inline-block;
-      position: relative;
-      top: 7px;
-      left: 2px;
+    .ldc-textfield {
+      display: block;
+      max-width: 250px;
+      margin-bottom: 18px;
     }
   }
 }

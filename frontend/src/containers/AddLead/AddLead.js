@@ -8,25 +8,24 @@ import { addLead } from "Actions"
 class AddLead extends React.Component {
   renderPriceElement() {
     const errors = this.props.errors
-    const error = errors['price'] ? "error" : ""
+    const error = errors["price"] ? "error" : ""
     return (
-      <div className={"price "+error}>
+      <div className={"price " + error}>
         <span>Lead price</span>
         <TextField
           inverted={true}
           value={this.props.price}
-          onChange={ (e) => {
-            this.props.handleChange('price',e.target.value)
+          onChange={e => {
+            this.props.handleChange("price", e.target.value)
           }}
         />
       </div>
     )
-
   }
 
   renderTerms() {
-    const {errors} = this.props
-    const error = errors['agree_to_terms'] ? "error" : ""
+    const { errors } = this.props
+    const error = errors["agree_to_terms"] ? "error" : ""
     return (
       <div className={error + " twothirds"}>
         <input
@@ -34,7 +33,7 @@ class AddLead extends React.Component {
           name="agree_to_terms"
           id="terms_checkbox"
           value={this.props.agree_to_terms}
-          onChange={(e) => {
+          onChange={e => {
             this.props.agreeToTerms(e.target.checked)
           }}
         />
@@ -44,33 +43,31 @@ class AddLead extends React.Component {
   }
 
   renderFields(fields) {
-    const {errors, values} = this.props
+    const { errors, values, loading } = this.props
     return fields.map((f, i) => {
-      const isError = errors[f] ? 'error' : ''
+      const isError = errors[f] ? "error" : ""
       return (
-        <div key={i} className={isError+" line flexed"}>
+        <div key={i} className={isError + " line flexed"}>
           <div className="fieldLabel">{f} </div>
           <div className="fieldValue">
             <TextField
+              disabled={loading}
               inverted={true}
               placeholder=" "
               value={values[f]}
-              onChange={ (e) => {
+              onChange={e => {
                 this.props.handleChange(f, e.target.value)
               }}
             />
-           </div>
+          </div>
         </div>
       )
     })
   }
 
   render() {
-    const { db_fields, values, errors } = this.props
-    if (!db_fields.private)
-      return (
-        <div> LOADING </div>
-      )
+    const { db_fields, loading } = this.props
+    if (!db_fields.private) return <div> LOADING </div>
     const terms = this.renderTerms()
     return (
       <div className="add_lead">
@@ -78,45 +75,49 @@ class AddLead extends React.Component {
           <div className="personal flexed">
             <div className="help_text">
               <div className="header">Personal Identification Information </div>
-              <div className="header">These fields will only be visible to who bought the lead </div>
+              <div className="header">
+                These fields will only be visible to who bought the lead{" "}
+              </div>
             </div>
-            <div className="fields">
-              {this.renderFields(db_fields.private)}
-            </div>
+            <div className="fields">{this.renderFields(db_fields.private)}</div>
           </div>
           <div className="public flexed">
             <div className="help_text">
               <div className="header">Public Fields </div>
             </div>
-            <div className="fields">
-              {this.renderFields(db_fields.public)}
-            </div>
+            <div className="fields">{this.renderFields(db_fields.public)}</div>
           </div>
           {this.renderPriceElement()}
           <div className="controls field_submit flexed">
-          {terms}
-          <div>
-            <Button
-              onClick={() => { this.props.submit(this.props.fields_map) }}
-              label="Submit"
-            />
-          </div>
-          <div>
-            <Button
-              inverted={true}
-              onClick={() => { this.props.clear() }}
-              label="Clear"
-            />
+            {terms}
+            <div>
+              <Button
+                loading={loading}
+                onClick={() => {
+                  this.props.submit(this.props.fields_map)
+                }}
+                label="Submit"
+              />
+            </div>
+            <div>
+              <Button
+                loading={loading}
+                inverted={true}
+                onClick={() => {
+                  this.props.clear()
+                }}
+                label="Clear"
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  ...state.addLead
+  ...state.addLead,
 })
 
 export default connect(mapStateToProps, {

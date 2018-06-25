@@ -1,11 +1,11 @@
-
 import { types } from "../actions"
 
 const initialState = {
   db_fields: [],
   errors: {},
   agree_to_terms: false,
-  values: {}
+  values: {},
+  loading: false,
 }
 
 export default function(state = initialState, action) {
@@ -15,7 +15,7 @@ export default function(state = initialState, action) {
         ...state,
         errors: {
           ...state.errors,
-          [action.error.name]: action.error.value
+          [action.error.name]: action.error.value,
         },
       }
 
@@ -23,7 +23,13 @@ export default function(state = initialState, action) {
       return {
         ...state,
         errors: [],
-        agree_to_terms: action.agree_to_terms.value
+        agree_to_terms: action.agree_to_terms.value,
+      }
+
+    case types.ADD_LEAD_TOGGLE_LOADING:
+      return {
+        ...state,
+        loading: action.loading,
       }
 
     case types.ADD_LEAD_CLEAR_FORM:
@@ -39,7 +45,7 @@ export default function(state = initialState, action) {
         values: {
           ...state.values,
           [action.payload.name]: action.payload.value,
-        }
+        },
       }
 
     case types.ADD_LEAD_GET_DB_FIELDS:
@@ -49,5 +55,5 @@ export default function(state = initialState, action) {
       }
     default:
       return state
-    }
   }
+}

@@ -15,6 +15,7 @@ class TextFieldState extends React.Component {
           this.setState({ value: e.target.value })
         }}
         label={this.props.label}
+        inverted={this.props.inverted}
         placeholder={this.props.placeholder}
       />
     )
@@ -25,4 +26,7 @@ storiesOf("Components/TextField")
   .add("add text", () => <TextFieldState label="Text Field" />)
   .add("add with hint", () => (
     <TextFieldState label="Hinted Text Field" placeholder="Hint!" />
+  ))
+  .add("App style", () => (
+    <TextFieldState placeholder="Type here..." inverted={true} />
   ))

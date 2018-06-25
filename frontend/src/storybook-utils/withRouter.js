@@ -10,6 +10,7 @@ import createSagaMiddleware from "redux-saga"
 import RootSaga from "sagas"
 import { routerMiddleware, ConnectedRouter } from "react-router-redux"
 import { createBrowserHistory, createMemoryHistory } from "history"
+import { user } from "Actions"
 
 // const history = createBrowserHistory()
 
@@ -18,6 +19,7 @@ export function createStoreAndStory({
   component,
   sagaFunction,
   connectToProductionSaga,
+  loggedIn,
 }) {
   var ROUTER_MIDDLEWARE
   var middlewares = [storyReduxLogger]
@@ -51,6 +53,10 @@ export function createStoreAndStory({
     sagaMiddleware.run(sagaFunction)
   }
   const UpperCaseComponent = component
+
+  if (loggedIn) {
+    store.dispatch(user.loggedIn({ id: 1 }))
+  }
   return {
     store,
     sagaMiddleware,
