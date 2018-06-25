@@ -4,7 +4,6 @@ import { connect } from "react-redux"
 import { csvUpload } from "Actions"
 
 class CSVUpload extends React.Component {
-
   generalError() {
     const { errors } = this.props
     if (errors && errors.length > 0) {
@@ -18,20 +17,22 @@ class CSVUpload extends React.Component {
 
   render() {
     let fileLabel = "Choose File"
-    const {loading, file} = this.props
+    const { loading, file } = this.props
     if (file) fileLabel = file.name
     return (
       <div className="csvUpload">
         <div className="file_pick">
           <div>
-            <Button 
-              className="container_button"
+            <Button
+              className="container_button ldc-button"
               loading={loading}
-              label={fileLabel} >
+              label={fileLabel}
+            >
               <input
                 className="displaynone"
                 type="file"
-                onChange= {(e) => {
+                accept=".csv"
+                onChange={e => {
                   if (loading) return false
                   this.props.pickFile(e.target.files[0])
                 }}
@@ -57,7 +58,7 @@ class CSVUpload extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  ...state.csvUpload
+  ...state.csvUpload,
 })
 
 export default connect(mapStateToProps, {

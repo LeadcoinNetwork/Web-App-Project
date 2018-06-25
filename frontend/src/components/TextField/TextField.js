@@ -8,6 +8,7 @@ const TextField = ({
   onChange,
   appStyle,
   inverted,
+  disabeld,
 }) => {
   appStyle = appStyle || inverted
   return (
@@ -15,6 +16,7 @@ const TextField = ({
       className={`ldc-textfield${appStyle ? " t-app-style" : ""}`}
       name={name}
       value={value}
+      disabled={disabeld}
       type={type || "text"}
       placeholder={placeholder}
       onChange={onChange}
