@@ -1,4 +1,4 @@
-import "./user-menu.scss"
+import "./UserMenu.scss"
 
 import UserMenu from "./UserMenu"
 

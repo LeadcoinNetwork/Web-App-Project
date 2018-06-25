@@ -1,4 +1,4 @@
-import "./user-settings.scss"
+import "./UserSettings.scss"
 
 import UserSettings from "./UserSettings"
 
