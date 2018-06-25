@@ -17,18 +17,24 @@
   margin-left: 5px;
   margin-right: 5px;
 
-  &.inverted {
-    border: solid 1px $bg-main-btn;
-    color: white;
-    background-color: $main-color;
-    opacity: 0.5;
-    &:hover {
-      opacity: 1;
-    }
-  }
-
   &:hover {
     opacity: 0.8;
+  }
+
+  &.b-app-style {
+    border: solid 1px $bg-level-3;
+    color: $bg-level-3;
+    background-color: transparent;
+    height: 45px;
+    border-radius: 0;
+    padding: 0 30px;
+
+    &:hover {
+      background-color: $bg-level-3;
+      border-color: $bg-level-3;
+      color: #fff;
+      opacity: 1;
+    }
   }
 
   &.b-loading {

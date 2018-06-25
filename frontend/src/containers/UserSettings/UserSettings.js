@@ -58,6 +58,7 @@ class UserSettings extends React.Component {
             label="submit"
             loading={loading}
             onClick={this.props.onSubmit}
+            inverted={true}
           />
         </div>
       </section>

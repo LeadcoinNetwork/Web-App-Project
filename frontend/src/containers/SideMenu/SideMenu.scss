@@ -8,6 +8,7 @@ nav.ldc-side-menu {
   width: $side-menu-width;
   height: calc(100vh - #{$header-height});
   padding-top: 30px;
+  z-index: $header-z;
 
   a {
     display: block;

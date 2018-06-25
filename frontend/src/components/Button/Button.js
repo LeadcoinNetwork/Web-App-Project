@@ -5,25 +5,26 @@ const Button = ({
   disabled,
   label,
   loadingLabel = "Wait",
-  className = "",
   loading,
   onClick,
   children,
   inverted,
+  appStyle,
 }) => {
-  let clsName = className || 'ldc-button'
-  clsName += (loading) ? " b-loading" : ""
-  clsName += (inverted) ? " inverted" : ""
+  appStyle = appStyle || inverted
+
   return (
-  <button
-    className={clsName}
-    type={type || "button"}
-    disabled={disabled || loading}
-    onClick={onClick}
-  >
-    {loading ? loadingLabel : label}
-    {children}
-  </button>
+    <button
+      className={`ldc-button${loading ? " b-loading" : ""}${
+        appStyle ? " b-app-style" : ""
+      }`}
+      type={type || "button"}
+      disabled={disabled || loading}
+      onClick={onClick}
+    >
+      {loading ? loadingLabel : label}
+      {children}
+    </button>
   )
 }
 
