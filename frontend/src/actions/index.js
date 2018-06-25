@@ -1,6 +1,7 @@
 import * as types from "./types"
 import * as app from "./app"
 import * as user from "./user"
+import * as checkout from "./checkout"
 import * as payments from "./payments"
 import * as withdrawl from "./withdraw"
 import * as signup from "./signup"
@@ -23,6 +24,7 @@ export {
   balance,
   signup,
   completeRegistration,
+  checkout,
   payments,
   withdrawl,
   notifications,
