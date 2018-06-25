@@ -32,6 +32,12 @@
       padding: calc(#{$header-height} + 30px) 30px 30px
         calc(#{$side-menu-width} + 30px);
       background-color: $bg-level-2;
+
+      h1 {
+        font-size: 30px;
+        font-weight: 300;
+        padding-bottom: 30px;
+      }
     }
   }
 }

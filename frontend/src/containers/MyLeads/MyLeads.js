@@ -53,16 +53,18 @@ class My extends React.Component {
   }
   render() {
     return (
-      <Table
-        title="My Leads"
-        fields={myLeadsConfig.fields}
-        records={this.props.leads.list}
-        buttons={this.getButtons(this.props.leads.selected.size)}
-        setSelectedRecords={this.setSelectedRecords}
-        onScrollBottom={this.onScrollBottom}
-        selected={this.props.leads.selected}
-        isSelectable={true}
-      />
+      <>
+        <h1>My Leads</h1>
+        <Table
+          fields={myLeadsConfig.fields}
+          records={this.props.leads.list}
+          buttons={this.getButtons(this.props.leads.selected.size)}
+          setSelectedRecords={this.setSelectedRecords}
+          onScrollBottom={this.onScrollBottom}
+          selected={this.props.leads.selected}
+          isSelectable={true}
+        />
+      </>
     )
   }
 }
