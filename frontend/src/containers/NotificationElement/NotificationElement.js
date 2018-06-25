@@ -1,8 +1,5 @@
 import React, { Component } from "react"
 import NotificationInner from "./NotificationInner"
-
-import FontAwesomeIcon from "@fortawesome/react-fontawesome"
-import faBell from "@fortawesome/fontawesome-free-regular/faBell"
 import { connect } from "react-redux"
 import { notifications } from "Actions"
 
@@ -32,16 +29,13 @@ class NotificationElement extends Component {
       notificationsViewAll,
     } = this.props
     return (
-      <div className="notification-element" onClick={(e) => {
-        e.stopPropagation()
-        notificationsClick()
-      }} >
-        <FontAwesomeIcon
-          className="notification-icon"
-          icon={faBell}
-          color="white"
-          size={"3x"}
-        />
+      <div
+        className="notification-element far fa-bell"
+        onClick={e => {
+          e.stopPropagation()
+          notificationsClick()
+        }}
+      >
         {unreadCount > 0 && (
           <div
             className={"notification-badge" + (unreadCount > 9 ? " plus" : "")}

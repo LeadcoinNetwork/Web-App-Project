@@ -1,19 +1,17 @@
 .user-menu {
   position: relative;
   display: inline-block;
-  width: 40px;
-  height: 40px;
   cursor: pointer;
 
-  .user-icon {
-    height: 30px;
+  &:before {
+    font-size: 30px;
   }
 
   .user-menu-inner {
     position: absolute;
     width: 200px;
-    top: 80px;
-    left: -160px;
+    top: 55px;
+    left: -150px;
     background: #433190;
     line-height: 30px;
 
@@ -32,15 +30,15 @@
       display: block;
       padding: 15px;
       color: white;
+      font-weight: 400;
 
       &.log-out {
         border-top: 1px solid #6a56bb;
-        
+
         &:hover {
           border-top-color: #b7adef;
         }
       }
-
 
       &:hover {
         background-color: #b7adef;

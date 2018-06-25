@@ -1,25 +1,25 @@
+@import "~Styles/variables";
+
 .notification-element {
   position: relative;
   display: inline-block;
-  width: 40px;
-  height: 40px;
   cursor: pointer;
 
-  .notification-icon {
-    height: 30px;
+  &:before {
+    font-size: 30px;
   }
 
   .notification-badge {
     position: absolute;
-    top: 20px;
-    right: 0px;
-    width: 15px;
-    height: 15px;
-    line-height: 16px;
-    font-size: 12px;
+    top: -3px;
+    right: 6px;
+    width: 16px;
+    height: 16px;
+    line-height: 15px;
+    font-size: 11px;
     color: white;
     border-radius: 50%;
-    background-color: red;
+    background-color: $ldc-color;
     text-align: center;
 
     &.plus {
@@ -27,15 +27,15 @@
       height: 16px;
     }
   }
-  
+
   .notification-inner {
     position: absolute;
     width: 300px;
-    top: 80px;
-    left: -255px;
+    top: 55px;
+    left: -250px;
     background: #433190;
     line-height: 30px;
-    
+
     .small-arrow {
       position: absolute;
       width: 20px;
@@ -46,12 +46,12 @@
       transform: rotateZ(45deg);
       z-index: -1;
     }
-    
+
     .ni-row {
       padding: 15px;
       border-bottom: 1px solid #6a56bb;
       font-weight: 300;
-      
+
       &.unread {
         font-weight: 600;
         background: #604db6;
@@ -60,17 +60,17 @@
           font-weight: 500;
         }
       }
-      
+
       .nr-time {
         font-size: 14px;
         font-weight: 200;
       }
     }
-    
+
     .view-all {
       padding: 15px;
       color: white;
-      
+
       .view-all-text {
         margin-left: 10px;
         font-weight: 500;

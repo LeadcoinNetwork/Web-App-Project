@@ -63,8 +63,15 @@ header.ldc-header {
     }
 
     .ham-menu {
-      display: inline-block;
       float: right;
+      line-height: 1;
+
+      .notification-element,
+      .user-menu {
+        padding: 0 12px;
+        top: calc(#{$header-height} / 2);
+        transform: translateY(-50%);
+      }
     }
   }
 }
