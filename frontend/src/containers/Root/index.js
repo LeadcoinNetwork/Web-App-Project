@@ -10,6 +10,7 @@ import Payments from "Containers/Payments"
 import UploadForm from "containers/UploadForm"
 import CSVUpload from "Containers/CSVUpload"
 import CSVMapping from "Containers/CSVMapping"
+import AddLead from "Containers/AddLead"
 import Dispute from "Containers/Dispute"
 import Checkout from "Containers/Checkout"
 import NotificationTable from "containers/NotificationsTable"
@@ -38,6 +39,7 @@ const Root = () => (
       <Route path="/uploadform" component={UploadForm} />
       <Route path="/csv-upload" component={CSVUpload} />
       <Route path="/csv-mapping" component={CSVMapping} />
+      <Route path="/add-lead" component={AddLead} />
       <Route path="/checkout/" component={Checkout} />
       <Route path="/dispute" component={Dispute} />
       <Route path="/notifications" component={NotificationTable} />

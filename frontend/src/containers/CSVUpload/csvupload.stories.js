@@ -3,21 +3,22 @@ import * as actions from "actions"
 import { createStoreAndStory } from "storybook-utils/withRouter"
 import CSVUpload from "../CSVUpload"
 
-
 storiesOf("Containers/CSVUpload")
   .add("CSVUpload - empty", () => {
     var { store, story } = createStoreAndStory({
-      component: CSVUpload,
+      path: "/csv-upload",
+      loggedIn: true,
     })
     return story
   })
 
   .add("CSVUpload - file picked", () => {
     var { store, story } = createStoreAndStory({
-      component: CSVUpload,
+      path: "/csv-upload",
+      loggedIn: true,
     })
     const mock_file = {
-      name: 'BestFileEver.csv',
+      name: "BestFileEver.csv",
     }
     store.dispatch(actions.csvUpload.csvUploadPickFile(mock_file))
     return story
@@ -25,7 +26,8 @@ storiesOf("Containers/CSVUpload")
 
   .add("CSVUpload - loading", () => {
     var { store, story } = createStoreAndStory({
-      component: CSVUpload,
+      path: "/csv-upload",
+      loggedIn: true,
     })
     store.dispatch(actions.csvUpload.csvUploadLoadingStart())
     return story
@@ -33,7 +35,8 @@ storiesOf("Containers/CSVUpload")
 
   .add("CSVUpload - error", () => {
     var { store, story } = createStoreAndStory({
-      component: CSVUpload,
+      path: "/csv-upload",
+      loggedIn: true,
     })
     store.dispatch(actions.csvUpload.csvUploadError("Error!"))
     return story

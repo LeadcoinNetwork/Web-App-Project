@@ -11,6 +11,7 @@ storiesOf("Containers/Payments")
   .add("empty", () => {
     var { store, story } = createStoreAndStory({
       path: "/payments",
+      loggedIn: true,
     })
     store.dispatch(actions.payments.paymentsHistoryLoadingStart())
     store.dispatch(actions.payments.paymentsHistoryLoadingEnd())
@@ -20,6 +21,7 @@ storiesOf("Containers/Payments")
   .add("loading", () => {
     var { store, story } = createStoreAndStory({
       path: "/payments",
+      loggedIn: true,
     })
     store.dispatch(actions.payments.paymentsHistoryLoadingStart())
     return story
@@ -27,6 +29,7 @@ storiesOf("Containers/Payments")
   .add("full", () => {
     var { store, story } = createStoreAndStory({
       path: "/payments",
+      loggedIn: true,
     })
     store.dispatch(actions.payments.paymentsHistoryLoadingStart())
     store.dispatch(actions.payments.paymentsHistoryLoadingEnd())
@@ -36,6 +39,7 @@ storiesOf("Containers/Payments")
   .add("error", () => {
     var { store, story } = createStoreAndStory({
       path: "/payments",
+      loggedIn: true,
     })
     store.dispatch(actions.payments.paymentsHistoryLoadingStart())
     store.dispatch(actions.payments.paymentsHistoryLoadingEnd())

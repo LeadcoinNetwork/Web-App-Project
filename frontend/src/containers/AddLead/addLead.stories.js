@@ -2,18 +2,19 @@ import React from "react"
 import { storiesOf } from "@storybook/react"
 import * as actions from "actions"
 import { createStoreAndStory } from "storybook-utils/withRouter"
-import AddLead from "../AddLead"
 
 storiesOf("Containers/AddLead")
   .add("AddLead - empty", () => {
     var { store, story } = createStoreAndStory({
-      component: AddLead,
+      path: "/add-lead",
+      loggedIn: true,
     })
     return story
   })
   .add("AddLead - with fields", () => {
     var { store, story } = createStoreAndStory({
-      component: AddLead,
+      path: "/add-lead",
+      loggedIn: true,
     })
     store.dispatch(
       actions.addLead.addLeadGetDbFields({
@@ -25,7 +26,8 @@ storiesOf("Containers/AddLead")
   })
   .add("AddLead - after submit", () => {
     var { store, story } = createStoreAndStory({
-      component: AddLead,
+      path: "/add-lead",
+      loggedIn: true,
     })
     store.dispatch(
       actions.addLead.addLeadGetDbFields({
@@ -38,7 +40,8 @@ storiesOf("Containers/AddLead")
   })
   .add("AddLead - with erros", () => {
     var { store, story } = createStoreAndStory({
-      component: AddLead,
+      path: "/add-lead",
+      loggedIn: true,
     })
     store.dispatch(
       actions.addLead.addLeadGetDbFields({
