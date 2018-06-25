@@ -7,6 +7,7 @@ import { specs, describe, it } from "storybook-addon-specifications"
 import { mount } from "enzyme"
 import { types } from "actions"
 import expect from "expect"
+import UserMenu from "./UserMenu"
 
 storiesOf("Containers/User Menu")
   .add("closed", () => {

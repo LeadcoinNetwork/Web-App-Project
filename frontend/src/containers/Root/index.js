@@ -1,5 +1,3 @@
-//@ts-check
-
 import React from "react"
 import { Switch, Route } from "react-router"
 import App from "Containers/App"
@@ -8,7 +6,6 @@ import Admin from "Containers/Admin"
 import MyLeads from "Containers/MyLeads"
 import SellLeads from "Containers/SellLeads"
 import BuyLeads from "Containers/BuyLeads"
-import Users from "Containers/Users"
 import Payments from "Containers/Payments"
 import UploadForm from "containers/UploadForm"
 import CSVUpload from "Containers/CSVUpload"
@@ -17,9 +14,10 @@ import Dispute from "Containers/Dispute"
 import Checkout from "Containers/Checkout"
 import NotificationTable from "containers/NotificationsTable"
 import Signup from "Containers/Signup"
-import Login from "Containers/Login"
 import EmailConfirmation from "containers/EmailConfirmation"
 import CompleteRegistration from "containers/CompleteRegistration"
+import Login from "Containers/Login"
+import UserSettings from "Containers/UserSettings"
 import Withdraw from "containers/Withdraw"
 
 const Root = () => (
@@ -27,16 +25,16 @@ const Root = () => (
     <Switch>
       <Route path="/" exact component={Home} />
       <Route path="/signup" component={Signup} />
+      <Route path="/email-confirmation" component={EmailConfirmation} />
+      <Route path="/complete-registration" component={CompleteRegistration} />
+      <Route path="/user-settings" component={UserSettings} />
       <Route path="/login" component={Login} />
       <Route path="/admin" component={Admin} />
       <Route path="/buy-leads" component={MyLeads} />
       <Route path="/sell-leads" component={SellLeads} />
       <Route path="/my-leads" component={BuyLeads} />
-      <Route path="/users" component={Users} />
       <Route path="/payments" component={Payments} />
       <Route path="/withdraw" component={Withdraw} />
-      <Route path="/email-confirmation" component={EmailConfirmation} />
-      <Route path="/complete-registration" component={CompleteRegistration} />
       <Route path="/uploadform" component={UploadForm} />
       <Route path="/csv-upload" component={CSVUpload} />
       <Route path="/csv-mapping" component={CSVMapping} />
