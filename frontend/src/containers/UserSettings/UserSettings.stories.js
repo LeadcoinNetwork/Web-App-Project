@@ -1,25 +1,31 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
-import * as actions from "actions"
+import { userSettings } from "Actions"
 import { createStoreAndStory } from "storybook-utils/withRouter"
-import UserSettings from "./UserSettings";
 
 storiesOf("Containers/User Settings", module)
   .add("empty form", () => {
-    var { store, story } = createStoreAndStory({ component: UserSettings })
+    var { store, story } = createStoreAndStory({
+      path: "/user-settings",
+      loggedIn: true,
+    })
     return story
   })
 
   .add("loading state", () => {
-    var { store, story } = createStoreAndStory({ component: UserSettings })
-    store.dispatch(actions.userSettings.userSettingsLoading())
+    var { store, story } = createStoreAndStory({
+      path: "/user-settings",
+      loggedIn: true,
+    })
+    store.dispatch(userSettings.userSettingsLoading())
     return story
   })
 
   .add("error form", () => {
-    var { store, story } = createStoreAndStory({ component: UserSettings })
-    store.dispatch(
-      actions.userSettings.userSettingsError("Example Error"),
-    )
+    var { store, story } = createStoreAndStory({
+      path: "/user-settings",
+      loggedIn: true,
+    })
+    store.dispatch(userSettings.userSettingsError("Example Error"))
     return story
   })

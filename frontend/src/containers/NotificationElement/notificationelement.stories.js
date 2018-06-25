@@ -11,16 +11,16 @@ storiesOf("Containers/Notification Element", module)
   .add("Empty", () => {
     var { store, story } = createStoreAndStory({
       path: "/my-leads",
+      loggedIn: true,
     })
-    store.dispatch(actions.user.loggedIn({ id: 123 }))
     return story
   })
 
   .add("Empty opened", () => {
     var { store, story } = createStoreAndStory({
       path: "/my-leads",
+      loggedIn: true,
     })
-    store.dispatch(actions.user.loggedIn({ id: 123 }))
     store.dispatch(actions.notifications.notificationsShow([], 0))
     return story
   })
@@ -28,8 +28,8 @@ storiesOf("Containers/Notification Element", module)
   .add("Have 6 unread 4", () => {
     var { store, story } = createStoreAndStory({
       path: "/my-leads",
+      loggedIn: true,
     })
-    store.dispatch(actions.user.loggedIn({ id: 123 }))
     store.dispatch(
       actions.notifications.notificationsUpdate(
         mockdata.noti6un4,
@@ -42,8 +42,8 @@ storiesOf("Containers/Notification Element", module)
   .add("have 6 unread 4 opened", () => {
     var { store, story } = createStoreAndStory({
       path: "/my-leads",
+      loggedIn: true,
     })
-    store.dispatch(actions.user.loggedIn({ id: 123 }))
     store.dispatch(
       actions.notifications.notificationsUpdate(
         mockdata.noti6un4,
@@ -57,8 +57,8 @@ storiesOf("Containers/Notification Element", module)
   .add("have 15 unread 14", () => {
     var { store, story } = createStoreAndStory({
       path: "/my-leads",
+      loggedIn: true,
     })
-    store.dispatch(actions.user.loggedIn({ id: 123 }))
     store.dispatch(
       actions.notifications.notificationsUpdate(
         mockdata.noti15un14,

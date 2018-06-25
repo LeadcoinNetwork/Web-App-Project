@@ -15,8 +15,8 @@ storiesOf("Containers/Header", module)
   .add("Logged in", () => {
     var { store, story } = createStoreAndStory({
       path: "/sell-leads",
+      loggedIn: true,
     })
 
-    store.dispatch(user.loggedIn({ id: 1 }))
     return story
   })
