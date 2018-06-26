@@ -30,8 +30,10 @@ class User {
       throw new Error("user email already exists")
     }
     var user2Databse = <any>user
-    user2Databse.password = auth.hashPassword(user.plainPassword)
-    delete user2Databse.plainPassword
+    if (user.plainPassword) {
+      user2Databse.password = auth.hashPassword(user.plainPassword)
+      delete user2Databse.plainPassword
+    }
     let status = await sql.query("INSERT INTO users SET ?", user2Databse)
     if (!status.insertId) {
       throw new Error("user not inserted")

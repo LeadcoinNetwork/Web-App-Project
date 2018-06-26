@@ -6,9 +6,6 @@ const authOptions = {
   session: false,
 }
 
-import EmailCreator from "../models/email-creator/email-creator"
-import EmailSender from "../models/emailsender/abstraction"
-import UserActions from "../models/users/users"
 import * as Express from "express"
 import AppLogic from "../app-logic/index"
 import NotFound from "../utils/not-found"
@@ -20,8 +17,6 @@ export function start({
   appLogic: AppLogic
   expressApp: Express.Express
 }) {
-  expressApp.post("/auth/login", login)
-
   expressApp.post(
     "/auth/logout",
     passport.authenticate("jwt", authOptions),
@@ -36,6 +31,12 @@ export function start({
     "/auth/resend-email",
     passport.authenticate("jwt", authOptions),
     resendEmail,
+  )
+
+  expressApp.post(
+    "/auth/login",
+    passport.authenticate("local", authOptions),
+    login,
   )
 
   expressApp.get(
@@ -68,13 +69,15 @@ export function start({
   }
 
   async function login(req, res, next) {
-    var pass = await appLogic.userLogin.login(req.body.email, req.body.password)
-    if (pass instanceof NotFound) {
-      res.status(400)
-      res.send({ error: "not auth" })
-    } else {
-      res.send({ token: pass })
-    }
+    var token = await appLogic.userLogin.login(req.user.id)
+    res.cookie("token", token)
+    res.send({ token })
+    // if (pass instanceof NotFound) {
+    // res.status(400)
+    // res.send({ error: "not auth" })
+    // } else {
+    // res.send({ token: pass })
+    // }
     // try {
     //   console.log("@")
     //   let _user = req.user

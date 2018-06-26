@@ -11,7 +11,7 @@ const authOptions = {
   failWithError: true,
 }
 
-import AppLogic from "../../app-logic/index"
+import AppLogic from "../app-logic/index"
 
 export function start({
   expressApp,
@@ -53,52 +53,52 @@ export function start({
   }
 
   async function remove(req, res, next) {
-    try {
-      let status = await userActions.remove(req.params.userId)
-      if (status) {
-        res.status(200).json({
-          ok: true,
-        })
-      } else {
-        res.status(404).json({
-          path: "remove",
-          error: "Not Found",
-        })
-      }
-    } catch (e) {
-      next(e)
-    }
+    // try {
+    //   let status = await userActions.remove(req.params.userId)
+    //   if (status) {
+    //     res.status(200).json({
+    //       ok: true,
+    //     })
+    //   } else {
+    //     res.status(404).json({
+    //       path: "remove",
+    //       error: "Not Found",
+    //     })
+    //   }
+    // } catch (e) {
+    //   next(e)
+    // }
   }
 
   async function find(req, res, next) {
-    try {
-      let _user = (await userActions.find({ id: req.params.userId }))[0]
-      if (_user) {
-        res.status(200).json(_user)
-      } else {
-        res.status(404).json({
-          path: "find",
-          error: "Not Found",
-        })
-      }
-    } catch (e) {
-      next(e)
-    }
+    // try {
+    //   let _user = (await userActions.find({ id: req.params.userId }))[0]
+    //   if (_user) {
+    //     res.status(200).json(_user)
+    //   } else {
+    //     res.status(404).json({
+    //       path: "find",
+    //       error: "Not Found",
+    //     })
+    //   }
+    // } catch (e) {
+    //   next(e)
+    // }
   }
 
   async function update(req, res, next) {
-    try {
-      let _user = await userActions.update(req.params.userId, req.body)
-      if (_user) {
-        res.status(200).json(_user)
-      } else {
-        res.status(404).json({
-          path: "update",
-          error: "Not Found",
-        })
-      }
-    } catch (e) {
-      next(e)
-    }
+    // try {
+    //   let _user = await userActions.update(req.params.userId, req.body)
+    //   if (_user) {
+    //     res.status(200).json(_user)
+    //   } else {
+    //     res.status(404).json({
+    //       path: "update",
+    //       error: "Not Found",
+    //     })
+    //   }
+    // } catch (e) {
+    //   next(e)
+    // }
   }
 }

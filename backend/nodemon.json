@@ -1,5 +1,7 @@
 {
-  "watch": ["**/*.ts", "**/*.js"],
-  "ignore": ["**/*.test.ts"],
-  "exec": "ts-node ./index"
+  "watch": ["./"],
+  "ext": "js,ts,json",
+  "restartable": "rs",
+  "ignore": [".git", "node_modules/**/node_modules"],
+  "exec": "node --inspect node_modules/ts-node/dist/bin.js index.ts"
 }

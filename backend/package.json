@@ -76,7 +76,8 @@
   },
   "scripts": {
     "start": "nodemon",
-    "develop": "nodemon",
+    "test": "jest --bail",
+    "test:watch": "jest --bail --watch",
     "precommit": "pretty-quick --staged"
   },
   "nodemonConfig": {

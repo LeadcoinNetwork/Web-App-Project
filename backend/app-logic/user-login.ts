@@ -14,15 +14,7 @@ export default class UserLogin {
   // return token
   // }
   constructor(private appLogic: AppLogic) {}
-  async login(email, password): Promise<string | NotFound> {
-    let user = await this.appLogic.users.getUserByEmailAndPassword(
-      email,
-      password,
-    )
-    if (user instanceof NotFound) {
-      return new NotFound()
-    } else {
-      return userAuth.generateJWT(user.id, this.appLogic.config.auth.jwt.secret)
-    }
+  async login(user_id): Promise<string> {
+    return userAuth.generateJWT(user_id, this.appLogic.config.auth.jwt.secret)
   }
 }

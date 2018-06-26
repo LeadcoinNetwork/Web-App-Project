@@ -47,6 +47,12 @@ export default class RestServer {
 
     var expressApp: ExpressInterface = express()
 
+    expressApp.use((req, res, next) => {
+      if (process.env.NODE_ENV != "test") {
+        console.log(req.method + " " + req.url)
+      }
+      next()
+    })
     // ROUTES
     expressApp.use(bodyParser.json())
     expressApp.use(cookieParser())
