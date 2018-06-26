@@ -1,5 +1,6 @@
 import AppLogic from "./index"
 import NotFound from "../utils/not-found"
+import * as userAuth from "../models/user-auth/user-auth"
 export default class UserLogin {
   // async login(userId): Promise<string> {
   // let user = (await this.find({ id: userId }))[0]
@@ -21,7 +22,7 @@ export default class UserLogin {
     if (user instanceof NotFound) {
       return new NotFound()
     } else {
-      return "stam-token"
+      return userAuth.generateJWT(user.id, this.appLogic.config.auth.jwt.secret)
     }
   }
 }

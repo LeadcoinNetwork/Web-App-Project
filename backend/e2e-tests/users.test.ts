@@ -62,7 +62,7 @@ test("GET /me sign up using real username and password", async () => {
   expect(_.get(x, "body.user.fname")).toBe(fname)
 })
 
-test("post /auth/login", async () => {
+test("post /auth/login (create user, try login with invalid password, then using valid password, then get me", async () => {
   const fname = chance.first()
   const lname = chance.last()
   const email = chance.email()
@@ -86,4 +86,8 @@ test("post /auth/login", async () => {
   })
   expect(x.error).toBeFalsy()
   expect(x.body.token).toBeTruthy()
+  var x = await request.get("/me").set({
+    cookie: "token=" + x.body.token,
+  })
+  expect(x.body.user.fname).toEqual(fname)
 })
