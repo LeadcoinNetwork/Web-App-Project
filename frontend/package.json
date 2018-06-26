@@ -7,7 +7,8 @@
     "build": "./node_modules/.bin/webpack --progress --config webpack.prod.js",
     "test": "jest",
     "test:watch": "jest --watch",
-    "storybook": "start-storybook -p 9001 -c .storybook"
+    "storybook": "start-storybook -p 9001 -c .storybook",
+    "storybook:build": "build-storybook -c .storybook -o storybook-build"
   },
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.8",
@@ -38,6 +39,7 @@
     "storybook-addon-material-ui": "^0.8.2"
   },
   "jest": {
+    "setupTestFrameworkScriptFile": "jest-extended",
     "moduleNameMapper": {
       "^HOC(.*)$": "<rootDir>/src/HOC$1",
       "^Actions(.*)$": "<rootDir>/src/actions$1",
@@ -54,6 +56,8 @@
       "^reducers(.*)$": "<rootDir>/src/reducers$1",
       "^Sagas(.*)$": "<rootDir>/src/sagas$1",
       "^sagas(.*)$": "<rootDir>/src/sagas$1",
+      "^Scripts(.*)$": "<rootDir>/src/scripts$1",
+      "^scripts(.*)$": "<rootDir>/src/scripts$1",
       "^Static(.*)$": "<rootDir>/src/static$1",
       "^static(.*)$": "<rootDir>/src/static$1",
       "^Storybook-examples(.*)$": "<rootDir>/src/storybook-examples$1",

@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getOne (remove created, id from snapshot) 1`] = `
+Object {
+  "access": null,
+  "company": null,
+  "country": null,
+  "disabled": null,
+  "email": "example_email@example_email.com",
+  "fname": "first name",
+  "lname": "last name",
+  "login": null,
+  "phone": null,
+  "provider": null,
+  "provider_id": null,
+  "role": "user",
+}
+`;
+
+exports[`getUserByEmailAndPassword (remove id,created,password from snapshot) 1`] = `
+Object {
+  "access": null,
+  "company": null,
+  "country": null,
+  "disabled": null,
+  "email": "myemail5@myemail.com",
+  "fname": "",
+  "lname": "",
+  "login": null,
+  "phone": null,
+  "provider": null,
+  "provider_id": null,
+  "role": "user",
+}
+`;
+
+exports[`setNewPassword, and getUserByEmailAndPassword (remove password,created,id from snapshot) 1`] = `
+Object {
+  "access": null,
+  "company": null,
+  "country": null,
+  "disabled": null,
+  "email": "myemail22@myemail.com",
+  "fname": "",
+  "lname": "",
+  "login": null,
+  "phone": null,
+  "provider": null,
+  "provider_id": null,
+  "role": "user",
+}
+`;
