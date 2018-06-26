@@ -7,24 +7,26 @@ import Button from "Components/Button"
 const checkoutConfig = require("./checkout.config.json")
 
 const checkout = ({ list, totalPrice, loading, error, onScrollBottom }) => (
-  <div className="shopping-list">
+  <div className="shopping-cart">
+    <h1>Shopping Cart</h1>
     <Table
-      title="Shopping Cart"
       fields={checkoutConfig.fields}
       records={list}
       onScrollBottom={onScrollBottom}
       showOnZeroRecords={<div>Shopping Cart is Empty</div>}
       isSelectable={false}
     />
-    <div className="payment-option">Pay {totalPrice} with PayPal
+    <div className="checkout">
+      <div className="total-price">Total: {totalPrice}</div>
       <Button
         label="Checkout"
         loading={loading}
-        loadingLabel="Processing..."
+        loadingLabel="Processing"
+        appStyle={true}
         disabled={list.length > 0 ? false : true}
       />
     </div>
-    {error && <div className="payment-error error">{error}</div>}
+    {error && <div className="checkout-error error">{error}</div>}
   </div>
 )
 
