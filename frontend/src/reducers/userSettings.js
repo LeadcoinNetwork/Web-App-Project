@@ -8,7 +8,7 @@ const initialState = {
   error: "",
 }
 
-export default function(state = initialState, action) {
+const userSettings = (state = initialState, action) => {
   switch (action.type) {
     case types.USER_SETTINGS_HANDLE_CHANGE:
       return {
@@ -36,3 +36,5 @@ export default function(state = initialState, action) {
       return state
   }
 }
+
+export default userSettings

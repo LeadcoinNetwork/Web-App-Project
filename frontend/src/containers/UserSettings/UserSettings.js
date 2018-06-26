@@ -6,7 +6,7 @@ import { userSettings } from "../../actions"
 
 class UserSettings extends React.Component {
   handleChange = event => {
-    this.props.handleChange(event.target.name, event.target.value)
+    this.props.onChange(event.target.name, event.target.value)
   }
   getErrors(errors) {
     return (

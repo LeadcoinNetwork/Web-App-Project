@@ -7,9 +7,6 @@ export function userSettingsHandleChange(name, value) {
   }
 }
 
-/**
- * @param message{string}
- */
 export function userSettingsError(message) {
   return {
     type: types.USER_SETTINGS_ERROR,
