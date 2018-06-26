@@ -15,6 +15,7 @@ const TBRow = props => (
         {props.buttons.map(button => (
           <Button
             key={button.value}
+            appStyle={true}
             label={button.value}
             onClick={e => {
               e.stopPropagation()
