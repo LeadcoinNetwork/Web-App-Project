@@ -3,10 +3,10 @@ const express = require("express")
 const passport = require("passport")
 
 // internal modules
-const auth = require("../../../models/auth/user-auth")
-const leads_upload = require("../../../models/leads-upload/leads_upload")
-const leads = require("../../../models/leads/leads")
-const csv_reader = require("../../../models/csv_reader/index")
+import * as auth from "../models/auth/user-auth"
+import * as leads_upload from "../models/leads-upload/leads_upload"
+import * as leads from "../models/leads/leads"
+import * as csv_reader from "../models/csv_reader/index"
 
 const router = express.Router()
 export default router

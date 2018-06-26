@@ -5,12 +5,12 @@ const JWTStrategy = require("passport-jwt").Strategy
 const ExtractJwt = require("passport-jwt").ExtractJwt
 const GoogleStrategy = require("passport-google-oauth20").Strategy
 const LinkedInStrategy = require("passport-linkedin-oauth2").Strategy
-import NotFound from "../../../utils/not-found"
+import NotFound from "../../utils/not-found"
 
-import AppLogic from "../../../app-logic/index"
+import AppLogic from "../../app-logic/index"
 
 // Internal Modules
-import * as utils from "../../../utils/index"
+import * as utils from "../../utils/index"
 
 export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
   var config = appLogic.config
@@ -110,14 +110,30 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
     async function(accessToken, refreshToken, profile, done) {
       try {
         // try to find user by provider
-        let user = (await userActions.find({
+        let user = (await appLogic.users.getOne({
           provider_id: profile.id,
           provider: profile.provider,
-        }))[0]
-        if (!user) {
-          // try to find user by email
-          user = (await userActions.find({ email: profile.emails[0].value }))[0]
+        }))
+        if(user instanceof NotFound) {
+          
+          let user = (await appLogic.users.getOne({ email: profile.emails[0].value }))[0]
+          if(user instanceof NotFound) {
           if (user) {
+            // user email exists, transfer user to SSO
+            let user = {
+              fname: profile.name.givenName,
+              lname: profile.name.familyName,
+              email: profile.emails[0].value,
+              disabled:null,
+              provider_id: profile.id,
+              provider: profile.provider,
+              created: Date.now(),
+              role: "user",
+            }
+            await appLogic.users.createUser(user)
+            var newuser = (await appLogic.users.getOne({ email: user.email }))            
+            done(null,newuser)
+          } else { 
             // user email exists, transfer user to SSO
             let update = {
               provider_id: profile.id,
@@ -125,19 +141,6 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
             }
             user = await userActions.updateExternal(user.id, update)
           } else {
-            // user is new, create user
-            user = {
-              fname: profile.name.givenName,
-              lname: profile.name.familyName,
-              email: profile.emails[0].value,
-              provider_id: profile.id,
-              provider: profile.provider,
-              created: Date.now(),
-              role: "user",
-            }
-            await userActions.insert(user)
-            user = (await userActions.find({ email: user.email }))[0]
-          }
         } else {
           let update = utils.difference(
             {

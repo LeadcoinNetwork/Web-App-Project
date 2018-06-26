@@ -20,6 +20,8 @@ export interface ExistingUserInterfaceCondition {
   password?: string
   /**? Timestamp */
   created?: number
+  provider_id?
+  provider?
 }
 
 export interface NewUserInterface extends BaseUserInterface {

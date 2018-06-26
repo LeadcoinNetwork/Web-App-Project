@@ -17,7 +17,7 @@ import * as cors from "./cors"
 import AppPassports from "./passport/index"
 const io = require("./io/io")
 
-import AppLogic from "../../app-logic/index"
+import AppLogic from "../app-logic/index"
 
 interface props {
   appLogic: AppLogic

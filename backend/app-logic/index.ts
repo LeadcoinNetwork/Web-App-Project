@@ -13,7 +13,7 @@ import EmailSenderAbstraction from "../models/emailsender/abstraction"
 import EmailSenderNodeMailer from "../models/emailsender/nodemailer"
 import EmailSenderConsole from "../models/emailsender/console"
 import Users from "../models/users/users"
-import RestServer from "../controllers/rest/index"
+import RestServer from "../rest/index"
 
 export default class AppLogic {
   public emailCreator: EmailCreator

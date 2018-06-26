@@ -51,7 +51,7 @@ class User {
     var result = await this.find(condition)
     return result.length > 0
   }
-  private async getOne(
+  public async getOne(
     condition: ExistingUserInterfaceCondition,
     settings: { returnPassword: boolean } = { returnPassword: false },
   ): Promise<ExistingUserInterface | NotFound> {
@@ -64,7 +64,7 @@ class User {
   }
 
   // If not found, not returing an error.
-  private async find(
+  public async find(
     condition: ExistingUserInterfaceCondition,
     settings: { returnPassword: boolean } = { returnPassword: false },
   ): Promise<ExistingUserInterface[]> {

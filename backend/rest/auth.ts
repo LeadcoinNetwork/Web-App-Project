@@ -6,12 +6,12 @@ const authOptions = {
   session: false,
 }
 
-import EmailCreator from "../../models/email-creator/email-creator"
-import EmailSender from "../../models/emailsender/abstraction"
-import UserActions from "../../models/users/users"
+import EmailCreator from "../models/email-creator/email-creator"
+import EmailSender from "../models/emailsender/abstraction"
+import UserActions from "../models/users/users"
 import * as Express from "express"
-import AppLogic from "../../app-logic/index"
-import NotFound from "../../utils/not-found"
+import AppLogic from "../app-logic/index"
+import NotFound from "../utils/not-found"
 
 export function start({
   appLogic,
@@ -69,7 +69,6 @@ export function start({
 
   async function login(req, res, next) {
     var pass = await appLogic.userLogin.login(req.body.email, req.body.password)
-    console.log(pass)
     if (pass instanceof NotFound) {
       res.status(400)
       res.send({ error: "not auth" })

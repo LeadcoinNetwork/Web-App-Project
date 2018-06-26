@@ -1,10 +1,10 @@
 // external modules
-const express = require("express")
-const passport = require("passport")
+import * as express from "express"
+import * as passport from "passport"
 
 // internal modules
-const auth = require("../../../models/auth/user-auth")
-const leads = require("../../../models/leads/leads")
+import * as auth from "../models/user-auth/user-auth"
+import * as leads from "../models/leads/leads"
 
 const router = express.Router()
 export default router
