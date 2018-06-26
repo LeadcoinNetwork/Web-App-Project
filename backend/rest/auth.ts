@@ -17,11 +17,7 @@ export function start({
   appLogic: AppLogic
   expressApp: Express.Express
 }) {
-  expressApp.post(
-    "/auth/logout",
-    passport.authenticate("jwt", authOptions),
-    logout,
-  )
+  expressApp.post("/auth/logout", logout)
   expressApp.get("/auth/confirm-email", confirmEmail, login)
   expressApp.get("/auth/confirm-email-update", confirmEmailUpdate)
   expressApp.post("/auth/forgot-password", forgotPassword)
@@ -71,7 +67,7 @@ export function start({
   async function login(req, res, next) {
     var token = await appLogic.userLogin.login(req.user.id)
     res.cookie("token", token)
-    res.send({ token })
+    res.redirect(appLogic.config.frontend)
     // if (pass instanceof NotFound) {
     // res.status(400)
     // res.send({ error: "not auth" })
@@ -94,7 +90,7 @@ export function start({
   }
 
   async function logout(req, res) {
-    res.cookie("token", null)
+    res.clearCookie("token")
     res.json({ logout: "success" })
   }
 

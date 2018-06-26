@@ -56,7 +56,7 @@ export default class RestServer {
     // ROUTES
     expressApp.use(bodyParser.json())
     expressApp.use(cookieParser())
-    cors.start(expressApp, this.frontend)
+    cors.start(expressApp, this.appLogic)
 
     AppPassports.start({ expressApp, appLogic: this.appLogic })
     auth.start({ appLogic: this.appLogic, expressApp })
