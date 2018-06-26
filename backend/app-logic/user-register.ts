@@ -1,8 +1,7 @@
 import EmailCreator from "../models/email-creator/email-creator"
 import EmailSender from "../models/emailsender/abstraction"
 
-import { NewUserInterface } from "../models/users/types"
-import Users from "../models/users/users"
+import { NewUserInterface, disabledResons } from "../models/users/types"
 import * as auth from "../models/user-auth/user-auth"
 
 import * as UserValidate from "../models/user-validate/user-validate"
@@ -25,15 +24,16 @@ export default class UserRegister {
   }
   async register(
     user: NewUserInterface,
+    shouldValidate = true,
   ): Promise<{ user: number; token: string }> {
-    var users = new Users()
+    var users = this.appLogic.users
 
-    /*
-    Only here we do validate to new user
-    */
-    var rs = await UserValidate.checkNewUserValid(user)
-    if (rs instanceof Error) {
-      throw rs
+    if (shouldValidate) {
+      var rs = await UserValidate.checkNewUserValid(user)
+      if (rs instanceof Error) {
+        throw rs
+      }
+      user.disabled = disabledResons.EMAIL_NOT_VERIFIED
     }
     var newUserid = await users.createUser(user)
     let token = auth.generateJWT(

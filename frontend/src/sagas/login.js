@@ -9,8 +9,15 @@ export default function* login() {
   if (ans.isError) {
     yield put(push("/"))
   } else {
-    yield put(Actions.user.loggedIn(ans.user))
-    yield put(push("/buy-leads"))
+    console.log(ans)
+    console.log(ans.user)
+    console.log(ans.user.disabled)
+    if (ans.user.disabled == "EMAIL_NOT_VERIFIED") {
+      yield put(push("/email-confirmation"))
+    } else {
+      yield put(Actions.user.loggedIn(ans.user))
+      yield put(push("/buy-leads"))
+    }
   }
 }
 // login() {

@@ -143,18 +143,17 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
               fname: profile.name.givenName,
               lname: profile.name.familyName,
               email: profile.emails[0].value,
-              disabled: null,
               provider_id: profile.id,
               provider: profile.provider,
               created: Date.now(),
               role: "user",
             }
-            await appLogic.users.createUser(user)
-            var newuser = await appLogic.users.getOne({ email: user.email })
-            if (newuser instanceof NotFound) {
-              return done(new Error("user not found, after creataing"))
-            }
-            done(null, newuser)
+            var { user: user_id } = await appLogic.userRegister.register(
+              user,
+              false,
+            )
+
+            done(null, { id: user_id })
           } else {
             // user email exists, but user never signup using SSO
 
@@ -162,8 +161,8 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
               provider_id: profile.id,
               provider: profile.provider,
             }
-            user = await appLogic.users.update(user.id, update)
-            done(null, newuser)
+            await appLogic.users.update(user.id, update)
+            done(null, Object.assign({}, user, update))
           }
         } else {
           // user already logged in using same provider.

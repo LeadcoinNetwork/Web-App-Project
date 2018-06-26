@@ -4,11 +4,12 @@ export interface BaseUserInterface {
   fname: string
   lname: string
   email: string
-  disabled: boolean
+  disabled?: disabledResons
 }
 export interface ExistingUserInterface extends BaseUserInterface {
   password: string
   id: number
+  disabled: disabledResons
   created: number
 }
 export interface ExistingUserInterfaceCondition {
@@ -16,7 +17,6 @@ export interface ExistingUserInterfaceCondition {
   fname?: string
   lname?: string
   email?: string
-  disabled?: boolean
   password?: string
   /**? Timestamp */
   created?: number
@@ -26,4 +26,8 @@ export interface ExistingUserInterfaceCondition {
 
 export interface NewUserInterface extends BaseUserInterface {
   plainPassword?: string
+}
+
+export enum disabledResons {
+  EMAIL_NOT_VERIFIED = "EMAIL_NOT_VERIFIED",
 }
