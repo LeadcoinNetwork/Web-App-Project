@@ -61,3 +61,29 @@ test("GET /me sign up using real username and password", async () => {
   expect(_.get(x, "error.text")).toBeFalsy()
   expect(_.get(x, "body.user.fname")).toBe(fname)
 })
+
+test("post /auth/login", async () => {
+  const fname = chance.first()
+  const lname = chance.last()
+  const email = chance.email()
+  var x = await request.post("/user").send({
+    fname,
+    lname,
+    password: "KGHasdF987654&*^%$#",
+    email,
+  })
+  expect(x.error).toBeFalsy()
+
+  var x = await request.post("/auth/login").send({
+    password: "not-valid-password",
+    email,
+  })
+  expect(x.error).toBeTruthy()
+
+  var x = await request.post("/auth/login").send({
+    password: "KGHasdF987654&*^%$#",
+    email,
+  })
+  expect(x.error).toBeFalsy()
+  expect(x.body.token).toBeTruthy()
+})

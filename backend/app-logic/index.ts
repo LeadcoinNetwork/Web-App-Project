@@ -25,13 +25,13 @@ export default class AppLogic {
   // private uploadCSV= new UploadCSV()
   private uploadForm = new UploadForm()
   private uploadLeads = new UploadLeads()
-  private userLogin = new UserLogin()
   private userLogout = new UserLogout()
   public userRegister = new UserRegister({
     emailCreator: this.emailCreator,
     emailSender: this.emailSender,
     appLogic: this,
   })
+  public userLogin = new UserLogin(this)
 
   constructor(props?: {
     emailSender?: EmailSenderAbstraction
@@ -55,7 +55,7 @@ export default class AppLogic {
     }
   }
 
-  createServer() {
+  createServer = () => {
     var restServer = new RestServer({
       appLogic: this,
       env: "",

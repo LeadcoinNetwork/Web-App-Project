@@ -53,7 +53,7 @@ export default class RestServer {
     cors.start(expressApp, this.frontend)
 
     AppPassports.start({ expressApp, appLogic: this.appLogic })
-    // auth.start({ appLogic })
+    auth.start({ appLogic: this.appLogic, expressApp })
 
     userRouter.start({ appLogic: this.appLogic, expressApp })
 

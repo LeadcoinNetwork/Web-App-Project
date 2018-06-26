@@ -9,7 +9,6 @@ function start({ expressApp, appLogic }: { expressApp; appLogic: AppLogic }) {
   expressApp.use(passport.initialize())
   var s = strategies.getStrategies({ appLogic })
 
-  passport.use(s.localStrategy)
   passport.use(s.jwtStrategy)
   passport.use(s.googleStrategy)
   passport.use(s.linkedInStrategy)

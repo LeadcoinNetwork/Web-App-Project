@@ -15,20 +15,6 @@ import * as utils from "../../../utils/index"
 export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
   var config = appLogic.config
 
-  const localStrategy = new LocalStrategy(
-    {
-      usernameField: "email",
-    },
-    async (email, password, done) => {
-      try {
-        let user = await userActions.authenticatePassword(email, password)
-        done(null, user)
-      } catch (e) {
-        done(e)
-      }
-    },
-  )
-
   const extactFromCookie = request => {
     let token = null
     if (request && request.cookies) token = request.cookies["token"]
@@ -177,7 +163,6 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
   )
 
   return {
-    localStrategy,
     jwtStrategy,
     googleStrategy,
     linkedInStrategy,
