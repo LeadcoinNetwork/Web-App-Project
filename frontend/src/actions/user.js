@@ -1,17 +1,27 @@
-import * as types from "./types"
+import types from "./types"
 
-export const logIn = () => ({
-  type: types.LOG_IN,
-})
-export const loggedIn = user => ({
-  type: types.LOGGED_IN,
-  payload: user,
-})
+export default {
+  logIn() {
+    return {
+      type: types.LOG_IN,
+    }
+  },
+  loggedIn(user) {
+    return {
+      type: types.LOGGED_IN,
+      payload: user,
+    }
+  },
 
-export const logOut = () => ({
-  type: types.LOG_OUT,
-})
+  logOut() {
+    return {
+      type: types.LOG_OUT,
+    }
+  },
 
-export const loggedOut = () => ({
-  type: types.LOGGED_OUT,
-})
+  loggedOut() {
+    return {
+      type: types.LOGGED_OUT,
+    }
+  },
+}

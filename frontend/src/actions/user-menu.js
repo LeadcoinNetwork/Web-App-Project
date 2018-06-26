@@ -1,17 +1,19 @@
-import * as types from "./types"
+import types from "./types"
 
-export function userMenuOpen() {
-  return {
-    type: types.USER_MENU_OPEN,
-  }
-}
-export function userMenuClose() {
-  return {
-    type: types.USER_MENU_CLOSE,
-  }
-}
-export function userMenuClick() {
-  return {
-    type: types.USER_MENU_CLICK,
-  }
+export default {
+  userMenuOpen() {
+    return {
+      type: types.USER_MENU_OPEN,
+    }
+  },
+  userMenuClose() {
+    return {
+      type: types.USER_MENU_CLOSE,
+    }
+  },
+  userMenuClick() {
+    return {
+      type: types.USER_MENU_CLICK,
+    }
+  },
 }

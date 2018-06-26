@@ -1,35 +1,37 @@
-import * as types from "./types"
+import types from "./types"
 
-export function signupHandleChange(name, value) {
-  return {
-    type: types.SIGNUP_HANDLE_CHANGE,
-    payload: { name, value },
-  }
-}
+export default {
+  signupHandleChange(name, value) {
+    return {
+      type: types.SIGNUP_HANDLE_CHANGE,
+      payload: { name, value },
+    }
+  },
 
-export function signupSubmit() {
-  return {
-    type: types.SIGNUP_SUBMIT,
-  }
-}
+  signupSubmit() {
+    return {
+      type: types.SIGNUP_SUBMIT,
+    }
+  },
 
-export function signupLoading() {
-  return {
-    type: types.SIGNUP_LOADING,
-  }
-}
+  signupLoading() {
+    return {
+      type: types.SIGNUP_LOADING,
+    }
+  },
 
-export function signupFinish() {
-  return {
-    type: types.SIGNUP_FINISH,
-  }
-}
+  signupFinish() {
+    return {
+      type: types.SIGNUP_FINISH,
+    }
+  },
 
-export function signupError(message) {
-  return {
-    type: types.SIGNUP_ERROR,
-    payload: {
-      message,
-    },
-  }
+  signupError(message) {
+    return {
+      type: types.SIGNUP_ERROR,
+      payload: {
+        message,
+      },
+    }
+  },
 }

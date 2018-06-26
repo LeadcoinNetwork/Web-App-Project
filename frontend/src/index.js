@@ -18,7 +18,7 @@ var sagaMiddleWare = createSagaMiddleware()
 const store = createStore(
   rootReducer,
   compose(
-    applyMiddleware(sagaMiddleWare, ROUTER_MIDDLEWARE),
+    applyMiddleware(ROUTER_MIDDLEWARE, sagaMiddleWare),
     window.__REDUX_DEVTOOLS_EXTENSION__ &&
       window.__REDUX_DEVTOOLS_EXTENSION__(),
   ),
