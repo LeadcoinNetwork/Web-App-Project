@@ -9,12 +9,15 @@ const Button = ({
   onClick,
   children,
   appStyle,
+  isSecondary,
 }) => {
+  let cls = `ldc-button${loading ? " b-loading" : ""}${
+    appStyle ? " b-app-style" : ""
+  }${isSecondary ? " b-secondary" : ""}`
+
   return (
     <button
-      className={`ldc-button${loading ? " b-loading" : ""}${
-        appStyle ? " b-app-style" : ""
-      }`}
+      className={cls}
       type={type || "button"}
       disabled={disabled || loading}
       onClick={onClick}

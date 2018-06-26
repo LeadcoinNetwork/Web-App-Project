@@ -93,6 +93,7 @@ class AddLead extends React.Component {
             <div>
               <Button
                 loading={loading}
+                appStyle={true}
                 onClick={() => {
                   this.props.submit(this.props.fields_map)
                 }}
@@ -103,6 +104,7 @@ class AddLead extends React.Component {
               <Button
                 loading={loading}
                 appStyle={true}
+                isSecondary={true}
                 onClick={() => {
                   this.props.clear()
                 }}

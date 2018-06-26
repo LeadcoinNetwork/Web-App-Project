@@ -20,12 +20,15 @@
   }
 
   &.b-app-style {
-    border: solid 1px $bg-level-3;
-    color: $bg-level-3;
-    background-color: transparent;
     height: 45px;
     border-radius: 0;
     padding: 0 30px;
+  }
+
+  &.b-secondary {
+    border: solid 1px $bg-level-3;
+    color: $bg-level-3;
+    background-color: transparent;
 
     &:hover {
       background-color: $bg-level-3;
