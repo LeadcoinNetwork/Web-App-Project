@@ -12,6 +12,7 @@ import * as userSettings from "./userSettings"
 import * as userMenu from "./user-menu"
 import * as leads from "./leads"
 import * as login from "./login"
+import * as emailConfirmation from "./emailConfirmation"
 import * as balance from "./balance"
 import * as csvMapping from "./csvMapping"
 import * as csvUpload from "./csvUpload"
@@ -23,6 +24,7 @@ export {
   user,
   balance,
   signup,
+  emailConfirmation,
   completeRegistration,
   checkout,
   payments,
