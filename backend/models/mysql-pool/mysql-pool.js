@@ -2,7 +2,7 @@
 const mysql = require("promise-mysql")
 
 // internal modules
-const config = require("../../config")
+const config = require("../../app-logic/config")
 
 module.exports = mysql.createPool(config.mysql)
 

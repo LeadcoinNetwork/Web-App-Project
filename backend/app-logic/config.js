@@ -1,6 +1,6 @@
 var dotenv = require("dotenv")
 const url = require("url")
-var utils = require("./utils")
+var utils = require("../utils")
 
 dotenv.config()
 utils.throwOnMissingEnvironmentVariables()

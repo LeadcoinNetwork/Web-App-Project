@@ -5,10 +5,11 @@ export interface BaseUserInterface {
   lname: string
   email: string
   disabled: boolean
-  password: string
 }
 export interface ExistingUserInterface extends BaseUserInterface {
+  password: string
   id: number
+  created: number
 }
 export interface ExistingUserInterfaceCondition {
   id?: number

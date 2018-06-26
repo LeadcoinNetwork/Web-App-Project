@@ -1,15 +1,12 @@
-const auth = require("../auth/auth")
+import * as auth from "../user-auth/user-auth"
 const mysql = require("mysql")
 
-const validate = require("../validate/validate")
-const TokenMySQL = require("../token-mysql/token-mysql")
+const validate = require("../user-validate/user-validate")
 const sql = require("../mysql-pool/mysql-pool")
 
-import EmailCreator from "../email-creator/email-creator"
-import EmailSender from "../emailsender/abstraction"
-import EmailSenderError from "../emailsender/error"
-
 interface UserActionsConstructor {}
+
+import NotFound from "../../utils/not-found"
 
 import {
   NewUserInterface,
@@ -22,31 +19,45 @@ class User {
     Object.assign(this, props)
   }
 
-  async createUser(user: NewUserInterface): Promise<ExistingUserInterface> {
-    let { email } = user
-    var result = await this.getOne({ email })
-    if (result) {
-      throw new Error("user email already exists")
-    }    
-    let status = await sql.query("INSERT INTO users SET ?", user)
-    if (status.affectedRows != 0) {
-      throw new Error("user not inserted")
-    } else {
-      return this.getOne({ id: status.insertId })
-    }
+  async deleteAll() {
+    return sql.query("delete from users")
   }
 
-  /**
-   * If not found, or found more than one return an error.
-   */
+  async createUser(user: NewUserInterface): Promise<number> {
+    let { email } = user
+    var exist = await this.exist({ email })
+    if (exist) {
+      throw new Error("user email already exists")
+    }
+    var user2Databse = <any>user
+    user2Databse.password = auth.hashPassword(user.plainPassword)
+    delete user2Databse.plainPassword
+    let status = await sql.query("INSERT INTO users SET ?", user2Databse)
+    if (!status.insertId) {
+      throw new Error("user not inserted")
+    } else {
+      return status.insertId
+      // return this.getOne({ id: status.insertId })
+    }
+  }
+  async setNewPassword(user_id, new_password): Promise<boolean> {
+    var hashed_password = auth.hashPassword(new_password)
+    return this.update(user_id, { password: hashed_password })
+  }
+
+  private async exist(
+    condition: ExistingUserInterfaceCondition,
+  ): Promise<boolean> {
+    var result = await this.find(condition)
+    return result.length > 0
+  }
   private async getOne(
     condition: ExistingUserInterfaceCondition,
-  ): Promise<ExistingUserInterface> {
-    var result = await this.find(condition)
+    settings: { returnPassword: boolean } = { returnPassword: false },
+  ): Promise<ExistingUserInterface | NotFound> {
+    var result = await this.find(condition, settings)
     if (result.length != 1) {
-      throw  new Error(
-          "must return only 1 user, but returned " + result.length + " users",
-        )
+      return new NotFound()
     } else {
       return result[0]
     }
@@ -55,17 +66,25 @@ class User {
   // If not found, not returing an error.
   private async find(
     condition: ExistingUserInterfaceCondition,
+    settings: { returnPassword: boolean } = { returnPassword: false },
   ): Promise<ExistingUserInterface[]> {
     var cnd = Object.keys(condition)
       .map(key => {
-        return `${mysql.escpaeId(key)} = ${mysql.escape(condition[key])}`
+        return `${mysql.escapeId(key)} = ${mysql.escape(condition[key])}`
       })
       .join(" AND ")
 
     if (cnd) cnd = `WHERE ${cnd}`
 
     let rows = await sql.query(`SELECT * FROM users ${cnd}`)
-    rows = rows.map(row => Object.assign({}, row)) // remove RowDataPacket class
+    rows = rows.map(row => {
+      // remove RowDataPacket class
+      var newObject = Object.assign({}, row)
+      if (!settings.returnPassword) {
+        delete newObject.password
+      }
+      return newObject
+    })
 
     return rows
   }
@@ -80,22 +99,27 @@ class User {
   }
 
   // returns user
+  async getUserById(id): Promise<ExistingUserInterface | NotFound> {
+    let user = await this.getOne({ id })
+    return user
+  }
+
   async getUserByEmailAndPassword(
     email,
     password,
-  ): Promise<ExistingUserInterface> {
-    let user = await this.getOne({ email })
+  ): Promise<ExistingUserInterface | NotFound> {
+    let user = await this.getOne({ email }, { returnPassword: true })
+    if (user instanceof NotFound) {
+      return new NotFound()
+    }
     if (!auth.comparePassword(password, user.password)) {
-      throw new Error("Unauthorized")]
+      return new NotFound()
     } else {
       return user
     }
   }
 
-  async update(
-    userId,
-    user: ExistingUserInterfaceCondition,
-  ): Promise<ExistingUserInterface> {
+  async update(userId, user: ExistingUserInterfaceCondition): Promise<boolean> {
     let { email, password } = user
 
     if (password) {
@@ -104,18 +128,17 @@ class User {
 
     var values = Object.keys(user)
       .map(key => {
-        return `${mysql.escape("$." + key)} , ${mysql.escape(user[key])}`
+        return `${mysql.escapeId(key)} = ${mysql.escape(user[key])}`
       })
       .join(" , ")
 
     let status = await sql.query(
-      "UPDATE users SET user=JSON_SET(user," + values + ") WHERE id = ?",
-      [userId],
+      `UPDATE users SET ${values}  WHERE id = ${mysql.escape(userId)}`,
     )
-    if (status.affectedRows != 0) {
+    if (status.affectedRows == 0) {
       throw new Error("user not updated")
     } else {
-      return await this.getOne({ id: userId })
+      return true
     }
   }
 
