@@ -1,5 +1,4 @@
 import * as types from "./types"
-import { SOCKET } from "./api"
 
 export function emailConfirmationFormHandleChange(name, value) {
   return {
