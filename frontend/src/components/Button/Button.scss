@@ -53,8 +53,12 @@
     }
   }
 
-  &:disabled:not(.b-loading) {
-    opacity: 0.5;
+  &:disabled {
+    cursor: default;
+    
+    &:not(.b-loading) {
+      opacity: 0.5;
+    }
   }
 }
 

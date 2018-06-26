@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import BalanceWidget from "Containers/BalanceWidget"
 import NotificationElement from "Containers/NotificationElement"
 import UserMenu from "Containers/UserMenu"
 
@@ -18,6 +19,7 @@ const Header = ({ path, loggedIn }) => (
       </div>
     )}
     <div className="ham-menu">
+      <BalanceWidget />
       <NotificationElement />
       <UserMenu />
     </div>

@@ -6,28 +6,24 @@ var initialState = {
 }
 export default function(state = initialState, action) {
   switch (action.type) {
-    case types.UPDATE_USER_BALANCE:
+    case types.BALANCE_WIDGET_UPDATE:
       return {
         ...state,
         loading: false,
         total: action.payload.total,
         inEscrow: action.payload.inEscrow,
       }
-    case types.ACTION_WITHDRAW_ELEMENT_START_LOADING:
+    case types.BALANCE_WIDGET_LOADING_START:
       return {
         ...state,
         loading: true,
       }
-      break
-    case types.ACTION_WITHDRAW_ELEMENT_FINISH_LOADING:
+    case types.BALANCE_WIDGET_LOADING_FINISH:
       return {
         ...state,
         loading: false,
       }
-      break
-
     default:
       return state
-      break
   }
 }
