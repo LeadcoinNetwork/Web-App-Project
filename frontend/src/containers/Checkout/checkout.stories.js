@@ -6,6 +6,13 @@ import { createStoreAndStory } from "storybook-utils/withRouter"
 const mockData = require("../../mocks/shopping-cart.json")
 
 storiesOf("Containers/Checkout")
+  .add("Checkout - empty", () => {
+    var { store, story } = createStoreAndStory({
+      path: '/checkout',
+      loggedIn: true,
+    })
+    return story
+  })
   .add("Checkout - 6 items", () => {
     var { store, story } = createStoreAndStory({
       path: '/checkout',
