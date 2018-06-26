@@ -53,6 +53,10 @@
       animation: loading-spinner 700ms linear infinite;
     }
   }
+
+  &:disabled:not(.b-loading) {
+    opacity: 0.5;
+  }
 }
 
 @media (max-width: $screen-tablets) {
