@@ -85,9 +85,10 @@ test("post /auth/login (create user, try login with invalid password, then using
     email,
   })
   expect(x.error).toBeFalsy()
-  expect(x.body.token).toBeTruthy()
+  var token = x.headers["set-cookie"][0].replace(/token=(.*?);.*/, "$1")
+  expect(token).toBeTruthy()
   var x = await request.get("/me").set({
-    cookie: "token=" + x.body.token,
+    cookie: "token=" + token,
   })
   expect(x.body.user.fname).toEqual(fname)
 })
