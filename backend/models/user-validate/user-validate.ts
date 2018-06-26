@@ -31,7 +31,7 @@ const userSchema = Joi.object().keys({
   email: Joi.string()
     .email()
     .label("Email"),
-  password: Joi.password()
+  plainPassword: Joi.password()
     .strong()
     .label("Password"),
   role: Joi.string()
@@ -64,19 +64,22 @@ function joiPassword(joi) {
   }
 }
 
-async function newUser(user) {
-  return await Joi.validate(
-    user,
-    userSchema.requiredKeys("fname", "lname", "email", "password"),
-    { abortEarly: false },
-  )
+export async function checkNewUserValid(user): Promise<true | Error> {
+  try {
+    var res = await Joi.validate(
+      user,
+      userSchema.requiredKeys("fname", "lname", "email", "plainPassword"),
+      { abortEarly: false },
+    )
+    return true
+  } catch (err) {
+    if (err.details) {
+      err.message = err.details.map(i => i.message).join("; ")
+    }
+    return err
+  }
 }
 
-async function partialUser(user) {
-  return await Joi.validate(user, userSchema.min(1), { abortEarly: false })
-}
-
-module.exports = {
-  newUser,
-  partialUser,
+export function partialUser(user) {
+  return Joi.validate(user, userSchema.min(1), { abortEarly: false })
 }

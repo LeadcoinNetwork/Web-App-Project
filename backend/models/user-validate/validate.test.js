@@ -1,5 +1,3 @@
-const chaiAsPromised = require("chai-as-promised")
-const { expect } = require("chai").use(chaiAsPromised)
 const { omit, pick } = require("lodash")
 const validate = require("./user-validate")
 
@@ -10,9 +8,7 @@ const user = {
   password: "912379233",
 }
 
-it("Should have `fname`, `lname`, `email`, `password`", () => {
-  return Promise.all([
-    expect(validate.newUser(user)).to.be.fulfilled,
+test("Should have `fname`, `lname`, `email`, `password`", () => {
     expect(validate.newUser(omit(user, "fname"))).to.be.rejected,
     expect(validate.newUser(omit(user, "lname"))).to.be.rejected,
     expect(validate.newUser(omit(user, "email"))).to.be.rejected,

@@ -1,7 +1,6 @@
 const express = require("express")
 const supertest = require("supertest")
 // Internal Modules
-import UserActions from "../../models/users/users"
 import EmailCreator from "../../models/email-creator/email-creator"
 import EmailSenderMock from "../../models/emailsender/mock"
 

@@ -10,7 +10,10 @@ function comparePassword(password, hash): boolean {
   return bcrypt.compareSync(password, hash)
 }
 
-function generateJWT(user_id: number, secret: string) {
+/**
+ * @returns Token
+ */
+function generateJWT(user_id: number, secret: string): string {
   let payload = {
     id: user_id,
   }

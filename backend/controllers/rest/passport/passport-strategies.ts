@@ -5,15 +5,16 @@ const JWTStrategy = require("passport-jwt").Strategy
 const ExtractJwt = require("passport-jwt").ExtractJwt
 const GoogleStrategy = require("passport-google-oauth20").Strategy
 const LinkedInStrategy = require("passport-linkedin-oauth2").Strategy
+import NotFound from "../../../utils/not-found"
 
 import AppLogic from "../../../app-logic/index"
 
 // Internal Modules
-const config = require("../../../config")
-const User = require("../../../models/user-actions/user-actions")
-const utils = require("../../../utils/index")
+import * as utils from "../../../utils/index"
 
 export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
+  var config = appLogic.config
+
   const localStrategy = new LocalStrategy(
     {
       usernameField: "email",
@@ -40,15 +41,15 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
       secretOrKey: config.auth.jwt.secret,
     },
     async (jwt, done) => {
-      try {
-        var user = await userActions.find({ id: jwt.id })
-      } catch (_err) {
+      var user = await appLogic.users.getUserById(jwt.id)
+      if (user instanceof NotFound) {
         let err = new Error("Unauthorized")
         //@ts-ignore
         err.status = 401
         done(err)
+      } else {
+        done(null, user)
       }
-      done(null, user)
     },
   )
 

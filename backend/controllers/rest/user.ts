@@ -2,10 +2,7 @@
 
 // external modules
 const passport = require("passport")
-
-// internal modules
-const User = require("../../../models/user-actions/user-actions")
-const auth = require("../../../models/auth/auth")
+import * as _ from "lodash"
 
 const authOptions = {
   session: false,
@@ -14,11 +11,7 @@ const authOptions = {
   failWithError: true,
 }
 
-import UserActions from "../../../models/users/users"
-import EmailCreator from "../../../models/email-creator/email-creator"
-import EmailSender from "../../../models/emailsender/abstraction"
-
-import AppLogic from "../../../app-logic/index"
+import AppLogic from "../../app-logic/index"
 
 export function start({
   expressApp,
@@ -45,18 +38,18 @@ export function start({
     res.send({ user: req.user })
   }
   async function register(req, res, next) {
-    var [{ user, token }, error] = await appLogic.userRegister.register({
-      ...req.body,
-    })
-
-    if (error) {
-      res.status(400)
-      res.json({ error })
-    } else {
+    ;(async () => {
+      var { user, token } = await appLogic.userRegister.register({
+        ..._.omit(req.body, "password"),
+        plainPassword: req.body.password,
+      })
       res.status(201) // Created
       res.cookie("token", token)
       res.json({ user, token })
-    }
+    })().catch(err => {
+      res.status(400)
+      res.json({ error: err.message })
+    })
   }
 
   async function remove(req, res, next) {

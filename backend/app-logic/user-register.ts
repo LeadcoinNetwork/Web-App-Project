@@ -5,27 +5,43 @@ import { NewUserInterface } from "../models/users/types"
 import Users from "../models/users/users"
 import * as auth from "../models/user-auth/user-auth"
 
+import * as UserValidate from "../models/user-validate/user-validate"
+
+import AppLogic from "./index"
 interface UserRegisterProps {
   emailCreator: EmailCreator
   emailSender: EmailSender
+  appLogic: AppLogic
 }
 
 export default class UserRegister {
-  private props: UserRegisterProps
+  private emailCreator: EmailCreator
+  private emailSender: EmailSender
+  private appLogic: AppLogic
 
   constructor(props: UserRegisterProps) {
-    this.props = props
+    Object.assign(this, props)
     //Empty function
   }
   async register(
     user: NewUserInterface,
-  ): Promise<{ user: NewUserInterface; token: string }> {
+  ): Promise<{ user: number; token: string }> {
     var users = new Users()
 
-    var newUser = await users.createUser(user)
-    let token = auth.generateJWT(newUser)
+    /*
+    Only here we do validate to new user
+    */
+    var rs = await UserValidate.checkNewUserValid(user)
+    if (rs instanceof Error) {
+      throw rs
+    }
+    var newUserid = await users.createUser(user)
+    let token = auth.generateJWT(
+      newUserid,
+      this.appLogic.config.auth.jwt.secret,
+    )
     return {
-      user: newUser,
+      user: newUserid,
       token,
     }
   }

@@ -6,7 +6,7 @@ var { request, emailSenderMock } = RoutesForTests.create()
 
 var chance = Chance()
 
-test("POST /user sign up using wrong username and password", async () => {
+test("POST /user sign up using WRONG username and password", async () => {
   return request
     .post("/user", {
       firstname: "moshe",
@@ -20,6 +20,18 @@ test("POST /user sign up using wrong username and password", async () => {
     })
 })
 
+test("POST /user sign up using REAL username and password", async () => {
+  var fname = chance.first()
+  var lname = chance.last()
+  var x = await request.post("/user").send({
+    fname,
+    lname,
+    password: "KGHasdF987654&*^%$#",
+    email: chance.email(),
+  })
+  expect(typeof x.body.user).toEqual("number")
+})
+
 test("GET /me sign up using real username and password", async () => {
   var fname = chance.first()
   var lname = chance.last()
@@ -29,7 +41,7 @@ test("GET /me sign up using real username and password", async () => {
     password: "KGHasdF987654&*^%$#",
     email: chance.email(),
   })
-  expect(_.get(x, "error.text")).toBeFalsy()
+  expect(x.error).toBeFalsy()
 
   expect(x.status).toEqual(201)
   var tokenFromBody = x.body.token
@@ -48,5 +60,4 @@ test("GET /me sign up using real username and password", async () => {
   })
   expect(_.get(x, "error.text")).toBeFalsy()
   expect(_.get(x, "body.user.fname")).toBe(fname)
-  return true
 })

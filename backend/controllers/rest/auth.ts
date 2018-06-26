@@ -6,9 +6,9 @@ const authOptions = {
   session: false,
 }
 
-import EmailCreator from "../../../models/email-creator/email-creator"
-import EmailSender from "../../../models/emailsender/abstraction"
-import UserActions from "../../../models/user-actions/user-actions"
+import EmailCreator from "../../models/email-creator/email-creator"
+import EmailSender from "../../models/emailsender/abstraction"
+import UserActions from "../../models/users/users"
 
 export function start({
   app,
@@ -57,7 +57,7 @@ export function start({
   async function resendEmail(req, res, next) {
     try {
       let _user = req.user
-      let token = await userActions.login(_user.id)
+      // let token = await userActions.login(_user.id)
       await emailCreator.confirmEmail(_user, token)
       res.json({ user: _user, token })
     } catch (e) {
@@ -68,7 +68,7 @@ export function start({
   async function login(req, res, next) {
     try {
       let _user = req.user
-      let token = await userActions.login(_user.id)
+      // let token = await userActions.login(_user.id)
       res.cookie("token", token)
       if (_user.provider) {
         res.redirect(frontend)
@@ -88,7 +88,7 @@ export function start({
   async function confirmEmail(req, res, next) {
     try {
       let { token } = req.query
-      let _user = await userActions.confirmEmail(token)
+      // let _user = await userActions.confirmEmail(token)
       if (_user) {
         req.user = _user
         next()
@@ -106,7 +106,7 @@ export function start({
   async function confirmEmailUpdate(req, res, next) {
     try {
       let { token } = req.query
-      await userActions.confirmEmailUpdate(token)
+      // await userActions.confirmEmailUpdate(token)
       res.json({ ok: true })
     } catch (e) {
       next(e)
@@ -116,7 +116,7 @@ export function start({
   async function forgotPassword(req, res, next) {
     try {
       let { email } = req.body
-      await userActions.forgotPassword(email)
+      // await userActions.forgotPassword(email)
       res.json({ ok: true })
     } catch (e) {
       next(e)

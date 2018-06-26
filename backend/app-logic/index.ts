@@ -13,13 +13,15 @@ import EmailSenderAbstraction from "../models/emailsender/abstraction"
 import EmailSenderNodeMailer from "../models/emailsender/nodemailer"
 import EmailSenderConsole from "../models/emailsender/console"
 import Users from "../models/users/users"
-import RestServer from "../controllers/rest/router/index"
+import RestServer from "../controllers/rest/index"
 
 export default class AppLogic {
   public emailCreator: EmailCreator
   public emailSender: EmailSenderAbstraction
+  public readonly config = config
 
-  private users: any
+  public users = new Users()
+
   // private uploadCSV= new UploadCSV()
   private uploadForm = new UploadForm()
   private uploadLeads = new UploadLeads()
@@ -28,6 +30,7 @@ export default class AppLogic {
   public userRegister = new UserRegister({
     emailCreator: this.emailCreator,
     emailSender: this.emailSender,
+    appLogic: this,
   })
 
   constructor(props?: {
@@ -58,15 +61,15 @@ export default class AppLogic {
       env: "",
       frontend: "",
     })
-    var expressApp = restServer.createExpressServer()
-    return expressApp
+    var httpServer = restServer.createHttpServer()
+    return httpServer
   }
 
   createServerAndListen() {
-    var expressApp = this.createServer()
-    expressApp.listen(config.app.port, () => {
+    var httpServer = this.createServer()
+    httpServer.listen(config.app.port, () => {
       console.log("listening on *:" + config.app.port)
     })
-    return expressApp
+    return httpServer
   }
 }
