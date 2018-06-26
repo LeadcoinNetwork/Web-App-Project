@@ -17,24 +17,22 @@ import {
   ExistingUserInterfaceCondition,
 } from "./types"
 
-import { GoPromise } from "../../utils/GoPromise"
-
 class User {
   constructor(props?: UserActionsConstructor) {
     Object.assign(this, props)
   }
 
-  async createUser(user: NewUserInterface): GoPromise<ExistingUserInterface> {
+  async createUser(user: NewUserInterface): Promise<ExistingUserInterface> {
     let { email } = user
-    var [result] = await this.getOne({ email })
+    var result = await this.getOne({ email })
     if (result) {
-      return [null, new Error("user email already exists")]
-    }
+      throw new Error("user email already exists")
+    }    
     let status = await sql.query("INSERT INTO users SET ?", user)
     if (status.affectedRows != 0) {
-      return [null, new Error("user not inserted")]
+      throw new Error("user not inserted")
     } else {
-      return await this.getOne({ id: status.insertId })
+      return this.getOne({ id: status.insertId })
     }
   }
 
@@ -43,24 +41,21 @@ class User {
    */
   private async getOne(
     condition: ExistingUserInterfaceCondition,
-  ): GoPromise<ExistingUserInterface> {
-    var [result] = await this.find(condition)
+  ): Promise<ExistingUserInterface> {
+    var result = await this.find(condition)
     if (result.length != 1) {
-      return [
-        null,
-        new Error(
+      throw  new Error(
           "must return only 1 user, but returned " + result.length + " users",
-        ),
-      ]
+        )
     } else {
-      return [result[0], null]
+      return result[0]
     }
   }
 
   // If not found, not returing an error.
   private async find(
     condition: ExistingUserInterfaceCondition,
-  ): GoPromise<ExistingUserInterface[]> {
+  ): Promise<ExistingUserInterface[]> {
     var cnd = Object.keys(condition)
       .map(key => {
         return `${mysql.escpaeId(key)} = ${mysql.escape(condition[key])}`
@@ -72,12 +67,12 @@ class User {
     let rows = await sql.query(`SELECT * FROM users ${cnd}`)
     rows = rows.map(row => Object.assign({}, row)) // remove RowDataPacket class
 
-    return [rows, null]
+    return rows
   }
 
-  async delete(userId): GoPromise<boolean> {
+  async delete(userId): Promise<boolean> {
     let status = await sql.query("DELETE FROM users WHERE id = ?", userId)
-    return [status.affectedRows != 0, null]
+    return status.affectedRows != 0
   }
 
   async activateUser({ user_id }: { user_id: number }) {
@@ -88,22 +83,19 @@ class User {
   async getUserByEmailAndPassword(
     email,
     password,
-  ): GoPromise<ExistingUserInterface> {
-    let [user, error] = await this.getOne({ email })
-    if (error) {
-      return [null, error]
-    }
+  ): Promise<ExistingUserInterface> {
+    let user = await this.getOne({ email })
     if (!auth.comparePassword(password, user.password)) {
-      return [null, new Error("Unauthorized")]
+      throw new Error("Unauthorized")]
     } else {
-      return [user, null]
+      return user
     }
   }
 
   async update(
     userId,
     user: ExistingUserInterfaceCondition,
-  ): GoPromise<ExistingUserInterface> {
+  ): Promise<ExistingUserInterface> {
     let { email, password } = user
 
     if (password) {
@@ -121,7 +113,7 @@ class User {
       [userId],
     )
     if (status.affectedRows != 0) {
-      return [null, new Error("user not updated")]
+      throw new Error("user not updated")
     } else {
       return await this.getOne({ id: userId })
     }

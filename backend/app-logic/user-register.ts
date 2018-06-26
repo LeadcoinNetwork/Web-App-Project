@@ -3,31 +3,32 @@ import EmailSender from "../models/emailsender/abstraction"
 
 import { NewUserInterface } from "../models/users/types"
 import Users from "../models/users/users"
-import * as auth from '../models/user-auth/user-auth'
+import * as auth from "../models/user-auth/user-auth"
 
 interface UserRegisterProps {
   emailCreator: EmailCreator
   emailSender: EmailSender
 }
 
-import {GoPromise} from '../utils/GoPromise'
 export default class UserRegister {
   private props: UserRegisterProps
 
   constructor(props: UserRegisterProps) {
-    this.props = props		
+    this.props = props
     //Empty function
   }
-  async register(user: NewUserInterface) :GoPromise<{user:NewUserInterface,token:string}>{
-		var users=new Users();
-		
-		var [newUser,error] = await users.createUser(user)
-		if(error) {return [null,error]} 
-      let token = auth.generateJWT(_user)
-		return {
-			user:newUser,
-			token:''
-	}
+  async register(
+    user: NewUserInterface,
+  ): Promise<{ user: NewUserInterface; token: string }> {
+    var users = new Users()
+
+    var newUser = await users.createUser(user)
+    let token = auth.generateJWT(newUser)
+    return {
+      user: newUser,
+      token,
+    }
+  }
 }
 
 // // ----------------------------- ONLY LOCAL USERS -----------------------------
