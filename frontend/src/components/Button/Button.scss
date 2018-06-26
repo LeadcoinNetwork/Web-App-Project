@@ -23,6 +23,7 @@
     height: 45px;
     border-radius: 0;
     padding: 0 30px;
+    background-color: $bg-level-3;
   }
 
   &.b-secondary {
@@ -31,10 +32,8 @@
     background-color: transparent;
 
     &:hover {
-      background-color: $bg-level-3;
-      border-color: $bg-level-3;
       color: #fff;
-      opacity: 1;
+      border-color: #fff;
     }
   }
 

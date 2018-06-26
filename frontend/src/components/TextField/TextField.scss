@@ -12,6 +12,7 @@
   color: $main-color;
   padding: 0 25px;
   font-weight: 300;
+  transition: all 300ms ease;
 
   &.t-app-style {
     color: white;
@@ -21,6 +22,10 @@
     height: 40px;
     font-size: 14px;
     padding: 0 12px;
+
+    &:focus {
+      border-color: #fff;
+    }
   }
 }
 

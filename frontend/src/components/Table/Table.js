@@ -87,21 +87,23 @@ class Table extends React.Component {
 
     return (
       <section className="ldc-table">
-        {props.buttons &&
-          props.buttons.table &&
-          props.buttons.table.map(button => (
-            <Button
-              key={button.value}
-              label={button.value}
-              onClick={button.onClick}
-              appStyle={true}
-              disabled={
-                props.isSelectable && button.actionPerSelected
-                  ? !props.selected.size
-                  : false
-              }
-            />
-          ))}
+        <div className="t-buttons">
+          {props.buttons &&
+            props.buttons.table &&
+            props.buttons.table.map(button => (
+              <Button
+                key={button.value}
+                label={button.value}
+                onClick={button.onClick}
+                appStyle={true}
+                disabled={
+                  props.isSelectable && button.actionPerSelected
+                    ? !props.selected.size
+                    : false
+                }
+              />
+            ))}
+        </div>
         <THead
           fields={props.fields}
           colCount={dinamicColsCount}
