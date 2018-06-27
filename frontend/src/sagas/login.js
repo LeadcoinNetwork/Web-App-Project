@@ -9,11 +9,8 @@ export default function* login() {
   if (ans.isError) {
     yield put(push("/"))
   } else {
-    console.log(ans)
-    console.log(ans.user)
-    console.log(ans.user.disabled)
     if (ans.user.disabled == "EMAIL_NOT_VERIFIED") {
-      yield put(push("/email-confirmation"))
+      yield put(Actions.user.loggedOut())
     } else {
       yield put(Actions.user.loggedIn(ans.user))
       yield put(push("/buy-leads"))

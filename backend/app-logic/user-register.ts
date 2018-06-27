@@ -26,7 +26,7 @@ export default class UserRegister {
     user: NewUserInterface,
     shouldValidate = true,
   ): Promise<{ user: number; token: string }> {
-    var users = this.appLogic.users
+    var users = this.appLogic.models.users
 
     if (shouldValidate) {
       var rs = await UserValidate.checkNewUserValid(user)

@@ -1,6 +1,6 @@
 import UploadCSV from "./upload-csv"
 import UploadForm from "./upload-form"
-import UploadLeads from "./upload-leads"
+import UploadLeads from "./leads"
 import UserLogin from "./user-login"
 import UserLogout from "./user-logout"
 import UserRegister from "./user-register"

@@ -17,7 +17,7 @@ var chance = Chance()
  * User B Don't see the lead in "Buy Leads"
  * User A
  */
-test("user sign-up, click link, upload lead. user 2, sign-up, click link, buy lead", async () => {
+test.skip("user sign-up, click link, upload lead. user 2, sign-up, click link, buy lead", async () => {
   var x = await request.post("/user").send({
     fname: "moshe",
     lname: "moshe",
