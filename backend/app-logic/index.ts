@@ -15,7 +15,7 @@ import EmailSenderConsole from "../models/emailsender/console"
 import RestServer from "../rest/index"
 import userSyntisize from "./user-syntisize"
 import Users from "../models/users/users"
-import * as LeadsModel from "../models/leads/leads"
+import LeadsModel from "../models/leads/leads"
 import leads from "./leads"
 
 export default class AppLogic {
@@ -25,7 +25,7 @@ export default class AppLogic {
 
   public models = {
     users: new Users(),
-    leads: LeadsModel,
+    leads: new LeadsModel(),
   }
   public leads = new leads(this)
 
