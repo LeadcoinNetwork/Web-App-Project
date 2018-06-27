@@ -25,7 +25,7 @@ export default class AppLogic {
 
   public models = {
     users: new Users(),
-    leads: new LeadsModel(),
+    leads: new LeadsModel({}),
   }
   public leads = new leads(this)
 
