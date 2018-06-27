@@ -27,6 +27,11 @@ module.exports = {
       title: "Leadcoin",
       links: [
         {
+          type: "image/png",
+          rel: "shortcut icon",
+          href: "/images/favicon.png",
+        },
+        {
           href: "/fonts/source-sans.css",
           rel: "stylesheet",
         },
