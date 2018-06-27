@@ -11,6 +11,7 @@ module.exports = mysql.createPool(config.mysql)
   mysql
     .createConnection({
       host: config.mysql.host,
+      port: config.mysql.port,
       user: config.mysql.user,
       password: config.mysql.password,
     })
