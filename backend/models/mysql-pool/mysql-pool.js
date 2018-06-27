@@ -28,6 +28,7 @@ module.exports = mysql.createPool(config.mysql)
         provider VARCHAR(40),
         password VARCHAR(60),
         email VARCHAR(254) NOT NULL UNIQUE,
+        emailConfirmationKey longtext, 
         role VARCHAR(255) DEFAULT 'user',
         fname VARCHAR(40) NOT NULL,
         lname VARCHAR(40) NOT NULL,

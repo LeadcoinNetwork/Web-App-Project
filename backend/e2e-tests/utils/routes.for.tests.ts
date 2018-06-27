@@ -19,5 +19,5 @@ export function create() {
 
   var request = supertest(app)
 
-  return { request, emailSenderMock }
+  return { request, emailSenderMock, appLogic }
 }

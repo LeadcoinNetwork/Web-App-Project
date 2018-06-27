@@ -8,6 +8,4 @@ var { request } = RoutesForTests.create()
 
 test("upload CSV that contain only 1 row", async () => {
   var { user, token } = await ValidatedUserForTests.create({ request })
-  console.log("great!!:", user)
-  console.log("great!@:", token)
 })
