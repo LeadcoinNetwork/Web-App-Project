@@ -113,13 +113,12 @@ export function start({
   }
 
   async function confirmEmailUpdate(req, res, next) {
-    // try {
-    //   let { token } = req.query
-    //   // await userActions.confirmEmailUpdate(token)
-    //   res.json({ ok: true })
-    // } catch (e) {
-    //   next(e)
-    // }
+    try {
+      var ok = await appLogic.userRegister.tryConfirmEmailByKey(req.query.key)
+      res.json({ ok })
+    } catch (e) {
+      next(e)
+    }
   }
 
   async function forgotPassword(req, res, next) {
