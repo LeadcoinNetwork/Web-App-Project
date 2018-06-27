@@ -11,7 +11,7 @@ module.exports = {
   frontend: process.env.FRONTEND,
   upload: process.env.UPLOAD_DIR,
   app: {
-    port: 3000,
+    port: process.env.PORT,
   },
   auth: {
     jwt: {
@@ -41,6 +41,7 @@ module.exports = {
   },
   mysql: {
     host: process.env.MYSQL_HOST,
+    port: process.env.MYSQL_PORT,
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE,
