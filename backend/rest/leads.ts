@@ -1,13 +1,13 @@
 // external modules
-import * as express from "express"
 import * as passport from "passport"
+import * as Express from "express"
+import AppLogic from "../app-logic/index"
+import NotFound from "../utils/not-found"
+import { appModels } from "app-logic/types"
 
-// internal modules
 import * as auth from "../models/user-auth/user-auth"
-import * as leads from "../models/leads/leads"
 
-const router = express.Router()
-export default router
+import {Lead} from '../models/leads/types'
 
 const authOptions = {
   session: false,
@@ -25,12 +25,45 @@ const mock_field_list = [
   "floor",
   "specification",
 ]
+// ---
 
-const flatten_lead = lead => {
-  const flat_lead = Object.assign(lead, JSON.parse(lead.ext_data))
-  delete flat_lead["ext_data"]
-  return flat_lead
+const done = (a) => {
+  console.log(a)
 }
+
+export function start({
+  appLogic,
+  expressApp,
+}:{
+  appLogic: AppLogic
+  expressApp: Express.Express
+}){
+
+  /*
+  expressApp.get("/auth/confirm-email-update", confirmEmailUpdate)
+  expressApp.get(
+    "/auth/resend-email",
+    passport.authenticate("jwt", authOptions),
+    resendEmail,
+  )
+  */
+  expressApp.post(
+    "/leads/add",
+    passport.authenticate("jwt", authOptions),
+    add_lead
+  )
+
+  async function add_lead(req, res, next) {
+    (async ()=>{
+      const { user } = req
+      const { lead } : {lead: Lead} = req.body
+      console.log({lead})
+      appLogic.leads.AddLead(lead)
+      next()
+    })().catch(done)
+  }
+}
+/*
 
 router.post("/leads/buy", passport.authenticate("jwt", authOptions), buy_leads)
 async function buy_leads(req, res, next) {
@@ -112,3 +145,4 @@ async function my_leads(req, res, next) {
     next(e)
   }
 }
+*/

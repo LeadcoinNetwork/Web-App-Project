@@ -1,0 +1,22 @@
+@import "~Styles/variables";
+
+.ldc-textarea {
+  display: inline-block;
+  width: 100%;
+  background-color: transparent;
+  font-size: 18px;
+  line-height: 1.5;
+  border: solid 1px $bg-level-3;
+  outline: none;
+  color: #fff;
+  letter-spacing: 0.7px;
+  padding: 20px 25px;
+  font-weight: 300;
+  transition: all 300ms ease;
+  resize: vertical;
+  min-height: 100px;
+
+  &:focus {
+    border-color: #fff;
+  }
+}

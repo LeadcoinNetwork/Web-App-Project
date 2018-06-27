@@ -14,7 +14,7 @@ const UserMenuInner = ({ user, logOut }) => (
     {user.email && (
       <label>
         Logged in as:
-        <span>{user.email}</span>
+        <span title={user.email}>{user.email}</span>
       </label>
     )}
     {menuItems.map((item, index) => (

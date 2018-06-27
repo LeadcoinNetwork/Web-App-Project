@@ -9,11 +9,11 @@ const Button = ({
   onClick,
   children,
   appStyle,
-  isSecondary,
+  secondary,
 }) => {
   let cls = `ldc-button${loading ? " b-loading" : ""}${
     appStyle ? " b-app-style" : ""
-  }${isSecondary ? " b-secondary" : ""}`
+  }${secondary ? " b-secondary" : ""}`
 
   return (
     <button
