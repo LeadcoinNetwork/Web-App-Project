@@ -1,4 +1,4 @@
-import * as types from "../actions/types"
+import types from "../actions/types"
 var initialState = {
   loading: false,
   total: 0,

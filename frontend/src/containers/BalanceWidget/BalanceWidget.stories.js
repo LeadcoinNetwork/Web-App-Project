@@ -9,15 +9,15 @@ storiesOf("Containers/Balance Widget", module)
       path: "/buy-leads",
       loggedIn: true,
     })
-    store.dispatch(actions.balance.balanceWidgetUpdate(0, 0))
+    store.dispatch(actions.balance.balanceWidgetUpdate(0))
     return story
   })
-  .add("Balance 10,50", () => {
+  .add("Balance 50", () => {
     var { store, story } = createStoreAndStory({
       path: "/buy-leads",
       loggedIn: true,
     })
-    store.dispatch(actions.balance.balanceWidgetUpdate(10, 50))
+    store.dispatch(actions.balance.balanceWidgetUpdate(50))
     return story
   })
   .add("Balance loading", () => {

@@ -1,33 +1,35 @@
-import * as types from "./types"
+import types from "./types"
 
-export function emailConfirmationFormHandleChange(name, value) {
-  return {
-    type: types.EMAIL_CONFIRMATION_FORM_HANDLE_CHANGE,
-    payload: { name, value },
-  }
-}
+export default {
+  emailConfirmationFormHandleChange(name, value) {
+    return {
+      type: types.EMAIL_CONFIRMATION_FORM_HANDLE_CHANGE,
+      payload: { name, value },
+    }
+  },
 
-export function emailConfirmationConfirmed() {
-  return {
-    type: types.EMAIL_CONFIRMATION_CONFIRMED,
-  }
-}
+  emailConfirmationConfirmed() {
+    return {
+      type: types.EMAIL_CONFIRMATION_CONFIRMED,
+    }
+  },
 
-export function emailConfirmationSent() {
-  return {
-    type: types.EMAIL_CONFIRMATION_SENT,
-  }
-}
+  emailConfirmationSent() {
+    return {
+      type: types.EMAIL_CONFIRMATION_SENT,
+    }
+  },
 
-export function emailConfirmationResend() {
-  return {
-    type: types.EMAIL_CONFIRMATION_RESEND,
-  }
-}
+  emailConfirmationResend() {
+    return {
+      type: types.EMAIL_CONFIRMATION_RESEND,
+    }
+  },
 
-export function emailConfirmationError(errors) {
-  return {
-    type: types.EMAIL_CONFIRMATION_ERROR,
-    errors,
-  }
+  emailConfirmationError(errors) {
+    return {
+      type: types.EMAIL_CONFIRMATION_ERROR,
+      errors,
+    }
+  },
 }

@@ -1,21 +1,23 @@
-import * as types from "./types"
+import types from "./types"
 
-export function balanceWidgetUpdate(total, inEscrow) {
-  return {
-    type: types.BALANCE_WIDGET_UPDATE,
-    payload: {
-      total,
-      inEscrow,
-    },
-  }
-}
-export function balanceWidgetLoadingStart() {
-  return {
-    type: types.BALANCE_WIDGET_LOADING_START,
-  }
-}
-export function balanceWidgetLoadingFinish() {
-  return {
-    type: types.BALANCE_WIDGET_LOADING_FINISH,
-  }
+export default {
+  balanceWidgetUpdate(total, inEscrow = 0) {
+    return {
+      type: types.BALANCE_WIDGET_UPDATE,
+      payload: {
+        total,
+        inEscrow,
+      },
+    }
+  },
+  balanceWidgetLoadingStart() {
+    return {
+      type: types.BALANCE_WIDGET_LOADING_START,
+    }
+  },
+  balanceWidgetLoadingFinish() {
+    return {
+      type: types.BALANCE_WIDGET_LOADING_FINISH,
+    }
+  },
 }

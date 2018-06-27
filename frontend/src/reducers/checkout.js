@@ -1,5 +1,5 @@
-import * as types from "../actions/types"
-import { Numbers } from "utils/numbers";
+import types from "../actions/types"
+import { Numbers } from "utils/numbers"
 
 const initialState = {
   loading: false,
@@ -14,7 +14,9 @@ const checkout = (state = initialState, action) => {
       return {
         ...state,
         list: action.payload,
-        totalPrice: Numbers.priceString(action.payload.reduce((price, lead) => price + lead.price, 0)),
+        totalPrice: Numbers.priceString(
+          action.payload.reduce((price, lead) => price + lead.price, 0),
+        ),
       }
     case types.CHECKOUT_LOADING_START:
       return {

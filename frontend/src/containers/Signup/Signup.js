@@ -26,7 +26,7 @@ class Signup extends React.Component {
           <h1>Register to LeadCoin</h1>
           <div className="sm-social-buttons">
             <SocialLogin provider={"google"} />
-            <SocialLogin provider={"linkedin"} />
+            {/* <SocialLogin provider={"linkedin"} /> */}
           </div>
           <div className="sm-form">
             <h4>Or enter your details:</h4>

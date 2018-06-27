@@ -1,33 +1,35 @@
-import * as types from "./types"
+import types from "./types"
 
-export function userSettingsHandleChange(name, value) {
-  return {
-    type: types.USER_SETTINGS_HANDLE_CHANGE,
-    payload: { name, value },
-  }
-}
+export default {
+  userSettingsHandleChange(name, value) {
+    return {
+      type: types.USER_SETTINGS_HANDLE_CHANGE,
+      payload: { name, value },
+    }
+  },
 
-export function userSettingsError(message) {
-  return {
-    type: types.USER_SETTINGS_ERROR,
-    payload: message,
-  }
-}
+  userSettingsError(message) {
+    return {
+      type: types.USER_SETTINGS_ERROR,
+      payload: message,
+    }
+  },
 
-export function userSettingsSubmit() {
-  return {
-    type: types.USER_SETTINGS_SUBMIT,
-  }
-}
+  userSettingsSubmit() {
+    return {
+      type: types.USER_SETTINGS_SUBMIT,
+    }
+  },
 
-export function userSettingsLoading() {
-  return {
-    type: types.USER_SETTINGS_LOADING,
-  }
-}
+  userSettingsLoading() {
+    return {
+      type: types.USER_SETTINGS_LOADING,
+    }
+  },
 
-export function userSettingsFinish() {
-  return {
-    type: types.USER_SETTINGS_FINISH,
-  }
+  userSettingsFinish() {
+    return {
+      type: types.USER_SETTINGS_FINISH,
+    }
+  },
 }

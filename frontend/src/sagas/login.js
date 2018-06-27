@@ -1,3 +1,22 @@
+import * as Actions from "Actions"
+import { put, call } from "redux-saga/effects"
+import request from "Utils/request"
+import { push } from "react-router-redux"
+
+export default function* login() {
+  // fetch("http://127.0.0.1.xip.io:3000/me", { credentials: "include" })
+  var ans = yield call(request, "GET", "/me")
+  if (ans.isError) {
+    yield put(push("/"))
+  } else {
+    if (ans.user.disabled == "EMAIL_NOT_VERIFIED") {
+      yield put(Actions.user.loggedOut())
+    } else {
+      yield put(Actions.user.loggedIn(ans.user))
+      yield put(push("/buy-leads"))
+    }
+  }
+}
 // login() {
 //     const { password, email } = this.state
 //     axios.defaults.withCredentials = true

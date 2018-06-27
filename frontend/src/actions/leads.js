@@ -1,4 +1,4 @@
-import * as types from "./types"
+import types from "./types"
 
 let leadsMock = require("../mocks/leads.json")
 
@@ -9,22 +9,26 @@ for (let i = 0; i < 10; i++) {
   })
 }
 
-export const setSelectedLeads = leads => ({
-  type: types.SET_SELECTED_RECORDS,
-  payload: leads,
-})
+export default {
+  setSelectedLeads(leads) {
+    return {
+      type: types.SET_SELECTED_RECORDS,
+      payload: leads,
+    }
+  },
 
-export const getLeads = (dispatch, cb, page = 1, limit = 50) => {
-  setTimeout(() => {
-    dispatch({
-      type: types.GET_LEADS,
-      payload: {
-        list: leadsMock,
-        page,
-        limit,
-        total: leadsMock.length * 3,
-      },
-    })
-    typeof cb === "function" ? cb() : null
-  }, 250)
+  getLeads(dispatch, cb, page = 1, limit = 50) {
+    setTimeout(() => {
+      dispatch({
+        type: types.GET_LEADS,
+        payload: {
+          list: leadsMock,
+          page,
+          limit,
+          total: leadsMock.length * 3,
+        },
+      })
+      typeof cb === "function" ? cb() : null
+    }, 250)
+  },
 }

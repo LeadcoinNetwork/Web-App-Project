@@ -1,35 +1,36 @@
-import * as types from "./types"
+import types from "./types"
 
-export function csvUploadLoadingDone() {
-  return {
-    type: types.CSV_UPLOAD_LOADING_CHANGE,
-    loading: false,
-  }
-}
+export default {
+  csvUploadLoadingDone() {
+    return {
+      type: types.CSV_UPLOAD_LOADING_CHANGE,
+      loading: false,
+    }
+  },
+  csvUploadLoadingStart() {
+    return {
+      type: types.CSV_UPLOAD_LOADING_CHANGE,
+      loading: true,
+    }
+  },
 
-export function csvUploadLoadingStart() {
-  return {
-    type: types.CSV_UPLOAD_LOADING_CHANGE,
-    loading: true,
-  }
-}
+  csvUploadPickFile(file) {
+    return {
+      type: types.CSV_UPLOAD_PICK_FILE,
+      file,
+    }
+  },
 
-export function csvUploadPickFile(file) {
-  return {
-    type: types.CSV_UPLOAD_PICK_FILE,
-    file,
-  }
-}
+  csvUploadError(error) {
+    return {
+      type: types.CSV_UPLOAD_ERROR,
+      error,
+    }
+  },
 
-export function csvUploadError(error) {
-  return {
-    type: types.CSV_UPLOAD_ERROR,
-    error,
-  }
-}
-
-export function csvUploadSubmit() {
-  return {
-    type: types.CSV_UPLOAD_SUBMIT
-  }
+  csvUploadSubmit() {
+    return {
+      type: types.CSV_UPLOAD_SUBMIT,
+    }
+  },
 }

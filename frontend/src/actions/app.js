@@ -1,9 +1,13 @@
-import * as types from "./types"
+import types from "./types"
 
-export const notificationShow = (message, type) => ({
-  type: types.NOTIFICATION_SHOW,
-  payload: {
-    message,
-    type,
+export default {
+  notificationShow(message, type) {
+    return {
+      type: types.NOTIFICATION_SHOW,
+      payload: {
+        message,
+        type,
+      },
+    }
   },
-})
+}
