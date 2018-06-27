@@ -8,8 +8,15 @@ class Dispute extends React.Component {
   handleChange = event => {
     this.props.handleChange(event.target.name, event.target.value)
   }
+  getErrors(errors) {
+    return (
+      <ul className="ldc-error-text">
+        {errors.split(";").map(e => <li>{e}</li>)}
+      </ul>
+    )
+  }
   render() {
-    let { dispute, submit, loading } = this.props
+    let { dispute, submit } = this.props
 
     return (
       <section className="ldc-dispute">
@@ -20,7 +27,13 @@ class Dispute extends React.Component {
           placeholder="Enter dispute details"
           onChange={this.handleChange}
         />
-        <Button label="Submit" loading={loading} appStyle onClick={submit} />
+        {dispute.error && this.getErrors(dispute.error)}
+        <Button
+          label="Submit"
+          loading={dispute.loading}
+          appStyle
+          onClick={submit}
+        />
       </section>
     )
   }
