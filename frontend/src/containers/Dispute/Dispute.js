@@ -1,5 +1,6 @@
 import React from "react"
 import Button from "Components/Button"
+import Textarea from "Components/Textarea"
 import { connect } from "react-redux"
 import { dispute } from "Actions"
 
@@ -13,7 +14,7 @@ class Dispute extends React.Component {
     return (
       <section className="ldc-dispute">
         <h1>Why do you want to Dispute?</h1>
-        <textarea
+        <Textarea
           name="message"
           value={dispute.message}
           placeholder="Enter dispute details"
