@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin")
 const Dotenv = require("dotenv-webpack")
 const webpackUtils = require("./webpack.utils.js")
 
-webpackUtils.JestUpdateModuleResoultionPacker()
+// webpackUtils.JestUpdateModuleResoultionPacker()
 
 module.exports = {
   entry: {
