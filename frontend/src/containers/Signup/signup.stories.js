@@ -25,7 +25,6 @@ storiesOf("Containers/SignUp", module)
       sagaFunction: fakeSaga,
     })
     setTimeout(function() {
-      console.log("here!")
       store.dispatch(push("/email-confirmation"))
     }, 1500)
     return story

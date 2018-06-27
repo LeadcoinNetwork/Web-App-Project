@@ -14,6 +14,7 @@ import balance from "./balance"
 import userSettings from "./userSettings"
 import userMenu from "./userMenu"
 import emailConfirmation from "./emailConfirmation"
+import dispute from "./dispute"
 import csvMapping from "./csvMapping"
 import csvUpload from "./csvUpload"
 import addLead from "./addLead"
@@ -38,6 +39,7 @@ const rootReducer = combineReducers({
   userSettings,
   userMenu,
   emailConfirmation,
+  dispute,
   csvMapping,
   csvUpload,
   addLead,
