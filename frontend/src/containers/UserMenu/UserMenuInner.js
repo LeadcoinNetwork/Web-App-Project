@@ -10,11 +10,11 @@ const menuItems = [
 const UserMenuInner = ({ user, logOut }) => (
   <div className="user-menu-inner">
     <div className="small-arrow" />
-    {user && (
-      <div className="um-row">
-        Logged in as:<br />
-        {user.email}
-      </div>
+    {user.email && (
+      <label>
+        Logged in as:
+        <span>{user.email}</span>
+      </label>
     )}
     {menuItems.map((item, index) => (
       <Link to={item.path} className="um-row" key={index}>
