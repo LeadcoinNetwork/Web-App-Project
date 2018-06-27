@@ -13,7 +13,7 @@ import EmailSenderAbstraction from "../models/emailsender/abstraction"
 import EmailSenderNodeMailer from "../models/emailsender/nodemailer"
 import EmailSenderConsole from "../models/emailsender/console"
 import RestServer from "../rest/index"
-
+import userSyntisize from "./user-syntisize"
 import Users from "../models/users/users"
 import LeadsModel from "../models/leads/leads"
 import leads from "./leads"
@@ -28,6 +28,8 @@ export default class AppLogic {
     leads: new LeadsModel(),
   }
   public leads = new leads(this)
+
+  public userSyntisize = userSyntisize
 
   // private uploadCSV= new UploadCSV()
   private uploadForm = new UploadForm()

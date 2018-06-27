@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin")
 const Dotenv = require("dotenv-webpack")
 const webpackUtils = require("./webpack.utils.js")
 
-webpackUtils.JestUpdateModuleResoultionPacker()
+// webpackUtils.JestUpdateModuleResoultionPacker()
 
 module.exports = {
   entry: {
@@ -26,6 +26,11 @@ module.exports = {
       lang: "en-US",
       title: "Leadcoin",
       links: [
+        {
+          type: "image/png",
+          rel: "shortcut icon",
+          href: "/images/favicon.png",
+        },
         {
           href: "/fonts/source-sans.css",
           rel: "stylesheet",

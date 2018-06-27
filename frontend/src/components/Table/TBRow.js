@@ -4,10 +4,13 @@ import Button from "Components/Button"
 import TBRCol from "./TBRCol"
 
 const TBRow = props => (
-  <div className="tb-row" onClick={e => props.toggleRecord(e, props.id)}>
+  <div className="tb-row">
     {props.isSelectable && (
       <div className="tbr-checkbox">
-        <Checkbox checked={props.selected.has(props.id)} />
+        <Checkbox
+          checked={props.selected.has(props.id)}
+          onClick={e => props.toggleRecord(e, props.id)}
+        />
       </div>
     )}
     {props.buttons && (

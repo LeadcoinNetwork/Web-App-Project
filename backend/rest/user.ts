@@ -35,7 +35,8 @@ export function start({
     .delete(remove)
 
   async function get(req, res, next) {
-    res.send({ user: req.user })
+    var synsitzedUser = appLogic.userSyntisize(req.user)
+    res.send({ user: synsitzedUser })
   }
   async function register(req, res, next) {
     ;(async () => {

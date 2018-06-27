@@ -20,6 +20,12 @@ export default {
     }
   },
 
+  loginFinish() {
+    return {
+      type: types.LOGIN_FINISH,
+    }
+  },
+
   loginError(message) {
     return {
       type: types.LOGIN_ERROR,

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { connect } from "react-redux"
 
 const menuItems = [
-  { title: "User Settings", path: "/settings" },
+  { title: "User Settings", path: "/user-settings" },
   { title: "Payments History", path: "/payments" },
   { title: "Withdraw Funds", path: "/withdraw" },
 ]
@@ -11,11 +11,11 @@ const menuItems = [
 const UserMenuInner = ({ user, logOut }) => (
   <div className="user-menu-inner">
     <div className="small-arrow" />
-    {user && (
-      <div className="um-row">
-        Logged in as:<br />
-        {user.email}
-      </div>
+    {user.email && (
+      <label>
+        Logged in as:
+        <span title={user.email}>{user.email}</span>
+      </label>
     )}
     {menuItems.map((item, index) => (
       <Link to={item.path} className="um-row" key={index}>
@@ -33,6 +33,4 @@ const UserMenuInner = ({ user, logOut }) => (
   </div>
 )
 
-export default connect(state => {
-  return state
-})(UserMenuInner)
+export default UserMenuInner

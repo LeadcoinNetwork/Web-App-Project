@@ -63,14 +63,18 @@ header.ldc-header {
     }
 
     .ham-menu {
+      display: flex;
       float: right;
       line-height: 1;
+      max-height: 30px;
+      position: relative;
+      top: calc(#{$header-height} / 2);
+      transform: translateY(-50%);
 
-      .notification-element,
-      .user-menu {
+      .ldc-notification-element,
+      .ldc-user-menu,
+      .ldc-balance-widget {
         padding: 0 12px;
-        top: calc(#{$header-height} / 2);
-        transform: translateY(-50%);
       }
     }
   }

@@ -2,7 +2,6 @@ import React from "react"
 import { Link } from "react-router-dom"
 
 const SideMenu = ({ path }) => {
-  console.log(path)
   return (
     <nav className="ldc-side-menu">
       <Link

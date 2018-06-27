@@ -31,7 +31,7 @@ class Login extends React.Component {
           <h1>Login</h1>
           <div className="lm-social-buttons">
             <SocialLogin provider="google" />
-            <SocialLogin provider="linkedin" />
+            {/* <SocialLogin provider="linkedin" /> */}
           </div>
           <div className="lm-form">
             <h4>Or enter your details:</h4>

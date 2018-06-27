@@ -104,7 +104,7 @@ class AddLead extends React.Component {
               <Button
                 loading={loading}
                 appStyle={true}
-                isSecondary={true}
+                secondary
                 onClick={() => {
                   this.props.clear()
                 }}

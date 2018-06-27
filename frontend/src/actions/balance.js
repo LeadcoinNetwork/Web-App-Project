@@ -1,7 +1,7 @@
 import types from "./types"
 
 export default {
-  balanceWidgetUpdate(total, inEscrow) {
+  balanceWidgetUpdate(total, inEscrow = 0) {
     return {
       type: types.BALANCE_WIDGET_UPDATE,
       payload: {

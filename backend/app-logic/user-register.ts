@@ -7,6 +7,8 @@ import * as auth from "../models/user-auth/user-auth"
 import * as UserValidate from "../models/user-validate/user-validate"
 
 import AppLogic from "./index"
+
+import NotFound from "../utils/not-found"
 interface UserRegisterProps {
   emailCreator: EmailCreator
   emailSender: EmailSender
@@ -34,6 +36,7 @@ export default class UserRegister {
         throw rs
       }
       user.disabled = disabledResons.EMAIL_NOT_VERIFIED
+      user.emailConfirmationKey = auth.generateToken()
     }
     var newUserid = await users.createUser(user)
     let token = auth.generateJWT(
@@ -43,6 +46,17 @@ export default class UserRegister {
     return {
       user: newUserid,
       token,
+    }
+  }
+
+  async tryConfirmEmailByKey(key: string): Promise<boolean> {
+    var { users } = this.appLogic.models
+    var user = await users.getOne({ emailConfirmationKey: key })
+    if (user instanceof NotFound) {
+      return false
+    } else {
+      await users.activateUser({ user_id: user.id })
+      return true
     }
   }
 }
