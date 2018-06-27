@@ -81,7 +81,7 @@ class Signup extends React.Component {
           </q>
           <label style={{ backgroundImage: `url(${t})` }}>
             <span>
-              Danny Gembom<br />CEO of Crypto
+              Meir Cohen<br />CEO of Crypto
             </span>
           </label>
         </aside>
