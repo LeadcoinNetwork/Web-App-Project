@@ -24,12 +24,12 @@ const notifications = (state = initialState, action) => {
     case types.NOTIFICATIONS_SHOW:
       return {
         ...state,
-        isOpen: false
+        isOpen: false,
       }
     case types.NOTIFICATIONS_CLICK:
       return {
         ...state,
-        isOpen: false
+        isOpen: false,
       }
     default:
       return state

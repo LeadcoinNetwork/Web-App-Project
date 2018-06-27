@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { connect } from "react-redux"
 
 const menuItems = [
-  { title: "User Settings", path: "/settings" },
+  { title: "User Settings", path: "/user-settings" },
   { title: "Payments History", path: "/payments" },
   { title: "Withdraw Funds", path: "/withdraw" },
 ]
