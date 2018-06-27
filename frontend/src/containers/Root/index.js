@@ -20,6 +20,8 @@ import CompleteRegistration from "containers/CompleteRegistration"
 import Login from "Containers/Login"
 import UserSettings from "Containers/UserSettings"
 import Withdraw from "containers/Withdraw"
+import Terms from "Containers/Terms"
+import Privacy from "Containers/Privacy"
 
 const Root = () => (
   <App>
@@ -43,6 +45,8 @@ const Root = () => (
       <Route path="/checkout/" component={Checkout} />
       <Route path="/dispute" component={Dispute} />
       <Route path="/notifications" component={NotificationTable} />
+      <Route path="/terms" component={Terms} />
+      <Route path="/privacy" component={Privacy} />
     </Switch>
   </App>
 )
