@@ -20,7 +20,10 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
       usernameField: "email",
     },
     async (email, password, done) => {
-      let user = await appLogic.users.getUserByEmailAndPassword(email, password)
+      let user = await appLogic.models.users.getUserByEmailAndPassword(
+        email,
+        password,
+      )
       if (user instanceof NotFound) {
         done(new Error("invalid"))
       } else {
@@ -41,7 +44,7 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
       secretOrKey: config.auth.jwt.secret,
     },
     async (jwt, done) => {
-      var user = await appLogic.users.getUserById(jwt.id)
+      var user = await appLogic.models.users.getUserById(jwt.id)
       if (user instanceof NotFound) {
         let err = new Error("Unauthorized")
         //@ts-ignore
@@ -124,7 +127,7 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
     async function(accessToken, refreshToken, profile, done) {
       // try to find user by provider
       ;(async () => {
-        let user = await appLogic.users.getOne({
+        let user = await appLogic.models.users.getOne({
           provider_id: profile.id,
           provider: profile.provider,
         })
@@ -132,7 +135,7 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
           // user never sign using this provider
 
           // try to find user by email
-          let user = await appLogic.users.getOne({
+          let user = await appLogic.models.users.getOne({
             email: profile.emails[0].value,
           })
           if (user instanceof NotFound) {
@@ -161,7 +164,7 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
               provider_id: profile.id,
               provider: profile.provider,
             }
-            await appLogic.users.update(user.id, update)
+            await appLogic.models.users.update(user.id, update)
             done(null, Object.assign({}, user, update))
           }
         } else {
@@ -181,7 +184,7 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
             },
           )
           if (Object.keys(update).length) {
-            await appLogic.users.update(user.id, update)
+            await appLogic.models.users.update(user.id, update)
           }
           done(null, user)
         }

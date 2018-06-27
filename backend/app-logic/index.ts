@@ -1,6 +1,6 @@
 import UploadCSV from "./upload-csv"
 import UploadForm from "./upload-form"
-import UploadLeads from "./upload-leads"
+import UploadLeads from "./leads"
 import UserLogin from "./user-login"
 import UserLogout from "./user-logout"
 import UserRegister from "./user-register"
@@ -12,19 +12,25 @@ import EmailCreator from "../models/email-creator/email-creator"
 import EmailSenderAbstraction from "../models/emailsender/abstraction"
 import EmailSenderNodeMailer from "../models/emailsender/nodemailer"
 import EmailSenderConsole from "../models/emailsender/console"
-import Users from "../models/users/users"
 import RestServer from "../rest/index"
+
+import Users from "../models/users/users"
+import * as LeadsModel from "../models/leads/leads"
+import leads from "./leads"
 
 export default class AppLogic {
   public emailCreator: EmailCreator
   public emailSender: EmailSenderAbstraction
   public readonly config = config
 
-  public users = new Users()
+  public models = {
+    users: new Users(),
+    leads: LeadsModel,
+  }
+  public leads = new leads(this)
 
   // private uploadCSV= new UploadCSV()
   private uploadForm = new UploadForm()
-  private uploadLeads = new UploadLeads()
   private userLogout = new UserLogout()
   public userRegister = new UserRegister({
     emailCreator: this.emailCreator,

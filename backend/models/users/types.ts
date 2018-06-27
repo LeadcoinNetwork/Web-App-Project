@@ -15,6 +15,7 @@ export interface ExistingUserInterface extends BaseUserInterface {
 export interface ExistingUserInterfaceCondition {
   id?: number
   fname?: string
+  disabled?: disabledResons
   lname?: string
   email?: string
   password?: string
@@ -29,5 +30,6 @@ export interface NewUserInterface extends BaseUserInterface {
 }
 
 export enum disabledResons {
+  // do not change strings. Frontend & API depends on it
   EMAIL_NOT_VERIFIED = "EMAIL_NOT_VERIFIED",
 }

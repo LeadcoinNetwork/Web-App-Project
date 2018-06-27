@@ -1,7 +1,7 @@
 import * as Chance from "chance"
 import * as _ from "lodash"
 import UserActions from "../../models/users/users"
-
+import * as UsersAuth from "../../models/user-auth/user-auth"
 import EmailCreator from "../../models/email-creator/email-creator"
 import EmailSenderMock from "../../models/emailsender/mock"
 
@@ -14,7 +14,9 @@ var chance = Chance()
 
 import { ExistingUserInterface } from "../../models/users/types"
 
-export async function create({ request }): Promise<ExistingUserInterface> {
+export async function create({
+  request,
+}): Promise<{ user: ExistingUserInterface; token: string }> {
   var x = await request.post("/user").send({
     fname: "moshe",
     lname: "moshe",
@@ -32,5 +34,5 @@ export async function create({ request }): Promise<ExistingUserInterface> {
   x = await request.get("/me").set({
     cookie: "token=" + tokenFromBody,
   })
-  return x.body.user
+  return { user: x.body.user, token: tokenFromBody }
 }
