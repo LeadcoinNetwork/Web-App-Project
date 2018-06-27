@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import { connect } from "react-redux"
 
 const menuItems = [
   { title: "User Settings", path: "/user-settings" },
@@ -10,11 +11,11 @@ const menuItems = [
 const UserMenuInner = ({ user, logOut }) => (
   <div className="user-menu-inner">
     <div className="small-arrow" />
-    {user && (
-      <div className="um-row">
-        Logged in as:<br />
-        {user.email}
-      </div>
+    {user.email && (
+      <label>
+        Logged in as:
+        <span>{user.email}</span>
+      </label>
     )}
     {menuItems.map((item, index) => (
       <Link to={item.path} className="um-row" key={index}>
