@@ -26,7 +26,7 @@ class UserMenu extends Component {
     let { isOpen, userMenuClick, logOut } = this.props
     return (
       <div
-        className="user-menu fas fa-user-circle"
+        className="ldc-user-menu fas fa-user-circle"
         onClick={e => {
           e.stopPropagation()
           userMenuClick()
