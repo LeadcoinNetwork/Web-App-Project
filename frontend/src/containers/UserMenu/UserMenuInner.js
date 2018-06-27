@@ -1,6 +1,5 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { connect } from "react-redux"
 
 const menuItems = [
   { title: "User Settings", path: "/user-settings" },
@@ -33,6 +32,4 @@ const UserMenuInner = ({ user, logOut }) => (
   </div>
 )
 
-export default connect(state => {
-  return state
-})(UserMenuInner)
+export default UserMenuInner

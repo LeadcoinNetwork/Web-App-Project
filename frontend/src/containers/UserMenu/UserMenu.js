@@ -23,7 +23,7 @@ class UserMenu extends Component {
   }
 
   render() {
-    let { isOpen, userMenuClick, logOut } = this.props
+    let { userMenu, user, userMenuClick, logOut } = this.props
     return (
       <div
         className="ldc-user-menu fas fa-user-circle"
@@ -32,19 +32,20 @@ class UserMenu extends Component {
           userMenuClick()
         }}
       >
-        {isOpen && <UserMenuInner logOut={logOut} />}
+        {userMenu.isOpen && <UserMenuInner user={user} logOut={logOut} />}
       </div>
     )
   }
 }
 
-const mapStateToProps = state => state.userMenu
+const mapStateToProps = state => ({
+  userMenu: state.userMenu,
+  user: state.user,
+})
 
-const mapDispatchToProps = {
+const UserMenuConnected = connect(mapStateToProps, {
   userMenuClick: userMenu.userMenuClick,
   logOut: user.loggedOut,
-}
-
-const UserMenuConnected = connect(mapStateToProps, mapDispatchToProps)(UserMenu)
+})(UserMenu)
 
 export default UserMenuConnected
