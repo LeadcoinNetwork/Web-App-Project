@@ -4,7 +4,7 @@ import Button from "./Button"
 
 storiesOf("Components/Button")
   .add("With Text", () => <Button label="Hello" />)
-  .add("Secondary", () => <Button label="Hello" isSecondary={true} />)
+  .add("Secondary", () => <Button label="Hello" secondary />)
   .add("With Click", () => (
     <Button label="Click me" onClick={() => alert("Clicked!")} />
   ))
@@ -21,20 +21,15 @@ storiesOf("Components/Button")
   ))
   .add("Disabled", () => <Button label="Click me" disabled={true} />)
   .add("Secondary Disabled", () => (
-    <Button label="Click me" isSecondary={true} disabled={true} />
+    <Button label="Click me" secondary disabled={true} />
   ))
   .add("With App Style", () => <Button label="Click me" appStyle={true} />)
   .add("With App Style Disabled", () => (
     <Button label="Click me" appStyle={true} disabled={true} />
   ))
   .add("With App Style Secondary", () => (
-    <Button label="Click me" isSecondary={true} appStyle={true} />
+    <Button label="Click me" secondary appStyle={true} />
   ))
   .add("With App Style Secondary Disabled", () => (
-    <Button
-      label="Click me"
-      appStyle={true}
-      isSecondary={true}
-      disabled={true}
-    />
+    <Button label="Click me" appStyle={true} secondary disabled={true} />
   ))
