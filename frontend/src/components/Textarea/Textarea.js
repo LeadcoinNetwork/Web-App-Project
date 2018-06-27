@@ -1,6 +1,6 @@
 import React from "react"
 
-const Textarea = ({ name, value, placeholder, rows = 20, onChange }) => (
+const Textarea = ({ name, value, placeholder, rows = 7, onChange }) => (
   <textarea
     className="ldc-textarea"
     name={name}
