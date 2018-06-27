@@ -103,10 +103,10 @@ test.only("activateUserByKey (ensure that is disabled before)", async () => {
     password: "KGHasdF987654&*^%$#",
     email,
   })
+  console.log(x.body)
 
   var TokenCookie = _.get(x, _.toPath("header['set-cookie'][0]"))
   var tokenFromCookie = TokenCookie.replace(/token=(.*?);.*/, "$1")
-
   var x = await request.get("/me").set({
     cookie: "token=" + tokenFromCookie,
   })
