@@ -2,7 +2,7 @@ import * as Chance from "chance"
 import * as _ from "lodash"
 
 import * as RoutesForTests from "./utils/routes.for.tests"
-var { request, emailSenderMock } = RoutesForTests.create()
+var { request, emailSenderMock, appLogic } = RoutesForTests.create()
 
 var chance = Chance()
 
@@ -92,3 +92,39 @@ test("post /auth/login (create user, try login with invalid password, then using
   })
   expect(x.body.user.fname).toEqual(fname)
 })
+
+test.only("activateUserByKey (ensure that is disabled before)", async () => {
+  const fname = chance.first()
+  const lname = chance.last()
+  const email = chance.email()
+  var x = await request.post("/user").send({
+    fname,
+    lname,
+    password: "KGHasdF987654&*^%$#",
+    email,
+  })
+
+  var TokenCookie = _.get(x, _.toPath("header['set-cookie'][0]"))
+  var tokenFromCookie = TokenCookie.replace(/token=(.*?);.*/, "$1")
+  var x = await request.get("/me").set({
+    cookie: "token=" + tokenFromCookie,
+  })
+  expect(x.body.user.disabled).toEqual("EMAIL_NOT_VERIFIED")
+
+  var user = await appLogic.models.users.getUserById(x.body.user.id)
+  if (user instanceof NotFound) {
+    throw new Error("user not found in db")
+  }
+
+  var x = await request.get("/auth/confirm-email-update").query({
+    key: "aasdads",
+  })
+  expect(x.body.ok).toBeFalsy()
+
+  var x = await request.get("/auth/confirm-email-update").query({
+    key: user.emailConfirmationKey,
+  })
+  expect(x.body.ok).toBeTruthy()
+})
+
+import NotFound from "../utils/not-found"

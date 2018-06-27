@@ -5,6 +5,7 @@ export interface BaseUserInterface {
   lname: string
   email: string
   disabled?: disabledResons
+  emailConfirmationKey?: string
 }
 export interface ExistingUserInterface extends BaseUserInterface {
   password: string
@@ -16,6 +17,7 @@ export interface ExistingUserInterfaceCondition {
   id?: number
   fname?: string
   disabled?: disabledResons
+  emailConfirmationKey?: string
   lname?: string
   email?: string
   password?: string
