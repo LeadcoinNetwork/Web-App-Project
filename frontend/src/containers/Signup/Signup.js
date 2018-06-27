@@ -5,6 +5,7 @@ import TextField from "Components/TextField"
 import SocialLogin from "Components/SocialLogin"
 import { signup } from "Actions"
 import t from "Images/t.jpg"
+import { Link } from "react-router-dom"
 
 class Signup extends React.Component {
   handleChange = event => {
@@ -65,13 +66,9 @@ class Signup extends React.Component {
             <p className="smf-agree">
               By clicking this button, you agree to our
               <br />
-              <a href="https://www.google.com" target="_blank">
-                Terms & conditions
-              </a>
+              <Link to="/terms">Terms & conditions</Link>
               &nbsp;and&nbsp;
-              <a href="https://www.google.com" target="_blank">
-                Privacy Policy
-              </a>
+              <Link to="/privacy">Privacy Policy</Link>
             </p>
           </div>
           <div />
@@ -97,7 +94,10 @@ const mapStateToProps = state => ({
   signup: state.signup,
 })
 
-export default connect(mapStateToProps, {
-  handleChange: signup.signupHandleChange,
-  submit: signup.signupSubmit,
-})(Signup)
+export default connect(
+  mapStateToProps,
+  {
+    handleChange: signup.signupHandleChange,
+    submit: signup.signupSubmit,
+  },
+)(Signup)
