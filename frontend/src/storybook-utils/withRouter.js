@@ -55,7 +55,9 @@ export function createStoreAndStory({
   const UpperCaseComponent = component
 
   if (loggedIn) {
-    store.dispatch(user.loggedIn({ id: 1, email: "user@leadcoin.network" }))
+    store.dispatch(
+      user.loggedIn({ id: 1, email: "verylongusername@leadcoin.network" }),
+    )
   }
   return {
     store,
