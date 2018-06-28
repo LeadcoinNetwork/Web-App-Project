@@ -6,7 +6,10 @@ import * as ValidatedUserForTests from "./utils/user.for.tests"
 
 var { request, appLogic } = RoutesForTests.create()
 
-test("adding a lead should fail unless contains required fields and succeed otherwise", async () => {
+test("adding a lead should fail without valid parameters A", async () => {})
+test("adding a lead should fail without valid parameters B", async () => {})
+
+test("adding a lead should fail without token", async () => {
   var { user, token } = await ValidatedUserForTests.create({
     users: appLogic.models.users,
   })
@@ -25,3 +28,5 @@ test("adding a lead should fail unless contains required fields and succeed othe
     .send({ lead })
   console.log(x.error)
 })
+
+test("adding a lead should success with data A", async () => {})
