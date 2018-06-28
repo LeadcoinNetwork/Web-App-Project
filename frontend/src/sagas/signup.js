@@ -18,6 +18,7 @@ export default function* signup() {
     if (ans.isError) {
       yield put(Actions.signup.signupError(ans.data.error))
     } else {
+      console.log(ans)
       yield put(push("/email-confirmation"))
     }
   }
