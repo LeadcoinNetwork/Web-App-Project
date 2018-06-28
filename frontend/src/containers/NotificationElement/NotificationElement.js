@@ -4,22 +4,20 @@ import { connect } from "react-redux"
 import { notifications } from "Actions"
 
 class NotificationElement extends Component {
-  constructor(props) {
-    super(props)
-
-    this.handleClick = this.handleClick.bind(this)
-  }
-  handleClick() {
+  handleClick = () => {
     if (this.props.isOpen) {
       this.props.notificationsClick()
     }
   }
+
   componentDidMount() {
     window.addEventListener("click", this.handleClick)
   }
+
   componentWillUnmount() {
     window.removeEventListener("click", this.handleClick)
   }
+  
   render() {
     let {
       unreadCount,
