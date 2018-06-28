@@ -5,56 +5,15 @@ var utils = require("../utils")
 dotenv.config()
 utils.throwOnMissingEnvironmentVariables()
 
-export interface IConfig {
-  env: any
-  backend: any
-  frontend: any
-  upload: any
-  app: { port: any }
-  auth: {
-    jwt: {
-      secret: any
-      expiresIn: any
-    }
-    google: {
-      clientID: any
-      clientSecret: any
-      callbackURL: any
-    }
-    linkedin: {
-      clientID: any
-      clientSecret: any
-      callbackURL: any
-    }
-  }
-  mail: {
-    mailer: any
-    host: any
-    port: any
-    from: any
-    auth: {
-      user: any
-      pass: any
-    }
-  }
-  mysql: {
-    host: any
-    port: any
-    user: any
-    database: any
-    password: any
-  }
-}
-
-const config: IConfig = {
-  env: process.env.NODE_ENV,
-  backend: process.env.BACKEND,
-  frontend: process.env.FRONTEND,
-  upload: process.env.UPLOAD_DIR,
-  app: {
+class Config {
+  env = process.env.NODE_ENV
+  backend = process.env.BACKEND
+  frontend = process.env.FRONTEND
+  upload = process.env.UPLOAD_DIR
+  app = {
     port: process.env.PORT,
-  },
-  auth: {
+  }
+  auth = {
     jwt: {
       secret: process.env.JWT_SECRET,
       expiresIn: process.env.JWT_EXPIRES_IN,
@@ -69,24 +28,24 @@ const config: IConfig = {
       clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
       callbackURL: process.env.BACKEND + "/auth/linkedin/callback",
     },
-  },
-  mail: {
+  }
+  mail = {
     mailer: process.env.MAILER,
     host: process.env.MAIL_HOST,
     port: process.env.MAIL_PORT,
     from: process.env.MAIL_FROM,
-    auth: {
-      user: process.env.MAIL_USER,
-      pass: process.env.MAIL_PASS,
-    },
-  },
-  mysql: {
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASS,
+  }
+  mysql = {
     host: process.env.MYSQL_HOST,
     port: process.env.MYSQL_PORT,
     user: process.env.MYSQL_USER,
     database: "leadcoin",
     password: process.env.MYSQL_PASSWORD,
-  },
+  }
 }
 
+var config = new Config()
+export { Config as IConfig }
 export default config

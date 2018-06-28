@@ -5,10 +5,14 @@ import EmailCreator from "../../models/email-creator/email-creator"
 import EmailSenderMock from "../../models/emailsender/mock"
 
 import AppLogic from "../../app-logic/index"
-export function create() {
+interface IcreateProps {
+  realEmail?: boolean
+}
+export function create({ realEmail = false }: IcreateProps = {}) {
   var emailSenderMock = new EmailSenderMock()
+
   var appLogic = new AppLogic({
-    emailSender: emailSenderMock,
+    emailSender: realEmail ? undefined : emailSenderMock,
     emailCreator: new EmailCreator({
       backend: "https://testbackend.com",
       from: "me@me.com",

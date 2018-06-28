@@ -6,6 +6,10 @@ var { request, emailSenderMock, appLogic } = RoutesForTests.create()
 
 var chance = Chance()
 
+beforeAll(() => {
+  appLogic.models.users.deleteAll()
+})
+
 test("POST /user sign up using WRONG username and password", async () => {
   return request
     .post("/user", {
@@ -30,6 +34,60 @@ test("POST /user sign up using REAL username and password", async () => {
     email: chance.email(),
   })
   expect(typeof x.body.user).toEqual("number")
+})
+
+describe("POST /user is sending emails that contain the right link", () => {
+  test("using mock email provider", async () => {
+    // We create routes here. Because we need to use the emailSenderMock
+    var { request, emailSenderMock, appLogic } = RoutesForTests.create()
+    var fname = chance.first()
+    var lname = chance.last()
+    var x = await request.post("/user").send({
+      fname,
+      lname,
+      password: "KGHasdF987654&*^%$#",
+      email: chance.email(),
+    })
+    var userid = x.body.user
+    expect(typeof userid).toEqual("number")
+
+    var user = await appLogic.models.users.getUserById(userid)
+    if (user instanceof NotFound) {
+      throw new Error("User not found in DB")
+    }
+    var key = user.emailConfirmationKey
+    var emailHTML = emailSenderMock.lastCall().html
+    expect(emailHTML).toMatch("/auth/confirm-email-update?key=" + key)
+  })
+
+  test("using real email provider", async () => {
+    // We create routes here. Because we need to use the emailSenderMock
+
+    var { request, emailSenderMock, appLogic } = RoutesForTests.create({
+      realEmail: true,
+    })
+
+    var fname = chance.first()
+    var lname = chance.last()
+    var x = await request.post("/user").send({
+      fname,
+      lname,
+      password: "KGHasdF987654&*^%$#",
+      email: "aminadav@leadcoin.network",
+    })
+    console.log(x.error.text)
+    expect(x.error).toBeFalsy()
+    var userid = x.body.user
+    expect(typeof userid).toEqual("number")
+
+    var user = await appLogic.models.users.getUserById(userid)
+    if (user instanceof NotFound) {
+      throw new Error("User not found in DB")
+    }
+    var key = user.emailConfirmationKey
+    // var emailHTML = emailSenderMock.lastCall().html
+    // expect(emailHTML).toMatch("/auth/confirm-email-update?key=" + key)
+  })
 })
 
 test("GET /me sign up using real username and password", async () => {
