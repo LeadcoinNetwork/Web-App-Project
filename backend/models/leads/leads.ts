@@ -1,8 +1,7 @@
 
-const mysqlPool = require("../mysql-pool/mysql-pool")
+import SQL from '../mysql-pool/mysql-pool'
 
 import { Lead } from "./types"
-interface LeadsConstructor {}
 
 interface FindOptions {
   sort_by?: [string, "ASC" |"DESC"]
@@ -10,21 +9,20 @@ interface FindOptions {
 }
 
 export default class Leads {
-  constructor(props: LeadsConstructor) {
-    Object.assign(this, props)
-  }
+  constructor(private sql: SQL) {}
 
   async deleteAll() {
-    return mysqlPool.query("delete from leads")
+    return this.sql.query("delete from leads")
   }
 
   async insert(lead: Lead) {
-    let status = await mysqlPool.query("INSERT INTO leads SET ?", lead)
+    console.log(this.sql)
+    let status = await this.sql.query("INSERT INTO leads SET ?", lead)
     return status.affectedRows != 0
   }
 
   async update(_id: number, lead: Lead) {
-    let status = await mysqlPool.query("UPDATE leads SET ? WHERE id = ?", [
+    let status = await this.sql.query("UPDATE leads SET ? WHERE id = ?", [
       lead,
       _id,
     ])
@@ -53,13 +51,13 @@ export default class Leads {
         sql += ` ORDER BY ${sort_by[0]} ${sort_by[1]}`
       }
     }
-    let rows = await mysqlPool.query(sql)
+    let rows = await this.sql.query(sql)
     rows = rows.map(row => Object.assign({}, row))
     return rows
   }
 
   async remove(id: number) {
-    let status = await mysqlPool.query("DELETE FROM leads WHERE id = ?", id)
+    let status = await this.sql.query("DELETE FROM leads WHERE id = ?", id)
     return status.affectedRows != 0
   }
 }

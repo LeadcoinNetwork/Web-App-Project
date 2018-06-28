@@ -1,9 +1,11 @@
 import Users from "./users"
 import * as Chance from "chance"
 import { NewUserInterface } from "./types"
+import config from "../../app-logic/config"
 var chance = Chance()
 
-var users = new Users()
+import SQL from "../mysql-pool/mysql-pool"
+var users = new Users(new SQL(config))
 
 beforeEach(async () => {
   await users.deleteAll()

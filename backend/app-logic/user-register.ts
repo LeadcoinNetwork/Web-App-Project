@@ -9,26 +9,17 @@ import * as UserValidate from "../models/user-validate/user-validate"
 import AppLogic from "./index"
 
 import NotFound from "../utils/not-found"
-interface UserRegisterProps {
-  emailCreator: EmailCreator
-  emailSender: EmailSender
-  appLogic: AppLogic
-}
+
+import { IModels } from "./index"
 
 export default class UserRegister {
-  private emailCreator: EmailCreator
-  private emailSender: EmailSender
-  private appLogic: AppLogic
+  constructor(private models: IModels) {}
 
-  constructor(props: UserRegisterProps) {
-    Object.assign(this, props)
-    //Empty function
-  }
   async register(
     user: NewUserInterface,
     shouldValidate = true,
   ): Promise<{ user: number; token: string }> {
-    var users = this.appLogic.models.users
+    var { users, config } = this.models
 
     if (shouldValidate) {
       var rs = await UserValidate.checkNewUserValid(user)
@@ -39,10 +30,7 @@ export default class UserRegister {
       user.emailConfirmationKey = auth.generateToken()
     }
     var newUserid = await users.createUser(user)
-    let token = auth.generateJWT(
-      newUserid,
-      this.appLogic.config.auth.jwt.secret,
-    )
+    let token = auth.generateJWT(newUserid, config.auth.jwt.secret)
     return {
       user: newUserid,
       token,
@@ -50,7 +38,7 @@ export default class UserRegister {
   }
 
   async tryConfirmEmailByKey(key: string): Promise<boolean> {
-    var { users } = this.appLogic.models
+    var { users } = this.models
     var user = await users.getOne({ emailConfirmationKey: key })
     if (user instanceof NotFound) {
       return false

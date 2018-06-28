@@ -93,7 +93,7 @@ test("post /auth/login (create user, try login with invalid password, then using
   expect(x.body.user.fname).toEqual(fname)
 })
 
-test.only("activateUserByKey (ensure that is disabled before)", async () => {
+test("activateUserByKey (ensure that is disabled before)", async () => {
   const fname = chance.first()
   const lname = chance.last()
   const email = chance.email()

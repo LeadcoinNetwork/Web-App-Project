@@ -2,9 +2,7 @@ import * as auth from "../user-auth/user-auth"
 const mysql = require("mysql")
 
 const validate = require("../user-validate/user-validate")
-const sql = require("../mysql-pool/mysql-pool")
-
-interface UserActionsConstructor {}
+import SQL from "../mysql-pool/mysql-pool"
 
 import NotFound from "../../utils/not-found"
 
@@ -16,12 +14,10 @@ import {
 } from "./types"
 
 class User {
-  constructor(props?: UserActionsConstructor) {
-    Object.assign(this, props)
-  }
+  constructor(private sql: SQL) {}
 
   async deleteAll() {
-    return sql.query("delete from users")
+    return this.sql.query("delete from users")
   }
 
   async createUser(user: NewUserInterface): Promise<number> {
@@ -35,7 +31,7 @@ class User {
       user2Databse.password = auth.hashPassword(user.plainPassword)
       delete user2Databse.plainPassword
     }
-    let status = await sql.query("INSERT INTO users SET ?", user2Databse)
+    let status = await this.sql.query("INSERT INTO users SET ?", user2Databse)
     if (!status.insertId) {
       throw new Error("user not inserted")
     } else {
@@ -79,7 +75,7 @@ class User {
 
     if (cnd) cnd = `WHERE ${cnd}`
 
-    let rows = await sql.query(`SELECT * FROM users ${cnd}`)
+    let rows = await this.sql.query(`SELECT * FROM users ${cnd}`)
     rows = rows.map(row => {
       // remove RowDataPacket class
       var newObject = Object.assign({}, row)
@@ -93,7 +89,7 @@ class User {
   }
 
   async delete(userId): Promise<boolean> {
-    let status = await sql.query("DELETE FROM users WHERE id = ?", userId)
+    let status = await this.sql.query("DELETE FROM users WHERE id = ?", userId)
     return status.affectedRows != 0
   }
 
@@ -135,7 +131,7 @@ class User {
       })
       .join(" , ")
 
-    let status = await sql.query(
+    let status = await this.sql.query(
       `UPDATE users SET ${values}  WHERE id = ${mysql.escape(userId)}`,
     )
     if (status.affectedRows == 0) {
@@ -146,7 +142,7 @@ class User {
   }
 
   async insertToken(token) {
-    let status = await sql.query("INSERT INTO tokens SET ?", token)
+    let status = await this.sql.query("INSERT INTO tokens SET ?", token)
     return status.affectedRows != 0
   }
 
@@ -167,13 +163,16 @@ class User {
       fields = "*"
     }
 
-    let rows = await sql.query(`SELECT ${fields} FROM tokens ${condition}`)
+    let rows = await this.sql.query(`SELECT ${fields} FROM tokens ${condition}`)
     rows = rows.map(row => Object.assign({}, row)) // remove RowDataPacket class
     return rows
   }
 
   async removeToken(userId) {
-    let status = await sql.query("DELETE FROM tokens WHERE user_id = ?", userId)
+    let status = await this.sql.query(
+      "DELETE FROM tokens WHERE user_id = ?",
+      userId,
+    )
     return status.affectedRows != 0
   }
 }
