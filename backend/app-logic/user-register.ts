@@ -19,7 +19,7 @@ export default class UserRegister {
     user: NewUserInterface,
     shouldValidate = true,
   ): Promise<{ user: number; token: string }> {
-    var { users, config } = this.models
+    var { users, config, emailSender, emailCreator } = this.models
 
     if (shouldValidate) {
       var rs = await UserValidate.checkNewUserValid(user)
@@ -28,6 +28,8 @@ export default class UserRegister {
       }
       user.disabled = disabledResons.EMAIL_NOT_VERIFIED
       user.emailConfirmationKey = auth.generateToken()
+      var str = emailCreator.confirmEmail(user, user.emailConfirmationKey)
+      await emailSender.send(str)
     }
     var newUserid = await users.createUser(user)
     let token = auth.generateJWT(newUserid, config.auth.jwt.secret)

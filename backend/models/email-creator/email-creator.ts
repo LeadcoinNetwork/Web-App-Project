@@ -27,7 +27,7 @@ class EmailCreator {
         "<p>Please click " +
         '<a href="' +
         this.backend +
-        "/auth/confirm-email?token=" +
+        "/auth/confirm-email-update?key=" +
         token +
         '">' +
         "here " +

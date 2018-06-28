@@ -54,14 +54,23 @@ export default class AppLogic {
     emailCreator?: EmailCreator
   }) {
     if (!props) props = {}
-
     if (props.emailSender) {
+      // The caller provider an emailSender provider. Usually by e2e tests
       this.models.emailSender = props.emailSender
     } else {
-      this.models.emailSender =
-        config.mail.mailer == "CONSOLE"
-          ? new EmailSenderConsole()
-          : new EmailSenderConsole()
+      // The caller didn't provider an emailSender provider (default)
+      switch (config.mail.mailer) {
+        case "CONSOLE":
+          this.models.emailSender = new EmailSenderConsole()
+          break
+        case "SMTP":
+          this.models.emailSender = new EmailSenderNodeMailer(this.config.mail)
+          break
+
+        default:
+          throw new Error("do not found emailSender provider")
+          break
+      }
     }
 
     if (props.emailCreator) {

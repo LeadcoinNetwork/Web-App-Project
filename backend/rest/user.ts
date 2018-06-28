@@ -49,7 +49,7 @@ export function start({
       res.json({ user, token })
     })().catch(err => {
       res.status(400)
-      res.json({ error: err.message })
+      res.send({ error: err.message })
     })
   }
 
