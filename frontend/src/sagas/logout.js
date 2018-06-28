@@ -8,6 +8,6 @@ export default function* logout() {
   while (true) {
     yield take(types.LOGGED_OUT)
     yield call(request, "POST", "/auth/logout")
-    yield put(push("/"))
+    yield put(push("/login"))
   }
 }

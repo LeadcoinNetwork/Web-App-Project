@@ -3,12 +3,22 @@ import { Link } from "react-router-dom"
 import BalanceWidget from "Containers/BalanceWidget"
 import NotificationElement from "Containers/NotificationElement"
 import UserMenu from "Containers/UserMenu"
-import LanguageSelector from "../UploadForm";
+import LanguageSelector from "../UploadForm"
 
-const Header = ({ path, loggedIn }) => (
-  <header className={`ldc-header${loggedIn ? " h-app-mode" : " h-sign-mode"}`}>
+const Header = ({ path, loggedIn, disabled, logout }) => (
+  <header
+    className={`ldc-header${
+      loggedIn && !disabled ? " h-app-mode" : " h-sign-mode"
+    }`}
+  >
     <Link to="/" className="logo-link" />
-    {path === "/login" ? (
+    {disabled ? (
+      <div className="sign-link">
+        <Link to="/login" onClick={logout}>
+          Logout
+        </Link>
+      </div>
+    ) : path === "/login" ? (
       <div className="sign-link">
         <span>already have an account?</span>
         <Link to="/signup">Start Now</Link>
