@@ -5,7 +5,48 @@ var utils = require("../utils")
 dotenv.config()
 utils.throwOnMissingEnvironmentVariables()
 
-module.exports = {
+export interface IConfig {
+  env: any
+  backend: any
+  frontend: any
+  upload: any
+  app: { port: any }
+  auth: {
+    jwt: {
+      secret: any
+      expiresIn: any
+    }
+    google: {
+      clientID: any
+      clientSecret: any
+      callbackURL: any
+    }
+    linkedin: {
+      clientID: any
+      clientSecret: any
+      callbackURL: any
+    }
+  }
+  mail: {
+    mailer: any
+    host: any
+    port: any
+    from: any
+    auth: {
+      user: any
+      pass: any
+    }
+  }
+  mysql: {
+    host: any
+    port: any
+    user: any
+    database: any
+    password: any
+  }
+}
+
+const config: IConfig = {
   env: process.env.NODE_ENV,
   backend: process.env.BACKEND,
   frontend: process.env.FRONTEND,
@@ -47,3 +88,5 @@ module.exports = {
     password: process.env.MYSQL_PASSWORD,
   },
 }
+
+export default config
