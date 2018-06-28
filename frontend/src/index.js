@@ -1,3 +1,6 @@
+import typeScriptExample from "./example"
+typeScriptExample()
+
 import "Styles/global.scss"
 
 import React from "react"

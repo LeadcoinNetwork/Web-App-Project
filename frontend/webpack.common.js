@@ -69,29 +69,6 @@ module.exports = {
       {
         test: /\.(scss|css)$/,
         use: ["style-loader", "css-loader", "sass-loader"],
-        // fallback: "style-loader",
-        // use: [
-        //   {
-        //     loader: "css-loader",
-        //     options: {
-        //       minimize: true,
-        //       sourceMap: true
-        //     }
-        //   },
-        //   {
-        //     loader: "postcss-loader",
-        //     options: {
-        //       sourceMap: true
-        //     }
-        //   },
-        //   {
-        //     loader: "sass-loader",
-        //     options: {
-        //       sourceMap: true
-        //     }
-        //   }
-        // ]
-        // })
       },
       {
         test: /\.(jpg|png|svg)$/,
@@ -100,11 +77,16 @@ module.exports = {
           name: "[path][name].[hash].[ext]",
         },
       },
+      {
+        test: /\.ts?$/,
+        use: "ts-loader",
+        exclude: /node_modules/,
+      },
     ],
   },
   resolve: {
     modules: ["node_modules", path.resolve(__dirname, "src")],
-    extensions: [".js"],
+    extensions: [".js", ".ts"],
     alias: webpackUtils.getAliasesFromRootSrcForWebPack(),
   },
 }

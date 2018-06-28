@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "target": "ES5",
+    "module": "ES6",
+    // "module": "commonjs",
+    "baseUrl": "./src",
+    "jsx": "react",
+    "checkJs": false,
+    "moduleResolution": "node",
+    "disableSizeLimit": true,
+    "paths": {
+      "@a": ["./actions/index.js"]
+    }
+  },
+  // "files": ["./src/index.js"],
+  "exclude": ["node_modules", "**/node_modules/*"]
+
+  // {
+  //   "compilerOptions": {
+  //     "allowJs": false,
+  //     "module": "commonjs",
+  //     "sourceMap": true,
+  //     "noImplicitAny": false,
+  //     "target": "es5",
+  //     "jsx": "react",
+  //     "resolveJsonModule": true,
+  //     // "moduleResolution": "node",
+  //     "baseUrl": "src",
+  //     "paths": {
+  //       "Containers/*": ["Containers/*", "src/Containers/*"],
+  //       "Actions/*": ["actions/*", "src/actions/*"],
+  //       "Actions": ["actions", "src/actions"],
+  //     }
+  //     // "moduleResolution": "node"
+  //   },
+  //   "files": ["src/index.js"]
+  //   // "include": ["src/**/*.*"]
+  // }
+}
