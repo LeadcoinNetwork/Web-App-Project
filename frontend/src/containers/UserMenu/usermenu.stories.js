@@ -5,7 +5,6 @@ import { createStoreAndStory } from "storybook-utils/withRouter"
 
 import { specs, describe, it } from "storybook-addon-specifications"
 import { mount } from "enzyme"
-import expect from "expect"
 import UserMenu from "./UserMenu"
 
 storiesOf("Containers/User Menu")
