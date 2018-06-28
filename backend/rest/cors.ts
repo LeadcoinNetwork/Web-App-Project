@@ -8,7 +8,7 @@ export function start(app: express.Express, appLogic: AppLogic) {
 
     res.header(
       "Access-Control-Allow-Origin",
-      req.headers.origin.toString(),
+      (req.headers.origin || "").toString(),
       // parse(frontend).protocol + "//" + parse(frontend).host,
     )
     res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS")

@@ -60,7 +60,7 @@ describe("POST /user is sending emails that contain the right link", () => {
     expect(emailHTML).toMatch("/auth/confirm-email-update?key=" + key)
   })
 
-  test("using real email provider", async () => {
+  test.skip("using real email provider", async () => {
     // We create routes here. Because we need to use the emailSenderMock
 
     var { request, emailSenderMock, appLogic } = RoutesForTests.create({
@@ -176,12 +176,13 @@ test("activateUserByKey (ensure that is disabled before)", async () => {
   var x = await request.get("/auth/confirm-email-update").query({
     key: "aasdads",
   })
-  expect(x.body.ok).toBeFalsy()
+  expect(x.error).toBeTruthy()
 
   var x = await request.get("/auth/confirm-email-update").query({
     key: user.emailConfirmationKey,
   })
-  expect(x.body.ok).toBeTruthy()
+  expect(x.headers.location).toMatch("/")
+  expect(x.headers["set-cookie"][0]).toMatch("token")
 })
 
 import NotFound from "../utils/not-found"

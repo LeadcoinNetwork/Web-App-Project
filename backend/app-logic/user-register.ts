@@ -31,6 +31,9 @@ export default class UserRegister {
       var str = emailCreator.confirmEmail(user, user.emailConfirmationKey)
       await emailSender.send(str)
     }
+    if (!shouldValidate) {
+      user.disabled = disabledResons.PROFILE_NOT_COMPLETED
+    }
     var newUserid = await users.createUser(user)
     let token = auth.generateJWT(newUserid, config.auth.jwt.secret)
     return {
@@ -39,17 +42,25 @@ export default class UserRegister {
     }
   }
 
-  async tryConfirmEmailByKey(key: string): Promise<boolean> {
+  async tryConfirmEmailByKey(
+    key: string,
+  ): Promise<{ ok: boolean; token?: string }> {
     var { users } = this.models
     var user = await users.getOne({ emailConfirmationKey: key })
     if (user instanceof NotFound) {
-      return false
+      return { ok: false }
     } else {
       await users.activateUser({ user_id: user.id })
-      return true
+      var token = userAuth.generateJWT(
+        user.id,
+        this.models.config.auth.jwt.secret,
+      )
+      return { ok: true, token }
     }
   }
 }
+
+import * as userAuth from "@/models/user-auth/user-auth"
 
 // // ----------------------------- ONLY LOCAL USERS -----------------------------
 

@@ -114,8 +114,17 @@ export function start({
 
   async function confirmEmailUpdate(req, res, next) {
     try {
-      var ok = await appLogic.userRegister.tryConfirmEmailByKey(req.query.key)
-      res.redirect(appLogic.config.frontend)
+      var { ok, token } = await appLogic.userRegister.tryConfirmEmailByKey(
+        req.query.key,
+      )
+
+      if (ok) {
+        res.cookie("token", token)
+        res.redirect(appLogic.config.frontend + "/")
+      } else {
+        res.status(400)
+        res.send({ error: "cannot confirm using this key" })
+      }
     } catch (e) {
       next(e)
     }
