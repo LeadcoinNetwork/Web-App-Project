@@ -7,12 +7,21 @@ export default function* login() {
   // fetch("http://127.0.0.1.xip.io:3000/me", { credentials: "include" })
   var ans = yield call(request, "GET", "/me")
   if (ans.isError) {
+    // user is not logged in
+
+    // redirect
     yield put(push("/"))
   } else {
     if (ans.user.disabled == "EMAIL_NOT_VERIFIED") {
+      // user is logged in and disabled
       yield put(Actions.user.loggedOut())
     } else {
+      // user is logged in and not disabled
+
+      // update the state
       yield put(Actions.user.loggedIn(ans.user))
+
+      // redirect
       yield put(push("/buy-leads"))
     }
   }

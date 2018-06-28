@@ -115,7 +115,7 @@ export function start({
   async function confirmEmailUpdate(req, res, next) {
     try {
       var ok = await appLogic.userRegister.tryConfirmEmailByKey(req.query.key)
-      res.json({ ok })
+      res.redirect(appLogic.config.frontend)
     } catch (e) {
       next(e)
     }
