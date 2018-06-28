@@ -6,7 +6,7 @@ import UserLogout from "./user-logout"
 import UserRegister from "./user-register"
 
 import { appModels } from "./types"
-import * as config from "./config"
+import config, { IConfig } from "./config"
 
 import EmailCreator from "../models/email-creator/email-creator"
 import EmailSenderAbstraction from "../models/emailsender/abstraction"
@@ -18,28 +18,36 @@ import Users from "../models/users/users"
 import LeadsModel from "../models/leads/leads"
 import leads from "./leads"
 
-export default class AppLogic {
-  public emailCreator: EmailCreator
-  public emailSender: EmailSenderAbstraction
-  public readonly config = config
+export interface IModels {
+  users: Users
+  leads: LeadsModel
+  emailCreator: EmailCreator
+  emailSender: EmailSenderAbstraction
+  config: IConfig
+}
 
-  public models = {
-    users: new Users(),
-    leads: new LeadsModel({}),
+import SQL from "../models/mysql-pool/mysql-pool"
+
+export default class AppLogic {
+  public readonly config = config
+  private sql = new SQL(config)
+
+  public models: IModels = {
+    users: new Users(this.sql),
+    leads: new LeadsModel(this.sql),
+    emailCreator: null,
+    emailSender: null,
+    config: this.config,
   }
-  public leads = new leads(this)
+  public leads = new leads(this.models)
 
   public userSyntisize = userSyntisize
 
   // private uploadCSV= new UploadCSV()
   private uploadForm = new UploadForm()
   private userLogout = new UserLogout()
-  public userRegister = new UserRegister({
-    emailCreator: this.emailCreator,
-    emailSender: this.emailSender,
-    appLogic: this,
-  })
-  public userLogin = new UserLogin(this)
+  public userRegister = new UserRegister(this.models)
+  public userLogin = new UserLogin(this.models)
 
   constructor(props?: {
     emailSender?: EmailSenderAbstraction
@@ -48,18 +56,18 @@ export default class AppLogic {
     if (!props) props = {}
 
     if (props.emailSender) {
-      this.emailSender = props.emailSender
+      this.models.emailSender = props.emailSender
     } else {
-      this.emailSender =
+      this.models.emailSender =
         config.mail.mailer == "CONSOLE"
           ? new EmailSenderConsole()
           : new EmailSenderConsole()
     }
 
     if (props.emailCreator) {
-      this.emailCreator = props.emailCreator
+      this.models.emailCreator = props.emailCreator
     } else {
-      this.emailCreator = new EmailCreator({ backend: "", from: "" })
+      this.models.emailCreator = new EmailCreator({ backend: "", from: "" })
     }
   }
 
