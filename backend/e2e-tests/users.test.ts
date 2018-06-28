@@ -183,6 +183,13 @@ test("activateUserByKey (ensure that is disabled before)", async () => {
   })
   expect(x.headers.location).toMatch("/")
   expect(x.headers["set-cookie"][0]).toMatch("token")
+
+  var user = await appLogic.models.users.getUserById(x.body.user.id)
+  if (user instanceof NotFound) {
+    throw new Error("user not found in db")
+  }
+  // user.disabled=
+  // expect(user.disabled).toBe(
 })
 
 import NotFound from "../utils/not-found"

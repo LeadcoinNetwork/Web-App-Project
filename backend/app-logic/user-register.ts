@@ -4,6 +4,7 @@ import EmailSender from "../models/emailsender/abstraction"
 import { NewUserInterface, disabledResons } from "../models/users/types"
 import * as auth from "../models/user-auth/user-auth"
 
+import * as userAuth from "../models/user-auth/user-auth"
 import * as UserValidate from "../models/user-validate/user-validate"
 
 import AppLogic from "./index"
@@ -59,8 +60,6 @@ export default class UserRegister {
     }
   }
 }
-
-import * as userAuth from "@/models/user-auth/user-auth"
 
 // // ----------------------------- ONLY LOCAL USERS -----------------------------
 
