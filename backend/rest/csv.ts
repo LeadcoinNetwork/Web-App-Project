@@ -66,7 +66,7 @@ async function mapper(req, res, next) {
     let lead_uploads = await leads_upload.find({
       batch_id: req.params.batchId,
     })
-    lead_promises = lead_uploads.map(lead => {
+    let lead_promises = lead_uploads.map(lead => {
       let insert_params = {
         user_id: req.user.id,
         created: new Date().valueOf(),
