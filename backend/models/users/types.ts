@@ -4,19 +4,19 @@ export interface BaseUserInterface {
   fname: string
   lname: string
   email: string
-  disabled?: disabledResons
+  disabled?: disabledReason
   emailConfirmationKey?: string
 }
 export interface ExistingUserInterface extends BaseUserInterface {
   password: string
   id: number
-  disabled: disabledResons
+  disabled: disabledReason
   created: number
 }
 export interface ExistingUserInterfaceCondition {
   id?: number
   fname?: string
-  disabled?: disabledResons
+  disabled?: disabledReason
   emailConfirmationKey?: string
   lname?: string
   email?: string
@@ -31,7 +31,7 @@ export interface NewUserInterface extends BaseUserInterface {
   plainPassword?: string
 }
 
-export enum disabledResons {
+export enum disabledReason {
   // do not change strings. Frontend & API depends on it
   EMAIL_NOT_VERIFIED = "EMAIL_NOT_VERIFIED",
   PROFILE_NOT_COMPLETED = "PROFILE_NOT_COMPLETED",

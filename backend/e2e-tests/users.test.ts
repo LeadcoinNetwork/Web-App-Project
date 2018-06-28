@@ -173,23 +173,24 @@ test("activateUserByKey (ensure that is disabled before)", async () => {
     throw new Error("user not found in db")
   }
 
-  var x = await request.get("/auth/confirm-email-update").query({
+  var j = await request.get("/auth/confirm-email-update").query({
     key: "aasdads",
   })
-  expect(x.error).toBeTruthy()
+  expect(j.error).toBeTruthy()
 
-  var x = await request.get("/auth/confirm-email-update").query({
+  var y = await request.get("/auth/confirm-email-update").query({
     key: user.emailConfirmationKey,
   })
-  expect(x.headers.location).toMatch("/")
-  expect(x.headers["set-cookie"][0]).toMatch("token")
+  expect(y.headers.location).toMatch("/")
+  expect(y.headers["set-cookie"][0]).toMatch("token")
 
   var user = await appLogic.models.users.getUserById(x.body.user.id)
   if (user instanceof NotFound) {
     throw new Error("user not found in db")
   }
   // user.disabled=
-  // expect(user.disabled).toBe(
+  expect(user.disabled).toBe(disabledReason.PROFILE_NOT_COMPLETED)
 })
 
 import NotFound from "../utils/not-found"
+import { disabledReason } from "../models/users/types"

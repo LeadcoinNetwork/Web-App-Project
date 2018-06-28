@@ -8,7 +8,7 @@ import NotFound from "../../utils/not-found"
 
 import {
   NewUserInterface,
-  disabledResons,
+  disabledReason,
   ExistingUserInterface,
   ExistingUserInterfaceCondition,
 } from "./types"
