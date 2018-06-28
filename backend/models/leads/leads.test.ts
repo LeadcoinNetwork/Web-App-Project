@@ -15,9 +15,11 @@ import NotFound from "../../utils/not-found"
 test("add new lead", async () => {
   const success = await leads.insert({ 
     date: 1212,
+    owner_id: 1,
     name: 'test lead',
     phone: '12301212',
     email: 'moshe@moshe.com',
+    active: true,
     bought_from: null
   })
   expect(success).toBeTruthy()
@@ -26,7 +28,9 @@ test("add new lead", async () => {
 test("find lead", async () => {
   await leads.insert({ 
     date: 1212,
+    owner_id: 1,
     name: 'test lead',
+    active: true,
     phone: '1',
     email: 'moshe@moshe.com',
     bought_from: null
@@ -40,7 +44,9 @@ test("find lead", async () => {
   expect(record2.email).toBe('moshe@moshe.com')
   await leads.insert({ 
     date: 1213,
+    owner_id: 1,
     name: 'test lead 2',
+    active: true,
     phone: '2',
     email: 'moshe@moshe.com',
     bought_from: null
@@ -60,6 +66,8 @@ test("find lead", async () => {
 test("delete lead", async () => {
   await leads.insert({ 
     date: 1212,
+    owner_id: 1,
+    active: true,
     name: 'test lead',
     phone: '12301212',
     email: 'moshe@moshe.com',

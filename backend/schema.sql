@@ -63,6 +63,7 @@ CREATE TABLE  `leadcoin`.`leads` (
   `ext_data` text,
   `bought_from` int(10) unsigned DEFAULT NULL,
   `owner_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `active` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `ownerId_type` (`owner_id`,`type`)
 );

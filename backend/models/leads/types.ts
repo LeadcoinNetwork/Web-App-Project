@@ -4,6 +4,8 @@ export interface BaseLead {
   phone: string
   email: string
   bought_from: number | null
+  owner_id: number
+  active: boolean
 }
 
 export interface RealEstateLead extends BaseLead {
