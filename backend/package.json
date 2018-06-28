@@ -64,6 +64,9 @@
         "tsConfigFile": "tsconfig.json"
       }
     },
+    "moduleNameMapper": {
+      "^@/(.*)": "<rootDir>/$1"
+    },
     "bail": true,
     "moduleFileExtensions": [
       "ts",

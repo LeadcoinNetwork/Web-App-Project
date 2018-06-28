@@ -2,9 +2,10 @@
   "compilerOptions": {
     "target": "ES6",
     "allowJs": true,
-    "baseUrl": ".",
+    "checkJs": false,
+    "baseUrl": "./",
     "paths": {
-      "*": ["*"]
+      "@/*": ["*"]
     },
     "sourceMap": true
   },
