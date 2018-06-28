@@ -3,7 +3,30 @@ import { put, call } from "redux-saga/effects"
 import request from "Utils/request"
 import { push } from "react-router-redux"
 
-export default function* login() {}
+export default function* LoginOnBoot() {
+  // fetch("http://127.0.0.1.xip.io:3000/me", { credentials: "include" })
+  var ans = yield call(request, "GET", "/me")
+  if (ans.isError) {
+    // user is not logged in
+
+    // redirect
+    yield put(push("/"))
+  } else {
+    if (ans.user.disabled == "EMAIL_NOT_VERIFIED") {
+      // user is logged in and disabled
+      yield put(push("/"))
+    } else if (ans.user.disabled == "PROFILE_NOT_COMPLETED") {
+      // user is logged in and not disabled
+
+      yield put(push("/complete-registration"))
+
+      // redirect
+    } else {
+      // update the state
+      yield put(Actions.user.loggedIn(ans.user))
+    }
+  }
+}
 // login() {
 //     const { password, email } = this.state
 //     axios.defaults.withCredentials = true
