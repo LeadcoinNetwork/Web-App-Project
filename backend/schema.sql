@@ -32,3 +32,38 @@ CREATE TABLE IF NOT EXISTS tokens (
 
 -- Add schema migration to here
 alter table users add column emailConfirmationKey longtext;
+
+DROP TABLE IF EXISTS `leadcoin`.`leads_upload`;
+CREATE TABLE  `leadcoin`.`leads_upload` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `batch_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `json` text,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `userId_batchId` (`user_id`,`batch_id`)
+);
+
+DROP TABLE IF EXISTS `leadcoin`.`leads`;
+CREATE TABLE  `leadcoin`.`leads` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `date` datetime DEFAULT NULL,
+  `name` varchar(45) NOT NULL DEFAULT '',
+  `phone` varchar(45) NOT NULL DEFAULT '',
+  `email` varchar(45) NOT NULL DEFAULT '',
+  `type` varchar(45) NOT NULL DEFAULT '',
+  `state` varchar(45) NOT NULL DEFAULT '',
+  `city` varchar(45) NOT NULL DEFAULT '',
+  `property_type` varchar(45) NOT NULL DEFAULT '',
+  `size` varchar(45) NOT NULL DEFAULT '',
+  `budget` varchar(45) NOT NULL DEFAULT '',
+  `bedrooms` varchar(45) NOT NULL DEFAULT '',
+  `floor` varchar(45) NOT NULL DEFAULT '',
+  `specification` varchar(45) NOT NULL DEFAULT '',
+  `ext_data` text,
+  `bought_from` int(10) unsigned DEFAULT NULL,
+  `owner_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `active` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `ownerId_type` (`owner_id`,`type`)
+);

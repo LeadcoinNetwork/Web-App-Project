@@ -48,17 +48,32 @@ export function start({
   )
   */
   expressApp.post(
+    "/leads/:id/remove",
+    passport.authenticate("jwt", authOptions),
+    remove_lead
+  )
+  async function remove_lead(req, res, next) {
+    (async ()=> {
+      const { user } = req
+      const { lead_id } : {lead_id: number} = req.body
+      const res = appLogic.leads.removeLead(lead_id)
+      next()
+    })().catch(done)
+  }
+
+  expressApp.post(
     "/leads/add",
     passport.authenticate("jwt", authOptions),
     add_lead
   )
-
   async function add_lead(req, res, next) {
-    (async ()=>{
+    (async ()=> {
       const { user } = req
       const { lead } : {lead: Lead} = req.body
-      console.log({lead})
-      appLogic.leads.AddLead(lead)
+      lead.owner_id = user.id
+      const res = await appLogic.leads.AddLead(lead)
+      console.log(res)
+      return
       next()
     })().catch(done)
   }

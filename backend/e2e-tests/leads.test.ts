@@ -8,13 +8,16 @@ var { request } = RoutesForTests.create()
 
 test("adding a lead should fail unless contains required fields and succeed otherwise", async () => {
   var { user, token } = await ValidatedUserForTests.create({ request })
+  const lead = { 
+    date: 1213,
+    name: 'test lead 2',
+    phone: '2',
+    email: 'moshe@moshe.com',
+    bought_from: null
+  }
   var x = await request.post("/leads/add").set({
     cookie: "token=" + token,
-  }).send({
-    lead: {
-      name: 'erez'
-    }
-  })
-  console.log(x)
+  }).send({ lead })
+  console.log(x.error)
 }
 )

@@ -40,6 +40,7 @@ export default class RestServer {
   }
 
   createHttpServer(): http.Server {
+    const {appLogic}=this
     if (this.env === "development") {
       console.log("Allowing orpha/n SSL certificates")
       process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
@@ -64,6 +65,8 @@ export default class RestServer {
     userRouter.start({ appLogic: this.appLogic, expressApp })
 
     // TODO leads
+    console.log('##')
+    leads.start({appLogic:this.appLogic,expressApp})
     // TODO csv
 
     _404.start(expressApp)
