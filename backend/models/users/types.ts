@@ -34,4 +34,5 @@ export interface NewUserInterface extends BaseUserInterface {
 export enum disabledResons {
   // do not change strings. Frontend & API depends on it
   EMAIL_NOT_VERIFIED = "EMAIL_NOT_VERIFIED",
+  PROFILE_NOT_COMPLETED = "PROFILE_NOT_COMPLETED",
 }

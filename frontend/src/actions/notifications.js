@@ -3,12 +3,12 @@ import { SOCKET } from "./api"
 
 export default {
   connectToNotifications(dispatch) {
-    SOCKET.on("notification", notification => {
-      dispatch({
-        type: types.NOTIFICATION_SHOW,
-        payload: notification,
-      })
-    })
+    // SOCKET.on("notification", notification => {
+    //   dispatch({
+    //     type: types.NOTIFICATION_SHOW,
+    //     payload: notification,
+    //   })
+    // })
   },
 
   notificationsShow() {
