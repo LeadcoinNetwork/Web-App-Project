@@ -47,7 +47,7 @@ export default class AppLogic {
   private uploadForm = new UploadForm()
   private userLogout = new UserLogout()
   public userRegister = new UserRegister(this.models)
-  public userLogin = new UserLogin(this)
+  public userLogin = new UserLogin(this.models)
 
   constructor(props?: {
     emailSender?: EmailSenderAbstraction
