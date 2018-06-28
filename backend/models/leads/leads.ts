@@ -6,6 +6,7 @@ import { Lead } from "./types"
 interface FindOptions {
   sort_by?: [string, "ASC" |"DESC"]
   fields?: string[]
+  where_additions?: string[]
 }
 
 export default class Leads {
@@ -16,9 +17,9 @@ export default class Leads {
   }
 
   async insert(lead: Lead) {
-    console.log(this.sql)
     let status = await this.sql.query("INSERT INTO leads SET ?", lead)
-    return status.affectedRows != 0
+    const success = (status.affectedRows != 0)
+    return [success, (success) ? status.insertId : null]
   }
 
   async update(_id: number, lead: Lead) {
@@ -35,6 +36,9 @@ export default class Leads {
       let conditions = Object.keys(condition_obj).map(key => {
         return `${key} = '${condition_obj[key]}'`
       })
+      if (options && options.where_additions) {
+        conditions.concat(options.where_additions)
+      }
       condition = "WHERE " + conditions.join(" AND ")
     }
     let fields_str = "*"

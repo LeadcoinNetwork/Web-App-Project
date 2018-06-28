@@ -16,7 +16,7 @@ export async function create({
 }): Promise<{ user: ExistingUserInterface; token: string }> {
   var user_id = await users.createUser({
     disabled: null,
-    email: "email-is-not-missing@haamifsfSFsadf.com",
+    email: chance.email(),
     fname: "moshe",
     lname: "Marilush",
     plainPassword: "danny-gembom",

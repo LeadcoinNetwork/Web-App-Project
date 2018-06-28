@@ -54,8 +54,8 @@ export function start({
   async function remove_lead(req, res, next) {
     ;(async () => {
       const { user } = req
-      const { lead_id }: { lead_id: number } = req.body
-      // const res = appLogic.leads.removeLead(lead_id)
+      const { lead_id }: { lead_id: number } = req.params.id
+      const res = appLogic.leads.removeLead(lead_id)
       next()
     })().catch(done)
   }
@@ -69,11 +69,13 @@ export function start({
     ;(async () => {
       const { user } = req
       const { lead }: { lead: Lead } = req.body
+      if (!lead.owner_id) {
+        return next()
+      }
       lead.owner_id = user.id
-      const res = await appLogic.leads.AddLead(lead)
-      console.log(res)
-      return
-      next()
+      const response = await appLogic.leads.AddLead(lead)
+      res.json({response})
+      return next()
     })().catch(done)
   }
 }
