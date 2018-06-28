@@ -17,12 +17,12 @@ export default function fetchBackend(method, url, data) {
       })
       .catch(e => {
         if (!e.response) {
-          return {
+          resolve({
             isError: true,
             data: {
               error: "NETWORK ERROR",
             },
-          }
+          })
         }
         e.response.isError = e.response.data
         resolve(e.response)
