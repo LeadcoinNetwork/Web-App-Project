@@ -51,7 +51,9 @@ export default class UserRegister {
     if (user instanceof NotFound) {
       return { ok: false }
     } else {
-      await users.activateUser({ user_id: user.id })
+      await users.update(user.id, {
+        disabled: disabledResons.PROFILE_NOT_COMPLETED,
+      })
       var token = userAuth.generateJWT(
         user.id,
         this.models.config.auth.jwt.secret,
