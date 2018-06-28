@@ -35,7 +35,7 @@ test("find lead", async () => {
   expect(record.email).toBe('moshe@moshe.com')
   const [record2] = await leads.find({email: 'moshe@moshe.com'}, {
     fields: ['email', 'phone']
-  });
+  })
   expect(record2[name]).toBe(undefined)
   expect(record2.email).toBe('moshe@moshe.com')
   await leads.insert({ 
