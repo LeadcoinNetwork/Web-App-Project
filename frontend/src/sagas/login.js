@@ -15,14 +15,15 @@ export default function* login() {
     if (ans.user.disabled == "EMAIL_NOT_VERIFIED") {
       // user is logged in and disabled
       yield put(Actions.user.loggedOut())
-    } else {
+    } else if (ans.user.disabled == "PROFILE_NOT_COMPLETED") {
       // user is logged in and not disabled
 
       // update the state
-      yield put(Actions.user.loggedIn(ans.user))
+      yield put(push("/buy-leads"))
 
       // redirect
-      yield put(push("/buy-leads"))
+    } else {
+      yield put(Actions.user.loggedIn(ans.user))
     }
   }
 }
