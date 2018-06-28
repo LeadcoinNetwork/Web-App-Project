@@ -4,12 +4,8 @@ import { userMenu, user } from "../../actions"
 import UserMenuInner from "./UserMenuInner"
 
 class UserMenu extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   handleClick = () => {
-    if (this.props.isOpen) {
+    if (this.props.userMenu.isOpen) {
       this.props.userMenuClick()
     }
   }
