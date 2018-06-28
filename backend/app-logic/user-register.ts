@@ -12,6 +12,11 @@ import AppLogic from "./index"
 import NotFound from "../utils/not-found"
 
 import { IModels } from "./index"
+interface ICompleteProfile {
+  company: string
+  country: string
+  phone: string
+}
 
 export default class UserRegister {
   constructor(private models: IModels) {}
@@ -41,6 +46,20 @@ export default class UserRegister {
       user: newUserid,
       token,
     }
+  }
+
+  async completeProfile(user_id, completeProfile: ICompleteProfile) {
+    var { users } = this.models
+    var { company, phone, country } = completeProfile
+    if (!company) throw new Error("Company not valid")
+    if (!phone) throw new Error("Phone not valid")
+    if (!country) throw new Error("Country not valid")
+    return users.update(user_id, {
+      company,
+      phone,
+      country,
+      disabled: null,
+    })
   }
 
   async tryConfirmEmailByKey(

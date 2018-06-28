@@ -22,7 +22,7 @@ export async function create({
     plainPassword: "danny-gembom",
   })
   const token = UsersAuth.generateJWT(user_id, config.auth.jwt.secret)
-  var user = await users.getUserById(user_id)
+  var user = await users.tryGetUserById(user_id)
   if (user instanceof NotFound) {
     throw new Error("cannot create user for tests")
   }

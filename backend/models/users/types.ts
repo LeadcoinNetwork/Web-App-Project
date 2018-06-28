@@ -6,6 +6,9 @@ export interface BaseUserInterface {
   email: string
   disabled?: disabledReason
   emailConfirmationKey?: string
+  country?: string
+  phone?: string
+  company?: string
 }
 export interface ExistingUserInterface extends BaseUserInterface {
   password: string
@@ -25,6 +28,9 @@ export interface ExistingUserInterfaceCondition {
   created?: number
   provider_id?
   provider?
+  country?: string
+  phone?: string
+  company?: string
 }
 
 export interface NewUserInterface extends BaseUserInterface {
