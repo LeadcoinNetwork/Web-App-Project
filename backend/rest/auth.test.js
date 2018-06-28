@@ -1,5 +1,0 @@
-test.skip("user login  [not yet implemented]", () => {})
-test.skip("user confirm email  [not yet implemented]", () => {})
-test.skip("user resend email  [not yet implemented]", () => {})
-test.skip("user chagne password  [not yet implemented]", () => {})
-test.skip("user chagne password  [not yet implemented]", () => {})

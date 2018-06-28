@@ -1,38 +1,30 @@
 import * as Chance from "chance"
 import * as _ from "lodash"
-import UserActions from "../../models/users/users"
+import Users from "../../models/users/users"
 import * as UsersAuth from "../../models/user-auth/user-auth"
-import EmailCreator from "../../models/email-creator/email-creator"
-import EmailSenderMock from "../../models/emailsender/mock"
+import config from "../../app-logic/config"
+import SQL from "../../models/mysql-pool/mysql-pool"
 
-var userActions = new UserActions({
-  emailCreator: new EmailCreator({ backend: "", from: "" }),
-  emailSender: new EmailSenderMock(),
-})
-
+var users = new Users(new SQL(config))
 var chance = Chance()
 
 import { ExistingUserInterface } from "../../models/users/types"
+import NotFound from "@/utils/not-found.ts"
 
 export async function create({
-  request,
+  users: Users,
 }): Promise<{ user: ExistingUserInterface; token: string }> {
-  var x = await request.post("/user").send({
+  var user_id = await users.createUser({
+    disabled: null,
+    email: "email-is-not-missing@haamifsfSFsadf.com",
     fname: "moshe",
-    lname: "moshe",
-    password: "KGHasdF987654&*^%$#",
-    email: chance.email(),
+    lname: "Marilush",
+    plainPassword: "danny-gembom",
   })
-  expect(_.get(x, "error.text")).toBeFalsy()
-  var tokenFromBody = x.body.token
-  x = await request.get("/me").set({
-    cookie: "token=" + tokenFromBody,
-  })
-  expect(_.get(x, "error.text")).toBeFalsy()
-  expect(_.get(x, "body.user.id")).toBeTruthy()
-  await userActions.activateUser({ user_id: x.body.user.id })
-  x = await request.get("/me").set({
-    cookie: "token=" + tokenFromBody,
-  })
-  return { user: x.body.user, token: tokenFromBody }
+  const token = UsersAuth.generateJWT(user_id, config.auth.jwt.secret)
+  var user = await users.getUserById(user_id)
+  if (user instanceof NotFound) {
+    throw new Error("cannot create user for tests")
+  }
+  return { user, token }
 }

@@ -18,6 +18,10 @@ import Users from "../models/users/users"
 import LeadsModel from "../models/leads/leads"
 import leads from "./leads"
 
+import NotFound from "@/utils/not-found.ts"
+
+// console.log("server is ready:", NotFound)
+
 export interface IModels {
   users: Users
   leads: LeadsModel

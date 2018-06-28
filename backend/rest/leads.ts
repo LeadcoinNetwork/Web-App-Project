@@ -7,7 +7,7 @@ import { appModels } from "app-logic/types"
 
 import * as auth from "../models/user-auth/user-auth"
 
-import {Lead} from '../models/leads/types'
+import { Lead } from "../models/leads/types"
 
 const authOptions = {
   session: false,
@@ -27,18 +27,17 @@ const mock_field_list = [
 ]
 // ---
 
-const done = (a) => {
+const done = a => {
   console.log(a)
 }
 
 export function start({
   appLogic,
   expressApp,
-}:{
+}: {
   appLogic: AppLogic
   expressApp: Express.Express
-}){
-
+}) {
   /*
   expressApp.get("/auth/confirm-email-update", confirmEmailUpdate)
   expressApp.get(
@@ -50,13 +49,13 @@ export function start({
   expressApp.post(
     "/leads/:id/remove",
     passport.authenticate("jwt", authOptions),
-    remove_lead
+    remove_lead,
   )
   async function remove_lead(req, res, next) {
-    (async ()=> {
+    ;(async () => {
       const { user } = req
-      const { lead_id } : {lead_id: number} = req.body
-      const res = appLogic.leads.removeLead(lead_id)
+      const { lead_id }: { lead_id: number } = req.body
+      // const res = appLogic.leads.removeLead(lead_id)
       next()
     })().catch(done)
   }
@@ -64,12 +63,12 @@ export function start({
   expressApp.post(
     "/leads/add",
     passport.authenticate("jwt", authOptions),
-    add_lead
+    add_lead,
   )
   async function add_lead(req, res, next) {
-    (async ()=> {
+    ;(async () => {
       const { user } = req
-      const { lead } : {lead: Lead} = req.body
+      const { lead }: { lead: Lead } = req.body
       lead.owner_id = user.id
       const res = await appLogic.leads.AddLead(lead)
       console.log(res)

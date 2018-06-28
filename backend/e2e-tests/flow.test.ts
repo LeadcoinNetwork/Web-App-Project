@@ -17,22 +17,23 @@ var chance = Chance()
  * User B Don't see the lead in "Buy Leads"
  * User A
  */
-test.skip("user sign-up, click link, upload lead. user 2, sign-up, click link, buy lead", async () => {
-  var x = await request.post("/user").send({
-    fname: "moshe",
-    lname: "moshe",
-    password: "KGHasdF987654&*^%$#",
-    email: chance.email(),
-  })
-  expect(_.get(x, "error.text")).toBeFalsy()
-  expect(x.status).toEqual(201)
-  var lastCall = emailSenderMock.lastCall()
 
-  var html = lastCall.html
-  var linkMatch = html.match(/href="(.*?)"/)
-  expect(linkMatch).toHaveLength(2)
-  var link = linkMatch[1]
-})
+// test.skip("user sign-up, click link, upload lead. user 2, sign-up, click link, buy lead", async () => {
+//   var x = await request.post("/user").send({
+//     fname: "moshe",
+//     lname: "moshe",
+//     password: "KGHasdF987654&*^%$#",
+//     email: chance.email(),
+//   })
+//   expect(_.get(x, "error.text")).toBeFalsy()
+//   expect(x.status).toEqual(201)
+//   var lastCall = emailSenderMock.lastCall()
+
+//   var html = lastCall.html
+//   var linkMatch = html.match(/href="(.*?)"/)
+//   expect(linkMatch).toHaveLength(2)
+//   var link = linkMatch[1]
+// })
 
 /** Complete Story
  * User A Sign UP

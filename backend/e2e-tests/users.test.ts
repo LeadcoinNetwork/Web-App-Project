@@ -75,7 +75,6 @@ describe("POST /user is sending emails that contain the right link", () => {
       password: "KGHasdF987654&*^%$#",
       email: "aminadav@leadcoin.network",
     })
-    console.log(x.error.text)
     expect(x.error).toBeFalsy()
     var userid = x.body.user
     expect(typeof userid).toEqual("number")

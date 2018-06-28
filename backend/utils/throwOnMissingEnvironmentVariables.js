@@ -3,7 +3,7 @@ var _ = require("lodash")
 var dotenv = require("dotenv")
 
 module.exports = function throwOnMissingEnvironmentVariables() {
-  REQUIRED_KEYS = dotenv.parse(fs.readFileSync("./.env.example"))
+  const REQUIRED_KEYS = dotenv.parse(fs.readFileSync("./.env.example"))
   var MISSING_VARS = _.keys(_.omit(REQUIRED_KEYS, _.keys(process.env)))
   if (MISSING_VARS.length > 0) {
     throw new Error(
