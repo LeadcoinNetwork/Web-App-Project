@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import BalanceWidget from "Containers/BalanceWidget"
 import NotificationElement from "Containers/NotificationElement"
 import UserMenu from "Containers/UserMenu"
+import LanguageSelector from "../UploadForm";
 
 const Header = ({ path, loggedIn }) => (
   <header className={`ldc-header${loggedIn ? " h-app-mode" : " h-sign-mode"}`}>
