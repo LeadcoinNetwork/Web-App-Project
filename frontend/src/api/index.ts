@@ -1,5 +1,3 @@
-import { SuperAgentStatic } from "superagent"
-
 import Users from "./users"
 export default class API {
   users: Users
