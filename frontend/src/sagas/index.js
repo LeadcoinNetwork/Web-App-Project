@@ -4,6 +4,7 @@ import loginOnBoot from "./loginOnBoot"
 import logout from "./logout"
 import homesaga from "./homesaga"
 import csvMapping from "./csvMapping"
+import completeRegistration from "./completeRegistration.js"
 import { spawn } from "redux-saga/effects"
 
 import * as superagent from "superagent"
@@ -22,7 +23,15 @@ var request = function(method, url, data) {
 var api = new API(request)
 
 export default function* rootSaga() {
-  var sagas = [login, logout, homesaga, loginOnBoot, signup, csvMapping]
+  var sagas = [
+    login,
+    completeRegistration,
+    logout,
+    homesaga,
+    loginOnBoot,
+    signup,
+    csvMapping,
+  ]
   for (var i in sagas) {
     yield spawn(sagas[i](api))
   }

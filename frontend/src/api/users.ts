@@ -3,7 +3,7 @@ import { methods, request } from "./request"
 export default class UserApi {
   constructor(private request: request) {}
   async login({ email, password }) {
-    return await this.request(methods.get, "/auth/login", { email, password })
+    return await this.request(methods.post, "/auth/login", { email, password })
   }
   async getMe() {
     return await this.request(methods.get, "/me")

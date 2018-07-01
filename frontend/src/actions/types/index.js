@@ -120,4 +120,5 @@ export default {
 
   // ROUTE
   GOTO_DEFAULT_HOME: "GOTO_DEFAULT_HOME",
+  BOOT_AGAIN: "BOOT_AGAIN",
 }

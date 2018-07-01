@@ -52,7 +52,11 @@ class CompleteRegistration extends React.Component {
               onChange={this.handlePhoneChange}
             />
             {error && this.getErrors(error)}
-            <Button label="Submit" loading={loading} />
+            <Button
+              label="Submit"
+              onClick={this.props.submit}
+              loading={loading}
+            />
           </div>
         </div>
         <aside>
@@ -76,8 +80,11 @@ const mapStateToProps = state => ({
   completeRegistration: state.completeRegistration,
 })
 
-export default connect(mapStateToProps, {
-  con: console.log,
-  handleChange: completeRegistration.completeRegistrationHandleChange,
-  submit: completeRegistration.completeRegistrationSubmit,
-})(CompleteRegistration)
+export default connect(
+  mapStateToProps,
+  {
+    con: console.log,
+    handleChange: completeRegistration.completeRegistrationHandleChange,
+    submit: completeRegistration.completeRegistrationSubmit,
+  },
+)(CompleteRegistration)

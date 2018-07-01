@@ -19,33 +19,14 @@ export default function login(api) {
       yield put(actions.login.loginLoading())
 
       let { email, password } = yield select(state => state.login)
-
-      let ans = api.users.login({
+      let ans = yield api.users.login({
         email,
         password,
       })
-
       if (ans.error) {
-        yield put(push("/login"))
+        yield put(actions.login.loginError(ans.error))
       } else {
-        yield put(Actions.user.loggedIn(ans.user))
-
-        if (ans.user.disabled) {
-          yield put(push(disabledPages[ans.user.disabled]))
-        } else {
-          let { location } = yield select(state => state.routerReducer),
-            path = location.pathname
-
-          if (
-            !path ||
-            path === "/login" ||
-            path === "/signup" ||
-            path === "/email-confirmation" ||
-            path === "/complete-registration"
-          ) {
-            yield put(push("/buy-leads"))
-          }
-        }
+        yield put(actions.route.bootAgain())
       }
     }
   }

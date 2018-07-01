@@ -7,7 +7,7 @@ export default class API {
     async function r() {
       try {
         var ans = await request.apply(null, arguments)
-        return ans.body
+        return ans.body || {}
       } catch (err) {
         if (err.response && err.response.body) {
           return {

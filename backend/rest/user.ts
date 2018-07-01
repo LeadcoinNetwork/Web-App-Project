@@ -44,7 +44,7 @@ export function start({
     appLogic.userRegister
       .completeProfile(req.user.id, req.body)
       .then(() => {
-        res.send("great")
+        res.send({ok:true)
       })
       .catch(err => {
         res.status(500).send({ error: err.message })

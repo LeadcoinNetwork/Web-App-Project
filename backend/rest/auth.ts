@@ -65,28 +65,14 @@ export function start({
   }
 
   async function login(req, res, next) {
-    var token = await appLogic.userLogin.login(req.user.id)
-    res.cookie("token", token)
-    res.redirect(appLogic.config.frontend)
-    // if (pass instanceof NotFound) {
-    // res.status(400)
-    // res.send({ error: "not auth" })
-    // } else {
-    // res.send({ token: pass })
-    // }
-    // try {
-    //   console.log("@")
-    //   let _user = req.user
-    //   // let token = await appLog.login(_user.id)
-    //   res.cookie("token", token)
-    //   if (_user.provider) {
-    //     res.redirect(frontend)
-    //   } else {
-    //     res.json({ user: _user, token })
-    //   }
-    // } catch (e) {
-    //   next(e)
-    // }
+    if (req.user && req.user.id) {
+      var token = await appLogic.userLogin.login(req.user.id)
+      res.cookie("token", token)
+      res.send({ ok: true })
+    } else {
+      res.status(409).send({ error: "invalid" })
+    }
+    // res.redirect(appLogic.config.frontend)
   }
 
   async function logout(req, res) {

@@ -16,4 +16,8 @@ export default {
       type: types.GOTO_DEFAULT_HOME,
     }
   },
+
+  bootAgain() {
+    return { type: types.BOOT_AGAIN }
+  },
 }
