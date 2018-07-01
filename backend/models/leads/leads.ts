@@ -3,7 +3,7 @@ import SQL from '../mysql-pool/mysql-pool'
 
 import { Lead } from "./types"
 
-interface FindOptions {
+export interface FindOptions {
   sort_by?: [string, "ASC" |"DESC"]
   fields?: string[]
   where_additions?: string[]
@@ -30,33 +30,32 @@ export default class Leads {
     return status.affectedRows != 0
   }
 
-  async find(condition_obj: object, options: FindOptions | null | undefined) {
-    let condition
-    if (condition_obj) {
-      let conditions = Object.keys(condition_obj).map(key => {
-        return `${key} = '${condition_obj[key]}'`
-      })
-      if (options && options.where_additions) {
-        conditions.concat(options.where_additions)
-      }
-      condition = "WHERE " + conditions.join(" AND ")
+  async find(condition_obj: object, options: FindOptions) {
+    if (!options) options = {}
+    const {where_additions, sort_by, fields} = options
+    let conditions = Object.keys(condition_obj).map(key => {
+      return `${key} = '${condition_obj[key]}'`
+    })
+    if (where_additions) {
+      conditions = conditions.concat(where_additions)
     }
+    let condition = "WHERE " + conditions.join(" AND ")
     let fields_str = "*"
-    if (options && options.fields) {
-      const {fields} = options
+    if (fields) {
       if (Array.isArray(fields) && fields.length) {
         fields_str = fields.join(", ")
       }
     }
     let sql = `SELECT ${fields_str} FROM leads ${condition}`
-    if (options && options.sort_by) {
-      const {sort_by} = options
+    if (sort_by) {
       if (Array.isArray(sort_by) && sort_by.length) {
         sql += ` ORDER BY ${sort_by[0]} ${sort_by[1]}`
       }
     }
+    //console.log({sql})
     let rows = await this.sql.query(sql)
     rows = rows.map(row => Object.assign({}, row))
+    //console.log({rows})
     return rows
   }
 
