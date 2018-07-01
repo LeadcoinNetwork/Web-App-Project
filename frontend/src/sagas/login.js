@@ -1,7 +1,6 @@
 import { types } from "Actions"
 import * as actions from "Actions"
 import { select, take, put, call } from "redux-saga/effects"
-import request from "Utils/request"
 import { push } from "react-router-redux"
 
 const disabledPages = {
