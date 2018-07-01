@@ -198,18 +198,17 @@ describe("/complete-profile", () => {
       email: chance.email(),
     })
     var token = await users.generateJWT(user, appLogic.config.auth.jwt.secret)
-    var x = await request
-      .post("/complete-profile")
-      .set({ cookie: "token=" + token })
-      .send({
-        company: "abc",
-        country: "Israel",
-      })
-    expect(x.error).toBeTruthy()
+
+    //@ts-ignore because telephone is missing
+    var ans = await ApiForToken(token).users.completeProfile({
+      company: "abc",
+      country: "Israel",
+    })
+    expect(ans.error).toBeTruthy()
     var newUser = await users.mustGetUserById(user)
     expect(newUser.disabled).toBeTruthy()
   })
-  test("should update databse, and set disabled as null", async () => {
+  test("should update database, and set disabled as null", async () => {
     var { users } = appLogic.models
     var user = await users.createUser({
       disabled: disabledReason.PROFILE_NOT_COMPLETED,
@@ -218,15 +217,12 @@ describe("/complete-profile", () => {
       email: chance.email(),
     })
     var token = await users.generateJWT(user, appLogic.config.auth.jwt.secret)
-    var x = await request
-      .post("/complete-profile")
-      .set({ cookie: "token=" + token })
-      .send({
-        company: "abc",
-        phone: "+32223132",
-        country: "Israel",
-      })
-    expect(x.error).toBeFalsy()
+    var ans = await ApiForToken(token).users.completeProfile({
+      company: "abc",
+      country: "Israel",
+      phone: "+32223132",
+    })
+    expect(ans.error).toBeFalsy()
 
     var newUser = await users.mustGetUserById(user)
     expect(newUser.disabled).toBeFalsy()

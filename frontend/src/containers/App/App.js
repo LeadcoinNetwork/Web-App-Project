@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-import { notifications, user } from "Actions"
+import { notifications, user, route } from "Actions"
 import Header from "Containers/Header"
 import SideMenu from "Containers/SideMenu"
 import Snackbar from "Containers/Snackbar"
@@ -22,6 +22,7 @@ class App extends React.Component {
           loggedIn={loggedIn}
           disabled={disabled}
           path={path}
+          gotoDefaultHome={this.props.gotoDefaultHome}
           logout={this.props.logout}
         />
         {loggedIn && !disabled && <SideMenu path={path} />}
@@ -39,6 +40,10 @@ const mapStateToProps = state => ({
   location: state.routerReducer.location,
 })
 
-export default connect(mapStateToProps, {
-  logout: user.loggedOut,
-})(App)
+export default connect(
+  mapStateToProps,
+  {
+    logout: user.loggedOut,
+    gotoDefaultHome: route.gotoDefaultHome,
+  },
+)(App)

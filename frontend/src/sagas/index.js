@@ -2,6 +2,7 @@ import signup from "./signup"
 import login from "./login"
 import loginOnBoot from "./loginOnBoot"
 import logout from "./logout"
+import homesaga from "./homesaga"
 import csvMapping from "./csvMapping"
 import { spawn } from "redux-saga/effects"
 
@@ -21,7 +22,7 @@ var request = function(method, url, data) {
 var api = new API(request)
 
 export default function* rootSaga() {
-  var sagas = [login, logout, loginOnBoot, signup, csvMapping]
+  var sagas = [login, logout, homesaga, loginOnBoot, signup, csvMapping]
   for (var i in sagas) {
     yield spawn(sagas[i](api))
   }

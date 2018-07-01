@@ -12,7 +12,9 @@ export default class UserApi {
     return this.request(methods.post, "/user", data)
   }
   async resendEmail() {}
-  async completeProfile() {}
+  async completeProfile(data: { company; phone; country }) {
+    return this.request(methods.post, "/complete-profile", data)
+  }
   async logout() {
     this.request(methods.post, "/auth/logout")
   }

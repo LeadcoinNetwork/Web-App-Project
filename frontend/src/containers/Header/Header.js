@@ -4,14 +4,15 @@ import BalanceWidget from "Containers/BalanceWidget"
 import NotificationElement from "Containers/NotificationElement"
 import UserMenu from "Containers/UserMenu"
 import LanguageSelector from "../UploadForm"
+import { connect } from "react-redux"
 
-const Header = ({ path, loggedIn, disabled, logout }) => (
+const Header = ({ path, loggedIn, disabled, logout, gotoDefaultHome }) => (
   <header
     className={`ldc-header${
       loggedIn && !disabled ? " h-app-mode" : " h-sign-mode"
     }`}
   >
-    <Link to="/" className="logo-link" />
+    <div to="/" className="logo-link" onClick={gotoDefaultHome} />
     {disabled ? (
       <div className="sign-link">
         <Link to="/login" onClick={logout}>
