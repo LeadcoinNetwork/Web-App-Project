@@ -44,7 +44,7 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
       secretOrKey: config.auth.jwt.secret,
     },
     async (jwt, done) => {
-      var user = await appLogic.models.users.getUserById(jwt.id)
+      var user = await appLogic.models.users.tryGetUserById(jwt.id)
       if (user instanceof NotFound) {
         let err = new Error("Unauthorized")
         //@ts-ignore

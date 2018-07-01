@@ -34,6 +34,22 @@ export function start({
     .put(update)
     .delete(remove)
 
+  expressApp.post(
+    "/complete-profile",
+    passport.authenticate("jwt", authOptions),
+    completeProfile,
+  )
+
+  function completeProfile(req, res) {
+    appLogic.userRegister
+      .completeProfile(req.user.id, req.body)
+      .then(() => {
+        res.send("great")
+      })
+      .catch(err => {
+        res.status(500).send({ error: err.message })
+      })
+  }
   async function get(req, res, next) {
     var synsitzedUser = appLogic.userSyntisize(req.user)
     res.send({ user: synsitzedUser })

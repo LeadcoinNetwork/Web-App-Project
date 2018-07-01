@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react"
 import Button from "./Button"
 
 storiesOf("Components/Button")
-  .add("With Text", () => <Button label="Hello" />)
+  .add("With text", () => <Button label="Hello" />)
   .add("Secondary", () => <Button label="Hello" secondary />)
   .add("With Click", () => (
     <Button label="Click me" onClick={() => alert("Clicked!")} />

@@ -2,6 +2,9 @@ import * as Chance from "chance"
 import * as _ from "lodash"
 
 import * as RoutesForTests from "./utils/routes.for.tests"
+import NotFound from "../utils/not-found"
+import { disabledReason } from "../models/users/types"
+
 var { request, emailSenderMock, appLogic } = RoutesForTests.create()
 
 var chance = Chance()
@@ -51,10 +54,7 @@ describe("POST /user is sending emails that contain the right link", () => {
     var userid = x.body.user
     expect(typeof userid).toEqual("number")
 
-    var user = await appLogic.models.users.getUserById(userid)
-    if (user instanceof NotFound) {
-      throw new Error("User not found in DB")
-    }
+    var user = await appLogic.models.users.mustGetUserById(userid)
     var key = user.emailConfirmationKey
     var emailHTML = emailSenderMock.lastCall().html
     expect(emailHTML).toMatch("/auth/confirm-email-update?key=" + key)
@@ -79,10 +79,7 @@ describe("POST /user is sending emails that contain the right link", () => {
     var userid = x.body.user
     expect(typeof userid).toEqual("number")
 
-    var user = await appLogic.models.users.getUserById(userid)
-    if (user instanceof NotFound) {
-      throw new Error("User not found in DB")
-    }
+    var user = await appLogic.models.users.mustGetUserById(userid)
     var key = user.emailConfirmationKey
     // var emailHTML = emailSenderMock.lastCall().html
     // expect(emailHTML).toMatch("/auth/confirm-email-update?key=" + key)
@@ -168,28 +165,67 @@ test("activateUserByKey (ensure that is disabled before)", async () => {
   })
   expect(x.body.user.disabled).toEqual("EMAIL_NOT_VERIFIED")
 
-  var user = await appLogic.models.users.getUserById(x.body.user.id)
-  if (user instanceof NotFound) {
-    throw new Error("user not found in db")
-  }
+  var user = await appLogic.models.users.mustGetUserById(x.body.user.id)
 
-  var x = await request.get("/auth/confirm-email-update").query({
+  var j = await request.get("/auth/confirm-email-update").query({
     key: "aasdads",
   })
-  expect(x.error).toBeTruthy()
+  expect(j.error).toBeTruthy()
 
-  var x = await request.get("/auth/confirm-email-update").query({
+  var y = await request.get("/auth/confirm-email-update").query({
     key: user.emailConfirmationKey,
   })
-  expect(x.headers.location).toMatch("/")
-  expect(x.headers["set-cookie"][0]).toMatch("token")
+  expect(y.headers.location).toMatch("/")
+  expect(y.headers["set-cookie"][0]).toMatch("token")
 
-  var user = await appLogic.models.users.getUserById(x.body.user.id)
-  if (user instanceof NotFound) {
-    throw new Error("user not found in db")
-  }
-  // user.disabled=
-  // expect(user.disabled).toBe(
+  var user = await appLogic.models.users.mustGetUserById(x.body.user.id)
+  expect(user.disabled).toBe(disabledReason.PROFILE_NOT_COMPLETED)
 })
 
-import NotFound from "../utils/not-found"
+describe("/complete-profile", () => {
+  test("using invalid date (no phone) should not update database, and set disabled as null", async () => {
+    var { users } = appLogic.models
+    var user = await users.createUser({
+      disabled: disabledReason.PROFILE_NOT_COMPLETED,
+      fname: "fname",
+      lname: "df",
+      email: chance.email(),
+    })
+    var token = await users.generateJWT(user, appLogic.config.auth.jwt.secret)
+    var x = await request
+      .post("/complete-profile")
+      .set({ cookie: "token=" + token })
+      .send({
+        company: "abc",
+        country: "Israel",
+      })
+    expect(x.error).toBeTruthy()
+    var newUser = await users.mustGetUserById(user)
+    expect(newUser.disabled).toBeTruthy()
+  })
+  test("should update databse, and set disabled as null", async () => {
+    var { users } = appLogic.models
+    var user = await users.createUser({
+      disabled: disabledReason.PROFILE_NOT_COMPLETED,
+      fname: "fname",
+      lname: "df",
+      email: chance.email(),
+    })
+    var token = await users.generateJWT(user, appLogic.config.auth.jwt.secret)
+    var x = await request
+      .post("/complete-profile")
+      .set({ cookie: "token=" + token })
+      .send({
+        company: "abc",
+        phone: "+32223132",
+        country: "Israel",
+      })
+    expect(x.error).toBeFalsy()
+
+    var newUser = await users.mustGetUserById(user)
+    expect(newUser.disabled).toBeFalsy()
+    expect(newUser.company).toEqual("abc")
+    expect(newUser.phone).toEqual("+32223132")
+    expect(newUser.country).toEqual("Israel")
+  })
+})

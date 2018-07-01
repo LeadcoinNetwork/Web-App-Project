@@ -1,7 +1,7 @@
 import EmailCreator from "../models/email-creator/email-creator"
 import EmailSender from "../models/emailsender/abstraction"
 
-import { NewUserInterface, disabledResons } from "../models/users/types"
+import { NewUserInterface, disabledReason } from "../models/users/types"
 import * as auth from "../models/user-auth/user-auth"
 
 import * as userAuth from "../models/user-auth/user-auth"
@@ -12,6 +12,11 @@ import AppLogic from "./index"
 import NotFound from "../utils/not-found"
 
 import { IModels } from "./index"
+interface ICompleteProfile {
+  company: string
+  country: string
+  phone: string
+}
 
 export default class UserRegister {
   constructor(private models: IModels) {}
@@ -27,13 +32,13 @@ export default class UserRegister {
       if (rs instanceof Error) {
         throw rs
       }
-      user.disabled = disabledResons.EMAIL_NOT_VERIFIED
+      user.disabled = disabledReason.EMAIL_NOT_VERIFIED
       user.emailConfirmationKey = auth.generateToken()
       var str = emailCreator.confirmEmail(user, user.emailConfirmationKey)
       await emailSender.send(str)
     }
     if (!shouldValidate) {
-      user.disabled = disabledResons.PROFILE_NOT_COMPLETED
+      user.disabled = disabledReason.PROFILE_NOT_COMPLETED
     }
     var newUserid = await users.createUser(user)
     let token = auth.generateJWT(newUserid, config.auth.jwt.secret)
@@ -41,6 +46,20 @@ export default class UserRegister {
       user: newUserid,
       token,
     }
+  }
+
+  async completeProfile(user_id, completeProfile: ICompleteProfile) {
+    var { users } = this.models
+    var { company, phone, country } = completeProfile
+    if (!company) throw new Error("Company not valid")
+    if (!phone) throw new Error("Phone not valid")
+    if (!country) throw new Error("Country not valid")
+    return users.update(user_id, {
+      company,
+      phone,
+      country,
+      disabled: null,
+    })
   }
 
   async tryConfirmEmailByKey(
@@ -52,7 +71,7 @@ export default class UserRegister {
       return { ok: false }
     } else {
       await users.update(user.id, {
-        disabled: disabledResons.PROFILE_NOT_COMPLETED,
+        disabled: disabledReason.PROFILE_NOT_COMPLETED,
       })
       var token = userAuth.generateJWT(
         user.id,

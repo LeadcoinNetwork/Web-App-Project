@@ -6,9 +6,12 @@ import SQL from "../mysql-pool/mysql-pool"
 
 import NotFound from "../../utils/not-found"
 
+// REFACTOR: remove user-auth model, and merge it to here any more,
+import * as userAuth from "../user-auth/user-auth"
+
 import {
   NewUserInterface,
-  disabledResons,
+  disabledReason,
   ExistingUserInterface,
   ExistingUserInterfaceCondition,
 } from "./types"
@@ -18,6 +21,11 @@ class User {
 
   async deleteAll() {
     return this.sql.query("delete from users")
+  }
+
+  async generateJWT(user_id, secret) {
+    // REFACTOR: move secret to the constructr, as dependency
+    return userAuth.generateJWT(user_id, secret)
   }
 
   async createUser(user: NewUserInterface): Promise<number> {
@@ -98,9 +106,18 @@ class User {
   }
 
   // returns user
-  async getUserById(id): Promise<ExistingUserInterface | NotFound> {
+  async tryGetUserById(id): Promise<ExistingUserInterface | NotFound> {
     let user = await this.getOne({ id })
     return user
+  }
+
+  async mustGetUserById(id): Promise<ExistingUserInterface> {
+    var result = await this.tryGetUserById(id)
+    if (result instanceof NotFound) {
+      throw new Error("NOT_FOUND")
+    } else {
+      return result
+    }
   }
 
   async getUserByEmailAndPassword(
