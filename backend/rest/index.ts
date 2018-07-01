@@ -65,7 +65,7 @@ export default class RestServer {
     userRouter.start({ appLogic: this.appLogic, expressApp })
 
     // TODO leads
-    leads.start({ appLogic: this.appLogic, expressApp })
+    leads.start({appLogic,expressApp})
     // TODO csv
 
     _404.start(expressApp)
