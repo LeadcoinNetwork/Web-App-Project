@@ -8,28 +8,33 @@ const disabledPages = {
   EMAIL_NOT_VERIFIED: "/email-confirmation",
 }
 
-export default function* LoginOnBoot() {
-  let ans = yield call(request, "GET", "/me")
-
-  if (ans.isError) {
-    yield put(push("/login"))
-  } else {
-    yield put(Actions.user.loggedIn(ans.user))
-
-    if (ans.user.disabled) {
-      yield put(push(disabledPages[ans.user.disabled]))
+import API from "../api/index"
+/**
+ * @param api {API} - this is this paramters
+ */
+export default function LoginOnBoot(api) {
+  return function*() {
+    let ans = yield api.users.getMe()
+    if (ans.error) {
+      yield put(push("/login"))
     } else {
-      let { location } = yield select(state => state.routerReducer),
-        path = location.pathname
+      yield put(Actions.user.loggedIn(ans.user))
 
-      if (
-        !path ||
-        path === "/login" ||
-        path === "/signup" ||
-        path === "/email-confirmation" ||
-        path === "/complete-registration"
-      ) {
-        yield put(push("/buy-leads"))
+      if (ans.user.disabled) {
+        yield put(push(disabledPages[ans.user.disabled]))
+      } else {
+        let { location } = yield select(state => state.routerReducer),
+          path = location.pathname
+
+        if (
+          !path ||
+          path === "/login" ||
+          path === "/signup" ||
+          path === "/email-confirmation" ||
+          path === "/complete-registration"
+        ) {
+          yield put(push("/buy-leads"))
+        }
       }
     }
   }

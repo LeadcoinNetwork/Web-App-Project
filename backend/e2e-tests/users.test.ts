@@ -5,7 +5,12 @@ import * as RoutesForTests from "./utils/routes.for.tests"
 import NotFound from "../utils/not-found"
 import { disabledReason } from "../models/users/types"
 
-var { request, emailSenderMock, appLogic } = RoutesForTests.create()
+var {
+  ApiForToken,
+  request,
+  emailSenderMock,
+  appLogic,
+} = RoutesForTests.create()
 
 var chance = Chance()
 
@@ -160,6 +165,7 @@ test("activateUserByKey (ensure that is disabled before)", async () => {
 
   var TokenCookie = _.get(x, _.toPath("header['set-cookie'][0]"))
   var tokenFromCookie = TokenCookie.replace(/token=(.*?);.*/, "$1")
+
   var x = await request.get("/me").set({
     cookie: "token=" + tokenFromCookie,
   })
@@ -228,4 +234,16 @@ describe("/complete-profile", () => {
     expect(newUser.phone).toEqual("+32223132")
     expect(newUser.country).toEqual("Israel")
   })
+})
+
+test("test logout", async () => {
+  var { users } = appLogic.models
+  var user = await users.createUser({
+    disabled: disabledReason.PROFILE_NOT_COMPLETED,
+    fname: "fname",
+    lname: "df",
+    email: chance.email(),
+  })
+  var token = await users.generateJWT(user, appLogic.config.auth.jwt.secret)
+  var me = await ApiForToken(token).users.getMe()
 })

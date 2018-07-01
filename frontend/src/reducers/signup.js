@@ -18,6 +18,7 @@ const signup = (state = initialState, action) => {
     case types.SIGNUP_LOADING:
       return {
         ...state,
+        error: "",
         loading: true,
       }
     case types.SIGNUP_FINISH:

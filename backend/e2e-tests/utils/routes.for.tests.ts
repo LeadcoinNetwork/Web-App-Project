@@ -3,6 +3,9 @@ const supertest = require("supertest")
 // Internal Modules
 import EmailCreator from "../../models/email-creator/email-creator"
 import EmailSenderMock from "../../models/emailsender/mock"
+import * as superagent from "superagent"
+import API from "../../../frontend/src/api/index"
+import * as _ from "lodash"
 
 import AppLogic from "../../app-logic/index"
 interface IcreateProps {
@@ -23,5 +26,14 @@ export function create({ realEmail = false }: IcreateProps = {}) {
 
   var request = supertest(app)
 
-  return { request, emailSenderMock, appLogic }
+  var ApiForToken = function(token) {
+    function newRequest(method, url, body) {
+      return request[method](url)
+        .set("Cookie", "token=" + token)
+        .send(body)
+    }
+    return new API(newRequest)
+  }
+
+  return { ApiForToken, request, emailSenderMock, appLogic }
 }
