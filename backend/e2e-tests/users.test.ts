@@ -246,4 +246,6 @@ test("test logout", async () => {
   })
   var token = await users.generateJWT(user, appLogic.config.auth.jwt.secret)
   var me = await ApiForToken(token).users.getMe()
+
+  ApiForToken("sdfsdF").users.getMe()
 })
