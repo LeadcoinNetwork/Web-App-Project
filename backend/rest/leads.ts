@@ -13,12 +13,7 @@ const authOptions = {
   session: false,
 }
 
-const basic_fields = [
-  "date",
-  "name",
-  "phone",
-  "email"
-]
+const basic_fields = ["date", "name", "phone", "email"]
 
 const mock_field_list = [
   "state",
@@ -32,71 +27,76 @@ const mock_field_list = [
 ]
 // ---
 
-const mock_records = [{
-  "date": "01/07/2018",
-  "name": "mock record 1",
-  "phone": "03-67674321",
-  "email": "email@email.com",
-  "state": "A",
-  "city": "B",
-  "property type": "C",
-  "size": "10",
-  "budget": "1",
-  "bedrooms": "1",
-  "floor": "1",
-  "specification": "",
-  } , {
-  "date": "02/07/2018",
-  "name": "mock record 2",
-  "phone": "03-67674321",
-  "email": "email@email.com",
-  "state": "C",
-  "city": "A",
-  "property type": "B",
-  "size": "11",
-  "budget": "2",
-  "bedrooms": "1",
-  "floor": "3",
-  "specification": "",
-  } , {
-  "date": "03/07/2018",
-  "name": "mock record 3",
-  "phone": "03-67674321",
-  "email": "email@email.com",
-  "state": "B",
-  "city": "C",
-  "property type": "A",
-  "size": "11",
-  "budget": "2",
-  "bedrooms": "1",
-  "floor": "3",
-  "specification": "",
-  } , {
-  "date": "04/07/2018",
-  "name": "mock record 4",
-  "phone": "03-67674321",
-  "email": "email@email.com",
-  "state": "B",
-  "city": "C",
-  "property type": "A",
-  "size": "11",
-  "budget": "4",
-  "bedrooms": "2",
-  "floor": "1",
-  "specification": "",
-  } , {
-  "date": "02/07/2018",
-  "name": "mock record 5",
-  "phone": "03-67674321",
-  "email": "email@email.com",
-  "state": "B",
-  "city": "C",
-  "property type": "A",
-  "size": "11",
-  "budget": "4",
-  "bedrooms": "2",
-  "floor": "2",
-  "specification": "",
+const mock_records = [
+  {
+    date: "01/07/2018",
+    name: "mock record 1",
+    phone: "03-67674321",
+    email: "email@email.com",
+    state: "A",
+    city: "B",
+    "property type": "C",
+    size: "10",
+    budget: "1",
+    bedrooms: "1",
+    floor: "1",
+    specification: "",
+  },
+  {
+    date: "02/07/2018",
+    name: "mock record 2",
+    phone: "03-67674321",
+    email: "email@email.com",
+    state: "C",
+    city: "A",
+    "property type": "B",
+    size: "11",
+    budget: "2",
+    bedrooms: "1",
+    floor: "3",
+    specification: "",
+  },
+  {
+    date: "03/07/2018",
+    name: "mock record 3",
+    phone: "03-67674321",
+    email: "email@email.com",
+    state: "B",
+    city: "C",
+    "property type": "A",
+    size: "11",
+    budget: "2",
+    bedrooms: "1",
+    floor: "3",
+    specification: "",
+  },
+  {
+    date: "04/07/2018",
+    name: "mock record 4",
+    phone: "03-67674321",
+    email: "email@email.com",
+    state: "B",
+    city: "C",
+    "property type": "A",
+    size: "11",
+    budget: "4",
+    bedrooms: "2",
+    floor: "1",
+    specification: "",
+  },
+  {
+    date: "02/07/2018",
+    name: "mock record 5",
+    phone: "03-67674321",
+    email: "email@email.com",
+    state: "B",
+    city: "C",
+    "property type": "A",
+    size: "11",
+    budget: "4",
+    bedrooms: "2",
+    floor: "2",
+    specification: "",
   },
 ]
 
@@ -145,7 +145,7 @@ export function start({
       if (lead && lead.email) {
         lead.owner_id = user.id
         const response = await appLogic.leads.AddLead(lead)
-        res.json({response})
+        res.json({ response })
       } else {
         return next()
       }
@@ -189,7 +189,7 @@ export function start({
         next(e)
       }
       */
-  return next()
+      return next()
     })().catch(done)
   }
 
@@ -204,8 +204,7 @@ export function start({
       const { user } = req
       const { sort_by } = req.body
       const response = await appLogic.leads.getBoughtLeads(user.id, { sort_by })
-      if (response)
-        return res.json(response)
+      if (response) return res.json(response)
       return next()
     })().catch(done)
   }
@@ -220,9 +219,11 @@ export function start({
     ;(async () => {
       const { user } = req
       const { sort_by, filters } = req.body
-      const response = await appLogic.leads.getSoldLeads(user.id, { sort_by, filters })
-      if (response)
-        return res.json(response)
+      const response = await appLogic.leads.getSoldLeads(user.id, {
+        sort_by,
+        filters,
+      })
+      if (response) return res.json(response)
       return next()
     })().catch(done)
   }
@@ -237,13 +238,15 @@ export function start({
     ;(async () => {
       const { user } = req
       const { sort_by, filters } = req.body
-      const response = await appLogic.leads.getMyLeads(user.id, { sort_by, filters })
-      if (response)
-        return res.json(response)
+      const response = await appLogic.leads.getMyLeads(user.id, {
+        sort_by,
+        filters,
+      })
+      if (response) return res.json(response)
       return next()
     })().catch(done)
   }
-
+}
 /*
 
 router.post("/leads/buy", passport.authenticate("jwt", authOptions), buy_leads)
