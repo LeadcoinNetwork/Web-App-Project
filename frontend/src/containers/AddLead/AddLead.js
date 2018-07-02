@@ -38,7 +38,7 @@ class AddLead extends React.Component {
             this.props.agreeToTerms(e.target.checked)
           }}
         />
-        <label htmlFor="terms_checkbox">I AGREE THE TERMS</label>
+        <label htmlFor="terms_checkbox">{t("I AGREE THE TERMS")}</label>
       </div>
     )
   }
