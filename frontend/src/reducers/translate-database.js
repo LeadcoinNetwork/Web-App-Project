@@ -1,5 +1,8 @@
 export default {
   "Lead Price": {
-    en: "מחיר הליד",
+    en: "Lead Price",
+  },
+  "I AGREE THE TERMS": {
+    en: "I AGREE THE TERMS",
   },
 }
