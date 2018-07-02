@@ -16,6 +16,7 @@ export default function completeRegistration(api) {
         ...profile,
         phone: profile.phone.value,
       })
+      console.log(ans)
       if (ans.error) {
         yield put(
           actions.completeRegistration.completeRegistrationError(ans.error),
