@@ -12,10 +12,11 @@ export default function addLead(api) {
   return function*() {
     while (true) {
       const action = yield take(types.ADD_LEAD_SUBMIT_FORM)
-      console.log('here')
       yield put(actions.addLead.addLeadLoadingStart())
       let { values } = yield select(state => state.addLead)
-      let ans = yield api.leads.add(values)
+      let res = yield api.leads.add(values)
+      console.log({ res })
+      return
       if (ans.error) {
         yield put(actions.leads.addError(ans.error))
       } else {

@@ -19,8 +19,8 @@ const initialState = [
     private: true,
   },
   {
-    key: "telephone",
-    name: "telephone",
+    key: "phone",
+    name: "phone",
     sortable: true,
     editable: false,
     maxWidth: "auto",
