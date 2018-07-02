@@ -6,7 +6,7 @@ import { user } from "Actions"
 storiesOf("Containers/Header", module)
   .add("Logged out", () => {
     var { store, story } = createStoreAndStory({
-      path: "/",
+      path: "/login",
     })
 
     store.dispatch(user.loggedOut())
