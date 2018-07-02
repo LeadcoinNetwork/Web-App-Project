@@ -6,7 +6,6 @@ const initialState = {
 }
 
 const language = (state = initialState, action) => {
-  debugger
   switch (action.type) {
     case types.LANGUAGE_SELECTOR_UPDATE:
       return {

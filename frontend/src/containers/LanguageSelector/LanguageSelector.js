@@ -28,7 +28,6 @@ class LanguageSelector extends React.Component {
       languageSelectorClick,
       languageSelectorUpdate,
     } = this.props
-    debugger
     return (
       <div
         className="ldc-language-selector"
@@ -69,9 +68,8 @@ const mapDispatchToProps = {
   languageSelectorClick: actions.language.languageSelectorClick,
 }
 
-const LanguageSelectorConnected = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(LanguageSelector)
+const LanguageSelectorConnected = connect(mapStateToProps, mapDispatchToProps)(
+  LanguageSelector,
+)
 
 export default LanguageSelectorConnected
