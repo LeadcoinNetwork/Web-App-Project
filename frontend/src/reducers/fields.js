@@ -115,6 +115,7 @@ const initialState = [
     editable: false,
     maxWidth: "65px",
     minWidth: "65px",
+    private: true,
   },
 ]
 

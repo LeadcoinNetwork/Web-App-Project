@@ -4,8 +4,6 @@ import Table from "Components/Table"
 import { leads } from "../../actions"
 import {Link} from 'react-router-dom'
 
-const sellLeadsConfig = require("./sell_leads_table.config.json")
-
 class Sell extends React.Component {
   constructor(props) {
     super(props)
@@ -58,7 +56,7 @@ class Sell extends React.Component {
         <Link to="/add-lead">Boom</Link>
         <h1>Sell Leads</h1>
         <Table
-          fields={sellLeadsConfig.fields}
+          fields={this.props.fields}
           records={this.props.leads.list}
           buttons={this.getButtons(this.props.leads.selected.size)}
           setSelectedRecords={this.setSelectedRecords}
@@ -73,6 +71,7 @@ class Sell extends React.Component {
 
 const mapStateToProps = state => ({
   leads: state.sellLeads,
+  fields: state.fields,
 })
 
 export default connect(mapStateToProps)(Sell)

@@ -20,3 +20,19 @@ storiesOf("Containers/Header", module)
 
     return story
   })
+  .add("Logged in - disabled", () => {
+    var { store, story } = createStoreAndStory({
+      path: "/complete-registration",
+      loggedIn: true,
+    })
+
+    store.dispatch(
+      user.loggedIn({
+        id: 1,
+        email: "meir@leadcoin.network",
+        disabled: "PROFILE_NOT_COMPLETED",
+      }),
+    )
+
+    return story
+  })

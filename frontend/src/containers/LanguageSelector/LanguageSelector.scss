@@ -1,0 +1,17 @@
+.ldc-language-selector {
+  position: relative;
+  display: inline-block;
+  top: 3px;
+
+  .selected-flag,
+  .flag {
+    width: 28px;
+    height: 21px;
+    cursor: pointer;
+  }
+
+  .flags-menu {
+    position: absolute;
+    top: 30px;
+  }
+}
