@@ -16,8 +16,8 @@
     "minWidth": "90px"
   },
   {
-    "key": "telephone",
-    "name": "telephone",
+    "key": "phone",
+    "name": "phone",
     "sortable": true,
     "editable": false,
     "maxWidth": "auto",
@@ -104,8 +104,8 @@
     "minWidth": "auto"
   },
   {
-    "key": "status",
-    "name": "status",
+    "key": "active",
+    "name": "active",
     "sortable": true,
     "editable": false,
     "maxWidth": "65px",

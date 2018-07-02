@@ -69,7 +69,6 @@ class AddLead extends React.Component {
     const { db_fields, loading } = this.props
     if (!db_fields.private) return <div> LOADING </div>
     const terms = this.renderTerms()
-    console.log(this.props.fields)
     return (
       <div className="add_lead">
         <div className="main_container">
@@ -119,11 +118,23 @@ class AddLead extends React.Component {
   }
 }
 
+const fields_not_for_display = [
+  'active'
+]
+
 const mapStateToProps = state => ({
   ...state.addLead,
   db_fields: {
-    private: state.fields.filter(field => field.private).map((field) => field.key),
-    public: state.fields.filter(field => !field.private).map((field) => field.key)
+    private: state.fields
+      .filter(field => field.private)
+      .map((field) => field.key)
+      .filter((f) => fields_not_for_display.indexOf(f) < 0)
+    ,
+    public: state.fields
+      .filter(field => !field.private)
+      .map((field) => field.key)
+      .filter((f) => fields_not_for_display.indexOf(f) < 0)
+    ,
   }
 })
 
