@@ -3,8 +3,7 @@ import { storiesOf } from "@storybook/react"
 import * as actions from "actions"
 import { createStoreAndStory } from "storybook-utils/withRouter"
 
-import AddLeadSaga from '../../sagas/addLead'
-storiesOf("Containers/AddLead")
+storiesOf("Containers/AddLead", module)
   .add("AddLead - empty", () => {
     var { store, story } = createStoreAndStory({
       path: "/add-lead",
@@ -17,12 +16,6 @@ storiesOf("Containers/AddLead")
       path: "/add-lead",
       loggedIn: true,
     })
-    store.dispatch(
-      actions.addLead.addLeadGetDbFields({
-        private: ["name", "phone"],
-        public: ["floor", "size"],
-      }),
-    )
     return story
   })
   .add("AddLead - Connect to real saga", () => {
@@ -31,12 +24,6 @@ storiesOf("Containers/AddLead")
       // sagaFunction:AddLeadSaga()
       connectToProductionSaga:true
     })
-    store.dispatch(
-      actions.addLead.addLeadGetDbFields({
-        private: ["name", "phone"],
-        public: ["floor", "size"],
-      }),
-    )
     return story
   })
   .add("AddLead - after submit", () => {
@@ -44,12 +31,6 @@ storiesOf("Containers/AddLead")
       path: "/add-lead",
       loggedIn: true,
     })
-    store.dispatch(
-      actions.addLead.addLeadGetDbFields({
-        private: ["name", "phone"],
-        public: ["floor", "size"],
-      }),
-    )
     store.dispatch(actions.addLead.addLeadLoadingStart())
     return story
   })
@@ -58,13 +39,7 @@ storiesOf("Containers/AddLead")
       path: "/add-lead",
       loggedIn: true,
     })
-    store.dispatch(
-      actions.addLead.addLeadGetDbFields({
-        private: ["name", "phone"],
-        public: ["floor", "size"],
-      }),
-    )
     store.dispatch(actions.addLead.addLeadAddError("size", "too short"))
-    store.dispatch(actions.addLead.addLeadAddError("phone", "is not valid"))
+    store.dispatch(actions.addLead.addLeadAddError("telephone", "is not valid"))
     return story
   })
