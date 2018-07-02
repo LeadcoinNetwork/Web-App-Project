@@ -3,8 +3,6 @@ import { connect } from "react-redux"
 import Table from "Components/Table"
 import { leads } from "../../actions"
 
-const buyLeadsConfig = require("./buy_leads_table.config.json")
-
 class BuyLeads extends React.Component {
   constructor(props) {
     super(props)
@@ -56,7 +54,7 @@ class BuyLeads extends React.Component {
       <>
         <h1>Buy Leads</h1>
         <Table
-          fields={buyLeadsConfig.fields}
+          fields={this.props.fields}
           records={this.props.leads.list}
           buttons={this.getButtons(this.props.leads.selected.size)}
           setSelectedRecords={this.setSelectedRecords}
@@ -71,6 +69,7 @@ class BuyLeads extends React.Component {
 
 const mapStateToProps = state => ({
   leads: state.buyLeads,
+  fields: state.fields.filter(lead => !lead.private),
 })
 
 export default connect(mapStateToProps)(BuyLeads)
