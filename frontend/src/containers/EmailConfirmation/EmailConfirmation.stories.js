@@ -1,43 +1,52 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
-import * as actions from "actions"
+import { user, emailConfirmation } from "Actions"
 import { createStoreAndStory } from "storybook-utils/withRouter"
 
-storiesOf("Containers/Email Confirmations", module)
-  .add("Empty", () => {
-    let { store, story } = createStoreAndStory({
-      path: "/email-confirmation",
-      loggedIn: true,
-    })
-    return story
+storiesOf("Containers/Email Confirmations", module).add("Page", () => {
+  let { store, story } = createStoreAndStory({
+    path: "/email-confirmation",
+    loggedIn: true,
+    connectToProductionSaga: true,
   })
-  .add("Already Confirmed", () => {
-    let { store, story } = createStoreAndStory({
-      path: "/email-confirmation",
-    })
-    store.dispatch(actions.emailConfirmation.emailConfirmationConfirmed())
-    return story
-  })
+  store.dispatch(
+    user.loggedIn({
+      id: 1,
+      email: "meir@leadcoin.network",
+      disabled: "EMAIL_NOT_VERIFIED",
+    }),
+  )
+  return story
+})
 
-  .add("Resend", () => {
-    let { store, story } = createStoreAndStory({
-      path: "/email-confirmation",
-    })
-    store.dispatch(actions.emailConfirmation.emailConfirmationResend())
-    return story
-  })
-
-  .add("sent success", () => {
-    let { store, story } = createStoreAndStory({
-      path: "/email-confirmation",
-    })
-    store.dispatch(actions.emailConfirmation.emailConfirmationSent())
-    return story
-  })
-  .add("sent error", () => {
-    let { store, story } = createStoreAndStory({
-      path: "/email-confirmation",
-    })
-    store.dispatch(actions.emailConfirmation.emailConfirmationError([]))
-    return story
-  })
+//
+// .add("Already Confirmed", () => {
+//   let { store, story } = createStoreAndStory({
+//     path: "/email-confirmation",
+//   })
+//   store.dispatch(actions.emailConfirmation.emailConfirmationConfirmed())
+//   return story
+// })
+//
+// .add("Resend", () => {
+//   let { store, story } = createStoreAndStory({
+//     path: "/email-confirmation",
+//   })
+//   store.dispatch(actions.emailConfirmation.emailConfirmationResend())
+//   return story
+// })
+//
+// .add("sent success", () => {
+//   let { store, story } = createStoreAndStory({
+//     path: "/email-confirmation",
+//   })
+//   store.dispatch(actions.emailConfirmation.emailConfirmationSent())
+//   return story
+// })
+// .add("sent error", () => {
+//   let { store, story } = createStoreAndStory({
+//     path: "/email-confirmation",
+//   })
+//   store.dispatch(actions.emailConfirmation.emailConfirmationError([]))
+//   return story
+// })

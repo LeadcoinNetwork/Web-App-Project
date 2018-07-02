@@ -1,29 +1,15 @@
-import types from "../actions/types"
+import types from "Actions/types"
 
 const initialState = {
-  loading: false,
-  confirmed: false,
-  confirmation_sent: false,
   error: "",
 }
 
 const emailConfirmation = (state = initialState, action) => {
   switch (action.type) {
-    case types.EMAIL_CONFIRMATION_RESEND:
+    case types.EMAIL_CONFIRMATION_ERROR:
       return {
         ...state,
-        loading: true,
-      }
-    case types.EMAIL_CONFIRMATION_CONFIRMED:
-      return {
-        ...state,
-        confirmed: true,
-      }
-    case types.EMAIL_CONFIRMATION_SENT:
-      return {
-        ...state,
-        loading: false,
-        confirmation_sent: true,
+        error: action.payload.message,
       }
     default:
       return state

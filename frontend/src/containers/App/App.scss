@@ -25,6 +25,12 @@
     margin: auto;
     padding: 0 30px 80px;
 
+    h1 {
+      font-size: 30px;
+      font-weight: 300;
+      padding-bottom: 30px;
+    }
+
     &.a-app-mode {
       max-width: 100vw;
       min-height: 100vh;
@@ -32,11 +38,14 @@
       padding: calc(#{$header-height} + 30px) 30px 30px
         calc(#{$side-menu-width} + 30px);
       background-color: $bg-level-2;
+    }
 
-      h1 {
-        font-size: 30px;
+    &.a-sign-mode {
+      p {
+        font-size: 18px;
         font-weight: 300;
-        padding-bottom: 30px;
+        letter-spacing: 0.7px;
+        line-height: 1.5;
       }
     }
   }
