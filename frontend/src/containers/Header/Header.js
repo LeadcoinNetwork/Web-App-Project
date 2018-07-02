@@ -12,36 +12,33 @@ const Header = ({ path, loggedIn, disabled, logout, gotoDefaultHome }) => (
     }`}
   >
     <div className="logo-link" onClick={gotoDefaultHome} />
-    <div className="right-menu">
-      {!loggedIn &&
-        (disabled ? (
-          <div className="sign-link">
-            <Link to="/login" onClick={logout}>
-              Logout
-            </Link>
-          </div>
-        ) : path === "/login" ? (
-          <div className="sign-link">
-            <span>already have an account?</span>
-            <Link to="/signup">Start Now</Link>
-          </div>
-        ) : (
-          <div className="sign-link">
-            <span>don't have an account?</span>
-            <Link to="/login">Login Here</Link>
-          </div>
-        ))}
 
-      <div className="ham-menu">
-        {loggedIn && (
-          <span>
-            <BalanceWidget />
-            <NotificationElement />
-            <UserMenu />
-          </span>
-        )}
-        <LanguageSelector />
+    <div className="m-both-right">
+      <LanguageSelector />
+    </div>
+
+    {disabled ? (
+      <div className="sign-link">
+        <Link to="/login" onClick={logout}>
+          Logout
+        </Link>
       </div>
+    ) : path === "/login" ? (
+      <div className="sign-link">
+        <span>already have an account?</span>
+        <Link to="/signup">Start Now</Link>
+      </div>
+    ) : (
+      <div className="sign-link">
+        <span>don't have an account?</span>
+        <Link to="/login">Login Here</Link>
+      </div>
+    )}
+
+    <div className="ham-menu">
+      <BalanceWidget />
+      <NotificationElement />
+      <UserMenu />
     </div>
   </header>
 )
