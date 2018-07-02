@@ -3,7 +3,7 @@ import * as actions from "actions"
 import { createStoreAndStory } from "storybook-utils/withRouter"
 import CSVUpload from "../CSVUpload"
 
-storiesOf("Containers/CSVUpload")
+storiesOf("Containers/CSVUpload", module)
   .add("CSVUpload - empty", () => {
     var { store, story } = createStoreAndStory({
       path: "/csv-upload",

@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react"
 import * as actions from "actions"
 import { createStoreAndStory } from "storybook-utils/withRouter"
 
-storiesOf("Containers/Email Confirmations")
+storiesOf("Containers/Email Confirmations", module)
   .add("Empty", () => {
     let { store, story } = createStoreAndStory({
       path: "/email-confirmation",

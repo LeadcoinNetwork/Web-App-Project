@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react"
 import * as actions from "actions"
 import { createStoreAndStory } from "storybook-utils/withRouter"
 
-storiesOf("Containers/CSVMapping")
+storiesOf("Containers/CSVMapping", module)
   .add("CSVMapping - empty", () => {
     var { store, story } = createStoreAndStory({
       path: "/csv-mapping",

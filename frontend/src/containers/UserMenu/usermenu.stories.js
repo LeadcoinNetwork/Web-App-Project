@@ -7,7 +7,7 @@ import { specs, describe, it } from "storybook-addon-specifications"
 import { mount } from "enzyme"
 import UserMenu from "./UserMenu"
 
-storiesOf("Containers/User Menu")
+storiesOf("Containers/User Menu", module)
   .add("closed", () => {
     var { store, story } = createStoreAndStory({
       path: "/buy-leads",

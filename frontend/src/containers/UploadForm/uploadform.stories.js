@@ -3,7 +3,8 @@ import { storiesOf } from "@storybook/react"
 import * as actions from "actions"
 import { createStoreAndStory } from "storybook-utils/withRouter"
 import UploadForm from "./UploadForm"
-storiesOf("Containers/Upload Form")
+
+storiesOf("Containers/Upload Form", module)
   .add("Upload Form - empty", () => {
     var { store, story } = createStoreAndStory({
       component: UploadForm,

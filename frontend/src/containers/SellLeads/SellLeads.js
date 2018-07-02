@@ -2,6 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import Table from "Components/Table"
 import { leads } from "../../actions"
+import {Link} from 'react-router-dom'
 
 const sellLeadsConfig = require("./sell_leads_table.config.json")
 
@@ -53,16 +54,19 @@ class Sell extends React.Component {
   }
   render() {
     return (
-      <Table
-        title="Sell Leads"
-        fields={sellLeadsConfig.fields}
-        records={this.props.leads.list}
-        buttons={this.getButtons(this.props.leads.selected.size)}
-        setSelectedRecords={this.setSelectedRecords}
-        onScrollBottom={this.onScrollBottom}
-        selected={this.props.leads.selected}
-        isSelectable={true}
-      />
+      <>
+        <Link to="/add-lead">Boom</Link>
+        <h1>Sell Leads</h1>
+        <Table
+          fields={sellLeadsConfig.fields}
+          records={this.props.leads.list}
+          buttons={this.getButtons(this.props.leads.selected.size)}
+          setSelectedRecords={this.setSelectedRecords}
+          onScrollBottom={this.onScrollBottom}
+          selected={this.props.leads.selected}
+          isSelectable={true}
+        />
+      </>
     )
   }
 }

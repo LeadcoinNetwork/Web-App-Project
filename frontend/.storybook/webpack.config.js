@@ -5,6 +5,7 @@ module.exports = (baseConfig, env, defaultConfig) => {
   defaultConfig.entry.preview.unshift("babel-polyfill")
   defaultConfig.plugins.push(new ExtractTextPlugin("bundle.css"))
   defaultConfig.module = common.module
+  defaultConfig.resolve.extensions = common.resolve.extensions
   defaultConfig.resolve.alias = common.resolve.alias
 
   defaultConfig.externals = {

@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react"
 import { storyReduxLogger } from "../storybook-utils/withRedux"
 import { createStore, applyMiddleware } from "redux"
 
-storiesOf("Example Stories/Redux").add("Redux", () => {
+storiesOf("Example Stories/Redux", module).add("Redux", () => {
   var store = createStore(() => {}, [], applyMiddleware(storyReduxLogger))
   return (
     <div

@@ -2,7 +2,7 @@ import React from "react"
 import { storiesOf } from "@storybook/react"
 import { createStoreAndStory } from "storybook-utils/withRouter"
 
-storiesOf("Containers/Withdraw")
+storiesOf("Containers/Withdraw", module)
   .add("empty", () => {
     var { store, story } = createStoreAndStory({
       path: "/withdraw",

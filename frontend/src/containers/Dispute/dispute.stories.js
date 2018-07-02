@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react"
 import { createStoreAndStory } from "storybook-utils/withRouter"
 import { dispute } from "Actions"
 
-storiesOf("Containers/Dispute")
+storiesOf("Containers/Dispute", module)
   .add("Dispute - empty", () => {
     var { store, story } = createStoreAndStory({
       path: "/dispute",

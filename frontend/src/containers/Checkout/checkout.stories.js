@@ -5,7 +5,7 @@ import { createStoreAndStory } from "storybook-utils/withRouter"
 
 const mockData = require("../../mocks/shopping-cart.json")
 
-storiesOf("Containers/Checkout")
+storiesOf("Containers/Checkout", module)
   .add("Checkout - empty", () => {
     var { store, story } = createStoreAndStory({
       path: '/checkout',

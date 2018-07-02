@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react"
 import Select from "./Select"
 
 
-storiesOf("Components/Select")
+storiesOf("Components/Select",module)
   .add("without data", () => <Select> </Select> )
   .add("with data (single value)", () => (
     <Select options={['Options 1', 'Options 2']}> 

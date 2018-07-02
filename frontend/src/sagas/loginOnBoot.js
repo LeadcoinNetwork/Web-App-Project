@@ -25,6 +25,7 @@ export default function LoginOnBoot(api) {
       } else {
         /** the current path */
         let path = yield select(state => state.routerReducer.location.pathname)
+
         if (
           !path ||
           path === "/" ||

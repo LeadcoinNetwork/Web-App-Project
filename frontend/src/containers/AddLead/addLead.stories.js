@@ -3,6 +3,7 @@ import { storiesOf } from "@storybook/react"
 import * as actions from "actions"
 import { createStoreAndStory } from "storybook-utils/withRouter"
 
+import AddLeadSaga from '../../sagas/addLead'
 storiesOf("Containers/AddLead")
   .add("AddLead - empty", () => {
     var { store, story } = createStoreAndStory({
@@ -15,6 +16,20 @@ storiesOf("Containers/AddLead")
     var { store, story } = createStoreAndStory({
       path: "/add-lead",
       loggedIn: true,
+    })
+    store.dispatch(
+      actions.addLead.addLeadGetDbFields({
+        private: ["name", "phone"],
+        public: ["floor", "size"],
+      }),
+    )
+    return story
+  })
+  .add("AddLead - Connect to real saga", () => {
+    var { store, story } = createStoreAndStory({
+      path: "/add-lead",
+      // sagaFunction:AddLeadSaga()
+      connectToProductionSaga:true
     })
     store.dispatch(
       actions.addLead.addLeadGetDbFields({

@@ -5,7 +5,7 @@ import { createStoreAndStory } from "storybook-utils/withRouter"
 
 const mockData = require("../../mocks/notifications.json")
 
-storiesOf("Containers/Notification Table")
+storiesOf("Containers/Notification Table", module)
   .add("Empty", () => {
     var { store, story } = createStoreAndStory({
       path: "/notifications",

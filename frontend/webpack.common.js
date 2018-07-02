@@ -86,7 +86,7 @@ module.exports = {
   },
   resolve: {
     modules: ["node_modules", path.resolve(__dirname, "src")],
-    extensions: [".js", ".ts"],
+    extensions: [".js", ".ts",".json"],
     alias: webpackUtils.getAliasesFromRootSrcForWebPack(),
   },
 }

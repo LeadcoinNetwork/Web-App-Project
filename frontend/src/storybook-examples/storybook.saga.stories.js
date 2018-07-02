@@ -12,7 +12,7 @@ import {
 } from "redux-saga/effects"
 import createSagaMiddleware from "redux-saga"
 
-storiesOf("Example Stories/saga").add("saga", () => {
+storiesOf("Example Stories/saga", module).add("saga", () => {
   // Create Saga Middleware
   const sagaMiddleware = createSagaMiddleware()
 

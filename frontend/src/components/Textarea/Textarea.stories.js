@@ -23,7 +23,7 @@ class TextareaState extends React.Component {
   }
 }
 
-storiesOf("Components/Textarea")
+storiesOf("Components/Textarea",module)
   .add("add text", () => <TextareaState placeholder="Type here..." />)
   .add("with text", () => (
     <TextareaState placeholder="Lorem ipsum" value={lorem} />

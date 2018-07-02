@@ -2,7 +2,7 @@ import React from "react"
 import { storiesOf } from "@storybook/react"
 import { createStoreAndStory } from "storybook-utils/withRouter"
 
-storiesOf("Containers/Buy Leads")
+storiesOf("Containers/Buy Leads", module)
   .add("Buy Leads - empty", () => {
     var { store, story } = createStoreAndStory({
       path: "/buy-leads",

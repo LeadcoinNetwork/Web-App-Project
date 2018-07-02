@@ -5,7 +5,7 @@ import { app, types } from "Actions"
 import Snackbar from "./Snackbar"
 import snackbar from "Sagas/snackbar"
 
-storiesOf("Containers/Snackbar")
+storiesOf("Containers/Snackbar", module)
   .add("All", () => {
     let { store, story } = createStoreAndStory({
       component: Snackbar,

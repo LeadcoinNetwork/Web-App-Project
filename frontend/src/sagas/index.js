@@ -5,6 +5,7 @@ import logout from "./logout"
 import homesaga from "./homesaga"
 import csvMapping from "./csvMapping"
 import completeRegistration from "./completeRegistration.js"
+import addLead from "./addLead"
 import { spawn } from "redux-saga/effects"
 
 import * as superagent from "superagent"
@@ -25,6 +26,7 @@ var api = new API(request)
 export default function* rootSaga() {
   var sagas = [
     login,
+    addLead,
     completeRegistration,
     logout,
     homesaga,
