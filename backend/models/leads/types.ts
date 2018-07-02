@@ -1,4 +1,5 @@
 export interface BaseLead {
+  id?: number
   date: number
   name: string
   phone: string

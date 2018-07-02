@@ -8,6 +8,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@types/superagent": "^3.8.0",
     "bcrypt": "^2.0.1",
     "body-parser": "^1.18.2",
     "commander": "^2.15.1",
@@ -28,6 +29,7 @@
     "passport-local": "^1.0.0",
     "promise-mysql": "^3.2.1",
     "socket.io": "^2.1.1",
+    "superagent": "^3.8.3",
     "typescript": "^2.9.2",
     "zxcvbn": "^4.4.2"
   },

@@ -2,15 +2,34 @@
 import Leads from "./leads"
 import * as Chance from "chance"
 import {Lead} from "./types"
+import config from "../../app-logic/config"
 var chance = Chance()
 
-var leads = new Leads({})
+import SQL from "../mysql-pool/mysql-pool"
+var leads = new Leads(new SQL(config))
 
 beforeEach(async () => {
   await leads.deleteAll()
 })
 
 import NotFound from "../../utils/not-found"
+
+test("delete lead", async () => {
+  const [success, id] = await leads.insert({ 
+    date: 1212,
+    owner_id: 1,
+    name: 'test lead',
+    phone: '12301212',
+    email: 'moshe@moshe.com',
+    active: true,
+    bought_from: null
+  })
+  expect(success).toBeTruthy()
+  const result = await leads.remove(id)
+  const [record]:Lead[] = await leads.find({id}, {fields: ['id']})
+  expect(record).toBe(undefined)
+})
+
 
 test("add new lead", async () => {
   const success = await leads.insert({ 
@@ -35,9 +54,9 @@ test("find lead", async () => {
     email: 'moshe@moshe.com',
     bought_from: null
   })
-  const [record] = await leads.find({email: 'moshe@moshe.com'})
+  const [record]:Lead[] = await leads.find({email: 'moshe@moshe.com'})
   expect(record.email).toBe('moshe@moshe.com')
-  const [record2] = await leads.find({email: 'moshe@moshe.com'}, {
+  const [record2]:Lead[] = await leads.find({email: 'moshe@moshe.com'}, {
     fields: ['email', 'phone']
   })
   expect(record2[name]).toBe(undefined)
@@ -51,12 +70,12 @@ test("find lead", async () => {
     email: 'moshe@moshe.com',
     bought_from: null
   })
-  const [record3, record4] = await leads.find({email: 'moshe@moshe.com'}, {
+  const [record3, record4]:Lead[] = await leads.find({email: 'moshe@moshe.com'}, {
     sort_by: ['phone', 'DESC']
   })
   expect(record3.name).toBe('test lead 2')
   expect(record4.name).toBe('test lead')
-  const [record5, record6] = await leads.find({email: 'moshe@moshe.com'}, {
+  const [record5, record6]:Lead[] = await leads.find({email: 'moshe@moshe.com'}, {
     sort_by: ['phone', 'ASC']
   })
   expect(record6.name).toBe('test lead 2')
@@ -73,7 +92,7 @@ test("delete lead", async () => {
     email: 'moshe@moshe.com',
     bought_from: null
   })
-  const [record] = await leads.find({email: 'moshe@moshe.com'}, {
+  const [record]:Lead[] = await leads.find({email: 'moshe@moshe.com'}, {
     fields: ['id']
   })
   const {id} = record

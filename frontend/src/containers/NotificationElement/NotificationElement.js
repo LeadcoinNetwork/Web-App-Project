@@ -17,7 +17,7 @@ class NotificationElement extends Component {
   componentWillUnmount() {
     window.removeEventListener("click", this.handleClick)
   }
-  
+
   render() {
     let {
       unreadCount,

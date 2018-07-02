@@ -18,7 +18,7 @@ class Login extends React.Component {
   getErrors(errors) {
     return (
       <ul className="ldc-error-text">
-        {errors.split(";").map(e => <li>{e}</li>)}
+        {errors.split(";").map(e => <li key={e}>{e}</li>)}
       </ul>
     )
   }
@@ -87,7 +87,10 @@ const mapStateToProps = state => ({
   login: state.login,
 })
 
-export default connect(mapStateToProps, {
-  handleChange: login.loginHandleChange,
-  submit: login.loginUserSubmit,
-})(Login)
+export default connect(
+  mapStateToProps,
+  {
+    handleChange: login.loginHandleChange,
+    submit: login.loginUserSubmit,
+  },
+)(Login)

@@ -9,5 +9,6 @@
     },
     "sourceMap": true
   },
+  "include": ["./../frontend/src/api/**.*"],
   "exclude": ["node_modules", "**/node_modules/*"]
 }

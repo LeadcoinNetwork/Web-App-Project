@@ -35,6 +35,7 @@ const notifications = (state = initialState, action) => {
         isOpen: false,
       }
     case types.USER_MENU_CLICK:
+    case types.LANGUAGE_SELECTOR_CLICK:
       return {
         ...state,
         isOpen: false,

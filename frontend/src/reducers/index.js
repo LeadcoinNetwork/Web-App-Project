@@ -3,6 +3,7 @@ import { routerReducer } from "react-router-redux"
 import app from "./app"
 import leads from "./leads"
 import user from "./user"
+import language from "./language"
 import checkout from "./checkout"
 import payments from "./payments"
 import notifications from "./notifications"
@@ -18,12 +19,14 @@ import dispute from "./dispute"
 import csvMapping from "./csvMapping"
 import csvUpload from "./csvUpload"
 import addLead from "./addLead"
+import fields from "./fields"
 
 const rootReducer = combineReducers({
   routerReducer,
   app,
   leads,
   user,
+  language,
   checkout,
   payments,
   notifications,
@@ -43,6 +46,7 @@ const rootReducer = combineReducers({
   csvMapping,
   csvUpload,
   addLead,
+  fields,
 })
 
 export default rootReducer

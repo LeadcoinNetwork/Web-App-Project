@@ -1,33 +1,36 @@
 import { types } from "../actions"
 
 const initialState = {
+  country: "us",
   isOpen: false,
 }
 
-const notifications = (state = initialState, action) => {
+const language = (state = initialState, action) => {
+  debugger
   switch (action.type) {
-    case types.USER_MENU_OPEN:
+    case types.LANGUAGE_SELECTOR_UPDATE:
       return {
         ...state,
-        isOpen: true,
-      }
-    case types.USER_MENU_CLOSE:
-      return {
-        ...state,
+        country: action.payload,
         isOpen: false,
       }
-    case types.USER_MENU_CLICK:
+    case types.LANGUAGE_SELECTOR_CLICK:
       return {
         ...state,
         isOpen: !state.isOpen,
       }
-    case types.NOTIFICATIONS_SHOW:
+    case types.LANGUAGE_SELECTOR_OPEN:
+      return {
+        ...state,
+        isOpen: true,
+      }
+    case types.LANGUAGE_SELECTOR_CLOSE:
       return {
         ...state,
         isOpen: false,
       }
     case types.NOTIFICATIONS_CLICK:
-    case types.LANGUAGE_SELECTOR_CLICK:
+    case types.USER_MENU_CLICK:
       return {
         ...state,
         isOpen: false,
@@ -37,4 +40,4 @@ const notifications = (state = initialState, action) => {
   }
 }
 
-export default notifications
+export default language

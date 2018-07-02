@@ -1,14 +1,18 @@
 import { types } from "Actions"
 import * as Actions from "Actions"
 import { select, take, put, call } from "redux-saga/effects"
-import request from "Utils/request"
 import { routerMiddleware, push } from "react-router-redux"
 
-export default function* csvMapping() {
-  while (true) {
-    const data = yield take(types.CSV_MAPPING_SUBMIT)
-    //yield put(Actions.csvMapping.csvMappingSubmit(data))
-    /*
+import API from "../api/index.ts"
+/**
+ * @param api {API} - this is this paramters
+ */
+export default function csvMapping(api) {
+  return function*() {
+    while (true) {
+      const data = yield take(types.CSV_MAPPING_SUBMIT)
+      //yield put(Actions.csvMapping.csvMappingSubmit(data))
+      /*
     var { fname, lname, email, password } = yield select(state => state.signup)
     var response = yield call(request, "POST", "/user", {
       password,
@@ -19,5 +23,6 @@ export default function* csvMapping() {
       yield put(push("/email-confirmation"))
     }
     */
+    }
   }
 }

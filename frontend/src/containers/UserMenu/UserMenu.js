@@ -39,9 +39,12 @@ const mapStateToProps = state => ({
   user: state.user,
 })
 
-const UserMenuConnected = connect(mapStateToProps, {
-  userMenuClick: userMenu.userMenuClick,
-  logOut: user.loggedOut,
-})(UserMenu)
+const UserMenuConnected = connect(
+  mapStateToProps,
+  {
+    userMenuClick: userMenu.userMenuClick,
+    logOut: user.loggedOut,
+  },
+)(UserMenu)
 
 export default UserMenuConnected
