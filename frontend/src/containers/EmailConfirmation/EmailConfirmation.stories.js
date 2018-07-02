@@ -7,6 +7,7 @@ storiesOf("Containers/Email Confirmations", module)
   .add("Empty", () => {
     let { store, story } = createStoreAndStory({
       path: "/email-confirmation",
+      loggedIn: true,
     })
     return story
   })

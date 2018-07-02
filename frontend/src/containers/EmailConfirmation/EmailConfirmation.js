@@ -1,16 +1,37 @@
 import React from "react"
 import Button from "Components/Button"
+import { Link } from "react-router-dom"
+import { connect } from "react-redux"
+import { user } from "Actions"
 
-const EmailConfirmation = props => (
+const EmailConfirmation = ({ user, logout }) => (
   <section className="ldc-email-confirmation">
-    We sent you an email, Please click on the link
+    We have sent you an email with a confirmation link
     <br />
     <br />
+    You logged in as {user.email}
+    <br />
+    <br />
+    Not you?{" "}
+    <Link to="/login" onClick={logout}>
+      Logout
+    </Link>
+    <br />
+    <br />
+    Don't find the email?
+    <bt />
+    <bt />
     <Button label="Resend" />
   </section>
 )
 
-export default EmailConfirmation
+const mapStateToProps = state => ({
+  user: state.user,
+})
+
+export default connect(mapStateToProps, {
+  logout: user.loggedOut,
+})(EmailConfirmation)
 
 // resendEmail = () => {
 //   axios.defaults.withCredentials = true
