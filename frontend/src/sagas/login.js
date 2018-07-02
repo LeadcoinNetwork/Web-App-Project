@@ -8,7 +8,7 @@ const disabledPages = {
   EMAIL_NOT_VERIFIED: "/email-confirmation",
 }
 
-import API from "../api/index.ts"
+import API from "../api/index"
 /**
  * @param api {API} - this is this paramters
  */

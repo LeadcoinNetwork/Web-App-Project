@@ -1,4 +1,4 @@
-import Users from "./users.ts"
+import Users from "./users"
 export default class API {
   users: Users
   constructor(private request) {

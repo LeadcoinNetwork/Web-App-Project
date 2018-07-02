@@ -2,7 +2,7 @@ import * as Actions from "Actions"
 import { select, put, call } from "redux-saga/effects"
 import { push } from "react-router-redux"
 
-import API from "../api/index.ts"
+import API from "../api/index"
 /**
  * @param api {API} - this is this paramters
  */
