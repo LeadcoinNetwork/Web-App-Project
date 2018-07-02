@@ -3,6 +3,7 @@ import { routerReducer } from "react-router-redux"
 import app from "./app"
 import leads from "./leads"
 import user from "./user"
+import language from "./language"
 import checkout from "./checkout"
 import payments from "./payments"
 import notifications from "./notifications"
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   app,
   leads,
   user,
+  language,
   checkout,
   payments,
   notifications,
