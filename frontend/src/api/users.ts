@@ -1,5 +1,5 @@
 import { SuperAgentStatic } from "superagent"
-import { methods, request } from "./request"
+import { methods, request } from "./request.ts"
 export default class UserApi {
   constructor(private request: request) {}
   async login({ email, password }) {

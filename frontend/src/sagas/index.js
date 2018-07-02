@@ -9,7 +9,7 @@ import { spawn } from "redux-saga/effects"
 
 import * as superagent from "superagent"
 
-import API from "../api/index"
+import API from "../api/index.ts"
 
 // Create a request object for all the API'sץ
 // This request object add the default backend URLs, and do other defaults.
