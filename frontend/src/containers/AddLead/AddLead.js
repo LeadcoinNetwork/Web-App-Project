@@ -4,6 +4,7 @@ import Button from "Components/Button"
 import TextField from "Components/TextField"
 import { connect } from "react-redux"
 import { addLead } from "Actions"
+import t from "containers/translate"
 
 class AddLead extends React.Component {
   renderPriceElement() {
@@ -11,7 +12,7 @@ class AddLead extends React.Component {
     const error = errors["price"] ? "error" : ""
     return (
       <div className={"price " + error}>
-        <span>Lead price</span>
+        <span>{t("Lead Price")}</span>
         <TextField
           appStyle={true}
           value={this.props.price}
@@ -69,13 +70,14 @@ class AddLead extends React.Component {
     const { db_fields, loading } = this.props
     if (!db_fields.private) return <div> LOADING </div>
     const terms = this.renderTerms()
-    console.log(this.props.fields)
     return (
       <div className="add_lead">
         <div className="main_container">
           <div className="personal flexed">
             <div className="help_text">
-              <div className="header">Personal Identification Information </div>
+              <div className="header">
+                {t("Personal Identification Information")}
+              </div>
               <div className="header">
                 These fields will only be visible to who bought the lead{" "}
               </div>
@@ -119,17 +121,28 @@ class AddLead extends React.Component {
   }
 }
 
+const fields_not_for_display = ["active"]
+
 const mapStateToProps = state => ({
   ...state.addLead,
   db_fields: {
-    private: state.fields.filter(field => field.private).map((field) => field.key),
-    public: state.fields.filter(field => !field.private).map((field) => field.key)
-  }
+    private: state.fields
+      .filter(field => field.private)
+      .map(field => field.key)
+      .filter(f => fields_not_for_display.indexOf(f) < 0),
+    public: state.fields
+      .filter(field => !field.private)
+      .map(field => field.key)
+      .filter(f => fields_not_for_display.indexOf(f) < 0),
+  },
 })
 
-export default connect(mapStateToProps, {
-  agreeToTerms: addLead.addLeadAgreeToTerms,
-  handleChange: addLead.addLeadHandleFormChange,
-  submit: addLead.addLeadSubmitForm,
-  clear: addLead.addLeadClearForm,
-})(AddLead)
+export default connect(
+  mapStateToProps,
+  {
+    agreeToTerms: addLead.addLeadAgreeToTerms,
+    handleChange: addLead.addLeadHandleFormChange,
+    submit: addLead.addLeadSubmitForm,
+    clear: addLead.addLeadClearForm,
+  },
+)(AddLead)

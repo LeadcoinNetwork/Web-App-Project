@@ -3,7 +3,7 @@ import * as passport from "passport"
 import * as Express from "express"
 import AppLogic from "../app-logic/index"
 import NotFound from "../utils/not-found"
-import { appModels } from "app-logic/types"
+import { appModels } from "../app-logic/types"
 
 import * as auth from "../models/user-auth/user-auth"
 
@@ -104,6 +104,11 @@ const done = a => {
   console.log(a)
 }
 
+const validateLead = (lead: Lead) => {
+  //TODO: smthing
+  return lead.email
+}
+
 export function start({
   appLogic,
   expressApp,
@@ -142,7 +147,7 @@ export function start({
     ;(async () => {
       const { user } = req
       const { lead }: { lead: Lead } = req.body
-      if (lead && lead.email) {
+      if (lead && validateLead(lead)) {
         lead.owner_id = user.id
         const response = await appLogic.leads.AddLead(lead)
         res.json({ response })

@@ -20,6 +20,7 @@ import csvMapping from "./csvMapping"
 import csvUpload from "./csvUpload"
 import addLead from "./addLead"
 import fields from "./fields"
+import translate from "./translate"
 
 const rootReducer = combineReducers({
   routerReducer,
@@ -47,6 +48,7 @@ const rootReducer = combineReducers({
   csvUpload,
   addLead,
   fields,
+  translate,
 })
 
 export default rootReducer
