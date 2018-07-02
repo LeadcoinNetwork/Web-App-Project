@@ -25,7 +25,7 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
         password,
       )
       if (user instanceof NotFound) {
-        done(new Error("invalid"))
+        done()
       } else {
         done(null, user)
       }
