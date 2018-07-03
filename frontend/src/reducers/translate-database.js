@@ -95,4 +95,7 @@ export default {
   "Wait": {
     en: "Wait",
   },
+  "Why do you want to Dispute?": {
+    en: "Why do you want to Dispute?",
+  },
 }

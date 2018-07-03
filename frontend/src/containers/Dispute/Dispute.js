@@ -3,6 +3,7 @@ import Button from "Components/Button"
 import Textarea from "Components/Textarea"
 import { connect } from "react-redux"
 import { dispute } from "Actions"
+import t from "Containers/translate"
 
 class Dispute extends React.Component {
   handleChange = event => {
@@ -20,7 +21,7 @@ class Dispute extends React.Component {
 
     return (
       <section className="ldc-dispute">
-        <h1>Why do you want to Dispute?</h1>
+        <h1>{t("Why do you want to Dispute?")}</h1>
         <Textarea
           name="message"
           value={dispute.message}
@@ -29,7 +30,7 @@ class Dispute extends React.Component {
         />
         {dispute.error && this.getErrors(dispute.error)}
         <Button
-          label="Submit"
+          label={t("Submit")}
           loading={dispute.loading}
           appStyle
           onClick={submit}
