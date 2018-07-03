@@ -6,7 +6,7 @@ import Checkbox from "Components/Checkbox"
 import SocialLogin from "Components/SocialLogin"
 import { Link } from "react-router-dom"
 import { login } from "Actions"
-import t from "Images/t.jpg"
+import tiger from "Images/tiger.jpg"
 
 class Login extends React.Component {
   handleChange = event => {
@@ -72,7 +72,7 @@ class Login extends React.Component {
             Collaborating with other marketers & sharing leads is 10X more
             effcient than giving away my budget to Google & Facebook.
           </q>
-          <label style={{ backgroundImage: `url(${t})` }}>
+          <label style={{ backgroundImage: `url(${tiger})` }}>
             <span>
               Meir Cohen<br />CEO of Crypto
             </span>

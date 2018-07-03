@@ -4,7 +4,7 @@ import Button from "Components/Button"
 import TextField from "Components/TextField"
 import SocialLogin from "Components/SocialLogin"
 import { signup } from "Actions"
-import t from "Images/t.jpg"
+import tiger from "Images/tiger.jpg"
 import { Link } from "react-router-dom"
 
 class Signup extends React.Component {
@@ -79,7 +79,7 @@ class Signup extends React.Component {
             Collaborating with other marketers & sharing leads is 10X more
             effcient than giving away my budget to Google & Facebook.
           </q>
-          <label style={{ backgroundImage: `url(${t})` }}>
+          <label style={{ backgroundImage: `url(${tiger})` }}>
             <span>
               Meir Cohen<br />CEO of Crypto
             </span>

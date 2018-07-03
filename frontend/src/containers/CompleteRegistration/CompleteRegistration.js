@@ -4,7 +4,7 @@ import Button from "Components/Button"
 import TextField from "Components/TextField"
 import ReactPhoneInput from "react-phone-input-2"
 import { completeRegistration } from "Actions"
-import t from "Images/t.jpg"
+import tiger from "Images/tiger.jpg"
 
 class CompleteRegistration extends React.Component {
   handleChange = event =>
@@ -65,7 +65,7 @@ class CompleteRegistration extends React.Component {
             Collaborating with other marketers & sharing leads is 10X more
             effcient than giving away my budget to Google & Facebook.
           </q>
-          <label style={{ backgroundImage: `url(${t})` }}>
+          <label style={{ backgroundImage: `url(${tiger})` }}>
             <span>
               Meir Cohen<br />CEO of Crypto
             </span>
