@@ -34,12 +34,12 @@ var T = connect(mapStateToProps)(function({
 }) {
   var value = _.get(database, [textToTransalte, current])
   if (value) {
-    return <span title="this text in the database!">☑{value}</span>
+    return <span title="this text is in the database!">☑{value}</span>
   } else {
     return (
       <span
         style={{ textDecoration: "line-through" }}
-        title="This text not translated yet. Please add to database"
+        title="This text is not translated yet. Please add to the database"
       >
         {textToTransalte}
       </span>

@@ -7,23 +7,6 @@ import { addLead } from "Actions"
 import t from "containers/translate"
 
 class AddLead extends React.Component {
-  renderPriceElement() {
-    const errors = this.props.errors
-    const error = errors["price"] ? "error" : ""
-    return (
-      <div className={"price " + error}>
-        <span>{t("Lead Price")}</span>
-        <TextField
-          appStyle={true}
-          value={this.props.price}
-          onChange={e => {
-            this.props.handleChange("price", e.target.value)
-          }}
-        />
-      </div>
-    )
-  }
-
   renderTerms() {
     const { errors } = this.props
     const error = errors["agree_to_terms"] ? "error" : ""
@@ -38,31 +21,23 @@ class AddLead extends React.Component {
             this.props.agreeToTerms(e.target.checked)
           }}
         />
-        <label htmlFor="terms_checkbox">I AGREE THE TERMS</label>
+        <label htmlFor="terms_checkbox">{t("I AGREE TO THE TERMS")}</label>
       </div>
     )
   }
 
   renderFields(fields) {
     const { errors, values, loading } = this.props
-    return fields.map((f, i) => {
-      const isError = errors[f] ? "error" : ""
-      return (
-        <div key={i} className={isError + " line flexed"}>
-          <div className="fieldLabel">{f} </div>
+    return fields.map((f) => {
+      const isError = errors[f.key] ? "error" : ""
+      return <div key={f.key} className={isError + " line flexed"}>
+          <div className="fieldLabel">{t(f.name)}</div>
           <div className="fieldValue">
-            <TextField
-              disabled={loading}
-              appStyle={true}
-              placeholder=" "
-              value={values[f]}
-              onChange={e => {
-                this.props.handleChange(f, e.target.value)
-              }}
-            />
+            <TextField disabled={loading} appStyle={true} placeholder=" " value={values[f.key]} onChange={e => {
+                this.props.handleChange(f.key, e.target.value)
+              }} />
           </div>
         </div>
-      )
     })
   }
 
@@ -79,18 +54,17 @@ class AddLead extends React.Component {
                 {t("Personal Identification Information")}
               </div>
               <div className="header">
-                These fields will only be visible to who bought the lead{" "}
+                {t("These fields will only be visible to the lead owner")}
               </div>
             </div>
             <div className="fields">{this.renderFields(db_fields.private)}</div>
           </div>
           <div className="public flexed">
             <div className="help_text">
-              <div className="header">Public Fields </div>
+              <div className="header">{t("Public Fields")}</div>
             </div>
             <div className="fields">{this.renderFields(db_fields.public)}</div>
           </div>
-          {this.renderPriceElement()}
           <div className="controls field_submit flexed">
             {terms}
             <div>
@@ -100,7 +74,7 @@ class AddLead extends React.Component {
                 onClick={() => {
                   this.props.submit(this.props.fields_map)
                 }}
-                label="Submit"
+                label={t("Submit")}
               />
             </div>
             <div>
@@ -111,7 +85,7 @@ class AddLead extends React.Component {
                 onClick={() => {
                   this.props.clear()
                 }}
-                label="Clear"
+                label={t("Clear")}
               />
             </div>
           </div>
@@ -128,12 +102,12 @@ const mapStateToProps = state => ({
   db_fields: {
     private: state.fields
       .filter(field => field.private)
-      .map(field => field.key)
+      .map(field => ({ key: field.key, name: field.name }))
       .filter(f => fields_not_for_display.indexOf(f) < 0),
     public: state.fields
       .filter(field => !field.private)
-      .map(field => field.key)
-      .filter(f => fields_not_for_display.indexOf(f) < 0),
+      .map(field => ({ key: field.key, name: field.name }))
+      .filter(f => fields_not_for_display.indexOf(f.key) < 0),
   },
 })
 
