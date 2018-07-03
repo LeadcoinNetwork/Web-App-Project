@@ -68,4 +68,10 @@ export default {
   "Withdraw": {
     en: "Withdraw",
   },
+  "Buy Leads": {
+    en: "Buy Leads",
+  },
+  "Loading...": {
+    en: "Loading...",
+  },
 }

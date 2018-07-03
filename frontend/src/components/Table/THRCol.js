@@ -2,6 +2,7 @@ import React from "react"
 import FontAwesomeIcon from "@fortawesome/react-fontawesome"
 import faSortUp from "@fortawesome/fontawesome-free-solid/faSortUp"
 import faSortDown from "@fortawesome/fontawesome-free-solid/faSortDown"
+import t from "Containers/translate"
 
 const THRCol = ({ field, colCount, staticColsWidth, onSort, sortedBy }) => (
   <div
@@ -25,7 +26,7 @@ const THRCol = ({ field, colCount, staticColsWidth, onSort, sortedBy }) => (
         : undefined
     }
   >
-    {field.name}
+    {t(field.name)}
     {sortedBy &&
       sortedBy.key === field.name && (
         <FontAwesomeIcon

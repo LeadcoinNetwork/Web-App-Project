@@ -2,6 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import Table from "Components/Table"
 import { leads } from "../../actions"
+import t from "Containers/translate"
 
 class BuyLeads extends React.Component {
   constructor(props) {
@@ -52,7 +53,7 @@ class BuyLeads extends React.Component {
   render() {
     return (
       <>
-        <h1>Buy Leads</h1>
+        <h1>{t("Buy Leads")}</h1>
         <Table
           fields={this.props.fields}
           records={this.props.leads.list}

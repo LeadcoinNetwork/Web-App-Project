@@ -1,5 +1,6 @@
 import React from "react"
 import { throttle } from "lodash"
+import t from "Containers/translate"
 
 const withInfiniteScroll = onScrollBottom => WrappedComponent => {
   class WithInfiniteScroll extends React.Component {
@@ -41,7 +42,7 @@ const withInfiniteScroll = onScrollBottom => WrappedComponent => {
       return (
         <>
           <WrappedComponent {...passThroughProps} />
-          {this.state.loading ? <div>Loading...</div> : null}
+          {this.state.loading ? <div>{t("Loading...")}</div> : null}
         </>
       )
     }
