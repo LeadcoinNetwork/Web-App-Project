@@ -3,8 +3,8 @@ import { connect } from "react-redux"
 import * as _ from "lodash"
 
 /**
- * This function get a text for translation
- * And create a component that contain this text.
+ * This function gets text for translation
+ * And creates a component that contains the text.
  *
  * E.g. use
  *
@@ -24,8 +24,8 @@ var mapStateToProps = state => {
 }
 
 /**
- * This is a React element that connect text to translate to the state
- * It's uses internally. In your code use the function above.
+ * This is a React element that connects text to translate to the state
+ * It's used internally. In your code use the function above.
  */
 var T = connect(mapStateToProps)(function({
   database,
