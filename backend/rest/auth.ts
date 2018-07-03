@@ -29,11 +29,7 @@ export function start({
     resendEmail,
   )
 
-  expressApp.post(
-    "/auth/login",
-    passport.authenticate("local", authOptions),
-    login,
-  )
+  expressApp.post("/auth/login", loginByUserNameAndPassword, login)
 
   expressApp.get(
     ["/auth/google", "/auth/google/callback"],
@@ -53,6 +49,20 @@ export function start({
     login,
   )
 
+  async function loginByUserNameAndPassword(req, res, next) {
+    var { email, password } = req.body
+    let user = await appLogic.models.users.getUserByEmailAndPassword(
+      email,
+      password,
+    )
+    if (user instanceof NotFound) {
+      res.status(409).send({ error: "invalid" })
+    } else {
+      var token = await appLogic.userLogin.login(user.id)
+      res.cookie("token", token)
+      res.send({ user })
+    }
+  }
   async function login(req, res, next) {
     if (req.user && req.user.id) {
       var token = await appLogic.userLogin.login(req.user.id)
@@ -71,17 +81,17 @@ export function start({
 
   async function resendEmail(req, res, next) {
     ;(async () => {
-      const {user} = req
+      const { user } = req
       appLogic.userRegister
-      .resendConfirmationEmail(user)
-      .then(() => {
-        res.send({ ok: true })
-      })
-      .catch((err) => {
-        res.status(400)
-        res.send({ error: err.message })
-      })
-    })().catch((err) => {
+        .resendConfirmationEmail(user)
+        .then(() => {
+          res.send({ ok: true })
+        })
+        .catch(err => {
+          res.status(400)
+          res.send({ error: err.message })
+        })
+    })().catch(err => {
       res.status(400)
       res.send({ error: err.message })
     })
