@@ -23,10 +23,13 @@ export default function login(api) {
         email,
         password,
       })
+      yield put(actions.login.loginFinish())
       if (ans.error) {
         yield put(actions.login.loginError(ans.error))
       } else {
-        yield put(actions.route.bootAgain())
+        yield put(actions.user.loggedIn(ans.user))
+        yield put(actions.route.gotoDefaultHome())
+        // yield put(actions.route.bootAgain())
       }
     }
   }

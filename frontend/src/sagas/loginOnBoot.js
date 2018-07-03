@@ -43,7 +43,7 @@ export default function LoginOnBoot(api) {
           // keep the user in the page he is current on.
         }
       }
-      yield take(Actions.route.bootAgain)
+      yield take(Actions.types.BOOT_AGAIN)
     }
   }
 }

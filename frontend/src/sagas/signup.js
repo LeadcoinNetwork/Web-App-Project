@@ -21,17 +21,12 @@ export default function signup(api) {
         email,
         password,
       })
-      console.log(ans)
+      yield put(Actions.signup.signupFinish())
 
-      // var ans = yield call(request, "POST", "/user", {
-      //   fname,
-      //   lname,
-      //   email,
-      //   password,
-      // })
       if (ans.error) {
         yield put(Actions.signup.signupError(ans.error))
       } else {
+        yield put(Actions.user.loggedIn(ans.user))
         yield put(push("/email-confirmation"))
       }
     }
