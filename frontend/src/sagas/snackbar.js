@@ -1,5 +1,5 @@
 import { types } from "Actions"
-import { take, call } from "redux-saga/effects"
+import { take } from "redux-saga/effects"
 import { toast } from "react-toastify"
 
 export default function snackbar() {
@@ -7,10 +7,7 @@ export default function snackbar() {
     while (true) {
       let notifiction = yield take(types.NOTIFICATION_SHOW)
 
-      yield call(
-        toast[notification.payload.type] || toast,
-        notifiction.payload.message,
-      )
+      toast(notifiction.payload.message, { type: notifiction.payload.type })
     }
   }
 }
