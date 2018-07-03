@@ -14,7 +14,7 @@ class Signup extends React.Component {
   getErrors(errors) {
     return (
       <ul className="ldc-error-text">
-        {errors.split(";").map(e => <li>{e}</li>)}
+        {errors.split(";").map(e => <li key={e}>{e}</li>)}
       </ul>
     )
   }

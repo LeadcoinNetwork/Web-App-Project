@@ -40,7 +40,7 @@ const Root = () => (
       <Route path="/my-leads" component={MyLeads} />
       <Route path="/payments" component={Payments} />
       <Route path="/withdraw" component={Withdraw} />
-      <Route path="/uploadform" component={UploadForm} />
+      {/* <Route path="/uploadform" component={UploadForm} /> */}
       <Route path="/csv-upload" component={CSVUpload} />
       <Route path="/csv-mapping" component={CSVMapping} />
       <Route path="/add-lead" component={AddLead} />
