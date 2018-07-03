@@ -18,6 +18,7 @@ import Signup from "Containers/Signup"
 import EmailConfirmation from "containers/EmailConfirmation"
 import CompleteRegistration from "containers/CompleteRegistration"
 import Login from "Containers/Login"
+import ForgotPassword from "Containers/ForgotPassword"
 import UserSettings from "Containers/UserSettings"
 import Withdraw from "containers/Withdraw"
 import Terms from "Containers/Terms"
@@ -32,6 +33,7 @@ const Root = () => (
       <Route path="/complete-registration" component={CompleteRegistration} />
       <Route path="/user-settings" component={UserSettings} />
       <Route path="/login" component={Login} />
+      <Route path="/forgot-password" component={ForgotPassword} />
       <Route path="/admin" component={Admin} />
       <Route path="/buy-leads" component={BuyLeads} />
       <Route path="/sell-leads" component={SellLeads} />
