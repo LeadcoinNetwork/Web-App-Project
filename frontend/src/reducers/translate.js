@@ -6,7 +6,22 @@ const initialState = {
   current: "en",
 }
 
+const flagLanguageConverter = {
+  us: "en",
+  cn: "zh",
+  jp: "ja",
+  kr: "ko",
+}
+
 const leads = (state = initialState, action) => {
-  return state
+  switch (action.type) {
+    case types.LANGUAGE_SELECTOR_UPDATE:
+      return {
+        ...state,
+        current: flagLanguageConverter[action.payload],
+      }
+    default:
+      return state
+  }
 }
 export default leads
