@@ -89,4 +89,10 @@ export default {
   "Processing": {
     en: "Processing",
   },
+  "Fill your Profile": {
+    en: "Fill your Profile",
+  },
+  "Wait": {
+    en: "Wait",
+  },
 }

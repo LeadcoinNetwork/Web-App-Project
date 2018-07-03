@@ -5,6 +5,7 @@ import TextField from "Components/TextField"
 import ReactPhoneInput from "react-phone-input-2"
 import { completeRegistration } from "Actions"
 import tiger from "Images/tiger.jpg"
+import t from "Containers/translate"
 
 class CompleteRegistration extends React.Component {
   handleChange = event =>
@@ -28,7 +29,7 @@ class CompleteRegistration extends React.Component {
     return (
       <section className="ldc-complete-registration">
         <div className="cr-main">
-          <h1>Fill your Profile</h1>
+          <h1>{t("Fill your Profile")}</h1>
           <div className="crm-form">
             <TextField
               placeholder="Company Name"
@@ -53,7 +54,7 @@ class CompleteRegistration extends React.Component {
             />
             {error && this.getErrors(error)}
             <Button
-              label="Submit"
+              label={t("Submit")}
               onClick={this.props.submit}
               loading={loading}
             />

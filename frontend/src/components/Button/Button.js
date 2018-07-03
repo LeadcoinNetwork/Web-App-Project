@@ -1,10 +1,11 @@
 import React from "react"
+import t from "Containers/translate"
 
 const Button = ({
   type,
   disabled,
   label,
-  loadingLabel = "Wait",
+  loadingLabel = t("Wait"),
   loading,
   onClick,
   children,
