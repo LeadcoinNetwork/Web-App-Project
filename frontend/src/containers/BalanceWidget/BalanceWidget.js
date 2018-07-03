@@ -2,13 +2,15 @@ import React from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
 import { Numbers } from "../../utils/numbers"
+import t from "containers/translate"
+
 
 const BalanceWidget = ({ balance }) => (
   <>
     {balance.loading ? null : (
       <div className="ldc-balance-widget">
-        Balance: {Numbers.priceString(balance.total)}
-        <Link to="/withdraw">Withdraw</Link>
+        {t("Balance")}: {Numbers.priceString(balance.total)}
+        <Link to="/withdraw">{t("Withdraw")}</Link>
       </div>
     )}
   </>

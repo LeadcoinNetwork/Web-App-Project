@@ -62,4 +62,10 @@ export default {
   "Clear": {
     en: "Clear",
   },
+  "Balance": {
+    en: "Balance",
+  },
+  "Withdraw": {
+    en: "Withdraw",
+  },
 }
