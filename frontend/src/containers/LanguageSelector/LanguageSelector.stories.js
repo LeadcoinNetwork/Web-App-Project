@@ -21,15 +21,6 @@ storiesOf("Containers/Language Selector", module)
     store.dispatch(language.languageSelectorUpdate("us"))
     return story
   })
-  .add("Logged out - UK", () => {
-    var { store, story } = createStoreAndStory({
-      path: "/login",
-      loggedIn: false,
-    })
-
-    store.dispatch(language.languageSelectorUpdate("gb"))
-    return story
-  })
   .add("Logged out - Japan", () => {
     var { store, story } = createStoreAndStory({
       path: "/login",
