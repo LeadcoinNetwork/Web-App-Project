@@ -74,4 +74,19 @@ export default {
   "Loading...": {
     en: "Loading...",
   },
+  "Shopping Cart": {
+    en: "Shopping Cart",
+  },
+  "Shopping Cart is Empty": {
+    en: "Shopping Cart is Empty",
+  },
+  "Total": {
+    en: "Total",
+  },
+  "Checkout": {
+    en: "Checkout",
+  },
+  "Processing": {
+    en: "Processing",
+  },
 }

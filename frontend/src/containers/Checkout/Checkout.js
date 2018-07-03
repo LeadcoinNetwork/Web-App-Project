@@ -3,25 +3,26 @@ import { connect } from "react-redux"
 import * as Actions from "../../actions"
 import Table from "Components/Table"
 import Button from "Components/Button"
+import t from "Containers/translate"
 
 const checkoutConfig = require("./checkout.config.json")
 
 const checkout = ({ list, totalPrice, loading, error, onScrollBottom }) => (
   <div className="shopping-cart">
-    <h1>Shopping Cart</h1>
+    <h1>{t("Shopping Cart")}</h1>
     <Table
       fields={checkoutConfig.fields}
       records={list}
       onScrollBottom={onScrollBottom}
-      showOnZeroRecords={<div>Shopping Cart is Empty</div>}
+      showOnZeroRecords={<div>{t("Shopping Cart is Empty")}</div>}
       isSelectable={false}
     />
     <div className="checkout">
-      <div className="total-price">Total: {totalPrice}</div>
+      <div className="total-price">{t("Total")}: {totalPrice}</div>
       <Button
-        label="Checkout"
+        label={t("Checkout")}
         loading={loading}
-        loadingLabel="Processing"
+        loadingLabel={t("Processing")}
         appStyle={true}
         disabled={list.length > 0 ? false : true}
       />
