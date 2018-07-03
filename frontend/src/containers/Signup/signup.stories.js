@@ -6,30 +6,7 @@ import { createStoreAndStory } from "storybook-utils/withRouter"
 import { routerMiddleware, go, push } from "react-router-redux"
 import { select, take, put, call } from "redux-saga/effects"
 
-function* fakeSaga() {
-  // yield put(push("/email-confirmation"))
-}
-
 storiesOf("Containers/SignUp", module)
-  .add("connected to production saga", () => {
-    var { store, story } = createStoreAndStory({
-      path: "/signup",
-      connectToProductionSaga: true,
-    })
-    return story
-  })
-
-  .add("connected to fake saga", () => {
-    var { store, story, saga } = createStoreAndStory({
-      path: "/signup",
-      sagaFunction: fakeSaga,
-    })
-    setTimeout(function() {
-      store.dispatch(push("/email-confirmation"))
-    }, 1500)
-    return story
-  })
-
   .add("empty form", () => {
     var { store, story } = createStoreAndStory({ path: "/signup" })
     return story

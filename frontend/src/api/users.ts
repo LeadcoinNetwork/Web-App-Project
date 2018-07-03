@@ -1,5 +1,6 @@
 import { SuperAgentStatic } from "superagent"
 import { methods, request } from "./request"
+
 export default class UserApi {
   constructor(private request: request) {}
   async login({ email, password }) {
@@ -11,7 +12,10 @@ export default class UserApi {
   async signUp(data) {
     return this.request(methods.post, "/user", data)
   }
-  async resendEmail() {}
+  async resendEmail() {
+    // TEMP
+    return Promise.resolve({})
+  }
   async completeProfile(data: { company; phone; country }) {
     return this.request(methods.post, "/complete-profile", data)
   }
