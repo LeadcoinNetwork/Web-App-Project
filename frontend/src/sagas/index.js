@@ -3,6 +3,8 @@ import login from "./login"
 import loginOnBoot from "./loginOnBoot"
 import logout from "./logout"
 import homesaga from "./homesaga"
+import snackbar from "./snackbar"
+import emailConfirmation from "./emailConfirmation"
 import csvMapping from "./csvMapping"
 import completeRegistration from "./completeRegistration.js"
 import addLead from "./addLead"
@@ -28,11 +30,13 @@ export default function* rootSaga() {
     login,
     addLead,
     completeRegistration,
+    emailConfirmation,
     logout,
     homesaga,
     loginOnBoot,
     signup,
     csvMapping,
+    snackbar,
   ]
   for (var i in sagas) {
     yield spawn(sagas[i](api))

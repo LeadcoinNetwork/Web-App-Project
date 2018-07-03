@@ -1,43 +1,57 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
-import * as actions from "actions"
+import { types, user } from "Actions"
+
 import { createStoreAndStory } from "storybook-utils/withRouter"
+import { take } from "redux-saga/effects"
+import { toast } from "react-toastify"
+
+const storySaga = type => {
+  return function*() {
+    while (true) {
+      yield take(types.EMAIL_CONFIRMATION_RESEND)
+
+      setTimeout(
+        () =>
+          toast[type](
+            type === "success"
+              ? "We sent a verification email. Please follow the instructions in it."
+              : "Error",
+          ),
+        500,
+      )
+    }
+  }
+}
 
 storiesOf("Containers/Email Confirmations", module)
-  .add("Empty", () => {
+  .add("Resend success", () => {
     let { store, story } = createStoreAndStory({
       path: "/email-confirmation",
-      loggedIn: true,
+      sagaFunction: storySaga("success"),
     })
-    return story
-  })
-  .add("Already Confirmed", () => {
-    let { store, story } = createStoreAndStory({
-      path: "/email-confirmation",
-    })
-    store.dispatch(actions.emailConfirmation.emailConfirmationConfirmed())
-    return story
-  })
 
-  .add("Resend", () => {
-    let { store, story } = createStoreAndStory({
-      path: "/email-confirmation",
-    })
-    store.dispatch(actions.emailConfirmation.emailConfirmationResend())
+    store.dispatch(
+      user.loggedIn({
+        id: 1,
+        email: "meir@leadcoin.network",
+        disabled: "EMAIL_NOT_VERIFIED",
+      }),
+    )
     return story
   })
+  .add("Resend error", () => {
+    let { store, story } = createStoreAndStory({
+      path: "/email-confirmation",
+      sagaFunction: storySaga("error"),
+    })
 
-  .add("sent success", () => {
-    let { store, story } = createStoreAndStory({
-      path: "/email-confirmation",
-    })
-    store.dispatch(actions.emailConfirmation.emailConfirmationSent())
-    return story
-  })
-  .add("sent error", () => {
-    let { store, story } = createStoreAndStory({
-      path: "/email-confirmation",
-    })
-    store.dispatch(actions.emailConfirmation.emailConfirmationError([]))
+    store.dispatch(
+      user.loggedIn({
+        id: 1,
+        email: "meir@leadcoin.network",
+        disabled: "EMAIL_NOT_VERIFIED",
+      }),
+    )
     return story
   })

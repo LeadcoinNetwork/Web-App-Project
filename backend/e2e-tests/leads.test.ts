@@ -125,14 +125,15 @@ test("getting my leads at order should work", async () => {
   expect(record4.name).toBe(lead2.name)
 })
 
-test("adding a lead should fail without email", async () => {
+test("adding a bad lead should return error to client", async () => {
   var { user, token } = await ValidatedUserForTests.create({
     users: appLogic.models.users,
   })
   const lead = {
-    date: 1213,
-    name: "test lead 2",
+    date: 2929, // this date will be invalid on mysql server
+    name: "test lead that should fail 100%",
     phone: "2",
+    email: 'test@test.test',
     bought_from: null,
   }
   const result = await request
@@ -142,6 +143,29 @@ test("adding a lead should fail without email", async () => {
     })
     .send({ lead })
   expect(result.error).toBeTruthy()
+})
+
+
+test("adding a lead should fail without email", async () => {
+  var { user, token } = await ValidatedUserForTests.create({
+    users: appLogic.models.users,
+  })
+
+  const lead = {
+    date: 1213,
+    name: "test lead that should fail 100%",
+    phone: "2",
+    bought_from: null,
+  }
+
+  const result = await request
+    .post("/leads/add")
+    .set({
+      cookie: "token=" + token,
+    })
+    .send({ lead })
+  expect(result.error).toBeTruthy()
+  expect(result.body.error).toBe('email not valid')
 })
 
 test("adding a lead should fail without token", async () => {

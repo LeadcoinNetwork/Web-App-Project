@@ -56,7 +56,7 @@ class Login extends React.Component {
                 checked={remember}
                 onClick={this.handleChange}
               />
-              <Link to="/">Forgot your password?</Link>
+              <Link to="/fotgot-password">Forgot your password?</Link>
             </p>
             {error && this.getErrors(error)}
             <Button
@@ -87,10 +87,7 @@ const mapStateToProps = state => ({
   login: state.login,
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    handleChange: login.loginHandleChange,
-    submit: login.loginUserSubmit,
-  },
-)(Login)
+export default connect(mapStateToProps, {
+  handleChange: login.loginHandleChange,
+  submit: login.loginUserSubmit,
+})(Login)

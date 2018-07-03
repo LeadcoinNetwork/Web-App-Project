@@ -9,7 +9,7 @@ storiesOf("Containers/Snackbar", module)
   .add("All", () => {
     let { store, story } = createStoreAndStory({
       component: Snackbar,
-      sagaFunction: snackbar,
+      sagaFunction: snackbar(),
     })
     let kinds = ["default", "success", "info", "warning", "error"],
       timeout = 0
@@ -27,7 +27,7 @@ storiesOf("Containers/Snackbar", module)
   .add("Default", () => {
     let { store, story } = createStoreAndStory({
       component: Snackbar,
-      sagaFunction: snackbar,
+      sagaFunction: snackbar(),
     })
 
     setTimeout(
@@ -39,7 +39,7 @@ storiesOf("Containers/Snackbar", module)
   .add("Success", () => {
     let { store, story } = createStoreAndStory({
       component: Snackbar,
-      sagaFunction: snackbar,
+      sagaFunction: snackbar(),
     })
 
     setTimeout(
@@ -51,7 +51,7 @@ storiesOf("Containers/Snackbar", module)
   .add("Info", () => {
     let { store, story } = createStoreAndStory({
       component: Snackbar,
-      sagaFunction: snackbar,
+      sagaFunction: snackbar(),
     })
 
     setTimeout(() => store.dispatch(app.notificationShow("Info", "info")), 500)
@@ -60,7 +60,7 @@ storiesOf("Containers/Snackbar", module)
   .add("Warning", () => {
     let { store, story } = createStoreAndStory({
       component: Snackbar,
-      sagaFunction: snackbar,
+      sagaFunction: snackbar(),
     })
 
     setTimeout(
@@ -72,7 +72,7 @@ storiesOf("Containers/Snackbar", module)
   .add("Error", () => {
     let { store, story } = createStoreAndStory({
       component: Snackbar,
-      sagaFunction: snackbar,
+      sagaFunction: snackbar(),
     })
 
     setTimeout(
@@ -84,7 +84,7 @@ storiesOf("Containers/Snackbar", module)
   .add("10 Success", () => {
     let { store, story } = createStoreAndStory({
       component: Snackbar,
-      sagaFunction: snackbar,
+      sagaFunction: snackbar(),
     })
     let timeout = 0
 

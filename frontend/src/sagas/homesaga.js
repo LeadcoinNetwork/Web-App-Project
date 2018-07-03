@@ -12,7 +12,7 @@ export default function gotoDefaultHome() {
     while (true) {
       yield take(types.GOTO_DEFAULT_HOME)
       var user = yield select(state => state.user)
-      console.log(user)
+
       if (!user || !user.id) {
         // User is not connected
         yield put(push("/login"))

@@ -26,7 +26,7 @@ class App extends React.Component {
           logout={this.props.logout}
         />
         {loggedIn && !disabled && <SideMenu path={path} />}
-        <main className={loggedIn && !disabled ? "a-app-mode" : ""}>
+        <main className={loggedIn && !disabled ? "a-app-mode" : "a-sign-mode"}>
           {this.props.children}
         </main>
         <Snackbar />
@@ -40,10 +40,7 @@ const mapStateToProps = state => ({
   location: state.routerReducer.location,
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    logout: user.loggedOut,
-    gotoDefaultHome: route.gotoDefaultHome,
-  },
-)(App)
+export default connect(mapStateToProps, {
+  logout: user.loggedOut,
+  gotoDefaultHome: route.gotoDefaultHome,
+})(App)
