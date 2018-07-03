@@ -1,6 +1,5 @@
 // External Modules
 
-const LocalStrategy = require("passport-local").Strategy
 const JWTStrategy = require("passport-jwt").Strategy
 const ExtractJwt = require("passport-jwt").ExtractJwt
 const GoogleStrategy = require("passport-google-oauth20").Strategy
@@ -14,23 +13,6 @@ import * as utils from "../../utils/index"
 
 export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
   var config = appLogic.config
-
-  const localStrategy = new LocalStrategy(
-    {
-      usernameField: "email",
-    },
-    async (email, password, done) => {
-      let user = await appLogic.models.users.getUserByEmailAndPassword(
-        email,
-        password,
-      )
-      if (user instanceof NotFound) {
-        done()
-      } else {
-        done(null, user)
-      }
-    },
-  )
 
   const extactFromCookie = request => {
     let token = null
@@ -193,7 +175,6 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
   )
 
   return {
-    localStrategy,
     jwtStrategy,
     googleStrategy,
     linkedInStrategy,
