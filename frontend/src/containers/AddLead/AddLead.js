@@ -4,7 +4,7 @@ import Button from "Components/Button"
 import TextField from "Components/TextField"
 import { connect } from "react-redux"
 import { addLead } from "Actions"
-import t from "containers/translate"
+import t from "Containers/translate"
 
 class AddLead extends React.Component {
   renderTerms() {
