@@ -1,16 +1,7 @@
 import types from "Actions/types"
 
-const initialState = {
-  error: "",
-}
-
-const emailConfirmation = (state = initialState, action) => {
+const emailConfirmation = (state = {}, action) => {
   switch (action.type) {
-    case types.EMAIL_CONFIRMATION_ERROR:
-      return {
-        ...state,
-        error: action.payload.message,
-      }
     default:
       return state
   }

@@ -19,6 +19,9 @@ export default class Leads {
   async insert(lead: Lead) {
     let status = await this.sql.query("INSERT INTO leads SET ?", lead)
     const success = (status.affectedRows != 0)
+    if (!success) {
+      throw new Error("Lead not added")
+    }
     return [success, (success) ? status.insertId : null]
   }
 

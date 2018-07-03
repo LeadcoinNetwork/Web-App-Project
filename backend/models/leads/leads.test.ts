@@ -30,7 +30,20 @@ test("delete lead", async () => {
   expect(record).toBe(undefined)
 })
 
-
+/*
+test("add new lead with bad data", async () => {
+  const success = await leads.insert({ 
+    date: 1414,
+    owner_id: 34,
+    name: 'test lead',
+    phone: '12301212',
+    email: 'moshe@moshe.com',
+    active: true,
+    bought_from: null
+  })
+  expect(success).toBeFalsey()
+})
+*/
 test("add new lead", async () => {
   const success = await leads.insert({ 
     date: 1212,

@@ -1,10 +1,18 @@
-import { Lead } from "models/leads/types"
+import { Lead } from "../models/leads/types"
 
 import { IModels } from "./index"
 
 export interface getLeadsOptions {
   sort_by?: [string, "ASC" | "DESC"]
   filters?: [string, string][]
+}
+
+const validate_lead = (lead:Lead) => {
+  //TODO: smthing
+  const errors = []
+  if (!lead.email || lead.email.length < 2)
+    errors.push("email not valid")
+  return (errors)
 }
 
 export default class Leads {
@@ -15,7 +23,12 @@ export default class Leads {
     return await this.models.leads.remove(lead_id)
   }
   public async AddLead(lead: Lead) {
-    return await this.models.leads.insert(lead)
+    const problems = validate_lead(lead)
+    if (problems.length == 0) {
+      const [success, id]  =  await this.models.leads.insert(lead)
+      return [success, id]
+    }
+    throw new Error(problems.join('; '))
   }
 
   public async getSoldLeads(user_id:number, options: getLeadsOptions) {

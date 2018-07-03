@@ -20,6 +20,7 @@ export async function create({
     fname: "moshe",
     lname: "Marilush",
     plainPassword: "danny-gembom",
+    emailConfirmationKey: UsersAuth.generateToken()
   })
   const token = UsersAuth.generateJWT(user_id, config.auth.jwt.secret)
   var user = await users.tryGetUserById(user_id)
