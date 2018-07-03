@@ -1,7 +1,7 @@
 // external modules
 import EmailSenderAbstraction from "./abstraction"
 const mailer = require("nodemailer-promise")
-
+import LogModelActions from "../log-model-actions/index"
 class EmailSenderNodeMailer implements EmailSenderAbstraction {
   mailer
   host
@@ -22,7 +22,7 @@ class EmailSenderNodeMailer implements EmailSenderAbstraction {
     })
   }
 
-  send({
+  async send({
     from,
     to,
     subject,
@@ -33,12 +33,15 @@ class EmailSenderNodeMailer implements EmailSenderAbstraction {
     subject: string
     html: string
   }) {
-    return this.mailer({
+    var a = LogModelActions("SendEmail", "Send", arguments[0])
+    var res = await this.mailer({
       from,
       to,
       subject,
       html,
     })
+    a(res)
+    return res
   }
 }
 
