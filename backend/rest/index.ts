@@ -50,7 +50,7 @@ export default class RestServer {
 
     expressApp.use((req, res, next) => {
       if (process.env.NODE_ENV != "test") {
-        console.log(req.method + " " + req.url)
+        console.log("REQUEST: " + req.method + " " + req.url)
       }
       next()
     })
@@ -65,7 +65,7 @@ export default class RestServer {
     userRouter.start({ appLogic: this.appLogic, expressApp })
 
     // TODO leads
-    leads.start({appLogic,expressApp})
+    leads.start({ appLogic, expressApp })
     // TODO csv
 
     _404.start(expressApp)
