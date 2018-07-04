@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import * as Actions from "../../actions"
 import Table from "Components/Table"
 import Button from "Components/Button"
-import t from "Containers/translate"
+import t from "../../utils/translate/translate"
 
 const checkoutConfig = require("./checkout.config.json")
 

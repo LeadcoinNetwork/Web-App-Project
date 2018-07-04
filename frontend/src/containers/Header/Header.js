@@ -4,7 +4,7 @@ import BalanceWidget from "Containers/BalanceWidget"
 import NotificationElement from "Containers/NotificationElement"
 import UserMenu from "Containers/UserMenu"
 import LanguageSelector from "Containers/LanguageSelector"
-import t from "Containers/translate"
+import t from "../../utils/translate/translate"
 
 const Header = ({ path, loggedIn, disabled, logout, gotoDefaultHome }) => (
   <header

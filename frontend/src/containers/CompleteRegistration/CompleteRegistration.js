@@ -5,7 +5,7 @@ import TextField from "Components/TextField"
 import ReactPhoneInput from "react-phone-input-2"
 import { completeRegistration } from "Actions"
 import tiger from "Images/tiger.jpg"
-import t from "Containers/translate"
+import t from "../../utils/translate/translate"
 
 class CompleteRegistration extends React.Component {
   handleChange = event =>

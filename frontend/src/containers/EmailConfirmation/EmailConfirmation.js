@@ -3,7 +3,7 @@ import Button from "Components/Button"
 import { Link } from "react-router-dom"
 import { connect } from "react-redux"
 import * as actions from "Actions"
-import t from "Containers/translate"
+import t from "../../utils/translate/translate"
 
 const EmailConfirmation = ({ user, emailConfirmation, logout, resend }) => (
   <section className="ldc-email-confirmation">

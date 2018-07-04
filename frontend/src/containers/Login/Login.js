@@ -7,7 +7,7 @@ import SocialLogin from "Components/SocialLogin"
 import { Link } from "react-router-dom"
 import { login } from "Actions"
 import tiger from "Images/tiger.jpg"
-import t from "Containers/translate"
+import t from "../../utils/translate/translate"
 
 class Login extends React.Component {
   handleChange = event => {

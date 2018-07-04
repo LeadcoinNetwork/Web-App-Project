@@ -23,8 +23,9 @@ import UserSettings from "Containers/UserSettings"
 import Withdraw from "containers/Withdraw"
 import Terms from "Containers/Terms"
 import Privacy from "Containers/Privacy"
+import { connect } from "react-redux"
 
-const Root = () => (
+const Root = props => (
   <App>
     <Switch>
       <Route path="/" exact component={Home} />
@@ -53,4 +54,10 @@ const Root = () => (
   </App>
 )
 
-export default Root
+// We want to rerender the root every time the language
+// changes.
+// We don't use this props.
+const ConnectedRoot = connect(state => ({
+  _: state.translate.current,
+}))(Root)
+export default ConnectedRoot

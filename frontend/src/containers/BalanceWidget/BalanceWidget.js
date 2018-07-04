@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
 import { Numbers } from "../../utils/numbers"
-import t from "Containers/translate"
+import t from "../../utils/translate/translate"
 
 
 const BalanceWidget = ({ balance }) => (

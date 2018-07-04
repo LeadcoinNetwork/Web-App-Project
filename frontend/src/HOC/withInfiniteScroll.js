@@ -1,6 +1,6 @@
 import React from "react"
 import { throttle } from "lodash"
-import t from "Containers/translate"
+import t from "../utils/translate/translate"
 
 const withInfiniteScroll = onScrollBottom => WrappedComponent => {
   class WithInfiniteScroll extends React.Component {

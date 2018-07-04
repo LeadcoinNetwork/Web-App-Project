@@ -1,8 +1,8 @@
 import types from "../actions/types"
-import translateDatabase from "./translate-database"
+
+const storage = window.localStorage
 
 const initialState = {
-  database: translateDatabase,
   current: "en",
 }
 
@@ -16,9 +16,11 @@ const flagLanguageConverter = {
 const leads = (state = initialState, action) => {
   switch (action.type) {
     case types.LANGUAGE_SELECTOR_UPDATE:
+      const current = flagLanguageConverter[action.payload]
+      storage.setItem("current", current)
       return {
         ...state,
-        current: flagLanguageConverter[action.payload],
+        current: current,
       }
     default:
       return state

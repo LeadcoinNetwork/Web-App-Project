@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import Table from "Components/Table"
 import { leads } from "../../actions"
-import t from "Containers/translate"
+import t from "../../utils/translate/translate"
 
 class BuyLeads extends React.Component {
   constructor(props) {
