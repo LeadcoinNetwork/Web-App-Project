@@ -1,20 +1,110 @@
+/**
+ * Log everything with context.
+ * Based on https://www.owasp.org/index.php/Logging_Cheat_Sheet
+ */
 var chalk = require("chalk")
 var i = 0
-export default function LogModelAction(model, action, data) {
-  var current = i++
-  if (process.env.NODE_ENV == "test") {
-    return () => {}
+declare var Zone: any
+require("zone.js")
+var shortid = require("shortid")
+export default function LogModelAction(model, action?, data?) {
+  if (typeof action == "undefined") {
+    return (action, data) => LogModelAction(model, action, data)
   }
-  console.log(
-    `${model}:${action}: (${current}) ${
-      typeof data == "object" ? JSON.stringify(data) : data
-    }`,
-  )
-  return function(c) {
+  try {
+    var id = Zone.current.get("req").id
+  } catch (err) {
+    // In case Zone not working...
+    id = "#"
+  }
+  if (process.env.NODE_ENV == "test") {
+    return
+  }
+  if (action instanceof Error) {
     console.log(
-      `${model}:${action}: (${current}) ${chalk.blue("Done")} ${
-        typeof c == "object" ? JSON.stringify(c) : c
+      chalk.red("Error") +
+        "(" +
+        id +
+        ") " +
+        action.stack.replace(/.*node_modules.*\n/g, ""),
+    )
+  } else {
+    model = chalk.inverse(model)
+    action = chalk.inverse(action)
+    // // if (action == "end") action = chalk.blue(action)
+    // // if (action == "start") action = chalk.green(action)
+    if (data && data.status == 500) data = chalk.red(JSON.stringify(data))
+    if (data && data.request)
+      data = chalk.inverse(data.request) + " " + JSON.stringify(data)
+    console.log(
+      `${model}:${action} (${id}) ${
+        typeof data == "object" ? JSON.stringify(data) : data
       }`,
     )
+  }
+}
+
+/**
+ * Create a zone.
+ * Zone contain id,ua, and ip.
+ * Output to   the request details.
+ * Output to console the response.
+ */
+export function expressMiddleware(req, res, next) {
+  var oldWrite = res.write,
+    oldEnd = res.end,
+    oldStatus = res.status
+
+  var chunks = []
+  var status = ""
+
+  res.write = function(chunk) {
+    chunks.push(chunk)
+
+    oldWrite.apply(res, arguments)
+  }
+  res.status = function(o) {
+    status = o
+    return oldStatus.call(res, o)
+  }
+  res.end = function(chunk) {
+    if (chunk) chunks.push(chunk)
+    var body = Buffer.concat(chunks).toString("utf8")
+    try {
+      body = JSON.parse(body)
+    } catch (err) {}
+    LogModelAction("request", "end", {
+      status,
+      ...(typeof body == "object" ? body : { body }),
+    })
+
+    oldEnd.apply(res, arguments)
+  }
+
+  var id = shortid.generate()
+  var data = {
+    request: `${req.method} ${req.url}`,
+    host: req.headers["host"],
+    ua: req.headers["user-agent"],
+    ip: req.headers["x-forwarded-for"] || req.connection.remoteAddress,
+  }
+
+  try {
+    var requestZone = Zone.current.fork({
+      name: "request",
+      properties: {
+        req: {
+          id,
+          ...data,
+        },
+      },
+    })
+    requestZone.run(() => {
+      LogModelAction("request", "start", data)
+      next()
+    })
+  } catch (err) {
+    // In case Zone not working
+    next()
   }
 }
