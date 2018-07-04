@@ -1,17 +1,31 @@
 import React from "react"
 import TextField from "Components/TextField"
 import Button from "Components/Button"
+import { connect } from "react-redux"
+import { forgotPassword } from "Actions"
 
-const ForgotPassword = props => (
+const ForgotPassword = ({ forgotPassword, handleChange, submit }) => (
   <section className="ldc-forgot-password">
     <h1>Forgot your password?</h1>
     <p>
       Enter the email address associated with your account, and we’ll email you
       a link to reset your password.
     </p>
-    <TextField placeholder="Email" name="email" vlaue={""} />
-    <Button label="Send Reset Link" />
+    <TextField
+      placeholder="Email"
+      name="email"
+      value={forgotPassword.email}
+      onChange={e => handleChange("email", e.target.value)}
+    />
+    <Button label="Send Reset Link" onClick={submit} />
   </section>
 )
 
-export default ForgotPassword
+const mapStateToProps = state => ({
+  forgotPassword: state.forgotPassword,
+})
+
+export default connect(mapStateToProps, {
+  handleChange: forgotPassword.forgotPassswordHandleChange,
+  submit: forgotPassword.forgotPassswordUserSubmit,
+})(ForgotPassword)
