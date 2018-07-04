@@ -29,7 +29,6 @@ export default function login(api) {
       } else {
         yield put(actions.user.loggedIn(ans.user))
         yield put(actions.route.gotoDefaultHome())
-        // yield put(actions.route.bootAgain())
       }
     }
   }
