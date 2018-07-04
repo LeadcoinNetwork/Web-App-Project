@@ -21,6 +21,7 @@ const ForgotPassword = ({ forgotPassword, handleChange, submit }) => (
     <Button
       label="Send Reset Link"
       onClick={submit}
+      loading={forgotPassword.loading}
       disabled={!forgotPassword.email}
     />
   </section>
