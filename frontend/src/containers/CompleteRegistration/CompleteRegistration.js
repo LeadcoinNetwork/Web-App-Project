@@ -68,7 +68,9 @@ class CompleteRegistration extends React.Component {
           </q>
           <label style={{ backgroundImage: `url(${tiger})` }}>
             {/* <span> */}
-            {t("Meir Cohen")}<br />{t("CEO of Crypto")}
+            {t("Meir Cohen")}
+            <br />
+            {t("CEO of Crypto")}
             {/* </span> */}
           </label>
         </aside>
@@ -81,11 +83,8 @@ const mapStateToProps = state => ({
   completeRegistration: state.completeRegistration,
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    con: console.log,
-    handleChange: completeRegistration.completeRegistrationHandleChange,
-    submit: completeRegistration.completeRegistrationSubmit,
-  },
-)(CompleteRegistration)
+export default connect(mapStateToProps, {
+  con: console.log,
+  handleChange: completeRegistration.completeRegistrationHandleChange,
+  submit: completeRegistration.completeRegistrationSubmit,
+})(CompleteRegistration)

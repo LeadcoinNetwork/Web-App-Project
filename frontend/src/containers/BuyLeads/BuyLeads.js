@@ -55,7 +55,7 @@ class BuyLeads extends React.Component {
       <>
         <h1>{t("Buy Leads")}</h1>
         <Table
-          fields={this.props.fields.map((field) => ({
+          fields={this.props.fields.map(field => ({
             ...field,
             name: t(field.name),
           }))}

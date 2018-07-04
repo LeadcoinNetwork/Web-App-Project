@@ -31,7 +31,10 @@ class Login extends React.Component {
         <div className="l-main">
           <h1>{t("Login")}</h1>
           <div className="lm-social-buttons">
-            <SocialLogin connectWithText={t("connect with")} provider="google" />
+            <SocialLogin
+              connectWithText={t("connect with")}
+              provider="google"
+            />
             {/* <SocialLogin connectWithText={t("connect with")} provider="linkedin" /> */}
           </div>
           <div className="lm-form">
@@ -75,7 +78,9 @@ class Login extends React.Component {
           </q>
           <label style={{ backgroundImage: `url(${tiger})` }}>
             {/* <span> */}
-              {t("Meir Cohen")}<br />{t("CEO of Crypto")}
+            {t("Meir Cohen")}
+            <br />
+            {t("CEO of Crypto")}
             {/* </span> */}
           </label>
         </aside>

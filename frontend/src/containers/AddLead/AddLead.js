@@ -28,16 +28,24 @@ class AddLead extends React.Component {
 
   renderFields(fields) {
     const { errors, values, loading } = this.props
-    return fields.map((f) => {
+    return fields.map(f => {
       const isError = errors[f.key] ? "error" : ""
-      return <div key={f.key} className={isError + " line flexed"}>
+      return (
+        <div key={f.key} className={isError + " line flexed"}>
           <div className="fieldLabel">{t(f.name)}</div>
           <div className="fieldValue">
-            <TextField disabled={loading} appStyle={true} placeholder=" " value={values[f.key]} onChange={e => {
+            <TextField
+              disabled={loading}
+              appStyle={true}
+              placeholder=" "
+              value={values[f.key]}
+              onChange={e => {
                 this.props.handleChange(f.key, e.target.value)
-              }} />
+              }}
+            />
           </div>
         </div>
+      )
     })
   }
 
@@ -113,12 +121,9 @@ const mapStateToProps = state => ({
   },
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    agreeToTerms: addLead.addLeadAgreeToTerms,
-    handleChange: addLead.addLeadHandleFormChange,
-    submit: addLead.addLeadSubmitForm,
-    clear: addLead.addLeadClearForm,
-  },
-)(AddLead)
+export default connect(mapStateToProps, {
+  agreeToTerms: addLead.addLeadAgreeToTerms,
+  handleChange: addLead.addLeadHandleFormChange,
+  submit: addLead.addLeadSubmitForm,
+  clear: addLead.addLeadClearForm,
+})(AddLead)

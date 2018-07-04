@@ -1,7 +1,6 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
 import { types, user } from "Actions"
-
 import { createStoreAndStory } from "storybook-utils/withRouter"
 import { take } from "redux-saga/effects"
 import { toast } from "react-toastify"

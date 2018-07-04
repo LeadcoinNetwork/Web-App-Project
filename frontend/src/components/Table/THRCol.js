@@ -16,12 +16,12 @@ const THRCol = ({ field, colCount, staticColsWidth, onSort, sortedBy }) => (
     onClick={
       field.sortable && onSort
         ? () =>
-          onSort(
-            field.name,
-            !sortedBy || sortedBy.key !== field.name
-              ? "asc"
-              : sortedBy.direction === "asc" ? "desc" : "asc",
-          )
+            onSort(
+              field.name,
+              !sortedBy || sortedBy.key !== field.name
+                ? "asc"
+                : sortedBy.direction === "asc" ? "desc" : "asc",
+            )
         : undefined
     }
   >
