@@ -28,13 +28,13 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
     async (jwt, done) => {
       var user = await appLogic.models.users.tryGetUserById(jwt.id)
       if (user instanceof NotFound) {
-        LogModelActions("jwt", "login success", "unauthorized")
+        LogModelActions("jwt", "login failure", "unauthorized")
         let err = new Error("Unauthorized")
         //@ts-ignore
         err.status = 401
         done(err)
       } else {
-        LogModelActions("jwt", "login failure", user.id)
+        LogModelActions("jwt", "login success", user.id)
         done(null, user)
       }
     },
