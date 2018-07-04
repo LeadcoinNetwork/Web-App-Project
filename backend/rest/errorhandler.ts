@@ -1,3 +1,5 @@
+import LogModelActions from "../models/log-model-actions/log-model-actions"
+
 export function start(app) {
   app.use((err, req, res, next) => {
     // customize Joi validation errors
@@ -6,10 +8,20 @@ export function start(app) {
       err.status = 400
     }
 
-    // respond with json body
-    res.status(err.status || 500).json({
-      error: err.message,
-    })
-    next(err)
+    var status = err.status || 500
+
+    LogModelActions("Error", err)
+
+    if (status == 500) {
+      res
+      res.statusMessage = "Unexpected failure. We have been notified."
+      res
+        .status(500)
+        .json({ error: "Unexpected failure. We have been notified." })
+    } else {
+      res.status(status).json({
+        error: err.message,
+      })
+    }
   })
 }
