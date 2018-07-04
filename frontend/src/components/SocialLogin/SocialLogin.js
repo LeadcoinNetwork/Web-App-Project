@@ -1,12 +1,12 @@
 import React from "react"
 
-const SocialLogin = ({ provider }) => (
+const SocialLogin = ({ connectWithText, provider }) => (
   <a
     className="ldc-social-login"
     href={`${process.env.BACKEND}/auth/${provider}`}
   >
     <i className={`fab fa-${provider}`} />
-    connect with {provider}
+    {connectWithText} {provider}
   </a>
 )
 

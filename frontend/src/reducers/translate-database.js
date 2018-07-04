@@ -122,4 +122,19 @@ export default {
   "Login Here": {
     en: "Login Here",
   },
+  "Login": {
+    en: "Login",
+  },
+  "connect with": {
+    en: "connect with",
+  },
+  "Or enter your details:": {
+    en: "Or enter your details:",
+  },
+  "Remember me": {
+    en: "Remember me",
+  },
+  "Forgot your password?": {
+    en: "Forgot your password?",
+  },
 }
