@@ -92,9 +92,6 @@ export default {
   "Fill your Profile": {
     en: "Fill your Profile",
   },
-  "Wait": {
-    en: "Wait",
-  },
   "Why do you want to Dispute?": {
     en: "Why do you want to Dispute?",
   },

@@ -55,7 +55,10 @@ class BuyLeads extends React.Component {
       <>
         <h1>{t("Buy Leads")}</h1>
         <Table
-          fields={this.props.fields}
+          fields={this.props.fields.map((field) => ({
+            ...field,
+            name: t(field.name),
+          }))}
           records={this.props.leads.list}
           buttons={this.getButtons(this.props.leads.selected.size)}
           setSelectedRecords={this.setSelectedRecords}
