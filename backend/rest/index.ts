@@ -25,6 +25,10 @@ interface props {
   frontend: string
 }
 
+declare var Zone: any
+require("zone.js")
+
+import * as LogModelActions from "../models/log-model-actions/log-model-actions"
 export default class RestServer {
   private appLogic: AppLogic
   private frontend
@@ -45,15 +49,17 @@ export default class RestServer {
       console.log("Allowing orpha/n SSL certificates")
       process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
     }
-
     var expressApp: ExpressInterface = express()
 
+    // Log of request and response
+    expressApp.use(LogModelActions.expressMiddleware)
+
     expressApp.use((req, res, next) => {
-      if (process.env.NODE_ENV != "test") {
-        console.log("REQUEST: " + req.method + " " + req.url)
-      }
+      // Uncommet below lines to test errors in express
+      // eval("sdf()")
       next()
     })
+
     // ROUTES
     expressApp.use(bodyParser.json())
     expressApp.use(cookieParser())
