@@ -27,86 +27,8 @@ const mock_field_list = [
 ]
 // ---
 
-const mock_records = [
-  {
-    date: "01/07/2018",
-    name: "mock record 1",
-    phone: "03-67674321",
-    email: "email@email.com",
-    state: "A",
-    city: "B",
-    "property type": "C",
-    size: "10",
-    budget: "1",
-    bedrooms: "1",
-    floor: "1",
-    specification: "",
-  },
-  {
-    date: "02/07/2018",
-    name: "mock record 2",
-    phone: "03-67674321",
-    email: "email@email.com",
-    state: "C",
-    city: "A",
-    "property type": "B",
-    size: "11",
-    budget: "2",
-    bedrooms: "1",
-    floor: "3",
-    specification: "",
-  },
-  {
-    date: "03/07/2018",
-    name: "mock record 3",
-    phone: "03-67674321",
-    email: "email@email.com",
-    state: "B",
-    city: "C",
-    "property type": "A",
-    size: "11",
-    budget: "2",
-    bedrooms: "1",
-    floor: "3",
-    specification: "",
-  },
-  {
-    date: "04/07/2018",
-    name: "mock record 4",
-    phone: "03-67674321",
-    email: "email@email.com",
-    state: "B",
-    city: "C",
-    "property type": "A",
-    size: "11",
-    budget: "4",
-    bedrooms: "2",
-    floor: "1",
-    specification: "",
-  },
-  {
-    date: "02/07/2018",
-    name: "mock record 5",
-    phone: "03-67674321",
-    email: "email@email.com",
-    state: "B",
-    city: "C",
-    "property type": "A",
-    size: "11",
-    budget: "4",
-    bedrooms: "2",
-    floor: "2",
-    specification: "",
-  },
-]
-
 const done = a => {
   console.log(a)
-}
-
-const validateLead = (lead: Lead) => {
-  //TODO: smthing
-  return lead.email
 }
 
 export function start({
@@ -116,14 +38,7 @@ export function start({
   appLogic: AppLogic
   expressApp: Express.Express
 }) {
-  /*
-  expressApp.get("/auth/confirm-email-update", confirmEmailUpdate)
-  expressApp.get(
-    "/auth/resend-email",
-    passport.authenticate("jwt", authOptions),
-    resendEmail,
-  )
-  */
+
   expressApp.post(
     "/leads/:id/remove",
     passport.authenticate("jwt", authOptions),
@@ -147,14 +62,28 @@ export function start({
     ;(async () => {
       const { user } = req
       const { lead }: { lead: Lead } = req.body
-      if (lead && validateLead(lead)) {
+      if (lead) {
         lead.owner_id = user.id
-        const response = await appLogic.leads.AddLead(lead)
-        res.json({ response })
+        appLogic.leads
+          .AddLead(lead)
+          .then((response) => {
+            res.json({ response })
+          })
+          .catch((err) => {
+            res.status(400)
+            if (err.sqlMessage) {
+              res.send({ error: err.sqlMessage })
+            } else {
+              res.send({ error: err.message })
+            }
+          })
       } else {
         return next()
       }
-    })().catch(done)
+    })().catch((err) => {
+      res.status(400)
+      res.send({ error: err.message })
+    })
   }
 
   expressApp.get(
@@ -165,6 +94,7 @@ export function start({
   async function buy_leads(req, res, next) {
     ;(async () => {
       /*
+      TODO: buy links
       */
       return next()
     })().catch(done)

@@ -40,6 +40,6 @@ storiesOf("Containers/AddLead", module)
       loggedIn: true,
     })
     store.dispatch(actions.addLead.addLeadAddError("size", "too short"))
-    store.dispatch(actions.addLead.addLeadAddError("telephone", "is not valid"))
+    store.dispatch(actions.addLead.addLeadAddError("phone", "is not valid"))
     return story
   })
