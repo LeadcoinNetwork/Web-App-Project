@@ -9,8 +9,10 @@
   "license": "MIT",
   "dependencies": {
     "@types/superagent": "^3.8.0",
+    "@types/zone.js": "^0.5.12",
     "bcrypt": "^2.0.1",
     "body-parser": "^1.18.2",
+    "chalk": "^2.4.1",
     "commander": "^2.15.1",
     "cookie-parser": "^1.4.3",
     "csv": "^3.1.0",
@@ -28,9 +30,11 @@
     "passport-linkedin-oauth2": "^1.5.0",
     "passport-local": "^1.0.0",
     "promise-mysql": "^3.2.1",
+    "shortid": "^2.2.8",
     "socket.io": "^2.1.1",
     "superagent": "^3.8.3",
     "typescript": "^2.9.2",
+    "zone.js": "^0.8.26",
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
@@ -57,10 +61,7 @@
     "ts-node": "^6.0.3"
   },
   "jest": {
-    "testMatch": [
-      "**/*.test.js",
-      "**/*.test.ts"
-    ],
+    "testMatch": ["**/*.test.js", "**/*.test.ts"],
     "globals": {
       "ts-jest": {
         "tsConfigFile": "tsconfig.json"
@@ -70,11 +71,7 @@
       "^@/(.*)": "<rootDir>/$1"
     },
     "bail": true,
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
+    "moduleFileExtensions": ["ts", "tsx", "js"],
     "transform": {
       "^.+\\.(ts|tsx)$": "ts-jest"
     }
@@ -86,9 +83,7 @@
     "precommit": "pretty-quick --staged"
   },
   "nodemonConfig": {
-    "ignore": [
-      "upload/*"
-    ]
+    "ignore": ["upload/*"]
   },
   "bugs": {
     "url": "https://github.com/LeadcoinNetwork/leadcoin-web/issues"

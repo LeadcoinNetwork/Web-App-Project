@@ -11,22 +11,22 @@ export default {
   "Public Fields": {
     en: "Public Fields",
   },
-  "date": {
+  date: {
     en: "date",
   },
-  "name": {
+  name: {
     en: "name",
   },
-  "phone": {
+  phone: {
     en: "phone",
   },
-  "email": {
+  email: {
     en: "email",
   },
-  "state": {
+  state: {
     en: "state",
   },
-  "city": {
+  city: {
     en: "city",
   },
   "property type": {
@@ -35,37 +35,37 @@ export default {
   "size (SqFt)": {
     en: "size (SqFt)",
   },
-  "budget": {
+  budget: {
     en: "budget",
   },
-  "rooms": {
+  rooms: {
     en: "rooms",
   },
-  "floor": {
+  floor: {
     en: "floor",
   },
-  "specification": {
+  specification: {
     en: "specification",
   },
   "lead price": {
     en: "lead price",
   },
-  "status": {
+  status: {
     en: "status",
   },
   "I AGREE TO THE TERMS": {
     en: "I AGREE TO THE TERMS",
   },
-  "Submit": {
+  Submit: {
     en: "Submit",
   },
-  "Clear": {
+  Clear: {
     en: "Clear",
   },
-  "Balance": {
+  Balance: {
     en: "Balance",
   },
-  "Withdraw": {
+  Withdraw: {
     en: "Withdraw",
   },
   "Buy Leads": {
@@ -80,22 +80,61 @@ export default {
   "Shopping Cart is Empty": {
     en: "Shopping Cart is Empty",
   },
-  "Total": {
+  Total: {
     en: "Total",
   },
-  "Checkout": {
+  Checkout: {
     en: "Checkout",
   },
-  "Processing": {
+  Processing: {
     en: "Processing",
   },
   "Fill your Profile": {
     en: "Fill your Profile",
   },
-  "Wait": {
-    en: "Wait",
-  },
   "Why do you want to Dispute?": {
     en: "Why do you want to Dispute?",
+  },
+  "Please verify your email": {
+    en: "Please verify your email",
+  },
+  "Verification email sent to": {
+    en: "Verification email sent to",
+  },
+  Resend: {
+    en: "Resend",
+  },
+  "Not you?": {
+    en: "Not you?",
+  },
+  Logout: {
+    en: "Logout",
+  },
+  "already have an account?": {
+    en: "already have an account?",
+  },
+  "Start Now": {
+    en: "Start Now",
+  },
+  "don't have an account?": {
+    en: "don't have an account?",
+  },
+  "Login Here": {
+    en: "Login Here",
+  },
+  Login: {
+    en: "Login",
+  },
+  "connect with": {
+    en: "connect with",
+  },
+  "Or enter your details:": {
+    en: "Or enter your details:",
+  },
+  "Remember me": {
+    en: "Remember me",
+  },
+  "Forgot your password?": {
+    en: "Forgot your password?",
   },
 }

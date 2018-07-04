@@ -117,6 +117,9 @@ section.ldc-complete-registration {
         left: calc(100% + 15px);
         top: 50%;
         transform: translateY(-50%);
+        &:nth-child(3) {
+          top: 70%;
+        }
       }
     }
   }
