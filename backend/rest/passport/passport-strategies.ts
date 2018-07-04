@@ -5,7 +5,7 @@ const ExtractJwt = require("passport-jwt").ExtractJwt
 const GoogleStrategy = require("passport-google-oauth20").Strategy
 const LinkedInStrategy = require("passport-linkedin-oauth2").Strategy
 import NotFound from "../../utils/not-found"
-
+import LogModelActions from "../../models/log-model-actions/log-model-actions"
 import AppLogic from "../../app-logic/index"
 
 // Internal Modules
@@ -28,11 +28,13 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
     async (jwt, done) => {
       var user = await appLogic.models.users.tryGetUserById(jwt.id)
       if (user instanceof NotFound) {
+        LogModelActions("jwt", "login success", "unauthorized")
         let err = new Error("Unauthorized")
         //@ts-ignore
         err.status = 401
         done(err)
       } else {
+        LogModelActions("jwt", "login failure", user.id)
         done(null, user)
       }
     },
