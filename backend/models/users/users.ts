@@ -18,6 +18,7 @@ import {
 } from "./types"
 
 class User {
+  log = LogModelActions("users")
   constructor(private sql: SQL) {}
 
   async deleteAll() {
@@ -40,9 +41,12 @@ class User {
       user2Databse.password = auth.hashPassword(user.plainPassword)
       delete user2Databse.plainPassword
     }
-    var a = LogModelActions("users", "createUser", user2Databse)
+    this.log("create user start", user2Databse)
+
     let status = await this.sql.query("INSERT INTO users SET ?", user2Databse)
-    a(status.insertId)
+
+    this.log("create user result", status.insertId)
+
     if (!status.insertId) {
       throw new Error("user not inserted")
     } else {
