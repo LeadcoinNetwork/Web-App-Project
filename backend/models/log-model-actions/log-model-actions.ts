@@ -53,7 +53,8 @@ export default function LogModelAction(model, action?, data?) {
 export function expressMiddleware(req, res, next) {
   var oldWrite = res.write,
     oldEnd = res.end,
-    oldStatus = res.status
+    oldStatus = res.status,
+    oldRedirect = res.redirect
 
   var chunks = []
   var status = ""
@@ -62,6 +63,10 @@ export function expressMiddleware(req, res, next) {
     chunks.push(chunk)
 
     oldWrite.apply(res, arguments)
+  }
+  res.redirect = function(o) {
+    console.log(arguments)
+    return oldRedirect.call(res, o)
   }
   res.status = function(o) {
     status = o
@@ -73,8 +78,10 @@ export function expressMiddleware(req, res, next) {
     try {
       body = JSON.parse(body)
     } catch (err) {}
+
     LogModelAction("request", "end", {
-      status,
+      status: status || res.statusCode,
+      location: this.get("Location") || undefined,
       ...(typeof body == "object" ? body : { body }),
     })
 
