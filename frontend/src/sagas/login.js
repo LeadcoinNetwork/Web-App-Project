@@ -3,11 +3,6 @@ import * as actions from "Actions"
 import { select, take, put, call } from "redux-saga/effects"
 import { push } from "react-router-redux"
 
-const disabledPages = {
-  PROFILE_NOT_COMPLETED: "/complete-registration",
-  EMAIL_NOT_VERIFIED: "/email-confirmation",
-}
-
 import API from "../api/index"
 /**
  * @param api {API} - this is this paramters
