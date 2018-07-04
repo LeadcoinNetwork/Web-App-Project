@@ -3,6 +3,7 @@ import EmailSenderAbstraction from "./abstraction"
 const mailer = require("nodemailer-promise")
 import LogModelActions from "../log-model-actions/log-model-actions"
 class EmailSenderNodeMailer implements EmailSenderAbstraction {
+  log = LogModelActions("nodemailer")
   mailer
   host
   port
@@ -33,14 +34,14 @@ class EmailSenderNodeMailer implements EmailSenderAbstraction {
     subject: string
     html: string
   }) {
-    var a = LogModelActions("SendEmail", "Send", arguments[0])
+    this.log("Send Start", arguments[0])
     var res = await this.mailer({
       from,
       to,
       subject,
       html,
     })
-    a(res)
+    this.log("Send End", res)
     return res
   }
 }
