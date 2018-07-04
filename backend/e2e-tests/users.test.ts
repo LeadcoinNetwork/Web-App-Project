@@ -41,7 +41,7 @@ test("POST /user sign up using REAL username and password", async () => {
     password: "KGHasdF987654&*^%$#",
     email: chance.email(),
   })
-  expect(typeof x.body.user).toEqual("number")
+  expect(typeof x.body.user.id).toEqual("number")
 })
 
 describe("POST /user is sending emails that contain the right link", () => {
@@ -56,7 +56,7 @@ describe("POST /user is sending emails that contain the right link", () => {
       password: "KGHasdF987654&*^%$#",
       email: chance.email(),
     })
-    var userid = x.body.user
+    var userid = x.body.user.id
     expect(typeof userid).toEqual("number")
 
     var user = await appLogic.models.users.mustGetUserById(userid)

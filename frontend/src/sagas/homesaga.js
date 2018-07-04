@@ -11,16 +11,24 @@ export default function gotoDefaultHome() {
   return function*() {
     while (true) {
       yield take(types.GOTO_DEFAULT_HOME)
-      var user = yield select(state => state.user)
+
+      let user = yield select(state => state.user)
+      let path = yield select(state => state.routerReducer.location.pathname)
 
       if (!user || !user.id) {
-        // User is not connected
-        yield put(push("/login"))
-      } else if (user.disabled) {
-        // user is disabled
-        yield put(push(disabledPages[user.disabled])) // redirect to disabled reason
-      } else {
-        // user is not disabled. (Active)
+        if (path !== "/signup" && path !== "/forgot-password") {
+          yield put(push("/login"))
+        }
+      } else if (user.disabled && path !== disabledPages[user.disabled]) {
+        yield put(push(disabledPages[user.disabled]))
+      } else if (
+        path &&
+        (path === "/" ||
+          path === "login" ||
+          path === "/signup" ||
+          path === "/email-confirmation" ||
+          path === "/complete-registration")
+      ) {
         yield put(push("/buy-leads"))
       }
     }

@@ -1,5 +1,6 @@
 import * as auth from "../user-auth/user-auth"
 const mysql = require("mysql")
+import LogModelActions from "../log-model-actions/index"
 
 const validate = require("../user-validate/user-validate")
 import SQL from "../mysql-pool/mysql-pool"
@@ -39,7 +40,9 @@ class User {
       user2Databse.password = auth.hashPassword(user.plainPassword)
       delete user2Databse.plainPassword
     }
+    var a = LogModelActions("users", "createUser", user2Databse)
     let status = await this.sql.query("INSERT INTO users SET ?", user2Databse)
+    a(status.insertId)
     if (!status.insertId) {
       throw new Error("user not inserted")
     } else {
