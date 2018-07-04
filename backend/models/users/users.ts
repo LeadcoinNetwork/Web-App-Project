@@ -1,6 +1,6 @@
 import * as auth from "../user-auth/user-auth"
 const mysql = require("mysql")
-import LogModelActions from "../log-model-actions/index"
+import LogModelActions from "../log-model-actions/log-model-actions"
 
 const validate = require("../user-validate/user-validate")
 import SQL from "../mysql-pool/mysql-pool"

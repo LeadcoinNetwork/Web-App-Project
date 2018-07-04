@@ -1,9 +1,9 @@
 var chalk = require("chalk")
 var i = 0
-export default function LopgModelAction(model, action, data) {
+export default function LogModelAction(model, action, data) {
   var current = i++
   if (process.env.NODE_ENV == "test") {
-    return
+    return () => {}
   }
   console.log(
     `${model}:${action}: (${current}) ${
