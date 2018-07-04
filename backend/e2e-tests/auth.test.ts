@@ -19,5 +19,6 @@ test("resend email endpoint does send email and with correct link", async () => 
   var _user = await users.tryGetUserById(user.id)
   let key = _user.emailConfirmationKey
   let emailHTML = emailSenderMock.lastCall().html
+  expect(emailHTML).toMatch("https://testbackend")
   expect(emailHTML).toMatch("/auth/confirm-email-update?key=" + key)
 })

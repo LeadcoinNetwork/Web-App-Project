@@ -80,7 +80,7 @@ export default class AppLogic {
     if (props.emailCreator) {
       this.models.emailCreator = props.emailCreator
     } else {
-      this.models.emailCreator = new EmailCreator({ backend: "", from: "" })
+      this.models.emailCreator = new EmailCreator({ backend: this.config.backend, from: this.config.mail.from })
     }
   }
 
