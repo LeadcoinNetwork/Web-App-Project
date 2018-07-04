@@ -110,4 +110,16 @@ export default {
   "Logout": {
     en: "Logout",
   },
+  "already have an account?": {
+    en: "already have an account?",
+  },
+  "Start Now": {
+    en: "Start Now",
+  },
+  "don't have an account?": {
+    en: "don't have an account?",
+  },
+  "Login Here": {
+    en: "Login Here",
+  },
 }
