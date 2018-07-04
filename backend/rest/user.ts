@@ -24,7 +24,7 @@ export function start({
 
   expressApp
     .route("/me")
-    .all(passport.authenticate("jwt", authOptions))
+    .all(passport.authenticate("jwt", { session: false, failWithError: false }))
     .get(get)
 
   expressApp
