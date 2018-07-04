@@ -95,4 +95,19 @@ export default {
   "Why do you want to Dispute?": {
     en: "Why do you want to Dispute?",
   },
+  "Please verify your email": {
+    en: "Please verify your email",
+  },
+  "Verification email sent to": {
+    en: "Verification email sent to",
+  },
+  "Resend": {
+    en: "Resend",
+  },
+  "Not you?": {
+    en: "Not you?",
+  },
+  "Logout": {
+    en: "Logout",
+  },
 }
