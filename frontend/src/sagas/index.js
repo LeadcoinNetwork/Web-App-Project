@@ -1,5 +1,6 @@
 import signup from "./signup"
 import login from "./login"
+import forgotPassword from "./forgotPassword"
 import loginOnBoot from "./loginOnBoot"
 import logout from "./logout"
 import homesaga from "./homesaga"
@@ -28,6 +29,7 @@ var api = new API(request)
 export default function* rootSaga() {
   var sagas = [
     login,
+    forgotPassword,
     addLead,
     completeRegistration,
     emailConfirmation,

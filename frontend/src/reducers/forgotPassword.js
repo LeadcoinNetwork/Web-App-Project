@@ -19,7 +19,7 @@ const forgotPassword = (state = initialState, action) => {
       }
     case types.FORGOT_PASSWORD_FINISH:
       return {
-        ...state,
+        email: "",
         loading: false,
       }
     default:

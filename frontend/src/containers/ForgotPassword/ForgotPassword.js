@@ -14,10 +14,15 @@ const ForgotPassword = ({ forgotPassword, handleChange, submit }) => (
     <TextField
       placeholder="Email"
       name="email"
+      type="email"
       value={forgotPassword.email}
       onChange={e => handleChange("email", e.target.value)}
     />
-    <Button label="Send Reset Link" onClick={submit} />
+    <Button
+      label="Send Reset Link"
+      onClick={submit}
+      disabled={!forgotPassword.email}
+    />
   </section>
 )
 

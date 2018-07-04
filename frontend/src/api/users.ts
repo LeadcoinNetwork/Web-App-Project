@@ -15,6 +15,10 @@ export default class UserApi {
   async resendEmail() {
     return await this.request(methods.get, "/auth/resend-email")
   }
+  async forgotPassword(email) {
+    // TODO: change url
+    return await this.request(methods.post, "/auth/forgot-password", { email })
+  }
   async completeProfile(data: { company; phone; country }) {
     return this.request(methods.post, "/complete-profile", data)
   }
