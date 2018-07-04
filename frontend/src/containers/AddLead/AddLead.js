@@ -43,7 +43,9 @@ class AddLead extends React.Component {
 
   render() {
     const { db_fields, loading } = this.props
-    if (!db_fields.private) return <div> LOADING </div>
+    if (!db_fields.private.length) {
+      return <div>{t("Loading...")}</div>
+    }
     const terms = this.renderTerms()
     return (
       <div className="add_lead">

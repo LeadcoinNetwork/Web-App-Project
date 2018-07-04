@@ -7,6 +7,7 @@ import SocialLogin from "Components/SocialLogin"
 import { Link } from "react-router-dom"
 import { login } from "Actions"
 import tiger from "Images/tiger.jpg"
+import t from "Containers/translate"
 
 class Login extends React.Component {
   handleChange = event => {
@@ -28,13 +29,13 @@ class Login extends React.Component {
     return (
       <section className="ldc-login">
         <div className="l-main">
-          <h1>Login</h1>
+          <h1>{t("Login")}</h1>
           <div className="lm-social-buttons">
-            <SocialLogin provider="google" />
-            {/* <SocialLogin provider="linkedin" /> */}
+            <SocialLogin connectWithText={t("connect with")} provider="google" />
+            {/* <SocialLogin connectWithText={t("connect with")} provider="linkedin" /> */}
           </div>
           <div className="lm-form">
-            <h4>Or enter your details:</h4>
+            <h4>{t("Or enter your details:")}</h4>
             <TextField
               placeholder="Email"
               type="email"
@@ -52,30 +53,30 @@ class Login extends React.Component {
             <p className="lmf-remember">
               <Checkbox
                 name="remember"
-                label="Remember me"
+                label={t("Remember me")}
                 checked={remember}
                 onClick={this.handleChange}
               />
-              <Link to="/fotgot-password">Forgot your password?</Link>
+              <Link to="/forgot-password">{t("Forgot your password?")}</Link>
             </p>
             {error && this.getErrors(error)}
             <Button
-              label="login"
+              label={t("Login")}
               loading={loading}
               onClick={this.props.submit}
             />
           </div>
         </div>
         <aside>
-          <h3>LeadCoin is the promised land for marketers</h3>
+          <h3>{t("LeadCoin is the promised land for marketers")}</h3>
           <q>
-            Collaborating with other marketers & sharing leads is 10X more
-            effcient than giving away my budget to Google & Facebook.
+            {t(`Collaborating with other marketers & sharing leads is 10X more
+            effcient than giving away my budget to Google & Facebook.`)}
           </q>
           <label style={{ backgroundImage: `url(${tiger})` }}>
-            <span>
-              Meir Cohen<br />CEO of Crypto
-            </span>
+            {/* <span> */}
+              {t("Meir Cohen")}<br />{t("CEO of Crypto")}
+            {/* </span> */}
           </label>
         </aside>
       </section>

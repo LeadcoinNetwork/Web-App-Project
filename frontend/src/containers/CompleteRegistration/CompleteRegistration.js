@@ -61,15 +61,15 @@ class CompleteRegistration extends React.Component {
           </div>
         </div>
         <aside>
-          <h3>LeadCoin is the promised land for marketers</h3>
+          <h3>{t("LeadCoin is the promised land for marketers")}</h3>
           <q>
-            Collaborating with other marketers & sharing leads is 10X more
-            effcient than giving away my budget to Google & Facebook.
+            {t(`Collaborating with other marketers & sharing leads is 10X more
+            effcient than giving away my budget to Google & Facebook.`)}
           </q>
           <label style={{ backgroundImage: `url(${tiger})` }}>
-            <span>
-              Meir Cohen<br />CEO of Crypto
-            </span>
+            {/* <span> */}
+            {t("Meir Cohen")}<br />{t("CEO of Crypto")}
+            {/* </span> */}
           </label>
         </aside>
       </section>

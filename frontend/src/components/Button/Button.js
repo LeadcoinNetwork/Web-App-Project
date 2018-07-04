@@ -1,11 +1,10 @@
 import React from "react"
-import t from "Containers/translate"
 
 const Button = ({
   type,
   disabled,
   label,
-  loadingLabel = t("Wait"),
+  loadingLabel,
   loading,
   onClick,
   children,
@@ -23,7 +22,7 @@ const Button = ({
       disabled={disabled || loading}
       onClick={onClick}
     >
-      {loading ? loadingLabel : label}
+      {loading && loadingLabel ? loadingLabel : label}
       {children}
     </button>
   )

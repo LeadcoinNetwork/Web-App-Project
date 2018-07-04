@@ -92,10 +92,49 @@ export default {
   "Fill your Profile": {
     en: "Fill your Profile",
   },
-  "Wait": {
-    en: "Wait",
-  },
   "Why do you want to Dispute?": {
     en: "Why do you want to Dispute?",
+  },
+  "Please verify your email": {
+    en: "Please verify your email",
+  },
+  "Verification email sent to": {
+    en: "Verification email sent to",
+  },
+  "Resend": {
+    en: "Resend",
+  },
+  "Not you?": {
+    en: "Not you?",
+  },
+  "Logout": {
+    en: "Logout",
+  },
+  "already have an account?": {
+    en: "already have an account?",
+  },
+  "Start Now": {
+    en: "Start Now",
+  },
+  "don't have an account?": {
+    en: "don't have an account?",
+  },
+  "Login Here": {
+    en: "Login Here",
+  },
+  "Login": {
+    en: "Login",
+  },
+  "connect with": {
+    en: "connect with",
+  },
+  "Or enter your details:": {
+    en: "Or enter your details:",
+  },
+  "Remember me": {
+    en: "Remember me",
+  },
+  "Forgot your password?": {
+    en: "Forgot your password?",
   },
 }

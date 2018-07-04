@@ -11,6 +11,7 @@ import notificationsTable from "./notificationsTable"
 import signup from "./signup"
 import completeRegistration from "./completeRegistration"
 import login from "./login"
+import forgotPassword from "./forgotPassword"
 import balance from "./balance"
 import userSettings from "./userSettings"
 import userMenu from "./userMenu"
@@ -40,6 +41,7 @@ const rootReducer = combineReducers({
   signup,
   completeRegistration,
   login,
+  forgotPassword,
   userSettings,
   userMenu,
   emailConfirmation,
