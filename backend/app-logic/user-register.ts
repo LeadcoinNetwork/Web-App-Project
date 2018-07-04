@@ -48,6 +48,14 @@ export default class UserRegister {
     }
   }
 
+  async resendConfirmationEmail(user) {
+    var { users, emailSender, emailCreator } = this.models
+    const {emailConfirmationKey} = user
+    var str = emailCreator.confirmEmail(user, emailConfirmationKey)
+    await emailSender.send(str)
+    return users.update(user.id, {emailConfirmationKey})
+  }
+
   async completeProfile(user_id, completeProfile: ICompleteProfile) {
     var { users } = this.models
     var { company, phone, country } = completeProfile

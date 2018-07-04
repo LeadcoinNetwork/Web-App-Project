@@ -18,7 +18,7 @@ export function start({
   expressApp: Express.Express
 }) {
   expressApp.post("/auth/logout", logout)
-  expressApp.get("/auth/confirm-email", confirmEmail, login)
+  //expressApp.get("/auth/confirm-email", confirmEmail, login)
   expressApp.get("/auth/confirm-email-update", confirmEmailUpdate)
   expressApp.post("/auth/forgot-password", forgotPassword)
   expressApp.post("/auth/reset-password", resetPassword, login)
@@ -53,17 +53,6 @@ export function start({
     login,
   )
 
-  async function resendEmail(req, res, next) {
-    // try {
-    //   let _user = req.user
-    //   // let token = await userActions.login(_user.id)
-    //   await emailCreator.confirmEmail(_user, token)
-    //   res.json({ user: _user, token })
-    // } catch (e) {
-    //   next(e)
-    // }
-  }
-
   async function login(req, res, next) {
     if (req.user && req.user.id) {
       var token = await appLogic.userLogin.login(req.user.id)
@@ -80,22 +69,15 @@ export function start({
     res.json({ logout: "success" })
   }
 
-  async function confirmEmail(req, res, next) {
-    // try {
-    //   let { token } = req.query
-    //   // let _user = await userActions.confirmEmail(token)
-    //   if (_user) {
-    //     req.user = _user
-    //     next()
-    //   } else {
-    //     res.status(404).json({
-    //       path: "confirmMail",
-    //       error: "Not Found",
-    //     })
-    //   }
-    // } catch (e) {
-    //   next(e)
-    // }
+  async function resendEmail(req, res, next) {
+    ;(async () => {
+      const {user} = req
+      appLogic.userRegister.resendConfirmationEmail(user)
+      res.send({ ok: true })
+    })().catch((err) => {
+      res.status(400)
+      res.send({ error: err.message })
+    })
   }
 
   async function confirmEmailUpdate(req, res, next) {
