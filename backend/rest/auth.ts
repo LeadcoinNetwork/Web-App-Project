@@ -67,7 +67,10 @@ export function start({
     if (req.user && req.user.id) {
       var token = await appLogic.userLogin.login(req.user.id)
       res.cookie("token", token)
-      res.send({ ok: true })
+      const {provider} = req.user
+      if (provider)
+        return res.redirect(appLogic.config.frontend)
+      res.send({user: req.user})
     } else {
       res.status(409).send({ error: "invalid" })
     }
