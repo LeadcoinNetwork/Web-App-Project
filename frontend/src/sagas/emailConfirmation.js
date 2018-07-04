@@ -11,11 +11,7 @@ export default function emailConfirmation(api) {
 
       if (ans.error) {
         yield put(
-          actions.app.notificationShow(
-            // TEMP
-            "Lorem ipsum",
-            "error",
-          ),
+          actions.app.notificationShow(ans.error, "error"),
         )
       } else {
         yield put(

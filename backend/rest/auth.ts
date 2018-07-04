@@ -72,8 +72,15 @@ export function start({
   async function resendEmail(req, res, next) {
     ;(async () => {
       const {user} = req
-      appLogic.userRegister.resendConfirmationEmail(user)
-      res.send({ ok: true })
+      appLogic.userRegister
+      .resendConfirmationEmail(user)
+      .then(() => {
+        res.send({ ok: true })
+      })
+      .catch((err) => {
+        res.status(400)
+        res.send({ error: err.message })
+      })
     })().catch((err) => {
       res.status(400)
       res.send({ error: err.message })

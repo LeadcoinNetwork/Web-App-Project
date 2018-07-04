@@ -13,8 +13,7 @@ export default class UserApi {
     return this.request(methods.post, "/user", data)
   }
   async resendEmail() {
-    // TEMP
-    return Promise.resolve({})
+    return await this.request(methods.get, "/auth/resend-email")
   }
   async completeProfile(data: { company; phone; country }) {
     return this.request(methods.post, "/complete-profile", data)
