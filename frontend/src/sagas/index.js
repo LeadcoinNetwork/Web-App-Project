@@ -1,7 +1,7 @@
 import signup from "./signup"
 import login from "./login"
 import forgotPassword from "./forgotPassword"
-import loginOnBoot from "./loginOnBoot"
+import fetchUserToState from "./fetchUserToState"
 import logout from "./logout"
 import homesaga from "./homesaga"
 import snackbar from "./snackbar"
@@ -9,13 +9,14 @@ import emailConfirmation from "./emailConfirmation"
 import csvMapping from "./csvMapping"
 import completeRegistration from "./completeRegistration.js"
 import addLead from "./addLead"
+import redirectIfNotAllowed from "./redirectIfNotAllowed"
 import { spawn } from "redux-saga/effects"
 
 import * as superagent from "superagent"
 
 import API from "../api/index"
 
-// Create a request object for all the API'sץ
+// Create a request object for all the API's
 // This request object add the default backend URLs, and do other defaults.
 // This request object is bein used only by the saga's on the frontend.
 var request = function(method, url, data) {
@@ -28,6 +29,7 @@ var api = new API(request)
 
 export default function* rootSaga() {
   var sagas = [
+    redirectIfNotAllowed,
     login,
     forgotPassword,
     addLead,
@@ -35,7 +37,7 @@ export default function* rootSaga() {
     emailConfirmation,
     logout,
     homesaga,
-    loginOnBoot,
+    fetchUserToState,
     signup,
     csvMapping,
     snackbar,

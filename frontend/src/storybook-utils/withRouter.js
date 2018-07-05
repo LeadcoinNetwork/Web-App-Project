@@ -8,7 +8,7 @@ import rootReducer from "Reducers"
 import Root from "containers/Root"
 import createSagaMiddleware from "redux-saga"
 import RootSaga from "sagas"
-import { routerMiddleware, ConnectedRouter } from "react-router-redux"
+import { routerMiddleware, ConnectedRouter } from "connected-react-router"
 import { createBrowserHistory, createMemoryHistory } from "history"
 import { user } from "Actions"
 

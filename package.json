@@ -7,9 +7,6 @@
   "name": "leadcoin-web",
   "scripts": {
     "precommit": "pretty-quick --staged",
-    "postmerge": "npm run githook",
-    "postcheckout": "node git-hook-auto-npm-install.js",
-    "githook": "node git-hook-auto-npm-install.js",
     "prettier-all": "prettier --write **/*.js"
   },
   "version": "1.0.0",

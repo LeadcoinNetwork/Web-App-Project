@@ -68,7 +68,9 @@ class EmailCreator {
         user.fname +
         "!</h2>" +
         "<p>Per your recent request we have issued a new temporary password for you. </br> " +
-        "your new password: " + password + "</br>" +
+        "your new password: " +
+        password +
+        "</br>" +
         "<b> This password is temporary, please change it as soon as possible </b>" +
         "</p>",
     }
