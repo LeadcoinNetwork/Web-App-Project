@@ -52,14 +52,14 @@ export function start({
     if (user instanceof NotFound) {
       res.status(409).send({ error: "invalid" })
     } else {
-      var token = await appLogic.auth.login(user.id)
+      var token = await appLogic.auth.loginUserNameAndPassword(user.id)
       res.cookie("token", token)
       res.send({ user })
     }
   }
   async function login(req, res, next) {
     if (req.user && req.user.id) {
-      var token = await appLogic.auth.login(req.user.id)
+      var token = await appLogic.auth.loginUserNameAndPassword(req.user.id)
       res.cookie("token", token)
       const { provider } = req.user
       if (provider) return res.redirect(appLogic.config.frontend)

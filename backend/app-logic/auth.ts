@@ -22,8 +22,12 @@ interface ICompleteProfile {
 export default class Auth {
   constructor(private models: IModels) {}
 
-  async login(user_id): Promise<string> {
+  private async login(user_id): Promise<string> {
     return userAuth.generateJWT(user_id, this.models.config.auth.jwt.secret)
+  }
+
+  async loginUserNameAndPassword(user_id): Promise<string> {
+    return this.login(user_id)
   }
 
   async LoginSocial({ provider_id, provider, email, fname, lname }) {
@@ -53,7 +57,7 @@ export default class Auth {
         }
         var result = await this.models.users.createUser(user)
 
-        return true
+        return this.login(result)
       } else {
         // user email exists, but user never signup using SSO
 
@@ -62,7 +66,7 @@ export default class Auth {
           provider: provider,
         }
         await this.models.users.update(user.id, update)
-        return true
+        return this.login(user.id)
       }
     } else {
       // user already logged in using same provider.
@@ -83,7 +87,7 @@ export default class Auth {
       if (Object.keys(update).length) {
         await this.models.users.update(user.id, update)
       }
-      return true
+      return this.login(user.id)
     }
   }
   async register(

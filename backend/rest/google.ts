@@ -43,13 +43,14 @@ export function start({
       //   headers: { Authorization: "Bearer " + ans.access_token },
     })
     var profile = ans2
-    await appLogic.auth.LoginSocial({
+    var token = await appLogic.auth.LoginSocial({
       provider_id: profile.id,
       provider: "google",
       email: profile.emails[0].value,
       fname: profile.name.givenName,
       lname: profile.name.familyName,
     })
+    res.cookie("token", token)
     res.redirect(req.query.state)
   })
 }
