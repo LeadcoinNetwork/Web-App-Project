@@ -56,7 +56,7 @@ class Login extends React.Component {
                 checked={remember}
                 onClick={this.handleChange}
               />
-              <Link to="/fotgot-password">Forgot your password?</Link>
+              <Link to="/forgot-password">Forgot your password?</Link>
             </p>
             {error && this.getErrors(error)}
             <Button
