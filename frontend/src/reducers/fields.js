@@ -57,8 +57,8 @@ const initialState = [
     name: "property type",
     sortable: true,
     editable: false,
-    maxWidth: "auto",
-    minWidth: "auto",
+    maxWidth: "130px",
+    minWidth: "130px",
   },
   {
     key: "size",
@@ -105,8 +105,8 @@ const initialState = [
     name: "lead price",
     sortable: true,
     editable: false,
-    maxWidth: "auto",
-    minWidth: "auto",
+    maxWidth: "100px",
+    minWidth: "100px",
   },
   {
     key: "status",
