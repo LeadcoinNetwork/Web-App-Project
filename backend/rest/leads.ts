@@ -48,7 +48,15 @@ export function start({
     ;(async () => {
       const { user } = req
       const { lead_id }: { lead_id: number } = req.params.id
-      const res = appLogic.leads.removeLead(lead_id)
+      appLogic.leads.removeLead(lead_id)
+      .then(() => {
+        res.status(200)
+        res.send({ ok: true })
+      })
+      .catch((err) => {
+        res.status(400)
+        res.send({ error: err.message })
+      })
       next()
     })().catch(done)
   }
@@ -109,9 +117,18 @@ export function start({
   async function bought_leads(req, res, next) {
     ;(async () => {
       const { user } = req
-      const { sort_by } = req.body
-      const response = await appLogic.leads.getBoughtLeads(user.id, { sort_by })
-      if (response) return res.json(response)
+      const { sort_by, filters, page, limit } = req.body
+      await appLogic.leads
+        .getBoughtLeads(user.id, {
+          sort_by, filters, page, limit
+        })
+        .then((response) => {
+          res.json(response)
+        })
+        .catch( (err) => {
+          res.status(400)
+          res.send({ error: err.message })
+        })
       return next()
     })().catch(done)
   }
@@ -125,12 +142,18 @@ export function start({
   async function sold_leads(req, res, next) {
     ;(async () => {
       const { user } = req
-      const { sort_by, filters } = req.body
-      const response = await appLogic.leads.getSoldLeads(user.id, {
-        sort_by,
-        filters,
-      })
-      if (response) return res.json(response)
+      const { sort_by, filters, page, limit } = req.body
+      await appLogic.leads
+        .getSoldLeads(user.id, {
+          sort_by, filters, page, limit
+        })
+        .then((response) => {
+          res.json(response)
+        })
+        .catch( (err) => {
+          res.status(400)
+          res.send({ error: err.message })
+        })
       return next()
     })().catch(done)
   }
@@ -144,12 +167,42 @@ export function start({
   async function my_leads(req, res, next) {
     ;(async () => {
       const { user } = req
-      const { sort_by, filters } = req.body
-      const response = await appLogic.leads.getMyLeads(user.id, {
-        sort_by,
-        filters,
-      })
-      if (response) return res.json(response)
+      const { sort_by, filters, page, limit } = req.body
+      await appLogic.leads
+        .getMyLeads(user.id, {
+          sort_by, filters, page, limit,
+        })
+        .then((response) => {
+          res.json(response)
+        })
+        .catch( (err) => {
+          res.status(400)
+          res.send({ error: err.message })
+        })
+      return next()
+    })().catch(done)
+  }
+  expressApp.get(
+    "/leads/all",
+    passport.authenticate("jwt", authOptions),
+    other_leads,
+  )
+
+  async function other_leads(req, res, next) {
+    ;(async () => {
+      const { user } = req
+      const { sort_by, filters, page, limit } = req.body
+      await appLogic.leads
+        .getLeadsNotOwnedByMe(user.id, {
+          sort_by, filters, page, limit
+        })
+        .then((response) => {
+          res.json(response)
+        })
+        .catch( (err) => {
+          res.status(400)
+          res.send({ error: err.message })
+        })
       return next()
     })().catch(done)
   }
