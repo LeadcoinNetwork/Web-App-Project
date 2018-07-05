@@ -58,24 +58,20 @@ class EmailCreator {
     }
   }
 
-  forgotPassword(user, token) {
+  forgotPassword(user, password) {
     return {
       to: user.email,
       from: this.from,
-      subject: "Reset Password",
+      subject: "New Password Issued",
       html:
         "<h2>Hello " +
         user.fname +
         "!</h2>" +
-        "<p>Please click " +
-        '<a href="' +
-        this.backend +
-        "/auth/reset-password?token=" +
-        token +
-        '">' +
-        "here " +
-        "</a>" +
-        "to choose a new password" +
+        "<p>Per your recent request we have issued a new temporary password for you. </br> " +
+        "your new password: " +
+        password +
+        "</br>" +
+        "<b> This password is temporary, please change it as soon as possible </b>" +
         "</p>",
     }
   }

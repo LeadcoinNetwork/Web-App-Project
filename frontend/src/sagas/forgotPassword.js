@@ -1,5 +1,5 @@
 import * as actions from "Actions"
-import { take, put } from "redux-saga/effects"
+import { select, take, put, call } from "redux-saga/effects"
 
 export default function forgotPassword(api) {
   return function*() {
@@ -7,8 +7,8 @@ export default function forgotPassword(api) {
       yield take(actions.types.FORGOT_PASSWORD_SUBMIT)
 
       yield put(actions.forgotPassword.forgotPassswordLoading())
-
-      let ans = yield api.users.forgotPassword()
+      let email = yield select(state => state.forgotPassword.email)
+      let ans = yield api.users.forgotPassword(email)
 
       yield put(actions.forgotPassword.forgotPassswordFinish())
 

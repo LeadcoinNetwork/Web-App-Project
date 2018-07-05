@@ -25,9 +25,6 @@ interface props {
   frontend: string
 }
 
-declare var Zone: any
-require("zone.js")
-
 import * as LogModelActions from "../models/log-model-actions/log-model-actions"
 import * as Google from "./google"
 

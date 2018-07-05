@@ -5,7 +5,9 @@
 var chalk = require("chalk")
 var i = 0
 declare var Zone: any
-require("zone.js")
+if (process.env.NODE_ENV != "test") {
+  require("zone.js")
+}
 var shortid = require("shortid")
 export default function LogModelAction(model, action?, data?) {
   if (typeof action == "undefined") {
@@ -51,6 +53,9 @@ export default function LogModelAction(model, action?, data?) {
  * Output to console the response.
  */
 export function expressMiddleware(req, res, next) {
+  if (process.env.NODE_ENV == "test") {
+    return next()
+  }
   var oldWrite = res.write,
     oldEnd = res.end,
     oldStatus = res.status,

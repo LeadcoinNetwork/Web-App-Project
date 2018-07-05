@@ -111,14 +111,24 @@ export function start({
     }
   }
 
+  // returns true unless critical failure for security reasons (email scraping etc)
   async function forgotPassword(req, res, next) {
-    // try {
-    //   let { email } = req.body
-    //   // await userActions.forgotPassword(email)
-    //   res.json({ ok: true })
-    // } catch (e) {
-    //   next(e)
-    // }
+    ;(async () => {
+      const { email } = req.body
+      appLogic.auth
+        .sendForgotPasswordEmail(email)
+        .then(() => {
+          res.status(200)
+          res.send({ ok: true })
+        })
+        .catch(err => {
+          res.status(200)
+          res.send({ ok: true })
+        })
+    })().catch(err => {
+      res.status(400)
+      res.send({ error: err.message })
+    })
   }
 
   async function resetPassword(req, res, next) {
