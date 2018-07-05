@@ -8,6 +8,9 @@ import * as utils from "../utils/index"
 import * as userAuth from "../models/user-auth/user-auth"
 import * as UserValidate from "../models/user-validate/user-validate"
 
+import * as Chance from "chance"
+
+const chance = new Chance()
 import AppLogic from "./index"
 
 import NotFound from "../utils/not-found"
@@ -26,7 +29,26 @@ export default class Auth {
     return userAuth.generateJWT(user_id, this.models.config.auth.jwt.secret)
   }
 
-  async LoginSocial({ provider_id, provider, email, fname, lname }) {
+  async sendForgotPasswordEmail(email): Promise<boolean> {
+    var { users, emailSender, emailCreator } = this.models
+    const user = await users.getOne({email})
+    if (user instanceof NotFound) {
+      return false
+    } else {
+      const new_password = chance.string({
+        pool: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+        length: 8
+      })
+      await this.models.users.update(user.id, {
+        password: new_password
+      })
+      var str = emailCreator.forgotPassword(user, new_password)
+      await emailSender.send(str)
+      return true
+    }
+  }
+
+  async LoginSocial({ provider_id, provider, email, fname, lname }):Promise<boolean> {
     let user = await this.models.users.getOne({
       provider_id: provider_id,
       provider: provider,
