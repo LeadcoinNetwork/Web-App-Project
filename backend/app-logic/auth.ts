@@ -3,6 +3,7 @@ import EmailSender from "../models/emailsender/abstraction"
 
 import { NewUserInterface, disabledReason } from "../models/users/types"
 import * as auth from "../models/user-auth/user-auth"
+import * as utils from "../utils/index"
 
 import * as userAuth from "../models/user-auth/user-auth"
 import * as UserValidate from "../models/user-validate/user-validate"
@@ -18,9 +19,73 @@ interface ICompleteProfile {
   phone: string
 }
 
-export default class UserRegister {
+export default class Auth {
   constructor(private models: IModels) {}
 
+  async login(user_id): Promise<string> {
+    return userAuth.generateJWT(user_id, this.models.config.auth.jwt.secret)
+  }
+
+  async LoginSocial({ provider_id, provider, email, fname, lname }) {
+    let user = await this.models.users.getOne({
+      provider_id: provider_id,
+      provider: provider,
+    })
+    if (user instanceof NotFound) {
+      // user never sign using this provider
+
+      // try to find user by email
+      let user = await this.models.users.getOne({
+        email,
+      })
+      if (user instanceof NotFound) {
+        // user never signin using same email
+
+        // create a new user
+        let user = {
+          fname,
+          lname,
+          email,
+          provider_id: provider_id,
+          provider: provider,
+          created: Date.now(),
+          role: "user",
+        }
+        var result = await this.models.users.createUser(user)
+
+        return true
+      } else {
+        // user email exists, but user never signup using SSO
+
+        let update = {
+          provider_id: provider_id,
+          provider: provider,
+        }
+        await this.models.users.update(user.id, update)
+        return true
+      }
+    } else {
+      // user already logged in using same provider.
+
+      // update user details from provider
+      let update = utils.difference(
+        {
+          fname: user.fname,
+          lname: user.lname,
+          email: user.email,
+        },
+        {
+          fname,
+          lname,
+          email,
+        },
+      )
+      if (Object.keys(update).length) {
+        await this.models.users.update(user.id, update)
+      }
+      return true
+    }
+  }
   async register(
     user: NewUserInterface,
     shouldValidate = true,
@@ -50,10 +115,10 @@ export default class UserRegister {
 
   async resendConfirmationEmail(user) {
     var { users, emailSender, emailCreator } = this.models
-    const {emailConfirmationKey} = user
+    const { emailConfirmationKey } = user
     var str = emailCreator.confirmEmail(user, emailConfirmationKey)
     await emailSender.send(str)
-    return users.update(user.id, {emailConfirmationKey})
+    return users.update(user.id, { emailConfirmationKey })
   }
 
   async completeProfile(user_id, completeProfile: ICompleteProfile) {

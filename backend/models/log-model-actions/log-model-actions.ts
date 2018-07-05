@@ -9,7 +9,7 @@ require("zone.js")
 var shortid = require("shortid")
 export default function LogModelAction(model, action?, data?) {
   if (typeof action == "undefined") {
-    return (action, data) => LogModelAction(model, action, data)
+    return (action, data?) => LogModelAction(model, action, data)
   }
   try {
     var id = Zone.current.get("req").id
@@ -74,8 +74,8 @@ export function expressMiddleware(req, res, next) {
   }
   res.end = function(chunk) {
     if (chunk) chunks.push(chunk)
-    var body = Buffer.concat(chunks).toString("utf8")
     try {
+      var body = Buffer.concat(chunks).toString("utf8")
       body = JSON.parse(body)
     } catch (err) {}
 

@@ -29,6 +29,8 @@ declare var Zone: any
 require("zone.js")
 
 import * as LogModelActions from "../models/log-model-actions/log-model-actions"
+import * as Google from "./google"
+
 export default class RestServer {
   private appLogic: AppLogic
   private frontend
@@ -59,6 +61,9 @@ export default class RestServer {
       // eval("sdf()")
       next()
     })
+
+    // AUTH
+    Google.start({ appLogic, expressApp })
 
     // ROUTES
     expressApp.use(bodyParser.json())

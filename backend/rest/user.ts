@@ -41,7 +41,7 @@ export function start({
   )
 
   function completeProfile(req, res) {
-    appLogic.userRegister
+    appLogic.auth
       .completeProfile(req.user.id, req.body)
       .then(() => {
         res.send({ ok: true })
@@ -56,7 +56,7 @@ export function start({
   }
   async function register(req, res, next) {
     ;(async () => {
-      var { user, token } = await appLogic.userRegister.register({
+      var { user, token } = await appLogic.auth.register({
         ..._.omit(req.body, "password"),
         plainPassword: req.body.password,
       })

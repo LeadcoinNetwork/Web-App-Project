@@ -3,7 +3,6 @@ const express = require("express")
 const passport = require("passport")
 
 // internal modules
-import * as auth from "../models/auth/user-auth"
 import * as leads_upload from "../models/leads-upload/leads_upload"
 import * as leads from "../models/leads/leads"
 import * as csv_reader from "../models/csv_reader/index"
@@ -90,7 +89,8 @@ async function mapper(req, res, next) {
       if (insert_params["ext_data"]) {
         insert_params["ext_data"] = JSON.stringify(insert_params["ext_data"])
       }
-      return leads.insert(insert_params).then(() => {
+      return leads.
+      (insert_params).then(() => {
         lead.processed = true
         leads_upload.update(lead)
       })

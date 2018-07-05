@@ -31,17 +31,11 @@ export function start({
 
   expressApp.post("/auth/login", loginByUserNameAndPassword, login)
 
-  expressApp.get(
-    ["/auth/google", "/auth/google/callback"],
-    passport.authenticate("google", authOptions),
-    login,
-  )
-
-  expressApp.get(
-    ["/auth/linkedin", "/auth/linkedin/callback"],
-    passport.authenticate("linkedin", authOptions),
-    login,
-  )
+  // expressApp.get(
+  //   ["/auth/linkedin", "/auth/linkedin/callback"],
+  //   passport.authenticate("linkedin", authOptions),
+  //   login,
+  // )
 
   expressApp.get(
     ["/auth/facebook", "/auth/facebook/callback"],
@@ -58,19 +52,18 @@ export function start({
     if (user instanceof NotFound) {
       res.status(409).send({ error: "invalid" })
     } else {
-      var token = await appLogic.userLogin.login(user.id)
+      var token = await appLogic.auth.login(user.id)
       res.cookie("token", token)
       res.send({ user })
     }
   }
   async function login(req, res, next) {
     if (req.user && req.user.id) {
-      var token = await appLogic.userLogin.login(req.user.id)
+      var token = await appLogic.auth.login(req.user.id)
       res.cookie("token", token)
-      const {provider} = req.user
-      if (provider)
-        return res.redirect(appLogic.config.frontend)
-      res.send({user: req.user})
+      const { provider } = req.user
+      if (provider) return res.redirect(appLogic.config.frontend)
+      res.send({ user: req.user })
     } else {
       res.status(409).send({ error: "invalid" })
     }
@@ -85,7 +78,7 @@ export function start({
   async function resendEmail(req, res, next) {
     ;(async () => {
       const { user } = req
-      appLogic.userRegister
+      appLogic.auth
         .resendConfirmationEmail(user)
         .then(() => {
           res.send({ ok: true })
@@ -102,7 +95,7 @@ export function start({
 
   async function confirmEmailUpdate(req, res, next) {
     try {
-      var { ok, token } = await appLogic.userRegister.tryConfirmEmailByKey(
+      var { ok, token } = await appLogic.auth.tryConfirmEmailByKey(
         req.query.key,
       )
 

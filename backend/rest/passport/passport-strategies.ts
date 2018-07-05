@@ -139,10 +139,7 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
               created: Date.now(),
               role: "user",
             }
-            var { user: user_id } = await appLogic.userRegister.register(
-              user,
-              false,
-            )
+            var { user: user_id } = await appLogic.auth.register(user, false)
 
             _done(null, { user })
           } else {

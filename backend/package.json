@@ -30,6 +30,7 @@
     "passport-linkedin-oauth2": "^1.5.0",
     "passport-local": "^1.0.0",
     "promise-mysql": "^3.2.1",
+    "request-promise": "^4.2.2",
     "shortid": "^2.2.8",
     "socket.io": "^2.1.1",
     "superagent": "^3.8.3",
@@ -61,7 +62,10 @@
     "ts-node": "^6.0.3"
   },
   "jest": {
-    "testMatch": ["**/*.test.js", "**/*.test.ts"],
+    "testMatch": [
+      "**/*.test.js",
+      "**/*.test.ts"
+    ],
     "globals": {
       "ts-jest": {
         "tsConfigFile": "tsconfig.json"
@@ -71,7 +75,11 @@
       "^@/(.*)": "<rootDir>/$1"
     },
     "bail": true,
-    "moduleFileExtensions": ["ts", "tsx", "js"],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
     "transform": {
       "^.+\\.(ts|tsx)$": "ts-jest"
     }
@@ -83,7 +91,9 @@
     "precommit": "pretty-quick --staged"
   },
   "nodemonConfig": {
-    "ignore": ["upload/*"]
+    "ignore": [
+      "upload/*"
+    ]
   },
   "bugs": {
     "url": "https://github.com/LeadcoinNetwork/leadcoin-web/issues"

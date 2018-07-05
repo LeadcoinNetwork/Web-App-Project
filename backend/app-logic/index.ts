@@ -1,9 +1,7 @@
 import UploadCSV from "./upload-csv"
 import UploadForm from "./upload-form"
 import UploadLeads from "./leads"
-import UserLogin from "./user-login"
-import UserLogout from "./user-logout"
-import UserRegister from "./user-register"
+import Auth from "./auth"
 
 import { appModels } from "./types"
 import config, { IConfig } from "./config"
@@ -49,9 +47,7 @@ export default class AppLogic {
 
   // private uploadCSV= new UploadCSV()
   private uploadForm = new UploadForm()
-  private userLogout = new UserLogout()
-  public userRegister = new UserRegister(this.models)
-  public userLogin = new UserLogin(this.models)
+  public auth = new Auth(this.models)
 
   constructor(props?: {
     emailSender?: EmailSenderAbstraction
@@ -80,7 +76,10 @@ export default class AppLogic {
     if (props.emailCreator) {
       this.models.emailCreator = props.emailCreator
     } else {
-      this.models.emailCreator = new EmailCreator({ backend: this.config.backend, from: this.config.mail.from })
+      this.models.emailCreator = new EmailCreator({
+        backend: this.config.backend,
+        from: this.config.mail.from,
+      })
     }
   }
 
