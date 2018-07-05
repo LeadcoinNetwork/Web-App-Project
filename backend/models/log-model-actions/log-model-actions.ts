@@ -5,7 +5,9 @@
 var chalk = require("chalk")
 var i = 0
 declare var Zone: any
-require("zone.js")
+if (process.env.NODE_ENV != "test") {
+  require("zone.js")
+}
 var shortid = require("shortid")
 export default function LogModelAction(model, action?, data?) {
   if (typeof action == "undefined") {
@@ -23,10 +25,10 @@ export default function LogModelAction(model, action?, data?) {
   if (action instanceof Error) {
     console.log(
       chalk.red("Error") +
-        "(" +
-        id +
-        ") " +
-        action.stack.replace(/.*node_modules.*\n/g, ""),
+      "(" +
+      id +
+      ") " +
+      action.stack.replace(/.*node_modules.*\n/g, ""),
     )
   } else {
     model = chalk.inverse(model)
@@ -38,7 +40,7 @@ export default function LogModelAction(model, action?, data?) {
       data = chalk.inverse(data.request) + " " + JSON.stringify(data)
     console.log(
       `${model}:${action} (${id}) ${
-        typeof data == "object" ? JSON.stringify(data) : data
+      typeof data == "object" ? JSON.stringify(data) : data
       }`,
     )
   }
@@ -51,6 +53,9 @@ export default function LogModelAction(model, action?, data?) {
  * Output to console the response.
  */
 export function expressMiddleware(req, res, next) {
+  if (process.env.NODE_ENV == "test") {
+    return next()
+  }
   var oldWrite = res.write,
     oldEnd = res.end,
     oldStatus = res.status,
@@ -59,25 +64,25 @@ export function expressMiddleware(req, res, next) {
   var chunks = []
   var status = ""
 
-  res.write = function(chunk) {
+  res.write = function (chunk) {
     chunks.push(chunk)
 
     oldWrite.apply(res, arguments)
   }
-  res.redirect = function(o) {
+  res.redirect = function (o) {
     console.log(arguments)
     return oldRedirect.call(res, o)
   }
-  res.status = function(o) {
+  res.status = function (o) {
     status = o
     return oldStatus.call(res, o)
   }
-  res.end = function(chunk) {
+  res.end = function (chunk) {
     if (chunk) chunks.push(chunk)
     try {
       var body = Buffer.concat(chunks).toString("utf8")
       body = JSON.parse(body)
-    } catch (err) {}
+    } catch (err) { }
 
     LogModelAction("request", "end", {
       status: status || res.statusCode,
