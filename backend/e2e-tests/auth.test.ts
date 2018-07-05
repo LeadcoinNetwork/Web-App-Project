@@ -12,14 +12,13 @@ var {
 test("forgot password sends email with the new password", async () => {
   const {users} = appLogic.models
   const { user, token } = await ValidatedUserForTests.create({users})
-  const {id} = user
   const res = await request
     .post("/auth/forgot-password")
     .send({
       email: user.email
     })
   expect(res.error).toBeFalsy()
-  var _user = await users.getOne({id}, {returnPassword: true})
+  var _user = await users.getOne({id: user.id}, {returnPassword: true})
   if (_user instanceof NotFound) {
     // wtf happened?
     throw new Error('user is error')
