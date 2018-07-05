@@ -104,17 +104,17 @@ class Table extends React.Component {
               />
             ))}
         </div>
-        <THead
-          fields={props.fields}
-          colCount={dinamicColsCount}
-          staticColsWidth={widthOfStaticCols}
-          toggleAll={this.toggleAll}
-          isAllSelected={this.isAllSelected()}
-          onSort={props.onSort}
-          sortedBy={props.sortedBy}
-          isSelectable={props.isSelectable}
-        />
-        {
+        <div className="t-main">
+          <THead
+            fields={props.fields}
+            colCount={dinamicColsCount}
+            staticColsWidth={widthOfStaticCols}
+            toggleAll={this.toggleAll}
+            isAllSelected={this.isAllSelected()}
+            onSort={props.onSort}
+            sortedBy={props.sortedBy}
+            isSelectable={props.isSelectable}
+          />
           <TBody
             fields={props.fields}
             records={props.records}
@@ -126,7 +126,7 @@ class Table extends React.Component {
             showOnZeroRecords={props.showOnZeroRecords}
             isSelectable={props.isSelectable}
           />
-        }
+        </div>
         <div className="t-footer" />
       </section>
     )
