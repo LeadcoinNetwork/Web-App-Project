@@ -11,8 +11,11 @@ import API from "../api/index"
 export default function logout(api) {
   return function*() {
     while (true) {
-      yield take(types.LOGGED_OUT)
+      console.log("before logout")
+      yield take(types.LOG_OUT)
+      console.log("after logout")
       yield api.users.logout()
+      yield put(Actions.user.loggedOut())
       yield put(push("/login"))
     }
   }
