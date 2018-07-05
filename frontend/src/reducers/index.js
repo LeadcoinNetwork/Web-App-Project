@@ -1,11 +1,7 @@
 import { combineReducers } from "redux"
 import { routerReducer } from "react-router-redux"
 import app from "./app"
-<<<<<<< Updated upstream
 import createLeadsReducerFor from "./leads"
-=======
-import createReducerFor from "./leads"
->>>>>>> Stashed changes
 
 import user from "./user"
 import language from "./language"
@@ -37,15 +33,9 @@ const rootReducer = combineReducers({
   payments,
   notifications,
   balance,
-<<<<<<< Updated upstream
   buyLeads: createLeadsReducerFor('BUY_LEADS'),
   sellLeads: createLeadsReducerFor('SELL_LEADS'),
   myLeads: createLeadsReducerFor('MY_LEADS'),
-=======
-  buyLeads: createReducerFor('BUY_LEADS'),
-  sellLeads: createReducerFor('SELL_LEADS'),
-  myLeads: createReducerFor('MY_LEADS'),
->>>>>>> Stashed changes
   notifications,
   notificationsTable,
   signup,
