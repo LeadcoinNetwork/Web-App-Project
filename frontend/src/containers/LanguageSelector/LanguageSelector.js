@@ -45,6 +45,7 @@ class LanguageSelector extends React.Component {
               .filter(countryItem => countryItem !== country)
               .map(countryItem => (
                 <div
+                  key={countryItem}
                   className={
                     "flag flag-icon-background flag-icon-" + countryItem
                   }
