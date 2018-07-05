@@ -15,7 +15,7 @@ export function start({
     res.redirect(
       "https://accounts.google.com/o/oauth2/v2/auth?response_type=code&redirect_uri=" +
         encodeURIComponent(appLogic.config.backend + "/auth/google/callback") +
-        "&scope=profile%20	email&client_id=" +
+        "&scope=profile%20email&client_id=" +
         appLogic.config.auth.google.clientID +
         "&state=" +
         encodeURIComponent(req.query.state),
