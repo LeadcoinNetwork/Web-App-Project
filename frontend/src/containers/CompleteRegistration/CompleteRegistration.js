@@ -67,11 +67,11 @@ class CompleteRegistration extends React.Component {
             effcient than giving away my budget to Google & Facebook.`)}
           </q>
           <label style={{ backgroundImage: `url(${tiger})` }}>
-            {/* <span> */}
-            {t("Meir Cohen")}
-            <br />
-            {t("CEO of Crypto")}
-            {/* </span> */}
+            <span>
+              {t("Meir Cohen")}
+              <br />
+              {t("CEO of Crypto")}
+            </span>
           </label>
         </aside>
       </section>
