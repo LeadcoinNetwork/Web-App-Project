@@ -8,22 +8,24 @@ const initialState = {
   selected: new Set(),
 }
 
-const leads = (state = initialState, action) => {
-  switch (action.type) {
-    case types.GET_LEADS:
-      return {
-        ...action.payload,
-        selected: state.selected,
-        list: [...state.list, ...action.payload.list],
-      }
-    case types.SET_SELECTED_RECORDS:
-      return {
-        ...state,
-        selected: action.payload,
-      }
-    default:
-      return state
+const createReducerFor = (namespace) => {
+  return (state = initialState, action) => {
+    switch (action.type) {
+      case types[namespace+'_GET_LEADS']:
+        return {
+          ...action.payload,
+          selected: state.selected,
+          list: [...state.list, ...action.payload.list],
+        }
+      case types[namespace+'_SET_SELECTED_RECORDS']:
+        return {
+          ...state,
+          selected: action.payload,
+        }
+      default:
+        return state
+    }
   }
 }
 
-export default leads
+export default createReducerFor

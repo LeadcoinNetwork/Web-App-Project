@@ -44,6 +44,49 @@ test("add new lead with bad data", async () => {
   expect(success).toBeFalsey()
 })
 */
+test("UNIQUE", async () => {
+  const add_leads = async (count) => {
+    for (let i=1; i<count+1; i++) {
+      let rs = await leads.insert({ 
+        date: 1212,
+        owner_id: i,
+        name: chance.name(),
+        phone: '12301212',
+        email: 'moshe@moshe.com',
+        active: true,
+        bought_from: null
+      })
+    }
+    return true
+  }
+  const done = await add_leads(50)
+  expect(done).toBeTruthy()
+  const records1:Lead[] = await leads.find({
+    email: 'moshe@moshe.com'
+  }, {
+    limit: 20,
+    page: 0,
+  })
+  expect(records1.length).toBe(20)
+  expect(records1.pop().owner_id).toBe(20)
+  const records2:Lead[] = await leads.find({
+    email: 'moshe@moshe.com'
+  }, {
+    limit: 20,
+    page: 1,
+  })
+  expect(records2.length).toBe(20)
+  expect(records2.pop().owner_id).toBe(40)
+  const records3:Lead[] = await leads.find({
+    email: 'moshe@moshe.com'
+  }, {
+    limit: 20,
+    page: 2,
+  })
+  expect(records3.length).toBe(10)
+  expect(records3.pop().owner_id).toBe(50)
+})
+
 test("add new lead", async () => {
   const success = await leads.insert({ 
     date: 1212,

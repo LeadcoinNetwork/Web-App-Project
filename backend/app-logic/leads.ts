@@ -5,6 +5,8 @@ import { IModels } from "./index"
 export interface getLeadsOptions {
   sort_by?: [string, "ASC" | "DESC"]
   filters?: [string, string][]
+  page?: number
+  limit?: number
 }
 
 const validate_lead = (lead:Lead) => {
@@ -49,6 +51,24 @@ export default class Leads {
   }
 
   public async getMyLeads(user_id:number, options: getLeadsOptions) {
+    const {filters, limit, page} = options
+    let where_additions = []
+    if (filters) {
+      where_additions = filters.map((f) => {
+        return f[0] +" LIKE \"%"+ f[1] +"%\""
+      })
+    }
+    return await this.models.leads.find({
+      owner_id: user_id,
+      active: 1
+    }, {
+      page, limit,
+      sort_by: options.sort_by,
+      where_additions
+    })
+  }
+
+  public async getBoughtLeads(user_id:number, options: getLeadsOptions) {
     const {filters} = options
     let where_additions = []
     if (filters) {
@@ -61,17 +81,17 @@ export default class Leads {
       active: 1
     }, {
       sort_by: options.sort_by,
-      where_additions
+      where_additions: ["bought_from > 0"].concat(where_additions)
     })
   }
-  public async getBoughtLeads(user_id:number, options: getLeadsOptions) {
+
+  public async getLeadsNotOwnedByMe(user_id:number, options: getLeadsOptions) {
     return await this.models.leads.find({
-      owner_id: user_id,
       active: 1
     }, {
       sort_by: options.sort_by,
       where_additions: [
-        "bought_from > 0"
+        "owner_id <> "+user_id
       ]
     })
   }

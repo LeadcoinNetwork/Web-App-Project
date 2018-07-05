@@ -6,7 +6,9 @@ import { Lead } from "./types"
 export interface FindOptions {
   sort_by?: [string, "ASC" |"DESC"]
   fields?: string[]
+  page?: number
   where_additions?: string[]
+  limit?: number
 }
 
 export default class Leads {
@@ -35,7 +37,7 @@ export default class Leads {
 
   async find(condition_obj: object, options: FindOptions) {
     if (!options) options = {}
-    const {where_additions, sort_by, fields} = options
+    const {where_additions, sort_by, fields, page, limit} = options
     let conditions = Object.keys(condition_obj).map(key => {
       return `${key} = '${condition_obj[key]}'`
     })
@@ -54,6 +56,11 @@ export default class Leads {
       if (Array.isArray(sort_by) && sort_by.length) {
         sql += ` ORDER BY ${sort_by[0]} ${sort_by[1]}`
       }
+    }
+    if (limit) {
+      let sqlLimit = (limit < 100) ? limit : 100
+      let limitBoundry = page * limit
+      sql += ` LIMIT ${limitBoundry},${sqlLimit}`
     }
     //console.log({sql})
     let rows = await this.sql.query(sql)
