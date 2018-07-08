@@ -95,5 +95,6 @@ storiesOf("Containers/Snackbar", module)
         i * 250,
       )
     }
+
     return story
   })
