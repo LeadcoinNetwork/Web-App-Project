@@ -37,6 +37,7 @@ function everyone(path) {
 function allowedDisabled(path) {
   if (everyone(path)) return true
   return [
+    "/",
     "/email-confirmation",
     "/complete-registration",
     "/forgot-password",
@@ -44,7 +45,7 @@ function allowedDisabled(path) {
 }
 function allowedAnon(path) {
   if (everyone(path)) return true
-  return ["/", "/login", "/signup", "/forgot-password"].includes(path)
+  return ["/login", "/signup", "/forgot-password"].includes(path)
 }
 function allowedLogedIn(path) {
   if (everyone(path)) return true
