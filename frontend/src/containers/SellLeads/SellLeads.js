@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import Table from "Components/Table"
 import { leads } from "../../actions"
 import {Link} from 'react-router-dom'
+import t from "../../utils/translate/translate"
 
 class Sell extends React.Component {
   constructor(props) {
@@ -23,11 +24,11 @@ class Sell extends React.Component {
   }
   buildButtonLabel = amount => {
     if (amount > 1) {
-      return "sell " + amount + " leads"
+      return t("sell ") + amount + t(" leads")
     } else if (amount === 1) {
-      return "sell lead"
+      return t("sell lead")
     } else {
-      return "sell leads"
+      return t("sell leads")
     }
   }
   getButtons = amountSelected => {
@@ -41,7 +42,7 @@ class Sell extends React.Component {
       ],
       record: [
         {
-          value: "sell",
+          value: t("sell"),
           onClick: this.sellLead,
         },
       ],
@@ -53,10 +54,13 @@ class Sell extends React.Component {
   render() {
     return (
       <>
-        <Link to="/add-lead">Boom</Link>
-        <h1>Sell Leads</h1>
+        <Link to="/add-lead">{t("Boom")}</Link>
+        <h1>{t("Sell Leads")}</h1>
         <Table
-          fields={this.props.fields}
+          fields={this.props.fields.map(field => ({
+            ...field,
+            name: t(field.name)
+          }))}
           records={this.props.leads.list}
           buttons={this.getButtons(this.props.leads.selected.size)}
           setSelectedRecords={this.setSelectedRecords}

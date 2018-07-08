@@ -1,5 +1,4 @@
 import React from "react"
-import Button from "Components/Button"
 import { Link } from "react-router-dom"
 import { connect } from "react-redux"
 import * as actions from "Actions"
@@ -15,7 +14,7 @@ const EmailConfirmation = ({ user, emailConfirmation, logout, resend }) => (
       </a>
     </p>
     <p>
-      {t("Not you?")}{" "}
+      {t("Not you?") + " "}
       <Link to="/login" onClick={logout}>
         {t("Logout")}
       </Link>

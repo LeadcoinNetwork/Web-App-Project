@@ -1,6 +1,7 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
 import { createStoreAndStory } from "storybook-utils/withRouter"
+import { user } from "Actions";
 
 storiesOf("Containers/SideMenu", module)
   .add("Login", () => {

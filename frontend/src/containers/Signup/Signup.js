@@ -6,6 +6,7 @@ import SocialLogin from "Components/SocialLogin"
 import { signup } from "Actions"
 import tiger from "Images/tiger.jpg"
 import { Link } from "react-router-dom"
+import t from "../../utils/translate/translate"
 
 class Signup extends React.Component {
   handleChange = event => {
@@ -14,7 +15,7 @@ class Signup extends React.Component {
   getErrors(errors) {
     return (
       <ul className="ldc-error-text">
-        {errors.split(";").map(e => <li key={e}>{e}</li>)}
+        {errors.split(";").map(e => <li key={e}>{t(e)}</li>)}
       </ul>
     )
   }
@@ -24,34 +25,37 @@ class Signup extends React.Component {
     return (
       <section className="ldc-signup">
         <div className="s-main">
-          <h1>Register to LeadCoin</h1>
+          <h1>{t("Register to LeadCoin")}</h1>
           <div className="sm-social-buttons">
-            <SocialLogin provider={"google"} />
-            {/* <SocialLogin provider={"linkedin"} /> */}
+            <SocialLogin
+              connectWithText={t("connect with")}
+              provider={"google"}
+            />
+            {/* <SocialLogin connectWithText={t("connect with")} provider={"linkedin"} /> */}
           </div>
           <div className="sm-form">
-            <h4>Or enter your details:</h4>
+            <h4>{t("Or enter your details:")}</h4>
             <TextField
-              placeholder="First Name"
+              placeholder={t("First Name")}
               value={fname}
               name="fname"
               onChange={this.handleChange}
             />
             <TextField
-              placeholder="Last Name"
+              placeholder={t("Last Name")}
               value={lname}
               name="lname"
               onChange={this.handleChange}
             />
             <TextField
-              placeholder="Email"
+              placeholder={t("Email")}
               type="email"
               value={email}
               name="email"
               onChange={this.handleChange}
             />
             <TextField
-              placeholder="Password"
+              placeholder={t("Password")}
               value={password}
               name="password"
               onChange={this.handleChange}
@@ -59,29 +63,29 @@ class Signup extends React.Component {
             />
             {error && this.getErrors(error)}
             <Button
-              label="register"
+              label={t("register")}
               loading={loading}
               onClick={this.props.submit}
             />
             <p className="smf-agree">
-              By clicking this button, you agree to our
+              {t("By clicking this button, you agree to our")}
               <br />
-              <Link to="/terms">Terms & conditions</Link>
-              &nbsp;and&nbsp;
-              <Link to="/privacy">Privacy Policy</Link>
+              <Link to="/terms">{t("Terms & conditions")}</Link>
+              &nbsp;{t("and")}&nbsp;
+              <Link to="/privacy">{t("Privacy Policy")}</Link>
             </p>
           </div>
           <div />
         </div>
         <aside>
-          <h3>LeadCoin is the promised land for marketers</h3>
+          <h3>{t("LeadCoin is the promised land for marketers")}</h3>
           <q>
-            Collaborating with other marketers & sharing leads is 10X more
-            effcient than giving away my budget to Google & Facebook.
+            {t(`Collaborating with other marketers & sharing leads is 10X more
+            effcient than giving away my budget to Google & Facebook.`)}
           </q>
           <label style={{ backgroundImage: `url(${tiger})` }}>
             <span>
-              Meir Cohen<br />CEO of Crypto
+              {t("Meir Cohen")}<br />{t("CEO of Crypto")}
             </span>
           </label>
         </aside>

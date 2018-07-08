@@ -2,6 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import Table from "Components/Table"
 import { leads } from "../../actions"
+import t from "../../utils/translate/translate"
 
 class My extends React.Component {
   constructor(props) {
@@ -22,11 +23,11 @@ class My extends React.Component {
   }
   buildButtonLabel = amount => {
     if (amount > 1) {
-      return "move " + amount + " leads to sell"
+      return t("move ") + amount + t(" leads to sell")
     } else if (amount === 1) {
-      return "move lead to sell"
+      return t("move lead to sell")
     } else {
-      return "move leads to sell"
+      return t("move leads to sell")
     }
   }
   getButtons = amountSelected => {
@@ -40,7 +41,7 @@ class My extends React.Component {
       ],
       record: [
         {
-          value: "move to sell",
+          value: t("move to sell"),
           onClick: this.moveLeadToSell,
         },
       ],
@@ -52,9 +53,12 @@ class My extends React.Component {
   render() {
     return (
       <>
-        <h1>My Leads</h1>
+        <h1>{t("My Leads")}</h1>
         <Table
-          fields={this.props.fields}
+          fields={this.props.fields.map(field => ({
+            ...field,
+            name: t(field.name)
+          }))}
           records={this.props.leads.list}
           buttons={this.getButtons(this.props.leads.selected.size)}
           setSelectedRecords={this.setSelectedRecords}

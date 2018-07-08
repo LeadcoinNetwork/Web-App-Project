@@ -4,6 +4,7 @@ import Button from "Components/Button"
 import TextField from "Components/TextField"
 import { connect } from "react-redux"
 import { csvMapping } from "Actions"
+import t from "../../utils/translate/translate"
 
 class CSVMapping extends React.Component {
   listItems(fieldName) {
@@ -12,9 +13,9 @@ class CSVMapping extends React.Component {
       let value = ""
       if (fields_map && fields_map[fieldName]) value = fields_map[fieldName]
       const items = file_fields.map((field, i) => {
-        return field
+        return t(field)
       })
-      items.unshift(["0", "I Don't have this field"])
+      items.unshift(["0", t("I Don't have this field")])
       return (
         <Select
           options={items}
@@ -33,7 +34,7 @@ class CSVMapping extends React.Component {
     const error = errors.indexOf("price") > -1 ? "error" : ""
     return (
       <div className={"price " + error}>
-        <span>Lead price</span>
+        <span>{t("Lead price")}</span>
         <TextField
           appStyle={true}
           value={this.props.price}
@@ -59,7 +60,7 @@ class CSVMapping extends React.Component {
             this.props.agreeToTerms(e.target.checked)
           }}
         />
-        <label htmlFor="terms_checkbox">I AGREE THE TERMS</label>
+        <label htmlFor="terms_checkbox">{t("I AGREE TO THE TERMS")}</label>
       </div>
     )
   }
@@ -68,7 +69,7 @@ class CSVMapping extends React.Component {
     return fields.map((f, i) => {
       return (
         <div key={i} className="line flexed">
-          <div className="fieldLabel">{f} </div>
+          <div className="fieldLabel">{t(f)} </div>
           {this.listItems(f)}
         </div>
       )
@@ -80,7 +81,7 @@ class CSVMapping extends React.Component {
     if (!batch_id)
       return (
         <div className="fields_mapper">
-          <div> LOADING </div>
+          <div>{t("LOADING")}</div>
         </div>
       )
     const price_element = this.renderPriceElement()
@@ -90,16 +91,16 @@ class CSVMapping extends React.Component {
         <div className="main_container">
           <div className="personal flexed">
             <div className="help_text">
-              <div className="header">Personal Identification Information </div>
+              <div className="header">{t("Personal Identification Information")}</div>
               <div className="header">
-                These fields will only be visible to who bought the lead{" "}
+                {t("These fields will only be visible to who bought the lead")}
               </div>
             </div>
             <div className="fields">{this.renderFields(db_fields.private)}</div>
           </div>
           <div className="public flexed">
             <div className="help_text">
-              <div className="header">Public Fields </div>
+              <div className="header">{t("Public Fields")}</div>
             </div>
             <div className="fields">{this.renderFields(db_fields.public)}</div>
           </div>
@@ -111,7 +112,7 @@ class CSVMapping extends React.Component {
                 onClick={() => {
                   this.props.submit(this.props.fields_map)
                 }}
-                label="Submit"
+                label={t("Submit")}
               />
             </div>
             <div>
@@ -120,7 +121,7 @@ class CSVMapping extends React.Component {
                 onClick={() => {
                   this.props.clear()
                 }}
-                label="Clear"
+                label={t("Clear")}
               />
             </div>
           </div>

@@ -11,7 +11,10 @@ const checkout = ({ list, totalPrice, loading, error, onScrollBottom }) => (
   <div className="shopping-cart">
     <h1>{t("Shopping Cart")}</h1>
     <Table
-      fields={checkoutConfig.fields}
+      fields={checkoutConfig.fields.map(field => ({
+        ...field,
+        name: t(field.name)
+      }))}
       records={list}
       onScrollBottom={onScrollBottom}
       showOnZeroRecords={<div>{t("Shopping Cart is Empty")}</div>}

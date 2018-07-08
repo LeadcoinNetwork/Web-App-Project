@@ -4,6 +4,7 @@ import { createStoreAndStory } from "storybook-utils/withRouter"
 import { app, types } from "Actions"
 import Snackbar from "./Snackbar"
 import snackbar from "Sagas/snackbar"
+import t from "../../utils/translate/translate"
 
 storiesOf("Containers/Snackbar", module)
   .add("All", () => {
@@ -11,7 +12,7 @@ storiesOf("Containers/Snackbar", module)
       component: Snackbar,
       sagaFunction: snackbar(),
     })
-    let kinds = ["default", "success", "info", "warning", "error"],
+    let kinds = [t("default"), t("success"), t("info"), t("warning"), t("error")],
       timeout = 0
 
     kinds.forEach(kind => {
@@ -31,7 +32,7 @@ storiesOf("Containers/Snackbar", module)
     })
 
     setTimeout(
-      () => store.dispatch(app.notificationShow("Default", "default")),
+      () => store.dispatch(app.notificationShow(t("Default"), "default")),
       500,
     )
     return story
@@ -43,7 +44,7 @@ storiesOf("Containers/Snackbar", module)
     })
 
     setTimeout(
-      () => store.dispatch(app.notificationShow("Success", "success")),
+      () => store.dispatch(app.notificationShow(t("Success"), "success")),
       500,
     )
     return story
@@ -54,7 +55,7 @@ storiesOf("Containers/Snackbar", module)
       sagaFunction: snackbar(),
     })
 
-    setTimeout(() => store.dispatch(app.notificationShow("Info", "info")), 500)
+    setTimeout(() => store.dispatch(app.notificationShow(t("Info"), "info")), 500)
     return story
   })
   .add("Warning", () => {
@@ -64,7 +65,7 @@ storiesOf("Containers/Snackbar", module)
     })
 
     setTimeout(
-      () => store.dispatch(app.notificationShow("Warning", "warning")),
+      () => store.dispatch(app.notificationShow(t("Warning"), "warning")),
       500,
     )
     return story
@@ -76,7 +77,7 @@ storiesOf("Containers/Snackbar", module)
     })
 
     setTimeout(
-      () => store.dispatch(app.notificationShow("Error", "error")),
+      () => store.dispatch(app.notificationShow(t("Error"), "error")),
       500,
     )
     return story
@@ -91,7 +92,7 @@ storiesOf("Containers/Snackbar", module)
     for (let i = 1; i <= 10; i++) {
       setTimeout(
         () =>
-          store.dispatch(app.notificationShow("Timeout " + i * 250, "success")),
+          store.dispatch(app.notificationShow(t("Timeout") + " " + i * 250, "success")),
         i * 250,
       )
     }
