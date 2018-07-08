@@ -21,13 +21,13 @@ const history = createBrowserHistory()
 
 const ROUTER_MIDDLEWARE = routerMiddleware(history)
 
-var sagaMiddleWare = createSagaMiddleware()
+var sagaMiddleware = createSagaMiddleware()
 
 const store = createStore(
   createReducer(),
-  composeWithDevTools(applyMiddleware(ROUTER_MIDDLEWARE, sagaMiddleWare)),
+  composeWithDevTools(applyMiddleware(ROUTER_MIDDLEWARE, sagaMiddleware)),
 )
-sagaMiddleWare.run(rootSaga)
+var sagaTask = sagaMiddleware.run(rootSaga)
 
 ReactDOM.render(
   <Provider store={store}>
@@ -50,6 +50,16 @@ if (module.hot) {
   module.hot.accept("./reducers/index", function() {
     console.log("reducers replaced")
     store.replaceReducer(createReducer())
+  })
+}
+if (module.hot) {
+  module.hot.accept("./sagas", function() {
+    console.log("cancel previous saga task")
+    sagaTask.cancel()
+    sagaTask.done.then(() => {
+      console.log("replacing the saga")
+      sagaTask = sagaMiddleware.run(rootSaga)
+    })
   })
 }
 

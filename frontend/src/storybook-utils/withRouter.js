@@ -7,7 +7,7 @@ import { MemoryRouter } from "react-router"
 import rootReducer from "Reducers"
 import Root from "containers/App"
 import createSagaMiddleware from "redux-saga"
-import RootSaga from "sagas"
+import rootSaga from "sagas"
 import {
   routerMiddleware,
   connectRouter,
@@ -50,8 +50,9 @@ export function createStoreAndStory({
     connectRouter(history)(rootReducer),
     composeWithDevTools(applyMiddleware(...middlewares)),
   )
+  var sagaTask
   if (connectToProductionSaga) {
-    sagaMiddleware.run(RootSaga)
+    sagaTask = sagaMiddleware.run(rootSaga)
   }
   if (sagaFunction) {
     sagaMiddleware.run(sagaFunction)
@@ -65,9 +66,20 @@ export function createStoreAndStory({
   }
   if (module.hot) {
     module.hot.accept("Reducers", function() {
-      console.log("hi")
       store.replaceReducer(connectRouter(history)(rootReducer))
     })
+    if (module.hot) {
+      module.hot.accept("sagas", function() {
+        if (sagaTask) {
+          console.log("cancel previous saga task")
+          sagaTask.cancel()
+          sagaTask.done.then(() => {
+            console.log("replacing the saga")
+            sagaTask = sagaMiddleware.run(rootSaga)
+          })
+        }
+      })
+    }
   }
 
   return {

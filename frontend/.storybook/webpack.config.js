@@ -15,6 +15,6 @@ module.exports = (baseConfig, env, defaultConfig) => {
     "react/lib/ReactContext": "window",
     "react/addons": true,
   }
-  defaultConfig.devServer.clientLogLevel = "error"
+  // defaultConfig.devServer.clientLogLevel = "error"
   return defaultConfig
 }
