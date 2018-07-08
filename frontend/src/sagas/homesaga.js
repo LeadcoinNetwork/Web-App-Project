@@ -7,29 +7,31 @@ const disabledPages = {
   EMAIL_NOT_VERIFIED: "/email-confirmation",
 }
 
+/**
+ * This saga goes to a default page for the user
+ * It should be launched when user open a page, that he don't have access to. (For e.g. connected user open a login page from URL)
+ * Or when clicking the logo icon.
+ *
+ */
 export default function gotoDefaultHome() {
   return function*() {
     while (true) {
+      var path
       yield take(types.GOTO_DEFAULT_HOME)
-
-      let user = yield select(state => state.user)
-      let path = yield select(state => state.routerReducer.location.pathname)
-
+      var user = yield select(state => state.user)
       if (!user || !user.id) {
-        if (path !== "/signup" && path !== "/forgot-password") {
-          yield put(push("/login"))
-        }
-      } else if (user.disabled && path !== disabledPages[user.disabled]) {
-        yield put(push(disabledPages[user.disabled]))
-      } else if (
-        path &&
-        (path === "/" ||
-          path === "login" ||
-          path === "/signup" ||
-          path === "/email-confirmation" ||
-          path === "/complete-registration")
-      ) {
-        yield put(push("/buy-leads"))
+        // User is not connected
+        path = "/login"
+      } else if (user.disabled) {
+        // user is disabled
+        path = disabledPages[user.disabled] // redirect to disabled reason
+      } else {
+        // user is not disabled. (Active)
+        path = "/buy-leads"
+      }
+      var currentPath = yield select(state => state.router.location.pathname)
+      if (currentPath != path) {
+        yield put(push(path))
       }
     }
   }

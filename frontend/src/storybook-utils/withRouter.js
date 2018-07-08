@@ -5,10 +5,14 @@ import { composeWithDevTools } from "redux-devtools-extension"
 import { Provider } from "react-redux"
 import { MemoryRouter } from "react-router"
 import rootReducer from "Reducers"
-import Root from "containers/Root"
+import App from "containers/App"
 import createSagaMiddleware from "redux-saga"
 import RootSaga from "sagas"
-import { routerMiddleware, ConnectedRouter } from "react-router-redux"
+import {
+  routerMiddleware,
+  ConnectedRouter,
+  connectRouter,
+} from "connected-react-router"
 import { createBrowserHistory, createMemoryHistory } from "history"
 import { user } from "Actions"
 
@@ -43,7 +47,7 @@ export function createStoreAndStory({
    * @type {{dispatch:()=>void}}
    */
   const store = createStore(
-    rootReducer,
+    connectRouter(history)(rootReducer),
     composeWithDevTools(applyMiddleware(...middlewares)),
   )
   if (connectToProductionSaga) {
@@ -66,8 +70,8 @@ export function createStoreAndStory({
       <Provider store={store}>
         <div>
           {path && (
-            <ConnectedRouter history={history}>
-              <Root />
+            <ConnectedRouter history={history} action="fight for your right to party">
+              <App />
             </ConnectedRouter>
           )}
           {component && <UpperCaseComponent />}

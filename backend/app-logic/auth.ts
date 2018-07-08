@@ -1,5 +1,3 @@
-import EmailCreator from "../models/email-creator/email-creator"
-import EmailSender from "../models/emailsender/abstraction"
 
 import { NewUserInterface, disabledReason } from "../models/users/types"
 import * as auth from "../models/user-auth/user-auth"
@@ -11,7 +9,6 @@ import * as UserValidate from "../models/user-validate/user-validate"
 import * as Chance from "chance"
 
 const chance = new Chance()
-import AppLogic from "./index"
 
 import NotFound from "../utils/not-found"
 
@@ -25,22 +22,26 @@ interface ICompleteProfile {
 export default class Auth {
   constructor(private models: IModels) {}
 
-  async login(user_id): Promise<string> {
+  private async login(user_id): Promise<string> {
     return userAuth.generateJWT(user_id, this.models.config.auth.jwt.secret)
+  }
+
+  async loginUserNameAndPassword(user_id): Promise<string> {
+    return this.login(user_id)
   }
 
   async sendForgotPasswordEmail(email): Promise<boolean> {
     var { users, emailSender, emailCreator } = this.models
-    const user = await users.getOne({email})
+    const user = await users.getOne({ email })
     if (user instanceof NotFound) {
       return false
     } else {
       const new_password = chance.string({
         pool: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
-        length: 8
+        length: 8,
       })
       await this.models.users.update(user.id, {
-        password: new_password
+        password: new_password,
       })
       var str = emailCreator.forgotPassword(user, new_password)
       await emailSender.send(str)
@@ -48,7 +49,7 @@ export default class Auth {
     }
   }
 
-  async LoginSocial({ provider_id, provider, email, fname, lname }):Promise<boolean> {
+  async LoginSocial({ provider_id, provider, email, fname, lname }) {
     let user = await this.models.users.getOne({
       provider_id: provider_id,
       provider: provider,
@@ -75,7 +76,7 @@ export default class Auth {
         }
         var result = await this.models.users.createUser(user)
 
-        return true
+        return this.login(result)
       } else {
         // user email exists, but user never signup using SSO
 
@@ -84,7 +85,7 @@ export default class Auth {
           provider: provider,
         }
         await this.models.users.update(user.id, update)
-        return true
+        return this.login(user.id)
       }
     } else {
       // user already logged in using same provider.
@@ -105,7 +106,7 @@ export default class Auth {
       if (Object.keys(update).length) {
         await this.models.users.update(user.id, update)
       }
-      return true
+      return this.login(user.id)
     }
   }
   async register(

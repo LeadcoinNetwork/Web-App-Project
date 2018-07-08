@@ -1,5 +1,4 @@
 import { combineReducers } from "redux"
-import { routerReducer } from "react-router-redux"
 import app from "./app"
 import createLeadsReducerFor from "./leads"
 
@@ -25,7 +24,6 @@ import fields from "./fields"
 import translate from "./translate"
 
 const rootReducer = combineReducers({
-  routerReducer,
   app,
   user,
   language,
@@ -33,9 +31,9 @@ const rootReducer = combineReducers({
   payments,
   notifications,
   balance,
-  buyLeads: createLeadsReducerFor('BUY_LEADS'),
-  sellLeads: createLeadsReducerFor('SELL_LEADS'),
-  myLeads: createLeadsReducerFor('MY_LEADS'),
+  buyLeads: createLeadsReducerFor("BUY_LEADS"),
+  sellLeads: createLeadsReducerFor("SELL_LEADS"),
+  myLeads: createLeadsReducerFor("MY_LEADS"),
   notifications,
   notificationsTable,
   signup,

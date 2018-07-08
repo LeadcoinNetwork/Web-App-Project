@@ -43,7 +43,7 @@ const UserMenuConnected = connect(
   mapStateToProps,
   {
     userMenuClick: userMenu.userMenuClick,
-    logOut: user.loggedOut,
+    logOut: user.logOut,
   },
 )(UserMenu)
 

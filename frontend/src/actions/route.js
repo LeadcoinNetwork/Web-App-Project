@@ -6,8 +6,13 @@ export default {
       type: types.GOTO_DEFAULT_HOME,
     }
   },
+  redirectIfNeeded() {
+    return {
+      type: types.REDIRECT_IF_NEEDED,
+    }
+  },
 
   bootAgain() {
-    return { type: types.BOOT_AGAIN }
+    return { type: types.FETCH_USER_AGAIN }
   },
 }
