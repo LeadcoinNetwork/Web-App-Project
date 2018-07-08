@@ -5,10 +5,14 @@ import { composeWithDevTools } from "redux-devtools-extension"
 import { Provider } from "react-redux"
 import { MemoryRouter } from "react-router"
 import rootReducer from "Reducers"
-import Root from "containers/Root"
+import Root from "containers/App"
 import createSagaMiddleware from "redux-saga"
 import RootSaga from "sagas"
-import { routerMiddleware, ConnectedRouter } from "connected-react-router"
+import {
+  routerMiddleware,
+  connectRouter,
+  ConnectedRouter,
+} from "connected-react-router"
 import { createBrowserHistory, createMemoryHistory } from "history"
 import { user } from "Actions"
 
@@ -43,7 +47,7 @@ export function createStoreAndStory({
    * @type {{dispatch:()=>void}}
    */
   const store = createStore(
-    rootReducer,
+    connectRouter(history)(rootReducer),
     composeWithDevTools(applyMiddleware(...middlewares)),
   )
   if (connectToProductionSaga) {
@@ -59,6 +63,13 @@ export function createStoreAndStory({
       user.loggedIn({ id: 1, email: "verylongusername@leadcoin.network" }),
     )
   }
+  if (module.hot) {
+    module.hot.accept("Reducers", function() {
+      console.log("hi")
+      store.replaceReducer(connectRouter(history)(rootReducer))
+    })
+  }
+
   return {
     store,
     sagaMiddleware,

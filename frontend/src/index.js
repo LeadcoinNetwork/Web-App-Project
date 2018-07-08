@@ -24,7 +24,7 @@ const ROUTER_MIDDLEWARE = routerMiddleware(history)
 var sagaMiddleWare = createSagaMiddleware()
 
 const store = createStore(
-  connectRouter(history)(rootReducer),
+  createReducer(),
   composeWithDevTools(applyMiddleware(ROUTER_MIDDLEWARE, sagaMiddleWare)),
 )
 sagaMiddleWare.run(rootSaga)
@@ -37,3 +37,22 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("root"),
 )
+
+import t from "./test"
+
+t()
+if (module.hot) {
+  module.hot.accept("./test", function() {
+    t()
+  })
+}
+if (module.hot) {
+  module.hot.accept("./reducers/index", function() {
+    console.log("reducers replaced")
+    store.replaceReducer(createReducer())
+  })
+}
+
+function createReducer() {
+  return connectRouter(history)(rootReducer)
+}
