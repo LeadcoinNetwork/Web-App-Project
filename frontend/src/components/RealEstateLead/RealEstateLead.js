@@ -19,8 +19,21 @@ const RealEstateLead = ({
   phone = "+972-584709090",
   checked = false,
 }) => {
+  let temp
+
+  const toggleCheck = () => {
+    checked = !checked
+    console.log(temp)
+
+    temp.className = `ldc-real-estate-lead${checked ? " rel-checked" : ""}`
+  }
+
   return (
-    <section className="ldc-real-estate-lead">
+    <section
+      className={`ldc-real-estate-lead${checked ? " rel-checked" : ""}`}
+      onClick={toggleCheck}
+      ref={c => (temp = c)}
+    >
       <div className="rel-specification">{specification}</div>
       <div className="rel-price">LDC {lead_price}</div>
       <div className="ldc-flex">
@@ -39,7 +52,7 @@ const RealEstateLead = ({
           <span>${budget} budget</span>
         </div>
       </div>
-      <Button label="Buy Lead" appStyle />
+      <button className="rel-buy-btn">buy</button>
     </section>
   )
 }
