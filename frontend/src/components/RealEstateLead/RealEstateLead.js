@@ -36,7 +36,7 @@ const RealEstateLead = ({
     >
       <div className="rel-specification">{specification}</div>
       <div className="rel-price">LDC {lead_price}</div>
-      <div className="ldc-flex">
+      <div className="rel-details-wrapper">
         <div className="rel-details">
           <div className="reld-status">{status}</div>
           <div className="reld-date">{date}</div>

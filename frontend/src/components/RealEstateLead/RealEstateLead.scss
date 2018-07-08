@@ -8,10 +8,10 @@ section.ldc-real-estate-lead {
   padding: $padding;
   margin-bottom: 20px;
   background-color: $bg-card;
-  border-left: 0 solid $ldc-color;
+  border-left: 0 solid $bg-level-3;
   transform: scaleX(1);
   transform-origin: right;
-  transition: all 250ms linear;
+  transition: all 200ms linear;
 
   .rel-specification {
     font-size: 16px;
@@ -26,50 +26,54 @@ section.ldc-real-estate-lead {
     font-weight: 600;
   }
 
-  .rel-details {
-    display: inline-block;
-    min-width: 260px;
-
-    .reld-status,
-    .reld-date,
-    .reld-location {
-      color: $main-color;
-      padding-top: 8px;
-    }
-
-    .reld-status {
-      text-transform: uppercase;
-      padding-top: 0;
-    }
-  }
-
-  .rel-features {
+  .rel-details-wrapper {
     display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    max-height: 75px;
-    color: $main-color;
 
-    span {
-      position: relative;
+    .rel-details {
       display: inline-block;
-      padding-left: 40px;
-      font-size: 16px;
-      line-height: 24px;
-      text-transform: capitalize;
+      min-width: 260px;
 
-      &:before {
-        content: "";
-        position: absolute;
-        left: 24px;
-        top: 4px;
-        height: 12px;
-        width: 4px;
-        border-right: 1px solid;
-        border-bottom: 1px solid;
-        border-color: $ldc-color;
+      .reld-status,
+      .reld-date,
+      .reld-location {
+        color: $main-color;
+        padding-top: 8px;
+      }
+
+      .reld-status {
+        text-transform: uppercase;
+        padding-top: 0;
+      }
+    }
+
+    .rel-features {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      max-height: 75px;
+      color: $main-color;
+
+      span {
+        position: relative;
         display: inline-block;
-        transform: rotate(45deg);
+        padding-left: 40px;
+        font-size: 16px;
+        line-height: 24px;
+        text-transform: capitalize;
+
+        &:before {
+          content: "";
+          position: absolute;
+          left: 24px;
+          top: 4px;
+          height: 12px;
+          width: 4px;
+          border-right: 1px solid;
+          border-bottom: 1px solid;
+          border-color: $ldc-color;
+          display: inline-block;
+          transform: rotate(45deg);
+        }
       }
     }
   }
@@ -107,6 +111,53 @@ section.ldc-real-estate-lead {
 
   &.rel-checked {
     transform: scaleX(0.98);
-    border-left-width: 5px;
+    border-left-width: 10px;
+  }
+}
+
+@media (max-width: $screen-tablets) {
+  section.ldc-real-estate-lead {
+    $padding: 20px;
+
+    padding: $padding $padding calc(#{$padding} + 60px) $padding;
+    transform: scale(1);
+    transform-origin: center;
+
+    .rel-details-wrapper {
+      display: block;
+
+      .rel-details {
+        min-width: auto;
+      }
+
+      .rel-features {
+        margin: 24px 0 30px;
+
+        span {
+          padding-left: 26px;
+
+          &:before {
+            left: 0px;
+          }
+        }
+      }
+    }
+
+    .rel-buy-btn {
+      right: $padding;
+      bottom: $padding;
+      width: calc(100% - (#{$padding} * 2));
+      height: 60px;
+      color: #fff;
+      background-color: $main-color;
+      font-size: 24px;
+      opacity: 1;
+    }
+
+    &.rel-checked {
+      transform: scale(0.95);
+      border-left-width: 0;
+      box-shadow: 1px 1px 23px 0px $bg-level-3;
+    }
   }
 }
