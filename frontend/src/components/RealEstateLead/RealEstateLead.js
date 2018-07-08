@@ -17,23 +17,28 @@ const RealEstateLead = ({
   name = "Meir Cohen",
   email = "meirkoen@gmail.com",
   phone = "+972-584709090",
+  checked = false,
 }) => {
   return (
     <section className="ldc-real-estate-lead">
       <div className="rel-specification">{specification}</div>
       <div className="rel-price">LDC {lead_price}</div>
-      <div className="rel-status">{status}</div>
-      <div className="rel-date">{date}</div>
-      <div className="rel-location">
-        {state}, {city}
+      <div className="ldc-flex">
+        <div className="rel-details">
+          <div className="reld-status">{status}</div>
+          <div className="reld-date">{date}</div>
+          <div className="reld-location">
+            {state}, {city}
+          </div>
+        </div>
+        <div className="rel-fetchers">
+          <span>{property_type}</span>
+          <span>{bedrooms} rooms</span>
+          <span>{floor}th floor</span>
+          <span>{size}</span>
+          <span>Budget: {budget}</span>
+        </div>
       </div>
-      <ul className="rel-fetchers">
-        <li>{property_type}</li>
-        <li>{bedrooms} rooms</li>
-        <li>{floor}th floor</li>
-        <li>{size}</li>
-        <li>{budget}</li>
-      </ul>
       <Button label="Buy Lead" appStyle />
     </section>
   )

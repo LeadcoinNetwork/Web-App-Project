@@ -3,6 +3,7 @@
 section.ldc-real-estate-lead {
   $padding: 25px;
   $bg-card: #f2f2f2;
+
   position: relative;
   padding: $padding;
   margin-bottom: 20px;
@@ -16,8 +17,43 @@ section.ldc-real-estate-lead {
     transform: scaleX(0.99);
   }
 
-  [class^="rel-"] {
+  .rel-specification {
+    font-size: 16px;
+    letter-spacing: 0.2px;
+    color: $bg-level-2;
+  }
+
+  .rel-price {
+    color: black;
+    font-size: 20px;
+    padding: 16px 0 20px;
+    font-weight: 600;
+  }
+
+  .rel-details {
+    display: inline-block;
+    min-width: 280px;
+
+    .reld-status,
+    .reld-date,
+    .reld-location {
+      color: $main-color;
+      padding-top: 8px;
+    }
+
+    .reld-status {
+      text-transform: uppercase;
+      padding-top: 0;
+    }
+  }
+
+  .rel-fetchers {
+    display: inline-block;
     color: $main-color;
+
+    span {
+      display: inline-block;
+    }
   }
 
   .ldc-button {
