@@ -15,6 +15,7 @@ export default function* boughtLeads(api) {
     if (res.error) {
       yield put(actions.leads.addError(res.error))
     } else {
+      console.log(res)
       yield put(actions.leads.getLeads(res.response))
     }
   }

@@ -89,8 +89,11 @@ export function createStoreAndStory({
       <Provider store={store}>
         <div>
           {path && (
-            <ConnectedRouter history={history}>
-              <Root />
+            <ConnectedRouter
+              history={history}
+              action="fight for your right to party"
+            >
+              <App />
             </ConnectedRouter>
           )}
           {component && <UpperCaseComponent />}

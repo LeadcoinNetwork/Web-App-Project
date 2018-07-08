@@ -1,6 +1,3 @@
-import EmailCreator from "../models/email-creator/email-creator"
-import EmailSender from "../models/emailsender/abstraction"
-
 import { NewUserInterface, disabledReason } from "../models/users/types"
 import * as auth from "../models/user-auth/user-auth"
 import * as utils from "../utils/index"
@@ -11,7 +8,6 @@ import * as UserValidate from "../models/user-validate/user-validate"
 import * as Chance from "chance"
 
 const chance = new Chance()
-import AppLogic from "./index"
 
 import NotFound from "../utils/not-found"
 
