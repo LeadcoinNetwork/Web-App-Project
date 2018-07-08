@@ -5,7 +5,7 @@ import { composeWithDevTools } from "redux-devtools-extension"
 import { Provider } from "react-redux"
 import { MemoryRouter } from "react-router"
 import rootReducer from "Reducers"
-import Root from "containers/App"
+import App from "containers/App"
 import createSagaMiddleware from "redux-saga"
 import rootSaga from "sagas"
 import {
