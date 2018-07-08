@@ -1,10 +1,13 @@
 @import "~Styles/variables";
 
 section.ldc-real-estate-lead {
-  padding: 25px;
+  $padding: 25px;
+  $bg-card: #f2f2f2;
+  position: relative;
+  padding: $padding;
   margin-bottom: 20px;
-  background-color: $bg-level-2;
-  border-left: 0 solid $ldc-color;
+  background-color: $bg-card;
+  border-left: 0 solid $bg-level-3;
   transform: scaleX(1);
   transform-origin: right;
   transition: all 300ms ease-in;
@@ -13,8 +16,18 @@ section.ldc-real-estate-lead {
     transform: scaleX(0.99);
   }
 
+  [class^="rel-"] {
+    color: $main-color;
+  }
+
+  .ldc-button {
+    position: absolute;
+    right: $padding;
+    bottom: $padding;
+  }
+
   &:hover {
     cursor: pointer;
-    border-left-width: 5px;
+    border-left-width: 10px;
   }
 }
