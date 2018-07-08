@@ -31,12 +31,12 @@ const RealEstateLead = ({
             {state}, {city}
           </div>
         </div>
-        <div className="rel-fetchers">
+        <div className="rel-features">
           <span>{property_type}</span>
           <span>{bedrooms} rooms</span>
           <span>{floor}th floor</span>
           <span>{size}</span>
-          <span>Budget: {budget}</span>
+          <span>${budget} budget</span>
         </div>
       </div>
       <Button label="Buy Lead" appStyle />

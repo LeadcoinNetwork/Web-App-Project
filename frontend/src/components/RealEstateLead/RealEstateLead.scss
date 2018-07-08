@@ -32,7 +32,7 @@ section.ldc-real-estate-lead {
 
   .rel-details {
     display: inline-block;
-    min-width: 280px;
+    min-width: 260px;
 
     .reld-status,
     .reld-date,
@@ -47,12 +47,34 @@ section.ldc-real-estate-lead {
     }
   }
 
-  .rel-fetchers {
-    display: inline-block;
+  .rel-features {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-height: 75px;
     color: $main-color;
 
     span {
+      position: relative;
       display: inline-block;
+      padding-left: 40px;
+      font-size: 16px;
+      line-height: 24px;
+      text-transform: capitalize;
+
+      &:before {
+        content: "";
+        position: absolute;
+        left: 24px;
+        top: 4px;
+        height: 12px;
+        width: 4px;
+        border-right: 1px solid;
+        border-bottom: 1px solid;
+        border-color: $ldc-color;
+        display: inline-block;
+        transform: rotate(45deg);
+      }
     }
   }
 
