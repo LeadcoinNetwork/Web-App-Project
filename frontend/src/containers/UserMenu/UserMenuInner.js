@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { connect } from "react-redux"
+import t from "../../utils/translate/translate"
 
 const menuItems = [
   { title: "User Settings", path: "/user-settings" },
@@ -13,13 +13,13 @@ const UserMenuInner = ({ user, logOut }) => (
     <div className="small-arrow" />
     {user.email && (
       <label>
-        Logged in as:
+        {t("Logged in as:")}
         <span title={user.email}>{user.email}</span>
       </label>
     )}
     {menuItems.map((item, index) => (
       <Link to={item.path} className="um-row" key={index}>
-        {item.title}
+        {t(item.title)}
       </Link>
     ))}
     <Link
@@ -28,7 +28,7 @@ const UserMenuInner = ({ user, logOut }) => (
       className="um-row log-out"
       key={menuItems.length}
     >
-      Log Out
+      {t("Log Out")}
     </Link>
   </div>
 )

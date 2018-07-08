@@ -97,4 +97,5 @@ const mapStateToProps = state => ({
 })
 
 // export default App
-export default connect(mapStateToProps)(App)
+import { hot } from "react-hot-loader"
+export default hot(module)(connect(mapStateToProps)(App))

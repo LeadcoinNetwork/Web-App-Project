@@ -58,13 +58,13 @@ module.exports = {
         test: /\.js$/,
         exclude: /(node_modules)/,
         loader: "babel-loader",
-        query: {
-          presets: ["@babel/preset-env", "@babel/preset-react"],
-          plugins: [
-            "@babel/plugin-proposal-object-rest-spread",
-            "transform-class-properties",
-          ],
-        },
+        // query: {
+        //   presets: ["@babel/preset-env", "@babel/preset-react"],
+        //   plugins: [
+        //     "@babel/plugin-proposal-object-rest-spread",
+        //     "transform-class-properties",
+        //   ],
+        // },
       },
       {
         test: /\.(scss|css)$/,
@@ -86,7 +86,7 @@ module.exports = {
   },
   resolve: {
     modules: ["node_modules", path.resolve(__dirname, "src")],
-    extensions: [".js", ".ts",".json"],
+    extensions: [".js", ".ts", ".json"],
     alias: webpackUtils.getAliasesFromRootSrcForWebPack(),
   },
 }

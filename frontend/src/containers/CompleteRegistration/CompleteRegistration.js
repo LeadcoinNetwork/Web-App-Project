@@ -32,14 +32,14 @@ class CompleteRegistration extends React.Component {
           <h1>{t("Fill your Profile")}</h1>
           <div className="crm-form">
             <TextField
-              placeholder="Company Name"
+              placeholder={t("Company Name")}
               name="company"
               value={company}
               onChange={this.handleChange}
               type="text"
             />
             <TextField
-              placeholder="Country"
+              placeholder={t("Country")}
               name="country"
               value={country}
               onChange={this.handleChange}

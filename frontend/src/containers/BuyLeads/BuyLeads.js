@@ -23,11 +23,11 @@ class BuyLeads extends React.Component {
   }
   buildButtonLabel = amount => {
     if (amount > 1) {
-      return "buy " + amount + " leads"
+      return t("buy ") + amount + t(" leads")
     } else if (amount === 1) {
-      return "buy lead"
+      return t("buy lead")
     } else {
-      return "buy leads"
+      return t("buy leads")
     }
   }
   getButtons = amountSelected => {
@@ -41,7 +41,7 @@ class BuyLeads extends React.Component {
       ],
       record: [
         {
-          value: "buy",
+          value: t("buy"),
           onClick: this.buyLead,
         },
       ],

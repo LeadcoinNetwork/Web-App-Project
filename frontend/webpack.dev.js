@@ -9,6 +9,7 @@ module.exports = merge(common, {
   devServer: {
     contentBase: "./src/static",
     historyApiFallback: true,
+    clientLogLevel: "error",
     stats: {
       stats: "errors-only",
       colors: true,

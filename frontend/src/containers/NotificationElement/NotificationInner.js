@@ -2,6 +2,7 @@ import React from "react"
 import FontAwesomeIcon from "@fortawesome/react-fontawesome"
 import faEye from "@fortawesome/fontawesome-free-solid/faEye"
 import { Time } from "../../utils/time"
+import t from "../../utils/translate/translate"
 
 const NotificationInner = ({ list, notificatiosViewAll }) => (
   <div className="notification-inner" onClick={notificatiosViewAll}>
@@ -15,7 +16,7 @@ const NotificationInner = ({ list, notificatiosViewAll }) => (
           <span className="nr-time">
             {Time.fromNow(notification.timestamp)}
           </span>{" "}
-          {notification.message}
+          {t(notification.message)}
         </div>
       </div>
     ))}
@@ -26,7 +27,7 @@ const NotificationInner = ({ list, notificatiosViewAll }) => (
         color={"white"}
         size={"1x"}
       />
-      <span className="view-all-text">View All Notifications</span>
+      <span className="view-all-text">{t("View All Notifications")}</span>
     </div>
   </div>
 )

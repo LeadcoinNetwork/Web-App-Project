@@ -11,14 +11,19 @@ const checkout = ({ list, totalPrice, loading, error, onScrollBottom }) => (
   <div className="shopping-cart">
     <h1>{t("Shopping Cart")}</h1>
     <Table
-      fields={checkoutConfig.fields}
+      fields={checkoutConfig.fields.map(field => ({
+        ...field,
+        name: t(field.name),
+      }))}
       records={list}
       onScrollBottom={onScrollBottom}
       showOnZeroRecords={<div>{t("Shopping Cart is Empty")}</div>}
       isSelectable={false}
     />
     <div className="checkout">
-      <div className="total-price">{t("Total")}: {totalPrice}</div>
+      <div className="total-price">
+        {t("Total")}: {totalPrice}
+      </div>
       <Button
         label={t("Checkout")}
         loading={loading}
@@ -37,7 +42,4 @@ const mapDispatchToProps = {
 
 const mapStateToProps = state => state.checkout
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(checkout)
+export default connect(mapStateToProps, mapDispatchToProps)(checkout)

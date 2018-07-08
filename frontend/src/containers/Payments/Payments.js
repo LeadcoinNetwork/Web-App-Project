@@ -2,6 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import * as Actions from "../../actions"
 import Table from "../../components/Table"
+import t from "../../utils/translate/translate"
 
 const paymentsConfig = require("./payments_table.config.json")
 
@@ -9,16 +10,19 @@ const PaymentsHistory = ({ list, loading, error, onScrollBottom }) => (
   <div className="payment-history">
     <Table
       title="Payments History"
-      fields={paymentsConfig.fields}
+      fields={paymentsConfig.fields.map(field => ({
+        ...field,
+        name: t(field.name),
+      }))}
       records={list}
       onScrollBottom={onScrollBottom}
       showOnZeroRecords={
         loading ? (
-          <div>Loading...</div>
+          <div>{t("Loading...")}</div>
         ) : error ? (
-          <div>{error}</div>
+          <div>{t(error)}</div>
         ) : (
-          <div>Nothing to show</div>
+          <div>{t("Nothing to show")}</div>
         )
       }
       isSelectable={false}
@@ -32,7 +36,4 @@ const mapDispatchToProps = {
 
 const mapStateToProps = state => state.payments
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(PaymentsHistory)
+export default connect(mapStateToProps, mapDispatchToProps)(PaymentsHistory)
