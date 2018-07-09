@@ -9,11 +9,6 @@ import RealEstateLead from "Components/RealEstateLead"
 import ResultsModeContext from "Containers/App/ResultsModeContext"
 
 class BuyLeads extends React.Component {
-  constructor(props) {
-    super(props)
-
-    leads.getLeads(props.dispatch)
-  }
   buyLeads = () => {
     console.log(Array.from(this.props.leads.selected))
   }
