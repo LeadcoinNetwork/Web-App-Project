@@ -4,7 +4,6 @@ jobs:
       language: node
       node_js: 8.5
       env:
-      - a=b
       - BACKEND=http://127.0.0.1.xip.io:3000
       - FRONTEND=http://localhost:8081
       - PORT=8081
@@ -19,8 +18,9 @@ jobs:
       - cd backend
       - npm i    
     - stage: deploy
+      script: skip
       deploy:
-        - echo "deploying..."
+      - echo "deploying..."
 cache:
   directories:
     - frontend/node_modules
