@@ -21,7 +21,14 @@ jobs:
       language: generic
       script: skip
       deploy:
-      - echo "deploying..."
+        provider: script
+        script: echo "should deploy frontend"
+    - stage: deploy
+      language: generic
+      script: skip
+      deploy:
+        provider: script
+        script: echo "should deploy backend"
 cache:
   directories:
     - frontend/node_modules
