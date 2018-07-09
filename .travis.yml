@@ -1,8 +1,8 @@
+language: node
+node_js: 8.5
 jobs:
   include:
     - stage: frontend & backend
-      language: node
-      node_js: 8.5
       env:
       - BACKEND=http://127.0.0.1.xip.io:3000
       - FRONTEND=http://localhost:8081
@@ -20,6 +20,8 @@ jobs:
       - cd backend
       - npm i    
       - echo "complete backend!"
+    - stage: deploy
+      script: echo 'deploying...'    
 cache:
   directories:
     - frontend/node_modules
