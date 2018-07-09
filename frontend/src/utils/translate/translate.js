@@ -20,11 +20,11 @@ export default function t(textToTransalte) {
   const current = storage.getItem("current")
   const value = _.get(translateDatabase, [textToTransalte, current])
   if (value) {
-    return value
+    return "☑" + value
   } else if (current !== "en") {
-    return getRandom(current, textToTransalte)
+    return "☒" + getRandom(current, textToTransalte)
   } else {
-    return textToTransalte
+    return "☒" + textToTransalte
   }
 }
 
