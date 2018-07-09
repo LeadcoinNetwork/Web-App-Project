@@ -18,6 +18,7 @@ jobs:
       - cd backend
       - npm i    
     - stage: deploy
+      language: generic
       script: skip
       deploy:
       - echo "deploying..."
