@@ -48,7 +48,7 @@ const RealEstateLead = ({
           <span>{property_type}</span>
           <span>{bedrooms} rooms</span>
           <span>{floor}th floor</span>
-          <span>{size}</span>
+          <span>{size} SqFt</span>
           <span>${budget} budget</span>
         </div>
       </div>
