@@ -10,7 +10,7 @@ const LeadsResults = ({ leads, leadType }) => {
 
   return (
     <section className="ldc-leads-results">
-      {leads.list.map(l => <Lead key={l.id} lead={l} />)}
+      {leads.list.map(l => <Lead key={l.id} {...l} />)}
     </section>
   )
 }
