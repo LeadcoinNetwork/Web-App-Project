@@ -71,7 +71,7 @@ class BuyLeads extends React.Component {
           isSelectable={true}
         />
 
-        <LeadsResults records={leads.list} />
+        <LeadsResults leads={leads} leadType={"RealEstateLead"} />
       </>
     )
   }
