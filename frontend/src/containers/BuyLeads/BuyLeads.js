@@ -5,6 +5,7 @@ import LeadsResults from "Components/LeadsResults"
 import { leads } from "../../actions"
 import t from "../../utils/translate/translate"
 import Button from "Components/Button"
+import RealEstateLead from "Components/RealEstateLead"
 import ResultsModeContext from "Containers/App/ResultsModeContext"
 
 class BuyLeads extends React.Component {
@@ -77,10 +78,12 @@ class BuyLeads extends React.Component {
             </label>
             <h1>{t("Buy Leads")}</h1>
             {cardsMode ? (
-              <LeadsResults leads={leads} leadType={"RealEstateLead"} />
+              <LeadsResults
+                leads={leads}
+                render={lead => <RealEstateLead key={lead.id} {...lead} />}
+              />
             ) : (
               <Table
-                text={console.log(cardsMode, toggleMode)}
                 fields={fields.map(field => ({
                   ...field,
                   name: t(field.name),
