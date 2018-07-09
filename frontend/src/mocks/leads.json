@@ -8,12 +8,13 @@
     "state": "ny",
     "city": "new york",
     "property_type": "home",
-    "size": "32",
+    "size": "120",
     "budget": "30m",
     "bedrooms": "5",
     "floor": "3",
-    "specification": "specification text",
-    "lead_price": "34 LDC",
+    "specification":
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore",
+    "lead_price": "500",
     "status": "live"
   },
   {
@@ -24,13 +25,14 @@
     "email": "meirkoen@gmail.com",
     "state": "ny",
     "city": "new york",
-    "property_type": "home",
-    "size": "32",
-    "budget": "30m",
-    "bedrooms": "5",
-    "floor": "3",
-    "specification": "specification text",
-    "lead_price": "34 LDC",
+    "property_type": "top roof",
+    "size": "60",
+    "budget": "450k",
+    "bedrooms": "2",
+    "floor": "2",
+    "specification":
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore",
+    "lead_price": "340",
     "status": "live"
   },
   {
@@ -42,12 +44,13 @@
     "state": "ny",
     "city": "new york",
     "property_type": "home",
-    "size": "32",
+    "size": "30",
     "budget": "30m",
     "bedrooms": "5",
     "floor": "3",
-    "specification": "specification text",
-    "lead_price": "34 LDC",
+    "specification":
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ei",
+    "lead_price": "200",
     "status": "live"
   },
   {
@@ -64,7 +67,7 @@
     "bedrooms": "5",
     "floor": "3",
     "specification": "specification text",
-    "lead_price": "34 LDC",
+    "lead_price": "50",
     "status": "live"
   },
   {
@@ -81,7 +84,7 @@
     "bedrooms": "5",
     "floor": "3",
     "specification": "specification text",
-    "lead_price": "34 LDC",
+    "lead_price": "50",
     "status": "live"
   },
   {
@@ -98,7 +101,7 @@
     "bedrooms": "5",
     "floor": "3",
     "specification": "specification text",
-    "lead_price": "34 LDC",
+    "lead_price": "50",
     "status": "live"
   },
   {
@@ -115,7 +118,7 @@
     "bedrooms": "5",
     "floor": "3",
     "specification": "specification text",
-    "lead_price": "34 LDC",
+    "lead_price": "34",
     "status": "live"
   },
   {
@@ -132,7 +135,7 @@
     "bedrooms": "5",
     "floor": "3",
     "specification": "specification text",
-    "lead_price": "34 LDC",
+    "lead_price": "34",
     "status": "live"
   },
   {
@@ -149,7 +152,7 @@
     "bedrooms": "5",
     "floor": "3",
     "specification": "specification text",
-    "lead_price": "34 LDC",
+    "lead_price": "34",
     "status": "live"
   },
   {
@@ -166,7 +169,7 @@
     "bedrooms": "5",
     "floor": "3",
     "specification": "specification text",
-    "lead_price": "34 LDC",
+    "lead_price": "34",
     "status": "live"
   },
   {
@@ -183,7 +186,7 @@
     "bedrooms": "5",
     "floor": "3",
     "specification": "specification text",
-    "lead_price": "34 LDC",
+    "lead_price": "34",
     "status": "live"
   }
 ]
