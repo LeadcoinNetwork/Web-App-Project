@@ -70,7 +70,10 @@ class BuyLeads extends React.Component {
               }}
             >
               Switch to &nbsp; &nbsp;
-              <i className={`fas fa-${cardsMode ? "align-justify" : "bars"}`} />
+              <i
+                className={`fas fa-${cardsMode ? "table" : "bars"}`}
+                style={{ fontSize: "20px", position: "relative", top: "2px" }}
+              />
             </label>
             <h1>{t("Buy Leads")}</h1>
             {cardsMode ? (
