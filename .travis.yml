@@ -1,1 +1,38 @@
-script: echo "hello world"
+jobs:
+  include:
+    - stage: build frontend & backend
+      language: node
+      node_js: 8.5
+      env:
+      - BACKEND=http://127.0.0.1.xip.io:3000
+      - FRONTEND=http://localhost:8081
+      - PORT=8081
+      script:
+      - cd frontend
+      - npm i
+      - npm run build
+    - stage: build frontend & backend
+      language: node
+      node_js: 8.5
+      script:
+      - cd backend
+      - npm i    
+    - stage: deploy
+      language: generic
+      script: skip
+      deploy:
+        provider: script
+        script: echo "should deploy frontend"
+    - stage: deploy
+      language: generic
+      script: skip
+      deploy:
+        provider: script
+        script: echo "should deploy backend"
+cache:
+  directories:
+    - frontend/node_modules
+    - backend/node_modules
+    - node_modules
+
+# if [ "$TRAVIS_PULL_REQUEST" = "false" ];fi;    
