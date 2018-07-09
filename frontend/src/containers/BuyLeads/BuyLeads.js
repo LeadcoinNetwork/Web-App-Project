@@ -1,6 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import Table from "Components/Table"
+import LeadsResults from "Components/LeadsResults"
 import { leads } from "../../actions"
 import t from "../../utils/translate/translate"
 
@@ -51,21 +52,26 @@ class BuyLeads extends React.Component {
     this.props.dispatch(leads.setSelectedLeads(selectedLeads))
   }
   render() {
+    let { leads, fields } = this.props
+
     return (
       <>
         <h1>{t("Buy Leads")}</h1>
+
         <Table
-          fields={this.props.fields.map(field => ({
+          fields={fields.map(field => ({
             ...field,
             name: t(field.name),
           }))}
-          records={this.props.leads.list}
-          buttons={this.getButtons(this.props.leads.selected.size)}
+          records={leads.list}
+          buttons={this.getButtons(leads.selected.size)}
           setSelectedRecords={this.setSelectedRecords}
           onScrollBottom={this.onScrollBottom}
-          selected={this.props.leads.selected}
+          selected={leads.selected}
           isSelectable={true}
         />
+
+        <LeadsResults leads={leads} leadType={"RealEstateLead"} />
       </>
     )
   }
