@@ -1,29 +1,30 @@
-language: node
-node_js: 8.5
 jobs:
   include:
-    - stage: frontend & backend
+    - stage: build frontend & backend
+      language: node
+      node_js: 8.5
       env:
+      - a=b
       - BACKEND=http://127.0.0.1.xip.io:3000
       - FRONTEND=http://localhost:8081
       - PORT=8081
       script:
-      - echo "start frontend..."
+      - echo $a
+      - echo ${a}
+      - node -v
       - cd frontend
       - npm i
       - npm run build
-      - echo "complete frontend!"
-    - stage: 
-      script:
-      - echo "start backend..."
+    - stage: deploy
+      script: skip
+      deploy:
       - node -v
       - cd backend
       - npm i    
-      - echo "complete backend!"
-    - stage: deploy
-      script: echo 'deploying...'    
 cache:
   directories:
     - frontend/node_modules
     - backend/node_modules
     - node_modules
+
+# if [ "$TRAVIS_PULL_REQUEST" = "false" ];fi;    
