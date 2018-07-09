@@ -9,18 +9,18 @@ jobs:
       - FRONTEND=http://localhost:8081
       - PORT=8081
       script:
-      - echo $a
-      - echo ${a}
-      - node -v
       - cd frontend
       - npm i
       - npm run build
-    - stage: deploy
-      script: skip
-      deploy:
-      - node -v
+    - stage: build frontend & backend
+      language: node
+      node_js: 8.5
+      script:
       - cd backend
       - npm i    
+    - stage: deploy
+      deploy:
+        - echo "deploying..."
 cache:
   directories:
     - frontend/node_modules
