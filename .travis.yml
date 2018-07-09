@@ -18,9 +18,17 @@ jobs:
       - cd backend
       - npm i    
     - stage: deploy
+      language: generic
       script: skip
       deploy:
-      - echo "deploying..."
+        provider: script
+        script: echo "should deploy frontend"
+    - stage: deploy
+      language: generic
+      script: skip
+      deploy:
+        provider: script
+        script: echo "should deploy backend"
 cache:
   directories:
     - frontend/node_modules
@@ -28,3 +36,12 @@ cache:
     - node_modules
 
 # if [ "$TRAVIS_PULL_REQUEST" = "false" ];fi;    
+
+# deploy:
+#   provider: gcs
+#   access_key_id: "GCS Interoperable Access Key ID"
+#   secret_access_key: "GCS Interoperable Access Secret"
+#   bucket: "GCS Bucket"
+#   skip_cleanup: true
+#   acl: public-read
+#   local-dir: directory-name
