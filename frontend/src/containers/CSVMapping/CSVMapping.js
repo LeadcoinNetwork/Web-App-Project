@@ -95,7 +95,7 @@ class CSVMapping extends React.Component {
                 {t("Personal Identification Information")}
               </div>
               <div className="header">
-                {t("These fields will only be visible to who bought the lead")}
+                {t("These fields will only be visible to the lead owner")}
               </div>
             </div>
             <div className="fields">{this.renderFields(db_fields.private)}</div>
