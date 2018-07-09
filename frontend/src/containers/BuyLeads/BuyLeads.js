@@ -4,6 +4,8 @@ import Table from "Components/Table"
 import LeadsResults from "Components/LeadsResults"
 import { leads } from "../../actions"
 import t from "../../utils/translate/translate"
+import Button from "Components/Button"
+import ResultsModeContext from "Containers/App/ResultsModeContext"
 
 class BuyLeads extends React.Component {
   constructor(props) {
@@ -55,24 +57,42 @@ class BuyLeads extends React.Component {
     let { leads, fields } = this.props
 
     return (
-      <>
-        <h1>{t("Buy Leads")}</h1>
-
-        <Table
-          fields={fields.map(field => ({
-            ...field,
-            name: t(field.name),
-          }))}
-          records={leads.list}
-          buttons={this.getButtons(leads.selected.size)}
-          setSelectedRecords={this.setSelectedRecords}
-          onScrollBottom={this.onScrollBottom}
-          selected={leads.selected}
-          isSelectable={true}
-        />
-
-        <LeadsResults leads={leads} leadType={"RealEstateLead"} />
-      </>
+      <ResultsModeContext.Consumer>
+        {({ cardsMode, toggleMode }) => (
+          <section className="ldc-buy-leads">
+            {/* TODO: make reusable */}
+            <label
+              onClick={toggleMode}
+              style={{
+                float: "right",
+                cursor: "pointer",
+                padding: "10px 3px 0 0",
+              }}
+            >
+              Switch to &nbsp; &nbsp;
+              <i className={`fas fa-${cardsMode ? "align-justify" : "bars"}`} />
+            </label>
+            <h1>{t("Buy Leads")}</h1>
+            {cardsMode ? (
+              <LeadsResults leads={leads} leadType={"RealEstateLead"} />
+            ) : (
+              <Table
+                text={console.log(cardsMode, toggleMode)}
+                fields={fields.map(field => ({
+                  ...field,
+                  name: t(field.name),
+                }))}
+                records={leads.list}
+                buttons={this.getButtons(leads.selected.size)}
+                setSelectedRecords={this.setSelectedRecords}
+                onScrollBottom={this.onScrollBottom}
+                selected={leads.selected}
+                isSelectable={true}
+              />
+            )}
+          </section>
+        )}
+      </ResultsModeContext.Consumer>
     )
   }
 }
