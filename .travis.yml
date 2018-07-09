@@ -1,13 +1,12 @@
 language: node
 node_js: 8.5
-env:
-  - a=b
-  - BACKEND=http://127.0.0.1.xip.io:3000
-  - FRONTEND=http://localhost:8081
-  - PORT=8081
 jobs:
   include:
-    - stage: test
+    - stage: Frontend
+      env:
+      - a=b
+      - BACKEND=http://127.0.0.1.xip.io:3000
+      - FRONTEND=http://localhost:8081
       script:
       - echo $a
       - echo ${a}
@@ -15,13 +14,11 @@ jobs:
       - cd frontend
       - npm i
       - npm run build
-    - stage: test 
+    - stage: Backend 
       script:
       - node -v
       - cd backend
-      - npm i
-    - stage: after-test
-      script: echo "after-test"
+      - npm i    
 cache:
   directories:
     - node_modules
