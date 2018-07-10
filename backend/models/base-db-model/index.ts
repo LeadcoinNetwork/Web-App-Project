@@ -49,7 +49,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
 
     if (cnd) cnd = `WHERE ${cnd}`
 
-    let rows = await this.sql.query(`SELECT * FROM users ${cnd}`)
+    let rows = await this.sql.query(`SELECT * FROM ${this.tableName} ${cnd}`)
     rows = rows.map(row => {
       // remove RowDataPacket class
       var newObject = Object.assign({}, row)
@@ -64,7 +64,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
   public async insert(record: INew) {
     this.log("create " + this.tableName + " start", record)
 
-    let status = await this.sql.query("INSERT INTO users SET ?", record)
+    let status = await this.sql.query("INSERT INTO "+this.tableName+" SET ?", record)
 
     this.log("create " + this.tableName + " start", status.insertId)
 
