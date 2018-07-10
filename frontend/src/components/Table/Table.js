@@ -96,11 +96,7 @@ class Table extends React.Component {
                 label={button.value}
                 onClick={button.onClick}
                 appStyle={true}
-                disabled={
-                  props.isSelectable && button.actionPerSelected
-                    ? !props.selected.size
-                    : false
-                }
+                disabled={button.actionPerSelected && !props.selected.size}
               />
             ))}
         </div>

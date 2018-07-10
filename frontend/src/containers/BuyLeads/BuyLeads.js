@@ -32,7 +32,7 @@ class BuyLeads extends React.Component {
       return t("buy leads")
     }
   }
-  getTableButtons = () => {
+  getListButtons = () => {
     return [
       {
         value: this.buildButtonLabel(),
@@ -51,7 +51,7 @@ class BuyLeads extends React.Component {
   }
   getButtons = () => {
     return {
-      table: this.getTableButtons(),
+      table: this.getListButtons(),
       record: this.getLeadButtons(),
     }
   }
@@ -81,7 +81,8 @@ class BuyLeads extends React.Component {
     setSelectedLeads(selected)
   }
   render() {
-    let { leads, fields, setSelectedLeads } = this.props
+    let { leads, fields, setSelectedLeads } = this.props,
+      isNotAllSelected = this.isNotAllSelected()
 
     return (
       <ResultsModeContext.Consumer>
@@ -92,6 +93,8 @@ class BuyLeads extends React.Component {
             {cardsMode ? (
               <LeadsResults
                 leads={leads}
+                buttons={this.getListButtons()}
+                isNotAllSelected={isNotAllSelected}
                 toggleAll={this.toggleAll}
                 render={lead => (
                   <RealEstateLead
@@ -113,7 +116,7 @@ class BuyLeads extends React.Component {
                 buttons={this.getButtons()}
                 setSelectedRecords={setSelectedLeads}
                 onScrollBottom={this.onScrollBottom}
-                isNotAllSelected={this.isNotAllSelected()}
+                isNotAllSelected={isNotAllSelected}
                 selected={leads.selected}
                 isSelectable={true}
               />
