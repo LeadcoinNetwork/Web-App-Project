@@ -21,7 +21,9 @@ class BuyLeads extends React.Component {
 
     getLeads(dispatch, cb, leads.page + 1)
   }
-  buildButtonLabel = amount => {
+  buildButtonLabel = () => {
+    let amount = this.props.leads.selected.size
+
     if (amount > 1) {
       return t("buy ") + amount + t(" leads")
     } else if (amount === 1) {
@@ -30,21 +32,27 @@ class BuyLeads extends React.Component {
       return t("buy leads")
     }
   }
-  getButtons = amountSelected => {
+  getTableButtons = () => {
+    return [
+      {
+        value: this.buildButtonLabel(),
+        onClick: this.buyLeads,
+        actionPerSelected: true,
+      },
+    ]
+  }
+  getLeadButtons = () => {
+    return [
+      {
+        value: t("buy"),
+        onClick: this.buyLead,
+      },
+    ]
+  }
+  getButtons = () => {
     return {
-      table: [
-        {
-          value: this.buildButtonLabel(amountSelected),
-          onClick: this.buyLeads,
-          actionPerSelected: true,
-        },
-      ],
-      record: [
-        {
-          value: t("buy"),
-          onClick: this.buyLead,
-        },
-      ],
+      table: this.getTableButtons(),
+      record: this.getLeadButtons(),
     }
   }
   toggleLead = (event, id) => {
@@ -84,7 +92,7 @@ class BuyLeads extends React.Component {
                   name: t(field.name),
                 }))}
                 records={leads.list}
-                buttons={this.getButtons(leads.selected.size)}
+                buttons={this.getButtons()}
                 setSelectedRecords={setSelectedLeads}
                 onScrollBottom={this.onScrollBottom}
                 selected={leads.selected}
