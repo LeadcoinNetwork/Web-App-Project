@@ -1,22 +1,27 @@
 import types from "./types"
 
 export default {
-  getLeads(payload) {
+  getLeads(namespace, payload) {
     return {
-      type: types.BUY_LEADS_GET_LEADS,
+      type: types[namespace + "_GET_LEADS"],
       payload,
     }
   },
-  addError(error) {
+  addError(namespace, error) {
     return {
-      type: types.BUY_LEADS_ERROR,
-      error,
+      type: types[namespace + "_ERROR"],
+      payload: error,
     }
   },
-  fetchLeads(options) {
+  fetchLeads(namespace) {
     return {
-      type: types.BUY_LEADS_FETCH_LEADS,
-      options,
+      type: types[namespace + "_FETCH_LEADS"],
+    }
+  },
+  setSelectedLeads(namespace, selected) {
+    return {
+      type: types[namespace + "_SET_SELECTED_LEADS"],
+      payload: selected,
     }
   },
 }

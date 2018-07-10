@@ -18,6 +18,31 @@ export default class Leads {
     return this.sql.query("delete from leads")
   }
 
+  async addWithNewOwner(lead_id: number, new_owner: number) {
+    const lead = await this.getById(lead_id)
+    lead.bought_from = lead.owner_id
+    lead.owner_id = new_owner
+    const [succ, _id] =  await this.insert(lead)
+    return _id
+  }
+
+  async buy(leads: number[], new_owner: number) {
+    // try to make leads inactive, in case of race condition
+    const inactive_leads = await leads.filter(async (l_id) => {
+      return await this.update(l_id, {active: false})
+    })
+
+    // insert the leads as new after a change ownership
+    return inactive_leads.map(async (l_id:number) => { 
+      return await this.addWithNewOwner(l_id, new_owner)
+    })
+  }
+
+  async getById(id: number): Promise<Lead> {
+    const [record] = await this.find({id}, null)
+    return record
+  }
+
   async insert(lead: Lead) {
     let status = await this.sql.query("INSERT INTO leads SET ?", lead)
     const success = (status.affectedRows != 0)
@@ -35,7 +60,7 @@ export default class Leads {
     return status.affectedRows != 0
   }
 
-  async find(condition_obj: object, options: FindOptions) {
+  async find(condition_obj: object, options: FindOptions | null) {
     if (!options) options = {}
     const {where_additions, sort_by, fields, page, limit} = options
     let conditions = Object.keys(condition_obj).map(key => {

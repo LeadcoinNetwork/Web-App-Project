@@ -33,7 +33,7 @@ const createReducerFor = namespace => {
           loading: true,
           error: false,
         }
-      case types[namespace + "_SET_SELECTED_RECORDS"]:
+      case types[namespace + "_SET_SELECTED_LEADS"]:
         return {
           ...state,
           selected: action.payload,

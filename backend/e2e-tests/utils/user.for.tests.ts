@@ -20,10 +20,10 @@ export async function create({
     fname: "moshe",
     lname: "Marilush",
     plainPassword: "danny-gembom",
-    emailConfirmationKey: UsersAuth.generateToken()
+    emailConfirmationKey: UsersAuth.generateToken(),
   })
   const token = UsersAuth.generateJWT(user_id, config.auth.jwt.secret)
-  var user = await users.tryGetUserById(user_id)
+  var user = await users.tryGetById(user_id)
   if (user instanceof NotFound) {
     throw new Error("cannot create user for tests")
   }
