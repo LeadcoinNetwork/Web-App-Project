@@ -82,9 +82,7 @@ class BuyLeads extends React.Component {
                 }))}
                 records={leads.list}
                 buttons={this.getButtons(leads.selected.size)}
-                setSelectedRecords={selectedLeads =>
-                  setSelectedLeads("BUY_LEADS", selectedLeads)
-                }
+                setSelectedRecords={setSelectedLeads}
                 onScrollBottom={this.onScrollBottom}
                 selected={leads.selected}
                 isSelectable={true}
@@ -103,5 +101,6 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, {
-  setSelectedLeads: leads.setSelectedLeads,
+  setSelectedLeads: selectedLeads =>
+    leads.setSelectedLeads("BUY_LEADS", selectedLeads),
 })(BuyLeads)
