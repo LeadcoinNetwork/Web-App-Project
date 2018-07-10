@@ -19,7 +19,7 @@ storiesOf("Containers/Buy Leads", module)
     return story
   })
   .add("Buy Leads - with mock fields", () => {
-    let leadsMock = require('../../mocks/leads.json')
+    let leadsMock = require("../../mocks/leads.json")
 
     for (let i = 0; i < 10; i++) {
       leadsMock.push({
@@ -31,13 +31,15 @@ storiesOf("Containers/Buy Leads", module)
       path: "/buy-leads",
       loggedIn: true,
     })
-    setTimeout( () => {
-      store.dispatch(actions.leads.getLeads({
-        list: leadsMock,
-        page: 0,
-        limit: 2,
-        total: leadsMock.length
-      }))
+    setTimeout(() => {
+      store.dispatch(
+        actions.leads.getLeads("BUY_LEADS", {
+          list: leadsMock,
+          page: 0,
+          limit: 2,
+          total: leadsMock.length,
+        }),
+      )
     }, 500)
     return story
   })

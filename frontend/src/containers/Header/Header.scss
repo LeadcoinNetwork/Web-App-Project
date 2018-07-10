@@ -98,5 +98,13 @@ header.ldc-header {
         }
       }
     }
+
+    &.h-app-mode {
+      .ham-menu {
+        .ldc-balance-widget {
+          display: none;
+        }
+      }
+    }
   }
 }
