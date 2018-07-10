@@ -5,6 +5,7 @@ const languageFlagConverter = {
   zh: "cn",
   ja: "jp",
   ko: "kr",
+  he: "il",
 }
 
 const initialState = {
