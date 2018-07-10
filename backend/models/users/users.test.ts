@@ -30,7 +30,7 @@ test("getOne (remove created, id from snapshot)", async () => {
     lname: "last name",
     plainPassword: "my plain password",
   })
-  var user = await users.tryGetUserById(user_id)
+  var user = await users.tryGetById(user_id)
   if (user instanceof NotFound) {
     throw new Error("user should be found")
   }

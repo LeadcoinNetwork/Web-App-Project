@@ -3,6 +3,11 @@ const mysql = require("promise-mysql")
 
 import { IConfig } from "../../app-logic/config"
 
+interface queryResult extends Array<any> {
+  insertId?: number
+  affectedRows?: number
+}
+
 export default class SQL {
   private pool
   constructor(private config: IConfig) {
@@ -10,8 +15,9 @@ export default class SQL {
     this.init()
     this.checkdb()
   }
-  public query(...args) {
-    return this.pool.query.apply(this.pool, arguments)
+  public query(...args): queryResult {
+    var result = this.pool.query.apply(this.pool, arguments)
+    return result
   }
   private async checkdb() {
     await this.query("select 1")

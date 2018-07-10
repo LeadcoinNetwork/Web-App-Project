@@ -1,5 +1,7 @@
 # LeadCoin’s Web App Project
 
+[![Build Status](https://travis-ci.org/LeadcoinNetwork/Web-App-Project.svg?branch=master)](https://travis-ci.org/LeadcoinNetwork/Web-App-Project)
+
 ![](https://i.imgur.com/EdTXW8o.png)
 
 A decentralized Lead Sharing Network https://leadcoin.network

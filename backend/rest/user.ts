@@ -61,7 +61,7 @@ export function start({
         plainPassword: req.body.password,
       })
       res.status(201) // Created
-      var _user = await appLogic.models.users.tryGetUserById(user)
+      var _user = await appLogic.models.users.tryGetById(user)
       res.cookie("token", token)
       res.json({ user: _user, token })
     })().catch(err => {

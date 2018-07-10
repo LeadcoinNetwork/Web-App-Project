@@ -6,7 +6,7 @@ var initialState = {
 }
 export default function(state = initialState, action) {
   switch (action.type) {
-    case types.BALANCE_WIDGET_UPDATE:
+    case types.BALANCE_UPDATE:
       return {
         ...state,
         loading: false,

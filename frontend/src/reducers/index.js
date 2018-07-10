@@ -1,7 +1,6 @@
 import { combineReducers } from "redux"
 import app from "./app"
 import createLeadsReducerFor from "./leads"
-
 import user from "./user"
 import language from "./language"
 import checkout from "./checkout"
@@ -22,6 +21,7 @@ import csvUpload from "./csvUpload"
 import addLead from "./addLead"
 import fields from "./fields"
 import translate from "./translate"
+import withdraw from "./withdraw"
 
 const rootReducer = combineReducers({
   app,
@@ -29,7 +29,6 @@ const rootReducer = combineReducers({
   language,
   checkout,
   payments,
-  notifications,
   balance,
   buyLeads: createLeadsReducerFor("BUY_LEADS"),
   sellLeads: createLeadsReducerFor("SELL_LEADS"),
@@ -49,6 +48,7 @@ const rootReducer = combineReducers({
   addLead,
   fields,
   translate,
+  withdraw,
 })
 
 export default rootReducer
