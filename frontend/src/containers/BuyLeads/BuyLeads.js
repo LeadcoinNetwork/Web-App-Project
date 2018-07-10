@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import Table from "Components/Table"
 import LeadsResults from "Components/LeadsResults"
-import { leads } from "../../actions"
+import { leads } from "Actions"
 import t from "../../utils/translate/translate"
 import Button from "Components/Button"
 import RealEstateLead from "Components/RealEstateLead"
@@ -46,11 +46,8 @@ class BuyLeads extends React.Component {
       ],
     }
   }
-  setSelectedRecords = selectedLeads => {
-    this.props.dispatch(leads.setSelectedLeads(selectedLeads))
-  }
   render() {
-    let { leads, fields } = this.props
+    let { leads, fields, setSelectedLeads } = this.props
 
     return (
       <ResultsModeContext.Consumer>
@@ -85,7 +82,9 @@ class BuyLeads extends React.Component {
                 }))}
                 records={leads.list}
                 buttons={this.getButtons(leads.selected.size)}
-                setSelectedRecords={this.setSelectedRecords}
+                setSelectedRecords={selectedLeads =>
+                  setSelectedLeads("BUY_LEADS", selectedLeads)
+                }
                 onScrollBottom={this.onScrollBottom}
                 selected={leads.selected}
                 isSelectable={true}
@@ -103,4 +102,6 @@ const mapStateToProps = state => ({
   fields: state.fields.filter(lead => !lead.private),
 })
 
-export default connect(mapStateToProps)(BuyLeads)
+export default connect(mapStateToProps, {
+  setSelectedLeads: leads.setSelectedLeads,
+})(BuyLeads)

@@ -18,9 +18,9 @@ export default {
       type: types[namespace + "_FETCH_LEADS"],
     }
   },
-  setSelectedRecords(namespace, selected) {
+  setSelectedLeads(namespace, selected) {
     return {
-      type: types[namespace + "_SET_SELECTED_RECORDS"],
+      type: types[namespace + "_SET_SELECTED_LEADS"],
       payload: selected,
     }
   },
