@@ -1,3 +1,10 @@
+# First Stage:
+# Start building the frontend and backend in parallel.
+# Then testing the frontend and backend in parallel.
+# If both builds and tests complete succefully, then go to the next stage.
+#
+# Second Stage:
+# Push the backend and frontend to production servers.
 jobs:
   include:
     - stage: build frontend & backend
@@ -45,3 +52,4 @@ cache:
 #   skip_cleanup: true
 #   acl: public-read
 #   local-dir: directory-name
+
