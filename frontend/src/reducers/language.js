@@ -1,7 +1,15 @@
 import { types } from "../actions"
 
+const languageFlagConverter = {
+  en: "us",
+  zh: "cn",
+  ja: "jp",
+  ko: "kr",
+}
+
 const initialState = {
-  country: "us",
+  country:
+    languageFlagConverter[window.localStorage.getItem("current")] || "us",
   isOpen: false,
 }
 

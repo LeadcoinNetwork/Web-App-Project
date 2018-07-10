@@ -1,19 +1,32 @@
 {
-  "presets": [
-    [
-      "@babel/preset-env",
-      {
-        "targets": {
-          "browsers": [
-            "last 2 versions"
-          ]
-        }
-      }
-    ],
-    "@babel/preset-react"
-  ],
+  "presets": ["@babel/preset-react"],
   "plugins": [
+    "transform-class-properties",
+    "transform-async-to-generator",
+    "babel-plugin-transform-exponentiation-operator",
+    "@babel/plugin-transform-template-literals",
+    "@babel/plugin-transform-literals",
+    "@babel/plugin-transform-function-name",
+    "@babel/plugin-transform-arrow-functions",
+    "@babel/plugin-transform-block-scoped-functions",
+    "@babel/plugin-transform-classes",
+    "@babel/plugin-transform-object-super",
+    "@babel/plugin-transform-shorthand-properties",
+    "@babel/plugin-transform-duplicate-keys",
+    "@babel/plugin-transform-computed-properties",
+    "@babel/plugin-transform-for-of",
+    "@babel/plugin-transform-sticky-regex",
+    "@babel/plugin-transform-unicode-regex",
+    "@babel/plugin-transform-spread",
+    "@babel/plugin-transform-parameters",
+    "@babel/plugin-transform-destructuring",
+    "@babel/plugin-transform-block-scoping",
+
+    "@babel/plugin-transform-typeof-symbol",
+    "@babel/plugin-transform-instanceof",
+    "@babel/plugin-transform-regenerator",
     "@babel/plugin-proposal-object-rest-spread",
-    "transform-class-properties"
+
+    "react-hot-loader/babel"
   ]
 }

@@ -40,14 +40,14 @@ class Login extends React.Component {
           <div className="lm-form">
             <h4>{t("Or enter your details:")}</h4>
             <TextField
-              placeholder="Email"
+              placeholder={t("Email")}
               type="email"
               name="email"
               value={email}
               onChange={this.handleChange}
             />
             <TextField
-              placeholder="Password"
+              placeholder={t("Password")}
               name="password"
               value={password}
               onChange={this.handleChange}

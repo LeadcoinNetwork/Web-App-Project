@@ -122,7 +122,7 @@ export function start({
           res.send({ ok: true })
         })
         .catch(err => {
-          console.log('ERROR', err)
+          console.log("ERROR", err)
           res.status(200)
           res.send({ ok: true })
         })

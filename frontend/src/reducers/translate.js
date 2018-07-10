@@ -2,15 +2,15 @@ import types from "../actions/types"
 
 const storage = window.localStorage
 
-const initialState = {
-  current: "en",
-}
-
 const flagLanguageConverter = {
   us: "en",
   cn: "zh",
   jp: "ja",
   kr: "ko",
+}
+
+const initialState = {
+  current: storage.getItem("current") || "en",
 }
 
 const leads = (state = initialState, action) => {

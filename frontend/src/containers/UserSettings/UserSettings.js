@@ -3,6 +3,7 @@ import TextField from "Components/TextField"
 import Button from "Components/Button"
 import { connect } from "react-redux"
 import { userSettings } from "../../actions"
+import t from "../../utils/translate/translate"
 
 class UserSettings extends React.Component {
   handleChange = event => {
@@ -11,7 +12,7 @@ class UserSettings extends React.Component {
   getErrors(errors) {
     return (
       <ul className="ldc-error-text">
-        {errors.split(";").map(e => <li>{e}</li>)}
+        {errors.split(";").map(e => <li>{t(e)}</li>)}
       </ul>
     )
   }
@@ -26,12 +27,12 @@ class UserSettings extends React.Component {
 
     return (
       <section className="ldc-user-settings">
-        <h1>User Settings</h1>
+        <h1>{t("User Settings")}</h1>
         <div className="us-password">
-          <h3>change your password</h3>
+          <h3>{t("change your password")}</h3>
           <TextField
             appStyle={true}
-            placeholder={"Current Password"}
+            placeholder={t("Current Password")}
             name="currentPassword"
             value={currentPassword}
             onChange={this.handleChange}
@@ -39,7 +40,7 @@ class UserSettings extends React.Component {
           />
           <TextField
             appStyle={true}
-            placeholder={"New Password"}
+            placeholder={t("New Password")}
             name="newPassword"
             value={newPassword}
             onChange={this.handleChange}
@@ -47,7 +48,7 @@ class UserSettings extends React.Component {
           />
           <TextField
             appStyle={true}
-            placeholder={"Confirm New Password"}
+            placeholder={t("Confirm New Password")}
             name="confirmPassword"
             value={confirmPassword}
             onChange={this.handleChange}
@@ -55,7 +56,7 @@ class UserSettings extends React.Component {
           />
           {error && this.getErrors(error)}
           <Button
-            label="submit"
+            label={t("submit")}
             loading={loading}
             onClick={this.props.onSubmit}
             appStyle={true}

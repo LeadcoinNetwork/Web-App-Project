@@ -1,15 +1,14 @@
 import React from "react"
 import { connect } from "react-redux"
 import Table from "Components/Table"
+import LeadsResults from "Components/LeadsResults"
 import { leads } from "../../actions"
 import t from "../../utils/translate/translate"
+import Button from "Components/Button"
+import RealEstateLead from "Components/RealEstateLead"
+import ResultsModeContext from "Containers/App/ResultsModeContext"
 
 class BuyLeads extends React.Component {
-  constructor(props) {
-    super(props)
-
-    leads.getLeads(props.dispatch)
-  }
   buyLeads = () => {
     console.log(Array.from(this.props.leads.selected))
   }
@@ -23,11 +22,11 @@ class BuyLeads extends React.Component {
   }
   buildButtonLabel = amount => {
     if (amount > 1) {
-      return "buy " + amount + " leads"
+      return t("buy ") + amount + t(" leads")
     } else if (amount === 1) {
-      return "buy lead"
+      return t("buy lead")
     } else {
-      return "buy leads"
+      return t("buy leads")
     }
   }
   getButtons = amountSelected => {
@@ -41,7 +40,7 @@ class BuyLeads extends React.Component {
       ],
       record: [
         {
-          value: "buy",
+          value: t("buy"),
           onClick: this.buyLead,
         },
       ],
@@ -51,22 +50,50 @@ class BuyLeads extends React.Component {
     this.props.dispatch(leads.setSelectedLeads(selectedLeads))
   }
   render() {
+    let { leads, fields } = this.props
+
     return (
-      <>
-        <h1>{t("Buy Leads")}</h1>
-        <Table
-          fields={this.props.fields.map(field => ({
-            ...field,
-            name: t(field.name),
-          }))}
-          records={this.props.leads.list}
-          buttons={this.getButtons(this.props.leads.selected.size)}
-          setSelectedRecords={this.setSelectedRecords}
-          onScrollBottom={this.onScrollBottom}
-          selected={this.props.leads.selected}
-          isSelectable={true}
-        />
-      </>
+      <ResultsModeContext.Consumer>
+        {({ cardsMode, toggleMode }) => (
+          <section className="ldc-buy-leads">
+            {/* TODO: make reusable */}
+            <label
+              onClick={toggleMode}
+              style={{
+                float: "right",
+                cursor: "pointer",
+                padding: "10px 3px 0 0",
+              }}
+            >
+              Switch to &nbsp; &nbsp;
+              <i
+                className={`fas fa-${cardsMode ? "table" : "bars"}`}
+                style={{ fontSize: "20px", position: "relative", top: "2px" }}
+              />
+            </label>
+            <h1>{t("Buy Leads")}</h1>
+            {cardsMode ? (
+              <LeadsResults
+                leads={leads}
+                render={lead => <RealEstateLead key={lead.id} {...lead} />}
+              />
+            ) : (
+              <Table
+                fields={fields.map(field => ({
+                  ...field,
+                  name: t(field.name),
+                }))}
+                records={leads.list}
+                buttons={this.getButtons(leads.selected.size)}
+                setSelectedRecords={this.setSelectedRecords}
+                onScrollBottom={this.onScrollBottom}
+                selected={leads.selected}
+                isSelectable={true}
+              />
+            )}
+          </section>
+        )}
+      </ResultsModeContext.Consumer>
     )
   }
 }

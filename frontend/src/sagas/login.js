@@ -7,24 +7,22 @@ import API from "../api/index"
 /**
  * @param api {API} - this is this paramters
  */
-export default function login(api) {
-  return function*() {
-    while (true) {
-      yield take(types.LOGIN_SUBMIT)
-      yield put(actions.login.loginLoading())
+export default function* login(api) {
+  while (true) {
+    yield take(types.LOGIN_SUBMIT)
+    yield put(actions.login.loginLoading())
 
-      let { email, password } = yield select(state => state.login)
-      let ans = yield api.users.login({
-        email,
-        password,
-      })
-      yield put(actions.login.loginFinish())
-      if (ans.error) {
-        yield put(actions.login.loginError(ans.error))
-      } else {
-        yield put(actions.user.loggedIn(ans.user))
-        yield put(actions.route.gotoDefaultHome())
-      }
+    let { email, password } = yield select(state => state.login)
+    let ans = yield api.users.login({
+      email,
+      password,
+    })
+    yield put(actions.login.loginFinish())
+    if (ans.error) {
+      yield put(actions.login.loginError(ans.error))
+    } else {
+      yield put(actions.user.loggedIn(ans.user))
+      yield put(actions.route.gotoDefaultHome())
     }
   }
 }

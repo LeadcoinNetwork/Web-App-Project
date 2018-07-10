@@ -7,11 +7,11 @@ import { MemoryRouter } from "react-router"
 import rootReducer from "Reducers"
 import App from "containers/App"
 import createSagaMiddleware from "redux-saga"
-import RootSaga from "sagas"
+import rootSaga from "sagas"
 import {
   routerMiddleware,
-  ConnectedRouter,
   connectRouter,
+  ConnectedRouter,
 } from "connected-react-router"
 import { createBrowserHistory, createMemoryHistory } from "history"
 import { user } from "Actions"
@@ -50,8 +50,9 @@ export function createStoreAndStory({
     connectRouter(history)(rootReducer),
     composeWithDevTools(applyMiddleware(...middlewares)),
   )
+  var sagaTask
   if (connectToProductionSaga) {
-    sagaMiddleware.run(RootSaga)
+    sagaTask = sagaMiddleware.run(rootSaga)
   }
   if (sagaFunction) {
     sagaMiddleware.run(sagaFunction)
@@ -63,6 +64,24 @@ export function createStoreAndStory({
       user.loggedIn({ id: 1, email: "verylongusername@leadcoin.network" }),
     )
   }
+  if (module.hot) {
+    module.hot.accept("Reducers", function() {
+      store.replaceReducer(connectRouter(history)(rootReducer))
+    })
+    if (module.hot) {
+      module.hot.accept("sagas", function() {
+        if (sagaTask) {
+          console.log("cancel previous saga task")
+          sagaTask.cancel()
+          sagaTask.done.then(() => {
+            console.log("replacing the saga")
+            sagaTask = sagaMiddleware.run(rootSaga)
+          })
+        }
+      })
+    }
+  }
+
   return {
     store,
     sagaMiddleware,
@@ -70,7 +89,10 @@ export function createStoreAndStory({
       <Provider store={store}>
         <div>
           {path && (
-            <ConnectedRouter history={history} action="fight for your right to party">
+            <ConnectedRouter
+              history={history}
+              action="fight for your right to party"
+            >
               <App />
             </ConnectedRouter>
           )}

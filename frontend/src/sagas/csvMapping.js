@@ -7,12 +7,11 @@ import API from "../api/index"
 /**
  * @param api {API} - this is this paramters
  */
-export default function csvMapping(api) {
-  return function*() {
-    while (true) {
-      const data = yield take(types.CSV_MAPPING_SUBMIT)
-      //yield put(Actions.csvMapping.csvMappingSubmit(data))
-      /*
+export default function* csvMapping(api) {
+  while (true) {
+    const data = yield take(types.CSV_MAPPING_SUBMIT)
+    //yield put(Actions.csvMapping.csvMappingSubmit(data))
+    /*
     var { fname, lname, email, password } = yield select(state => state.signup)
     var response = yield call(request, "POST", "/user", {
       password,
@@ -23,6 +22,5 @@ export default function csvMapping(api) {
       yield put(push("/email-confirmation"))
     }
     */
-    }
   }
 }

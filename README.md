@@ -27,6 +27,8 @@ The Smart Contract (Blockchain Layer) - When we finish to connect the frontend t
 
 ## Architecture
 
+![](./architecture.png)
+
 The frontend is developed using React. We’re developing the frontend using the Story-Driven-Development (SDD) method. We’re writing stories in Storybook for every component and container we're going to use, and then we’re developing the stories. We’re using Webpack for our custom configurations to bundle the frontend, as this allows us to combine all the best aspects of SASS, File-Loaders, Storybook, Dev-Servers, hot-reloading any settings based on our development needs.
 
 The state management system is Redux. We tried to keep all the states of non-reusable components in the store.

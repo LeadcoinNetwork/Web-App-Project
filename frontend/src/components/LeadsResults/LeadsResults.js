@@ -1,17 +1,8 @@
 import React from "react"
-import RealEstateLead from "Components/RealEstateLead"
 
-const LeadsResults = () => (
+const LeadsResults = ({ leads, render }) => (
   <section className="ldc-leads-results">
-    <RealEstateLead />
-    <RealEstateLead />
-    <RealEstateLead />
-    <RealEstateLead />
-    <RealEstateLead />
-    <RealEstateLead />
-    <RealEstateLead />
-    <RealEstateLead />
-    <RealEstateLead />
+    {leads.list.map(l => render(l))}
   </section>
 )
 

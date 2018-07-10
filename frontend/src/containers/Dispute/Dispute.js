@@ -12,7 +12,7 @@ class Dispute extends React.Component {
   getErrors(errors) {
     return (
       <ul className="ldc-error-text">
-        {errors.split(";").map(e => <li>{e}</li>)}
+        {errors.split(";").map(e => <li>{t(e)}</li>)}
       </ul>
     )
   }
@@ -25,7 +25,7 @@ class Dispute extends React.Component {
         <Textarea
           name="message"
           value={dispute.message}
-          placeholder="Enter dispute details"
+          placeholder={t("Enter dispute details")}
           onChange={this.handleChange}
         />
         {dispute.error && this.getErrors(dispute.error)}
