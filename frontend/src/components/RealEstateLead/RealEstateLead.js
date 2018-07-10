@@ -2,7 +2,7 @@ import React from "react"
 import Button from "Components/Button"
 
 const RealEstateLead = ({
-  id = 1,
+  id,
   specification,
   lead_price,
   status,
@@ -19,6 +19,7 @@ const RealEstateLead = ({
   phone,
   checked,
   toggleCheck,
+  buyLead,
 }) => {
   return (
     <section
@@ -43,7 +44,9 @@ const RealEstateLead = ({
           <span>${budget} budget</span>
         </div>
       </div>
-      <button className="rel-buy-btn">buy</button>
+      <button className="rel-buy-btn" onClick={() => buyLead(id)}>
+        buy
+      </button>
     </section>
   )
 }
