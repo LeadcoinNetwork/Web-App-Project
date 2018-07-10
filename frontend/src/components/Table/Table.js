@@ -59,7 +59,7 @@ class Table extends React.Component {
     if (this.props.isSelectable) {
       let selected = new Set()
 
-      if (!this.isAllSelected()) {
+      if (this.props.isNotAllSelected) {
         this.props.records.forEach(r => selected.add(r.id))
       }
 
@@ -110,7 +110,7 @@ class Table extends React.Component {
             colCount={dinamicColsCount}
             staticColsWidth={widthOfStaticCols}
             toggleAll={this.toggleAll}
-            isAllSelected={this.isAllSelected()}
+            isAllSelected={!props.isNotAllSelected}
             onSort={props.onSort}
             sortedBy={props.sortedBy}
             isSelectable={props.isSelectable}

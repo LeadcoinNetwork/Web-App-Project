@@ -55,6 +55,11 @@ class BuyLeads extends React.Component {
       record: this.getLeadButtons(),
     }
   }
+  isNotAllSelected = () => {
+    let { leads } = this.props
+
+    return leads.list.length > 0 && leads.selected.size !== leads.list.length
+  }
   toggleLead = (event, id) => {
     let { leads, setSelectedLeads } = this.props
 
@@ -69,7 +74,7 @@ class BuyLeads extends React.Component {
     let { leads, setSelectedLeads } = this.props,
       selected = new Set()
 
-    if (leads.selected === 0 || leads.selected.size !== leads.list.length) {
+    if (this.isNotAllSelected()) {
       leads.list.forEach(l => selected.add(l.id))
     }
 
@@ -108,6 +113,7 @@ class BuyLeads extends React.Component {
                 buttons={this.getButtons()}
                 setSelectedRecords={setSelectedLeads}
                 onScrollBottom={this.onScrollBottom}
+                isNotAllSelected={this.isNotAllSelected()}
                 selected={leads.selected}
                 isSelectable={true}
               />
