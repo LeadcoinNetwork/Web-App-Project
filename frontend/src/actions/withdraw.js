@@ -1,14 +1,34 @@
 import types from "./types"
 
 export default {
-  WithdrawElementOnScreen() {
+  withdrawPageFormUpdate(name, value) {
     return {
-      type: types.ACTION_WITHDRAW_ELEMENT_ON_SCREEN,
+      type: types.WITHDRAW_PAGE_FORM_UPDATE,
+      payload: {
+        name,
+        value,
+      }
     }
   },
-  WithdrawElementStartLoading() {
+  withdrawPageSubmit() {
     return {
-      type: types.ACTION_WITHDRAW_ELEMENT_START_LOADING,
+      type: types.WITHDRAW_PAGE_SUBMIT,
+    }
+  },
+  withdrawPageLoadingStart() {
+    return {
+      type: types.WITHDRAW_PAGE_LOADING_START,
+    }
+  },
+  withdrawPageLoadingFinish() {
+    return {
+      type: types.WITHDRAW_PAGE_LOADING_FINISH,
+    }
+  },
+  withdrawPageError(error) {
+    return {
+      type: types.WITHDRAW_PAGE_ERROR,
+      payload: error,
     }
   },
 }
