@@ -8,13 +8,18 @@ const languageFlagConverter = {
   he: "il",
 }
 
-const initialState = {
-  country:
-    languageFlagConverter[window.localStorage.getItem("current")] || "us",
-  isOpen: false,
+function getInitialState() {
+  return {
+    country:
+      languageFlagConverter[window.localStorage.getItem("current")] || "us",
+    isOpen: false,
+  }
 }
 
-const language = (state = initialState, action) => {
+/**
+ * Get initial state is a function to solve language not updated in storybook after HMR
+ */
+const language = (state = getInitialState(), action) => {
   switch (action.type) {
     case types.LANGUAGE_SELECTOR_UPDATE:
       return {

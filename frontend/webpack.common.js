@@ -49,14 +49,12 @@ module.exports = {
   ],
   module: {
     rules: [
-      // scss and css loader must be the first. the webpack.dev.rtl.js is depended on the order
       {
         test: /\.(scss|css)$/,
         use: process.env.RTL
           ? ["style-loader", "rtlcss-loader", "sass-loader"]
           : ["style-loader", "css-loader", "sass-loader"],
       },
-      // do not move the scss loader
       {
         test: /\.stories\.jsx?$/,
         loaders: [require.resolve("@storybook/addon-storysource/loader")],

@@ -13,7 +13,7 @@
     "storybook": "start-storybook -p 9001 -c .storybook",
     "storybook:rtl": "cross-env RTL=true npm run storybook",
     "storybook:build": "build-storybook -c .storybook -o storybook-build",
-    "storybook:build:rtl": "build-storybook -c .storybook -o storybook-build"
+    "storybook:build:rtl": "cross-env RTL=true build-storybook -c .storybook -o storybook-build"
   },
   "dependencies": {
     "@babel/core": "^7.0.0-beta.49",
