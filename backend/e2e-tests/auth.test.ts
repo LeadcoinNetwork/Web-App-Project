@@ -30,7 +30,7 @@ test("resend email endpoint does send email and with correct link", async () => 
     .get("/auth/resend-email")
     .set({ cookie: "token=" + token })
     .send()
-  var _user = await users.tryGetUserById(user.id)
+  var _user = await users.tryGetById(user.id)
   let key = _user.emailConfirmationKey
   let emailHTML = emailSenderMock.lastCall().html
   expect(emailHTML).toMatch("https://testbackend")
