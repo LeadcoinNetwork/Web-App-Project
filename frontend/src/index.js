@@ -38,14 +38,6 @@ ReactDOM.render(
   document.getElementById("root"),
 )
 
-import t from "./test"
-
-t()
-if (module.hot) {
-  module.hot.accept("./test", function() {
-    t()
-  })
-}
 if (module.hot) {
   module.hot.accept("./reducers/index", function() {
     console.log("reducers replaced")
