@@ -17,9 +17,9 @@ const RealEstateLead = ({
   name,
   email,
   phone,
+  buttons,
   checked,
   toggleCheck,
-  buyLead,
 }) => {
   return (
     <section
@@ -44,9 +44,13 @@ const RealEstateLead = ({
           <span>${budget} budget</span>
         </div>
       </div>
-      <button className="rel-buy-btn" onClick={() => buyLead(id)}>
-        buy
-      </button>
+      <div className="rel-buttons">
+        {buttons.map(button => (
+          <button className="relb-btn" onClick={() => button.onClick(id)}>
+            {button.value}
+          </button>
+        ))}
+      </div>
     </section>
   )
 }

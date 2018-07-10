@@ -80,8 +80,8 @@ class BuyLeads extends React.Component {
                     key={lead.id}
                     {...lead}
                     checked={leads.selected.has(lead.id)}
+                    buttons={this.getLeadButtons()}
                     toggleCheck={event => this.toggleLead(event, lead.id)}
-                    buyLead={this.buyLead}
                   />
                 )}
               />
