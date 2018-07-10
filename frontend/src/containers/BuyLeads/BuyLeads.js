@@ -56,12 +56,24 @@ class BuyLeads extends React.Component {
     }
   }
   toggleLead = (event, id) => {
+    let { leads, setSelectedLeads } = this.props
+
     if (event.target.tagName !== "BUTTON") {
-      let selected = new Set(this.props.leads.selected)
+      let selected = new Set(leads.selected)
 
       selected.delete(id) ? null : selected.add(id)
-      this.props.setSelectedLeads(selected)
+      setSelectedLeads(selected)
     }
+  }
+  toggleAll = () => {
+    let { leads, setSelectedLeads } = this.props,
+      selected = new Set()
+
+    if (leads.selected === 0 || leads.selected.size !== leads.list.length) {
+      leads.list.forEach(l => selected.add(l.id))
+    }
+
+    setSelectedLeads(selected)
   }
   render() {
     let { leads, fields, setSelectedLeads } = this.props
@@ -75,6 +87,7 @@ class BuyLeads extends React.Component {
             {cardsMode ? (
               <LeadsResults
                 leads={leads}
+                toggleAll={this.toggleAll}
                 render={lead => (
                   <RealEstateLead
                     key={lead.id}
