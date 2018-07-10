@@ -17,22 +17,13 @@ const RealEstateLead = ({
   name,
   email,
   phone,
-  checked = false,
+  checked,
+  toggleCheck,
 }) => {
-  let temp
-
-  const toggleCheck = () => {
-    checked = !checked
-    console.log(temp)
-
-    temp.className = `ldc-real-estate-lead${checked ? " rel-checked" : ""}`
-  }
-
   return (
     <section
       className={`ldc-real-estate-lead${checked ? " rel-checked" : ""}`}
       onClick={toggleCheck}
-      ref={c => (temp = c)}
     >
       <div className="rel-specification">{specification}</div>
       <div className="rel-price">LDC {lead_price}</div>
