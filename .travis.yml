@@ -1,3 +1,10 @@
+# First Stage:
+# Start building the frontend and backend in parallel.
+# Then testing the frontend and backend in parallel.
+# If both builds and tests complete succefully, then go to the next stage.
+#
+# Second Stage:
+# Push the backend and frontend to production servers.
 jobs:
   include:
     - stage: build frontend & backend
@@ -36,3 +43,13 @@ cache:
     - node_modules
 
 # if [ "$TRAVIS_PULL_REQUEST" = "false" ];fi;    
+
+# deploy:
+#   provider: gcs
+#   access_key_id: "GCS Interoperable Access Key ID"
+#   secret_access_key: "GCS Interoperable Access Secret"
+#   bucket: "GCS Bucket"
+#   skip_cleanup: true
+#   acl: public-read
+#   local-dir: directory-name
+
