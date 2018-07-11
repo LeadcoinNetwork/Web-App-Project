@@ -36,7 +36,7 @@ class LanguageSelector extends React.Component {
           return languageSelectorClick()
         }}
       >
-        <div
+        <i
           className={"selected-flag flag-icon-background flag-icon-" + country}
         />
         {isOpen && (
