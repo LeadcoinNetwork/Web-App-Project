@@ -27,7 +27,7 @@ class NotificationElement extends Component {
       notificationsViewAll,
     } = this.props
     return (
-      <div
+      <i
         className="ldc-notification-element far fa-bell"
         onClick={e => {
           e.stopPropagation()
@@ -47,7 +47,7 @@ class NotificationElement extends Component {
             notificationsViewAll={notificationsViewAll}
           />
         )}
-      </div>
+      </i>
     )
   }
 }
