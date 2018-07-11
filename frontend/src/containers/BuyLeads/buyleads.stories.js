@@ -16,6 +16,7 @@ storiesOf("Containers/Buy Leads", module)
       path: "/buy-leads",
       loggedIn: true,
     })
+    store.dispatch(actions.leads.fetchLeads("BUY_LEADS"))
     return story
   })
   .add("Buy Leads - with mock fields", () => {
@@ -33,7 +34,7 @@ storiesOf("Containers/Buy Leads", module)
     })
     setTimeout(() => {
       store.dispatch(
-        actions.leads.getLeads("BUY_LEADS", {
+        actions.leads.fetchSuccess("BUY_LEADS", {
           list: leadsMock,
           page: 0,
           limit: 2,
@@ -41,13 +42,5 @@ storiesOf("Containers/Buy Leads", module)
         }),
       )
     }, 500)
-    return story
-  })
-
-  .add("Buy Leads - error", () => {
-    var { store, story } = createStoreAndStory({
-      path: "/buy-leads",
-      loggedIn: true,
-    })
     return story
   })

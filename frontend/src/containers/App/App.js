@@ -1,5 +1,5 @@
 import React from "react"
-import { user, route } from "Actions"
+import { app, user, route } from "Actions"
 import * as _ from "lodash"
 
 import Header from "Containers/Header"
@@ -34,25 +34,14 @@ import { createBrowserHistory } from "history"
 import ResultsModeContext from "./ResultsModeContext"
 
 class App extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      cardsMode: true,
-    }
-  }
-  toggleResultsMode = () => {
-    this.setState(state => ({
-      cardsMode: !state.cardsMode,
-    }))
-  }
   render() {
     let loggedIn = !!_.get(this.props, "user.id")
     let disabled = !!_.get(this.props, "user.disabled")
     let path = _.get(this.props, "location.pathname", "")
+
     let resultsModeContextValue = {
-      cardsMode: this.state.cardsMode,
-      toggleMode: this.toggleResultsMode,
+      cardsMode: this.props.app.cardsMode,
+      toggleMode: this.props.toggleResultsMode,
     }
 
     return (
@@ -99,6 +88,7 @@ class App extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  app: state.app,
   user: state.user,
   location: _.get(state, "router.location"),
   pathname: _.get(state, "router.location.pathname"),
@@ -109,4 +99,8 @@ const mapStateToProps = state => ({
 
 // export default App
 import { hot } from "react-hot-loader"
-export default hot(module)(connect(mapStateToProps)(App))
+export default hot(module)(
+  connect(mapStateToProps, {
+    toggleResultsMode: app.toggleResultsMode,
+  })(App),
+)

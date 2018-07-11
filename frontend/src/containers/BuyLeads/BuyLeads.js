@@ -16,10 +16,10 @@ class BuyLeads extends React.Component {
   buyLead = id => {
     console.log([id])
   }
-  onScrollBottom = cb => {
-    let { dispatch, leads } = this.props
+  onScrollBottom = () => {
+    let { fetchLeads, leads } = this.props
 
-    getLeads(dispatch, cb, leads.page + 1)
+    fetchLeads(leads.page + 1)
   }
   buildButtonLabel = () => {
     let amount = this.props.leads.selected.size
@@ -58,7 +58,7 @@ class BuyLeads extends React.Component {
   isNotAllSelected = () => {
     let { leads } = this.props
 
-    return leads.list.length > 0 && leads.selected.size !== leads.list.length
+    return leads.list.length && leads.selected.size !== leads.list.length
   }
   toggleLead = (event, id) => {
     let { leads, setSelectedLeads } = this.props
@@ -95,6 +95,8 @@ class BuyLeads extends React.Component {
                 leads={leads}
                 buttons={this.getListButtons()}
                 isNotAllSelected={isNotAllSelected}
+                loading={leads.loading}
+                onScrollBottom={this.onScrollBottom}
                 toggleAll={this.toggleAll}
                 render={lead => (
                   <RealEstateLead
@@ -112,10 +114,11 @@ class BuyLeads extends React.Component {
                   ...field,
                   name: t(field.name),
                 }))}
+                loading={leads.loading}
+                onScrollBottom={this.onScrollBottom}
                 records={leads.list}
                 buttons={this.getButtons()}
                 setSelectedRecords={setSelectedLeads}
-                onScrollBottom={this.onScrollBottom}
                 isNotAllSelected={isNotAllSelected}
                 selected={leads.selected}
                 isSelectable={true}
@@ -134,6 +137,7 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, {
+  fetchLeads: (...params) => leads.fetchLeads("BUY_LEADS", ...params),
   setSelectedLeads: selectedLeads =>
     leads.setSelectedLeads("BUY_LEADS", selectedLeads),
 })(BuyLeads)

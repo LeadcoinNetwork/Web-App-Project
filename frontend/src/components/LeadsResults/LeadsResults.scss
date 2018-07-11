@@ -1,6 +1,16 @@
 @import "~Styles/variables";
 
 section.ldc-leads-results {
+  .lr-check-all {
+    padding-top: 12px;
+
+    label {
+      cursor: pointer;
+      text-transform: uppercase;
+      font-size: 16px;
+      font-weight: 300;
+    }
+  }
   .lr-main {
     margin-top: 30px;
   }

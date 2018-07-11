@@ -1,13 +1,11 @@
 import types from "./types"
 
 export default {
-  notificationShow(message, type) {
-    return {
-      type: types.NOTIFICATION_SHOW,
-      payload: {
-        message,
-        type,
-      },
-    }
-  },
+  toggleResultsMode: () => ({
+    type: types.TOGGLE_RESULTS_MODE,
+  }),
+  notificationShow: () => ({
+    type: types.NOTIFICATION_SHOW,
+    payload: { message, type },
+  }),
 }
