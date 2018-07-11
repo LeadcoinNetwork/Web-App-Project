@@ -29,9 +29,7 @@ const withInfiniteScroll = onScrollBottom => WrappedComponent => {
         <>
           <WrappedComponent {...passThroughProps} />
           {this.props.loading ? (
-            <div className="ldc-with-infinite-scroll-loading">
-              {t("Loading")}
-            </div>
+            <div className="ldc-with-infinite-scroll-loading" />
           ) : null}
         </>
       )
