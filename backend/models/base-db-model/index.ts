@@ -5,6 +5,7 @@ import LogModelActions from "../log-model-actions/log-model-actions"
 import NotFound from "../../utils/not-found"
 
 type tableName = "users" | "leads"
+type SAFE_AND_SANITIZED_SQL_QUERY = string
 
 export default abstract class BaseDBModel<INew, IExisting, ICondition> {
   log = LogModelActions(this.tableName)
@@ -14,21 +15,21 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
   async deleteAll() {
     return this.sql.query("delete from " + this.tableName)
   }
-  public async tryGetById(id): Promise<IExisting | NotFound> {
+  protected async tryGetById(id): Promise<IExisting | NotFound> {
     let user = await this.getOne(<any>{ id }) // 'any' becuase ICondition it's a generic interface.
     return user
   }
 
-  public async exist(condition: ICondition): Promise<boolean> {
+  protected async exist(condition: ICondition): Promise<boolean> {
     var result = await this.find(condition)
     return result.length > 0
   }
 
-  public async getOne(
+  protected async getOne(
     condition: ICondition,
     settings: { returnPassword: boolean } = { returnPassword: false },
   ): Promise<IExisting | NotFound> {
-    var result = await this.find(condition, settings)
+    var result = await this.find({condition})
     if (result.length != 1) {
       return new NotFound()
     } else {
@@ -36,10 +37,17 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     }
   }
 
-  // If not found, not returing an error.
-  public async find(
-    condition: ICondition,
-    settings: { returnPassword: boolean } = { returnPassword: false },
+
+  // TODO @erez Ensure change all fucntion to pretected. (And make sure applogic do not use it...)
+  // TODO @erez Change call to user.find to this signature (tests...)
+  /**
+   *  If not found, not returing an error.
+   */
+  protected async find({condition,sort,limit}:{
+    condition?: ICondition,
+    sort? : {sortBy:string, sortOrder:"asc" | "desc"},
+    limit?:{start:number,offset:number}
+  }
   ): Promise<IExisting[]> {
     var cnd = Object.keys(condition)
       .map(key => {
@@ -50,18 +58,18 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     if (cnd) cnd = `WHERE ${cnd}`
 
     let rows = await this.sql.query(`SELECT * FROM ${this.tableName} ${cnd}`)
-    rows = rows.map(row => {
-      // remove RowDataPacket class
-      var newObject = Object.assign({}, row)
-      if (!settings.returnPassword) {
-        delete newObject.password
-      }
-      return newObject
-    })
     return rows
   }
 
-  public async insert(record: INew) {
+  protected async query(query: SAFE_AND_SANITIZED_SQL_QUERY) {
+    this.log("executing query on ",this.tableName)
+    this.log("query is:", query)
+    let status = await this.sql.query(query)
+    this.log("query results: ", JSON.stringify(status))
+    return status
+  }
+  
+  protected async insert(record: INew) {
     this.log("create " + this.tableName + " start", record)
 
     let status = await this.sql.query("INSERT INTO "+this.tableName+" SET ?", record)
@@ -70,7 +78,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
 
     return status
   }
-  public async deleteIfExist(id): Promise<boolean> {
+  protected async deleteIfExist(id): Promise<boolean> {
     let status = await this.sql.query(
       "DELETE FROM " + this.tableName + " WHERE id = ?",
       id,
@@ -78,7 +86,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     return status.affectedRows != 0
   }
 
-  public async update(id, record) {
+  protected async update(id, record) {
     this.log("update " + this.tableName + " start", record)
     var values = Object.keys(record)
       .map(key => {
