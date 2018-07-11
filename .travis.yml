@@ -34,8 +34,8 @@ after_success:
   docker run -v /home/build/.env:/usr/leadcoin/.env --network host --name backend
   --rm leadcoin/leadcoin"
 - cd frontend
-- ssh -l build b.leadcoin.network -i deploy_rsa -o stricthostkeychecking=no "rm -r ~/dist"
-- ssh -l build b.leadcoin.network -i deploy_rsa -o stricthostkeychecking=no "rm -r ~/storybook-build"
+- ssh -l build b.leadcoin.network -i ../deploy_rsa -o stricthostkeychecking=no "rm -r ~/dist"
+- ssh -l build b.leadcoin.network -i ../deploy_rsa -o stricthostkeychecking=no "rm -r ~/storybook-build"
 - scp -i ../deploy_rsa -o stricthostkeychecking=no -r -v dist build@b.leadcoin.network:~/
 - scp -i ../deploy_rsa -o stricthostkeychecking=no -r -v storybook-build build@b.leadcoin.network:~/
 - echo "finish"
