@@ -1,5 +1,9 @@
 @import "~Styles/helpers";
 
+html {
+  direction: ltr;
+}
+
 * {
   box-sizing: border-box;
 }

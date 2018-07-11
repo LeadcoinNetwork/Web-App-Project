@@ -21,7 +21,7 @@ export default function t(textToTransalte) {
   const value = _.get(translateDatabase, [textToTransalte, current])
   if (value) {
     return value
-  } else if (current !== "en") {
+  } else if (current !== "en" && current !== "he") {
     return getRandom(current, textToTransalte)
   } else {
     return textToTransalte
@@ -39,10 +39,7 @@ function getRandom(language, original) {
   }
   let str = ""
   for (let i = 0; i < original.length; i++) {
-    str +=
-      randomSource[language][
-        parseInt(Math.random() * randomSource[language].length)
-      ]
+    str += randomSource[language][parseInt(Math.random() * randomSource[language].length)]
   }
   return str
 }

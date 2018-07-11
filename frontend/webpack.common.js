@@ -50,6 +50,12 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.(scss|css)$/,
+        use: process.env.RTL
+          ? ["style-loader", "rtlcss-loader", "sass-loader"]
+          : ["style-loader", "css-loader", "sass-loader"],
+      },
+      {
         test: /\.stories\.jsx?$/,
         loaders: [require.resolve("@storybook/addon-storysource/loader")],
         enforce: "pre",
@@ -58,17 +64,6 @@ module.exports = {
         test: /\.js$/,
         exclude: /(node_modules)/,
         loader: "babel-loader",
-        // query: {
-        //   presets: ["@babel/preset-env", "@babel/preset-react"],
-        //   plugins: [
-        //     "@babel/plugin-proposal-object-rest-spread",
-        //     "transform-class-properties",
-        //   ],
-        // },
-      },
-      {
-        test: /\.(scss|css)$/,
-        use: ["style-loader", "css-loader", "sass-loader"],
       },
       {
         test: /\.(jpg|png|svg)$/,

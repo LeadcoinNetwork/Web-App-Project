@@ -7,7 +7,7 @@ const SwitchResultsMode = () => (
       <label
         onClick={toggleMode}
         style={{
-          float: "right",
+          float: "right", // TODO @noam move to class name
           cursor: "pointer",
           padding: "10px 3px 0 0",
         }}
