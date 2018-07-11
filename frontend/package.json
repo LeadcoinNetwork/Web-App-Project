@@ -5,8 +5,7 @@
   "scripts": {
     "start": "webpack-dev-server --progress --hot --config webpack.dev.js",
     "build": "./node_modules/.bin/webpack --progress --config webpack.prod.js",
-    "stats":
-      "./node_modules/.bin/webpack --progress --config webpack.prod.js --json >stats.json",
+    "stats": "./node_modules/.bin/webpack --progress --config webpack.prod.js --json >stats.json",
     "test": "jest",
     "test:watch": "jest --watch",
     "storybook": "start-storybook -p 9001 -c .storybook",
@@ -74,6 +73,7 @@
     "file-loader": "^1.1.11",
     "flag-icon-css": "^3.0.0",
     "fs-extra": "^6.0.1",
+    "hard-source-webpack-plugin": "^0.11.0",
     "history": "^4.7.2",
     "html-webpack-plugin": "^3.2.0",
     "html-webpack-template": "^6.2.0",
