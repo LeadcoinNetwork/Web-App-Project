@@ -33,7 +33,7 @@ storiesOf("Containers/Buy Leads", module)
     })
     setTimeout(() => {
       store.dispatch(
-        actions.leads.getLeads("BUY_LEADS", {
+        actions.leads.fetchSuccess("BUY_LEADS", {
           list: leadsMock,
           page: 0,
           limit: 2,

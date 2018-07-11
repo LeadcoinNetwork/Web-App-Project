@@ -13,7 +13,13 @@ const initialState = {
 const createReducerFor = namespace => {
   return (state = initialState, action) => {
     switch (action.type) {
-      case types[namespace + "_GET_LEADS"]:
+      case types[namespace + "_FETCH_LEADS"]:
+        return {
+          ...state,
+          loading: true,
+          error: false,
+        }
+      case types[namespace + "_FETCH_SUCCESS"]:
         return {
           ...state,
           ...action.payload,
@@ -21,17 +27,10 @@ const createReducerFor = namespace => {
           error: false,
           list: [...state.list, ...action.payload.list],
         }
-      case types[namespace + "_ERROR"]:
+      case types[namespace + "_FETCH_ERROR"]:
         return {
           ...state,
           loading: false,
-          error: action.payload,
-        }
-      case types[namespace + "_FETCH_LEADS"]:
-        return {
-          ...state,
-          loading: true,
-          error: false,
         }
       case types[namespace + "_SET_SELECTED_LEADS"]:
         return {

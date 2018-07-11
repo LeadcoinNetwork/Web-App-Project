@@ -1,0 +1,14 @@
+@import "~Styles/variables";
+
+.ldc-with-infinite-scroll-loading {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 22px;
+  font-weight: 300;
+}
+
+@media (max-width: $screen-tablets) {
+  .ldc-with-infinite-scroll-loading {
+    margin-top: 20px;
+  }
+}

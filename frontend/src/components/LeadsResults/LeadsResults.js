@@ -1,5 +1,6 @@
 import React from "react"
 import Button from "Components/Button"
+import withInfiniteScroll from "HOC/withInfiniteScroll"
 
 const LeadsResults = ({
   leads,
@@ -26,4 +27,4 @@ const LeadsResults = ({
   </section>
 )
 
-export default LeadsResults
+export default withInfiniteScroll()(LeadsResults)
