@@ -15,7 +15,7 @@ module.exports = {
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
-    publicPath: "./",
+    publicPath: "/",
   },
   plugins: [
     new Dotenv({ systemvars: true, safe: true }),
@@ -23,7 +23,7 @@ module.exports = {
     new CleanWebpackPlugin(["dist"]),
     new HtmlWebpackPlugin({
       inject: false,
-      // filename: path.resolve(__dirname, "/x.html"),
+      filename: path.resolve(__dirname, "/x.html"),
       template: "./webpack.template.html", // we want to support htmlClass property.
       lang: "en-US",
       htmlClass: "ldc-ltr",
