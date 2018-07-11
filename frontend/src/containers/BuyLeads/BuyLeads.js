@@ -95,6 +95,8 @@ class BuyLeads extends React.Component {
                 leads={leads}
                 buttons={this.getListButtons()}
                 isNotAllSelected={isNotAllSelected}
+                loading={leads.loading}
+                onScrollBottom={this.onScrollBottom}
                 toggleAll={this.toggleAll}
                 render={lead => (
                   <RealEstateLead
@@ -113,10 +115,10 @@ class BuyLeads extends React.Component {
                   name: t(field.name),
                 }))}
                 loading={leads.loading}
+                onScrollBottom={this.onScrollBottom}
                 records={leads.list}
                 buttons={this.getButtons()}
                 setSelectedRecords={setSelectedLeads}
-                onScrollBottom={this.onScrollBottom}
                 isNotAllSelected={isNotAllSelected}
                 selected={leads.selected}
                 isSelectable={true}
