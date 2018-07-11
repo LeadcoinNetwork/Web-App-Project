@@ -1,7 +1,7 @@
 import React from "react"
 
 const Privacy = () => (
-  <div className="privacy">
+  <div className="privacy" dir="ltr">
     <h1>Privacy Policy of LeadCoin</h1>
     <div>
       <p>
