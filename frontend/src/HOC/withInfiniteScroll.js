@@ -1,6 +1,5 @@
 import React from "react"
 import { throttle } from "lodash"
-import t from "../utils/translate/translate"
 import LoadingDots from "Components/LoadingDots"
 
 const withInfiniteScroll = onScrollBottom => WrappedComponent => {
