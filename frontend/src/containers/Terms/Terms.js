@@ -2,7 +2,7 @@ import React from "react"
 
 // TODO @noam keep on the left you can use for this inline-style and fro privacy
 const Terms = () => (
-  <div className="terms">
+  <div className="terms" dir="ltr">
     <h1>Terms and Conditions of Use</h1>
     <div>Last updated: June 2018</div>
     <div>
