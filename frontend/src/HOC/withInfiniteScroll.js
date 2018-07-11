@@ -27,7 +27,9 @@ const withInfiniteScroll = onScrollBottom => WrappedComponent => {
       return (
         <>
           <WrappedComponent {...passThroughProps} />
-          {this.props.loading ? <div>{t("Loading...")}</div> : null}
+          {this.props.loading ? (
+            <div style={{ paddingTop: "20px" }}>{t("Loading...")}</div>
+          ) : null}
         </>
       )
     }
