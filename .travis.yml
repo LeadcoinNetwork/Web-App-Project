@@ -1,24 +1,17 @@
-# First Stage:
-# Start building the frontend and backend in parallel.
-# Then testing the frontend and backend in parallel.
-# If both builds and tests complete succefully, then go to the next stage.
-#
-# Second Stage:
-# Push the backend and frontend to production servers.
-
 language: node_js
 node_js:
-  - 8.5
+- 8.5
 env:
   global:
-  - secure: "qB+kNRkSo7Cpge6mH2DWrOrPfguV7TK8fQlaTLQSWtv74E2Z5+Nk9/A8UYIGh2ULZSCqABo+AiAsoaj3p27MKHMdM9feGjBGz0gJp7ZcMfKQjzYgxekmWNKFU0D1HD4dhqjXamx5JElskN1hH6yUOYzaeN1I9gwdd3XvtftWsazjpmE5uiUQvhe7BNHrdggkDr9UMGtsvE5mZcZbP66q7NBfApsZ4DSswuQGJcO8jjt/PcfXoLMBCm9F7XlORITuYAOqiymF7CecmNf3wLkwd+gyuzeZfOi6SHuO2aM1LVaoViwxqJp4V8NKuh65c2u2tHuDz2654QnEHHAzanAFhTXCXH0V8RK8JHedSpb4ozX9E+cTgXOYBrj+F7kqkUJ5p7qvgYQaOzQSQxb8XLQ6J/YHiaOi1o0yfVCwrr2TfxLFJjipmAS4uEicRh/iFGPg9TP799Y0l4rVqqHP2CCo5KV3YVyVb0lW9ZYAOF93lcRJl7UpPzO+WoMF6eHS9EvzERldoAb/lvO5n/k2O8SZznZRueAOzMpdQez8WPXuVYB9do4j7Jx/v1d0zeewkTcMfkeVU0cwPT35TS7dB9RuZSIPnW9Ozxj7YGbz2yFP6iET8WenX/VIx3t+VcsUl4duNX+CTuX9ydrmJ1uNSJ//Ht5M66+ZR2MKjwj7OtCDZhE="
-  - secure: "eEEeSTIHbVnOwclzHsCdDH9NczVv2ZsX0rXJN+N5irz+O/sqZmtc3YWWFuYloQdB7DiKWoenbmzrjQPeyNieHaAwfWv/e6EGdfH9wDeRFAISR+iW46sO/cEAsZvLqrR62luBfQZrOxdEp2u8t9xLGq6AAWykdq4n9okK3wZXrWACgfVe9f1rrLqpziWtUQfoulC+6vTfZxfHj5D0smeZYNjhKwayGX7lT056q0JXHwPKVON95neQfewoL6CoWhdKxBNMH1Wz9mNfbTWN2rUxfhEDfROUJF0J66YG8oKcP1PUYY6hOKmprfF8lS+0yaf2KZ1ge5uYwaO9gj701Jx5T4aIMq4K0AfKOJAcJhrx5v579pU+cI9YbqfQ8Kauc0yjN1VAnzSAEAM5agGIqRxJtxwUiuUG0qvsKR5v/LIGT+m4c9D1vZDQGA7lH3ngHl29JkcEzQnHtTZihR7d2+K/D87PCbGsNMTVmk/1jEjEDl8YpNg6bujOrLnyEJXl3HcxV8iRY3LYuRZhx7gI4vei0ZUIyoX5HEyo5LEiSDUfG/cpnPL7aTrZeeB/v48fpAsC0sq0PgpvRlEjCnw8xjdSNRI/Z9Zml4xvdJMwBjmZGPhvKm7MVN3J2vcmY/PWN/8oXeMjSGi0OkVHkVsnwcDUsi2n5zYPZSZHzTiIGAF2NWw="      
+  - secure: qB+kNRkSo7Cpge6mH2DWrOrPfguV7TK8fQlaTLQSWtv74E2Z5+Nk9/A8UYIGh2ULZSCqABo+AiAsoaj3p27MKHMdM9feGjBGz0gJp7ZcMfKQjzYgxekmWNKFU0D1HD4dhqjXamx5JElskN1hH6yUOYzaeN1I9gwdd3XvtftWsazjpmE5uiUQvhe7BNHrdggkDr9UMGtsvE5mZcZbP66q7NBfApsZ4DSswuQGJcO8jjt/PcfXoLMBCm9F7XlORITuYAOqiymF7CecmNf3wLkwd+gyuzeZfOi6SHuO2aM1LVaoViwxqJp4V8NKuh65c2u2tHuDz2654QnEHHAzanAFhTXCXH0V8RK8JHedSpb4ozX9E+cTgXOYBrj+F7kqkUJ5p7qvgYQaOzQSQxb8XLQ6J/YHiaOi1o0yfVCwrr2TfxLFJjipmAS4uEicRh/iFGPg9TP799Y0l4rVqqHP2CCo5KV3YVyVb0lW9ZYAOF93lcRJl7UpPzO+WoMF6eHS9EvzERldoAb/lvO5n/k2O8SZznZRueAOzMpdQez8WPXuVYB9do4j7Jx/v1d0zeewkTcMfkeVU0cwPT35TS7dB9RuZSIPnW9Ozxj7YGbz2yFP6iET8WenX/VIx3t+VcsUl4duNX+CTuX9ydrmJ1uNSJ//Ht5M66+ZR2MKjwj7OtCDZhE=
+  - secure: eEEeSTIHbVnOwclzHsCdDH9NczVv2ZsX0rXJN+N5irz+O/sqZmtc3YWWFuYloQdB7DiKWoenbmzrjQPeyNieHaAwfWv/e6EGdfH9wDeRFAISR+iW46sO/cEAsZvLqrR62luBfQZrOxdEp2u8t9xLGq6AAWykdq4n9okK3wZXrWACgfVe9f1rrLqpziWtUQfoulC+6vTfZxfHj5D0smeZYNjhKwayGX7lT056q0JXHwPKVON95neQfewoL6CoWhdKxBNMH1Wz9mNfbTWN2rUxfhEDfROUJF0J66YG8oKcP1PUYY6hOKmprfF8lS+0yaf2KZ1ge5uYwaO9gj701Jx5T4aIMq4K0AfKOJAcJhrx5v579pU+cI9YbqfQ8Kauc0yjN1VAnzSAEAM5agGIqRxJtxwUiuUG0qvsKR5v/LIGT+m4c9D1vZDQGA7lH3ngHl29JkcEzQnHtTZihR7d2+K/D87PCbGsNMTVmk/1jEjEDl8YpNg6bujOrLnyEJXl3HcxV8iRY3LYuRZhx7gI4vei0ZUIyoX5HEyo5LEiSDUfG/cpnPL7aTrZeeB/v48fpAsC0sq0PgpvRlEjCnw8xjdSNRI/Z9Zml4xvdJMwBjmZGPhvKm7MVN3J2vcmY/PWN/8oXeMjSGi0OkVHkVsnwcDUsi2n5zYPZSZHzTiIGAF2NWw=
   - BACKEND=http://127.0.0.1.xip.io:3000
   - FRONTEND=http://localhost:8081
   - PORT=8081
   - PORT_RTL=8082
 before_install:
-- openssl aes-256-cbc -K $encrypted_c6f1553d2570_key -iv $encrypted_c6f1553d2570 -in deploy_rsa.enc -out deploy_rsa -d  
+- openssl aes-256-cbc -K $encrypted_c6f1553d2570_key -iv $encrypted_c6f1553d2570_iv
+  -in deploy_rsa.enc -out deploy_rsa -d
 script:
 - cd frontend
 - npm i
@@ -32,46 +25,22 @@ script:
 - cd ..
 after_success:
 - chmod 400 deploy_rsa
-- ssh -l build b.leadcoin.network -i deploy_rsa -o stricthostkeychecking=no "sudo docker ps"
-- ssh -l build b.leadcoin.network -i deploy_rsa -o stricthostkeychecking=no "sudo docker pull leadcoin/leadcoin"
-- ssh -l build b.leadcoin.network -i deploy_rsa -o stricthostkeychecking=no "sudo docker stop backend && sudo docker rm backend"
-- ssh -l build b.leadcoin.network -i deploy_rsa -o stricthostkeychecking=no "sudo docker run -ti -v /home/build/.env:/usr/leadcoin/.env --network host --name backend --rm leadcoin/leadcoin"
+- ssh -l build b.leadcoin.network -i deploy_rsa -o stricthostkeychecking=no "sudo
+  docker ps"
+- ssh -l build b.leadcoin.network -i deploy_rsa -o stricthostkeychecking=no "sudo
+  docker pull leadcoin/leadcoin"
+- ssh -l build b.leadcoin.network -i deploy_rsa -o stricthostkeychecking=no "sudo
+  docker stop backend && sudo docker rm backend"
+- ssh -l build b.leadcoin.network -i deploy_rsa -o stricthostkeychecking=no "sudo
+  docker run -ti -v /home/build/.env:/usr/leadcoin/.env --network host --name backend
+  --rm leadcoin/leadcoin"
 - cd frontend
 - scp -i ../deploy_rsa -o stricthostkeychecking=no -r dist build@b.leadcoin.network:~/dist
 - scp -i ../deploy_rsa -o stricthostkeychecking=no -r storybook-build build@b.leadcoin.network:~/storybook-build
 - echo "finish"
-
 cache:
   directories:
-    - frontend/node_modules
-    - backend/node_modules
-    - node_modules
-    - /home/travis/.npm
-
-# if [ "$TRAVIS_PULL_REQUEST" = "false" ];fi;    
-
-# deploy:
-#   provider: gcs
-#   access_key_id: "GCS Interoperable Access Key ID"
-#   secreyt_access_key: "GCS Interoperable Access Secret"
-#   bucket: "GCS Bucket"
-#   skip_cleanup: true
-#   acl: public-read
-#   local-dir: directory-name
-#
-# before_install:
-# - openssl aes-256-cbc -K $encrypted_9a34510753a2_key -iv $encrypted_9a34510753a2_iv
-#   -in deploy_rsa.enc -out deploy_rsa -d
-
-# ssh-keygen -t rsa -b 4096 -C 'build@travis-ci.org' -f ./deploy_rsa
-# travis encrypt-file deploy_rsa --add
-# ssh-copy-id -i deploy_rsa.pub <ssh-user>@<deploy-host>
-
-# rm -f deploy_rsa deploy_rsa.pub
-# git add deploy_rsa.enc .travis.yml
-
-# apt-get update
-# apt-get install ssh-client
-# ssh build@b.leadcoin.network -i key -o stricthostkeychecking=no
-# ssh -l build b.leadcoin.network -i key -o stricthostkeychecking=no "sudo docker ps"
-# scp -i key -o stricthostkeychecking=no m build@b.leadcoin.network:~
+  - frontend/node_modules
+  - backend/node_modules
+  - node_modules
+  - "/home/travis/.npm"
