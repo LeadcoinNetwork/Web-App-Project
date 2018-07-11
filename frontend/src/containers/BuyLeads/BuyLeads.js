@@ -58,7 +58,7 @@ class BuyLeads extends React.Component {
   isNotAllSelected = () => {
     let { leads } = this.props
 
-    return leads.list.length > 0 && leads.selected.size !== leads.list.length
+    return leads.list.length && leads.selected.size !== leads.list.length
   }
   toggleLead = (event, id) => {
     let { leads, setSelectedLeads } = this.props
