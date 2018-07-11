@@ -1,7 +1,40 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
 import { createStoreAndStory } from "storybook-utils/withRouter"
-import * as actions from "actions"
+import { types, leads } from "Actions"
+import { delay } from "redux-saga"
+import { take, put } from "redux-saga/effects"
+
+let leadsMock = require("../../mocks/leads.json"),
+  leadsPage = 0,
+  leadsTotal = leadsMock.length * 10
+
+const storySaga = () => {
+  return function*() {
+    while (true) {
+      yield take(types.BUY_LEADS_FETCH_LEADS)
+      yield delay(600)
+
+      if (leadsMock.length * leadsPage >= leadsTotal) {
+        yield put(
+          leads.fetchSuccess("BUY_LEADS", {
+            list: [],
+          }),
+        )
+      } else {
+        leadsPage++
+        yield put(
+          leads.fetchSuccess("BUY_LEADS", {
+            list: leadsMock.map(l => ({ ...l, id: l.id + "_" + leadsPage })),
+            page: leadsPage,
+            limit: 200,
+            total: leadsTotal,
+          }),
+        )
+      }
+    }
+  }
+}
 
 storiesOf("Containers/Buy Leads", module)
   .add("Buy Leads - empty", () => {
@@ -16,25 +49,23 @@ storiesOf("Containers/Buy Leads", module)
       path: "/buy-leads",
       loggedIn: true,
     })
-    store.dispatch(actions.leads.fetchLeads("BUY_LEADS"))
+    store.dispatch(leads.fetchLeads("BUY_LEADS"))
     return story
   })
   .add("Buy Leads - with mock fields", () => {
-    let leadsMock = require("../../mocks/leads.json")
-
     let { store, story } = createStoreAndStory({
       path: "/buy-leads",
       loggedIn: true,
+      sagaFunction: storySaga(),
     })
-    setTimeout(() => {
-      store.dispatch(
-        actions.leads.fetchSuccess("BUY_LEADS", {
-          list: leadsMock,
-          page: 0,
-          limit: 2,
-          total: leadsMock.length,
-        }),
-      )
-    }, 500)
+
+    store.dispatch(
+      leads.fetchSuccess("BUY_LEADS", {
+        list: leadsMock,
+        page: leadsPage,
+        limit: 200,
+        total: leadsMock.length,
+      }),
+    )
     return story
   })
