@@ -44,11 +44,3 @@ storiesOf("Containers/Buy Leads", module)
     }, 500)
     return story
   })
-
-  .add("Buy Leads - error", () => {
-    var { store, story } = createStoreAndStory({
-      path: "/buy-leads",
-      loggedIn: true,
-    })
-    return story
-  })
