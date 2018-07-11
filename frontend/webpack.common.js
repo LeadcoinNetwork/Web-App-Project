@@ -8,7 +8,7 @@ const webpackUtils = require("./webpack.utils.js")
 
 module.exports = {
   entry: {
-    app: process.env.TEST_WEBPACK
+    app: process.env.WEBPACK_TEST
       ? ["./src/utils/entry-for-test-webpack.js"]
       : ["babel-polyfill", "./src/index.js"],
   },
@@ -23,7 +23,7 @@ module.exports = {
     new CleanWebpackPlugin(["dist"]),
     new HtmlWebpackPlugin({
       inject: false,
-      filename: path.resolve(__dirname, "/x.html"),
+      // filename: path.resolve(__dirname, "index.html"),
       template: "./webpack.template.html", // we want to support htmlClass property.
       lang: "en-US",
       htmlClass: "ldc-ltr",

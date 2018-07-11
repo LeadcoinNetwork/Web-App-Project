@@ -29,6 +29,10 @@ const store = createStore(
 )
 var sagaTask = sagaMiddleware.run(rootSaga)
 
+import { hot } from "react-hot-loader"
+
+var HotApp = hot(module)(App)
+
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history} action="action required?">

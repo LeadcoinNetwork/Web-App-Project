@@ -94,13 +94,13 @@ const mapStateToProps = state => ({
   pathname: _.get(state, "router.location.pathname"),
 
   // We want to rerender the root every time the languag changes. We don't use this props.
-  _: state.translate.current,
+  _: state.language.country,
 })
 
 // export default App
-import { hot } from "react-hot-loader"
-export default hot(module)(
-  connect(mapStateToProps, {
+export default connect(
+  mapStateToProps,
+  {
     toggleResultsMode: app.toggleResultsMode,
-  })(App),
-)
+  },
+)(App)

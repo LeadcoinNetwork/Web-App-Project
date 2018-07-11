@@ -1,6 +1,6 @@
 /*
 to use this alternative entry use this environment
-process.env.TEST_WEBPACK=true
+process.env.WEBPACK_TEST=true
 */
 import "./entry-for-test-webpack.css"
 console.log("hi")
