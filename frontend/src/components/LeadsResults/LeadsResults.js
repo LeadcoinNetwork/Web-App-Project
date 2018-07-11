@@ -17,11 +17,11 @@ const LeadsResults = ({
         appStyle
       />
     ))}
-    <Button
-      label={isNotAllSelected ? "check all" : "uncheck all"}
-      onClick={toggleAll}
-      appStyle
-    />
+    <div className="lr-check-all">
+      <label onClick={toggleAll}>
+        {isNotAllSelected ? "check all" : "uncheck all"}
+      </label>
+    </div>
     <div className="lr-main">{leads.list.map(l => render(l))}</div>
   </section>
 )
