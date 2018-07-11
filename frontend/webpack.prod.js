@@ -16,19 +16,3 @@ module.exports = merge(common, {
     },
   ],
 })
-
-/*
-function AddRTLCSSFromBundle() {
-  // Plugins must have a constructor
-  return this
-}
-
-AddRTLCSSFromBundle.prototype.apply = function(compiler) {
-  compiler.plugin("done", function() {
-    fs.writeFileSync(
-      "./dist/bundle.rtl.css",
-      rtlcss.process(fs.readFileSync("./dist/bundle.css")),
-    )
-  })
-}
-*/
