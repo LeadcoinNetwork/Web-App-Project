@@ -4,17 +4,18 @@ const CleanWebpackPlugin = require("clean-webpack-plugin")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const Dotenv = require("dotenv-webpack")
 const webpackUtils = require("./webpack.utils.js")
-
 // webpackUtils.JestUpdateModuleResoultionPacker()
 
 module.exports = {
   entry: {
-    app: ["babel-polyfill", "./src/index.js"],
+    app: process.env.TEST_WEBPACK
+      ? ["./src/utils/entry-for-test-webpack.js"]
+      : ["babel-polyfill", "./src/index.js"],
   },
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
-    publicPath: "/",
+    publicPath: "./",
   },
   plugins: [
     new Dotenv({ systemvars: true, safe: true }),
@@ -22,8 +23,10 @@ module.exports = {
     new CleanWebpackPlugin(["dist"]),
     new HtmlWebpackPlugin({
       inject: false,
-      template: require("html-webpack-template"),
+      // filename: path.resolve(__dirname, "/x.html"),
+      template: "./webpack.template.html", // we want to support htmlClass property.
       lang: "en-US",
+      htmlClass: "ldc-ltr",
       title: "Leadcoin",
       links: [
         {
@@ -49,12 +52,31 @@ module.exports = {
   ],
   module: {
     rules: [
-      {
-        test: /\.(scss|css)$/,
-        use: process.env.RTL
-          ? ["style-loader", "rtlcss-loader", "sass-loader"]
-          : ["style-loader", "css-loader", "sass-loader"],
-      },
+      process.env.WEBPACK_ENV == "production"
+        ? // We are in production. // sets by webpack.prod.js
+          {
+            test: /\.(scss|css)$/,
+            use: ExtractTextPlugin.extract({
+              // Do not add RTL. Create simple CSS. the webpack.prod.js, will create RTL Bundle
+              use: [
+                "css-loader",
+                "sass-loader",
+                "./webpack.rtl.duplicate.js", //It takes a CSS syntax and returns SASS Syntax
+                "sass-loader",
+              ],
+            }),
+          }
+        : // We are in development.  Add style-loader
+          {
+            test: /\.(scss|css)$/,
+            use: [
+              "style-loader",
+              "css-loader",
+              "sass-loader",
+              "./webpack.rtl.duplicate.js", //It take a CSS syntax and returns SASS Syntax
+              "sass-loader",
+            ],
+          },
       {
         test: /\.stories\.jsx?$/,
         loaders: [require.resolve("@storybook/addon-storysource/loader")],

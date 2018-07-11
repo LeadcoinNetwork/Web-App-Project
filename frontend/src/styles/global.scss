@@ -1,14 +1,11 @@
 @import "~Styles/helpers";
 
-html {
-  direction: ltr;
-}
-
 * {
   box-sizing: border-box;
 }
 
 body {
+  direction: ltr; // We need it, so rtlcss, will change it to rtl
   margin: 0;
   padding: 0;
   background-color: $main-color;
