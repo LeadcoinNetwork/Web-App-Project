@@ -7,7 +7,7 @@ import NotFound from "../../utils/not-found"
 type tableName = "users" | "leads"
 type SAFE_AND_SANITIZED_SQL_QUERY = string
 
-export default abstract class BaseDBModel<INew, IExisting, ICondition,oneFieldType> {
+export default abstract class BaseDBModel<INew, IExisting, ICondition> {
   log = LogModelActions(this.tableName)
 
   constructor(protected sql: SQL, public readonly tableName: tableName) {}
@@ -29,7 +29,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition,oneFieldTy
     condition: ICondition,
     settings: { returnPassword: boolean } = { returnPassword: false },
   ): Promise<IExisting | NotFound> {
-    var result = await this.find(condition, settings)
+    var result = await this.find({condition})
     if (result.length != 1) {
       return new NotFound()
     } else {
