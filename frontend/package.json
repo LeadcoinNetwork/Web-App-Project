@@ -4,16 +4,13 @@
   "private": true,
   "scripts": {
     "start": "webpack-dev-server --progress --hot --config webpack.dev.js",
-    "start:rtl": "cross-env RTL=true npm run start",
     "build": "./node_modules/.bin/webpack --progress --config webpack.prod.js",
-    "build:rtl": "echo command not ready yet",
-    "stats": "./node_modules/.bin/webpack --progress --config webpack.prod.js --json >stats.json",
+    "stats":
+      "./node_modules/.bin/webpack --progress --config webpack.prod.js --json >stats.json",
     "test": "jest",
     "test:watch": "jest --watch",
     "storybook": "start-storybook -p 9001 -c .storybook",
-    "storybook:rtl": "cross-env RTL=true npm run storybook",
-    "storybook:build": "build-storybook -c .storybook -o storybook-build",
-    "storybook:build:rtl": "cross-env RTL=true build-storybook -c .storybook -o storybook-build"
+    "storybook:build": "build-storybook -c .storybook -o storybook-build"
   },
   "dependencies": {
     "@babel/core": "^7.0.0-beta.49",

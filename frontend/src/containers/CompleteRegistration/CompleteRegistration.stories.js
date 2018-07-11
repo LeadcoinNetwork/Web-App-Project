@@ -1,7 +1,7 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
 import { completeRegistration, app } from "Actions"
-import { createStoreAndStory } from "storybook-utils/withRouter"
+import { createStoreAndStory } from "storybook-utils/createStoreAndStory"
 import snackbar from "Sagas/snackbar"
 
 storiesOf("Containers/Complete registration", module)

@@ -10,6 +10,7 @@ import csvMapping from "./csvMapping"
 import completeRegistration from "./completeRegistration.js"
 import addLead from "./addLead"
 import redirectIfNotAllowed from "./redirectIfNotAllowed"
+import language from "./language"
 
 import { spawn, fork } from "redux-saga/effects"
 
@@ -42,6 +43,7 @@ export default function* rootSaga() {
     signup,
     csvMapping,
     snackbar,
+    language,
   ]
   for (var i in sagas) {
     yield fork(sagas[i], api)
