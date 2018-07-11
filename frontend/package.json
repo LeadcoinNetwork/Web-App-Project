@@ -5,7 +5,8 @@
   "scripts": {
     "start": "webpack-dev-server --progress --hot --config webpack.dev.js",
     "build": "./node_modules/.bin/webpack --progress --config webpack.prod.js",
-    "stats": "./node_modules/.bin/webpack --progress --config webpack.prod.js --json >stats.json",
+    "stats":
+      "./node_modules/.bin/webpack --progress --config webpack.prod.js --json >stats.json",
     "test": "jest",
     "test:watch": "jest --watch",
     "storybook": "start-storybook -p 9001 -c .storybook",

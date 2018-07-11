@@ -46,7 +46,11 @@ const RealEstateLead = ({
       </div>
       <div className="rel-buttons">
         {buttons.map(button => (
-          <button className="relb-btn" onClick={() => button.onClick(id)}>
+          <button
+            key={button.value}
+            className="relb-btn"
+            onClick={() => button.onClick(id)}
+          >
             {button.value}
           </button>
         ))}
