@@ -20,10 +20,6 @@ module.exports = {
     publicPath: "/",
   },
   plugins: [
-    new HardSourceWebpackPlugin({
-      maxAge: 90 * 24 * 60 * 60 * 1000, // 90 Days
-      sizeThreshold: 150 * 1024 * 1024, // 150 MB
-    }),
     new Dotenv({ systemvars: true, safe: true }),
     new ExtractTextPlugin("bundle.css"),
     new CleanWebpackPlugin(["dist"]),
