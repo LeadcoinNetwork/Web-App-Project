@@ -1,22 +1,22 @@
 @import "~Styles/variables";
 
-.ldc-with-infinite-scroll-loading {
+.ldc-loading-dots {
   text-align: center;
   margin-top: 30px;
 
   &:after {
     content: "\25CF";
-    animation: dots-loading 1100ms steps(5, end) infinite;
+    animation: loading-dots 1100ms steps(5, end) infinite;
   }
 }
 
 @media (max-width: $screen-tablets) {
-  .ldc-with-infinite-scroll-loading {
+  .ldc-loading-dots {
     margin-top: 20px;
   }
 }
 
-@keyframes dots-loading {
+@keyframes loading-dots {
   0%,
   20% {
     color: transparent;

@@ -1,7 +1,7 @@
-import "./withInfiniteScroll.scss"
 import React from "react"
 import { throttle } from "lodash"
 import t from "../utils/translate/translate"
+import LoadingDots from "Components/LoadingDots"
 
 const withInfiniteScroll = onScrollBottom => WrappedComponent => {
   class WithInfiniteScroll extends React.Component {
@@ -28,9 +28,7 @@ const withInfiniteScroll = onScrollBottom => WrappedComponent => {
       return (
         <>
           <WrappedComponent {...passThroughProps} />
-          {this.props.loading ? (
-            <div className="ldc-with-infinite-scroll-loading" />
-          ) : null}
+          {this.props.loading ? <LoadingDots /> : null}
         </>
       )
     }
