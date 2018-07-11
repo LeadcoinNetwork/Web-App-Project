@@ -16,10 +16,10 @@ class BuyLeads extends React.Component {
   buyLead = id => {
     console.log([id])
   }
-  onScrollBottom = cb => {
-    let { dispatch, leads } = this.props
+  onScrollBottom = () => {
+    let { fetchLeads, leads } = this.props
 
-    getLeads(dispatch, cb, leads.page + 1)
+    fetchLeads(leads.page + 1)
   }
   buildButtonLabel = () => {
     let amount = this.props.leads.selected.size
@@ -112,6 +112,7 @@ class BuyLeads extends React.Component {
                   ...field,
                   name: t(field.name),
                 }))}
+                loading={leads.loading}
                 records={leads.list}
                 buttons={this.getButtons()}
                 setSelectedRecords={setSelectedLeads}
@@ -134,6 +135,7 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, {
+  fetchLeads: (...params) => leads.fetchLeads("BUY_LEADS", ...params),
   setSelectedLeads: selectedLeads =>
     leads.setSelectedLeads("BUY_LEADS", selectedLeads),
 })(BuyLeads)
