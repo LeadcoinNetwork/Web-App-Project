@@ -1,3 +1,4 @@
+import "./withInfiniteScroll.scss"
 import React from "react"
 import { throttle } from "lodash"
 import t from "../utils/translate/translate"
@@ -28,7 +29,9 @@ const withInfiniteScroll = onScrollBottom => WrappedComponent => {
         <>
           <WrappedComponent {...passThroughProps} />
           {this.props.loading ? (
-            <div style={{ paddingTop: "20px" }}>{t("Loading...")}</div>
+            <div className="ldc-with-infinite-scroll-loading">
+              {t("Loading")}
+            </div>
           ) : null}
         </>
       )
