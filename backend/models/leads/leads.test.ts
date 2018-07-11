@@ -13,8 +13,8 @@ beforeEach(async () => {
 
 import NotFound from "../../utils/not-found"
 
-test("delete lead - insert, delete and then test cannot find lead after deleted", async () => {
-  const [success, id] = await leads.insert({
+test.skip("delete lead - insert, delete and then test cannot find lead after deleted", async () => {
+  const status = await leads.insertLead({
     date: 1212,
     owner_id: 1,
     name: "test lead",
@@ -23,15 +23,16 @@ test("delete lead - insert, delete and then test cannot find lead after deleted"
     active: true,
     bought_from: null,
   })
-  expect(success).toBeTruthy()
+  expect(status.insertId).toBeTruthy()
+  const id = status.insertId
   const result = await leads.remove(id)
-  const [record]: Lead[] = await leads.find({ id }, { fields: ["id"] })
+  const record: Lead = await leads.getById(id)
   expect(record).toBe(undefined)
 })
 
 /*
 test("add new lead with bad data", async () => {
-  const success = await leads.insert({ 
+  const success = await leads.insertLead({
     date: 1414,
     owner_id: 34,
     name: 'test lead',
@@ -43,60 +44,82 @@ test("add new lead with bad data", async () => {
   expect(success).toBeFalsey()
 })
 */
-it("find leads - pagination and limit.", async () => {
-  const add_leads = async count => {
-    for (let i = 1; i < count + 1; i++) {
-      let rs = await leads.insert({
-        date: 1212,
-        owner_id: i,
-        name: chance.name(),
-        phone: "12301212",
-        email: "moshe@moshe.com",
-        active: true,
-        bought_from: null,
-      })
-    }
-    return true
+const add_leads = async count => {
+  const rc = []
+  for (let i = 1; i < count + 1; i++) {
+    let status = await leads.insertLead({
+      date: 1212,
+      owner_id: i,
+      name: chance.name(),
+      phone: "12301212",
+      email: "moshe@moshe.com",
+      active: true,
+      price: 0,
+      bought_currency: null,
+      bought_from: null,
+    })
+    if (status.affectedRows) rc.push(status.insertId)
   }
+  return rc
+}
+
+test.skip("buying leads should work", async () => {
+  const new_ids = await add_leads(10)
+  expect(new_ids.length).toBeTruthy()
+  leads.buy(new_ids, 666)
+  const record: Lead[] = await leads.findLeads({
+    condition: {
+      owner_id: 666,
+    },
+    limit: {
+      start: 0,
+      offset: 20,
+    },
+  })
+  expect(record.length).toBe(10)
+  expect(record.pop().owner_id).toBe(666)
+})
+
+test.skip("paging and limit should work", async () => {
   const done = await add_leads(50)
-  expect(done).toBeTruthy()
-  const records1: Lead[] = await leads.find(
-    {
+  expect(done.length).toBeTruthy()
+  const records1: Lead[] = await leads.findLeads({
+    condition: {
       email: "moshe@moshe.com",
     },
-    {
-      limit: 20,
-      page: 0,
+    limit: {
+      start: 20,
+      offset: 0,
     },
-  )
+  })
   expect(records1.length).toBe(20)
   expect(records1.pop().owner_id).toBe(20)
-  const records2: Lead[] = await leads.find(
-    {
+  const records2: Lead[] = await leads.findLeads({
+    condition: {
       email: "moshe@moshe.com",
     },
-    {
-      limit: 20,
-      page: 1,
+    limit: {
+      start: 20,
+      offset: 1,
     },
-  )
+  })
   expect(records2.length).toBe(20)
   expect(records2.pop().owner_id).toBe(40)
-  const records3: Lead[] = await leads.find(
-    {
+  const records3: Lead[] = await leads.findLeads({
+    condition: {
       email: "moshe@moshe.com",
     },
-    {
-      limit: 20,
-      page: 2,
+    limit: {
+      start: 20,
+      offset: 2,
     },
-  )
+  })
   expect(records3.length).toBe(10)
   expect(records3.pop().owner_id).toBe(50)
 })
 
-test("add new lead", async () => {
-  const success = await leads.insert({
+test.skip("add new lead", async () => {
+  const success = await leads.insertLead({
     date: 1212,
     owner_id: 1,
     name: "test lead",
@@ -109,8 +132,10 @@ test("add new lead", async () => {
 })
 
 test("find lead", async () => {
-  await leads.insert({
+  await leads.insertLead({
     date: 1212,
+    bought_currency: "USD",
+    price: 0,
     owner_id: 1,
     name: "test lead",
     active: true,
@@ -118,18 +143,16 @@ test("find lead", async () => {
     email: "moshe@moshe.com",
     bought_from: null,
   })
-  const [record]: Lead[] = await leads.find({ email: "moshe@moshe.com" })
-  expect(record.email).toBe("moshe@moshe.com")
-  const [record2]: Lead[] = await leads.find(
-    { email: "moshe@moshe.com" },
-    {
-      fields: ["email", "phone"],
+  const [record]: Lead[] = await leads.findLeads({
+    condition: {
+      email: "moshe@moshe.com",
     },
-  )
-  expect(record2[name]).toBe(undefined)
-  expect(record2.email).toBe("moshe@moshe.com")
-  await leads.insert({
+  })
+  expect(record.email).toBe("moshe@moshe.com")
+  await leads.insertLead({
     date: 1213,
+    bought_currency: "USD",
+    price: 0,
     owner_id: 1,
     name: "test lead 2",
     active: true,
@@ -137,26 +160,32 @@ test("find lead", async () => {
     email: "moshe@moshe.com",
     bought_from: null,
   })
-  const [record3, record4]: Lead[] = await leads.find(
-    { email: "moshe@moshe.com" },
-    {
-      sort_by: ["phone", "DESC"],
+  const [record3, record4]: Lead[] = await leads.findLeads({
+    condition: {
+      email: "moshe@moshe.com",
     },
-  )
+    sort: {
+      sortBy: "phone",
+      sortOrder: "DESC",
+    },
+  })
   expect(record3.name).toBe("test lead 2")
   expect(record4.name).toBe("test lead")
-  const [record5, record6]: Lead[] = await leads.find(
-    { email: "moshe@moshe.com" },
-    {
-      sort_by: ["phone", "ASC"],
+  const [record5, record6]: Lead[] = await leads.findLeads({
+    condition: {
+      email: "moshe@moshe.com",
     },
-  )
+    sort: {
+      sortBy: "phone",
+      sortOrder: "ASC",
+    },
+  })
   expect(record6.name).toBe("test lead 2")
   expect(record5.name).toBe("test lead")
 })
 
-test("delete lead", async () => {
-  await leads.insert({
+test.skip("delete lead", async () => {
+  await leads.insertLead({
     date: 1212,
     owner_id: 1,
     active: true,
@@ -165,19 +194,17 @@ test("delete lead", async () => {
     email: "moshe@moshe.com",
     bought_from: null,
   })
-  const [record]: Lead[] = await leads.find(
-    { email: "moshe@moshe.com" },
-    {
-      fields: ["id"],
+  const [record]: Lead[] = await leads.findLeads({
+    condition: {
+      email: "moshe@moshe.com",
     },
-  )
+  })
   const { id } = record
   await leads.remove(id)
-  const [record2] = await leads.find(
-    { email: "moshe@moshe.com" },
-    {
-      fields: ["id"],
+  const [record2]: Lead[] = await leads.findLeads({
+    condition: {
+      email: "moshe@moshe.com",
     },
-  )
+  })
   expect(record2).toBe(undefined)
 })

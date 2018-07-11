@@ -12,5 +12,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/LeadcoinNetwork/leadcoin-web",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@types/jest": "^23.1.3"
+  }
 }

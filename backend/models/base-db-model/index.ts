@@ -29,7 +29,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     condition: ICondition,
     settings: { returnPassword: boolean } = { returnPassword: false },
   ): Promise<IExisting | NotFound> {
-    var result = await this.find({condition})
+    var result = await this.find({ condition })
     if (result.length != 1) {
       return new NotFound()
     } else {
@@ -37,18 +37,21 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     }
   }
 
-
   // TODO @erez Ensure change all fucntion to pretected. (And make sure applogic do not use it...)
   // TODO @erez Change call to user.find to this signature (tests...)
   /**
    *  If not found, not returing an error.
    */
-  protected async find({condition,sort,limit}:{
-    condition?: ICondition,
-    sort? : {sortBy:string, sortOrder:"asc" | "desc"},
-    limit?:{start:number,offset:number}
-  }
-  ): Promise<IExisting[]> {
+  protected async find({
+    condition,
+    sort,
+    limit,
+  }: {
+    condition?: ICondition
+    sort?: { sortBy: string; sortOrder: "ASC" | "DESC" }
+    limit?: { start: number; offset: number }
+  }): Promise<IExisting[]> {
+    console.log({ condition })
     var cnd = Object.keys(condition)
       .map(key => {
         return `${mysql.escapeId(key)} = ${mysql.escape(condition[key])}`
@@ -56,23 +59,35 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       .join(" AND ")
 
     if (cnd) cnd = `WHERE ${cnd}`
-
-    let rows = await this.sql.query(`SELECT * FROM ${this.tableName} ${cnd}`)
+    let sql_sort = ""
+    let sql_limit = ""
+    if (sort) {
+      sql_sort = ` ORDER BY ${sort.sortBy} ${sort.sortOrder}`
+    }
+    if (limit) {
+      sql_limit = ` LIMIT ${limit.start},${limit.offset} `
+    }
+    let rows = await this.sql.query(
+      `SELECT * FROM ${this.tableName} ${cnd} ${sql_sort} ${sql_limit} ;`,
+    )
     return rows
   }
 
   protected async query(query: SAFE_AND_SANITIZED_SQL_QUERY) {
-    this.log("executing query on ",this.tableName)
+    this.log("executing query on ", this.tableName)
     this.log("query is:", query)
     let status = await this.sql.query(query)
     this.log("query results: ", JSON.stringify(status))
     return status
   }
-  
+
   protected async insert(record: INew) {
     this.log("create " + this.tableName + " start", record)
 
-    let status = await this.sql.query("INSERT INTO "+this.tableName+" SET ?", record)
+    let status = await this.sql.query(
+      "INSERT INTO " + this.tableName + " SET ?",
+      record,
+    )
 
     this.log("create " + this.tableName + " start", status.insertId)
 

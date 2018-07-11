@@ -1,4 +1,4 @@
-import { Lead } from "../models/leads/types"
+import { Lead, LeadQueryOptions } from "../models/leads/types"
 
 import { IModels } from "./index"
 
@@ -9,90 +9,49 @@ export interface getLeadsOptions {
   limit?: number
 }
 
-const validate_lead = (lead:Lead) => {
+const validate_lead = (lead: Lead) => {
   //TODO: smthing
   const errors = []
-  if (!lead.email || lead.email.length < 2)
-    errors.push("email not valid")
-  return (errors)
+  if (!lead.email || lead.email.length < 2) errors.push("email not valid")
+  return errors
 }
 
 export default class Leads {
   constructor(private models: IModels) {}
   public UploadCSV() {}
 
+  public async buyLeads(leads: number[], new_owner: number) {
+    return await this.models.leads.buy(leads, new_owner)
+  }
+
   public async removeLead(lead_id: number) {
     return await this.models.leads.remove(lead_id)
   }
+
   public async AddLead(lead: Lead) {
     const problems = validate_lead(lead)
     if (problems.length == 0) {
-      const [success, id]  =  await this.models.leads.insert(lead)
-      return [success, id]
+      const id = await this.models.leads.AddLead(lead)
+      return id
     }
-    throw new Error(problems.join('; '))
+    throw new Error(problems.join("; "))
   }
 
-  public async getSoldLeads(user_id:number, options: getLeadsOptions) {
-    const {filters} = options
-    let where_additions = []
-    if (filters) {
-      where_additions = filters.map((f) => {
-        return f[0] +" LIKE \"%"+ f[1] +"%\""
-      })
-    }
-    return await this.models.leads.find({
-      bought_from: user_id,
-      active: 1
-    }, {
-      sort_by: options.sort_by,
-      where_additions
-    })
+  public async getSoldLeads(user_id: number, options: LeadQueryOptions) {
+    return await this.models.leads.getSoldLeads(user_id, options)
   }
 
-  public async getMyLeads(user_id:number, options: getLeadsOptions) {
-    const {filters, limit, page} = options
-    let where_additions = []
-    if (filters) {
-      where_additions = filters.map((f) => {
-        return f[0] +" LIKE \"%"+ f[1] +"%\""
-      })
-    }
-    return await this.models.leads.find({
-      owner_id: user_id,
-      active: 1
-    }, {
-      page, limit,
-      sort_by: options.sort_by,
-      where_additions
-    })
+  /*
+  public async getMyLeads(user_id:number, options: LeadQueryOptions) {
+    this.models.leads.getMyLeads(user_id, options)
   }
 
-  public async getBoughtLeads(user_id:number, options: getLeadsOptions) {
-    const {filters} = options
-    let where_additions = []
-    if (filters) {
-      where_additions = filters.map((f) => {
-        return f[0] +" LIKE \"%"+ f[1] +"%\""
-      })
-    }
-    return await this.models.leads.find({
-      owner_id: user_id,
-      active: 1
-    }, {
-      sort_by: options.sort_by,
-      where_additions: ["bought_from > 0"].concat(where_additions)
-    })
+  public async getBoughtLeads(user_id:number, options: LeadQueryOptions) {
+    return await this.models.leads.getBoughtLeads(user_id, options)
   }
 
-  public async getLeadsNotOwnedByMe(user_id:number, options: getLeadsOptions) {
-    return await this.models.leads.find({
-      active: 1
-    }, {
-      sort_by: options.sort_by,
-      where_additions: [
-        "owner_id <> "+user_id
-      ]
-    })
+  public async getLeadsNotOwnedByMe(user_id:number, options: LeadQueryOptions) {
+    return await this.models.leads.getLeadsNotOwnedByMe(user_id, options)
   }
+  */
 }

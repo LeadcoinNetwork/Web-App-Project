@@ -10,8 +10,10 @@ import csvMapping from "./csvMapping"
 import completeRegistration from "./completeRegistration.js"
 import addLead from "./addLead"
 import redirectIfNotAllowed from "./redirectIfNotAllowed"
-
-import { spawn, fork } from "redux-saga/effects"
+import { spawn } from "redux-saga/effects"
+import sellLeads from "./soldLeads"
+import boughtLeads from "./boughtLeads"
+import myLeads from "./myLeads"
 
 import * as superagent from "superagent"
 
@@ -37,6 +39,9 @@ export default function* rootSaga() {
     completeRegistration,
     emailConfirmation,
     logout,
+    sellLeads,
+    boughtLeads,
+    myLeads,
     homesaga,
     fetchUserToState,
     signup,
@@ -44,6 +49,6 @@ export default function* rootSaga() {
     snackbar,
   ]
   for (var i in sagas) {
-    yield fork(sagas[i], api)
+    yield spawn(sagas[i](api))
   }
 }
