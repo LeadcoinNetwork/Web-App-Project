@@ -1,7 +1,7 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
 import { userMenu, types } from "Actions"
-import { createStoreAndStory } from "storybook-utils/withRouter"
+import { createStoreAndStory } from "storybook-utils/createStoreAndStory"
 
 import { specs, describe, it } from "storybook-addon-specifications"
 import { mount } from "enzyme"

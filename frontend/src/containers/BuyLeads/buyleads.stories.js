@@ -1,6 +1,6 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
-import { createStoreAndStory } from "storybook-utils/withRouter"
+import { createStoreAndStory } from "storybook-utils/createStoreAndStory"
 import * as actions from "actions"
 
 storiesOf("Containers/Buy Leads", module)

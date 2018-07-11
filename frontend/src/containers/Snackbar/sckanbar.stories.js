@@ -1,6 +1,6 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
-import { createStoreAndStory } from "storybook-utils/withRouter"
+import { createStoreAndStory } from "storybook-utils/createStoreAndStory"
 import { app, types } from "Actions"
 import Snackbar from "./Snackbar"
 import snackbar from "Sagas/snackbar"
