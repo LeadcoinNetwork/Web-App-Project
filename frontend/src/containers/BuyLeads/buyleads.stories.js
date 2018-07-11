@@ -16,6 +16,7 @@ storiesOf("Containers/Buy Leads", module)
       path: "/buy-leads",
       loggedIn: true,
     })
+    store.dispatch(actions.leads.fetchLeads("BUY_LEADS"))
     return story
   })
   .add("Buy Leads - with mock fields", () => {
