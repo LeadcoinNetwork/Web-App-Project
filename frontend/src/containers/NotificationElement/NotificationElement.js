@@ -35,11 +35,11 @@ class NotificationElement extends Component {
         }}
       >
         {unreadCount > 0 && (
-          <div
+          <i
             className={"notification-badge" + (unreadCount > 9 ? " plus" : "")}
           >
             {unreadCount < 10 ? unreadCount : "9+"}
-          </div>
+          </i>
         )}
         {isOpen && (
           <NotificationInner
