@@ -2,7 +2,7 @@ import SQL from "../mysql-pool/mysql-pool"
 
 import { Lead, LeadQueryOptions, NewLead } from "./types"
 
-import baseDBModel from "../base-db-model"
+import baseDBModel from "../base-db-model/base-db-model"
 
 export default class Leads extends baseDBModel<
   NewLead,
