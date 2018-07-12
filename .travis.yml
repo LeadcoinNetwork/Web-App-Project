@@ -28,4 +28,3 @@ cache:
   - backend/node_modules
   - node_modules
   - "/home/travis/.npm"
-  - "/var/lib/docker"
