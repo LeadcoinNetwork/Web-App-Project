@@ -14,8 +14,8 @@ if (!storage.getItem("current")) {
  *
  * <div>{t("Hello")}</div>
  *
- * Will display a verification symbol before the text if localStorage holds a 'translate-verify' key.
- * For verifying our text db.
+ * Will display a verification symbol before the text to verify text in db,
+ * only if localStorage holds a 'translate-verify' key.
  *
  * @return String
  */
