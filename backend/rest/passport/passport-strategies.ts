@@ -149,7 +149,7 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
               provider_id: profile.id,
               provider: profile.provider,
             }
-            await appLogic.models.users.update(user.id, update)
+            await appLogic.models.users.updateUser(user.id, update)
             _done(null, Object.assign({}, user, update))
           }
         } else {
@@ -169,7 +169,7 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
             },
           )
           if (Object.keys(update).length) {
-            await appLogic.models.users.update(user.id, update)
+            await appLogic.models.users.updateUser(user.id, update)
           }
           _done(null, user)
         }

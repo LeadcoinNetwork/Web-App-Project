@@ -26,6 +26,11 @@ class User extends baseDBModel<
     super(sql, "users")
   }
 
+  public async tryGetById(id): Promise<ExistingUserInterface | NotFound> {
+    let user = await this.getOne(<any>{ id }) // 'any' becuase ICondition it's a generic interface.
+    return user
+  }
+
   public async getOne(
     condition: ExistingUserInterfaceCondition,
   ): Promise<ExistingUserInterface | NotFound> {
