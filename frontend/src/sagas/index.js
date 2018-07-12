@@ -15,6 +15,9 @@ import sellLeads from "./soldLeads"
 import boughtLeads from "./boughtLeads"
 import myLeads from "./myLeads"
 
+import language from "./language"
+
+import { spawn, fork } from "redux-saga/effects"
 import * as superagent from "superagent"
 
 import API from "../api/index"
@@ -47,6 +50,7 @@ export default function* rootSaga() {
     signup,
     csvMapping,
     snackbar,
+    language,
   ]
   for (var i in sagas) {
     yield spawn(sagas[i](api))

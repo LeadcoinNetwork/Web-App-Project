@@ -86,7 +86,8 @@
     }
   },
   "scripts": {
-    "start": "nodemon",
+    "start": "ts-node index.ts",
+    "start:dev": "nodemon",
     "test": "jest --bail",
     "test:watch": "jest --bail --watch",
     "precommit": "pretty-quick --staged"

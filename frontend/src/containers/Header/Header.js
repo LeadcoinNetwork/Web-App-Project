@@ -57,6 +57,7 @@ var mapStateToProps = state => ({
   loggedIn: !!_.get(state, "user.id"),
   disabled: !!_.get(state, "user.disabled"),
   pathname: _.get(state, "router.location.pathname"),
+  language: state.language,
 })
 var mapDispatchToProps = {
   gotoDefaultHome: actions.route.gotoDefaultHome,

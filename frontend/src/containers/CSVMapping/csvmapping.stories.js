@@ -1,7 +1,7 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
 import * as actions from "actions"
-import { createStoreAndStory } from "storybook-utils/withRouter"
+import { createStoreAndStory } from "storybook-utils/createStoreAndStory"
 
 storiesOf("Containers/CSVMapping", module)
   .add("CSVMapping - empty", () => {

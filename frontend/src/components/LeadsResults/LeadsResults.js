@@ -12,6 +12,7 @@ const LeadsResults = ({
   <section className="ldc-leads-results">
     {buttons.map(button => (
       <Button
+        key={button.value}
         label={button.value}
         onClick={button.onClick}
         disabled={button.actionPerSelected && !leads.selected.size}
