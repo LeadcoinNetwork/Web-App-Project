@@ -19,10 +19,18 @@ const LeadsResults = ({
         appStyle
       />
     ))}
-    <div className="lr-check-all">
-      <label onClick={toggleAll}>
-        {isNotAllSelected ? "check all" : "uncheck all"}
+    <label className="lr-check-all" onClick={toggleAll}>
+      {isNotAllSelected ? "check all" : "uncheck all"}
+    </label>
+    <div className="lr-results-head">
+      <label className="lr-results-count">
+        {leads.list.length} of {leads.total} results
       </label>
+      <select>
+        <option>Sort By</option>
+        <option>size</option>
+        <option>budget</option>
+      </select>
     </div>
     <div className="lr-main">{leads.list.map(l => render(l))}</div>
   </section>

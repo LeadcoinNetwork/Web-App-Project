@@ -20,9 +20,9 @@ script:
 - cd backend
 - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 - docker build -t leadcoin/leadcoin .
-- docker push leadcoin/leadcoin
 - cd ..
 after_success:
+- docker push leadcoin/leadcoin
 - chmod 400 deploy_rsa
 - ssh -l build b.leadcoin.network -i deploy_rsa -o stricthostkeychecking=no "sudo
   docker ps"
@@ -36,8 +36,8 @@ after_success:
 - cd frontend
 - ssh -l build b.leadcoin.network -i ../deploy_rsa -o stricthostkeychecking=no "rm -r ~/dist"
 - ssh -l build b.leadcoin.network -i ../deploy_rsa -o stricthostkeychecking=no "rm -r ~/storybook-build"
-- scp -i ../deploy_rsa -o stricthostkeychecking=no -r -v dist build@b.leadcoin.network:~/
-- scp -i ../deploy_rsa -o stricthostkeychecking=no -r -v storybook-build build@b.leadcoin.network:~/
+- scp -i ../deploy_rsa -o stricthostkeychecking=no -r  dist build@b.leadcoin.network:~/
+- scp -i ../deploy_rsa -o stricthostkeychecking=no -r  storybook-build build@b.leadcoin.network:~/
 - echo "finish"
 cache:
   directories:
