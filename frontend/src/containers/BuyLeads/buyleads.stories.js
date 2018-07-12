@@ -64,7 +64,7 @@ storiesOf("Containers/Buy Leads", module)
         list: leadsMock,
         page: leadsPage,
         limit: 200,
-        total: leadsMock.length,
+        total: leadsTotal,
       }),
     )
     return story

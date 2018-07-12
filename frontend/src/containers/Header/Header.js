@@ -32,14 +32,14 @@ const Header = ({ pathname, loggedIn, disabled, logout, gotoDefaultHome }) => {
       {!disabled &&
         pathname == "/login" && (
           <div className="sign-link">
-            <span>{t("already have an account?")}</span>
+            <span>{t("don't have an account?")}</span>
             <Link to="/signup">{t("Start Now")}</Link>
           </div>
         )}
       {!disabled &&
         pathname != "/login" && (
           <div className="sign-link">
-            <span>{t("don't have an account?")}</span>
+            <span>{t("already have an account?")}</span>
             <Link to="/login">{t("Login Here")}</Link>
           </div>
         )}

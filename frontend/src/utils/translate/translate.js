@@ -14,14 +14,19 @@ if (!storage.getItem("current")) {
  *
  * <div>{t("Hello")}</div>
  *
+ * Will display a verification symbol before the text if localStorage holds a 'translate-verify' key.
+ * For verifying our text db.
+ *
  * @return String
  */
 export default function t(textToTransalte) {
   const current = storage.getItem("current")
   const value = _.get(translateDatabase, [textToTransalte, current])
   if (value || value === "") {
-    return value
+    return storage.getItem("translate-verify") ? "☑" + value : value
   } else {
-    return textToTransalte
+    return storage.getItem("translate-verify")
+      ? "☒" + textToTransalte
+      : textToTransalte
   }
 }
