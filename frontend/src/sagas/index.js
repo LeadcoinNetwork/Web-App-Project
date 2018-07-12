@@ -52,6 +52,6 @@ export default function* rootSaga() {
     language,
   ]
   for (var i in sagas) {
-    yield spawn(sagas, api)
+    yield fork(sagas[i], api)
   }
 }

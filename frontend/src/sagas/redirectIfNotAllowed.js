@@ -29,7 +29,6 @@ logedin click on link in user menu.
 
 import * as Actions from "Actions"
 import { select, put, take } from "redux-saga/effects"
-import * as _ from "lodash"
 
 function everyone(path) {
   if (["/privacy", "/terms"].includes(path)) return true
@@ -52,7 +51,7 @@ function allowedLogedIn(path) {
   return !allowedAnon(path)
 }
 
-window.SHOW_REDIRECT_LOGS = false
+window.SHOW_REDIRECT_LOGS = true
 function log() {
   if (window.SHOW_REDIRECT_LOGS) {
     console.log.apply(console, arguments)
