@@ -15,6 +15,10 @@ export default class SQL {
     this.init()
     this.checkdb()
   }
+  public loggedQuery(...args): queryResult {
+    var result = this.pool.query.apply(this.pool, arguments)
+    return result
+  }
   public query(...args): queryResult {
     var result = this.pool.query.apply(this.pool, arguments)
     return result

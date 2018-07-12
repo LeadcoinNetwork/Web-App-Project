@@ -1,5 +1,21 @@
+import { Currency } from "../../utils/currency"
+
+export interface LeadQueryOptions {
+  id?: number
+  sort_by?: [string, "ASC" | "DESC"]
+  email?: string
+  fields?: string[]
+  page?: number
+  limit?: number
+  bought_from?: number
+  owner_id?: number
+  active?: boolean
+  filters?: [string, string][]
+}
+
 export interface BaseLead {
   id?: number
+  price: number
   date: number
   name: string
   phone: string
@@ -7,10 +23,23 @@ export interface BaseLead {
   bought_from: number | null
   owner_id: number
   active: boolean
+  currency: Currency
+  bought_currency: Currency | null
+}
+
+export interface NewLead extends BaseLead {
+  date: number
+  name: string
+  phone: string
+  email: string
+  bought_from: number | null
+  owner_id: number
+  active: boolean
+  bought_currency: Currency
 }
 
 export interface RealEstateLead extends BaseLead {
-  type: 'realestate'
+  type: "realestate"
   city?: string
   size?: number
   state?: string

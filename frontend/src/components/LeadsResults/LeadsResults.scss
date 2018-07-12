@@ -1,17 +1,35 @@
 @import "~Styles/variables";
 
 section.ldc-leads-results {
-  .lr-check-all {
-    padding-top: 12px;
+  label.lr-check-all,
+  .lr-results-head {
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 0.8px;
+  }
 
-    label {
-      cursor: pointer;
-      text-transform: uppercase;
-      font-size: 16px;
-      font-weight: 300;
+  label.lr-check-all {
+    cursor: pointer;
+    padding: 0 20px;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 300;
+  }
+
+  .lr-results-head {
+    position: relative;
+    text-transform: capitalize;
+    height: 80px;
+    line-height: 80px;
+
+    select {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
     }
   }
+
   .lr-main {
-    margin-top: 30px;
   }
 }

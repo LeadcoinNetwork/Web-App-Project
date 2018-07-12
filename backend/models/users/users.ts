@@ -26,6 +26,17 @@ class User extends baseDBModel<
     super(sql, "users")
   }
 
+  public async getOne({
+    condition: ExistingUserInterfaceCondition,
+  }): Promise<IExisting | NotFound> {
+    var result = await this.find({ condition })
+    if (result.length != 1) {
+      return new NotFound()
+    } else {
+      return result[0]
+    }
+  }
+
   public async generateJWT(user_id, secret) {
     // REFACTOR: move secret to the constructr, as dependency
     return userAuth.generateJWT(user_id, secret)
@@ -54,7 +65,7 @@ class User extends baseDBModel<
   }
   public async setNewPassword(user_id, new_password): Promise<boolean> {
     var hashed_password = auth.hashPassword(new_password)
-    return this.updateUser(user_id, { password: hashed_password })
+    return this.update(user_id, { password: hashed_password })
   }
 
   async activateUser({ user_id }: { user_id: number }) {
@@ -74,7 +85,7 @@ class User extends baseDBModel<
     email,
     password,
   ): Promise<ExistingUserInterface | NotFound> {
-    let user = await this.getOne({ email }, { returnPassword: true })
+    let user = await this.getOne({ condition: { email } })
     if (user instanceof NotFound) {
       return new NotFound()
     }
@@ -89,6 +100,10 @@ class User extends baseDBModel<
     userId,
     user: ExistingUserInterfaceCondition,
   ): Promise<boolean> {
+    if (user.password) {
+      const password_updated = this.setNewPassword(userId, user.password)
+      delete user["password"]
+    }
     return this.update(userId, user)
   }
 }
