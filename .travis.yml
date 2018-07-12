@@ -9,35 +9,17 @@ env:
   - FRONTEND=http://f.leadcoin.network
   - PORT=80
 before_install:
-- openssl aes-256-cbc -K $encrypted_c6f1553d2570_key -iv $encrypted_c6f1553d2570_iv
-  -in deploy_rsa.enc -out deploy_rsa -d
-script:
-- cd frontend
-- npm i
-- npm run build
-- npm run storybook:build
-- cd ..
-- cd backend
-- docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-- docker build -t leadcoin/leadcoin .
-- cd ..
-after_success:
-- docker push leadcoin/leadcoin
+- openssl aes-256-cbc -K $encrypted_c6f1553d2570_key -iv $encrypted_c6f1553d2570_iv -in deploy_rsa.enc -out deploy_rsa -d
 - chmod 400 deploy_rsa
-- ssh -l build b.leadcoin.network -i deploy_rsa -o stricthostkeychecking=no "sudo
-  docker ps"
-- ssh -l build b.leadcoin.network -i deploy_rsa -o stricthostkeychecking=no "sudo
-  docker pull leadcoin/leadcoin"
-- ssh -l build b.leadcoin.network -i deploy_rsa -o stricthostkeychecking=no "sudo
-  docker stop backend && sudo docker rm backend"
-- ssh -l build b.leadcoin.network -i deploy_rsa -o stricthostkeychecking=no "sudo
-  docker run -v /home/build/.env:/usr/leadcoin/.env --network host --name backend
-  --rm leadcoin/leadcoin"
-- cd frontend
-- ssh -l build b.leadcoin.network -i ../deploy_rsa -o stricthostkeychecking=no "rm -r ~/dist"
-- ssh -l build b.leadcoin.network -i ../deploy_rsa -o stricthostkeychecking=no "rm -r ~/storybook-build"
-- scp -i ../deploy_rsa -o stricthostkeychecking=no -r  dist build@b.leadcoin.network:~/
-- scp -i ../deploy_rsa -o stricthostkeychecking=no -r  storybook-build build@b.leadcoin.network:~/
+- chmod o+x scripts/*.sh
+script:
+- scripts/local-frontend-build.sh
+- scripts/local-build-docker.sh
+after_success:
+- scripts/local-push-docker.sh
+- ssh -l build b.leadcoin.network -i deploy_rsa -o stricthostkeychecking=no "bash -s" < scripts/remote-docker-pull-restart.sh
+- ssh -l build b.leadcoin.network -i deploy_rsa -o stricthostkeychecking=no "bash -s" < scripts/remote-remove-old-frontend.sh
+- scripts/local-copy-new-frontend.sh
 - echo "finish"
 cache:
   directories:
