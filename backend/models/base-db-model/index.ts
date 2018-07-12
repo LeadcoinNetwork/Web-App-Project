@@ -21,14 +21,11 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
   }
 
   protected async exist(condition: ICondition): Promise<boolean> {
-    var result = await this.find(condition)
+    var result = await this.find({ condition })
     return result.length > 0
   }
 
-  protected async getOne(
-    condition: ICondition,
-    settings: { returnPassword: boolean } = { returnPassword: false },
-  ): Promise<IExisting | NotFound> {
+  protected async getOne(condition: ICondition): Promise<IExisting | NotFound> {
     var result = await this.find({ condition })
     if (result.length != 1) {
       return new NotFound()
@@ -51,7 +48,6 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     sort?: { sortBy: string; sortOrder: "ASC" | "DESC" }
     limit?: { start: number; offset: number }
   }): Promise<IExisting[]> {
-    console.log({ condition })
     var cnd = Object.keys(condition)
       .map(key => {
         return `${mysql.escapeId(key)} = ${mysql.escape(condition[key])}`
@@ -67,9 +63,12 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     if (limit) {
       sql_limit = ` LIMIT ${limit.start},${limit.offset} `
     }
-    let rows = await this.sql.query(
-      `SELECT * FROM ${this.tableName} ${cnd} ${sql_sort} ${sql_limit} ;`,
-    )
+    let sql_query = `SELECT * FROM ${
+      this.tableName
+    } ${cnd} ${sql_sort} ${sql_limit} ;`
+    //console.log(sql_query)
+    let rows = await this.sql.query(sql_query)
+    rows = rows.map(row => Object.assign({}, row)) // remove RowDataPacket class
     return rows
   }
 

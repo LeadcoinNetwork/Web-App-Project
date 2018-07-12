@@ -41,17 +41,18 @@ export default class Leads {
     return await this.models.leads.getSoldLeads(user_id, options)
   }
 
-  /*
-  public async getMyLeads(user_id:number, options: LeadQueryOptions) {
-    this.models.leads.getMyLeads(user_id, options)
+  public async getMyLeads(user_id: number, options: LeadQueryOptions) {
+    return await this.models.leads.getMyLeads(user_id, options)
   }
 
-  public async getBoughtLeads(user_id:number, options: LeadQueryOptions) {
+  public async getBoughtLeads(user_id: number, options: LeadQueryOptions) {
     return await this.models.leads.getBoughtLeads(user_id, options)
   }
 
-  public async getLeadsNotOwnedByMe(user_id:number, options: LeadQueryOptions) {
+  public async getLeadsNotOwnedByMe(
+    user_id: number,
+    options: LeadQueryOptions,
+  ) {
     return await this.models.leads.getLeadsNotOwnedByMe(user_id, options)
   }
-  */
 }

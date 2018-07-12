@@ -26,9 +26,9 @@ class User extends baseDBModel<
     super(sql, "users")
   }
 
-  public async getOne({
+  public async getOne(
     condition: ExistingUserInterfaceCondition,
-  }): Promise<IExisting | NotFound> {
+  ): Promise<ExistingUserInterface | NotFound> {
     var result = await this.find({ condition })
     if (result.length != 1) {
       return new NotFound()
@@ -85,7 +85,7 @@ class User extends baseDBModel<
     email,
     password,
   ): Promise<ExistingUserInterface | NotFound> {
-    let user = await this.getOne({ condition: { email } })
+    let user = await this.getOne({ email })
     if (user instanceof NotFound) {
       return new NotFound()
     }
