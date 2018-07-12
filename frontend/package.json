@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "webpack-dev-server --progress --hot --config webpack.dev.js",
-    "build": "./node_modules/.bin/webpack --progress --config webpack.prod.js",
-    "stats": "./node_modules/.bin/webpack --progress --config webpack.prod.js --json >stats.json",
+    "start": "webpack-dev-server --hot --config webpack.dev.js",
+    "build": "./node_modules/.bin/webpack --config webpack.prod.js",
+    "stats":
+      "./node_modules/.bin/webpack --config webpack.prod.js --json >stats.json",
     "test": "jest",
     "test:watch": "jest --watch",
     "storybook": "start-storybook -p 9001 -c .storybook",

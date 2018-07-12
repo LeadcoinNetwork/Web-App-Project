@@ -1,10 +1,13 @@
 import * as Chance from "chance"
 import * as _ from "lodash"
 
+import API from "../../frontend/src/api/index"
+
 import * as RoutesForTests from "./utils/routes.for.tests"
 import * as ValidatedUserForTests from "./utils/user.for.tests"
 
 var { request, appLogic } = RoutesForTests.create()
+var api = new API(request)
 
 test("getting my sold_leads should work", async () => {
   var { user, token } = await ValidatedUserForTests.create({
@@ -17,21 +20,23 @@ test("getting my sold_leads should work", async () => {
     email: "moshe@moshe.com",
     owner_id: 123,
     active: 1,
-    bought_from: user.id
+    bought_from: user.id,
   }
-  const [success, lead_id] = await appLogic.models.leads.insert(lead)
-  expect(success).toBeTruthy()
+  const { affectedRows, insertId } = await appLogic.models.leads.insertLead(
+    lead,
+  )
+  expect(affectedRows).toBeTruthy()
   const res = await request
     .get("/leads/sold")
     .set({
       cookie: "token=" + token,
     })
     .send({
-      filters: [["name", "testlead"]]
+      filters: [["name", "testlead"]],
     })
   expect(res.error).toBeFalsy()
   const [record] = res.body
-  expect(record.id).toBe(lead_id)
+  expect(record.id).toBe(insertId)
 })
 
 test("getting my bought_leads should work", async () => {
@@ -57,7 +62,7 @@ test("getting my bought_leads should work", async () => {
       cookie: "token=" + token,
     })
     .send({
-      filters: [["name", "testlead"]]
+      filters: [["name", "testlead"]],
     })
   expect(res.error).toBeFalsy()
   const [record] = res.body
@@ -96,15 +101,15 @@ test("getting my leads at order should work", async () => {
     })
     .send({ lead: lead2 })
   expect(result2.error).toBeFalsy()
-  
+
   const res = await request
     .get("/leads/my")
     .set({
       cookie: "token=" + token,
     })
     .send({
-      sort_by: ["date", 'ASC'],
-      filters: [["name", "testlead"]]
+      sort_by: ["date", "ASC"],
+      filters: [["name", "testlead"]],
     })
   expect(res.error).toBeFalsy()
   const [record1, record2] = res.body
@@ -116,8 +121,8 @@ test("getting my leads at order should work", async () => {
       cookie: "token=" + token,
     })
     .send({
-      sort_by: ["date", 'DESC'],
-      filters: [["name", "testlead"]]
+      sort_by: ["date", "DESC"],
+      filters: [["name", "testlead"]],
     })
   expect(res2.error).toBeFalsy()
   const [record3, record4] = res.body
@@ -133,7 +138,7 @@ test("adding a bad lead should return error to client", async () => {
     date: 2929, // this date will be invalid on mysql server
     name: "test lead that should fail 100%",
     phone: "2",
-    email: 'test@test.test',
+    email: "test@test.test",
     bought_from: null,
   }
   const result = await request
@@ -144,7 +149,6 @@ test("adding a bad lead should return error to client", async () => {
     .send({ lead })
   expect(result.error).toBeTruthy()
 })
-
 
 test("adding a lead should fail without email", async () => {
   var { user, token } = await ValidatedUserForTests.create({
@@ -165,7 +169,7 @@ test("adding a lead should fail without email", async () => {
     })
     .send({ lead })
   expect(result.error).toBeTruthy()
-  expect(result.body.error).toBe('email not valid')
+  expect(result.body.error).toBe("email not valid")
 })
 
 test("adding a lead should fail without token", async () => {
@@ -179,9 +183,7 @@ test("adding a lead should fail without token", async () => {
     email: "moshe@moshe.com",
     bought_from: null,
   }
-  const results = await request
-    .post("/leads/add")
-    .send({ lead })
+  const results = await request.post("/leads/add").send({ lead })
   expect(results.error).toBeTruthy()
 })
 
@@ -195,7 +197,7 @@ test("adding a lead should success with data A", async () => {
     phone: "2",
     email: "moshe@moshe.com",
     bought_from: null,
-    owner_id: 3
+    owner_id: 3,
   }
   const result = await request
     .post("/leads/add")
@@ -203,6 +205,6 @@ test("adding a lead should success with data A", async () => {
       cookie: "token=" + token,
     })
     .send({ lead })
-  const [done, insertId] = result.body.response
-  expect(done).toBeTruthy()
+  const { affectedRows, insertId } = result.body.response
+  expect(affectedRows).toBeTruthy()
 })

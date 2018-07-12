@@ -39,7 +39,7 @@ export default class Auth {
         pool: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
         length: 8,
       })
-      await this.models.users.update(user.id, {
+      await this.models.users.updateUser(user.id, {
         password: new_password,
       })
       var str = emailCreator.forgotPassword(user, new_password)
@@ -83,7 +83,7 @@ export default class Auth {
           provider_id: provider_id,
           provider: provider,
         }
-        await this.models.users.update(user.id, update)
+        await this.models.users.updateUser(user.id, update)
         return this.login(user.id)
       }
     } else {
@@ -103,7 +103,7 @@ export default class Auth {
         },
       )
       if (Object.keys(update).length) {
-        await this.models.users.update(user.id, update)
+        await this.models.users.updateUser(user.id, update)
       }
       return this.login(user.id)
     }
@@ -140,7 +140,7 @@ export default class Auth {
     const { emailConfirmationKey } = user
     var str = emailCreator.confirmEmail(user, emailConfirmationKey)
     await emailSender.send(str)
-    return users.update(user.id, { emailConfirmationKey })
+    return users.updateUser(user.id, { emailConfirmationKey })
   }
 
   async completeProfile(user_id, completeProfile: ICompleteProfile) {
@@ -149,7 +149,7 @@ export default class Auth {
     if (!company) throw new Error("Company not valid")
     if (!phone) throw new Error("Phone not valid")
     if (!country) throw new Error("Country not valid")
-    return users.update(user_id, {
+    return users.updateUser(user_id, {
       company,
       phone,
       country,
@@ -165,7 +165,7 @@ export default class Auth {
     if (user instanceof NotFound) {
       return { ok: false }
     } else {
-      await users.update(user.id, {
+      await users.updateUser(user.id, {
         disabled: disabledReason.PROFILE_NOT_COMPLETED,
       })
       var token = userAuth.generateJWT(

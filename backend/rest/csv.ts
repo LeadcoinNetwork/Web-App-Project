@@ -89,11 +89,11 @@ async function mapper(req, res, next) {
       if (insert_params["ext_data"]) {
         insert_params["ext_data"] = JSON.stringify(insert_params["ext_data"])
       }
-      return leads.
-      (insert_params).then(() => {
-        lead.processed = true
-        leads_upload.update(lead)
-      })
+      // return leads.
+      // (insert_params).then(() => {
+      //   lead.processed = true
+      //   leads_upload.update(lead)
+      // })
     })
     Promise.all(lead_promises)
       .then(results => {

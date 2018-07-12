@@ -13,7 +13,7 @@ beforeEach(async () => {
 
 import NotFound from "../../utils/not-found"
 
-test.skip("delete lead - insert, delete and then test cannot find lead after deleted", async () => {
+test("delete lead - insert, delete and then test cannot find lead after deleted", async () => {
   const status = await leads.insertLead({
     date: 1212,
     owner_id: 1,
@@ -55,7 +55,7 @@ const add_leads = async count => {
       email: "moshe@moshe.com",
       active: true,
       price: 0,
-      bought_currency: null,
+      bought_currency: "USD",
       bought_from: null,
     })
     if (status.affectedRows) rc.push(status.insertId)
@@ -66,7 +66,8 @@ const add_leads = async count => {
 test.skip("buying leads should work", async () => {
   const new_ids = await add_leads(10)
   expect(new_ids.length).toBeTruthy()
-  leads.buy(new_ids, 666)
+  const res = await leads.buy(new_ids, 666)
+  console.log(res)
   const record: Lead[] = await leads.findLeads({
     condition: {
       owner_id: 666,
@@ -80,7 +81,7 @@ test.skip("buying leads should work", async () => {
   expect(record.pop().owner_id).toBe(666)
 })
 
-test.skip("paging and limit should work", async () => {
+test("paging and limit should work", async () => {
   const done = await add_leads(50)
   expect(done.length).toBeTruthy()
   const records1: Lead[] = await leads.findLeads({
@@ -88,8 +89,8 @@ test.skip("paging and limit should work", async () => {
       email: "moshe@moshe.com",
     },
     limit: {
-      start: 20,
-      offset: 0,
+      start: 0,
+      offset: 20,
     },
   })
   expect(records1.length).toBe(20)
@@ -100,7 +101,7 @@ test.skip("paging and limit should work", async () => {
     },
     limit: {
       start: 20,
-      offset: 1,
+      offset: 20,
     },
   })
   expect(records2.length).toBe(20)
@@ -110,15 +111,15 @@ test.skip("paging and limit should work", async () => {
       email: "moshe@moshe.com",
     },
     limit: {
-      start: 20,
-      offset: 2,
+      start: 40,
+      offset: 20,
     },
   })
   expect(records3.length).toBe(10)
   expect(records3.pop().owner_id).toBe(50)
 })
 
-test.skip("add new lead", async () => {
+test("add new lead", async () => {
   const success = await leads.insertLead({
     date: 1212,
     owner_id: 1,
@@ -184,7 +185,7 @@ test("find lead", async () => {
   expect(record5.name).toBe("test lead")
 })
 
-test.skip("delete lead", async () => {
+test("delete lead", async () => {
   await leads.insertLead({
     date: 1212,
     owner_id: 1,

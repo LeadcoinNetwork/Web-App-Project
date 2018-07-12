@@ -8,8 +8,9 @@
     "paths": {
       "@/*": ["*"]
     },
+    "outDir": "./dist",
     "sourceMap": true
   },
-  "include": ["./../frontend/src/api/**.*"],
-  "exclude": ["node_modules", "**/node_modules/*"]
+  "include": ["./../frontend/src/api/**.*", "./*.*"],
+  "exclude": ["node_modules", "**/node_modules/*", "./dist"]
 }

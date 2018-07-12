@@ -16,7 +16,7 @@ import {
   ExistingUserInterfaceCondition,
 } from "./types"
 
-import baseDBModel from "../base-db-model"
+import baseDBModel from "../base-db-model/base-db-model"
 class User extends baseDBModel<
   NewUserInterface,
   ExistingUserInterface,
@@ -26,9 +26,14 @@ class User extends baseDBModel<
     super(sql, "users")
   }
 
-  public async getOne({
+  public async tryGetById(id): Promise<ExistingUserInterface | NotFound> {
+    let user = await this.getOne(<any>{ id }) // 'any' becuase ICondition it's a generic interface.
+    return user
+  }
+
+  public async getOne(
     condition: ExistingUserInterfaceCondition,
-  }): Promise<IExisting | NotFound> {
+  ): Promise<ExistingUserInterface | NotFound> {
     var result = await this.find({ condition })
     if (result.length != 1) {
       return new NotFound()
@@ -85,7 +90,7 @@ class User extends baseDBModel<
     email,
     password,
   ): Promise<ExistingUserInterface | NotFound> {
-    let user = await this.getOne({ condition: { email } })
+    let user = await this.getOne({ email })
     if (user instanceof NotFound) {
       return new NotFound()
     }
