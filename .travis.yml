@@ -12,8 +12,7 @@ before_install:
 - chmod 400 deploy_rsa
 - chmod o+x scripts/*.sh
 script:
-- scripts/local-frontend-build.sh
-- scripts/local-build-docker.sh
+- scripts/build.sh
 deploy:
 - provider: script
 - script: bash scripts/deploy.sh
