@@ -25,7 +25,7 @@ const LeadsResults = ({
     </label>
     <div className="lr-results-head">
       <label className="lr-results-count">
-        {leads.list.length} of {leads.total} results
+        {leads.list.length} of {leads.total} leads
       </label>
       <Select>
         <option>Sort By</option>
