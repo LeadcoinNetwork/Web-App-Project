@@ -1,5 +1,6 @@
 import React from "react"
 import Button from "Components/Button"
+import Select from "Components/Select"
 import withInfiniteScroll from "HOC/withInfiniteScroll"
 
 const LeadsResults = ({
@@ -26,11 +27,11 @@ const LeadsResults = ({
       <label className="lr-results-count">
         {leads.list.length} of {leads.total} results
       </label>
-      <select>
+      <Select>
         <option>Sort By</option>
         <option>size</option>
         <option>budget</option>
-      </select>
+      </Select>
     </div>
     <div className="lr-main">{leads.list.map(l => render(l))}</div>
   </section>

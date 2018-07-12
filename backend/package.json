@@ -63,10 +63,7 @@
     "ts-node": "^6.0.3"
   },
   "jest": {
-    "testMatch": [
-      "**/*.test.js",
-      "**/*.test.ts"
-    ],
+    "testMatch": ["**/*.test.js", "**/*.test.ts"],
     "globals": {
       "ts-jest": {
         "tsConfigFile": "tsconfig.json"
@@ -76,11 +73,7 @@
       "^@/(.*)": "<rootDir>/$1"
     },
     "bail": true,
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
+    "moduleFileExtensions": ["ts", "tsx", "js"],
     "transform": {
       "^.+\\.(ts|tsx)$": "ts-jest"
     }
@@ -94,9 +87,7 @@
     "precommit": "pretty-quick --staged"
   },
   "nodemonConfig": {
-    "ignore": [
-      "upload/*"
-    ]
+    "ignore": ["upload/*"]
   },
   "bugs": {
     "url": "https://github.com/LeadcoinNetwork/leadcoin-web/issues"

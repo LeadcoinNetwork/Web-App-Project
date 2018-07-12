@@ -22,11 +22,12 @@ section.ldc-leads-results {
     height: 80px;
     line-height: 80px;
 
-    select {
+    select.ldc-select {
       position: absolute;
       right: 0;
       top: 50%;
       transform: translateY(-50%);
+      max-width: 150px;
     }
   }
 
