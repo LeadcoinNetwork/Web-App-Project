@@ -111,6 +111,7 @@ class CSVMapping extends React.Component {
             {terms}
             <div>
               <Button
+                appStyle
                 onClick={() => {
                   this.props.submit(this.props.fields_map)
                 }}
@@ -119,7 +120,8 @@ class CSVMapping extends React.Component {
             </div>
             <div>
               <Button
-                appStyle={true}
+                appStyle
+                secondary
                 onClick={() => {
                   this.props.clear()
                 }}

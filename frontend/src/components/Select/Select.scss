@@ -1,0 +1,29 @@
+@import "~Styles/variables";
+
+.ldc-select {
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-block;
+  padding: 0 12px;
+  width: 100%;
+  height: 40px;
+  outline: none;
+  border-radius: 0;
+  border: solid 1px $bg-level-3;
+  font-weight: 300;
+  background-color: transparent;
+  color: white;
+  font-size: 14px;
+
+  &:before {
+    content: "sdf";
+  }
+}
+
+@media (max-width: $screen-tablets) {
+  .ldc-select {
+    height: 60px;
+    font-size: 18px;
+    padding: 0 16px;
+  }
+}

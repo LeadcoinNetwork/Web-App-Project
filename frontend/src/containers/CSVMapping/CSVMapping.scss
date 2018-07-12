@@ -10,7 +10,7 @@
     padding-top: 10px;
   }
   .controls {
-    margin: 5px;
+    margin: 20px;
   }
   .help_text {
     width: 200px;
@@ -22,25 +22,22 @@
     }
   }
   .line {
-    margin: 5px 10px;
-    height: 30px;
-    line-height: 30px;
+    margin: 20px 10px;
+    height: 40px;
+    line-height: 40px;
+
     .fieldLabel {
       width: 100px;
       margin-right: 5px;
       text-transform: capitalize;
     }
-    .ldc-select {
-      background-color: #180852;
-      color: white;
-    }
   }
   .price {
+    margin-left: 10px;
+    input {
       margin-left: 10px;
-      input {
-        margin-left: 10px;
-        width: 150px;
-      }
+      width: 150px;
+    }
   }
   .flexed {
     display: flex;
