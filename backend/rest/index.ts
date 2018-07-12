@@ -5,7 +5,7 @@ import { Express as ExpressInterface } from "express"
 import * as cookieParser from "cookie-parser"
 import * as http from "http"
 
-import {exec} from 'child_process'
+import { exec } from "child_process"
 
 // Routes
 import * as _404 from "./404"
@@ -75,11 +75,11 @@ export default class RestServer {
     leads.start({ appLogic, expressApp })
     // TODO csv
 
-    expressApp.route('/health').get((req, res) => {
+    expressApp.route("/health").get((req, res) => {
       exec("git log -1", (e, output, stderror) => {
         if (e) return res.json(e)
         res.status(200)
-        res.send({git:output})
+        res.send({ git: output })
       })
     })
 
