@@ -16,7 +16,7 @@ module.exports = merge(common, {
       colors: true,
       env: true,
     },
-    port: process.env.RTL ? process.env.PORT_RTL : process.env.PORT,
+    port: process.env.PORT,
     host: "0.0.0.0",
     disableHostCheck: true,
   },
