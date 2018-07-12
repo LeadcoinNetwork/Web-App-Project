@@ -33,7 +33,6 @@ export default {
     ja: "日付",
     zh: "日期",
     ko: "날짜",
-    
   },
   name: {
     en: "name",
@@ -359,11 +358,17 @@ export default {
   },
   "Start Now": {
     en: "Start Now",
-    he: "התחל/י",
+    he: "הרשמה",
+    ja: "今すぐ開始",
+    zh: "立刻开始",
+    ko: "지금 시작",
   },
   "don't have an account?": {
     en: "don't have an account?",
     he: "אין לך חשבון?",
+    ja: "アカウントをお持ちでない場合?",
+    zh: "没有账户？",
+    ko: "계정이 없으신가요?",
   },
   "Login Here": {
     en: "Login Here",
@@ -407,12 +412,34 @@ export default {
     zh: "忘记您的密码？",
     ko: "비밀번호를 잊으셨나요?",
   },
+  "LeadCoin is the promised land for marketers": {
+    en: "LeadCoin is the promised land for marketers",
+    he: "LeadCoin הינה ההבטחה לכל המשווקים",
+  },
+  "Collaborating with other marketers & sharing leads is 10X more effcient than giving away my budget to Google & Facebook.": {
+    en:
+      "Collaborating with other marketers & sharing leads is 10X more effcient than giving away my budget to Google & Facebook.",
+    he:
+      "שיתוף הפעולה בין משווקים ושיתוף לִידים הוא X10 יותר אפקטיבי מאשר תשלום לגוגל ופייסבוק. ",
+  },
+  "Meir Cohen": {
+    en: "Meir Cohen",
+    he: "מאיר כהן",
+  },
+  "CEO of Crypto": {
+    en: "CEO of Crypto",
+    he: 'מנכ"ל Crypto',
+  },
   "Enter the email address associated with your account, and we’ll email you a link to reset your password.": {
-    en: "Enter the email address associated with your account, and we’ll email you a link to reset your password.",
-    he: "נא להכניס את כתובת האימייל המקושרת לחשבון שלך, אנו נשלח לכתובת קישור לאיפוס הסיסמה.",
-    ja: "アカウントに登録されたEメールアドレスを入力してください。パスワードをリセットするリンクをお送りします。",
+    en:
+      "Enter the email address associated with your account, and we’ll email you a link to reset your password.",
+    he:
+      "נא להכניס את כתובת האימייל המקושרת לחשבון שלך, אנו נשלח לכתובת קישור לאיפוס הסיסמה.",
+    ja:
+      "アカウントに登録されたEメールアドレスを入力してください。パスワードをリセットするリンクをお送りします。",
     zh: "输入与您的帐户关联的电子邮件地址，我们将给您发送一个重设密码的链接。",
-    ko: "계정과 연결된 이메일 주소를 입력하시면, 비밀번호 재설정 링크를 받게 됩니다.",
+    ko:
+      "계정과 연결된 이메일 주소를 입력하시면, 비밀번호 재설정 링크를 받게 됩니다.",
   },
   Email: {
     en: "Email",
@@ -431,16 +458,16 @@ export default {
   "move ": {
     en: "move ",
     he: "העבר ",
-    ja: "移動",
-    zh: "移动",
-    ko: "이동하기",
+    ja: "移動 ",
+    zh: "移动 ",
+    ko: "이동하기 ",
   },
   " leads to sell": {
     en: " leads to sell",
     he: " לִידים למכירה",
-    ja: "販売するリード",
-    zh: "待出售的潜在客户",
-    ko: "판매할 리드",
+    ja: " 販売するリード",
+    zh: " 待出售的潜在客户",
+    ko: " 판매할 리드",
   },
   "move lead to sell": {
     en: "move lead to sell",
@@ -452,10 +479,16 @@ export default {
   "move leads to sell": {
     en: "move leads to sell",
     he: "העבר לִידים למכירה",
+    ja: "リードを移動して販売",
+    zh: "移动潜在客户以出售",
+    ko: "리드를 판매하려면 이동하세요",
   },
   "move to sell": {
     en: "move to sell",
     he: "העבר למכירה",
+    ja: "移動して販売",
+    zh: "移动以出售",
+    ko: "판매하려면 이동하세요",
   },
   "My Leads": {
     en: "My Leads",
@@ -607,6 +640,9 @@ export default {
   register: {
     en: "register",
     he: "הרשמה",
+    ja: "登録",
+    zh: "注册",
+    ko: "등록",
   },
   "Logged in as:": {
     en: "Logged in as:",
@@ -671,11 +707,47 @@ export default {
     zh: "确认新密码",
     ko: "새 비밀번호 확정",
   },
-  "submit": {
+  submit: {
     en: "submit",
     he: "שלח",
     ja: "送信",
     zh: "提交",
     ko: "제출하기",
+  },
+  "Total balance: ": {
+    en: "Total balance: ",
+    he: 'סה"כ יתרה: ',
+  },
+  "Balance available to withdraw: ": {
+    en: "Balance available to withdraw: ",
+    he: "יתרה פנויה למשיכה: ",
+  },
+  "To withdraw your funds please enter your PayPal email address": {
+    en: "To withdraw your funds please enter your PayPal email address",
+    he: 'למשיכת הכספים נא להכנים את כתובת הדוא"ל המשוייכת לחשבון הPayPal שלך',
+  },
+  "Enter PayPal Email": {
+    en: "Enter PayPal Email",
+    he: 'הכנס דוא"ל המשויך ל PayPal',
+  },
+  "Switch to": {
+    en: "Switch to",
+    he: "החלף ל",
+  },
+  "Sort By": {
+    en: "Sort By",
+    he: "מיין לפי",
+  },
+  "check all": {
+    en: "check all",
+    he: "בחר הכל",
+  },
+  "uncheck all": {
+    en: "uncheck all",
+    he: "בטל בחירה",
+  },
+  of: {
+    en: "of",
+    he: "בטל בחירה",
   },
 }
