@@ -1,2 +1,2 @@
-rm -r ~/dist
-rm -r ~/storybook-build
+sudo rm -r ~/dist
+sudo rm -r ~/storybook-build

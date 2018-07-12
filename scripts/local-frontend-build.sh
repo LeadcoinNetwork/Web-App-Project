@@ -1,4 +1,4 @@
 cd frontend
-npm i > dev/null
-npm run build > dev/null
-npm run storybook:build > dev/null
+sudo npm i > dev/null
+sudo npm run build > dev/null
+sudo npm run storybook:build > dev/null

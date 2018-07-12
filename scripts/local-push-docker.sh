@@ -1,1 +1,1 @@
-docker push leadcoin/leadcoin
+sudo docker push leadcoin/leadcoin
