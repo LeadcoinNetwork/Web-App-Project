@@ -1,3 +1,4 @@
+set -e
 sudo docker ps
 sudo docker pull leadcoin/leadcoin
 sudo docker stop backend && sudo docker rm backend

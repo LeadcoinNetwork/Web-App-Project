@@ -20,6 +20,7 @@ after_success:
 - ssh -l build b.leadcoin.network -i deploy_rsa -o stricthostkeychecking=no "bash -s" < scripts/remote-docker-pull-restart.sh
 - ssh -l build b.leadcoin.network -i deploy_rsa -o stricthostkeychecking=no "bash -s" < scripts/remote-remove-old-frontend.sh
 - scripts/local-copy-new-frontend.sh
+- scripts/try-delete-old-dockers.sh
 - echo "finish"
 cache:
   directories:
@@ -27,3 +28,4 @@ cache:
   - backend/node_modules
   - node_modules
   - "/home/travis/.npm"
+  - "/var/lib/docker
