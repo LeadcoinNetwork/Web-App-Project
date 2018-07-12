@@ -8,7 +8,7 @@
     "paths": {
       "@/*": ["*"]
     },
-    "outDir": "./dist",
+    "outDir": "./temp-outdir",
     "sourceMap": true
   },
   "include": ["./../frontend/src/api/**.*", "./*.*"],
