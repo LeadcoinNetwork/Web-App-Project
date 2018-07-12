@@ -27,6 +27,7 @@ const store = createStore(
   createReducer(),
   composeWithDevTools(applyMiddleware(ROUTER_MIDDLEWARE, sagaMiddleware)),
 )
+
 var sagaTask = sagaMiddleware.run(rootSaga)
 
 import { hot } from "react-hot-loader"
