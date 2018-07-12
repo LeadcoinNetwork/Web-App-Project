@@ -1,5 +1,4 @@
-import Currency from "@/utils/currency.ts"
-import { currency } from "../../utils/currency"
+import { Currency } from "../../utils/currency"
 
 export interface LeadQueryOptions {
   id?: number

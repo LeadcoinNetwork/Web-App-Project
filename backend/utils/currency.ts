@@ -1,1 +1,1 @@
-export type currency = "ILS" | "USD" | "LDC"
+export type Currency = "ILS" | "USD" | "LDC"
