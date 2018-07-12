@@ -8,3 +8,4 @@ npm run build > /dev/null
 echo 'Start NPM run storyboook:build in frontend'
 npm run storybook:build > /dev/null
 echo 'finish local-frontend-build'
+cd ..

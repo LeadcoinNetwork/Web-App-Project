@@ -41,7 +41,7 @@ export default function* rootSaga() {
     completeRegistration,
     emailConfirmation,
     logout,
-    sellLeads,
+    // sellLeads,
     boughtLeads,
     myLeads,
     homesaga,

@@ -51,7 +51,7 @@ function allowedLogedIn(path) {
   return !allowedAnon(path)
 }
 
-window.SHOW_REDIRECT_LOGS = true
+window.SHOW_REDIRECT_LOGS = false
 function log() {
   if (window.SHOW_REDIRECT_LOGS) {
     console.log.apply(console, arguments)
