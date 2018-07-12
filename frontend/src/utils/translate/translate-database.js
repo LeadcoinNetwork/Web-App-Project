@@ -414,13 +414,13 @@ export default {
   },
   "LeadCoin is the promised land for marketers": {
     en: "LeadCoin is the promised land for marketers",
-    he: "LeadCoin הינה ההבטחה לכל המשווקים",
+    he: "LeadCoin הינה הארץ המובטחת למשווקים",
   },
   "Collaborating with other marketers & sharing leads is 10X more effcient than giving away my budget to Google & Facebook.": {
     en:
       "Collaborating with other marketers & sharing leads is 10X more effcient than giving away my budget to Google & Facebook.",
     he:
-      "שיתוף הפעולה בין משווקים ושיתוף לִידים הוא X10 יותר אפקטיבי מאשר תשלום לגוגל ופייסבוק. ",
+      "שיתוף פעולה בין משווקים ושיתוף לִידים הוא אפקטיבי עשרות מונים יותר מאשר תשלום לגוגל ופייסבוק. ",
   },
   "Meir Cohen": {
     en: "Meir Cohen",
