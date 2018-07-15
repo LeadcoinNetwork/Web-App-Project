@@ -13,6 +13,7 @@ export interface BaseUserInterface {
 export interface ExistingUserInterface extends BaseUserInterface {
   password: string
   id: number
+  emailConfirmationKey: string
   disabled: disabledReason
   created: number
 }

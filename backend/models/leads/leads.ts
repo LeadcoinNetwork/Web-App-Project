@@ -129,23 +129,23 @@ export default class Leads extends baseDBModel<
 
   async addWithNewOwner(lead_id: number, new_owner: number) {
     const lead = await this.getById(lead_id)
-    lead.bought_from = lead.owner_id
-    lead.bought_currency = lead.currency
-    lead.owner_id = new_owner
-    const _id = await this.insert(lead)
+    const new_lead = Object.assign(lead, {
+      bought_from: lead.owner_id,
+      bought_currency: lead.currency,
+      owner_id: new_owner,
+    })
+    const _id = await this.insert(new_lead)
     return _id
   }
 
   async buy(leads: number[], new_owner: number) {
-    // try to make leads inactive, in case of race condition
-    const inactive_leads = await leads.filter(async l_id => {
-      return await this.update(l_id, { active: false })
-    })
-
-    // insert the leads as new after a change ownership
-    return inactive_leads.map(async (l_id: number) => {
-      return await this.addWithNewOwner(l_id, new_owner)
-    })
+    const inactive_leads = await leads
+      .filter(async l_id => {
+        return await this.update(l_id, { active: false })
+      })
+      .map(async (l_id: number) => {
+        return await this.addWithNewOwner(l_id, new_owner)
+      })
   }
 
   async getById(id: number): Promise<Lead> {
