@@ -1,28 +1,19 @@
 import React from "react"
 import { connect } from "react-redux"
-import Table from "Components/Table"
-import { leads } from "../../actions"
-import { Link } from "react-router-dom"
+import { leads } from "Actions"
+import LeadsTemplate from "Containers/LeadsTemplate"
 import t from "../../utils/translate/translate"
 
-class Sell extends React.Component {
-  constructor(props) {
-    super(props)
-
-    leads.getLeads(props.dispatch)
-  }
+class SellLeads extends React.Component {
   sellLeads = () => {
     console.log(Array.from(this.props.leads.selected))
   }
   sellLead = id => {
     console.log([id])
   }
-  onScrollBottom = cb => {
-    let { dispatch, leads } = this.props
+  buildButtonLabel = () => {
+    let amount = this.props.leads.selected.size
 
-    getLeads(dispatch, cb, leads.page + 1)
-  }
-  buildButtonLabel = amount => {
     if (amount > 1) {
       return t("sell ") + amount + t(" leads")
     } else if (amount === 1) {
@@ -31,21 +22,27 @@ class Sell extends React.Component {
       return t("sell leads")
     }
   }
+  getListButtons = () => {
+    return [
+      {
+        value: this.buildButtonLabel(),
+        onClick: this.buyLeads,
+        actionPerSelected: true,
+      },
+    ]
+  }
+  getLeadButtons = () => {
+    return [
+      {
+        value: t("sell"),
+        onClick: this.buyLead,
+      },
+    ]
+  }
   getButtons = amountSelected => {
     return {
-      table: [
-        {
-          value: this.buildButtonLabel(amountSelected),
-          onClick: this.sellLeads,
-          actionPerSelected: true,
-        },
-      ],
-      record: [
-        {
-          value: t("sell"),
-          onClick: this.sellLead,
-        },
-      ],
+      table: this.getListButtons(),
+      record: this.getLeadButtons(),
     }
   }
   setSelectedRecords = selectedLeads => {
@@ -53,22 +50,14 @@ class Sell extends React.Component {
   }
   render() {
     return (
-      <>
-        <Link to="/add-lead">{t("Boom")}</Link>
-        <h1>{t("Sell Leads")}</h1>
-        <Table
-          fields={this.props.fields.map(field => ({
-            ...field,
-            name: t(field.name),
-          }))}
-          records={this.props.leads.list}
-          buttons={this.getButtons(this.props.leads.selected.size)}
-          setSelectedRecords={this.setSelectedRecords}
-          onScrollBottom={this.onScrollBottom}
-          selected={this.props.leads.selected}
-          isSelectable={true}
-        />
-      </>
+      <LeadsTemplate
+        {...this.props}
+        pageTitle="sell leads"
+        pageClassName="ldc-sell-leads"
+        getListButtons={this.getListButtons}
+        getLeadButtons={this.getLeadButtons}
+        getButtons={this.getButtons}
+      />
     )
   }
 }
@@ -78,4 +67,8 @@ const mapStateToProps = state => ({
   fields: state.fields,
 })
 
-export default connect(mapStateToProps)(Sell)
+export default connect(mapStateToProps, {
+  fetchLeads: (...params) => leads.fetchLeads("SELL_LEADS", ...params),
+  setSelectedLeads: selectedLeads =>
+    leads.setSelectedLeads("SELL_LEADS", selectedLeads),
+})(SellLeads)
