@@ -4,7 +4,7 @@ import Table from "Components/Table"
 import { leads } from "../../actions"
 import t from "../../utils/translate/translate"
 
-class My extends React.Component {
+class MyLeads extends React.Component {
   constructor(props) {
     super(props)
 
@@ -76,4 +76,4 @@ const mapStateToProps = state => ({
   fields: state.fields,
 })
 
-export default connect(mapStateToProps)(My)
+export default connect(mapStateToProps)(MyLeads)
