@@ -2,6 +2,7 @@
 const mysql = require("promise-mysql")
 
 import { IConfig } from "../../app-logic/config"
+import LogModelAction from "../log-model-actions/log-model-actions"
 
 interface queryResult extends Array<any> {
   insertId?: number
@@ -9,6 +10,7 @@ interface queryResult extends Array<any> {
 }
 
 export default class SQL {
+  private log = LogModelAction("sql")
   private pool
   constructor(private config: IConfig) {
     this.pool = mysql.createPool(config.mysql)
@@ -19,8 +21,15 @@ export default class SQL {
     var result = this.pool.query.apply(this.pool, arguments)
     return result
   }
-  public query(...args): queryResult {
-    var result = this.pool.query.apply(this.pool, arguments)
+  public async query(...args): Promise<queryResult> {
+    var query = mysql.format(...args)
+    try {
+      var result = await this.pool.query(query)
+    } catch (err) {
+      this.log("query", { error: err.message, query })
+      throw err
+    }
+    this.log("query", { query, result })
     return result
   }
   private async checkdb() {

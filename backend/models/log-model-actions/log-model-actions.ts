@@ -1,8 +1,11 @@
 /**
  * Log everything with context.
  * Based on https://www.owasp.org/index.php/Logging_Cheat_Sheet
+ *
+ * Using process.env.FORCE_LOG
  */
 var chalk = require("chalk")
+require("dotenv").config() // Add support to show logs
 var i = 0
 declare var Zone: any
 if (process.env.NODE_ENV != "test") {
@@ -19,7 +22,7 @@ export default function LogModelAction(model, action?, data?) {
     // In case Zone not working...
     id = "#"
   }
-  if (process.env.NODE_ENV == "test" && !!process.env.FORCE_LOG) {
+  if (process.env.NODE_ENV == "test" && !process.env.FORCE_LOG) {
     return
   }
   if (action instanceof Error) {
@@ -53,7 +56,7 @@ export default function LogModelAction(model, action?, data?) {
  * Output to console the response.
  */
 export function expressMiddleware(req, res, next) {
-  if (process.env.NODE_ENV == "test" && !!process.env.FORCE_LOG) {
+  if (process.env.NODE_ENV == "test" && !process.env.FORCE_LOG) {
     return next()
   }
   var oldWrite = res.write,
