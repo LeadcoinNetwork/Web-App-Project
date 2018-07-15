@@ -16,7 +16,7 @@ before_install:
 - chmod o+x scripts/*.sh
 script:
 - scripts/build.sh
-- scripts/test-backend.sh
+- scripts/local-test-backend.sh
 after_success:
 - '[[ $TRAVIS_BRANCH == "production" ]] && [[ $TRAVIS_PULL_REQUEST == "false" ]] && scripts/deploy.sh'
 cache:
