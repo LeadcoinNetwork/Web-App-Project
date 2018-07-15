@@ -100,6 +100,7 @@ class Table extends React.Component {
               />
             ))}
         </div>
+        {props.renderFilters()}
         {props.renderResultsHead()}
         <div className="t-main">
           <THead

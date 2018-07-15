@@ -2,6 +2,7 @@ import React from "react"
 import Table from "Components/Table"
 import LeadsResults from "Components/LeadsResults"
 import Select from "Components/Select"
+import TextField from "Components/TextField"
 import t from "../../utils/translate/translate"
 import RealEstateLead from "Components/RealEstateLead"
 import ResultsModeContext from "Containers/App/ResultsModeContext"
@@ -37,6 +38,23 @@ class LeadsTemplate extends React.Component {
     }
 
     setSelectedLeads(selected)
+  }
+  renderFilters = () => {
+    return (
+      <div className="lt-filters">
+        <Select>
+          <option>City</option>
+          <option>new york</option>
+          <option>tel aviv</option>
+        </Select>
+        <Select>
+          <option>Type</option>
+          <option>roof</option>
+          <option>garden</option>
+        </Select>
+        <TextField placeholder="Search here" appStyle />
+      </div>
+    )
   }
   renderResultsHead = () => {
     let { leads } = this.props
@@ -79,6 +97,7 @@ class LeadsTemplate extends React.Component {
                   loading={leads.loading}
                   onScrollBottom={this.onScrollBottom}
                   toggleAll={this.toggleAll}
+                  renderFilters={this.renderFilters}
                   renderResultsHead={this.renderResultsHead}
                   renderLead={lead => (
                     <RealEstateLead
@@ -98,6 +117,7 @@ class LeadsTemplate extends React.Component {
                   }))}
                   loading={leads.loading}
                   onScrollBottom={this.onScrollBottom}
+                  renderFilters={this.renderFilters}
                   renderResultsHead={this.renderResultsHead}
                   records={leads.list}
                   buttons={this.props.getButtons()}

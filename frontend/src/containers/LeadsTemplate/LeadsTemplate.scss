@@ -1,6 +1,16 @@
 @import "~Styles/variables";
 
 .ldc-leads-template {
+  .lt-filters {
+    margin-top: 30px;
+
+    select.ldc-select,
+    input.ldc-textfield {
+      max-width: 150px;
+      margin-right: 20px;
+    }
+  }
+
   .lt-results-head {
     position: relative;
     font-size: 16px;

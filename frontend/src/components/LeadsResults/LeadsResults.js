@@ -7,6 +7,7 @@ import t from "../../utils/translate/translate"
 const LeadsResults = ({
   leads,
   renderLead,
+  renderFilters,
   renderResultsHead,
   buttons,
   isNotAllSelected,
@@ -25,6 +26,7 @@ const LeadsResults = ({
     <label className="lr-check-all" onClick={toggleAll}>
       {isNotAllSelected ? t("check all") : t("uncheck all")}
     </label>
+    {renderFilters()}
     {renderResultsHead()}
     <div className="lr-main">{leads.list.map(l => renderLead(l))}</div>
   </section>
