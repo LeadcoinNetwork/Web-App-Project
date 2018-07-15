@@ -6,7 +6,8 @@ import t from "../../utils/translate/translate"
 
 const LeadsResults = ({
   leads,
-  render,
+  renderLead,
+  renderResultsHead,
   buttons,
   isNotAllSelected,
   toggleAll,
@@ -24,17 +25,8 @@ const LeadsResults = ({
     <label className="lr-check-all" onClick={toggleAll}>
       {isNotAllSelected ? t("check all") : t("uncheck all")}
     </label>
-    <div className="lr-results-head">
-      <label className="lr-results-count">
-        {leads.list.length} {t("of")} {leads.total} {t("leads")}
-      </label>
-      <Select>
-        <option>{t("Sort By")}</option>
-        <option>{t("size")}</option>
-        <option>{t("budget")}</option>
-      </Select>
-    </div>
-    <div className="lr-main">{leads.list.map(l => render(l))}</div>
+    {renderResultsHead()}
+    <div className="lr-main">{leads.list.map(l => renderLead(l))}</div>
   </section>
 )
 

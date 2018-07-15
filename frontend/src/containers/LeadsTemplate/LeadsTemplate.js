@@ -55,16 +55,6 @@ class LeadsTemplate extends React.Component {
             <section className={pageClassName}>
               <SwitchResultsMode />
               <h1>{t(pageTitle)}</h1>
-              <div className="lt-results-head">
-                <label className="ltrh-count">
-                  {leads.list.length} {t("of")} {leads.total} {t("leads")}
-                </label>
-                <Select>
-                  <option>{t("Sort By")}</option>
-                  <option>{t("size")}</option>
-                  <option>{t("budget")}</option>
-                </Select>
-              </div>
               {cardsMode ? (
                 <LeadsResults
                   leads={leads}
@@ -73,7 +63,19 @@ class LeadsTemplate extends React.Component {
                   loading={leads.loading}
                   onScrollBottom={this.onScrollBottom}
                   toggleAll={this.toggleAll}
-                  render={lead => (
+                  renderResultsHead={() => (
+                    <div className="lt-results-head">
+                      <label className="ltrh-count">
+                        {leads.list.length} {t("of")} {leads.total} {t("leads")}
+                      </label>
+                      <Select>
+                        <option>{t("Sort By")}</option>
+                        <option>{t("size")}</option>
+                        <option>{t("budget")}</option>
+                      </Select>
+                    </div>
+                  )}
+                  renderLead={lead => (
                     <RealEstateLead
                       key={lead.id}
                       {...lead}
