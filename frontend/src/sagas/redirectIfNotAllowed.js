@@ -36,7 +36,6 @@ function everyone(path) {
 function allowedDisabled(path) {
   if (everyone(path)) return true
   return [
-    "/",
     "/email-confirmation",
     "/complete-registration",
     "/forgot-password",
@@ -48,6 +47,7 @@ function allowedAnon(path) {
 }
 function allowedLogedIn(path) {
   if (everyone(path)) return true
+  if (path == "/") return false
   return !allowedAnon(path)
 }
 
