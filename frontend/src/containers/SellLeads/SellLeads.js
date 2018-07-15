@@ -1,16 +1,10 @@
 import React from "react"
 import { connect } from "react-redux"
 import { leads } from "Actions"
-import { Link } from "react-router-dom"
 import LeadsTemplate from "Containers/LeadsTemplate"
 import t from "../../utils/translate/translate"
 
 class SellLeads extends React.Component {
-  constructor(props) {
-    super(props)
-
-    leads.getLeads(props.dispatch)
-  }
   sellLeads = () => {
     console.log(Array.from(this.props.leads.selected))
   }
@@ -81,5 +75,5 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   fetchLeads: (...params) => leads.fetchLeads("SELL_LEADS", ...params),
   setSelectedLeads: selectedLeads =>
-    leads.setSelectedLeads("BUY_LEADS", selectedLeads),
+    leads.setSelectedLeads("SELL_LEADS", selectedLeads),
 })(SellLeads)

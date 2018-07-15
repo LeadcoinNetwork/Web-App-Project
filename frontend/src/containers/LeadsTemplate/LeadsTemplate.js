@@ -6,7 +6,7 @@ import t from "../../utils/translate/translate"
 import RealEstateLead from "Components/RealEstateLead"
 import ResultsModeContext from "Containers/App/ResultsModeContext"
 import SwitchResultsMode from "Containers/SwitchResultsMode"
-import Link from "react-router-dom"
+import { Link } from "react-router-dom"
 
 class LeadsTemplate extends React.Component {
   onScrollBottom = () => {
