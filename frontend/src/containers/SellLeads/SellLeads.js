@@ -5,7 +5,7 @@ import { leads } from "../../actions"
 import { Link } from "react-router-dom"
 import t from "../../utils/translate/translate"
 
-class Sell extends React.Component {
+class SellLeads extends React.Component {
   constructor(props) {
     super(props)
 
@@ -78,4 +78,4 @@ const mapStateToProps = state => ({
   fields: state.fields,
 })
 
-export default connect(mapStateToProps)(Sell)
+export default connect(mapStateToProps)(SellLeads)
