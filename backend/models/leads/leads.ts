@@ -36,95 +36,22 @@ export default class Leads extends baseDBModel<
   public async findAndSort() {}
 
   public async getSoldLeads(user_id: number, options: LeadQueryOptions) {
-    const { filters } = options
-    let where_additions
-    if (filters) {
-      where_additions = filters
-        .map(f => {
-          return f[0] + ' LIKE "%' + escape(f[1]) + '%"'
-        })
-        .join(" AND ")
-    }
-    let query = `
-      SELECT *
-      FROM leads
-      WHERE bought_from = ${user_id}
-      AND active = 1
-    `
-    if (where_additions.length > 0) {
-      query += `AND ${where_additions};`
-      return await this.query(query)
-    }
+    return await this.leads.getSoldLeads(user_id, options)
   }
 
   public async getMyLeads(user_id: number, options: LeadQueryOptions) {
-    const { filters } = options
-    let where_additions
-    if (filters) {
-      where_additions = filters
-        .map(f => {
-          return f[0] + ' LIKE "%' + escape(f[1]) + '%"'
-        })
-        .join(" AND ")
-    }
-    let query = `
-      SELECT *
-      FROM leads
-      WHERE owner_id = ${user_id}
-      AND active = 1
-    `
-    if (where_additions.length > 0) {
-      query += `AND ${where_additions};`
-      return await this.query(query)
-    }
+    return await this.leads.getMyLeads(user_id, options)
   }
 
   public async getBoughtLeads(user_id: number, options: LeadQueryOptions) {
-    const { filters } = options
-    let where_additions
-    if (filters) {
-      where_additions = filters
-        .map(f => {
-          return f[0] + ' LIKE "%' + escape(f[1]) + '%"'
-        })
-        .join(" AND ")
-    }
-    let query = `
-      SELECT *
-      FROM leads
-      WHERE owner_id = ${user_id}
-      AND active = 1
-      AND bought_from > 0
-    `
-    if (where_additions.length > 0) {
-      query += `AND ${where_additions};`
-    }
-    return await this.query(query)
+    return await this.leads.getBoughtLeads(user_id, options)
   }
 
   public async getLeadsNotOwnedByMe(
     user_id: number,
     options: LeadQueryOptions,
   ) {
-    const { filters } = options
-    let where_additions
-    if (filters) {
-      where_additions = filters
-        .map(f => {
-          return f[0] + ' LIKE "%' + escape(f[1]) + '%"'
-        })
-        .join(" AND ")
-    }
-    let query = `
-      SELECT *
-      FROM leads
-      WHERE owner_id <> ${user_id}
-      AND active = 1
-    `
-    if (where_additions.length > 0) {
-      query += `AND ${where_additions};`
-    }
-    return await this.query(query)
+    return await this.leads.getLeadsNotOwnedByMe(user_id, options)
   }
 
   async buy(lead_ids: number[], new_owner: number) {

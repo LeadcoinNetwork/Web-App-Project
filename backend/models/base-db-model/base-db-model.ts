@@ -9,13 +9,10 @@ type tableName = "users" | "leads"
 type SAFE_AND_SANITIZED_SQL_QUERY = string
 
 export default abstract class BaseDBModel<INew, IExisting, ICondition> {
+  fieldName = "JSON"
   log = LogModelActions(this.tableName)
 
-  constructor(
-    protected sql: SQL,
-    public readonly tableName: tableName,
-    public readonly fieldName: string,
-  ) {}
+  constructor(protected sql: SQL, public readonly tableName: tableName) {}
 
   async deleteAll() {
     return this.sql.query("delete from " + this.tableName)
@@ -45,8 +42,94 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     }
   }
 
-  // TODO @erez Ensure change all fucntion to pretected. (And make sure applogic do not use it...)
-  // TODO @erez Change call to user.find to this signature (tests...)
+  leads = {
+    getBoughtLeads: async (user_id: number, options: any) => {
+      const { filters } = options
+      let where_additions
+      if (filters) {
+        where_additions = filters
+          .map(f => {
+            return f[0] + ' LIKE "%' + escape(f[1]) + '%"'
+          })
+          .join(" AND ")
+      }
+      let query = `
+        SELECT *
+        FROM leads
+        WHERE owner_id = ${user_id}
+        AND active = 1
+        AND bought_from > 0
+      `
+      if (where_additions.length > 0) {
+        query += `AND ${where_additions};`
+      }
+      return await this.sql.query(query)
+    },
+    getLeadsNotOwnedByMe: async (user_id: number, options: any) => {
+      const { filters } = options
+      let where_additions
+      if (filters) {
+        where_additions = filters
+          .map(f => {
+            return f[0] + ' LIKE "%' + escape(f[1]) + '%"'
+          })
+          .join(" AND ")
+      }
+      let query = `
+        SELECT *
+        FROM leads
+        WHERE owner_id <> ${user_id}
+        AND active = 1
+      `
+      if (where_additions.length > 0) {
+        query += `AND ${where_additions};`
+      }
+      return await this.sql.query(query)
+    },
+    getMyLeads: async (user_id: number, options: any) => {
+      const { filters } = options
+      let where_additions
+      if (filters) {
+        where_additions = filters
+          .map(f => {
+            return f[0] + ' LIKE "%' + escape(f[1]) + '%"'
+          })
+          .join(" AND ")
+      }
+      let query = `
+        SELECT *
+        FROM leads
+        WHERE owner_id = ${user_id}
+        AND active = 1
+      `
+      if (where_additions.length > 0) {
+        query += `AND ${where_additions};`
+        return await this.sql.query(query)
+      }
+    },
+    getSoldLeads: async (user_id: number, options: any) => {
+      const { filters } = options
+      let where_additions
+      if (filters) {
+        where_additions = filters
+          .map(f => {
+            return f[0] + ' LIKE "%' + escape(f[1]) + '%"'
+          })
+          .join(" AND ")
+      }
+      let query = `
+        SELECT *
+        FROM leads
+        WHERE bought_from = ${user_id}
+        AND active = 1
+      `
+      if (where_additions.length > 0) {
+        query += `AND ${where_additions};`
+        return await this.sql.query(query)
+      }
+    },
+  }
+
   /**
    *  If not found, not returing an error.
    */
