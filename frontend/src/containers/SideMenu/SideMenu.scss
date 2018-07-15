@@ -50,7 +50,7 @@ nav.ldc-side-menu {
       display: inline-block;
       width: auto;
       height: 100%;
-      font-size: 18px;
+      font-size: 16px;
 
       &.sm-active,
       &.sm-active:hover {
@@ -61,12 +61,25 @@ nav.ldc-side-menu {
       &:before {
         content: attr(data-text);
         text-transform: capitalize;
-        letter-spacing: 0.3px;
-        padding: 0 15px;
+        letter-spacing: 0.2px;
+        padding: 0 12px;
       }
 
       i {
         display: none;
+      }
+    }
+  }
+}
+
+@media (max-width: $screen-narrow) {
+  nav.ldc-side-menu {
+    a {
+      font-size: 14px;
+
+      &:before {
+        letter-spacing: 0.2px;
+        padding: 0 10px;
       }
     }
   }

@@ -29,6 +29,7 @@ interface props {
 
 import * as LogModelActions from "../models/log-model-actions/log-model-actions"
 import * as Google from "./google"
+import { start } from "./user"
 
 export default class RestServer {
   private appLogic: AppLogic

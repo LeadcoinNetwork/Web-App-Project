@@ -106,10 +106,11 @@ class User extends baseDBModel<
     user: ExistingUserInterfaceCondition,
   ): Promise<boolean> {
     if (user.password) {
-      const password_updated = this.setNewPassword(userId, user.password)
+      const password_updated = await this.setNewPassword(userId, user.password)
       delete user["password"]
     }
-    return this.update(userId, user)
+    if (Object.keys(user).length > 0) return this.update(userId, user)
+    return
   }
 }
 
