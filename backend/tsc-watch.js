@@ -1,5 +1,5 @@
 var cp = require("child_process")
-var p1 = cp.fork("node_modules\\typescript\\lib\\tsc.js", ["--watch"], {
+var p1 = cp.fork("node_modules/typescript/lib/tsc.js", ["--watch"], {
   stdio: "pipe",
 })
 var firstTime = true
@@ -31,7 +31,7 @@ function restart() {
     start()
   }
   function start() {
-    p = cp.fork("node_modules\\ts-node\\dist\\bin", ["index"], {
+    p = cp.fork("node_modules/ts-node/dist/bin", ["index"], {
       stdio: "inherit",
     })
   }
