@@ -79,9 +79,9 @@
     }
   },
   "scripts": {
-    "start": "ts-node index.ts",
-    "start:dev": "nodemon",
+    "start": "node tsc-watch",
     "test": "jest --bail",
+    "test:compile": "tsc",
     "build": "tsc",
     "test:watch": "jest --bail --watch",
     "precommit": "pretty-quick --staged"

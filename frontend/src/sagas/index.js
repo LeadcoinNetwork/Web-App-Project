@@ -41,7 +41,7 @@ export default function* rootSaga() {
     completeRegistration,
     emailConfirmation,
     logout,
-    sellLeads,
+    // sellLeads,
     boughtLeads,
     myLeads,
     homesaga,
@@ -52,6 +52,6 @@ export default function* rootSaga() {
     language,
   ]
   for (var i in sagas) {
-    yield spawn(sagas[i](api))
+    yield fork(sagas[i], api)
   }
 }

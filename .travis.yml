@@ -1,5 +1,8 @@
 language: node_js
 node_js: 8.5
+sudo: required
+services:
+  - docker
 env:
   global:
   - secure: qB+kNRkSo7Cpge6mH2DWrOrPfguV7TK8fQlaTLQSWtv74E2Z5+Nk9/A8UYIGh2ULZSCqABo+AiAsoaj3p27MKHMdM9feGjBGz0gJp7ZcMfKQjzYgxekmWNKFU0D1HD4dhqjXamx5JElskN1hH6yUOYzaeN1I9gwdd3XvtftWsazjpmE5uiUQvhe7BNHrdggkDr9UMGtsvE5mZcZbP66q7NBfApsZ4DSswuQGJcO8jjt/PcfXoLMBCm9F7XlORITuYAOqiymF7CecmNf3wLkwd+gyuzeZfOi6SHuO2aM1LVaoViwxqJp4V8NKuh65c2u2tHuDz2654QnEHHAzanAFhTXCXH0V8RK8JHedSpb4ozX9E+cTgXOYBrj+F7kqkUJ5p7qvgYQaOzQSQxb8XLQ6J/YHiaOi1o0yfVCwrr2TfxLFJjipmAS4uEicRh/iFGPg9TP799Y0l4rVqqHP2CCo5KV3YVyVb0lW9ZYAOF93lcRJl7UpPzO+WoMF6eHS9EvzERldoAb/lvO5n/k2O8SZznZRueAOzMpdQez8WPXuVYB9do4j7Jx/v1d0zeewkTcMfkeVU0cwPT35TS7dB9RuZSIPnW9Ozxj7YGbz2yFP6iET8WenX/VIx3t+VcsUl4duNX+CTuX9ydrmJ1uNSJ//Ht5M66+ZR2MKjwj7OtCDZhE=
@@ -14,9 +17,7 @@ before_install:
 script:
 - scripts/build.sh
 after_success:
-- echo "TRAVIS_PULL_REQUEST = $TRAVIS_PULL_REQUEST"
-- echo "TRAVIS_BRANCH = $TRAVIS_BRANCH"
-- '[[ $TRAVIS_BRANCH == "master" ]] && [[ ! $TRAVIS_PULL_REQUEST ]] bash scripts/deploy.sh'
+- '[[ $TRAVIS_BRANCH == "master" ]] && [[ $TRAVIS_PULL_REQUEST == "false" ]] && scripts/deploy.sh'
 cache:
   directories:
   - frontend/node_modules

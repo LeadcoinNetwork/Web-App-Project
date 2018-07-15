@@ -29,7 +29,6 @@ logedin click on link in user menu.
 
 import * as Actions from "Actions"
 import { select, put, take } from "redux-saga/effects"
-import * as _ from "lodash"
 
 function everyone(path) {
   if (["/privacy", "/terms"].includes(path)) return true

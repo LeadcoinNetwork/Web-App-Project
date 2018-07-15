@@ -73,8 +73,9 @@ class Login extends React.Component {
         <aside>
           <h3>{t("LeadCoin is the promised land for marketers")}</h3>
           <q>
-            {t(`Collaborating with other marketers & sharing leads is 10X more
-            effcient than giving away my budget to Google & Facebook.`)}
+            {t(
+              "Collaborating with other marketers & sharing leads is 10X more effcient than giving away my budget to Google & Facebook.",
+            )}
           </q>
           <label style={{ backgroundImage: `url(${tiger})` }}>
             <span>
@@ -93,10 +94,7 @@ const mapStateToProps = state => ({
   login: state.login,
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    handleChange: login.loginHandleChange,
-    submit: login.loginUserSubmit,
-  },
-)(Login)
+export default connect(mapStateToProps, {
+  handleChange: login.loginHandleChange,
+  submit: login.loginUserSubmit,
+})(Login)

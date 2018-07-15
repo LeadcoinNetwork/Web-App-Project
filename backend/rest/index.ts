@@ -76,7 +76,7 @@ export default class RestServer {
     // TODO csv
 
     expressApp.route("/health").get((req, res) => {
-      exec("git log -1", (e, output, stderror) => {
+      exec("sudo git log -1", (e, output, stderror) => {
         if (e) return res.json(e)
         res.status(200)
         res.send({ git: output })

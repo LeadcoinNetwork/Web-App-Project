@@ -19,7 +19,7 @@ export default function LogModelAction(model, action?, data?) {
     // In case Zone not working...
     id = "#"
   }
-  if (process.env.NODE_ENV == "test") {
+  if (process.env.NODE_ENV == "test" && !!process.env.FORCE_LOG) {
     return
   }
   if (action instanceof Error) {
@@ -53,7 +53,7 @@ export default function LogModelAction(model, action?, data?) {
  * Output to console the response.
  */
 export function expressMiddleware(req, res, next) {
-  if (process.env.NODE_ENV == "test") {
+  if (process.env.NODE_ENV == "test" && !!process.env.FORCE_LOG) {
     return next()
   }
   var oldWrite = res.write,
