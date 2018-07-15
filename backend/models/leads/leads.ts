@@ -53,7 +53,7 @@ export default class Leads extends baseDBModel<
     `
     if (where_additions.length > 0) {
       query += `AND ${where_additions};`
-      return await this.query(query)
+      // return await this.query(query)
     }
   }
 
@@ -75,7 +75,7 @@ export default class Leads extends baseDBModel<
     `
     if (where_additions.length > 0) {
       query += `AND ${where_additions};`
-      return await this.query(query)
+      // return await this.query(query)
     }
   }
 
@@ -99,7 +99,7 @@ export default class Leads extends baseDBModel<
     if (where_additions.length > 0) {
       query += `AND ${where_additions};`
     }
-    return await this.query(query)
+    // return await this.query(query)
   }
 
   public async getLeadsNotOwnedByMe(
@@ -124,7 +124,7 @@ export default class Leads extends baseDBModel<
     if (where_additions.length > 0) {
       query += `AND ${where_additions};`
     }
-    return await this.query(query)
+    // return await this.query(query)
   }
 
   async buy(lead_ids: number[], new_owner: number) {
