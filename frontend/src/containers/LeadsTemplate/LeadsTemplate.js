@@ -1,7 +1,7 @@
 import React from "react"
 import Table from "Components/Table"
 import LeadsResults from "Components/LeadsResults"
-import Button from "Components/Button"
+import Select from "Components/Select"
 import t from "../../utils/translate/translate"
 import RealEstateLead from "Components/RealEstateLead"
 import ResultsModeContext from "Containers/App/ResultsModeContext"
@@ -51,44 +51,56 @@ class LeadsTemplate extends React.Component {
     return (
       <ResultsModeContext.Consumer>
         {({ cardsMode, toggleMode }) => (
-          <section className={pageClassName}>
-            <SwitchResultsMode />
-            <h1>{t(pageTitle)}</h1>
-            {cardsMode ? (
-              <LeadsResults
-                leads={leads}
-                buttons={this.props.getListButtons()}
-                isNotAllSelected={isNotAllSelected}
-                loading={leads.loading}
-                onScrollBottom={this.onScrollBottom}
-                toggleAll={this.toggleAll}
-                render={lead => (
-                  <RealEstateLead
-                    key={lead.id}
-                    {...lead}
-                    checked={leads.selected.has(lead.id)}
-                    buttons={this.props.getLeadButtons()}
-                    toggleCheck={event => this.toggleLead(event, lead.id)}
-                  />
-                )}
-              />
-            ) : (
-              <Table
-                fields={fields.map(field => ({
-                  ...field,
-                  name: t(field.name),
-                }))}
-                loading={leads.loading}
-                onScrollBottom={this.onScrollBottom}
-                records={leads.list}
-                buttons={this.props.getButtons()}
-                setSelectedRecords={setSelectedLeads}
-                isNotAllSelected={isNotAllSelected}
-                selected={leads.selected}
-                isSelectable={true}
-              />
-            )}
-          </section>
+          <div className="ldc-leads-template">
+            <section className={pageClassName}>
+              <SwitchResultsMode />
+              <h1>{t(pageTitle)}</h1>
+              <div className="lt-results-head">
+                <label className="ltrh-count">
+                  {leads.list.length} {t("of")} {leads.total} {t("leads")}
+                </label>
+                <Select>
+                  <option>{t("Sort By")}</option>
+                  <option>{t("size")}</option>
+                  <option>{t("budget")}</option>
+                </Select>
+              </div>
+              {cardsMode ? (
+                <LeadsResults
+                  leads={leads}
+                  buttons={this.props.getListButtons()}
+                  isNotAllSelected={isNotAllSelected}
+                  loading={leads.loading}
+                  onScrollBottom={this.onScrollBottom}
+                  toggleAll={this.toggleAll}
+                  render={lead => (
+                    <RealEstateLead
+                      key={lead.id}
+                      {...lead}
+                      checked={leads.selected.has(lead.id)}
+                      buttons={this.props.getLeadButtons()}
+                      toggleCheck={event => this.toggleLead(event, lead.id)}
+                    />
+                  )}
+                />
+              ) : (
+                <Table
+                  fields={fields.map(field => ({
+                    ...field,
+                    name: t(field.name),
+                  }))}
+                  loading={leads.loading}
+                  onScrollBottom={this.onScrollBottom}
+                  records={leads.list}
+                  buttons={this.props.getButtons()}
+                  setSelectedRecords={setSelectedLeads}
+                  isNotAllSelected={isNotAllSelected}
+                  selected={leads.selected}
+                  isSelectable={true}
+                />
+              )}
+            </section>
+          </div>
         )}
       </ResultsModeContext.Consumer>
     )
