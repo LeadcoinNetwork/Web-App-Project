@@ -39,13 +39,19 @@ class LeadsTemplate extends React.Component {
     setSelectedLeads(selected)
   }
   render() {
-    let { pageTitle, leads, fields, setSelectedLeads } = this.props,
+    let {
+        pageTitle,
+        pageClassName,
+        leads,
+        fields,
+        setSelectedLeads,
+      } = this.props,
       isNotAllSelected = this.isNotAllSelected()
 
     return (
       <ResultsModeContext.Consumer>
         {({ cardsMode, toggleMode }) => (
-          <section className="ldc-buy-leads">
+          <section className={pageClassName}>
             <SwitchResultsMode />
             <h1>{t(pageTitle)}</h1>
             {cardsMode ? (

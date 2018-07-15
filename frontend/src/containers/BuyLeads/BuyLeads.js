@@ -1,14 +1,8 @@
 import React from "react"
 import { connect } from "react-redux"
-import Table from "Components/Table"
-import LeadsResults from "Components/LeadsResults"
 import { leads } from "Actions"
-import t from "../../utils/translate/translate"
-import Button from "Components/Button"
-import RealEstateLead from "Components/RealEstateLead"
-import ResultsModeContext from "Containers/App/ResultsModeContext"
-import SwitchResultsMode from "Containers/SwitchResultsMode"
 import LeadsTemplate from "Containers/LeadsTemplate"
+import t from "../../utils/translate/translate"
 
 class BuyLeads extends React.Component {
   buyLeads = () => {
@@ -52,61 +46,15 @@ class BuyLeads extends React.Component {
     }
   }
   render() {
-    let { leads, fields, setSelectedLeads } = this.props,
-      isNotAllSelected = this.isNotAllSelected()
-
     return (
       <LeadsTemplate
         {...this.props}
         pageTitle="buy leads"
+        pageClassName="ldc-buy-leads"
         getListButtons={this.getListButtons}
         getLeadButtons={this.getLeadButtons}
         getButtons={this.getButtons}
       />
-    )
-    return (
-      <ResultsModeContext.Consumer>
-        {({ cardsMode, toggleMode }) => (
-          <section className="ldc-buy-leads">
-            <SwitchResultsMode />
-            <h1>{t("Buy Leads")}</h1>
-            {cardsMode ? (
-              <LeadsResults
-                leads={leads}
-                buttons={this.getListButtons()}
-                isNotAllSelected={isNotAllSelected}
-                loading={leads.loading}
-                onScrollBottom={this.onScrollBottom}
-                toggleAll={this.toggleAll}
-                render={lead => (
-                  <RealEstateLead
-                    key={lead.id}
-                    {...lead}
-                    checked={leads.selected.has(lead.id)}
-                    buttons={this.getLeadButtons()}
-                    toggleCheck={event => this.toggleLead(event, lead.id)}
-                  />
-                )}
-              />
-            ) : (
-              <Table
-                fields={fields.map(field => ({
-                  ...field,
-                  name: t(field.name),
-                }))}
-                loading={leads.loading}
-                onScrollBottom={this.onScrollBottom}
-                records={leads.list}
-                buttons={this.getButtons()}
-                setSelectedRecords={setSelectedLeads}
-                isNotAllSelected={isNotAllSelected}
-                selected={leads.selected}
-                isSelectable={true}
-              />
-            )}
-          </section>
-        )}
-      </ResultsModeContext.Consumer>
     )
   }
 }
