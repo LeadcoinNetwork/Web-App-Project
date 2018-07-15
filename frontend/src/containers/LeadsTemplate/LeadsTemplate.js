@@ -6,7 +6,6 @@ import t from "../../utils/translate/translate"
 import RealEstateLead from "Components/RealEstateLead"
 import ResultsModeContext from "Containers/App/ResultsModeContext"
 import SwitchResultsMode from "Containers/SwitchResultsMode"
-import { Link } from "react-router-dom"
 
 class LeadsTemplate extends React.Component {
   onScrollBottom = () => {
@@ -53,7 +52,6 @@ class LeadsTemplate extends React.Component {
       <ResultsModeContext.Consumer>
         {({ cardsMode, toggleMode }) => (
           <section className={pageClassName}>
-            <Link to="/add-lead">{t("Boom")}</Link>
             <SwitchResultsMode />
             <h1>{t(pageTitle)}</h1>
             {cardsMode ? (
