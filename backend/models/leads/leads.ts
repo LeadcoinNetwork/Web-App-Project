@@ -10,7 +10,7 @@ export default class Leads extends baseDBModel<
   LeadQueryOptions
 > {
   constructor(sql: SQL) {
-    super(sql, "leads")
+    super(sql, "leads", "lead")
   }
 
   public async AddLead(lead: Lead) {

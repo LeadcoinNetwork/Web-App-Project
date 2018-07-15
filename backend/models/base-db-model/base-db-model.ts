@@ -21,7 +21,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     return this.sql.query("delete from " + this.tableName)
   }
   protected async tryGetById(id): Promise<IExisting | NotFound> {
-    let user = await this.getOne(<any>{ id }) // 'any' becuase ICondition it's a generic interface.
+    let user = await this.getOne(<any>{ condition: { id } }) // 'any' becuase ICondition it's a generic interface.
     return user
   }
 
@@ -30,14 +30,14 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     return result.length > 0
   }
 
-  private async convertRowToObject(row) {
+  private convertRowToObject(row) {
     return {
       ..._.omit(row, this.fieldName),
       ...JSON.parse(row[this.fieldName]),
     }
   }
-  protected async getOne(condition: ICondition): Promise<IExisting | NotFound> {
-    var result = await this.find({ condition })
+  protected async getOne(whatever): Promise<IExisting | NotFound> {
+    var result = await this.find(whatever)
     if (result.length != 1) {
       return new NotFound()
     } else {
@@ -61,7 +61,17 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
   }): Promise<IExisting[]> {
     var cnd = Object.keys(condition)
       .map(key => {
-        return `${mysql.escapeId(key)} = ${mysql.escape(condition[key])}`
+        var field
+        switch (key) {
+          case "id":
+            field = "id"
+            break
+
+          default:
+            field = `${this.fieldName} ->> ${mysql.escape("$." + key)}`
+            break
+        }
+        return `${field} = ${mysql.escape(condition[key])}`
       })
       .join(" AND ")
 
@@ -79,7 +89,6 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     let sql_query = `SELECT * FROM ${
       this.tableName
     } ${cnd} ${sql_sort} ${sql_limit} ;`
-    //console.log(sql_query)
     let rows = await this.sql.query(sql_query)
     rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
     return rows

@@ -23,7 +23,7 @@ class User extends baseDBModel<
   ExistingUserInterfaceCondition
 > {
   constructor(sql: SQL) {
-    super(sql, "users")
+    super(sql, "users", "user")
   }
 
   public async tryGetById(id): Promise<ExistingUserInterface | NotFound> {
