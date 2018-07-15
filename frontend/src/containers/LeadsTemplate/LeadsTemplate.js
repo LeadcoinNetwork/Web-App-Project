@@ -38,6 +38,22 @@ class LeadsTemplate extends React.Component {
 
     setSelectedLeads(selected)
   }
+  renderResultsHead = () => {
+    let { leads } = this.props
+
+    return (
+      <div className="lt-results-head">
+        <label className="ltrh-count">
+          {leads.list.length} {t("of")} {leads.total} {t("leads")}
+        </label>
+        <Select>
+          <option>{t("Sort By")}</option>
+          <option>{t("size")}</option>
+          <option>{t("budget")}</option>
+        </Select>
+      </div>
+    )
+  }
   render() {
     let {
         pageTitle,
@@ -63,18 +79,7 @@ class LeadsTemplate extends React.Component {
                   loading={leads.loading}
                   onScrollBottom={this.onScrollBottom}
                   toggleAll={this.toggleAll}
-                  renderResultsHead={() => (
-                    <div className="lt-results-head">
-                      <label className="ltrh-count">
-                        {leads.list.length} {t("of")} {leads.total} {t("leads")}
-                      </label>
-                      <Select>
-                        <option>{t("Sort By")}</option>
-                        <option>{t("size")}</option>
-                        <option>{t("budget")}</option>
-                      </Select>
-                    </div>
-                  )}
+                  renderResultsHead={this.renderResultsHead}
                   renderLead={lead => (
                     <RealEstateLead
                       key={lead.id}
@@ -93,6 +98,7 @@ class LeadsTemplate extends React.Component {
                   }))}
                   loading={leads.loading}
                   onScrollBottom={this.onScrollBottom}
+                  renderResultsHead={this.renderResultsHead}
                   records={leads.list}
                   buttons={this.props.getButtons()}
                   setSelectedRecords={setSelectedLeads}
