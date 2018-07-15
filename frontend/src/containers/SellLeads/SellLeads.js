@@ -11,11 +11,6 @@ class SellLeads extends React.Component {
   sellLead = id => {
     console.log([id])
   }
-  onScrollBottom = cb => {
-    let { dispatch, leads } = this.props
-
-    getLeads(dispatch, cb, leads.page + 1)
-  }
   buildButtonLabel = () => {
     let amount = this.props.leads.selected.size
 
