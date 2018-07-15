@@ -63,12 +63,11 @@ const add_leads = async count => {
   return rc
 }
 
-test.skip("buying leads should work", async () => {
+test("buying leads should work", async () => {
   const new_ids = await add_leads(10)
-  expect(new_ids.length).toBeTruthy()
+  expect(new_ids.length).toBe(10)
   const res = await leads.buy(new_ids, 666)
-  console.log(res)
-  const record: Lead[] = await leads.findLeads({
+  const records: Lead[] = await leads.findLeads({
     condition: {
       owner_id: 666,
     },
@@ -77,8 +76,8 @@ test.skip("buying leads should work", async () => {
       offset: 20,
     },
   })
-  expect(record.length).toBe(10)
-  expect(record.pop().owner_id).toBe(666)
+  expect(records.length).toBe(10)
+  expect(records.pop().owner_id).toBe(666)
 })
 
 test("paging and limit should work", async () => {
