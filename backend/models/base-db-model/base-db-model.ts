@@ -1,4 +1,5 @@
 const mysql = require("mysql")
+import * as _ from "lodash"
 
 import SQL from "../mysql-pool/mysql-pool"
 import LogModelActions from "../log-model-actions/log-model-actions"
@@ -10,7 +11,11 @@ type SAFE_AND_SANITIZED_SQL_QUERY = string
 export default abstract class BaseDBModel<INew, IExisting, ICondition> {
   log = LogModelActions(this.tableName)
 
-  constructor(protected sql: SQL, public readonly tableName: tableName) {}
+  constructor(
+    protected sql: SQL,
+    public readonly tableName: tableName,
+    public readonly fieldName: string,
+  ) {}
 
   async deleteAll() {
     return this.sql.query("delete from " + this.tableName)
@@ -25,6 +30,12 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     return result.length > 0
   }
 
+  private async convertRowToObject(row) {
+    return {
+      ..._.omit(row, this.fieldName),
+      ...JSON.parse(row[this.fieldName]),
+    }
+  }
   protected async getOne(condition: ICondition): Promise<IExisting | NotFound> {
     var result = await this.find({ condition })
     if (result.length != 1) {
@@ -58,7 +69,9 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     let sql_sort = ""
     let sql_limit = ""
     if (sort) {
-      sql_sort = ` ORDER BY ${sort.sortBy} ${sort.sortOrder}`
+      sql_sort = ` ORDER BY ${this.fieldName} ->> ${mysql.escape(
+        "$." + sort.sortBy,
+      )} ${sort.sortOrder}`
     }
     if (limit) {
       sql_limit = ` LIMIT ${limit.start},${limit.offset} `
@@ -68,27 +81,20 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     } ${cnd} ${sql_sort} ${sql_limit} ;`
     //console.log(sql_query)
     let rows = await this.sql.query(sql_query)
-    rows = rows.map(row => Object.assign({}, row)) // remove RowDataPacket class
+    rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
     return rows
-  }
-
-  protected async query(query: SAFE_AND_SANITIZED_SQL_QUERY) {
-    this.log("executing query on ", this.tableName)
-    this.log("query is:", query)
-    let status = await this.sql.query(query)
-    this.log("query results: ", JSON.stringify(status))
-    return status
   }
 
   protected async insert(record: INew) {
     this.log("create " + this.tableName + " start", record)
 
     let status = await this.sql.query(
-      "INSERT INTO " + this.tableName + " SET ?",
-      record,
+      `INSERT INTO ${this.tableName}  SET ${this.fieldName}=${mysql.escape(
+        JSON.stringify(record),
+      )}`,
     )
 
-    this.log("create " + this.tableName + " start", status.insertId)
+    this.log("create " + this.tableName + " ends", status.insertId)
 
     return status
   }
@@ -101,16 +107,19 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
   }
 
   protected async update(id, record) {
-    this.log("update " + this.tableName + " start", record)
-    var values = Object.keys(record)
-      .map(key => {
-        return `${mysql.escapeId(key)} = ${mysql.escape(record[key])}`
-      })
-      .join(" , ")
+    /*
+     update user set user=JSON_set(user,"$.name","new name","$.telephone","123")
+    */
 
-    var query = `UPDATE ${
-      this.tableName
-    } SET ${values}  WHERE id = ${mysql.escape(id)}`
+    this.log("update " + this.tableName + " start", record)
+    var str = ""
+    var values = Object.keys(record).forEach(key => {
+      str += `, ${mysql.escape("$." + key)} , ${mysql.escape(record[key])}`
+    })
+
+    var query = `UPDATE ${this.tableName} SET ${this.fieldName}=JSON_SET(${
+      this.fieldName
+    } ${str})   WHERE id = ${mysql.escape(id)}`
 
     let status = await this.sql.query(query)
     if (status.affectedRows == 0) {
