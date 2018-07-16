@@ -44,7 +44,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
 
   leads = {
     getBoughtLeads: async (user_id: number, options: any) => {
-      const { filters } = options
+      const { filters, sort } = options
       let where_additions
       if (filters) {
         where_additions = filters
@@ -61,10 +61,17 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         AND doc->>"$.bought_from" > 0
       `
       if (where_additions.length > 0) query += `AND ${where_additions};`
-      return await this.sql.query(query)
+      if (sort) {
+        query += ` ORDER BY ${this.fieldName} ->> ${mysql.escape(
+          "$." + sort.sortBy,
+        )} ${sort.sortOrder}`
+      }
+      let rows = await this.sql.query(query)
+      rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
+      return rows
     },
     getLeadsNotOwnedByMe: async (user_id: number, options: any) => {
-      const { filters } = options
+      const { filters, sort } = options
       let where_additions
       if (filters) {
         where_additions = filters
@@ -80,10 +87,17 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         AND doc->>"$.active" = "true" 
       `
       if (where_additions.length > 0) query += `AND ${where_additions};`
-      return await this.sql.query(query)
+      if (sort) {
+        query += ` ORDER BY ${this.fieldName} ->> ${mysql.escape(
+          "$." + sort.sortBy,
+        )} ${sort.sortOrder}`
+      }
+      let rows = await this.sql.query(query)
+      rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
+      return rows
     },
     getMyLeads: async (user_id: number, options: any) => {
-      const { filters } = options
+      const { filters, sort } = options
       let where_additions
       if (filters) {
         where_additions = filters
@@ -99,10 +113,17 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         AND doc->>"$.active" = "true" 
       `
       if (where_additions.length > 0) query += `AND ${where_additions};`
-      return await this.sql.query(query)
+      if (sort) {
+        query += ` ORDER BY ${this.fieldName} ->> ${mysql.escape(
+          "$." + sort.sortBy,
+        )} ${sort.sortOrder}`
+      }
+      let rows = await this.sql.query(query)
+      rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
+      return rows
     },
     getSoldLeads: async (user_id: number, options: any) => {
-      const { filters } = options
+      const { filters, sort } = options
       let where_additions
       if (filters) {
         where_additions = filters
@@ -117,8 +138,15 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         WHERE doc->>"$.bought_from" = ${user_id}
         AND doc->>"$.active" = "true" 
       `
-      if (where_additions.length > 0) query += `AND ${where_additions};`
-      return await this.sql.query(query)
+      if (where_additions.length > 0) query += `AND ${where_additions} `
+      if (sort) {
+        query += ` ORDER BY ${this.fieldName} ->> ${mysql.escape(
+          "$." + sort.sortBy,
+        )} ${sort.sortOrder}`
+      }
+      let rows = await this.sql.query(query)
+      rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
+      return rows
     },
   }
 

@@ -76,6 +76,7 @@ test("getting my leads at order should work", async () => {
   })
   const lead = {
     date: 1213,
+    active: true,
     name: "testlead 1",
     phone: "2",
     email: "moshe@moshe.com",
@@ -83,6 +84,7 @@ test("getting my leads at order should work", async () => {
   }
   const lead2 = {
     date: 1214,
+    active: true,
     name: "testlead 2",
     phone: "2",
     email: "moshe@moshe.com",
@@ -109,8 +111,11 @@ test("getting my leads at order should work", async () => {
       cookie: "token=" + token,
     })
     .send({
-      sort_by: ["date", "ASC"],
-      filters: [["name", "testlead"]],
+      sort: {
+        sortBy: "date",
+        sortOrder: "ASC",
+      },
+      filters: [],
     })
   expect(res.error).toBeFalsy()
   const [record1, record2] = res.body
@@ -122,8 +127,11 @@ test("getting my leads at order should work", async () => {
       cookie: "token=" + token,
     })
     .send({
-      sort_by: ["date", "DESC"],
-      filters: [["name", "testlead"]],
+      sort: {
+        sortBy: "date",
+        sortOrder: "DESC",
+      },
+      filters: [],
     })
   expect(res2.error).toBeFalsy()
   const [record3, record4] = res.body
