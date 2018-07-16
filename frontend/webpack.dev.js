@@ -20,10 +20,10 @@ module.exports = merge(common, {
     host: "0.0.0.0",
     disableHostCheck: true,
   },
-  plugins: [
-    new HardSourceWebpackPlugin({
-      maxAge: 90 * 24 * 60 * 60 * 1000, // 90 Days
-      sizeThreshold: 500 * 1024 * 1024, // 150 MB
-    }),
-  ],
+  // plugins: [
+  //   new HardSourceWebpackPlugin({
+  //     maxAge: 90 * 24 * 60 * 60 * 1000, // 90 Days
+  //     sizeThreshold: 500 * 1024 * 1024, // 150 MB
+  //   }),
+  // ],
 })
