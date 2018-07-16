@@ -30,6 +30,7 @@ import Terms from "Containers/Terms"
 import Privacy from "Containers/Privacy"
 import { connect } from "react-redux"
 import { createBrowserHistory } from "history"
+import Steps from "../steps"
 
 import ResultsModeContext from "./ResultsModeContext"
 
@@ -46,6 +47,7 @@ class App extends React.Component {
 
     return (
       <ResultsModeContext.Provider value={resultsModeContextValue}>
+        <Steps />
         <div className="ldc-app">
           <Header />
           {loggedIn && !disabled && <SideMenu path={path} />}

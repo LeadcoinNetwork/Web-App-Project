@@ -9,13 +9,10 @@ type tableName = "users" | "leads"
 type SAFE_AND_SANITIZED_SQL_QUERY = string
 
 export default abstract class BaseDBModel<INew, IExisting, ICondition> {
+  fieldName = "doc"
   log = LogModelActions(this.tableName)
 
-  constructor(
-    protected sql: SQL,
-    public readonly tableName: tableName,
-    public readonly fieldName: string,
-  ) {}
+  constructor(protected sql: SQL, public readonly tableName: tableName) {}
 
   async deleteAll() {
     return this.sql.query("delete from " + this.tableName)
@@ -45,8 +42,86 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     }
   }
 
-  // TODO @erez Ensure change all fucntion to pretected. (And make sure applogic do not use it...)
-  // TODO @erez Change call to user.find to this signature (tests...)
+  leads = {
+    getBoughtLeads: async (user_id: number, options: any) => {
+      const { filters } = options
+      let where_additions
+      if (filters) {
+        where_additions = filters
+          .map(f => {
+            return `${this.fieldName} ->> "$.${f[0]}" LIKE "%${f[1]}%"`
+          })
+          .join(" AND ")
+      }
+      let query = `
+        SELECT *
+        FROM leads
+        WHERE doc->>"$.owner_id" = ${user_id}
+        AND doc->>"$.active" = "true" 
+        AND doc->>"$.bought_from" > 0
+      `
+      if (where_additions.length > 0) query += `AND ${where_additions};`
+      return await this.sql.query(query)
+    },
+    getLeadsNotOwnedByMe: async (user_id: number, options: any) => {
+      const { filters } = options
+      let where_additions
+      if (filters) {
+        where_additions = filters
+          .map(f => {
+            return `${this.fieldName} ->> "$.${f[0]}" LIKE "%${f[1]}%"`
+          })
+          .join(" AND ")
+      }
+      let query = `
+        SELECT *
+        FROM leads
+        WHERE doc->>"$.owner_id" <> ${user_id}
+        AND doc->>"$.active" = "true" 
+      `
+      if (where_additions.length > 0) query += `AND ${where_additions};`
+      return await this.sql.query(query)
+    },
+    getMyLeads: async (user_id: number, options: any) => {
+      const { filters } = options
+      let where_additions
+      if (filters) {
+        where_additions = filters
+          .map(f => {
+            return `${this.fieldName} ->> "$.${f[0]}" LIKE "%${f[1]}%"`
+          })
+          .join(" AND ")
+      }
+      let query = `
+        SELECT *
+        FROM leads
+        WHERE doc->>"$.owner_id" = ${user_id}
+        AND doc->>"$.active" = "true" 
+      `
+      if (where_additions.length > 0) query += `AND ${where_additions};`
+      return await this.sql.query(query)
+    },
+    getSoldLeads: async (user_id: number, options: any) => {
+      const { filters } = options
+      let where_additions
+      if (filters) {
+        where_additions = filters
+          .map(f => {
+            return `${this.fieldName} ->> "$.${f[0]}" LIKE "%${f[1]}%"`
+          })
+          .join(" AND ")
+      }
+      let query = `
+        SELECT *
+        FROM leads
+        WHERE doc->>"$.bought_from" = ${user_id}
+        AND doc->>"$.active" = "true" 
+      `
+      if (where_additions.length > 0) query += `AND ${where_additions};`
+      return await this.sql.query(query)
+    },
+  }
+
   /**
    *  If not found, not returing an error.
    */
@@ -70,6 +145,10 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
           default:
             field = `${this.fieldName} ->> ${mysql.escape("$." + key)}`
             break
+        }
+        let val = condition[key]
+        if (typeof val == "boolean") {
+          val = "" + val + ""
         }
         return `${field} = ${mysql.escape(condition[key])}`
       })

@@ -122,9 +122,12 @@ const mapStateToProps = state => ({
   },
 })
 
-export default connect(mapStateToProps, {
-  agreeToTerms: addLead.addLeadAgreeToTerms,
-  handleChange: addLead.addLeadHandleFormChange,
-  submit: addLead.addLeadSubmitForm,
-  clear: addLead.addLeadClearForm,
-})(AddLead)
+export default connect(
+  mapStateToProps,
+  {
+    agreeToTerms: addLead.addLeadAgreeToTerms,
+    handleChange: addLead.addLeadHandleFormChange,
+    submit: addLead.addLeadSubmitForm,
+    clear: addLead.addLeadClearForm,
+  },
+)(AddLead)

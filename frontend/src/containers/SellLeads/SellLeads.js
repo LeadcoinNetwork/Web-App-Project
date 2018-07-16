@@ -67,8 +67,11 @@ const mapStateToProps = state => ({
   fields: state.fields,
 })
 
-export default connect(mapStateToProps, {
-  fetchLeads: (...params) => leads.fetchLeads("SELL_LEADS", ...params),
-  setSelectedLeads: selectedLeads =>
-    leads.setSelectedLeads("SELL_LEADS", selectedLeads),
-})(SellLeads)
+export default connect(
+  mapStateToProps,
+  {
+    fetchLeads: (...params) => leads.fetchLeads("SELL_LEADS", ...params),
+    setSelectedLeads: selectedLeads =>
+      leads.setSelectedLeads("SELL_LEADS", selectedLeads),
+  },
+)(SellLeads)

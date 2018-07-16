@@ -204,6 +204,7 @@ test("delete lead", async () => {
   const [record2]: Lead[] = await leads.findLeads({
     condition: {
       email: "moshe@moshe.com",
+      active: true,
     },
   })
   expect(record2).toBe(undefined)

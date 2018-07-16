@@ -19,7 +19,7 @@ test("getting my sold_leads should work", async () => {
     phone: "2",
     email: "moshe@moshe.com",
     owner_id: 123,
-    active: 1,
+    active: true,
     bought_from: user.id,
   }
   const { affectedRows, insertId } = await appLogic.models.leads.insertLead(
@@ -48,6 +48,7 @@ test("getting my bought_leads should work", async () => {
     name: "testlead 1",
     phone: "2",
     email: "moshe@moshe.com",
+    active: true,
     bought_from: 5,
   }
   const result = await request
@@ -138,7 +139,7 @@ test("adding a bad lead should return error to client", async () => {
     date: 2929, // this date will be invalid on mysql server
     name: "test lead that should fail 100%",
     phone: "2",
-    email: "test@test.test",
+    email: "",
     bought_from: null,
   }
   const result = await request
