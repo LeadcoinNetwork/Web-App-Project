@@ -1,4 +1,3 @@
-import { SuperAgentStatic } from "superagent"
 import { methods, request } from "./request"
 
 export default class UserApi {

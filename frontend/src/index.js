@@ -28,11 +28,8 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(ROUTER_MIDDLEWARE, sagaMiddleware)),
 )
 
-var sagaTask = sagaMiddleware.run(rootSaga)
-
-import { hot } from "react-hot-loader"
-
-var HotApp = hot(module)(App)
+var sagaTask
+runSagas()
 
 ReactDOM.render(
   <Provider store={store}>
@@ -51,15 +48,20 @@ if (module.hot) {
 }
 if (module.hot) {
   module.hot.accept("./sagas", function() {
-    console.log("cancel previous saga task")
     sagaTask.cancel()
-    sagaTask.done.then(() => {
-      console.log("replacing the saga")
-      sagaTask = sagaMiddleware.run(rootSaga)
-    })
+    console.log("replacing the saga, because hot reload")
+    runSagas()
   })
 }
 
 function createReducer() {
   return connectRouter(history)(rootReducer)
+}
+
+function runSagas() {
+  sagaTask = sagaMiddleware.run(rootSaga)
+  sagaTask.done.catch(() => {
+    console.log("replacing the saga, because of an error")
+    runSagas()
+  })
 }

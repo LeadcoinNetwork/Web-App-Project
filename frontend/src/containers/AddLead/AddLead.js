@@ -57,6 +57,7 @@ class AddLead extends React.Component {
     const terms = this.renderTerms()
     return (
       <div className="add_lead">
+        <h1>{t("add lead")}</h1>
         <div className="main_container">
           <div className="personal flexed">
             <div className="help_text">
@@ -121,9 +122,12 @@ const mapStateToProps = state => ({
   },
 })
 
-export default connect(mapStateToProps, {
-  agreeToTerms: addLead.addLeadAgreeToTerms,
-  handleChange: addLead.addLeadHandleFormChange,
-  submit: addLead.addLeadSubmitForm,
-  clear: addLead.addLeadClearForm,
-})(AddLead)
+export default connect(
+  mapStateToProps,
+  {
+    agreeToTerms: addLead.addLeadAgreeToTerms,
+    handleChange: addLead.addLeadHandleFormChange,
+    submit: addLead.addLeadSubmitForm,
+    clear: addLead.addLeadClearForm,
+  },
+)(AddLead)
