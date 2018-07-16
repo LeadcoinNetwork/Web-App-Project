@@ -6,16 +6,19 @@ use leadcoin;
 CREATE TABLE IF NOT EXISTS users (
 	id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	user longtext
-);
+) DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin;
 
 DROP TABLE IF EXISTS `leadcoin`.`leads_upload`;
 CREATE TABLE  `leadcoin`.`leads_upload` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
     leads_upload longtext
-);
+) DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin;
 
 DROP TABLE IF EXISTS `leadcoin`.`leads`;
 CREATE TABLE  `leadcoin`.`leads` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
   lead longtext
-);
+) DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin;
