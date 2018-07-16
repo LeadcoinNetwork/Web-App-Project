@@ -748,6 +748,6 @@ export default {
   },
   of: {
     en: "of",
-    he: "בטל בחירה",
+    he: "מתוך",
   },
 }
