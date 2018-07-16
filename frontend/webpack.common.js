@@ -4,7 +4,6 @@ const CleanWebpackPlugin = require("clean-webpack-plugin")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const Dotenv = require("dotenv-webpack")
 const webpackUtils = require("./webpack.utils.js")
-var HardSourceWebpackPlugin = require("hard-source-webpack-plugin")
 
 // webpackUtils.JestUpdateModuleResoultionPacker()
 
