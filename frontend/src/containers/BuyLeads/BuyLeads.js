@@ -49,7 +49,7 @@ class BuyLeads extends React.Component {
     return (
       <LeadsTemplate
         {...this.props}
-        pageTitle="buy leads"
+        pageName="buy"
         pageClassName="ldc-buy-leads"
         getListButtons={this.getListButtons}
         getLeadButtons={this.getLeadButtons}

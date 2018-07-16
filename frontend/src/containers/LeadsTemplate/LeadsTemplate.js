@@ -40,6 +40,8 @@ class LeadsTemplate extends React.Component {
     setSelectedLeads(selected)
   }
   renderFilters = () => {
+    if (this.props.pageName !== "buy") return
+
     return (
       <div className="lt-filters">
         <Select>
@@ -74,7 +76,7 @@ class LeadsTemplate extends React.Component {
   }
   render() {
     let {
-        pageTitle,
+        pageName,
         pageClassName,
         leads,
         fields,
@@ -88,7 +90,7 @@ class LeadsTemplate extends React.Component {
           <div className="ldc-leads-template">
             <section className={pageClassName}>
               <SwitchResultsMode />
-              <h1>{t(pageTitle)}</h1>
+              <h1>{t(`${pageName} leads`)}</h1>
               {cardsMode ? (
                 <LeadsResults
                   leads={leads}
