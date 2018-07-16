@@ -44,17 +44,7 @@ class LeadsTemplate extends React.Component {
 
     return (
       <div className="lt-filters">
-        <Select>
-          <option>City</option>
-          <option>new york</option>
-          <option>tel aviv</option>
-        </Select>
-        <Select>
-          <option>Type</option>
-          <option>roof</option>
-          <option>garden</option>
-        </Select>
-        <TextField placeholder="Search here" appStyle />
+        <TextField placeholder="Search..." appStyle />
       </div>
     )
   }
