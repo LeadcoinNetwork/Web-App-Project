@@ -26,6 +26,13 @@ const SideMenu = ({ path }) => {
       >
         <i className="fas fa-clipboard-list" />
       </Link>
+      <Link
+        to="/add-lead"
+        className={path === "/add-lead" ? "sm-active" : ""}
+        data-text={t("add lead")}
+      >
+        <i className="fas fa-plus" />
+      </Link>
     </nav>
   )
 }
