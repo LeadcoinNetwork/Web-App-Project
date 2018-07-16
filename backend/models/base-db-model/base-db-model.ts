@@ -9,7 +9,7 @@ type tableName = "users" | "leads"
 type SAFE_AND_SANITIZED_SQL_QUERY = string
 
 export default abstract class BaseDBModel<INew, IExisting, ICondition> {
-  fieldName = "JSON"
+  fieldName = "doc"
   log = LogModelActions(this.tableName)
 
   constructor(protected sql: SQL, public readonly tableName: tableName) {}
@@ -49,20 +49,18 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       if (filters) {
         where_additions = filters
           .map(f => {
-            return f[0] + ' LIKE "%' + escape(f[1]) + '%"'
+            return `${this.fieldName} ->> "$.${f[0]}" LIKE "%${f[1]}%"`
           })
           .join(" AND ")
       }
       let query = `
         SELECT *
         FROM leads
-        WHERE owner_id = ${user_id}
-        AND active = 1
-        AND bought_from > 0
+        WHERE doc->>"$.owner_id" = ${user_id}
+        AND doc->>"$.active" = "true" 
+        AND doc->>"$.bought_from" > 0
       `
-      if (where_additions.length > 0) {
-        query += `AND ${where_additions};`
-      }
+      if (where_additions.length > 0) query += `AND ${where_additions};`
       return await this.sql.query(query)
     },
     getLeadsNotOwnedByMe: async (user_id: number, options: any) => {
@@ -71,19 +69,17 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       if (filters) {
         where_additions = filters
           .map(f => {
-            return f[0] + ' LIKE "%' + escape(f[1]) + '%"'
+            return `${this.fieldName} ->> "$.${f[0]}" LIKE "%${f[1]}%"`
           })
           .join(" AND ")
       }
       let query = `
         SELECT *
         FROM leads
-        WHERE owner_id <> ${user_id}
-        AND active = 1
+        WHERE doc->>"$.owner_id" <> ${user_id}
+        AND doc->>"$.active" = "true" 
       `
-      if (where_additions.length > 0) {
-        query += `AND ${where_additions};`
-      }
+      if (where_additions.length > 0) query += `AND ${where_additions};`
       return await this.sql.query(query)
     },
     getMyLeads: async (user_id: number, options: any) => {
@@ -92,20 +88,18 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       if (filters) {
         where_additions = filters
           .map(f => {
-            return f[0] + ' LIKE "%' + escape(f[1]) + '%"'
+            return `${this.fieldName} ->> "$.${f[0]}" LIKE "%${f[1]}%"`
           })
           .join(" AND ")
       }
       let query = `
         SELECT *
         FROM leads
-        WHERE owner_id = ${user_id}
-        AND active = 1
+        WHERE doc->>"$.owner_id" = ${user_id}
+        AND doc->>"$.active" = "true" 
       `
-      if (where_additions.length > 0) {
-        query += `AND ${where_additions};`
-        return await this.sql.query(query)
-      }
+      if (where_additions.length > 0) query += `AND ${where_additions};`
+      return await this.sql.query(query)
     },
     getSoldLeads: async (user_id: number, options: any) => {
       const { filters } = options
@@ -113,20 +107,18 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       if (filters) {
         where_additions = filters
           .map(f => {
-            return f[0] + ' LIKE "%' + escape(f[1]) + '%"'
+            return `${this.fieldName} ->> "$.${f[0]}" LIKE "%${f[1]}%"`
           })
           .join(" AND ")
       }
       let query = `
         SELECT *
         FROM leads
-        WHERE bought_from = ${user_id}
-        AND active = 1
+        WHERE doc->>"$.bought_from" = ${user_id}
+        AND doc->>"$.active" = "true" 
       `
-      if (where_additions.length > 0) {
-        query += `AND ${where_additions};`
-        return await this.sql.query(query)
-      }
+      if (where_additions.length > 0) query += `AND ${where_additions};`
+      return await this.sql.query(query)
     },
   }
 
@@ -153,6 +145,10 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
           default:
             field = `${this.fieldName} ->> ${mysql.escape("$." + key)}`
             break
+        }
+        let val = condition[key]
+        if (typeof val == "boolean") {
+          val = "" + val + ""
         }
         return `${field} = ${mysql.escape(condition[key])}`
       })
