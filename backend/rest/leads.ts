@@ -4,6 +4,8 @@ import * as Express from "express"
 import AppLogic from "../app-logic/index"
 import NotFound from "../utils/not-found"
 import { appModels } from "../app-logic/types"
+import * as Chance from "chance"
+const chance = Chance()
 
 import * as auth from "../models/user-auth/user-auth"
 
@@ -38,6 +40,39 @@ export function start({
   appLogic: AppLogic
   expressApp: Express.Express
 }) {
+  expressApp.get("/leads/mock/:number", mock_leads)
+  async function add_fake_leads(count) {
+    const rc = []
+    for (let i = 1; i < count + 1; i++) {
+      let owner = Math.floor(count / i)
+      let status = await appLogic.models.leads.insertLead({
+        date: new Date().toDateString,
+        owner_id: owner,
+        name: chance.name(),
+        phone: chance.phone(),
+        email: chance.email(),
+        active: true,
+        price: chance
+          .integer()
+          .toString()
+          .substring(0, 7),
+      })
+      if (status.affectedRows) rc.push(status.insertId)
+    }
+    return rc
+  }
+
+  async function mock_leads(req, res, next) {
+    ;(async () => {
+      console.log("HERE")
+      const quantity: number = req.params.number
+      const done = add_fake_leads(quantity)
+      res.status(200)
+      res.send({ done })
+      return
+      next()
+    })().catch(done)
+  }
 
   expressApp.post(
     "/leads/:id/remove",
@@ -48,15 +83,16 @@ export function start({
     ;(async () => {
       const { user } = req
       const { lead_id }: { lead_id: number } = req.params.id
-      appLogic.leads.removeLead(lead_id)
-      .then(() => {
-        res.status(200)
-        res.send({ ok: true })
-      })
-      .catch((err) => {
-        res.status(400)
-        res.send({ error: err.message })
-      })
+      appLogic.leads
+        .removeLead(lead_id)
+        .then(() => {
+          res.status(200)
+          res.send({ ok: true })
+        })
+        .catch(err => {
+          res.status(400)
+          res.send({ error: err.message })
+        })
       next()
     })().catch(done)
   }
@@ -74,10 +110,10 @@ export function start({
         lead.owner_id = user.id
         appLogic.leads
           .AddLead(lead)
-          .then((response) => {
+          .then(response => {
             res.json({ response })
           })
-          .catch((err) => {
+          .catch(err => {
             res.status(400)
             if (err.sqlMessage) {
               res.send({ error: err.sqlMessage })
@@ -88,7 +124,7 @@ export function start({
       } else {
         return next()
       }
-    })().catch((err) => {
+    })().catch(err => {
       res.status(400)
       res.send({ error: err.message })
     })
@@ -99,13 +135,35 @@ export function start({
     passport.authenticate("jwt", authOptions),
     buy_leads,
   )
+
   async function buy_leads(req, res, next) {
     ;(async () => {
       /*
       TODO: buy links
       */
-      return next()
-    })().catch(done)
+      const { user } = req
+      const { leads }: { leads: number[] } = req.body
+      if (leads) {
+        appLogic.leads
+          .buyLeads(leads, user.id)
+          .then(response => {
+            res.json({ response })
+          })
+          .catch(err => {
+            res.status(400)
+            if (err.sqlMessage) {
+              res.send({ error: err.sqlMessage })
+            } else {
+              res.send({ error: err.message })
+            }
+          })
+      } else {
+        return next()
+      }
+    })().catch(err => {
+      res.status(400)
+      res.send({ error: err.message })
+    })
   }
 
   expressApp.get(
