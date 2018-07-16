@@ -23,7 +23,7 @@ class User extends baseDBModel<
   ExistingUserInterfaceCondition
 > {
   constructor(sql: SQL) {
-    super(sql, "users", "user")
+    super(sql, "users")
   }
 
   public async tryGetById(id): Promise<ExistingUserInterface | NotFound> {
@@ -44,7 +44,7 @@ class User extends baseDBModel<
 
   public async generateJWT(user_id, secret) {
     // REFACTOR: move secret to the constructr, as dependency
-    return userAuth.generateJWT(user_id, secret)
+    return auth.generateJWT(user_id, secret)
   }
 
   public async createUser(user: NewUserInterface): Promise<number> {

@@ -19,7 +19,7 @@ test("getting my sold_leads should work", async () => {
     phone: "2",
     email: "moshe@moshe.com",
     owner_id: 123,
-    active: 1,
+    active: true,
     bought_from: user.id,
   }
   const { affectedRows, insertId } = await appLogic.models.leads.insertLead(
@@ -48,6 +48,7 @@ test("getting my bought_leads should work", async () => {
     name: "testlead 1",
     phone: "2",
     email: "moshe@moshe.com",
+    active: true,
     bought_from: 5,
   }
   const result = await request
@@ -75,6 +76,7 @@ test("getting my leads at order should work", async () => {
   })
   const lead = {
     date: 1213,
+    active: true,
     name: "testlead 1",
     phone: "2",
     email: "moshe@moshe.com",
@@ -82,6 +84,7 @@ test("getting my leads at order should work", async () => {
   }
   const lead2 = {
     date: 1214,
+    active: true,
     name: "testlead 2",
     phone: "2",
     email: "moshe@moshe.com",
@@ -108,8 +111,11 @@ test("getting my leads at order should work", async () => {
       cookie: "token=" + token,
     })
     .send({
-      sort_by: ["date", "ASC"],
-      filters: [["name", "testlead"]],
+      sort: {
+        sortBy: "date",
+        sortOrder: "ASC",
+      },
+      filters: [],
     })
   expect(res.error).toBeFalsy()
   const [record1, record2] = res.body
@@ -121,8 +127,11 @@ test("getting my leads at order should work", async () => {
       cookie: "token=" + token,
     })
     .send({
-      sort_by: ["date", "DESC"],
-      filters: [["name", "testlead"]],
+      sort: {
+        sortBy: "date",
+        sortOrder: "DESC",
+      },
+      filters: [],
     })
   expect(res2.error).toBeFalsy()
   const [record3, record4] = res.body
@@ -138,7 +147,7 @@ test("adding a bad lead should return error to client", async () => {
     date: 2929, // this date will be invalid on mysql server
     name: "test lead that should fail 100%",
     phone: "2",
-    email: "test@test.test",
+    email: "",
     bought_from: null,
   }
   const result = await request

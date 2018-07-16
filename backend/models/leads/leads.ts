@@ -3,6 +3,7 @@ import SQL from "../mysql-pool/mysql-pool"
 import { Lead, LeadQueryOptions, NewLead } from "./types"
 
 import baseDBModel from "../base-db-model/base-db-model"
+import NotFound from "../../utils/not-found"
 
 export default class Leads extends baseDBModel<
   NewLead,
@@ -10,7 +11,7 @@ export default class Leads extends baseDBModel<
   LeadQueryOptions
 > {
   constructor(sql: SQL) {
-    super(sql, "leads", "lead")
+    super(sql, "leads")
   }
 
   public async AddLead(lead: Lead) {
@@ -33,98 +34,23 @@ export default class Leads extends baseDBModel<
     return this.find({ condition, sort, limit })
   }
 
-  public async findAndSort() {}
-
   public async getSoldLeads(user_id: number, options: LeadQueryOptions) {
-    const { filters } = options
-    let where_additions
-    if (filters) {
-      where_additions = filters
-        .map(f => {
-          return f[0] + ' LIKE "%' + escape(f[1]) + '%"'
-        })
-        .join(" AND ")
-    }
-    let query = `
-      SELECT *
-      FROM leads
-      WHERE bought_from = ${user_id}
-      AND active = 1
-    `
-    if (where_additions.length > 0) {
-      query += `AND ${where_additions};`
-      // return await this.query(query)
-    }
+    return await this.leads.getSoldLeads(user_id, options)
   }
 
   public async getMyLeads(user_id: number, options: LeadQueryOptions) {
-    const { filters } = options
-    let where_additions
-    if (filters) {
-      where_additions = filters
-        .map(f => {
-          return f[0] + ' LIKE "%' + escape(f[1]) + '%"'
-        })
-        .join(" AND ")
-    }
-    let query = `
-      SELECT *
-      FROM leads
-      WHERE owner_id = ${user_id}
-      AND active = 1
-    `
-    if (where_additions.length > 0) {
-      query += `AND ${where_additions};`
-      // return await this.query(query)
-    }
+    return await this.leads.getMyLeads(user_id, options)
   }
 
   public async getBoughtLeads(user_id: number, options: LeadQueryOptions) {
-    const { filters } = options
-    let where_additions
-    if (filters) {
-      where_additions = filters
-        .map(f => {
-          return f[0] + ' LIKE "%' + escape(f[1]) + '%"'
-        })
-        .join(" AND ")
-    }
-    let query = `
-      SELECT *
-      FROM leads
-      WHERE owner_id = ${user_id}
-      AND active = 1
-      AND bought_from > 0
-    `
-    if (where_additions.length > 0) {
-      query += `AND ${where_additions};`
-    }
-    // return await this.query(query)
+    return await this.leads.getBoughtLeads(user_id, options)
   }
 
   public async getLeadsNotOwnedByMe(
     user_id: number,
     options: LeadQueryOptions,
   ) {
-    const { filters } = options
-    let where_additions
-    if (filters) {
-      where_additions = filters
-        .map(f => {
-          return f[0] + ' LIKE "%' + escape(f[1]) + '%"'
-        })
-        .join(" AND ")
-    }
-    let query = `
-      SELECT *
-      FROM leads
-      WHERE owner_id <> ${user_id}
-      AND active = 1
-    `
-    if (where_additions.length > 0) {
-      query += `AND ${where_additions};`
-    }
-    // return await this.query(query)
+    return await this.leads.getLeadsNotOwnedByMe(user_id, options)
   }
 
   async buy(lead_ids: number[], new_owner: number) {
@@ -133,9 +59,10 @@ export default class Leads extends baseDBModel<
         await this.update(l_id, { active: false })
       })
       .map(async (l_id: number) => {
-        const lead = await this.getById(l_id)
+        const lead = await this.getById(l_id, true)
         return Object.assign(lead, {
           id: undefined,
+          active: true,
           bought_from: lead.owner_id,
           bought_currency: lead.currency,
           owner_id: new_owner,
@@ -149,14 +76,17 @@ export default class Leads extends baseDBModel<
     return Promise.all(lead_promises)
   }
 
-  async getById(id: number): Promise<Lead> {
+  async getById(id: number, includeDeleted = false) {
     const condition = { id }
     const [record] = await this.find({ condition })
+    if (!record.active && !includeDeleted) {
+      return undefined
+    }
     return record
   }
 
   async remove(id: number) {
-    let status = await this.sql.query("DELETE FROM leads WHERE id = ?", id)
-    return status.affectedRows != 0
+    const status = await this.update(id, { active: false })
+    return status
   }
 }
