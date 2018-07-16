@@ -40,19 +40,11 @@ class LeadsTemplate extends React.Component {
     setSelectedLeads(selected)
   }
   renderFilters = () => {
+    if (this.props.pageName !== "buy") return
+
     return (
       <div className="lt-filters">
-        <Select>
-          <option>City</option>
-          <option>new york</option>
-          <option>tel aviv</option>
-        </Select>
-        <Select>
-          <option>Type</option>
-          <option>roof</option>
-          <option>garden</option>
-        </Select>
-        <TextField placeholder="Search here" appStyle />
+        <TextField placeholder="Search..." appStyle />
       </div>
     )
   }
@@ -73,22 +65,16 @@ class LeadsTemplate extends React.Component {
     )
   }
   render() {
-    let {
-        pageTitle,
-        pageClassName,
-        leads,
-        fields,
-        setSelectedLeads,
-      } = this.props,
+    let { pageName, leads, fields, setSelectedLeads } = this.props,
       isNotAllSelected = this.isNotAllSelected()
 
     return (
       <ResultsModeContext.Consumer>
         {({ cardsMode, toggleMode }) => (
           <div className="ldc-leads-template">
-            <section className={pageClassName}>
+            <section className={`ldc-${pageName}-leads`}>
               <SwitchResultsMode />
-              <h1>{t(pageTitle)}</h1>
+              <h1>{t(`${pageName} leads`)}</h1>
               {cardsMode ? (
                 <LeadsResults
                   leads={leads}

@@ -64,7 +64,7 @@ class CompleteRegistration extends React.Component {
           <h3>{t("LeadCoin is the promised land for marketers")}</h3>
           <q>
             {t(`Collaborating with other marketers & sharing leads is 10X more
-            effcient than giving away my budget to Google & Facebook.`)}
+            efficient than giving away my budget to Google & Facebook.`)}
           </q>
           <label style={{ backgroundImage: `url(${tiger})` }}>
             <span>
@@ -83,8 +83,11 @@ const mapStateToProps = state => ({
   completeRegistration: state.completeRegistration,
 })
 
-export default connect(mapStateToProps, {
-  con: console.log,
-  handleChange: completeRegistration.completeRegistrationHandleChange,
-  submit: completeRegistration.completeRegistrationSubmit,
-})(CompleteRegistration)
+export default connect(
+  mapStateToProps,
+  {
+    con: console.log,
+    handleChange: completeRegistration.completeRegistrationHandleChange,
+    submit: completeRegistration.completeRegistrationSubmit,
+  },
+)(CompleteRegistration)
