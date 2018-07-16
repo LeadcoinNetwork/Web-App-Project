@@ -18,7 +18,7 @@ export MYSQL_PASSWORD= &&
 
 echo "Running Tests" &&
 docker run --network travisnet -ti -e MYSQL_HOST=mysql2 \
-	-e MYSQL_USER=root \ 
+	-e MYSQL_USER=root \
 	-e MYSQL_PASSWORD= \
  leadcoin/leadcoin \
  npm run test &&
