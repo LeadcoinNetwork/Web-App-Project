@@ -1,4 +1,8 @@
 export default {
+  "add lead": {
+    en: "add lead",
+    he: "הוספת לִיד",
+  },
   "Lead Price": {
     en: "Lead Price",
     he: "מחיר לִיד",
@@ -179,14 +183,14 @@ export default {
     he: "קנה ",
     ja: "購入",
     zh: "购买",
-    ko: "출금",
+    ko: "구매하기",
   },
   " leads": {
     en: " leads",
     he: " לִידים",
-    ja: "出金",
-    zh: "提款",
-    ko: "구매하기",
+    ja: " リード",
+    zh: " 潜在客户",
+    ko: " 리드",
   },
   "buy lead": {
     en: "buy lead",
@@ -208,6 +212,13 @@ export default {
     ja: "購入",
     zh: "购买",
     ko: "구매하기",
+  },
+  leads: {
+    en: "leads",
+    he: "לִידים",
+    ja: "リード",
+    zh: "潜在客户",
+    ko: "리드",
   },
   "Shopping Cart": {
     en: "Shopping Cart",
@@ -416,9 +427,9 @@ export default {
     en: "LeadCoin is the promised land for marketers",
     he: "LeadCoin הינה הארץ המובטחת למשווקים",
   },
-  "Collaborating with other marketers & sharing leads is 10X more effcient than giving away my budget to Google & Facebook.": {
+  "Collaborating with other marketers & sharing leads is 10X more efficient than giving away my budget to Google & Facebook.": {
     en:
-      "Collaborating with other marketers & sharing leads is 10X more effcient than giving away my budget to Google & Facebook.",
+      "Collaborating with other marketers & sharing leads is 10X more efficient than giving away my budget to Google & Facebook.",
     he:
       "שיתוף פעולה בין משווקים ושיתוף לִידים הוא אפקטיבי עשרות מונים יותר מאשר תשלום לגוגל ופייסבוק. ",
   },
@@ -538,13 +549,6 @@ export default {
     ja: "販売",
     zh: "出售",
     ko: "판매",
-  },
-  " leads": {
-    en: " leads",
-    he: " לִידים",
-    ja: "リード",
-    zh: "潜在客户",
-    ko: "리드",
   },
   "sell lead": {
     en: "sell lead",
@@ -748,6 +752,10 @@ export default {
   },
   of: {
     en: "of",
-    he: "בטל בחירה",
+    he: "מתוך",
+  },
+  "Search...": {
+    en: "Search...",
+    he: "חיפוש...",
   },
 }
