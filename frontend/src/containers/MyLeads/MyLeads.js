@@ -50,7 +50,6 @@ class MyLeads extends React.Component {
       <LeadsTemplate
         {...this.props}
         pageName="my"
-        pageClassName="ldc-my-leads"
         getListButtons={this.getListButtons}
         getLeadButtons={this.getLeadButtons}
         getButtons={this.getButtons}
