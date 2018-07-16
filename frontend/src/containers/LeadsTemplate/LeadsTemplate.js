@@ -44,7 +44,7 @@ class LeadsTemplate extends React.Component {
 
     return (
       <div className="lt-filters">
-        <TextField placeholder="Search..." appStyle />
+        <TextField placeholder={t("Search...")} appStyle />
       </div>
     )
   }
