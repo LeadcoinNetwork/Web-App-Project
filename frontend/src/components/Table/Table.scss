@@ -20,6 +20,8 @@
         padding-left: 50px;
 
         .thr-checkbox {
+          /*rtl:ignore*/
+          direction: ltr;
           position: absolute;
           left: 20px;
           top: 50%;
