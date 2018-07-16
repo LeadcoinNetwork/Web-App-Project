@@ -31,9 +31,9 @@ const store = createStore(
 var sagaTask
 runSagas()
 
-import { hot } from "react-hot-loader"
+// import { hot } from "react-hot-loader"
 
-var HotApp = hot(module)(App)
+// var HotApp = hot(module)(App)
 
 ReactDOM.render(
   <Provider store={store}>
