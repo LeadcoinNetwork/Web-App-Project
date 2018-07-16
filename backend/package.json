@@ -76,7 +76,6 @@
     "moduleNameMapper": {
       "^@/(.*)": "<rootDir>/$1"
     },
-    "bail": true,
     "moduleFileExtensions": [
       "ts",
       "tsx",
@@ -88,12 +87,12 @@
   },
   "scripts": {
     "start": "node tsc-watch",
-    "test": "jest --bail --runInBand --forceExit",
-    "test:log": "cross-env FORCE_LOG=true jest --bail --forceExit",
-    "test:nobail": "jest --bail false --forceExit",
+    "test": "jest --runInBand --forceExit",
+    "test:log": "cross-env FORCE_LOG=true jest --forceExit",
+    "test:nobail": "jest false --forceExit",
     "test:compile": "tsc",
     "build": "tsc",
-    "test:watch": "jest --bail --watch --runInBand",
+    "test:watch": "jest --watch --runInBand",
     "precommit": "pretty-quick --staged"
   },
   "nodemonConfig": {
