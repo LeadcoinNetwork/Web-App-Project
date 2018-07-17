@@ -10,7 +10,7 @@ export default class API {
     async function r() {
       try {
         var ans = await request.apply(null, arguments)
-        if (ans.status != 200 && !ans.body.error) {
+        if (ans.status >= 400 && !ans.body.error) {
           return {
             error: "REQUEST_ERROR",
             status: ans.status,
