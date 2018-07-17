@@ -6,10 +6,10 @@ import API from "../../frontend/src/api/index"
 import * as RoutesForTests from "./utils/routes.for.tests"
 import * as ValidatedUserForTests from "./utils/user.for.tests"
 
-var { request, appLogic } = RoutesForTests.create()
+var { request, appLogic, ApiForToken } = RoutesForTests.create()
 var api = new API(request)
 
-test("getting my sold_leads should work", async () => {
+test.skip("getting my sold_leads should work", async () => {
   var { user, token } = await ValidatedUserForTests.create({
     users: appLogic.models.users,
   })
@@ -39,8 +39,11 @@ test("getting my sold_leads should work", async () => {
   expect(record.id).toBe(insertId)
 })
 
-test("getting all leads should work", async () => {
-  var { user, token } = await ValidatedUserForTests.create({
+test.only("getting all leads should work", async () => {
+  var { user: user1, token: token1 } = await ValidatedUserForTests.create({
+    users: appLogic.models.users,
+  })
+  var { user: user2, token: token2 } = await ValidatedUserForTests.create({
     users: appLogic.models.users,
   })
 
@@ -50,27 +53,26 @@ test("getting all leads should work", async () => {
     phone: "2",
     email: "moshe@moshe.com",
     active: true,
+    // type:'proeprty',
+    price: 12,
+    owner_id: 50,
+    currency: "ils",
     bought_from: 5,
   }
 
-  const result = await request
-    .post("/leads/add")
-    .set({
-      cookie: "token=" + token,
-    })
-    .send({ lead })
+  await ApiForToken(token1).leads.sellLeadsAddByForm(lead)
 
-  const res = await request
-    .get("/leads/all")
-    .set({
-      cookie: "token=" + token,
-    })
-    .send({
-      filters: [["name", "testlead"]],
-    })
-  expect(res.error).toBeFalsy()
-  const [record] = res.body.list
-  expect(record).toBeTruthy()
+  var body = await ApiForToken(token2).leads.buyLeadsGetList()
+  // const res = await request
+  //   .get("/leads/all")
+  //   .set({
+  //     cookie: "token=" + token,
+  //   })
+  //   .send({
+  //     filters: [["name", "testlead"]],
+  //   })
+  expect(body.error).toBeFalsy()
+  expect(typeof body.list).toEqual("object")
 })
 
 test("getting my bought_leads should work", async () => {

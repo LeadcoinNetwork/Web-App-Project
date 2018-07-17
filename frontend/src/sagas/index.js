@@ -10,8 +10,8 @@ import csvMapping from "./csvMapping"
 import completeRegistration from "./completeRegistration.js"
 import addLead from "./addLead"
 import redirectIfNotAllowed from "./redirectIfNotAllowed"
-import sellLeads from "./soldLeads"
-import boughtLeads from "./boughtLeads"
+import sellLeads from "./sellLeads"
+import buyLeads from "./buyLeads"
 import myLeads from "./myLeads"
 
 import language from "./language"
@@ -41,15 +41,15 @@ export default function* rootSaga() {
     completeRegistration,
     emailConfirmation,
     logout,
-    // sellLeads,
-    boughtLeads,
-    myLeads,
     homesaga,
     fetchUserToState,
     signup,
     csvMapping,
     snackbar,
     language,
+    sellLeads,
+    buyLeads,
+    myLeads,
   ]
   for (var i in sagas) {
     yield fork(sagas[i], api)

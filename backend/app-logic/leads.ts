@@ -50,6 +50,6 @@ export default class Leads {
   }
 
   public async getAllLeads(options: LeadQueryOptions) {
-    return await this.models.leads.getAllLeads(options)
+    return await this.models.leads.buyLeadsGetAll(options)
   }
 }

@@ -61,7 +61,9 @@ export class Steps extends React.Component {
   }
 }
 import { push } from "react-router-redux"
-const mapStateToProps = state => {}
+const mapStateToProps = state => {
+  return {}
+}
 const mapDispatchToProps = {
   push,
 }

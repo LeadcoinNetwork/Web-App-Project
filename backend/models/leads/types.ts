@@ -27,7 +27,7 @@ export interface BaseLead {
   bought_currency: Currency | null
 }
 
-export interface NewLead extends BaseLead {
+export interface NewBaseLead {
   date: number
   name: string
   phone: string
@@ -35,7 +35,7 @@ export interface NewLead extends BaseLead {
   bought_from: number | null
   owner_id: number
   active: boolean
-  bought_currency: Currency
+  // bought_currency: Currency
 }
 
 export interface RealEstateLead extends BaseLead {
@@ -51,3 +51,4 @@ export interface RealEstateLead extends BaseLead {
 }
 
 export type Lead = BaseLead | RealEstateLead
+export type NewLead = NewBaseLead

@@ -36,9 +36,6 @@ export default class SQL {
     await this.query("select 1")
     if (this.config.env != "test") {
       console.log("Connected to mysql")
-      console.log(
-        "Attention: mysql-pool do not create schema anymore. instead you should execute /schema.sql. It will clear your database",
-      )
     }
   }
   private init() {

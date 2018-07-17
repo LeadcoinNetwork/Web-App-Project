@@ -35,19 +35,19 @@ export default class Leads extends baseDBModel<
   }
 
   public async getSoldLeads(user_id: number, options: LeadQueryOptions) {
-    return await this.leads.getSoldLeads(user_id, options)
+    return await this.leadsQueries.getSoldLeads(user_id, options)
   }
 
   public async getMyLeads(user_id: number, options: LeadQueryOptions) {
-    return await this.leads.getMyLeads(user_id, options)
+    return await this.leadsQueries.getMyLeads(user_id, options)
   }
 
   public async getBoughtLeads(user_id: number, options: LeadQueryOptions) {
-    return await this.leads.getBoughtLeads(user_id, options)
+    return await this.leadsQueries.getBoughtLeads(user_id, options)
   }
 
-  public async getAllLeads(options: LeadQueryOptions) {
-    return await this.leads.getAllLeads(options)
+  public async buyLeadsGetAll(options: LeadQueryOptions) {
+    return await this.leadsQueries.buyLeadsGetAll(options)
   }
 
   async buy(lead_ids: number[], new_owner: number) {
