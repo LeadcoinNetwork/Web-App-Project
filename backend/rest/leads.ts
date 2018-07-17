@@ -123,7 +123,7 @@ export function start({
         const { user } = req
         const { sort_by, filters, page, limit } = req.body
         await appLogic.leads
-          .getMyLeadsForSale(user.id, {
+          .getSellLeads(user.id, {
             sort_by,
             filters,
             page,

@@ -38,10 +38,6 @@ export default class Leads {
   }
 
   public async getSellLeads(user_id: number, options: LeadQueryOptions) {
-    return await this.models.leads.getSellLeads(user_id, options)
-  }
-
-  public async getMyLeadsForSale(user_id: number, options: LeadQueryOptions) {
     return await this.models.leads.getMyLeadsForSale(user_id, options)
   }
 
