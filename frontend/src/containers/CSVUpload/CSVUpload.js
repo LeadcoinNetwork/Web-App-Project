@@ -23,7 +23,7 @@ class CSVUpload extends React.Component {
     return (
       <div className="csvUpload">
         <div className="file-pick">
-          <Button loading={loading} label={fileLabel}>
+          <Button appStyle secondary loading={loading} label={fileLabel}>
             <input
               className="displaynone"
               type="file"
@@ -37,6 +37,7 @@ class CSVUpload extends React.Component {
         </div>
         <div className="submit">
           <Button
+            appStyle
             loading={loading}
             onClick={() => {
               if (loading) return false

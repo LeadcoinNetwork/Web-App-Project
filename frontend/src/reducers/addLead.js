@@ -1,10 +1,26 @@
 import { types } from "../actions"
+import fields from "./fields-data"
 
+const initialValues = fields.reduce((values, field) => {
+  values[field.key] = ""
+  return values
+}, {})
+
+const fields_not_for_display = ["active"]
 const initialState = {
-  db_fields: [],
+  db_fields: {
+    private: fields
+      .filter(field => field.private)
+      .map(field => ({ key: field.key, name: field.name }))
+      .filter(f => fields_not_for_display.indexOf(f) < 0),
+    public: fields
+      .filter(field => !field.private)
+      .map(field => ({ key: field.key, name: field.name }))
+      .filter(f => fields_not_for_display.indexOf(f.key) < 0),
+  },
+  values: initialValues,
   errors: {},
   agree_to_terms: false,
-  values: {},
   loading: false,
 }
 
@@ -22,7 +38,7 @@ export default function(state = initialState, action) {
     case types.ADD_LEAD_AGREE_TO_TERMS:
       return {
         ...state,
-        errors: [],
+        errors: {},
         agree_to_terms: action.agree_to_terms.value,
       }
 
@@ -35,17 +51,19 @@ export default function(state = initialState, action) {
     case types.ADD_LEAD_CLEAR_FORM:
       return {
         ...state,
-        agree_to_terms: initialState.agree_to_terms,
+        values: initialValues,
+        errors: {},
+        agree_to_terms: state.agree_to_terms,
       }
 
     case types.ADD_LEAD_HANDLE_FORM_CHANGE:
       return {
         ...state,
-        errors: [],
         values: {
           ...state.values,
           [action.payload.name]: action.payload.value,
         },
+        errors: {},
       }
 
     case types.ADD_LEAD_GET_DB_FIELDS:
