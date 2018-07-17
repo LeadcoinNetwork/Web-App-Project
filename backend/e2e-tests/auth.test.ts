@@ -18,7 +18,7 @@ test("forgot password sends email with the new password", async () => {
   } else {
     const { password } = _user
     let emailHTML = emailSenderMock.lastCall().html
-    expect(emailHTML).toMatch(/password:\s+(.*)<\/br>/)
+    expect(emailHTML).toMatch(/password:\s+(.*)<br>/)
   }
 })
 
