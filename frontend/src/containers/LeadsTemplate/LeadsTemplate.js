@@ -147,9 +147,10 @@ class LeadsTemplate extends React.Component {
                   isSelectable={true}
                 />
               )}
-              {!leads.loading && (
-                <div className="lt-zero-results">{this.zeroResults()}</div>
-              )}
+              {!leads.list.length &&
+                !leads.loading && (
+                  <div className="lt-zero-results">{this.zeroResults()}</div>
+                )}
             </section>
           </div>
         )}
