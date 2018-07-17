@@ -108,16 +108,16 @@ test("getting all leads should work", async () => {
     phone: "2",
     email: "moshe@moshe.com",
     active: true,
-    // type:'proeprty',
     price: 12,
     owner_id: 50,
-    currency: "ils",
+    currency: "USD",
     bought_from: 5,
   }
 
   await ApiForToken(token1).leads.sellLeadsAddByForm(lead)
 
   var body = await ApiForToken(token2).leads.buyLeadsGetList()
+  expect(body.total).toBe(1)
   // const res = await request
   //   .get("/leads/all")
   //   .set({

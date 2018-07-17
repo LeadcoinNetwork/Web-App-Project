@@ -83,8 +83,9 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
           })
           .join(" AND ")
       }
+      let countHeader = "SELECT COUNT(*) as total"
+      let realHeader = "SELECT *"
       let query = `
-        SELECT *
         FROM leads
         WHERE doc->>"$.active" = "true" 
       `
@@ -97,10 +98,10 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       if (limit) {
         query += ` LIMIT ${limit.start},${limit.offset} `
       }
-      console.log({ query })
-      let rows = await this.sql.query(query)
+      let count = await this.sql.query(countHeader + query)
+      let rows = await this.sql.query(realHeader + query)
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
-      return rows
+      return { list: rows, total: count[0].total }
     },
 
     getMyLeads: async (user_id: number, options: any) => {

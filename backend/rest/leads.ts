@@ -15,20 +15,6 @@ const authOptions = {
   session: false,
 }
 
-const basic_fields = ["date", "name", "phone", "email"]
-
-const mock_field_list = [
-  "state",
-  "city",
-  "property type",
-  "size",
-  "budget",
-  "bedrooms",
-  "floor",
-  "specification",
-]
-// ---
-
 const done = a => {
   console.log(a)
 }
@@ -43,10 +29,11 @@ export function start({
   expressApp.get("/leads/mock/:number", mock_leads)
   async function add_fake_leads(count) {
     const rc = []
+    count = parseInt(count)
     for (let i = 1; i < count + 1; i++) {
       let owner = Math.floor(count / i)
       let status = await appLogic.models.leads.insertLead({
-        date: new Date().toDateString,
+        date: new Date().toDateString(),
         floor: chance.integer({ min: 1, max: 4 }),
         rooms: chance.integer({ min: 1, max: 4 }),
         size: chance.integer({ min: 1, max: 20 }),
@@ -121,13 +108,20 @@ export function start({
     async function(req, res, next) {
       ;(async () => {
         const { user } = req
-        const { sort_by, filters, page, limit } = req.query
+        let { search, sortBy, page, limit, sortOrder } = req.query
+        let _sort = {
+          sortBy: sortBy || "date",
+          sortOrder: sortOrder || "DESC",
+        }
+        let _limit = {
+          start: parseInt(page || 0) * parseInt(limit || 50),
+          offset: limit || 50,
+        }
         await appLogic.leads
           .getSellLeads(user.id, {
-            sort_by,
-            filters,
-            page,
-            limit,
+            sort: _sort,
+            filters: [],
+            limit: _limit,
           })
           .then(response => {
             let jsonResponse = Object.assign({ list: response }, req.query)
@@ -224,13 +218,20 @@ export function start({
     async function(req, res, next) {
       ;(async () => {
         const { user } = req
-        const { sort_by, filters, page, limit } = req.query
+        let { search, sortBy, page, limit, sortOrder } = req.query
+        let _sort = {
+          sortBy: sortBy || "date",
+          sortOrder: sortOrder || "DESC",
+        }
+        let _limit = {
+          start: parseInt(page || 0) * parseInt(limit || 50),
+          offset: limit || 50,
+        }
         await appLogic.leads
           .getBoughtLeads(user.id, {
-            sort_by,
-            filters,
-            page,
-            limit,
+            sort: _sort,
+            filters: [],
+            limit: _limit,
           })
           .then(response => {
             let jsonResponse = Object.assign({ list: response }, req.query)
@@ -336,7 +337,7 @@ export function start({
           limit: _limit,
         })
         .then(response => {
-          let jsonResponse = Object.assign({ list: response }, req.query)
+          let jsonResponse = Object.assign(response, req.query)
           res.json(jsonResponse)
         })
         .catch(err => {
