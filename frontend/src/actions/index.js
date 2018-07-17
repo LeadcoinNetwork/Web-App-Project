@@ -21,7 +21,3 @@ export { default as csvMapping } from "./csvMapping"
 export { default as csvUpload } from "./csvUpload"
 export { default as addLead } from "./addLead"
 export { default as route } from "./route"
-
-export { default as buyLeads } from "./buyLeads"
-export { default as sellLeads } from "./sellLeads"
-export { default as myLeads } from "./myLeads"

@@ -26,7 +26,7 @@ export default function* buyLeads(api) {
       yield put(actions.leads.fetchError("BUY_LEADS"))
       yield put(actions.app.notificationShow(res.error, "error"))
     } else {
-      yield put(actions.buyLeads.fetchSuccess("BUY_LEADS", res))
+      yield put(actions.leads.fetchSuccess("BUY_LEADS", res))
     }
 
     yield take([
