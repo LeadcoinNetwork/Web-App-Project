@@ -10,6 +10,12 @@ export default class API {
     async function r() {
       try {
         var ans = await request.apply(null, arguments)
+        if (ans.status != 200 && !ans.body.error) {
+          return {
+            error: "REQUEST_ERROR",
+            status: ans.status,
+          }
+        }
         return ans.body || {}
       } catch (err) {
         if (err.response && err.response.body) {
