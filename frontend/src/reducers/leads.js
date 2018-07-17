@@ -64,15 +64,10 @@ const initialState = {
 const createReducerFor = namespace => {
   return (state = initialState, action) => {
     switch (action.type) {
-      case types[namespace + "_UPDATE_LIST"]:
-        console.log("we are here!")
-        return {
-          ...state,
-          list: action.payload.list,
-        }
       case types[namespace + "_FETCH_LEADS"]:
         return {
           ...state,
+          ...action.payload,
           loading: true,
           error: false,
         }
