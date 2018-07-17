@@ -13,7 +13,9 @@ class LeadsTemplate extends React.Component {
   onScrollBottom = () => {
     let { fetchLeads, leads } = this.props
 
-    fetchLeads(leads.page + 1)
+    fetchLeads({
+      page: leads.page + 1,
+    })
   }
   isNotAllSelected = () => {
     let { leads } = this.props

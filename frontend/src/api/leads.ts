@@ -13,7 +13,7 @@ export default class LeadsApi {
     return await this.request(methods.post, "/sell-leads/addbyform", { lead })
   }
   async buyLeadsGetList(filters?) {
-    return await this.request(methods.get, "/buy-leads")
+    return await this.request(methods.get, "/buy-leads", null, { ...filters })
   }
 
   async getBoughtLeads(options: LeadsApiOptions) {

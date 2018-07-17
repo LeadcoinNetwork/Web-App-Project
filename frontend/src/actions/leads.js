@@ -1,9 +1,10 @@
 import types from "./types"
 
 export default {
-  fetchLeads(namespace) {
+  fetchLeads(namespace, params) {
     return {
       type: types[namespace + "_FETCH_LEADS"],
+      payload: params,
     }
   },
   fetchSuccess(namespace, payload) {

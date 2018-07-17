@@ -67,6 +67,7 @@ const createReducerFor = namespace => {
       case types[namespace + "_FETCH_LEADS"]:
         return {
           ...state,
+          ...action.payload,
           loading: true,
           error: false,
         }

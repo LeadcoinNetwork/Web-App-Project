@@ -63,11 +63,8 @@ const mapStateToProps = state => ({
   fields: state.fields.filter(lead => !lead.private),
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    fetchLeads: (...params) => leads.fetchLeads("BUY_LEADS", ...params),
-    setSelectedLeads: selectedLeads =>
-      leads.setSelectedLeads("BUY_LEADS", selectedLeads),
-  },
-)(BuyLeads)
+export default connect(mapStateToProps, {
+  fetchLeads: params => leads.fetchLeads("BUY_LEADS", params),
+  setSelectedLeads: selectedLeads =>
+    leads.setSelectedLeads("BUY_LEADS", selectedLeads),
+})(BuyLeads)
