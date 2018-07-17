@@ -5,11 +5,10 @@ import Table from "Components/Table"
 import Button from "Components/Button"
 import t from "../../utils/translate/translate"
 
-const checkoutConfig = require("./checkout.config.json")
-
 const Checkout = ({ fields, checkout, buyLeads }) => (
-  <div className="shopping-cart">
-    <h1>{t("Shopping Cart")}</h1>
+  <div className="ldc-checkout">
+    <h1>{t("Checkout")}</h1>
+
     <Table
       fields={fields.map(field => ({
         ...field,
@@ -18,16 +17,18 @@ const Checkout = ({ fields, checkout, buyLeads }) => (
       records={buyLeads.list.filter(lead => buyLeads.selected.has(lead.id))}
       isSelectable={false}
     />
+
     <div className="checkout">
       <div className="total-price">
         {t("Total")}: {checkout.totalPrice}
       </div>
+
       <Button
-        label={t("Checkout")}
+        label={t("Buy")}
         loading={checkout.loading}
         loadingLabel={t("Processing")}
         appStyle={true}
-        disabled={buyLeads.selected.size > 0 ? false : true}
+        disabled={!buyLeads.selected.size}
       />
     </div>
   </div>
