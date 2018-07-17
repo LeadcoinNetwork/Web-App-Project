@@ -57,7 +57,7 @@ const initialState = {
   floor_max: null,
   search: null,
   error: "",
-  loading: false,
+  loading: true,
   selected: new Set(),
 }
 
@@ -68,12 +68,6 @@ const createReducerFor = namespace => {
         return {
           ...state,
           ...action.payload,
-          loading: true,
-          error: false,
-        }
-      case types[namespace + "_FETCH_LEADS"]:
-        return {
-          ...state,
           loading: true,
           error: false,
         }
