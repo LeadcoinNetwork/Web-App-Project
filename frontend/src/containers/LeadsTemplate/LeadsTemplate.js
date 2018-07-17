@@ -14,7 +14,7 @@ class LeadsTemplate extends React.Component {
     let { fetchLeads, leads } = this.props
 
     fetchLeads({
-      page: leads.page + 1,
+      page: Number(leads.page) + 1,
     })
   }
   isNotAllSelected = () => {
