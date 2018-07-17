@@ -4,6 +4,7 @@ export interface LeadQueryOptions {
   id?: number
   condition?: any
   sort?: any
+  sort_by?: any
   email?: string
   fields?: string[]
   page?: number
