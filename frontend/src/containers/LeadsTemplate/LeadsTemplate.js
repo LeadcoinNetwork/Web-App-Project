@@ -7,12 +7,15 @@ import t from "../../utils/translate/translate"
 import RealEstateLead from "Components/RealEstateLead"
 import ResultsModeContext from "Containers/App/ResultsModeContext"
 import SwitchResultsMode from "Containers/SwitchResultsMode"
+import { Link } from "react-router-dom"
 
 class LeadsTemplate extends React.Component {
   onScrollBottom = () => {
     let { fetchLeads, leads } = this.props
 
-    fetchLeads(leads.page + 1)
+    fetchLeads({
+      page: leads.page + 1,
+    })
   }
   isNotAllSelected = () => {
     let { leads } = this.props
@@ -48,6 +51,37 @@ class LeadsTemplate extends React.Component {
       </div>
     )
   }
+  zeroResults = () => {
+    switch (this.props.pageName) {
+      case "buy":
+        return (
+          <>
+            <h3>Sorry, we couldn't find any leads</h3>
+            <span>Try expanding your criteria</span>
+          </>
+        )
+      case "sell":
+        return (
+          <>
+            <h3>Start uploading your leads</h3>
+            <span>
+              Upload your leads now by selecting a{" "}
+              <Link to="/csv-upload">CSV file</Link> or by filling out a{" "}
+              <Link to="/add-lead">simple web form</Link>
+            </span>
+          </>
+        )
+      case "my":
+        return (
+          <>
+            <h3>You have no leads</h3>
+            <span>
+              Explore and <Link to="/buy-leads">buy new leads</Link> now
+            </span>
+          </>
+        )
+    }
+  }
   renderResultsHead = () => {
     let { leads } = this.props
 
@@ -75,43 +109,47 @@ class LeadsTemplate extends React.Component {
             <section className={`ldc-${pageName}-leads`}>
               <SwitchResultsMode />
               <h1>{t(`${pageName} leads`)}</h1>
-              {cardsMode ? (
-                <LeadsResults
-                  leads={leads}
-                  buttons={this.props.getListButtons()}
-                  isNotAllSelected={isNotAllSelected}
-                  loading={leads.loading}
-                  onScrollBottom={this.onScrollBottom}
-                  toggleAll={this.toggleAll}
-                  renderFilters={this.renderFilters}
-                  renderResultsHead={this.renderResultsHead}
-                  renderLead={lead => (
-                    <RealEstateLead
-                      key={lead.id}
-                      {...lead}
-                      checked={leads.selected.has(lead.id)}
-                      buttons={this.props.getLeadButtons()}
-                      toggleCheck={event => this.toggleLead(event, lead.id)}
-                    />
-                  )}
-                />
+              {leads.list.length ? (
+                cardsMode ? (
+                  <LeadsResults
+                    leads={leads}
+                    buttons={this.props.getListButtons()}
+                    isNotAllSelected={isNotAllSelected}
+                    loading={leads.loading}
+                    onScrollBottom={this.onScrollBottom}
+                    toggleAll={this.toggleAll}
+                    renderFilters={this.renderFilters}
+                    renderResultsHead={this.renderResultsHead}
+                    renderLead={lead => (
+                      <RealEstateLead
+                        key={lead.id}
+                        {...lead}
+                        checked={leads.selected.has(lead.id)}
+                        buttons={this.props.getLeadButtons()}
+                        toggleCheck={event => this.toggleLead(event, lead.id)}
+                      />
+                    )}
+                  />
+                ) : (
+                  <Table
+                    fields={fields.map(field => ({
+                      ...field,
+                      name: t(field.name),
+                    }))}
+                    loading={leads.loading}
+                    onScrollBottom={this.onScrollBottom}
+                    renderFilters={this.renderFilters}
+                    renderResultsHead={this.renderResultsHead}
+                    records={leads.list}
+                    buttons={this.props.getButtons()}
+                    setSelectedRecords={setSelectedLeads}
+                    isNotAllSelected={isNotAllSelected}
+                    selected={leads.selected}
+                    isSelectable={true}
+                  />
+                )
               ) : (
-                <Table
-                  fields={fields.map(field => ({
-                    ...field,
-                    name: t(field.name),
-                  }))}
-                  loading={leads.loading}
-                  onScrollBottom={this.onScrollBottom}
-                  renderFilters={this.renderFilters}
-                  renderResultsHead={this.renderResultsHead}
-                  records={leads.list}
-                  buttons={this.props.getButtons()}
-                  setSelectedRecords={setSelectedLeads}
-                  isNotAllSelected={isNotAllSelected}
-                  selected={leads.selected}
-                  isSelectable={true}
-                />
+                <div className="lt-zero-results">{this.zeroResults()}</div>
               )}
             </section>
           </div>

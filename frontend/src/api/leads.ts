@@ -14,7 +14,7 @@ export default class LeadsApi {
   }
 
   async buyLeadsGetList(filters?) {
-    return await this.request(methods.get, "/buy-leads")
+    return await this.request(methods.get, "/buy-leads", null, { ...filters })
   }
 
   async buyLeadsBuy(leads: Lead[]) {

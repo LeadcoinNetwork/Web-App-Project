@@ -24,10 +24,11 @@ import API from "../api/index"
 // Create a request object for all the API's
 // This request object add the default backend URLs, and do other defaults.
 // This request object is bein used only by the saga's on the frontend.
-var request = function(method, url, data) {
+var request = function(method, url, data, query) {
   if (url[0] == "/") url = process.env.BACKEND + url
   return superagent[method.toLowerCase()](url)
     .withCredentials()
+    .query(query)
     .send(data)
 }
 var api = new API(request)

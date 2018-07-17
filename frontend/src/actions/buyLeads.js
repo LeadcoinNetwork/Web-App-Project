@@ -12,14 +12,6 @@ export default {
       payload,
     }
   },
-  buyLeadsUpdateList(list) {
-    return {
-      type: types.BUY_LEADS_UPDATE_LIST,
-      payload: {
-        list,
-      },
-    }
-  },
   fetchError(namespace, error) {
     return {
       type: types[namespace + "_FETCH_ERROR"],
