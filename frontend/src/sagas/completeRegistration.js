@@ -20,6 +20,9 @@ export default function* completeRegistration(api) {
         actions.completeRegistration.completeRegistrationError(ans.error),
       )
     } else {
+      console.log("here2")
+      yield put({ type: actions.types.FETCH_USER_AGAIN })
+      // yield push("/buy-leads")
       yield put(actions.route.gotoDefaultHome())
     }
   }

@@ -12,12 +12,17 @@ export default class LeadsApi {
   async sellLeadsAddByForm(lead: NewLead) {
     return await this.request(methods.post, "/sell-leads/addbyform", { lead })
   }
+
   async buyLeadsGetList(filters?) {
     return await this.request(methods.get, "/buy-leads", null, { ...filters })
   }
 
-  async getBoughtLeads(options: LeadsApiOptions) {
-    return await this.request(methods.get, "/leads/bought", { ...options })
+  async buyLeadsBuy(leads: Lead[]) {
+    return await this.request(methods.post, "/buy-leads/buy", { leads })
+  }
+
+  async sellLeadsGetList(options: LeadsApiOptions) {
+    return await this.request(methods.get, "/sell-leads", { ...options })
   }
 
   async getSoldLeads(options: LeadsApiOptions) {

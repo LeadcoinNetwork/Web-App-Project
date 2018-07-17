@@ -37,6 +37,10 @@ export default class Leads {
     throw new Error(problems.join("; "))
   }
 
+  public async getSellLeads(user_id: number, options: LeadQueryOptions) {
+    return await this.models.leads.getMyLeadsForSale(user_id, options)
+  }
+
   public async getSoldLeads(user_id: number, options: LeadQueryOptions) {
     return await this.models.leads.getSoldLeads(user_id, options)
   }

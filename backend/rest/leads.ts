@@ -47,7 +47,17 @@ export function start({
       let owner = Math.floor(count / i)
       let status = await appLogic.models.leads.insertLead({
         date: new Date().toDateString,
-        owner_id: owner,
+        floor: chance.integer({ min: 1, max: 4 }),
+        rooms: chance.integer({ min: 1, max: 4 }),
+        size: chance.integer({ min: 1, max: 20 }),
+        budget: chance.integer({ min: 100000, max: 1000000 }),
+        city: chance.city(),
+        specification: chance.sentence({
+          words: chance.integer({ min: 1, max: 9 }),
+        }),
+        state: chance.state(),
+        propertyType: "Cardboard Box",
+        ownerId: owner,
         name: chance.name(),
         phone: chance.phone(),
         email: chance.email(),
@@ -101,6 +111,38 @@ export function start({
   // }
 
   /**
+   * get leads I added for selling
+   */
+
+  expressApp.get(
+    "/sell-leads",
+    passport.authenticate("jwt", authOptions),
+
+    async function(req, res, next) {
+      ;(async () => {
+        const { user } = req
+        const { sort_by, filters, page, limit } = req.body
+        await appLogic.leads
+          .getSellLeads(user.id, {
+            sort_by,
+            filters,
+            page,
+            limit,
+          })
+          .then(response => {
+            let jsonResponse = Object.assign({ list: response }, req.body)
+            res.json(jsonResponse)
+          })
+          .catch(err => {
+            res.status(400)
+            res.send({ error: err.message })
+          })
+        return next()
+      })().catch(done)
+    },
+  )
+
+  /**
    * Post a now lead for selling. Using a form.
    */
   expressApp.post(
@@ -138,7 +180,7 @@ export function start({
   /**
    * Buying a lead.
    */
-  expressApp.get(
+  expressApp.post(
     "/buy-leads/buy",
     passport.authenticate("jwt", authOptions),
     async function(req, res, next) {
@@ -191,12 +233,8 @@ export function start({
             limit,
           })
           .then(response => {
-            res.json({
-              list: response,
-              sort_by,
-              page,
-              limit,
-            })
+            let jsonResponse = Object.assign({ list: response }, req.body)
+            res.json(jsonResponse)
           })
           .catch(err => {
             res.status(400)
@@ -298,12 +336,8 @@ export function start({
           limit,
         })
         .then(response => {
-          res.json({
-            list: response,
-            sort_by,
-            page,
-            limit,
-          })
+          let jsonResponse = Object.assign({ list: response }, req.body)
+          res.json(jsonResponse)
         })
         .catch(err => {
           res.status(400)
