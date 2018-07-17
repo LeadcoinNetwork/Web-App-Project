@@ -44,7 +44,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
 
   leadsQueries = {
     getBoughtLeads: async (user_id: number, options: any) => {
-      const { filters, sort } = options
+      const { limit, filters, sort } = options
       let where_additions = []
       if (filters) {
         where_additions = filters
@@ -66,12 +66,15 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
           "$." + sort.sortBy,
         )} ${sort.sortOrder}`
       }
+      if (limit) {
+        query += ` LIMIT ${limit.start},${limit.offset} `
+      }
       let rows = await this.sql.query(query)
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
       return rows
     },
     buyLeadsGetAll: async (options: any) => {
-      const { filters, sort } = options
+      const { limit, filters, sort } = options
       let where_additions = []
       if (filters) {
         where_additions = filters
@@ -91,13 +94,17 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
           "$." + sort.sortBy,
         )} ${sort.sortOrder}`
       }
+      if (limit) {
+        query += ` LIMIT ${limit.start},${limit.offset} `
+      }
+      console.log({ query })
       let rows = await this.sql.query(query)
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
       return rows
     },
 
     getMyLeads: async (user_id: number, options: any) => {
-      const { filters, sort } = options
+      const { limit, filters, sort } = options
       let where_additions = []
       if (filters) {
         where_additions = filters
@@ -118,13 +125,16 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
           "$." + sort.sortBy,
         )} ${sort.sortOrder}`
       }
+      if (limit) {
+        query += ` LIMIT ${limit.start},${limit.offset} `
+      }
       let rows = await this.sql.query(query)
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
       return rows
     },
 
     getMyLeadsForSale: async (user_id: number, options: any) => {
-      const { filters, sort } = options
+      const { limit, filters, sort } = options
       let where_additions = []
       if (filters) {
         where_additions = filters
@@ -145,13 +155,16 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
           "$." + sort.sortBy,
         )} ${sort.sortOrder}`
       }
+      if (limit) {
+        query += ` LIMIT ${limit.start},${limit.offset} `
+      }
       let rows = await this.sql.query(query)
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
       return rows
     },
 
     getSoldLeads: async (user_id: number, options: any) => {
-      const { filters, sort } = options
+      const { limit, filters, sort } = options
       let where_additions = []
       if (filters) {
         where_additions = filters

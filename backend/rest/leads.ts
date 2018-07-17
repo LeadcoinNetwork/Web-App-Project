@@ -320,20 +320,19 @@ export function start({
    */
   expressApp.get("/buy-leads", async (req, res, next) => {
     ;(async () => {
-      const { search, sortBy, page, limit } = req.query
-      let sort_by = {
+      let { search, sortBy, page, limit, sortOrder } = req.query
+      let _sort = {
         sortBy: sortBy || "date",
-        sortOrder: "DESC",
+        sortOrder: sortOrder || "DESC",
       }
       let _limit = {
-        start: page * limit,
-        limit,
+        start: parseInt(page || 0) * parseInt(limit || 50),
+        offset: limit || 50,
       }
       await appLogic.leads
         .getAllLeads({
-          sort_by,
+          sort: _sort,
           filters: [],
-          page,
           limit: _limit,
         })
         .then(response => {

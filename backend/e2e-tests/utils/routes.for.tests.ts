@@ -27,9 +27,10 @@ export function create({ realEmail = false }: IcreateProps = {}) {
   var request = supertest(app)
 
   var ApiForToken = function(token) {
-    function newRequest(method, url, body) {
+    function newRequest(method, url, body, query) {
       return request[method](url)
         .set("Cookie", "token=" + token)
+        .query(query)
         .send(body)
     }
     return new API(newRequest)

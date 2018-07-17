@@ -1,5 +1,9 @@
 import { methods, request } from "./request"
-import { Lead, NewLead } from "../../../backend/models/leads/types"
+import {
+  Lead,
+  NewLead,
+  LeadQueryOptions,
+} from "../../../backend/models/leads/types"
 
 interface LeadsApiOptions {
   sort_by?: [string, "ASC" | "DESC"]
