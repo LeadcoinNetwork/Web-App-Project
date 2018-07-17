@@ -14,16 +14,11 @@ test("forgot password sends email with the new password", async () => {
   expect(res.error).toBeFalsy()
   var _user = await users.getOne({ id: user.id })
   if (_user instanceof NotFound) {
-    // wtf happened?
     throw new Error("user is error")
   } else {
     const { password } = _user
-    let password_finding_regex = /password:\s+(.*)<\/br>/
     let emailHTML = emailSenderMock.lastCall().html
-    let password_matches = emailHTML.match(password_finding_regex)
-
-    const hashed_password = auth.hashPassword(password)
-    expect(emailHTML).toMatch(hashed_password)
+    expect(emailHTML).toMatch(/password:\s+(.*)<\/br>/)
   }
 })
 
