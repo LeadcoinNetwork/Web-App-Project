@@ -6,10 +6,10 @@ import API from "../../frontend/src/api/index"
 import * as RoutesForTests from "./utils/routes.for.tests"
 import * as ValidatedUserForTests from "./utils/user.for.tests"
 
-var { request, appLogic } = RoutesForTests.create()
+var { request, appLogic, ApiForToken } = RoutesForTests.create()
 var api = new API(request)
 
-test("getting my sold_leads should work", async () => {
+test.skip("getting my sold_leads should work", async () => {
   var { user, token } = await ValidatedUserForTests.create({
     users: appLogic.models.users,
   })
@@ -35,8 +35,44 @@ test("getting my sold_leads should work", async () => {
       filters: [["name", "testlead"]],
     })
   expect(res.error).toBeFalsy()
-  const [record] = res.body
+  const [record] = res.body.list
   expect(record.id).toBe(insertId)
+})
+
+test.only("getting all leads should work", async () => {
+  var { user: user1, token: token1 } = await ValidatedUserForTests.create({
+    users: appLogic.models.users,
+  })
+  var { user: user2, token: token2 } = await ValidatedUserForTests.create({
+    users: appLogic.models.users,
+  })
+
+  const lead = {
+    date: 1213,
+    name: "testlead 1",
+    phone: "2",
+    email: "moshe@moshe.com",
+    active: true,
+    // type:'proeprty',
+    price: 12,
+    owner_id: 50,
+    currency: "ils",
+    bought_from: 5,
+  }
+
+  await ApiForToken(token1).leads.sellLeadsAddByForm(lead)
+
+  var body = await ApiForToken(token2).leads.buyLeadsGetList()
+  // const res = await request
+  //   .get("/leads/all")
+  //   .set({
+  //     cookie: "token=" + token,
+  //   })
+  //   .send({
+  //     filters: [["name", "testlead"]],
+  //   })
+  expect(body.error).toBeFalsy()
+  expect(typeof body.list).toEqual("object")
 })
 
 test("getting my bought_leads should work", async () => {
@@ -66,7 +102,7 @@ test("getting my bought_leads should work", async () => {
       filters: [["name", "testlead"]],
     })
   expect(res.error).toBeFalsy()
-  const [record] = res.body
+  const [record] = res.body.list
   expect(record.name).toBe(lead.name)
 })
 
@@ -118,7 +154,7 @@ test("getting my leads at order should work", async () => {
       filters: [],
     })
   expect(res.error).toBeFalsy()
-  const [record1, record2] = res.body
+  const [record1, record2] = res.body.list
   expect(record1.name).toBe(lead.name)
   expect(record2.name).toBe(lead2.name)
   const res2 = await request
@@ -134,7 +170,7 @@ test("getting my leads at order should work", async () => {
       filters: [],
     })
   expect(res2.error).toBeFalsy()
-  const [record3, record4] = res.body
+  const [record3, record4] = res.body.list
   expect(record3.name).toBe(lead.name)
   expect(record4.name).toBe(lead2.name)
 })

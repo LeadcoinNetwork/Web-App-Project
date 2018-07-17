@@ -64,7 +64,6 @@ export function start({
 
   async function mock_leads(req, res, next) {
     ;(async () => {
-      console.log("HERE")
       const quantity: number = req.params.number
       const done = add_fake_leads(quantity)
       res.status(200)
@@ -74,194 +73,243 @@ export function start({
     })().catch(done)
   }
 
+  /**
+   * There is no option yet to remove a lead
+   * Later should e 2 endpoints. (selleads/remove , myleads/remove)
+   */
+  // expressApp.post(
+  //   "/leads/:id/remove",
+  //   passport.authenticate("jwt", authOptions),
+  //   remove_lead,
+  // )
+  // async function remove_lead(req, res, next) {
+  //   ;(async () => {
+  //     const { user } = req
+  //     const { lead_id }: { lead_id: number } = req.params.id
+  //     appLogic.leads
+  //       .removeLead(lead_id)
+  //       .then(() => {
+  //         res.status(200)
+  //         res.send({ ok: true })
+  //       })
+  //       .catch(err => {
+  //         res.status(400)
+  //         res.send({ error: err.message })
+  //       })
+  //     next()
+  //   })().catch(done)
+  // }
+
+  /**
+   * Post a now lead for selling. Using a form.
+   */
   expressApp.post(
-    "/leads/:id/remove",
+    "/sell-leads/addbyform",
     passport.authenticate("jwt", authOptions),
-    remove_lead,
+    async function(req, res, next) {
+      ;(async () => {
+        const { user } = req
+        const { lead }: { lead: Lead } = req.body
+        if (lead) {
+          lead.owner_id = user.id
+          appLogic.leads
+            .AddLead(lead)
+            .then(response => {
+              res.json({ response })
+            })
+            .catch(err => {
+              res.status(400)
+              if (err.sqlMessage) {
+                res.send({ error: err.sqlMessage })
+              } else {
+                res.send({ error: err.message })
+              }
+            })
+        } else {
+          return next()
+        }
+      })().catch(err => {
+        res.status(400)
+        res.send({ error: err.message })
+      })
+    },
   )
-  async function remove_lead(req, res, next) {
+
+  /**
+   * Buying a lead.
+   */
+  expressApp.get(
+    "/buy-leads/buy",
+    passport.authenticate("jwt", authOptions),
+    async function(req, res, next) {
+      ;(async () => {
+        /*
+      TODO: buy links
+      */
+        const { user } = req
+        const { leads }: { leads: number[] } = req.body
+        if (leads) {
+          appLogic.leads
+            .buyLeads(leads, user.id)
+            .then(response => {
+              res.json({ response })
+            })
+            .catch(err => {
+              res.status(400)
+              if (err.sqlMessage) {
+                res.send({ error: err.sqlMessage })
+              } else {
+                res.send({ error: err.message })
+              }
+            })
+        } else {
+          return next()
+        }
+      })().catch(err => {
+        res.status(400)
+        res.send({ error: err.message })
+      })
+    },
+  )
+
+  /**
+   * Leads I bought
+   */
+  expressApp.get(
+    "/my-leads",
+    passport.authenticate("jwt", authOptions),
+
+    async function(req, res, next) {
+      ;(async () => {
+        const { user } = req
+        const { sort_by, filters, page, limit } = req.body
+        await appLogic.leads
+          .getBoughtLeads(user.id, {
+            sort_by,
+            filters,
+            page,
+            limit,
+          })
+          .then(response => {
+            res.json({
+              list: response,
+              sort_by,
+              page,
+              limit,
+            })
+          })
+          .catch(err => {
+            res.status(400)
+            res.send({ error: err.message })
+          })
+        return next()
+      })().catch(done)
+    },
+  )
+
+  /**
+   * Leads I sold. Not relevent for now.
+   */
+
+  // expressApp.get(
+  //   "/leads/sold",
+  //   passport.authenticate("jwt", authOptions),
+  //   sold_leads,
+  // )
+
+  // async function sold_leads(req, res, next) {
+  //   ;(async () => {
+  //     const { user } = req
+  //     const { sort_by, filters, page, limit } = req.body
+  //     await appLogic.leads
+  //       .getSoldLeads(user.id, {
+  //         sort_by,
+  //         filters,
+  //         page,
+  //         limit,
+  //       })
+  //       .then(response => {
+  //         res.json({
+  //           list: response,
+  //           sort_by,
+  //           page,
+  //           limit,
+  //         })
+  //       })
+  //       .catch(err => {
+  //         res.status(400)
+  //         res.send({ error: err.message })
+  //       })
+  //     return next()
+  //   })().catch(done)
+  // }
+
+  // expressApp.get(
+  //   "/my-leads",
+  //   passport.authenticate("jwt", authOptions),
+  //   my_leads,
+  // )
+
+  // async function my_leads(req, res, next) {
+  //   ;(async () => {
+  //     const { user } = req
+  //     const { sort_by, filters, page, limit } = req.body
+  //     await appLogic.leads
+  //       .getMyLeads(user.id, {
+  //         sort_by,
+  //         filters,
+  //         page,
+  //         limit,
+  //       })
+  //       .then(response => {
+  //         res.json({
+  //           list: response,
+  //           sort_by,
+  //           page,
+  //           limit,
+  //         })
+  //       })
+  //       .catch(err => {
+  //         res.status(400)
+  //         res.send({ error: err.message })
+  //       })
+  //     return next()
+  //   })().catch(done)
+  // }
+
+  /**
+   * All the leads
+   */
+  expressApp.get("/buy-leads", async (req, res, next) => {
     ;(async () => {
-      const { user } = req
-      const { lead_id }: { lead_id: number } = req.params.id
-      appLogic.leads
-        .removeLead(lead_id)
-        .then(() => {
-          res.status(200)
-          res.send({ ok: true })
+      let { limit } = req.body
+      const { sort_by, filters, page } = req.body
+      if (!limit) {
+        limit = {
+          start: 0,
+          offset: 50,
+        }
+      }
+      await appLogic.leads
+        .getAllLeads({
+          sort_by,
+          filters,
+          page,
+          limit,
+        })
+        .then(response => {
+          res.json({
+            list: response,
+            sort_by,
+            page,
+            limit,
+          })
         })
         .catch(err => {
           res.status(400)
           res.send({ error: err.message })
         })
-      next()
-    })().catch(done)
-  }
-
-  expressApp.post(
-    "/leads/add",
-    passport.authenticate("jwt", authOptions),
-    add_lead,
-  )
-  async function add_lead(req, res, next) {
-    ;(async () => {
-      const { user } = req
-      const { lead }: { lead: Lead } = req.body
-      if (lead) {
-        lead.owner_id = user.id
-        appLogic.leads
-          .AddLead(lead)
-          .then(response => {
-            res.json({ response })
-          })
-          .catch(err => {
-            res.status(400)
-            if (err.sqlMessage) {
-              res.send({ error: err.sqlMessage })
-            } else {
-              res.send({ error: err.message })
-            }
-          })
-      } else {
-        return next()
-      }
-    })().catch(err => {
-      res.status(400)
-      res.send({ error: err.message })
-    })
-  }
-
-  expressApp.get(
-    "/leads/buy",
-    passport.authenticate("jwt", authOptions),
-    buy_leads,
-  )
-
-  async function buy_leads(req, res, next) {
-    ;(async () => {
-      /*
-      TODO: buy links
-      */
-      const { user } = req
-      const { leads }: { leads: number[] } = req.body
-      if (leads) {
-        appLogic.leads
-          .buyLeads(leads, user.id)
-          .then(response => {
-            res.json({ response })
-          })
-          .catch(err => {
-            res.status(400)
-            if (err.sqlMessage) {
-              res.send({ error: err.sqlMessage })
-            } else {
-              res.send({ error: err.message })
-            }
-          })
-      } else {
-        return next()
-      }
-    })().catch(err => {
-      res.status(400)
-      res.send({ error: err.message })
-    })
-  }
-
-  expressApp.get(
-    "/leads/bought",
-    passport.authenticate("jwt", authOptions),
-    bought_leads,
-  )
-
-  async function bought_leads(req, res, next) {
-    ;(async () => {
-      const { user } = req
-      const { sort_by, filters, page, limit } = req.body
-      await appLogic.leads
-        .getBoughtLeads(user.id, {
-          sort_by, filters, page, limit
-        })
-        .then((response) => {
-          res.json(response)
-        })
-        .catch( (err) => {
-          res.status(400)
-          res.send({ error: err.message })
-        })
       return next()
     })().catch(done)
-  }
-
-  expressApp.get(
-    "/leads/sold",
-    passport.authenticate("jwt", authOptions),
-    sold_leads,
-  )
-
-  async function sold_leads(req, res, next) {
-    ;(async () => {
-      const { user } = req
-      const { sort_by, filters, page, limit } = req.body
-      await appLogic.leads
-        .getSoldLeads(user.id, {
-          sort_by, filters, page, limit
-        })
-        .then((response) => {
-          res.json(response)
-        })
-        .catch( (err) => {
-          res.status(400)
-          res.send({ error: err.message })
-        })
-      return next()
-    })().catch(done)
-  }
-
-  expressApp.get(
-    "/leads/my",
-    passport.authenticate("jwt", authOptions),
-    my_leads,
-  )
-
-  async function my_leads(req, res, next) {
-    ;(async () => {
-      const { user } = req
-      const { sort_by, filters, page, limit } = req.body
-      await appLogic.leads
-        .getMyLeads(user.id, {
-          sort_by, filters, page, limit,
-        })
-        .then((response) => {
-          res.json(response)
-        })
-        .catch( (err) => {
-          res.status(400)
-          res.send({ error: err.message })
-        })
-      return next()
-    })().catch(done)
-  }
-  expressApp.get(
-    "/leads/all",
-    passport.authenticate("jwt", authOptions),
-    other_leads,
-  )
-
-  async function other_leads(req, res, next) {
-    ;(async () => {
-      const { user } = req
-      const { sort_by, filters, page, limit } = req.body
-      await appLogic.leads
-        .getLeadsNotOwnedByMe(user.id, {
-          sort_by, filters, page, limit
-        })
-        .then((response) => {
-          res.json(response)
-        })
-        .catch( (err) => {
-          res.status(400)
-          res.send({ error: err.message })
-        })
-      return next()
-    })().catch(done)
-  }
+  })
 }

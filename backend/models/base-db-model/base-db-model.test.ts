@@ -33,7 +33,7 @@ class DBModel extends BaseDBModel<INew, IExisting, ICondition> {
   }
 }
 var sql = new SQL(config)
-var dbModel = new DBModel(sql, "users", "user")
+var dbModel = new DBModel(sql, "users")
 
 test("insert", async () => {
   class DBModel extends BaseDBModel<INew, IExisting, ICondition> {
@@ -42,7 +42,7 @@ test("insert", async () => {
     }
   }
   var sql = new SQL(config)
-  var dbModel = new DBModel(sql, "users", "user")
+  var dbModel = new DBModel(sql, "users")
 
   var x = await dbModel.insert({ telephone: "123", name: "danny" })
   expect(x.insertId).toBeGreaterThan(0)

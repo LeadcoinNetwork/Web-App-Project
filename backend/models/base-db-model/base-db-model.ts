@@ -42,7 +42,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     }
   }
 
-  leads = {
+  leadsQueries = {
     getBoughtLeads: async (user_id: number, options: any) => {
       const { filters, sort } = options
       let where_additions
@@ -70,9 +70,9 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
       return rows
     },
-    getLeadsNotOwnedByMe: async (user_id: number, options: any) => {
+    buyLeadsGetAll: async (options: any) => {
       const { filters, sort } = options
-      let where_additions
+      let where_additions = []
       if (filters) {
         where_additions = filters
           .map(f => {
@@ -83,8 +83,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       let query = `
         SELECT *
         FROM leads
-        WHERE doc->>"$.owner_id" <> ${user_id}
-        AND doc->>"$.active" = "true" 
+        WHERE doc->>"$.active" = "true" 
       `
       if (where_additions.length > 0) query += `AND ${where_additions};`
       if (sort) {

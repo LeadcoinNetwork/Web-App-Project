@@ -49,10 +49,7 @@ export default class Leads {
     return await this.models.leads.getBoughtLeads(user_id, options)
   }
 
-  public async getLeadsNotOwnedByMe(
-    user_id: number,
-    options: LeadQueryOptions,
-  ) {
-    return await this.models.leads.getLeadsNotOwnedByMe(user_id, options)
+  public async getAllLeads(options: LeadQueryOptions) {
+    return await this.models.leads.buyLeadsGetAll(options)
   }
 }

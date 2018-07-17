@@ -4,12 +4,10 @@ const Joi = require("joi").extend(joiPassword)
 
 const userSchema = Joi.object().keys({
   phone: Joi.string()
-    .alphanum()
     .min(3)
     .max(15)
     .label("Phone"),
   country: Joi.string()
-    .alphanum()
     .min(3)
     .max(30)
     .label("Country"),
@@ -19,21 +17,17 @@ const userSchema = Joi.object().keys({
     .max(30)
     .label("Company"),
   fname: Joi.string()
-    .alphanum()
     .min(3)
     .max(30)
     .label("First name"),
   lname: Joi.string()
-    .alphanum()
     .min(3)
     .max(30)
     .label("Last name"),
   email: Joi.string()
     .email()
     .label("Email"),
-  plainPassword: Joi.password()
-    .strong()
-    .label("Password"),
+  plainPassword: Joi.password().label("Password"),
   role: Joi.string()
     .only("user", "admin")
     .label("Role"),

@@ -1,5 +1,5 @@
 import { methods, request } from "./request"
-import { Lead } from "../../../backend/models/leads/types"
+import { Lead, NewLead } from "../../../backend/models/leads/types"
 
 interface LeadsApiOptions {
   sort_by?: [string, "ASC" | "DESC"]
@@ -9,8 +9,11 @@ interface LeadsApiOptions {
 export default class LeadsApi {
   constructor(private request: request) {}
 
-  async add(lead: Lead) {
-    return await this.request(methods.post, "/leads/add", { lead })
+  async sellLeadsAddByForm(lead: NewLead) {
+    return await this.request(methods.post, "/sell-leads/addbyform", { lead })
+  }
+  async buyLeadsGetList(filters?) {
+    return await this.request(methods.get, "/buy-leads")
   }
 
   async getBoughtLeads(options: LeadsApiOptions) {
