@@ -42,6 +42,7 @@ class Config {
     port: process.env.MYSQL_PORT,
     user: process.env.MYSQL_USER,
     database: "leadcoin",
+    connectionLimit: process.env.CONNECTION_LIMIT || 10,
     password: process.env.MYSQL_PASSWORD,
   }
 }

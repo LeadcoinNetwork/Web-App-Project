@@ -59,7 +59,6 @@ test("user adds lead and see it as his lead for sale", async () => {
 
   await ApiForToken(token).leads.sellLeadsAddByForm(lead)
   let body = await ApiForToken(token).leads.sellLeadsGetList({})
-  console.log(body)
   expect(body.list.length).toBe(1)
   expect(body.list[0].owner_id).toBe(user.id)
 })

@@ -20,6 +20,8 @@ echo "Running Tests" &&
 docker run --network travisnet -ti -e MYSQL_HOST=mysql \
 	-e MYSQL_USER=root \
 	-e MYSQL_PASSWORD= \
+	-e FORCE_LOG=true \
+	-e CONNECTION_LIMIT=1 \
  leadcoin/leadcoin \
  npm run test &&
 exit $?
