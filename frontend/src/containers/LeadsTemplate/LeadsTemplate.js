@@ -78,8 +78,6 @@ class LeadsTemplate extends React.Component {
             </span>
           </>
         )
-      default:
-        return <h3>Sorry, we couldn't find any leads</h3>
     }
   }
   renderResultsHead = () => {
