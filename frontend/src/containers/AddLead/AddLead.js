@@ -90,7 +90,6 @@ class AddLead extends React.Component {
             </div>
             <div>
               <Button
-                loading={loading}
                 appStyle={true}
                 secondary
                 onClick={() => {
@@ -106,21 +105,7 @@ class AddLead extends React.Component {
   }
 }
 
-const fields_not_for_display = ["active"]
-
-const mapStateToProps = state => ({
-  ...state.addLead,
-  db_fields: {
-    private: state.fields
-      .filter(field => field.private)
-      .map(field => ({ key: field.key, name: field.name }))
-      .filter(f => fields_not_for_display.indexOf(f) < 0),
-    public: state.fields
-      .filter(field => !field.private)
-      .map(field => ({ key: field.key, name: field.name }))
-      .filter(f => fields_not_for_display.indexOf(f.key) < 0),
-  },
-})
+const mapStateToProps = state => state.addLead
 
 export default connect(
   mapStateToProps,
