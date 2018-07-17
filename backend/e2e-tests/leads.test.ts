@@ -39,7 +39,59 @@ test.skip("getting my sold_leads should work", async () => {
   expect(record.id).toBe(insertId)
 })
 
-test.only("getting all leads should work", async () => {
+test.only("user adds lead and see it as his lead for sale", async () => {
+  var { user, token } = await ValidatedUserForTests.create({
+    users: appLogic.models.users,
+  })
+  const lead = {
+    date: 1213,
+    name: "testlead 1",
+    phone: "2",
+    email: "moshe@moshe.com",
+    active: true,
+    price: 12,
+    currency: "USD",
+    bought_from: 0,
+  }
+
+  await ApiForToken(token).leads.sellLeadsAddByForm(lead)
+  let body = await ApiForToken(token).leads.sellLeadsGetList({})
+  expect(body.list.length).toBe(1)
+  expect(body.list[0].owner_id).toBe(user.id)
+})
+
+test("1st user adds lead, 2nd user buys it, everything should work", async () => {
+  var { user: user1, token: token1 } = await ValidatedUserForTests.create({
+    users: appLogic.models.users,
+  })
+  var { user: user2, token: token2 } = await ValidatedUserForTests.create({
+    users: appLogic.models.users,
+  })
+  const lead = {
+    date: 1213,
+    name: "testlead 1",
+    phone: "2",
+    email: "moshe@moshe.com",
+    active: true,
+    price: 12,
+    owner_id: 50,
+    currency: "USD",
+    bought_from: 0,
+  }
+
+  await ApiForToken(token1).leads.sellLeadsAddByForm(lead)
+  let body = await ApiForToken(token2).leads.buyLeadsGetList()
+  expect(body.error).toBeFalsy()
+  expect(body.list.length).toBe(1)
+  let [old_record] = body.list
+  expect(old_record.owner_id).toBe(user1.id)
+  body = await ApiForToken(token2).leads.buyLeadsBuy([body.list[0].id])
+  body = await ApiForToken(token2).leads.buyLeadsGetList()
+  let [new_record] = body.list
+  expect(new_record.owner_id).toBe(user2.id)
+})
+
+test("getting all leads should work", async () => {
   var { user: user1, token: token1 } = await ValidatedUserForTests.create({
     users: appLogic.models.users,
   })
@@ -87,12 +139,8 @@ test("getting my bought_leads should work", async () => {
     active: true,
     bought_from: 5,
   }
-  const result = await request
-    .post("/leads/add")
-    .set({
-      cookie: "token=" + token,
-    })
-    .send({ lead })
+  await ApiForToken(token).leads.sellLeadsAddByForm(lead)
+  var body = await ApiForToken(token).leads.getMyLeads
   const res = await request
     .get("/leads/bought")
     .set({

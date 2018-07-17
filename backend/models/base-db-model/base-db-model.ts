@@ -45,7 +45,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
   leadsQueries = {
     getBoughtLeads: async (user_id: number, options: any) => {
       const { filters, sort } = options
-      let where_additions
+      let where_additions = []
       if (filters) {
         where_additions = filters
           .map(f => {
@@ -95,9 +95,10 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
       return rows
     },
+
     getMyLeads: async (user_id: number, options: any) => {
       const { filters, sort } = options
-      let where_additions
+      let where_additions = []
       if (filters) {
         where_additions = filters
           .map(f => {
@@ -121,9 +122,37 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
       return rows
     },
+
+    getMyLeadsForSale: async (user_id: number, options: any) => {
+      const { filters, sort } = options
+      let where_additions = []
+      if (filters) {
+        where_additions = filters
+          .map(f => {
+            return `${this.fieldName} ->> "$.${f[0]}" LIKE "%${f[1]}%"`
+          })
+          .join(" AND ")
+      }
+      let query = `
+        SELECT *
+        FROM leads
+        WHERE doc->>"$.owner_id" = ${user_id}
+        AND doc->>"$.active" = "true" 
+      `
+      if (where_additions.length > 0) query += `AND ${where_additions} `
+      if (sort) {
+        query += ` ORDER BY ${this.fieldName} ->> ${mysql.escape(
+          "$." + sort.sortBy,
+        )} ${sort.sortOrder}`
+      }
+      let rows = await this.sql.query(query)
+      rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
+      return rows
+    },
+
     getSoldLeads: async (user_id: number, options: any) => {
       const { filters, sort } = options
-      let where_additions
+      let where_additions = []
       if (filters) {
         where_additions = filters
           .map(f => {

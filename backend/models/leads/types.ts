@@ -33,7 +33,6 @@ export interface NewBaseLead {
   phone: string
   email: string
   bought_from: number | null
-  owner_id: number
   active: boolean
   // bought_currency: Currency
 }
