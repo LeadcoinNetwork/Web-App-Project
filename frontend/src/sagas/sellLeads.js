@@ -22,8 +22,8 @@ export default function* sellLeads(api) {
     })
 
     if (res.error) {
+      console.log("sell saga")
       yield put(actions.leads.fetchError("SELL_LEADS"))
-      yield put(actions.app.notificationShow(res.error, "error"))
     } else {
       yield put(actions.leads.fetchSuccess("SELL_LEADS", res))
     }

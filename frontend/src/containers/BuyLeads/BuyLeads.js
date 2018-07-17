@@ -1,11 +1,13 @@
 import React from "react"
 import { connect } from "react-redux"
 import { leads } from "Actions"
+import { push } from "react-router-redux"
 import LeadsTemplate from "Containers/LeadsTemplate"
 import t from "../../utils/translate/translate"
 
 class BuyLeads extends React.Component {
   buyLeads = () => {
+    this.props.push("/checkout")
     console.log(Array.from(this.props.leads.selected))
   }
   buyLead = id => {
@@ -64,6 +66,7 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, {
+  push: push,
   fetchLeads: params => leads.fetchLeads("BUY_LEADS", params),
   setSelectedLeads: selectedLeads =>
     leads.setSelectedLeads("BUY_LEADS", selectedLeads),

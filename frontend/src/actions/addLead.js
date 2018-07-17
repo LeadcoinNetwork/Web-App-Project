@@ -39,7 +39,6 @@ export default {
   addLeadClearForm() {
     return {
       type: types.ADD_LEAD_CLEAR_FORM,
-      values: {},
     }
   },
 
