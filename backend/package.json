@@ -86,6 +86,7 @@
     "test:compile": "tsc",
     "build": "tsc",
     "test:watch": "cross-env CONNECTION_LIMIT=1 jest --watch --runInBand",
+    "test:logwatch": "cross-env CONNECTION_LIMIT=1 FORCE_LOG=true jest --watch --runInBand",
     "precommit": "pretty-quick --staged"
   },
   "nodemonConfig": {

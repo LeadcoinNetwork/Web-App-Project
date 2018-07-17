@@ -161,48 +161,57 @@ test("getting my leads at order should work", async () => {
   var { user, token } = await ValidatedUserForTests.create({
     users: appLogic.models.users,
   })
+  let body
   const lead = {
     date: 1213,
     active: true,
-    name: "testlead 1",
-    phone: "2",
+    name: "testlead1",
+    phone: "0001",
     email: "moshe@moshe.com",
     bought_from: null,
   }
   const lead2 = {
     date: 1214,
     active: true,
-    name: "testlead 2",
-    phone: "2",
+    name: "testlead2",
+    phone: "0002",
     email: "moshe@moshe.com",
     bought_from: null,
   }
-  let result = await ApiForToken(token).leads.sellLeadsAddByForm(lead)
-  expect(result.error).toBeFalsy()
-  let result2 = await ApiForToken(token).leads.sellLeadsAddByForm(lead2)
-  expect(result2.error).toBeFalsy()
-  var body = await ApiForToken(token).leads.buyLeadsGetList()
+
+  body = await ApiForToken(token).leads.sellLeadsAddByForm(lead)
   expect(body.error).toBeFalsy()
-  return
+
+  body = await ApiForToken(token).leads.sellLeadsAddByForm(lead2)
+  expect(body.error).toBeFalsy()
+
+  // get leads ordered by date, order should be [lead2, lead]
+  body = await ApiForToken(token).leads.buyLeadsGetList({
+    page: 0,
+    limit: 5,
+  })
+  expect(body.error).toBeFalsy()
   const [record1, record2] = body.list
-  expect(record1.name).toBe(lead.name)
-  expect(record2.name).toBe(lead2.name)
-  const res2 = await request
-    .get("/leads/my")
-    .set({
-      cookie: "token=" + token,
-    })
-    .send({
-      sort: {
-        sortBy: "date",
-        sortOrder: "DESC",
-      },
-      filters: [],
-    })
-  expect(res2.error).toBeFalsy()
-  const [record3, record4] = res.body.list
-  expect(record3.name).toBe(lead.name)
-  expect(record4.name).toBe(lead2.name)
+  expect(record1.name).toBe(lead2.name)
+  expect(record2.name).toBe(lead.name)
+
+  // get leads ordered by phone, order should be [lead2, lead]
+  body = await ApiForToken(token).leads.buyLeadsGetList({
+    page: 0,
+    limit: 5,
+    sortBy: "phone",
+  })
+  expect(body.error).toBeFalsy()
+  const [record3, record4] = body.list
+  expect(record4.name).toBe(lead.name)
+  expect(record3.name).toBe(lead2.name)
+
+  body = await ApiForToken(token).leads.buyLeadsGetList({
+    page: 0,
+    limit: 1,
+    sortBy: "phone",
+  })
+  expect(body.list.length).toBe(1)
 })
 
 test("adding a lead should fail without email", async () => {

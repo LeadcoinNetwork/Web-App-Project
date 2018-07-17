@@ -121,7 +121,7 @@ export function start({
     async function(req, res, next) {
       ;(async () => {
         const { user } = req
-        const { sort_by, filters, page, limit } = req.body
+        const { sort_by, filters, page, limit } = req.query
         await appLogic.leads
           .getSellLeads(user.id, {
             sort_by,
@@ -130,7 +130,7 @@ export function start({
             limit,
           })
           .then(response => {
-            let jsonResponse = Object.assign({ list: response }, req.body)
+            let jsonResponse = Object.assign({ list: response }, req.query)
             res.json(jsonResponse)
           })
           .catch(err => {
@@ -224,7 +224,7 @@ export function start({
     async function(req, res, next) {
       ;(async () => {
         const { user } = req
-        const { sort_by, filters, page, limit } = req.body
+        const { sort_by, filters, page, limit } = req.query
         await appLogic.leads
           .getBoughtLeads(user.id, {
             sort_by,
@@ -233,7 +233,7 @@ export function start({
             limit,
           })
           .then(response => {
-            let jsonResponse = Object.assign({ list: response }, req.body)
+            let jsonResponse = Object.assign({ list: response }, req.query)
             res.json(jsonResponse)
           })
           .catch(err => {
@@ -320,23 +320,23 @@ export function start({
    */
   expressApp.get("/buy-leads", async (req, res, next) => {
     ;(async () => {
-      let { limit } = req.body
-      const { sort_by, filters, page } = req.body
-      if (!limit) {
-        limit = {
-          start: 0,
-          offset: 50,
-        }
+      let { search, sortBy, page, limit, sortOrder } = req.query
+      let _sort = {
+        sortBy: sortBy || "date",
+        sortOrder: sortOrder || "DESC",
+      }
+      let _limit = {
+        start: parseInt(page || 0) * parseInt(limit || 50),
+        offset: limit || 50,
       }
       await appLogic.leads
         .getAllLeads({
-          sort_by,
-          filters,
-          page,
-          limit,
+          sort: _sort,
+          filters: [],
+          limit: _limit,
         })
         .then(response => {
-          let jsonResponse = Object.assign({ list: response }, req.body)
+          let jsonResponse = Object.assign({ list: response }, req.query)
           res.json(jsonResponse)
         })
         .catch(err => {
