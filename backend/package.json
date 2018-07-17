@@ -87,12 +87,11 @@
   },
   "scripts": {
     "start": "node tsc-watch",
-    "test": "jest --runInBand --forceExit",
-    "test:log": "cross-env FORCE_LOG=true jest --forceExit",
-    "test:nobail": "jest false --forceExit",
+    "test": "cross-env CONNECTION_LIMIT=1 jest --runInBand --forceExit",
+    "test:log": "cross-env CONNECTION_LIMIT=1 FORCE_LOG=true jest --runInBand --forceExit",
     "test:compile": "tsc",
     "build": "tsc",
-    "test:watch": "jest --watch --runInBand",
+    "test:watch": "cross-env CONNECTION_LIMIT=1 jest --watch --runInBand",
     "precommit": "pretty-quick --staged"
   },
   "nodemonConfig": {
