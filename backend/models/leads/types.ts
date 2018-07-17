@@ -2,11 +2,12 @@ import { Currency } from "../../utils/currency"
 
 export interface LeadQueryOptions {
   id?: number
-  sort_by?: [string, "ASC" | "DESC"]
+  condition?: any
+  sort_by?: any
   email?: string
   fields?: string[]
   page?: number
-  limit?: number
+  limit?: any
   bought_from?: number
   owner_id?: number
   active?: boolean
