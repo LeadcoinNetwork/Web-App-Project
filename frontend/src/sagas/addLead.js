@@ -3,7 +3,7 @@ import * as actions from "Actions"
 import { select, take, put, call } from "redux-saga/effects"
 import { push } from "react-router-redux"
 
-import API from "../api/index.ts"
+import API from "../api/index"
 
 /**
  * @param api {API} - this is this paramters
@@ -13,11 +13,14 @@ export default function* addLead(api) {
     const action = yield take(types.ADD_LEAD_SUBMIT_FORM)
     yield put(actions.addLead.addLeadLoadingStart())
     let { values } = yield select(state => state.addLead)
-    let res = yield api.leads.add(values)
+    let res = yield api.leads.sellLeadsAddByForm(values)
     if (res.error) {
-      yield put(actions.leads.addError(res.error))
+      yield put(actions.addLead.addLeadLoadingEnd())
+      yield put(actions.addLead.addLeadAddError("error", res.error))
     } else {
-      yield put(actions.leads.addComplete())
+      yield put(actions.addLead.addLeadLoadingEnd())
+      yield put(actions.addLead.addLeadClearForm())
+      yield put(push("/sell-leads"))
     }
   }
 }
