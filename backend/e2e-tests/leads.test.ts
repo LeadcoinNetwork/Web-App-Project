@@ -35,8 +35,42 @@ test("getting my sold_leads should work", async () => {
       filters: [["name", "testlead"]],
     })
   expect(res.error).toBeFalsy()
-  const [record] = res.body
+  const [record] = res.body.list
   expect(record.id).toBe(insertId)
+})
+
+test("getting all leads should work", async () => {
+  var { user, token } = await ValidatedUserForTests.create({
+    users: appLogic.models.users,
+  })
+
+  const lead = {
+    date: 1213,
+    name: "testlead 1",
+    phone: "2",
+    email: "moshe@moshe.com",
+    active: true,
+    bought_from: 5,
+  }
+
+  const result = await request
+    .post("/leads/add")
+    .set({
+      cookie: "token=" + token,
+    })
+    .send({ lead })
+
+  const res = await request
+    .get("/leads/all")
+    .set({
+      cookie: "token=" + token,
+    })
+    .send({
+      filters: [["name", "testlead"]],
+    })
+  expect(res.error).toBeFalsy()
+  const [record] = res.body.list
+  expect(record).toBeTruthy()
 })
 
 test("getting my bought_leads should work", async () => {
@@ -66,7 +100,7 @@ test("getting my bought_leads should work", async () => {
       filters: [["name", "testlead"]],
     })
   expect(res.error).toBeFalsy()
-  const [record] = res.body
+  const [record] = res.body.list
   expect(record.name).toBe(lead.name)
 })
 
@@ -118,7 +152,7 @@ test("getting my leads at order should work", async () => {
       filters: [],
     })
   expect(res.error).toBeFalsy()
-  const [record1, record2] = res.body
+  const [record1, record2] = res.body.list
   expect(record1.name).toBe(lead.name)
   expect(record2.name).toBe(lead2.name)
   const res2 = await request
@@ -134,7 +168,7 @@ test("getting my leads at order should work", async () => {
       filters: [],
     })
   expect(res2.error).toBeFalsy()
-  const [record3, record4] = res.body
+  const [record3, record4] = res.body.list
   expect(record3.name).toBe(lead.name)
   expect(record4.name).toBe(lead2.name)
 })

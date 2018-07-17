@@ -46,11 +46,8 @@ export default class Leads extends baseDBModel<
     return await this.leads.getBoughtLeads(user_id, options)
   }
 
-  public async getLeadsNotOwnedByMe(
-    user_id: number,
-    options: LeadQueryOptions,
-  ) {
-    return await this.leads.getLeadsNotOwnedByMe(user_id, options)
+  public async getAllLeads(options: LeadQueryOptions) {
+    return await this.leads.getAllLeads(options)
   }
 
   async buy(lead_ids: number[], new_owner: number) {

@@ -5,7 +5,7 @@ import { disabledReason } from "../models/users/types"
 import * as auth from "../models/user-auth/user-auth"
 var { request, emailSenderMock, appLogic } = RoutesForTests.create()
 
-test.skip("forgot password sends email with the new password", async () => {
+test("forgot password sends email with the new password", async () => {
   const { users } = appLogic.models
   const { user, token } = await ValidatedUserForTests.create({ users })
   const res = await request.post("/auth/forgot-password").send({

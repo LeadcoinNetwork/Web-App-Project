@@ -1,8 +1,8 @@
 import Leads from "./leads"
 import * as Chance from "chance"
+var chance = Chance()
 import { Lead } from "./types"
 import config from "../../app-logic/config"
-var chance = Chance()
 
 import SQL from "../mysql-pool/mysql-pool"
 var leads = new Leads(new SQL(config))
