@@ -7,7 +7,7 @@ import t from "../../utils/translate/translate"
 import { push } from "react-router-redux"
 import { priceString } from "Utils/numbers"
 
-const Checkout = ({ fields, checkout, buyLeads, push }) => {
+const Checkout = ({ fields, checkout, buyLeads, push, checkoutBuyStart }) => {
   if (!buyLeads.selected.size) {
     push("/buy-leads")
   }
@@ -41,6 +41,7 @@ const Checkout = ({ fields, checkout, buyLeads, push }) => {
 
       <Button
         label={t("Buy")}
+        onClick={checkoutBuyStart}
         loading={checkout.loading}
         loadingLabel={t("Processing")}
         appStyle={true}
@@ -58,4 +59,5 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   push,
+  checkoutBuyStart: Actions.checkout.checkoutBuyStart,
 })(Checkout)

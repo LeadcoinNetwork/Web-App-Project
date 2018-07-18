@@ -12,6 +12,7 @@ import addLead from "./addLead"
 import redirectIfNotAllowed from "./redirectIfNotAllowed"
 import sellLeads from "./sellLeads"
 import buyLeads from "./buyLeads"
+import checkout from "./checkout"
 import myLeads from "./myLeads"
 
 import language from "./language"
@@ -50,6 +51,7 @@ export default function* rootSaga() {
     language,
     sellLeads,
     buyLeads,
+    checkout,
     myLeads,
   ]
   for (var i in sagas) {
