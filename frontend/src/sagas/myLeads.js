@@ -19,7 +19,6 @@ export default function* myLeads(api) {
       limit,
       sortBy,
       category,
-      mock, //using mock lead option
     })
 
     if (res.error) {
