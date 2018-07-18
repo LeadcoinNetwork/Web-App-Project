@@ -24,6 +24,7 @@ export interface BaseLead {
   email: string
   bought_from: number | null
   ownerId: number
+  forSale: boolean
   active: boolean
   currency: Currency
   bought_currency: Currency | null

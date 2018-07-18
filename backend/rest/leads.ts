@@ -44,6 +44,7 @@ export function start({
         }),
         state: chance.state(),
         propertyType: "Cardboard Box",
+        forSale: true,
         ownerId: owner,
         name: chance.name(),
         phone: chance.phone(),
@@ -149,6 +150,7 @@ export function start({
         if (lead) {
           lead.ownerId = user.id
           lead.active = true
+          lead.forSale = true
           appLogic.leads
             .AddLead(lead)
             .then(response => {
