@@ -21,7 +21,7 @@ test.skip("getting my sold_leads should work", async () => {
     name: "testlead 8",
     phone: "2",
     email: "moshe@moshe.com",
-    owner_id: 123,
+    ownerId: 123,
     active: true,
     bought_from: user.id,
   }
@@ -60,7 +60,7 @@ test("user adds lead and see it as his lead for sale", async () => {
   await ApiForToken(token).leads.sellLeadsAddByForm(lead)
   let body = await ApiForToken(token).leads.sellLeadsGetList({})
   expect(body.list.length).toBe(1)
-  expect(body.list[0].owner_id).toBe(user.id)
+  expect(body.list[0].ownerId).toBe(user.id)
 })
 
 test("1st user adds lead, 2nd user buys it, everything should work", async () => {
@@ -77,7 +77,7 @@ test("1st user adds lead, 2nd user buys it, everything should work", async () =>
     email: "moshe@moshe.com",
     active: true,
     price: 12,
-    owner_id: 50,
+    ownerId: 50,
     currency: "USD",
     bought_from: 0,
   }
@@ -87,11 +87,12 @@ test("1st user adds lead, 2nd user buys it, everything should work", async () =>
   expect(body.error).toBeFalsy()
   expect(body.list.length).toBe(1)
   let [old_record] = body.list
-  expect(old_record.owner_id).toBe(user1.id)
+  expect(old_record.ownerId).toBe(user1.id)
   body = await ApiForToken(token2).leads.buyLeadsBuy([body.list[0].id])
   body = await ApiForToken(token2).leads.buyLeadsGetList()
   let [new_record] = body.list
-  expect(new_record.owner_id).toBe(user2.id)
+  expect(new_record.ownerId).toBe(user2.id)
+  expect(new_record.name).toBe(lead.name)
 })
 
 test("getting all leads should work", async () => {
@@ -109,14 +110,34 @@ test("getting all leads should work", async () => {
     email: "moshe@moshe.com",
     active: true,
     price: 12,
-    owner_id: 50,
+    ownerId: 50,
+    currency: "USD",
+    bought_from: 5,
+  }
+
+  const lead2 = {
+    date: 1213,
+    name: "unique",
+    phone: "2",
+    email: "moshe@moshe.com",
+    active: true,
+    price: 12,
+    ownerId: 50,
     currency: "USD",
     bought_from: 5,
   }
 
   await ApiForToken(token1).leads.sellLeadsAddByForm(lead)
-
   var body = await ApiForToken(token2).leads.buyLeadsGetList()
+  expect(body.total).toBe(1)
+  expect(body.error).toBeFalsy()
+  expect(typeof body.list).toEqual("object")
+
+  await ApiForToken(token1).leads.sellLeadsAddByForm(lead2)
+
+  var body = await ApiForToken(token2).leads.buyLeadsGetList({
+    search: "unique",
+  })
   expect(body.total).toBe(1)
   expect(body.error).toBeFalsy()
   expect(typeof body.list).toEqual("object")
@@ -124,6 +145,9 @@ test("getting all leads should work", async () => {
 
 test("getting my bought_leads should work", async () => {
   var { user, token } = await ValidatedUserForTests.create({
+    users: appLogic.models.users,
+  })
+  var { user: user2, token: token2 } = await ValidatedUserForTests.create({
     users: appLogic.models.users,
   })
   const lead = {
@@ -134,9 +158,10 @@ test("getting my bought_leads should work", async () => {
     active: true,
     bought_from: 5,
   }
-  await ApiForToken(token).leads.sellLeadsAddByForm(lead)
-  var body = await ApiForToken(token).leads.getMyLeads({})
-  console.log(body)
+  let body = await ApiForToken(token).leads.sellLeadsAddByForm(lead)
+  body = await ApiForToken(token2).leads.buyLeadsGetList()
+  body = await ApiForToken(token2).leads.buyLeadsBuy([body.list[0].id])
+  body = await ApiForToken(token2).leads.getMyLeads({})
   expect(body.error).toBeFalsy()
   const [record] = body.list
   expect(record.name).toBe(lead.name)
@@ -211,7 +236,7 @@ test("adding a lead should fail without email", async () => {
     email: "",
     active: true,
     price: 12,
-    owner_id: 50,
+    ownerId: 50,
     currency: "ils",
     bought_from: 5,
   }
@@ -231,7 +256,7 @@ test("adding a lead should fail without token", async () => {
     email: "moshe@moshe.com",
     active: true,
     price: 12,
-    owner_id: 50,
+    ownerId: 50,
     currency: "ils",
     bought_from: 5,
   }
@@ -250,7 +275,7 @@ test("adding a lead should success with data A", async () => {
     email: "moshe@moshe.com",
     active: true,
     price: 12,
-    owner_id: 50,
+    ownerId: 50,
     currency: "ils",
     bought_from: 5,
   }

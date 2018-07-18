@@ -49,16 +49,19 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       if (filters) {
         where_additions = filters
           .map(f => {
-            return `${this.fieldName} ->> "$.${f[0]}" LIKE "%${f[1]}%"`
+            const escaped = mysql.escape(f.val)
+            return `${this.fieldName} ->> "$.${f.field}" ${
+              f.op
+            } "%${escaped.slice(1, -1)}%"`
           })
-          .join(" AND ")
+          .join(" OR ")
       }
       let limit_addition = ""
       let countHeader = "SELECT COUNT(*) as count "
       let realHeader = "SELECT *"
       let query = `
         FROM leads
-        WHERE doc->>"$.owner_id" = ${user_id}
+        WHERE doc->>"$.ownerId" = ${user_id}
         AND doc->>"$.active" = "true" 
         AND doc->>"$.bought_from" > 0
       `
@@ -76,15 +79,19 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
       return { list: rows, total: count[0].count }
     },
+
     buyLeadsGetAll: async (options: any) => {
       const { limit, filters, sort } = options
       let where_additions = []
       if (filters) {
         where_additions = filters
           .map(f => {
-            return `${this.fieldName} ->> "$.${f[0]}" LIKE "%${f[1]}%"`
+            const escaped = mysql.escape(f.val)
+            return `${this.fieldName} ->> "$.${f.field}" ${
+              f.op
+            } "%${escaped.slice(1, -1)}%"`
           })
-          .join(" AND ")
+          .join(" OR ")
       }
       let limit_addition = ""
       let countHeader = "SELECT COUNT(*) as count "
@@ -93,7 +100,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         FROM leads
         WHERE doc->>"$.active" = "true" 
       `
-      if (where_additions.length > 0) query += `AND ${where_additions};`
+      if (where_additions.length > 0) query += `AND ${where_additions}`
       if (sort) {
         query += ` ORDER BY ${this.fieldName} ->> ${mysql.escape(
           "$." + sort.sortBy,
@@ -114,28 +121,34 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       if (filters) {
         where_additions = filters
           .map(f => {
-            return `${this.fieldName} ->> "$.${f[0]}" LIKE "%${f[1]}%"`
+            const escaped = mysql.escape(f.val)
+            return `${this.fieldName} ->> "$.${f.field}" ${
+              f.op
+            } "%${escaped.slice(1, -1)}%"`
           })
-          .join(" AND ")
+          .join(" OR ")
       }
+      let limit_addition = ""
+      let countHeader = "SELECT COUNT(*) as count "
+      let realHeader = "SELECT *"
       let query = `
-        SELECT *
         FROM leads
-        WHERE doc->>"$.owner_id" = ${user_id}
+        WHERE doc->>"$.ownerId" = ${user_id}
         AND doc->>"$.active" = "true" 
       `
-      if (where_additions.length > 0) query += `AND ${where_additions};`
+      if (where_additions.length > 0) query += `AND ${where_additions}`
       if (sort) {
         query += ` ORDER BY ${this.fieldName} ->> ${mysql.escape(
           "$." + sort.sortBy,
         )} ${sort.sortOrder}`
       }
       if (limit) {
-        query += ` LIMIT ${limit.start},${limit.offset} `
+        limit_addition += ` LIMIT ${limit.start},${limit.offset} `
       }
-      let rows = await this.sql.query(query)
+      let count = await this.sql.query(countHeader + query)
+      let rows = await this.sql.query(realHeader + query + limit_addition)
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
-      return rows
+      return { list: rows, total: count[0].count }
     },
 
     getMyLeadsForSale: async (user_id: number, options: any) => {
@@ -144,28 +157,34 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       if (filters) {
         where_additions = filters
           .map(f => {
-            return `${this.fieldName} ->> "$.${f[0]}" LIKE "%${f[1]}%"`
+            const escaped = mysql.escape(f.val)
+            return `${this.fieldName} ->> "$.${f.field}" ${
+              f.op
+            } "%${escaped.slice(1, -1)}%"`
           })
-          .join(" AND ")
+          .join(" OR ")
       }
+      let limit_addition = ""
+      let countHeader = "SELECT COUNT(*) as count "
+      let realHeader = "SELECT *"
       let query = `
-        SELECT *
         FROM leads
-        WHERE doc->>"$.owner_id" = ${user_id}
+        WHERE doc->>"$.ownerId" = ${user_id}
         AND doc->>"$.active" = "true" 
       `
-      if (where_additions.length > 0) query += `AND ${where_additions} `
+      if (where_additions.length > 0) query += `AND ${where_additions}`
       if (sort) {
         query += ` ORDER BY ${this.fieldName} ->> ${mysql.escape(
           "$." + sort.sortBy,
         )} ${sort.sortOrder}`
       }
       if (limit) {
-        query += ` LIMIT ${limit.start},${limit.offset} `
+        limit_addition += ` LIMIT ${limit.start},${limit.offset} `
       }
-      let rows = await this.sql.query(query)
+      let count = await this.sql.query(countHeader + query)
+      let rows = await this.sql.query(realHeader + query + limit_addition)
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
-      return rows
+      return { list: rows, total: count[0].count }
     },
 
     getSoldLeads: async (user_id: number, options: any) => {

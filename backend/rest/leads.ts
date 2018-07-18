@@ -124,7 +124,7 @@ export function start({
             limit: _limit,
           })
           .then(response => {
-            let jsonResponse = Object.assign({ list: response }, req.query)
+            let jsonResponse = Object.assign(response, req.query)
             res.json(jsonResponse)
           })
           .catch(err => {
@@ -147,7 +147,7 @@ export function start({
         const { user } = req
         const { lead }: { lead: Lead } = req.body
         if (lead) {
-          lead.owner_id = user.id
+          lead.ownerId = user.id
           lead.active = true
           appLogic.leads
             .AddLead(lead)
@@ -324,6 +324,8 @@ export function start({
   //   })().catch(done)
   // }
 
+  const extract_params = req => {}
+
   /**
    * All the leads
    */
@@ -334,6 +336,16 @@ export function start({
         sortBy: sortBy && sortBy != "id" ? sortBy : "date",
         sortOrder: sortOrder || "DESC",
       }
+      let f
+      if (search) {
+        f = ["name", "specification", "city"].map(field => {
+          return {
+            field,
+            op: "LIKE",
+            val: search,
+          }
+        })
+      }
       let _limit = {
         start: parseInt(page || 0) * parseInt(limit || 50),
         offset: limit || 50,
@@ -341,7 +353,7 @@ export function start({
       await appLogic.leads
         .getAllLeads({
           sort: _sort,
-          filters: [],
+          filters: f,
           limit: _limit,
         })
         .then(response => {
