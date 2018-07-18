@@ -59,6 +59,7 @@ const initialState = {
   error: "",
   loading: true,
   selected: new Set(),
+  mock: 1,
 }
 
 const createReducerFor = namespace => {

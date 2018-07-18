@@ -26,19 +26,14 @@ export default class LeadsApi {
   }
 
   async sellLeadsGetList(options: LeadsApiOptions) {
-    return await this.request(methods.get, "/sell-leads", { ...options })
+    return await this.request(methods.get, "/sell-leads", null, { ...options })
   }
 
   async getMyLeads(options: LeadsApiOptions) {
-    return await this.request(
-      methods.get,
-      "/my-leads",
-      { ...options },
-      { mock: 1 },
-    )
+    return await this.request(methods.get, "/my-leads", null, { ...options })
   }
 
   async getSoldLeads(options: LeadsApiOptions) {
-    return await this.request(methods.get, "/leads/sold", { ...options })
+    return await this.request(methods.get, "/leads/sold", null, { ...options })
   }
 }

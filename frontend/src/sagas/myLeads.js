@@ -10,7 +10,7 @@ import API from "../api/index.ts"
  */
 export default function* myLeads(api) {
   while (true) {
-    let { page, limit, sortBy, category, search } = yield select(
+    let { page, limit, sortBy, category, search, mock } = yield select(
       state => state.myLeads,
     )
 
@@ -19,6 +19,7 @@ export default function* myLeads(api) {
       limit,
       sortBy,
       category,
+      mock, //using mock lead option
     })
 
     if (res.error) {
