@@ -221,8 +221,11 @@ export function start({
         const { user } = req
         let { search, sortBy, page, limit, sortOrder, mock } = req.query
         if (mock == 1) {
-          let mock_lead = `{list:[{"date":1531902112073,"floor":4,"rooms":1,"size":18,"budget":165362,"city":"Pejkupeni","specification":"Ur uvo gi obaro.","state":"OR","propertyType":"Cardboard Box","ownerId":5,"name":"Virginia Estrada","phone":"(927) 820-4759","email":"agisemen@hastu.tl","active":true,"price":"4090856"}], count: 1, total: 1}`
-          return res.json(JSON.parse(mock_lead))
+          let mock_lead = `{"date":1531902112073,"floor":4,"rooms":1,"size":18,"budget":165362,"city":"Pejkupeni","specification":"Ur uvo gi obaro.","state":"OR","propertyType":"Cardboard Box","ownerId":5,"name":"Virginia Estrada","phone":"(927) 820-4759","email":"agisemen@hastu.tl","active":true,"price":"4090856"}`
+          return res.json({
+            list: JSON.parse(mock_lead),
+            total: 1,
+          })
         }
         let _sort = {
           sortBy: sortBy || "date",
