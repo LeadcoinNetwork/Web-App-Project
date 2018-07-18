@@ -4,8 +4,14 @@ import * as Actions from "../../actions"
 import Table from "Components/Table"
 import Button from "Components/Button"
 import t from "../../utils/translate/translate"
+import { push } from "react-router-redux"
+import { Numbers } from "Utils/numbers"
 
-const Checkout = ({ fields, checkout, buyLeads }) => {
+const Checkout = ({ fields, checkout, buyLeads, push }) => {
+  if (!buyLeads.selected.size) {
+    push("/buy-leads")
+  }
+
   let selectedLeads = buyLeads.list.filter(lead =>
     buyLeads.selected.has(lead.id),
   )
@@ -25,7 +31,12 @@ const Checkout = ({ fields, checkout, buyLeads }) => {
 
       <div className="c-total">
         {t("Total")}:{" "}
-        {selectedLeads.reduce((price, lead) => price + Math.abs(lead.price), 0)}
+        {Numbers.priceString(
+          selectedLeads.reduce(
+            (price, lead) => price + Math.abs(lead.price),
+            0,
+          ),
+        )}
       </div>
 
       <Button
@@ -45,4 +56,6 @@ const mapStateToProps = state => ({
   buyLeads: state.buyLeads,
 })
 
-export default connect(mapStateToProps)(Checkout)
+export default connect(mapStateToProps, {
+  push,
+})(Checkout)
