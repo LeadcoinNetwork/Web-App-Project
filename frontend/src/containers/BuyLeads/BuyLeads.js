@@ -8,10 +8,12 @@ import t from "../../utils/translate/translate"
 class BuyLeads extends React.Component {
   buyLeads = () => {
     this.props.push("/checkout")
-    console.log(Array.from(this.props.leads.selected))
   }
   buyLead = id => {
-    console.log([id])
+    let selected = new Set(this.props.leads.selected)
+    selected.add(id)
+    this.props.setSelectedLeads(selected)
+    this.buyLeads()
   }
   buildButtonLabel = () => {
     let amount = this.props.leads.selected.size
