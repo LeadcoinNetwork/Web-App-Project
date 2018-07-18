@@ -30,12 +30,7 @@ export default class LeadsApi {
   }
 
   async getMyLeads(options: LeadsApiOptions) {
-    return await this.request(
-      methods.get,
-      "/my-leads",
-      { ...options },
-      { mock: 1 },
-    )
+    return await this.request(methods.get, "/my-leads", null, { ...options })
   }
 
   async getSoldLeads(options: LeadsApiOptions) {
