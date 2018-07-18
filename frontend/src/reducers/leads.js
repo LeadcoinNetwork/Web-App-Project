@@ -36,7 +36,7 @@ const initialState = {
   },
   sortBy: null,
   page: 1,
-  limit: 5,
+  limit: 20,
   total: 0,
   category: "realEstate",
   country: "US",

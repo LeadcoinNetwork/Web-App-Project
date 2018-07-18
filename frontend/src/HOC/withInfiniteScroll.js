@@ -5,8 +5,10 @@ import LoadingDots from "Components/LoadingDots"
 const withInfiniteScroll = onScrollBottom => WrappedComponent => {
   class WithInfiniteScroll extends React.Component {
     componentDidMount() {
-      this.onScrollThrottled = throttle(this.onScroll, 200)
-      window.addEventListener("scroll", this.onScrollThrottled)
+      if (this.props.onScrollBottom) {
+        this.onScrollThrottled = throttle(this.onScroll, 200)
+        window.addEventListener("scroll", this.onScrollThrottled)
+      }
     }
     componentWillUnount() {
       window.removeEventListener("scroll", this.onScrollThrottled)

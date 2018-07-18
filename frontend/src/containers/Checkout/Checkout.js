@@ -5,41 +5,39 @@ import Table from "Components/Table"
 import Button from "Components/Button"
 import t from "../../utils/translate/translate"
 
-const checkoutConfig = require("./checkout.config.json")
+const Checkout = ({ fields, checkout, buyLeads }) => (
+  <div className="ldc-checkout">
+    <h1>{t("Checkout")}</h1>
 
-const checkout = ({ list, totalPrice, loading, error, onScrollBottom }) => (
-  <div className="shopping-cart">
-    <h1>{t("Shopping Cart")}</h1>
     <Table
-      fields={checkoutConfig.fields.map(field => ({
+      fields={fields.map(field => ({
         ...field,
         name: t(field.name),
       }))}
-      records={list}
-      onScrollBottom={onScrollBottom}
-      showOnZeroRecords={<div>{t("Shopping Cart is Empty")}</div>}
+      records={buyLeads.list.filter(lead => buyLeads.selected.has(lead.id))}
       isSelectable={false}
     />
+
     <div className="checkout">
       <div className="total-price">
-        {t("Total")}: {totalPrice}
+        {t("Total")}: {checkout.totalPrice}
       </div>
+
       <Button
-        label={t("Checkout")}
-        loading={loading}
+        label={t("Buy")}
+        loading={checkout.loading}
         loadingLabel={t("Processing")}
         appStyle={true}
-        disabled={list.length > 0 ? false : true}
+        disabled={!buyLeads.selected.size}
       />
     </div>
-    {error && <div className="checkout-error error">{error}</div>}
   </div>
 )
 
-const mapDispatchToProps = {
-  onScrollBottom: Actions.checkout.checkoutOnScrollBottom,
-}
+const mapStateToProps = state => ({
+  fields: state.fields,
+  checkout: state.checkout,
+  buyLeads: state.buyLeads,
+})
 
-const mapStateToProps = state => state.checkout
-
-export default connect(mapStateToProps, mapDispatchToProps)(checkout)
+export default connect(mapStateToProps)(Checkout)

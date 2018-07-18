@@ -1,15 +1,19 @@
 import React from "react"
 import { connect } from "react-redux"
 import { leads } from "Actions"
+import { push } from "react-router-redux"
 import LeadsTemplate from "Containers/LeadsTemplate"
 import t from "../../utils/translate/translate"
 
 class BuyLeads extends React.Component {
   buyLeads = () => {
-    console.log(Array.from(this.props.leads.selected))
+    this.props.push("/checkout")
   }
   buyLead = id => {
-    console.log([id])
+    let selected = new Set(this.props.leads.selected)
+    selected.add(id)
+    this.props.setSelectedLeads(selected)
+    this.buyLeads()
   }
   buildButtonLabel = () => {
     let amount = this.props.leads.selected.size
@@ -64,6 +68,7 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, {
+  push: push,
   fetchLeads: params => leads.fetchLeads("BUY_LEADS", params),
   setSelectedLeads: selectedLeads =>
     leads.setSelectedLeads("BUY_LEADS", selectedLeads),

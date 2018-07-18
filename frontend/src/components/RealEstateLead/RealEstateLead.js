@@ -4,12 +4,12 @@ import Button from "Components/Button"
 const RealEstateLead = ({
   id,
   specification,
-  lead_price,
+  price,
   status,
   date,
   state,
   city,
-  property_type,
+  propertyType,
   bedrooms,
   floor,
   size,
@@ -27,7 +27,7 @@ const RealEstateLead = ({
       onClick={toggleCheck}
     >
       <div className="rel-specification">{specification}</div>
-      <div className="rel-price">LDC {lead_price}</div>
+      <div className="rel-price">LDC {price}</div>
       <div className="rel-details-wrapper">
         <div className="rel-details">
           <div className="reld-status">{status}</div>
@@ -37,7 +37,7 @@ const RealEstateLead = ({
           </div>
         </div>
         <div className="rel-features">
-          <span>{property_type}</span>
+          <span>{propertyType}</span>
           <span>{bedrooms} rooms</span>
           <span>{floor}th floor</span>
           <span>{size} SqFt</span>
