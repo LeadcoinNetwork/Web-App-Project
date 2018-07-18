@@ -242,7 +242,7 @@ export function start({
             limit: _limit,
           })
           .then(response => {
-            let jsonResponse = Object.assign({ list: response }, req.query)
+            let jsonResponse = Object.assign(response, req.query)
             res.json(jsonResponse)
           })
           .catch(err => {
