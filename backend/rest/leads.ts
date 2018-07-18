@@ -148,6 +148,7 @@ export function start({
         const { lead }: { lead: Lead } = req.body
         if (lead) {
           lead.owner_id = user.id
+          lead.active = true
           appLogic.leads
             .AddLead(lead)
             .then(response => {
