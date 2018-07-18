@@ -83,7 +83,8 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
           })
           .join(" AND ")
       }
-      let countHeader = "SELECT COUNT(*) as total"
+      let limit_addition = ""
+      let countHeader = "SELECT COUNT(*) as count "
       let realHeader = "SELECT *"
       let query = `
         FROM leads
@@ -96,12 +97,12 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         )} ${sort.sortOrder}`
       }
       if (limit) {
-        query += ` LIMIT ${limit.start},${limit.offset} `
+        limit_addition += ` LIMIT ${limit.start},${limit.offset} `
       }
       let count = await this.sql.query(countHeader + query)
-      let rows = await this.sql.query(realHeader + query)
+      let rows = await this.sql.query(realHeader + query + limit_addition)
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
-      return { list: rows, total: count[0].total }
+      return { list: rows, total: count[0].count }
     },
 
     getMyLeads: async (user_id: number, options: any) => {
