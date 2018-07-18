@@ -5,7 +5,7 @@ import Table from "Components/Table"
 import Button from "Components/Button"
 import t from "../../utils/translate/translate"
 import { push } from "react-router-redux"
-import { Numbers } from "Utils/numbers"
+import { priceString } from "Utils/numbers"
 
 const Checkout = ({ fields, checkout, buyLeads, push }) => {
   if (!buyLeads.selected.size) {
@@ -31,7 +31,7 @@ const Checkout = ({ fields, checkout, buyLeads, push }) => {
 
       <div className="c-total">
         {t("Total")}:{" "}
-        {Numbers.priceString(
+        {priceString(
           selectedLeads.reduce(
             (price, lead) => price + Math.abs(lead.price),
             0,

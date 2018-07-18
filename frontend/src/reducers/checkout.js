@@ -1,5 +1,4 @@
 import types from "../actions/types"
-import { Numbers } from "utils/numbers"
 
 const initialState = {
   loading: false,

@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { withdraw } from "../../actions"
 import TextField from "Components/TextField"
 import Button from "Components/Button"
-import { Numbers } from "../../utils/numbers"
+import { priceString } from "Utils/numbers"
 import t from "../../utils/translate/translate"
 
 class Withdraw extends React.Component {
@@ -22,9 +22,16 @@ class Withdraw extends React.Component {
     return (
       <div className="withdraw-page">
         <h1>{t("Withdraw Funds")}</h1>
-        <p className="total">{t("Total balance: ") + Numbers.priceString(balance.total)}</p>
-        <p className="available">{t("Balance available to withdraw: ") + Numbers.priceString(balance.total - balance.inEscrow)}</p>
-        <p className="label">{t("To withdraw your funds please enter your PayPal email address")}</p>
+        <p className="total">
+          {t("Total balance: ") + priceString(balance.total)}
+        </p>
+        <p className="available">
+          {t("Balance available to withdraw: ") +
+            priceString(balance.total - balance.inEscrow)}
+        </p>
+        <p className="label">
+          {t("To withdraw your funds please enter your PayPal email address")}
+        </p>
         <TextField
           appStyle={true}
           placeholder={t("Enter PayPal Email")}
