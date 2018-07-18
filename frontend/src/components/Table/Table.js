@@ -100,8 +100,8 @@ class Table extends React.Component {
               />
             ))}
         </div>
-        {props.renderFilters()}
-        {props.renderResultsHead()}
+        {props.renderFilters && props.renderFilters()}
+        {props.renderResultsHead && props.renderResultsHead()}
         <div className="t-main">
           <THead
             fields={props.fields}

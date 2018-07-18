@@ -4,7 +4,7 @@ import { Express as ExpressInterface } from "express"
 //@ts-ignore cookie-parser is missing (not really)
 import * as cookieParser from "cookie-parser"
 import * as http from "http"
-
+var fs = require("fs")
 import { exec } from "child_process"
 
 // Routes
@@ -76,12 +76,14 @@ export default class RestServer {
     leads.start({ appLogic, expressApp })
     // TODO csv
 
-    expressApp.route("/health").get((req, res) => {
-      exec("sudo git log -1", (e, output, stderror) => {
-        if (e) return res.json(e)
-        res.status(200)
-        res.send({ git: output })
-      })
+    expressApp.route("/gitlog.txt").get((req, res) => {
+      var gitlog = ""
+      try {
+        gitlog = fs.readFileSync("../gitlog.txt").toString()
+      } catch (err) {}
+      res.status(200)
+      res.set("content-type", "text/text")
+      res.send(gitlog)
     })
 
     _404.start(expressApp)

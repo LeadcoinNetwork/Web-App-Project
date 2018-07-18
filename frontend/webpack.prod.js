@@ -15,7 +15,9 @@ module.exports = merge(common, {
     }),
     () => {
       fs.copySync("./src/static", "./dist")
-      exec("git log -1 > ./dist/health.txt")
+      try {
+        fs.copySync("../gitlog.txt", "./dist/gitlog.txt")
+      } catch (err) {}
     },
   ],
 })
