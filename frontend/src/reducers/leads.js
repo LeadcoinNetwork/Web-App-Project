@@ -35,7 +35,7 @@ const initialState = {
     propertyTypes: ["rooftop", "gallery", "apartment", "office", "warehouse"],
   },
   sortBy: null,
-  page: 1,
+  page: 0,
   limit: 20,
   total: 0,
   category: "realEstate",
@@ -59,7 +59,6 @@ const initialState = {
   error: "",
   loading: true,
   selected: new Set(),
-  mock: 1,
 }
 
 const createReducerFor = namespace => {
