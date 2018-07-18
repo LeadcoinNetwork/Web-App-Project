@@ -108,52 +108,37 @@ test("getting all leads should work", async () => {
     phone: "2",
     email: "moshe@moshe.com",
     active: true,
-    // type:'proeprty',
     price: 12,
     owner_id: 50,
-    currency: "ils",
+    currency: "USD",
     bought_from: 5,
   }
 
   await ApiForToken(token1).leads.sellLeadsAddByForm(lead)
 
   var body = await ApiForToken(token2).leads.buyLeadsGetList()
-  // const res = await request
-  //   .get("/leads/all")
-  //   .set({
-  //     cookie: "token=" + token,
-  //   })
-  //   .send({
-  //     filters: [["name", "testlead"]],
-  //   })
+  expect(body.total).toBe(1)
   expect(body.error).toBeFalsy()
   expect(typeof body.list).toEqual("object")
 })
 
-test.skip("getting my bought_leads should work", async () => {
+test("getting my bought_leads should work", async () => {
   var { user, token } = await ValidatedUserForTests.create({
     users: appLogic.models.users,
   })
   const lead = {
     date: 1213,
-    name: "testlead 1",
+    name: "testlead for my-leads",
     phone: "2",
     email: "moshe@moshe.com",
     active: true,
     bought_from: 5,
   }
   await ApiForToken(token).leads.sellLeadsAddByForm(lead)
-  var body = await ApiForToken(token).leads.getMyLeads
-  const res = await request
-    .get("/leads/bought")
-    .set({
-      cookie: "token=" + token,
-    })
-    .send({
-      filters: [["name", "testlead"]],
-    })
-  expect(res.error).toBeFalsy()
-  const [record] = res.body.list
+  var body = await ApiForToken(token).leads.getMyLeads({})
+  console.log(body)
+  expect(body.error).toBeFalsy()
+  const [record] = body.list
   expect(record.name).toBe(lead.name)
 })
 

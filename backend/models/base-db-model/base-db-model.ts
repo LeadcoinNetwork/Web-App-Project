@@ -53,8 +53,10 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
           })
           .join(" AND ")
       }
+      let limit_addition = ""
+      let countHeader = "SELECT COUNT(*) as count "
+      let realHeader = "SELECT *"
       let query = `
-        SELECT *
         FROM leads
         WHERE doc->>"$.owner_id" = ${user_id}
         AND doc->>"$.active" = "true" 
@@ -67,11 +69,12 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         )} ${sort.sortOrder}`
       }
       if (limit) {
-        query += ` LIMIT ${limit.start},${limit.offset} `
+        limit_addition += ` LIMIT ${limit.start},${limit.offset} `
       }
-      let rows = await this.sql.query(query)
+      let count = await this.sql.query(countHeader + query)
+      let rows = await this.sql.query(realHeader + query + limit_addition)
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
-      return rows
+      return { list: rows, total: count[0].count }
     },
     buyLeadsGetAll: async (options: any) => {
       const { limit, filters, sort } = options
@@ -83,8 +86,10 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
           })
           .join(" AND ")
       }
+      let limit_addition = ""
+      let countHeader = "SELECT COUNT(*) as count "
+      let realHeader = "SELECT *"
       let query = `
-        SELECT *
         FROM leads
         WHERE doc->>"$.active" = "true" 
       `
@@ -95,12 +100,12 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         )} ${sort.sortOrder}`
       }
       if (limit) {
-        query += ` LIMIT ${limit.start},${limit.offset} `
+        limit_addition += ` LIMIT ${limit.start},${limit.offset} `
       }
-      console.log({ query })
-      let rows = await this.sql.query(query)
+      let count = await this.sql.query(countHeader + query)
+      let rows = await this.sql.query(realHeader + query + limit_addition)
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
-      return rows
+      return { list: rows, total: count[0].count }
     },
 
     getMyLeads: async (user_id: number, options: any) => {

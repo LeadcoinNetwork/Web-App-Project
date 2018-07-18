@@ -15,22 +15,8 @@ const authOptions = {
   session: false,
 }
 
-const basic_fields = ["date", "name", "phone", "email"]
-
-const mock_field_list = [
-  "state",
-  "city",
-  "property type",
-  "size",
-  "budget",
-  "bedrooms",
-  "floor",
-  "specification",
-]
-// ---
-
 const done = a => {
-  console.log(a)
+  console.log("Unhandled Catch")
 }
 
 export function start({
@@ -43,10 +29,11 @@ export function start({
   expressApp.get("/leads/mock/:number", mock_leads)
   async function add_fake_leads(count) {
     const rc = []
+    count = parseInt(count)
     for (let i = 1; i < count + 1; i++) {
       let owner = Math.floor(count / i)
       let status = await appLogic.models.leads.insertLead({
-        date: new Date().toDateString,
+        date: new Date().valueOf(),
         floor: chance.integer({ min: 1, max: 4 }),
         rooms: chance.integer({ min: 1, max: 4 }),
         size: chance.integer({ min: 1, max: 20 }),
@@ -121,13 +108,20 @@ export function start({
     async function(req, res, next) {
       ;(async () => {
         const { user } = req
-        const { sort_by, filters, page, limit } = req.query
+        let { search, sortBy, page, limit, sortOrder } = req.query
+        let _sort = {
+          sortBy: sortBy && sortBy != "id" ? sortBy : "date",
+          sortOrder: sortOrder || "DESC",
+        }
+        let _limit = {
+          start: parseInt(page || 0) * parseInt(limit || 50),
+          offset: limit || 50,
+        }
         await appLogic.leads
           .getSellLeads(user.id, {
-            sort_by,
-            filters,
-            page,
-            limit,
+            sort: _sort,
+            filters: [],
+            limit: _limit,
           })
           .then(response => {
             let jsonResponse = Object.assign({ list: response }, req.query)
@@ -154,6 +148,7 @@ export function start({
         const { lead }: { lead: Lead } = req.body
         if (lead) {
           lead.owner_id = user.id
+          lead.active = true
           appLogic.leads
             .AddLead(lead)
             .then(response => {
@@ -224,16 +219,30 @@ export function start({
     async function(req, res, next) {
       ;(async () => {
         const { user } = req
-        const { sort_by, filters, page, limit } = req.query
+        let { search, sortBy, page, limit, sortOrder, mock } = req.query
+        if (mock == 1) {
+          let mock_lead = `{"id":1,"date":1531902112073,"floor":4,"rooms":1,"size":18,"budget":165362,"city":"Pejkupeni","specification":"Ur uvo gi obaro.","state":"OR","propertyType":"Cardboard Box","ownerId":5,"name":"Virginia Estrada","phone":"(927) 820-4759","email":"agisemen@hastu.tl","active":true,"price":"4090856"}`
+          return res.json({
+            list: [JSON.parse(mock_lead)],
+            total: 1,
+          })
+        }
+        let _sort = {
+          sortBy: sortBy && sortBy != "id" ? sortBy : "date",
+          sortOrder: sortOrder || "DESC",
+        }
+        let _limit = {
+          start: parseInt(page || 0) * parseInt(limit || 50),
+          offset: limit || 50,
+        }
         await appLogic.leads
           .getBoughtLeads(user.id, {
-            sort_by,
-            filters,
-            page,
-            limit,
+            sort: _sort,
+            filters: [],
+            limit: _limit,
           })
           .then(response => {
-            let jsonResponse = Object.assign({ list: response }, req.query)
+            let jsonResponse = Object.assign(response, req.query)
             res.json(jsonResponse)
           })
           .catch(err => {
@@ -322,7 +331,7 @@ export function start({
     ;(async () => {
       let { search, sortBy, page, limit, sortOrder } = req.query
       let _sort = {
-        sortBy: sortBy || "date",
+        sortBy: sortBy && sortBy != "id" ? sortBy : "date",
         sortOrder: sortOrder || "DESC",
       }
       let _limit = {
@@ -336,7 +345,7 @@ export function start({
           limit: _limit,
         })
         .then(response => {
-          let jsonResponse = Object.assign({ list: response }, req.query)
+          let jsonResponse = Object.assign(response, req.query)
           res.json(jsonResponse)
         })
         .catch(err => {
