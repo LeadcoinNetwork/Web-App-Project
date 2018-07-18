@@ -1,4 +1,7 @@
-export const Numbers = {
-  localeFormat: number => number.toLocaleString(),
-  priceString: (number, currency) => number.toLocaleString('en-US', {style: 'currency', currency: currency ? currency : 'USD'}),
-}
+export const localeFormat = number => number.toLocaleString()
+
+export const priceString = (number, currency = "USD") =>
+  number.toLocaleString("en-US", {
+    style: "currency",
+    currency: currency,
+  })

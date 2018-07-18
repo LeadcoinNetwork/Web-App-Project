@@ -4,23 +4,39 @@ import * as Actions from "../../actions"
 import Table from "Components/Table"
 import Button from "Components/Button"
 import t from "../../utils/translate/translate"
+import { push } from "react-router-redux"
+import { priceString } from "Utils/numbers"
 
-const Checkout = ({ fields, checkout, buyLeads }) => (
-  <div className="ldc-checkout">
-    <h1>{t("Checkout")}</h1>
+const Checkout = ({ fields, checkout, buyLeads, push }) => {
+  if (!buyLeads.selected.size) {
+    push("/buy-leads")
+  }
 
-    <Table
-      fields={fields.map(field => ({
-        ...field,
-        name: t(field.name),
-      }))}
-      records={buyLeads.list.filter(lead => buyLeads.selected.has(lead.id))}
-      isSelectable={false}
-    />
+  let selectedLeads = buyLeads.list.filter(lead =>
+    buyLeads.selected.has(lead.id),
+  )
 
-    <div className="checkout">
-      <div className="total-price">
-        {t("Total")}: {checkout.totalPrice}
+  return (
+    <div className="ldc-checkout">
+      <h1>{t("Checkout")}</h1>
+
+      <Table
+        fields={fields.map(field => ({
+          ...field,
+          name: t(field.name),
+        }))}
+        records={selectedLeads}
+        isSelectable={false}
+      />
+
+      <div className="c-total">
+        {t("Total")}:{" "}
+        {priceString(
+          selectedLeads.reduce(
+            (price, lead) => price + Math.abs(lead.price),
+            0,
+          ),
+        )}
       </div>
 
       <Button
@@ -31,8 +47,8 @@ const Checkout = ({ fields, checkout, buyLeads }) => (
         disabled={!buyLeads.selected.size}
       />
     </div>
-  </div>
-)
+  )
+}
 
 const mapStateToProps = state => ({
   fields: state.fields,
@@ -40,4 +56,6 @@ const mapStateToProps = state => ({
   buyLeads: state.buyLeads,
 })
 
-export default connect(mapStateToProps)(Checkout)
+export default connect(mapStateToProps, {
+  push,
+})(Checkout)
