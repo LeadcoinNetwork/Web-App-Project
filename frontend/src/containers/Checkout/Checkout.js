@@ -5,22 +5,27 @@ import Table from "Components/Table"
 import Button from "Components/Button"
 import t from "../../utils/translate/translate"
 
-const Checkout = ({ fields, checkout, buyLeads }) => (
-  <div className="ldc-checkout">
-    <h1>{t("Checkout")}</h1>
+const Checkout = ({ fields, checkout, buyLeads }) => {
+  let selectedLeads = buyLeads.list.filter(lead =>
+    buyLeads.selected.has(lead.id),
+  )
 
-    <Table
-      fields={fields.map(field => ({
-        ...field,
-        name: t(field.name),
-      }))}
-      records={buyLeads.list.filter(lead => buyLeads.selected.has(lead.id))}
-      isSelectable={false}
-    />
+  return (
+    <div className="ldc-checkout">
+      <h1>{t("Checkout")}</h1>
 
-    <div className="checkout">
-      <div className="total-price">
-        {t("Total")}: {checkout.totalPrice}
+      <Table
+        fields={fields.map(field => ({
+          ...field,
+          name: t(field.name),
+        }))}
+        records={selectedLeads}
+        isSelectable={false}
+      />
+
+      <div className="c-total">
+        {t("Total")}:{" "}
+        {selectedLeads.reduce((price, lead) => price + Math.abs(lead.price), 0)}
       </div>
 
       <Button
@@ -31,8 +36,8 @@ const Checkout = ({ fields, checkout, buyLeads }) => (
         disabled={!buyLeads.selected.size}
       />
     </div>
-  </div>
-)
+  )
+}
 
 const mapStateToProps = state => ({
   fields: state.fields,
