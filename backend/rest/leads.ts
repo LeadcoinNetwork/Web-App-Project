@@ -110,7 +110,7 @@ export function start({
         const { user } = req
         let { search, sortBy, page, limit, sortOrder } = req.query
         let _sort = {
-          sortBy: sortBy || "date",
+          sortBy: sortBy && sortBy != "id" ? sortBy : "date",
           sortOrder: sortOrder || "DESC",
         }
         let _limit = {
@@ -228,7 +228,7 @@ export function start({
           })
         }
         let _sort = {
-          sortBy: sortBy || "date",
+          sortBy: sortBy && sortBy != "id" ? sortBy : "date",
           sortOrder: sortOrder || "DESC",
         }
         let _limit = {
@@ -331,7 +331,7 @@ export function start({
     ;(async () => {
       let { search, sortBy, page, limit, sortOrder } = req.query
       let _sort = {
-        sortBy: sortBy || "date",
+        sortBy: sortBy && sortBy != "id" ? sortBy : "date",
         sortOrder: sortOrder || "DESC",
       }
       let _limit = {
