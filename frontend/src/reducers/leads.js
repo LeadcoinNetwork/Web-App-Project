@@ -72,12 +72,19 @@ const createReducerFor = namespace => {
           error: false,
         }
       case types[namespace + "_FETCH_SUCCESS"]:
+        let currentIds = state.list.map(lead => lead.id)
+
         return {
           ...state,
           ...action.payload,
           loading: false,
           error: false,
-          list: [...state.list, ...action.payload.list],
+          list: [
+            ...state.list,
+            ...action.payload.list.filter(
+              lead => !currentIds.includes(lead.id),
+            ),
+          ],
         }
       case types[namespace + "_FETCH_ERROR"]:
         return {
