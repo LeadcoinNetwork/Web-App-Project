@@ -244,6 +244,7 @@ export function start({
             limit: _limit,
           })
           .then(response => {
+            console.log({ response })
             let jsonResponse = Object.assign(response, req.query)
             res.json(jsonResponse)
           })

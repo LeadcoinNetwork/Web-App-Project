@@ -173,6 +173,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         FROM leads
         WHERE doc->>"$.ownerId" = ${user_id}
         AND doc->>"$.active" = "true" 
+        AND doc->>"$.forSale" = "true"
       `
       if (where_additions.length > 0) query += `AND ${where_additions}`
       if (sort) {
