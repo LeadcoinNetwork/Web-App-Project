@@ -93,6 +93,7 @@ test("1st user adds lead, 2nd user buys it, everything should work", async () =>
   let [new_record] = body.list
   expect(new_record.ownerId).toBe(user2.id)
   expect(new_record.name).toBe(lead.name)
+  expect(new_record.forSale).toBeFalsy()
 })
 
 test("getting all leads should work", async () => {
@@ -281,4 +282,7 @@ test("adding a lead should success with data A", async () => {
   }
   let result = await ApiForToken(token).leads.sellLeadsAddByForm(lead)
   expect(result.response.affectedRows).toBeTruthy()
+  let body = await ApiForToken(token).leads.buyLeadsGetList()
+  let [record] = body.list
+  expect(record.forSale).toBeTruthy()
 })

@@ -99,7 +99,8 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       let realHeader = "SELECT *"
       let query = `
         FROM leads
-        WHERE doc->>"$.active" = "true" 
+        WHERE doc->>"$.active" = "true"
+        AND doc->>"$.forSale" = "true" 
       `
       if (where_additions.length > 0) query += `AND ${where_additions}`
       if (sort) {
