@@ -16,7 +16,7 @@ const authOptions = {
 }
 
 const done = a => {
-  console.log(a)
+  console.log("Unhandled Catch")
 }
 
 export function start({
@@ -33,7 +33,7 @@ export function start({
     for (let i = 1; i < count + 1; i++) {
       let owner = Math.floor(count / i)
       let status = await appLogic.models.leads.insertLead({
-        date: new Date().toDateString(),
+        date: new Date().valueOf(),
         floor: chance.integer({ min: 1, max: 4 }),
         rooms: chance.integer({ min: 1, max: 4 }),
         size: chance.integer({ min: 1, max: 20 }),
