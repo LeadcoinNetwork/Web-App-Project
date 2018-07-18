@@ -1,5 +1,5 @@
 import React from "react"
-import { Time } from "../../utils/time"
+import { localeString } from "Utils/time"
 
 const TBRCol = ({ field, value, colCount, staticColsWidth }) => (
   <div
@@ -10,7 +10,7 @@ const TBRCol = ({ field, value, colCount, staticColsWidth }) => (
       minWidth: field.minWidth,
     }}
   >
-    {field.key === "timestamp" ? Time.localeString(value) : value}
+    {field.key === "timestamp" ? localeString(value) : value}
   </div>
 )
 

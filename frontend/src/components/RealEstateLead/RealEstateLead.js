@@ -1,6 +1,6 @@
 import React from "react"
 import Button from "Components/Button"
-import { Time } from "Utils/time"
+import { fromNow } from "Utils/time"
 
 const RealEstateLead = ({
   id,
@@ -32,7 +32,7 @@ const RealEstateLead = ({
       <div className="rel-details-wrapper">
         <div className="rel-details">
           <div className="reld-status">{status}</div>
-          <div className="reld-date">{Time.localeString(Date(date))}</div>
+          <div className="reld-date">{fromNow(Date(date))}</div>
           <div className="reld-location">
             {state}, {city}
           </div>
