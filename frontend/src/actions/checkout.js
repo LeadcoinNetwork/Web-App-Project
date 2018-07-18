@@ -1,19 +1,19 @@
 import types from "./types"
 
 export default {
-  checkoutLoadingStart() {
+  checkoutBuyStart() {
     return {
-      type: types.CHECKOUT_LOADING_START,
+      type: types.CHECKOUT_BUY_START,
     }
   },
-  checkoutLoadingFinish() {
+  checkoutBuySuccess() {
     return {
-      type: types.CHECKOUT_LOADING_FINISH,
+      type: types.CHECKOUT_BUY_SUCCESS,
     }
   },
-  checkoutError() {
+  checkoutBuyError() {
     return {
-      type: types.CHECKOUT_ERROR,
+      type: types.CHECKOUT_BUY_ERROR,
     }
   },
 }
