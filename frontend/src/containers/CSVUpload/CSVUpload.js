@@ -23,7 +23,7 @@ class CSVUpload extends React.Component {
     return (
       <div className="csvUpload">
         <div className="file-pick">
-          <Button appStyle secondary loading={loading} label={fileLabel}>
+          <Button appStyle secondary label={fileLabel}>
             <input
               className="displaynone"
               type="file"
@@ -57,7 +57,10 @@ const mapStateToProps = state => ({
   ...state.csvUpload,
 })
 
-export default connect(mapStateToProps, {
-  pickFile: csvUpload.csvUploadPickFile,
-  submit: csvUpload.csvUploadSubmit,
-})(CSVUpload)
+export default connect(
+  mapStateToProps,
+  {
+    pickFile: csvUpload.csvUploadPickFile,
+    submit: csvUpload.csvUploadSubmit,
+  },
+)(CSVUpload)
