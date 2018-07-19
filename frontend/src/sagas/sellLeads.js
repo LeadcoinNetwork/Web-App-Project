@@ -31,6 +31,7 @@ export default function* sellLeads(api) {
     yield take([
       types.SELL_LEADS_FETCH_LEADS,
       types.ADD_LEAD_SUBMIT_SUCCESS,
+      types.MY_LEADS_MOVE_TO_SELL_SUCCESS,
       types.LOGIN_FINISH,
       types.LOGGED_OUT,
     ])

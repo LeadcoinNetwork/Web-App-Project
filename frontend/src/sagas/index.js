@@ -7,14 +7,14 @@ import homesaga from "./homesaga"
 import snackbar from "./snackbar"
 import emailConfirmation from "./emailConfirmation"
 import csvMapping from "./csvMapping"
-import completeRegistration from "./completeRegistration.js"
+import completeRegistration from "./completeRegistration"
 import addLead from "./addLead"
 import redirectIfNotAllowed from "./redirectIfNotAllowed"
 import sellLeads from "./sellLeads"
 import buyLeads from "./buyLeads"
 import checkout from "./checkout"
 import myLeads from "./myLeads"
-
+import moveToSell from "./moveToSell"
 import language from "./language"
 
 import { spawn, fork } from "redux-saga/effects"
@@ -53,6 +53,7 @@ export default function* rootSaga() {
     buyLeads,
     checkout,
     myLeads,
+    moveToSell,
   ]
   for (var i in sagas) {
     yield fork(sagas[i], api)
