@@ -33,6 +33,10 @@ export default class LeadsApi {
     return await this.request(methods.get, "/my-leads", null, { ...options })
   }
 
+  async myLeadsMoveToSell(leads: string[]) {
+    return await this.request(methods.post, "/my-leads/move", { leads })
+  }
+
   async getSoldLeads(options: LeadsApiOptions) {
     return await this.request(methods.get, "/leads/sold", null, { ...options })
   }
