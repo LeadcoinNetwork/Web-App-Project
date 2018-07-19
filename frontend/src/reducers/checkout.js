@@ -12,10 +12,6 @@ const checkout = (state = initialState, action) => {
         loading: true,
       }
     case types.CHECKOUT_BUY_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-      }
     case types.CHECKOUT_BUY_ERROR:
       return {
         ...state,
