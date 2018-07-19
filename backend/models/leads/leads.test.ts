@@ -16,7 +16,7 @@ import NotFound from "../../utils/not-found"
 test("delete lead - insert, delete and then test cannot find lead after deleted", async () => {
   const status = await leads.insertLead({
     date: 1212,
-    owner_id: 1,
+    ownerId: 1,
     name: "test lead",
     phone: "12301212",
     email: "moshe@moshe.com",
@@ -34,7 +34,7 @@ test("delete lead - insert, delete and then test cannot find lead after deleted"
 test("add new lead with bad data", async () => {
   const success = await leads.insertLead({
     date: 1414,
-    owner_id: 34,
+    ownerId: 34,
     name: 'test lead',
     phone: '12301212',
     email: 'moshe@moshe.com',
@@ -49,7 +49,7 @@ const add_leads = async count => {
   for (let i = 1; i < count + 1; i++) {
     let status = await leads.insertLead({
       date: 1212,
-      owner_id: i,
+      ownerId: i,
       name: chance.name(),
       phone: "12301212",
       email: "moshe@moshe.com",
@@ -69,7 +69,7 @@ test("buying leads should work", async () => {
   const res = await leads.buy(new_ids, 666)
   const records: Lead[] = await leads.findLeads({
     condition: {
-      owner_id: 666,
+      ownerId: 666,
     },
     limit: {
       start: 0,
@@ -77,7 +77,7 @@ test("buying leads should work", async () => {
     },
   })
   expect(records.length).toBe(10)
-  expect(records.pop().owner_id).toBe(666)
+  expect(records.pop().ownerId).toBe(666)
 })
 
 test("paging and limit should work", async () => {
@@ -93,7 +93,7 @@ test("paging and limit should work", async () => {
     },
   })
   expect(records1.length).toBe(20)
-  expect(records1.pop().owner_id).toBe(20)
+  expect(records1.pop().ownerId).toBe(20)
   const records2: Lead[] = await leads.findLeads({
     condition: {
       email: "moshe@moshe.com",
@@ -104,7 +104,7 @@ test("paging and limit should work", async () => {
     },
   })
   expect(records2.length).toBe(20)
-  expect(records2.pop().owner_id).toBe(40)
+  expect(records2.pop().ownerId).toBe(40)
   const records3: Lead[] = await leads.findLeads({
     condition: {
       email: "moshe@moshe.com",
@@ -115,13 +115,13 @@ test("paging and limit should work", async () => {
     },
   })
   expect(records3.length).toBe(10)
-  expect(records3.pop().owner_id).toBe(50)
+  expect(records3.pop().ownerId).toBe(50)
 })
 
 test("add new lead", async () => {
   const success = await leads.insertLead({
     date: 1212,
-    owner_id: 1,
+    ownerId: 1,
     name: "test lead",
     phone: "12301212",
     email: "moshe@moshe.com",
@@ -136,7 +136,7 @@ test("find lead", async () => {
     date: 1212,
     bought_currency: "USD",
     price: 0,
-    owner_id: 1,
+    ownerId: 1,
     name: "test lead",
     active: true,
     phone: "1",
@@ -153,7 +153,7 @@ test("find lead", async () => {
     date: 1213,
     bought_currency: "USD",
     price: 0,
-    owner_id: 1,
+    ownerId: 1,
     name: "test lead 2",
     active: true,
     phone: "2",
@@ -187,7 +187,7 @@ test("find lead", async () => {
 test("delete lead", async () => {
   await leads.insertLead({
     date: 1212,
-    owner_id: 1,
+    ownerId: 1,
     active: true,
     name: "test lead",
     phone: "12301212",

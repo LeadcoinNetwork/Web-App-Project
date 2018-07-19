@@ -10,9 +10,9 @@ export interface LeadQueryOptions {
   page?: number
   limit?: any
   bought_from?: number
-  owner_id?: number
+  ownerId?: number
   active?: boolean
-  filters?: [string, string][]
+  filters?: object[]
 }
 
 export interface BaseLead {
@@ -23,7 +23,8 @@ export interface BaseLead {
   phone: string
   email: string
   bought_from: number | null
-  owner_id: number
+  ownerId: number
+  forSale: boolean
   active: boolean
   currency: Currency
   bought_currency: Currency | null
