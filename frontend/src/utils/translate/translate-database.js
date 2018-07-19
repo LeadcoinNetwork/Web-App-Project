@@ -2,6 +2,9 @@ export default {
   "add lead": {
     en: "add lead",
     he: "הוספת לִיד",
+    ja: "リードを追加",
+    zh: "添加潜在客户",
+    ko: "리드 추가",
   },
   "Lead Price": {
     en: "Lead Price",
@@ -426,20 +429,35 @@ export default {
   "LeadCoin is the promised land for marketers": {
     en: "LeadCoin is the promised land for marketers",
     he: "LeadCoin הינה הארץ המובטחת למשווקים",
+    ja: "パスワードをお忘れですか？",
+    zh: "忘记您的密码？",
+    ko: "비밀번호를 잊으셨나요?",
   },
   "Collaborating with other marketers & sharing leads is 10X more efficient than giving away my budget to Google & Facebook.": {
     en:
       "Collaborating with other marketers & sharing leads is 10X more efficient than giving away my budget to Google & Facebook.",
     he:
       "שיתוף פעולה בין משווקים ושיתוף לִידים הוא אפקטיבי עשרות מונים יותר מאשר תשלום לגוגל ופייסבוק. ",
+    ja:
+      "他のマーケターと協力してリードを共有することで、Google や Facebook に予算を費やすよりも 10 倍効率を上げることができます。",
+    zh:
+      "与其他营销者合作并分享潜在客户，效率比将我的预算投给Google和Facebook高出10倍。",
+    ko:
+      "타 마케터와 협업을 하고, 리드를 공유하면 구글과 페이스북에 예산을 쏟아붓는 것보다 10배 이상의 효과를 보게 됩니다.",
   },
   "Meir Cohen": {
     en: "Meir Cohen",
     he: "מאיר כהן",
+    ja: "Meir Cohen",
+    zh: "Meir Cohen",
+    ko: "메이어 코헨",
   },
   "CEO of Crypto": {
     en: "CEO of Crypto",
     he: 'מנכ"ל Crypto',
+    ja: "Crypto CEO",
+    zh: "加密货币首席执行官",
+    ko: "크립토 최고경영자",
   },
   "Enter the email address associated with your account, and we’ll email you a link to reset your password.": {
     en:
@@ -721,41 +739,71 @@ export default {
   "Total balance: ": {
     en: "Total balance: ",
     he: 'סה"כ יתרה: ',
+    ja: "合計残高:",
+    zh: "总余额：",
+    ko: "총 잔액:",
   },
   "Balance available to withdraw: ": {
     en: "Balance available to withdraw: ",
     he: "יתרה פנויה למשיכה: ",
+    ja: "出金可能残高",
+    zh: "可提取余额",
+    ko: "출금 가능 잔액",
   },
   "To withdraw your funds please enter your PayPal email address": {
     en: "To withdraw your funds please enter your PayPal email address",
     he: 'למשיכת הכספים נא להכנים את כתובת הדוא"ל המשוייכת לחשבון הPayPal שלך',
+    ja: "出金するには PayPal のEメールアドレスを入力してください:",
+    zh: "如要提款，请输入您的PayPal电子邮件地址：",
+    ko: "자금을 출금하시려면 페이팔 이메일 주소를 입력해주세요.",
   },
   "Enter PayPal Email": {
     en: "Enter PayPal Email",
     he: 'הכנס דוא"ל המשויך ל PayPal',
+    ja: "PayPal のEメールアドレスを入力してください",
+    zh: "输入PayPal电子邮件地址",
+    ko: "페이팔 이메일을 입력해주세요",
   },
   "Switch to": {
     en: "Switch to",
     he: "החלף ל",
+    ja: "次に切り替える:",
+    zh: "切换为",
+    ko: "바꾸기",
   },
   "Sort By": {
     en: "Sort By",
     he: "מיין לפי",
+    ja: "次による並べ替え:",
+    zh: "分类方式：",
+    ko: "정렬",
   },
   "check all": {
     en: "check all",
     he: "בחר הכל",
+    ja: "すべてチェックを入れる",
+    zh: "全部勾选",
+    ko: "모두 선택",
   },
   "uncheck all": {
     en: "uncheck all",
     he: "בטל בחירה",
+    ja: "すべてのチェックを外す",
+    zh: "取消全部勾选",
+    ko: "모두 선택 해제",
   },
   of: {
     en: "of",
     he: "מתוך",
+    ja: "の",
+    zh: "的",
+    ko: "의",
   },
   "Search...": {
     en: "Search...",
     he: "חיפוש...",
+    ja: "検索...",
+    zh: "搜索...",
+    ko: "검색...",
   },
 }

@@ -1,15 +1,18 @@
 import React from "react"
 import { connect } from "react-redux"
-import t from "../../utils/translate/translate"
-import LeadsTemplate from "Containers/LeadsTemplate"
-import { leads } from "Actions"
+import t from "utils/translate/translate"
+import LeadsTemplate from "../LeadsTemplate"
+import { leads, moveToSell } from "Actions"
 
 class MyLeads extends React.Component {
   moveLeadsToSell = () => {
-    console.log(Array.from(this.props.leads.selected))
+    this.props.moveToSell()
   }
   moveLeadToSell = id => {
-    console.log([id])
+    let selected = new Set(this.props.leads.selected)
+    selected.add(id)
+    this.props.setSelectedLeads(selected)
+    this.moveLeadsToSell()
   }
   buildButtonLabel = () => {
     let amount = this.props.leads.selected.size
@@ -69,5 +72,6 @@ export default connect(
     fetchLeads: (...params) => leads.fetchLeads("MY_LEADS", ...params),
     setSelectedLeads: selectedLeads =>
       leads.setSelectedLeads("MY_LEADS", selectedLeads),
+    moveToSell: moveToSell.myLeadsMoveToSellBegin,
   },
 )(MyLeads)

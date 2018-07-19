@@ -94,7 +94,10 @@ const mapStateToProps = state => ({
   login: state.login,
 })
 
-export default connect(mapStateToProps, {
-  handleChange: login.loginHandleChange,
-  submit: login.loginUserSubmit,
-})(Login)
+export default connect(
+  mapStateToProps,
+  {
+    handleChange: login.loginHandleChange,
+    submit: login.loginUserSubmit,
+  },
+)(Login)

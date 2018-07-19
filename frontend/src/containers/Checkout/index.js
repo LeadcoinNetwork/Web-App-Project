@@ -1,4 +1,4 @@
-import "./checkout.scss"
+import "./Checkout.scss"
 
 import Checkout from "./Checkout"
 

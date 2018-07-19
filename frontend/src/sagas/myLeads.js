@@ -30,6 +30,7 @@ export default function* myLeads(api) {
 
     yield take([
       types.MY_LEADS_FETCH_LEADS,
+      types.CHECKOUT_BUY_SUCCESS,
       types.LOGIN_FINISH,
       types.LOGGED_OUT,
     ])
