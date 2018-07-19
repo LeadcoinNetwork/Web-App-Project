@@ -178,13 +178,41 @@ export function start({
    * Buying a lead.
    */
   expressApp.post(
+    "/my-leads/move",
+    passport.authenticate("jwt", authOptions),
+    async function(req, res, next) {
+      ;(async () => {
+        const { user } = req
+        const { leads }: { leads: number[] } = req.body
+        if (leads) {
+          appLogic.leads
+            .moveMyLeadsToSellLeads(leads)
+            .then(response => {
+              res.json({ response })
+            })
+            .catch(err => {
+              res.status(400)
+              if (err.sqlMessage) {
+                res.send({ error: err.sqlMessage })
+              } else {
+                res.send({ error: err.message })
+              }
+            })
+        } else {
+          return next()
+        }
+      })().catch(err => {
+        res.status(400)
+        res.send({ error: err.message })
+      })
+    },
+  )
+
+  expressApp.post(
     "/buy-leads/buy",
     passport.authenticate("jwt", authOptions),
     async function(req, res, next) {
       ;(async () => {
-        /*
-      TODO: buy links
-      */
         const { user } = req
         const { leads }: { leads: number[] } = req.body
         if (leads) {

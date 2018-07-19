@@ -145,6 +145,34 @@ test("getting all leads should work", async () => {
   expect(typeof body.list).toEqual("object")
 })
 
+test(`user1 add a lead
+      user2 buys it 
+      user2 move it for sale 
+      user1 buys it back, for symetry`, async () => {
+  var { user, token } = await ValidatedUserForTests.create({
+    users: appLogic.models.users,
+  })
+  var { user: user2, token: token2 } = await ValidatedUserForTests.create({
+    users: appLogic.models.users,
+  })
+  const lead = {
+    date: 1213,
+    name: "testlead for my-leads",
+    phone: "2",
+    email: "moshe@moshe.com",
+    active: true,
+    bought_from: 5,
+  }
+  let body = await ApiForToken(token).leads.sellLeadsAddByForm(lead)
+  body = await ApiForToken(token2).leads.buyLeadsGetList()
+  body = await ApiForToken(token2).leads.buyLeadsBuy([body.list[0].id])
+  body = await ApiForToken(token2).leads.getMyLeads({})
+  const [record] = body.list
+  body = await ApiForToken(token2).leads.myLeadsMoveToSell([body.list[0].id])
+  expect(body.error).toBeFalsy()
+  expect(record.name).toBe(lead.name)
+})
+
 test("user1 add lead, user2 buys it and then he sees it as his lead under /my-leads", async () => {
   var { user, token } = await ValidatedUserForTests.create({
     users: appLogic.models.users,

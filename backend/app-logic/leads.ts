@@ -20,6 +20,10 @@ export default class Leads {
   constructor(private models: IModels) {}
   public UploadCSV() {}
 
+  public async moveMyLeadsToSellLeads(leads: number[]) {
+    return await this.models.leads.moveMyToSell(leads)
+  }
+
   public async buyLeads(leads: number[], new_owner: number) {
     return await this.models.leads.buy(leads, new_owner)
   }
