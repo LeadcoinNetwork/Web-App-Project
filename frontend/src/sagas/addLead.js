@@ -14,11 +14,11 @@ export default function* addLead(api) {
     yield put(actions.addLead.addLeadLoadingStart())
     let { values } = yield select(state => state.addLead)
     let res = yield api.leads.sellLeadsAddByForm(values)
+    yield put(actions.addLead.addLeadLoadingEnd())
     if (res.error) {
-      yield put(actions.addLead.addLeadLoadingEnd())
       yield put(actions.addLead.addLeadAddError("error", res.error))
     } else {
-      yield put(actions.addLead.addLeadLoadingEnd())
+      yield put(actions.addLead.addLeadSubmitSuccess())
       yield put(actions.addLead.addLeadClearForm())
       yield put(push("/sell-leads"))
     }

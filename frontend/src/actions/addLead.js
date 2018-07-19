@@ -22,17 +22,15 @@ export default {
     }
   },
 
-  addLeadLoadingEnd() {
+  addLeadLoadingStart() {
     return {
-      type: types.ADD_LEAD_TOGGLE_LOADING,
-      loading: false,
+      type: types.ADD_LEAD_LOADING_START,
     }
   },
 
-  addLeadLoadingStart() {
+  addLeadLoadingEnd() {
     return {
-      type: types.ADD_LEAD_TOGGLE_LOADING,
-      loading: true,
+      type: types.ADD_LEAD_LOADING_END,
     }
   },
 
@@ -46,6 +44,12 @@ export default {
     return {
       type: types.ADD_LEAD_SUBMIT_FORM,
       payload,
+    }
+  },
+
+  addLeadSubmitSuccess() {
+    return {
+      type: types.ADD_LEAD_SUBMIT_SUCCESS,
     }
   },
 

@@ -42,10 +42,16 @@ export default function(state = initialState, action) {
         agree_to_terms: action.agree_to_terms.value,
       }
 
-    case types.ADD_LEAD_TOGGLE_LOADING:
+    case types.ADD_LEAD_LOADING_START:
       return {
         ...state,
-        loading: action.loading,
+        loading: true,
+      }
+
+    case types.ADD_LEAD_LOADING_END:
+      return {
+        ...state,
+        loading: false,
       }
 
     case types.ADD_LEAD_CLEAR_FORM:
