@@ -272,7 +272,8 @@ test("adding a lead should fail without email", async () => {
   }
   let result = await ApiForToken(token).leads.sellLeadsAddByForm(lead)
   expect(result.error).toBeTruthy()
-  expect(result.error).toBe("email not valid")
+  const error_json = JSON.parse(result.error)
+  expect(error_json.email[0]).toBe("email not valid")
 })
 
 test("adding a lead should fail without token", async () => {
