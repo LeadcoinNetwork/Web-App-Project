@@ -3,7 +3,6 @@ yarn-error.log
 .env
 .idea
 .vscode
-package-lock.json
 deploy_rsa
 *.ppk
 gitlog.txt

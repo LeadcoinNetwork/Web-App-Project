@@ -64,7 +64,10 @@
     "ts-node": "^6.0.3"
   },
   "jest": {
-    "testMatch": ["**/*.test.js", "**/*.test.ts"],
+    "testMatch": [
+      "**/*.test.js",
+      "**/*.test.ts"
+    ],
     "globals": {
       "ts-jest": {
         "tsConfigFile": "tsconfig.json"
@@ -73,7 +76,11 @@
     "moduleNameMapper": {
       "^@/(.*)": "<rootDir>/$1"
     },
-    "moduleFileExtensions": ["ts", "tsx", "js"],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
     "transform": {
       "^.+\\.(ts|tsx)$": "ts-jest"
     }
@@ -81,8 +88,7 @@
   "scripts": {
     "start": "node tsc-watch",
     "test": "cross-env CONNECTION_LIMIT=1 jest --runInBand --forceExit",
-    "test:log":
-      "cross-env CONNECTION_LIMIT=1 FORCE_LOG=true jest --runInBand --forceExit",
+    "test:log": "cross-env CONNECTION_LIMIT=1 FORCE_LOG=true jest --runInBand --forceExit",
     "test:compile": "tsc",
     "build": "tsc",
     "test:watch": "cross-env CONNECTION_LIMIT=1 jest --watch --runInBand",
@@ -90,7 +96,9 @@
     "precommit": "pretty-quick --staged"
   },
   "nodemonConfig": {
-    "ignore": ["upload/*"]
+    "ignore": [
+      "upload/*"
+    ]
   },
   "bugs": {
     "url": "https://github.com/LeadcoinNetwork/leadcoin-web/issues"
