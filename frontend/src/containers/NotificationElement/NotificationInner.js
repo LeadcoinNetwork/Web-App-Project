@@ -1,7 +1,7 @@
 import React from "react"
 import FontAwesomeIcon from "@fortawesome/react-fontawesome"
 import faEye from "@fortawesome/fontawesome-free-solid/faEye"
-import { Time } from "../../utils/time"
+import { fromNow } from "../../utils/time"
 import t from "../../utils/translate/translate"
 
 const NotificationInner = ({ list, notificatiosViewAll }) => (
@@ -13,9 +13,7 @@ const NotificationInner = ({ list, notificatiosViewAll }) => (
           className={"ni-row" + (notification.unread ? " unread" : "")}
           key={notification.id}
         >
-          <span className="nr-time">
-            {Time.fromNow(notification.timestamp)}
-          </span>{" "}
+          <span className="nr-time">{fromNow(notification.timestamp)}</span>{" "}
           {t(notification.message)}
         </div>
       </div>
