@@ -80,8 +80,9 @@ class Signup extends React.Component {
         <aside>
           <h3>{t("LeadCoin is the promised land for marketers")}</h3>
           <q>
-            {t(`Collaborating with other marketers & sharing leads is 10X more
-            efficient than giving away my budget to Google & Facebook.`)}
+            {t(
+              "Collaborating with other marketers & sharing leads is 10X more efficient than giving away my budget to Google & Facebook.",
+            )}
           </q>
           <label style={{ backgroundImage: `url(${tiger})` }}>
             <span>
