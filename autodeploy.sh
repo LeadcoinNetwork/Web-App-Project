@@ -12,8 +12,9 @@ do
 	fi
 	if [ "$donow" = "y" ]; then
 		echo "we should do"
-		git log -1 > dist/gitlog.txt
+		git log -1 > frontend/dist/gitlog.txt
 		git log -1 > gitlog.txt
+		git log -1 > backend/gitlog.txt
 		(
 			cd frontend;
 			echo 'start frontend npm build'
