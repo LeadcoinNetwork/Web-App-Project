@@ -8,7 +8,8 @@ const cp = require("child_process")
 const exec = cp.exec
 
 module.exports = merge(common, {
-  devServer: {},
+  // devServer: {},
+  // debug: true,
   plugins: [
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("production"),
