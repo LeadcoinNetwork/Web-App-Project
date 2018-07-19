@@ -89,7 +89,8 @@ test("1st user adds lead, 2nd user buys it, everything should work", async () =>
   let [old_record] = body.list
   expect(old_record.ownerId).toBe(user1.id)
   body = await ApiForToken(token2).leads.buyLeadsBuy([body.list[0].id])
-  body = await ApiForToken(token2).leads.buyLeadsGetList()
+  body = await ApiForToken(token2).leads.getMyLeads({})
+  expect(body.list.length).toBe(1)
   let [new_record] = body.list
   expect(new_record.ownerId).toBe(user2.id)
   expect(new_record.name).toBe(lead.name)
@@ -144,7 +145,7 @@ test("getting all leads should work", async () => {
   expect(typeof body.list).toEqual("object")
 })
 
-test("getting my bought_leads should work", async () => {
+test("user1 add lead, user2 buys it and then he sees it as his lead under /my-leads", async () => {
   var { user, token } = await ValidatedUserForTests.create({
     users: appLogic.models.users,
   })
