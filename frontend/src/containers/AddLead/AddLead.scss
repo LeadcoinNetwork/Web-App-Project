@@ -1,4 +1,4 @@
-@import "~Styles/variables";
+@import "../../styles/variables";
 
 .add_lead {
   padding: 10px;
@@ -38,11 +38,11 @@
     }
   }
   .price {
+    margin-left: 10px;
+    input {
       margin-left: 10px;
-      input {
-        margin-left: 10px;
-        width: 150px;
-      }
+      width: 150px;
+    }
   }
   .flexed {
     display: flex;
