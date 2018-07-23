@@ -56,27 +56,30 @@ class LeadsTemplate extends React.Component {
       case "buy":
         return (
           <>
-            <h3>Sorry, we couldn't find any leads</h3>
-            <span>Try expanding your criteria</span>
+            <h3>{t("Sorry, we couldn't find any leads")}</h3>
+            <span>{t("Try expanding your search criteria")}</span>
           </>
         )
       case "sell":
         return (
           <>
-            <h3>Start uploading your leads</h3>
+            <h3>{t("Start uploading your leads")}</h3>
             <span>
-              Upload your leads now by selecting a{" "}
-              <Link to="/csv-upload">CSV file</Link> or by filling out a{" "}
-              <Link to="/add-lead">simple web form</Link>
+              {t("Upload your leads now by selecting a")}{" "}
+              <Link to="/csv-upload">{t("CSV file")}</Link>
+              {t(" or by filling out a")}{" "}
+              <Link to="/add-lead">{t("simple web form")}</Link>
             </span>
           </>
         )
       case "my":
         return (
           <>
-            <h3>You have no leads</h3>
+            <h3>{t("You have no leads")}</h3>
             <span>
-              Explore and <Link to="/buy-leads">buy new leads</Link> now
+              {t("Explore and ")}{" "}
+              <Link to="/buy-leads">{t("buy new leads")}</Link>
+              {t(" now")}
             </span>
           </>
         )

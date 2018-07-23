@@ -814,4 +814,48 @@ export default {
     en: "Create New Lead",
     he: "יצירת לִיד חדש",
   },
+  "Sorry, we couldn't find any leads": {
+    en: "Sorry, we couldn't find any leads",
+    he: "סליחה, לא מצאנו לִידים",
+  },
+  "Try expanding your search criteria": {
+    en: "Try expanding your search criteria",
+    he: "נסה/י להרחיב את קריטריון החיפוש",
+  },
+  "Start uploading your leads": {
+    en: "Start uploading your leads",
+    he: "התחל/י בהעלאת הלִידים שלך",
+  },
+  "Upload your leads now by selecting a": {
+    en: "Upload your leads now by selecting a",
+    he: 'העלה/י את הלִידים שלך עכשיו ע"י בחירת',
+  },
+  "CSV file": {
+    en: "CSV file",
+    he: "קובץ CSV",
+  },
+  " or by filling out a": {
+    en: " or by filling out a",
+    he: ' או ע"י מילוי',
+  },
+  "simple web form": {
+    en: "simple web form",
+    he: "טופס פשוט",
+  },
+  "You have no leads": {
+    en: "You have no leads",
+    he: "אין לך לִידים",
+  },
+  "Explore and ": {
+    en: "Explore and ",
+    he: "חפש ",
+  },
+  "buy new leads": {
+    en: "buy new leads",
+    he: "וקנה לִידים חדשים",
+  },
+  " now": {
+    en: " now",
+    he: " עכשיו",
+  },
 }
