@@ -1,6 +1,6 @@
 /**
  * Some manual tests
- * 
+ *
  * /signup
 ☑ not logged in => go to login
 ☑ logged in => go to buy-leads
@@ -20,14 +20,14 @@ logged in disabled => go to disbled page
 
 Redirect & Back
 
-/buy-leads 
+/buy-leads
 logedin click on link in user menu.
 
 /terms
 /privacy
 */
 
-import * as Actions from "Actions"
+import * as Actions from "../actions"
 import { select, put, take } from "redux-saga/effects"
 
 function everyone(path) {

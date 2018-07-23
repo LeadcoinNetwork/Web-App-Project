@@ -1,6 +1,5 @@
 import React from "react"
 import { connect } from "react-redux"
-// import { notificationsTable } from "Actions"
 import { localeString } from "Utils/time"
 import t from "../../utils/translate/translate"
 
@@ -21,6 +20,4 @@ const NotificationsTable = ({ loading, list, error }) => (
 
 const mapStateToProps = state => state.notificationsTable
 
-const NotificationsTableConnected = connect(mapStateToProps)(NotificationsTable)
-
-export default NotificationsTableConnected
+export default connect(mapStateToProps)(NotificationsTable)

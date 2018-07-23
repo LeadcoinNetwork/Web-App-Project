@@ -1,6 +1,6 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
-import { completeRegistration, app } from "Actions"
+import { completeRegistration, app } from "../../actions"
 import { createStoreAndStory } from "storybook-utils/createStoreAndStory"
 import snackbar from "Sagas/snackbar"
 

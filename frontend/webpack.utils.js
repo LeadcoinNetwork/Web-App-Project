@@ -18,15 +18,15 @@ function JestUpdateModuleResoultionPacker() {
 function toCamelcase(item) {
   return item[0].toUpperCase() + item.slice(1)
 }
-function getAliasesFromRootSrcForWebPack() {
-  var aliases = {}
-  var filesAndFolder = getRootDirectories()
-  filesAndFolder.forEach(item => {
-    aliases[toCamelcase(item)] = __dirname + "/src/" + item
-    aliases[item] = __dirname + "/src/" + item
-  })
-  return aliases
-}
+// function getAliasesFromRootSrcForWebPack() {
+//   var aliases = {}
+//   var filesAndFolder = getRootDirectories()
+//   filesAndFolder.forEach(item => {
+//     aliases[toCamelcase(item)] = __dirname + "/src/" + item
+//     aliases[item] = __dirname + "/src/" + item
+//   })
+//   return aliases
+// }
 function getRootDirectories() {
   return fs
     .readdirSync(__dirname + "/src")
@@ -36,5 +36,5 @@ function getRootDirectories() {
 
 module.exports = {
   JestUpdateModuleResoultionPacker,
-  getAliasesFromRootSrcForWebPack,
+  // getAliasesFromRootSrcForWebPack,
 }

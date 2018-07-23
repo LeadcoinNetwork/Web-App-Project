@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-import { leads } from "Actions"
+import { leads } from "../../actions"
 import { push } from "react-router-redux"
 import LeadsTemplate from "Containers/LeadsTemplate"
 import t from "../../utils/translate/translate"

@@ -1,7 +1,7 @@
 import React from "react"
 import Button from "Components/Button"
 import { connect } from "react-redux"
-import { csvUpload } from "Actions"
+import { csvUpload } from "../../actions"
 import t from "../../utils/translate/translate"
 
 class CSVUpload extends React.Component {
@@ -57,10 +57,7 @@ const mapStateToProps = state => ({
   ...state.csvUpload,
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    pickFile: csvUpload.csvUploadPickFile,
-    submit: csvUpload.csvUploadSubmit,
-  },
-)(CSVUpload)
+export default connect(mapStateToProps, {
+  pickFile: csvUpload.csvUploadPickFile,
+  submit: csvUpload.csvUploadSubmit,
+})(CSVUpload)

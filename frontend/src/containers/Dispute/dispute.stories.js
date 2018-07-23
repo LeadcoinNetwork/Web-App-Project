@@ -1,7 +1,7 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
 import { createStoreAndStory } from "storybook-utils/createStoreAndStory"
-import { dispute } from "Actions"
+import { dispute } from "../../actions"
 
 storiesOf("Containers/Dispute", module)
   .add("Dispute - empty", () => {

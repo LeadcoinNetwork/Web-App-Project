@@ -1,6 +1,6 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
-import { userMenu, types } from "Actions"
+import { userMenu, types } from "../../actions"
 import { createStoreAndStory } from "storybook-utils/createStoreAndStory"
 
 import { specs, describe, it } from "storybook-addon-specifications"

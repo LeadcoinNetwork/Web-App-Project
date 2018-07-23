@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import NotificationInner from "./NotificationInner"
 import { connect } from "react-redux"
-import { notifications } from "Actions"
+import { notifications } from "../../actions"
 
 class NotificationElement extends Component {
   handleClick = () => {

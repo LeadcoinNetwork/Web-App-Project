@@ -3,7 +3,7 @@ import Select from "Components/Select"
 import Button from "Components/Button"
 import TextField from "Components/TextField"
 import { connect } from "react-redux"
-import { csvMapping } from "Actions"
+import { csvMapping } from "../../actions"
 import t from "../../utils/translate/translate"
 
 class CSVMapping extends React.Component {

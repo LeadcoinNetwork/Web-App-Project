@@ -2,14 +2,16 @@ import React from "react"
 import TextField from "Components/TextField"
 import Button from "Components/Button"
 import { connect } from "react-redux"
-import { forgotPassword } from "Actions"
+import { forgotPassword } from "../../actions"
 import t from "../../utils/translate/translate"
 
 const ForgotPassword = ({ forgotPassword, handleChange, submit }) => (
   <section className="ldc-forgot-password">
     <h1>{t("Forgot your password?")}</h1>
     <p>
-      {t("Enter the email address associated with your account, and we’ll email you a link to reset your password.")}
+      {t(
+        "Enter the email address associated with your account, and we’ll email you a link to reset your password.",
+      )}
     </p>
     <TextField
       placeholder={t("Email")}

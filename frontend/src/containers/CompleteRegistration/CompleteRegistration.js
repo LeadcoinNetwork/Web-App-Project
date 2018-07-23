@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import Button from "Components/Button"
 import TextField from "Components/TextField"
 import ReactPhoneInput from "react-phone-input-2"
-import { completeRegistration } from "Actions"
+import { completeRegistration } from "../../actions"
 import tiger from "Images/tiger.jpg"
 import t from "../../utils/translate/translate"
 
@@ -84,11 +84,8 @@ const mapStateToProps = state => ({
   completeRegistration: state.completeRegistration,
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    con: console.log,
-    handleChange: completeRegistration.completeRegistrationHandleChange,
-    submit: completeRegistration.completeRegistrationSubmit,
-  },
-)(CompleteRegistration)
+export default connect(mapStateToProps, {
+  con: console.log,
+  handleChange: completeRegistration.completeRegistrationHandleChange,
+  submit: completeRegistration.completeRegistrationSubmit,
+})(CompleteRegistration)

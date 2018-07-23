@@ -1,5 +1,5 @@
-import { types } from "Actions"
-import * as actions from "Actions"
+import { types } from "../actions"
+import * as actions from "../actions"
 import { select, take, put, call } from "redux-saga/effects"
 import { push } from "react-router-redux"
 

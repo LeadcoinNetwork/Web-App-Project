@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-import { leads } from "Actions"
+import { leads } from "../../actions"
 import LeadsTemplate from "Containers/LeadsTemplate"
 import t from "../../utils/translate/translate"
 
@@ -66,11 +66,8 @@ const mapStateToProps = state => ({
   fields: state.fields,
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    fetchLeads: (...params) => leads.fetchLeads("SELL_LEADS", ...params),
-    setSelectedLeads: selectedLeads =>
-      leads.setSelectedLeads("SELL_LEADS", selectedLeads),
-  },
-)(SellLeads)
+export default connect(mapStateToProps, {
+  fetchLeads: (...params) => leads.fetchLeads("SELL_LEADS", ...params),
+  setSelectedLeads: selectedLeads =>
+    leads.setSelectedLeads("SELL_LEADS", selectedLeads),
+})(SellLeads)

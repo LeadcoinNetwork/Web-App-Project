@@ -2,7 +2,7 @@ import React from "react"
 import Button from "Components/Button"
 import Textarea from "Components/Textarea"
 import { connect } from "react-redux"
-import { dispute } from "Actions"
+import { dispute } from "../../actions"
 import t from "../../utils/translate/translate"
 
 class Dispute extends React.Component {

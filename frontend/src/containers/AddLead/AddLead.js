@@ -3,7 +3,7 @@ import Select from "Components/Select"
 import Button from "Components/Button"
 import TextField from "Components/TextField"
 import { connect } from "react-redux"
-import { addLead } from "Actions"
+import { addLead } from "../../actions"
 import t from "../../utils/translate/translate"
 
 class AddLead extends React.Component {
@@ -107,12 +107,9 @@ class AddLead extends React.Component {
 
 const mapStateToProps = state => state.addLead
 
-export default connect(
-  mapStateToProps,
-  {
-    agreeToTerms: addLead.addLeadAgreeToTerms,
-    handleChange: addLead.addLeadHandleFormChange,
-    submit: addLead.addLeadSubmitForm,
-    clear: addLead.addLeadClearForm,
-  },
-)(AddLead)
+export default connect(mapStateToProps, {
+  agreeToTerms: addLead.addLeadAgreeToTerms,
+  handleChange: addLead.addLeadHandleFormChange,
+  submit: addLead.addLeadSubmitForm,
+  clear: addLead.addLeadClearForm,
+})(AddLead)

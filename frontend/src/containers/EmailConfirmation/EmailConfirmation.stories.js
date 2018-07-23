@@ -1,6 +1,6 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
-import { types, user } from "Actions"
+import { types, user } from "../../actions"
 import { createStoreAndStory } from "storybook-utils/createStoreAndStory"
 import { take } from "redux-saga/effects"
 import { toast } from "react-toastify"

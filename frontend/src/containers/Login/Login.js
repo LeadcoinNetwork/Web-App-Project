@@ -5,7 +5,7 @@ import TextField from "Components/TextField"
 import Checkbox from "Components/Checkbox"
 import SocialLogin from "Components/SocialLogin"
 import { Link } from "react-router-dom"
-import { login } from "Actions"
+import { login } from "../../actions"
 import tiger from "Images/tiger.jpg"
 import t from "../../utils/translate/translate"
 
@@ -94,10 +94,7 @@ const mapStateToProps = state => ({
   login: state.login,
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    handleChange: login.loginHandleChange,
-    submit: login.loginUserSubmit,
-  },
-)(Login)
+export default connect(mapStateToProps, {
+  handleChange: login.loginHandleChange,
+  submit: login.loginUserSubmit,
+})(Login)

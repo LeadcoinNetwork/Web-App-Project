@@ -1,4 +1,4 @@
-import * as actions from "Actions"
+import * as actions from "../actions"
 import { select, take, put, call } from "redux-saga/effects"
 
 export default function* forgotPassword(api) {

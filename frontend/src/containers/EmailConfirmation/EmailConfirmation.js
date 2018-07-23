@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import { connect } from "react-redux"
-import * as actions from "Actions"
+import * as actions from "../../actions"
 import t from "../../utils/translate/translate"
 
 const EmailConfirmation = ({ user, emailConfirmation, logout, resend }) => (

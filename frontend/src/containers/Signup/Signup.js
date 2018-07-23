@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import Button from "Components/Button"
 import TextField from "Components/TextField"
 import SocialLogin from "Components/SocialLogin"
-import { signup } from "Actions"
+import { signup } from "../../actions"
 import tiger from "Images/tiger.jpg"
 import { Link } from "react-router-dom"
 import t from "../../utils/translate/translate"
@@ -101,10 +101,7 @@ const mapStateToProps = state => ({
   signup: state.signup,
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    handleChange: signup.signupHandleChange,
-    submit: signup.signupSubmit,
-  },
-)(Signup)
+export default connect(mapStateToProps, {
+  handleChange: signup.signupHandleChange,
+  submit: signup.signupSubmit,
+})(Signup)

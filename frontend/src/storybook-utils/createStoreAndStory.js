@@ -14,7 +14,7 @@ import {
   ConnectedRouter,
 } from "connected-react-router"
 import { createBrowserHistory, createMemoryHistory } from "history"
-import { user } from "Actions"
+import { user } from "../actions"
 import languageSaga from "../sagas/language"
 
 // const history = createBrowserHistory()

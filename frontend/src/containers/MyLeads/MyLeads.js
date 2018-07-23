@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import t from "utils/translate/translate"
 import LeadsTemplate from "../LeadsTemplate"
-import { leads, moveToSell } from "Actions"
+import { leads, moveToSell } from "../../actions"
 
 class MyLeads extends React.Component {
   moveLeadsToSell = () => {
@@ -66,12 +66,9 @@ const mapStateToProps = state => ({
   fields: state.fields,
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    fetchLeads: (...params) => leads.fetchLeads("MY_LEADS", ...params),
-    setSelectedLeads: selectedLeads =>
-      leads.setSelectedLeads("MY_LEADS", selectedLeads),
-    moveToSell: moveToSell.myLeadsMoveToSellBegin,
-  },
-)(MyLeads)
+export default connect(mapStateToProps, {
+  fetchLeads: (...params) => leads.fetchLeads("MY_LEADS", ...params),
+  setSelectedLeads: selectedLeads =>
+    leads.setSelectedLeads("MY_LEADS", selectedLeads),
+  moveToSell: moveToSell.myLeadsMoveToSellBegin,
+})(MyLeads)

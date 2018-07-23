@@ -1,7 +1,7 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
 import { createStoreAndStory } from "storybook-utils/createStoreAndStory"
-import { withdraw, balance } from "Actions"
+import { withdraw, balance } from "../../actions"
 
 storiesOf("Containers/Withdraw", module)
   .add("balance 450 available 400", () => {

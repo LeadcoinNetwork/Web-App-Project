@@ -1,5 +1,5 @@
 import React from "react"
-import { app, user, route } from "Actions"
+import { app, user, route } from "../../actions"
 import * as _ from "lodash"
 
 import Header from "Containers/Header"

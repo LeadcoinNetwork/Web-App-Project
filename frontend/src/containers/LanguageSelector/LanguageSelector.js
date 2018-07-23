@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-import * as actions from "Actions"
+import * as actions from "../../actions"
 
 const list = require("./languagesList.json")
 
@@ -69,9 +69,8 @@ const mapDispatchToProps = {
   languageSelectorClick: actions.language.languageSelectorClick,
 }
 
-const LanguageSelectorConnected = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(LanguageSelector)
+const LanguageSelectorConnected = connect(mapStateToProps, mapDispatchToProps)(
+  LanguageSelector,
+)
 
 export default LanguageSelectorConnected
