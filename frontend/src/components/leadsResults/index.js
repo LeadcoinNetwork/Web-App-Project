@@ -1,4 +1,4 @@
-import "./LeadsResults.scss"
-import LeadsResults from "./LeadsResults"
+import "./leadsResults.scss"
+import LeadsResults from "./leadsResults"
 
 export default LeadsResults

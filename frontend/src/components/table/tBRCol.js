@@ -1,5 +1,5 @@
 import React from "react"
-import { localeString } from "Utils/time"
+import { localeString } from "../../utils/time"
 
 const TBRCol = ({ field, value, colCount, staticColsWidth }) => (
   <div

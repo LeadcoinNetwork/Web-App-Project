@@ -1,5 +1,5 @@
-import "./App.scss"
+import "./app.scss"
 
-import App from "./App"
+import App from "./app"
 
 export default App

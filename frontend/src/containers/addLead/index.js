@@ -1,3 +1,3 @@
-import "./AddLead.scss"
-import AddLead from "./AddLead"
+import "./addLead.scss"
+import AddLead from "./addLead"
 export default AddLead

@@ -1,9 +1,9 @@
 import React from "react"
 import { Switch, Route } from "react-router"
-import Login from "./Login"
-import Users from "./Users"
-import Leads from "./Leads"
-import Transactions from "./Transactions"
+import Login from "./login"
+import Users from "./users"
+import Leads from "./leads"
+import Transactions from "./transactions"
 
 class Admin extends React.Component {
   render() {

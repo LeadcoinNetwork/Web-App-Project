@@ -1,3 +1,3 @@
-import Admin from "./Admin"
+import Admin from "./admin"
 
 export default Admin

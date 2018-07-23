@@ -1,5 +1,5 @@
 import React from "react"
-import withInfiniteScroll from "HOC/withInfiniteScroll"
+import withInfiniteScroll from "../../hoc/withInfiniteScroll"
 import Button from "../button"
 import THead from "./tHead"
 import TBody from "./tBody"
