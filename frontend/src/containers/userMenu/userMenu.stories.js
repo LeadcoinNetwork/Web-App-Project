@@ -5,7 +5,7 @@ import { createStoreAndStory } from "../../storybook-utils/createStoreAndStory"
 
 import { specs, describe, it } from "storybook-addon-specifications"
 import { mount } from "enzyme"
-import UserMenu from "./UserMenu"
+import UserMenu from "./userMenu"
 
 storiesOf("Containers/User Menu", module)
   .add("closed", () => {
