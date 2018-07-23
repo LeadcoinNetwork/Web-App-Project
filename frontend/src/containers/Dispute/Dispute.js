@@ -1,6 +1,6 @@
 import React from "react"
-import Button from "Components/Button"
-import Textarea from "Components/Textarea"
+import Button from "../../components/Button"
+import Textarea from "../../components/Textarea"
 import { connect } from "react-redux"
 import { dispute } from "../../actions"
 import t from "../../utils/translate/translate"

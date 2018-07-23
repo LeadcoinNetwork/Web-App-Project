@@ -1,5 +1,5 @@
 import React from "react"
-import Button from "Components/Button"
+import Button from "../../components/Button"
 import { connect } from "react-redux"
 import { csvUpload } from "../../actions"
 import t from "../../utils/translate/translate"

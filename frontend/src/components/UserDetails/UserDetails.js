@@ -1,7 +1,7 @@
 import React from "react"
 import axios from "axios"
-import Button from "Components/Button"
-import TextField from "Components/TextField"
+import Button from "../Button"
+import TextField from "../TextField"
 
 class UserDetails extends React.Component {
   state = {

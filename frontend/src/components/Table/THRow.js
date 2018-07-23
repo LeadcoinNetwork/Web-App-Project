@@ -1,5 +1,5 @@
 import React from "react"
-import Checkbox from "Components/Checkbox"
+import Checkbox from "../Checkbox"
 import THRCol from "./THRCol"
 
 const THRow = props => (

@@ -1,6 +1,6 @@
 import React from "react"
-import Checkbox from "Components/Checkbox"
-import Button from "Components/Button"
+import Checkbox from "../Checkbox"
+import Button from "../Button"
 import TBRCol from "./TBRCol"
 
 const TBRow = props => (

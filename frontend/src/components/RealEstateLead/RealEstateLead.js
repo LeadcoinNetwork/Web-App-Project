@@ -1,5 +1,5 @@
 import React from "react"
-import Button from "Components/Button"
+import Button from "../Button"
 import { fromNow } from "Utils/time"
 
 const RealEstateLead = ({

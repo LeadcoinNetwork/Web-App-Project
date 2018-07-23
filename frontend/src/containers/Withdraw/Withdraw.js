@@ -1,8 +1,8 @@
 import React from "react"
 import { connect } from "react-redux"
 import { withdraw } from "../../actions"
-import TextField from "Components/TextField"
-import Button from "Components/Button"
+import TextField from "../../components/TextField"
+import Button from "../../components/Button"
 import { priceString } from "Utils/numbers"
 import t from "../../utils/translate/translate"
 

@@ -1,6 +1,6 @@
 import React from "react"
 import withInfiniteScroll from "HOC/withInfiniteScroll"
-import Button from "Components/Button"
+import Button from "../Button"
 import THead from "./THead"
 import TBody from "./TBody"
 
