@@ -86,7 +86,7 @@
     }
   },
   "scripts": {
-    "start": "ts-node index",
+    "start": "nodemon",
     "test": "cross-env CONNECTION_LIMIT=1 jest --runInBand --forceExit",
     "test:log": "cross-env CONNECTION_LIMIT=1 FORCE_LOG=true jest --runInBand --forceExit",
     "test:compile": "tsc",
