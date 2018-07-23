@@ -1,7 +1,7 @@
 import "./Signup.scss"
 import React from "react"
 import { storiesOf } from "@storybook/react"
-import * as actions from "actions"
+import * as actions from "../../actions"
 import { createStoreAndStory } from "storybook-utils/createStoreAndStory"
 import { routerMiddleware, go, push } from "react-router-redux"
 import { select, take, put, call } from "redux-saga/effects"

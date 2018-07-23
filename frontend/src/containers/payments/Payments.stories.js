@@ -1,7 +1,7 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
 import { action, configureActions } from "@storybook/addon-actions"
-import * as actions from "actions"
+import * as actions from "../../actions"
 
 const mockData = require("../../mocks/payments.json")
 

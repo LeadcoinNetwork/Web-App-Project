@@ -7,7 +7,7 @@ import UserMenu from "../UserMenu"
 import LanguageSelector from "../LanguageSelector"
 import t from "../../utils/translate/translate"
 import { connect } from "react-redux"
-import * as actions from "actions"
+import * as actions from "../../actions"
 import { Route, Switch } from "react-router"
 const Header = ({ pathname, loggedIn, disabled, logout, gotoDefaultHome }) => {
   return (

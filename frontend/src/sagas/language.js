@@ -1,5 +1,5 @@
 import { take } from "redux-saga/effects"
-import * as actions from "actions"
+import * as actions from "../actions"
 
 export default function* language(API) {
   if (localStorage.current == "he") {

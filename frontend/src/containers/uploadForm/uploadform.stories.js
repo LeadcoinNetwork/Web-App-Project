@@ -1,6 +1,6 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
-import * as actions from "actions"
+import * as actions from "../../actions"
 import { createStoreAndStory } from "storybook-utils/createStoreAndStory"
 import UploadForm from "./UploadForm"
 
