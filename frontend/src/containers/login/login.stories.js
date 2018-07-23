@@ -1,7 +1,7 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
 import { login } from "../../actions"
-import { createStoreAndStory } from "storybook-utils/createStoreAndStory"
+import { createStoreAndStory } from "../../storybook-utils/createStoreAndStory"
 
 storiesOf("Containers/Login", module)
   .add("empty form", () => {

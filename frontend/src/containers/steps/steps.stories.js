@@ -1,6 +1,6 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
-import { createStoreAndStory } from "storybook-utils/createStoreAndStory"
+import { createStoreAndStory } from "../../storybook-utils/createStoreAndStory"
 import { types, leads } from "../../actions"
 import { delay } from "redux-saga"
 import { take, put } from "redux-saga/effects"

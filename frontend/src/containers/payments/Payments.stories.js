@@ -5,7 +5,7 @@ import * as actions from "../../actions"
 
 const mockData = require("../../mocks/payments.json")
 
-import { createStoreAndStory } from "storybook-utils/createStoreAndStory"
+import { createStoreAndStory } from "../../storybook-utils/createStoreAndStory"
 
 storiesOf("Containers/Payments", module)
   .add("empty", () => {
