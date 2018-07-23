@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import * as Actions from "../../actions"
-import Table from "../../components/Table"
+import Table from "../../components/table"
 import t from "../../utils/translate/translate"
 
 const paymentsConfig = require("./payments_table.config.json")
