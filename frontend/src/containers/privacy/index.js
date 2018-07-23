@@ -1,5 +1,5 @@
-import "./Privacy.scss"
+import "./privacy.scss"
 
-import Privacy from "./Privacy"
+import Privacy from "./privacy"
 
 export default Privacy

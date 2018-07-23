@@ -1,3 +1,3 @@
-import MyLeads from "./MyLeads"
+import MyLeads from "./myLeads"
 
 export default MyLeads

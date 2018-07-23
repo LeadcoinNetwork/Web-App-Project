@@ -1,5 +1,5 @@
-import "./Terms.scss"
+import "./terms.scss"
 
-import Terms from "./Terms"
+import Terms from "./terms"
 
 export default Terms

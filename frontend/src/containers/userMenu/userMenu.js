@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import { userMenu, user } from "../../actions"
-import UserMenuInner from "./UserMenuInner"
+import UserMenuInner from "./userMenuInner"
 
 class UserMenu extends Component {
   handleClick = () => {

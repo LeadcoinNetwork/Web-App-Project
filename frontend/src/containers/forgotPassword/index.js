@@ -1,4 +1,4 @@
-import "./ForgotPassword.scss"
-import ForgotPassword from "./ForgotPassword"
+import "./forgotPassword.scss"
+import ForgotPassword from "./forgotPassword"
 
 export default ForgotPassword

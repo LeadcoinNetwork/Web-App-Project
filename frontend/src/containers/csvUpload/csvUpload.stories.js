@@ -1,7 +1,7 @@
 import { storiesOf } from "@storybook/react"
 import * as actions from "../../actions"
 import { createStoreAndStory } from "storybook-utils/createStoreAndStory"
-import CSVUpload from "../CSVUpload"
+import CSVUpload from "../csvUpload"
 
 storiesOf("Containers/CSVUpload", module)
   .add("CSVUpload - empty", () => {

@@ -1,5 +1,5 @@
-import "./NotificationElement.scss"
+import "./notificationElement.scss"
 
-import NotificationElement from "./NotificationElement"
+import NotificationElement from "./notificationElement"
 
 export default NotificationElement

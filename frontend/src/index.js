@@ -1,10 +1,10 @@
 import typeScriptExample from "./example"
 
-import "Styles/global.scss"
+import "./styles/global.scss"
 
 import React from "react"
 import ReactDOM from "react-dom"
-import App from "./containers/App"
+import App from "./containers/app"
 import { Provider } from "react-redux"
 import {
   routerMiddleware,

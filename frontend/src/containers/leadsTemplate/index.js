@@ -1,4 +1,4 @@
-import "./LeadsTemplate.scss"
-import LeadsTemplate from "./LeadsTemplate"
+import "./leadsTemplate.scss"
+import LeadsTemplate from "./leadsTemplate"
 
 export default LeadsTemplate

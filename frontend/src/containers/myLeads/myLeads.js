@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import t from "utils/translate/translate"
-import LeadsTemplate from "../LeadsTemplate"
+import LeadsTemplate from "../leadsTemplate"
 import { leads, moveToSell } from "../../actions"
 
 class MyLeads extends React.Component {

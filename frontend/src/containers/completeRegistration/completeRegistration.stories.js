@@ -2,7 +2,7 @@ import React from "react"
 import { storiesOf } from "@storybook/react"
 import { completeRegistration, app } from "../../actions"
 import { createStoreAndStory } from "storybook-utils/createStoreAndStory"
-import snackbar from "Sagas/snackbar"
+import snackbar from "../../sagas/snackbar"
 
 storiesOf("Containers/Complete registration", module)
   .add("All chapters", () => {

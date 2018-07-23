@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import NotificationInner from "./NotificationInner"
+import NotificationInner from "./notificationInner"
 import { connect } from "react-redux"
 import { notifications } from "../../actions"
 

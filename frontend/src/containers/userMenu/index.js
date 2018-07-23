@@ -1,5 +1,5 @@
-import "./UserMenu.scss"
+import "./userMenu.scss"
 
-import UserMenu from "./UserMenu"
+import UserMenu from "./userMenu"
 
 export default UserMenu

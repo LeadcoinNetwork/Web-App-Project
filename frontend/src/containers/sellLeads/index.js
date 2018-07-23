@@ -1,3 +1,3 @@
-import SellLeads from "./SellLeads"
+import SellLeads from "./sellLeads"
 
 export default SellLeads

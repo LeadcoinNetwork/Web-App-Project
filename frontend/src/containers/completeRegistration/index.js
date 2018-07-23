@@ -1,3 +1,3 @@
-import "./CompleteRegistration.scss"
-import CompleteRegistration from "./CompleteRegistration"
+import "./completeRegistration.scss"
+import CompleteRegistration from "./completeRegistration"
 export default CompleteRegistration

@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-import { localeString } from "Utils/time"
+import { localeString } from "../../utils/time"
 import t from "../../utils/translate/translate"
 
 const NotificationsTable = ({ loading, list, error }) => (

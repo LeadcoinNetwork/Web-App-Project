@@ -1,2 +1,2 @@
-import UploadFrom from "./UploadForm"
+import UploadFrom from "./uploadForm"
 export default UploadFrom

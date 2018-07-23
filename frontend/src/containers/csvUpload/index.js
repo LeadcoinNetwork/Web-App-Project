@@ -1,3 +1,3 @@
-import "./CSVUpload.scss"
-import CSVUpload from "./CSVUpload"
+import "./csvUpload.scss"
+import CSVUpload from "./csvUpload"
 export default CSVUpload

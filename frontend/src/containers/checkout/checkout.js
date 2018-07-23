@@ -5,7 +5,7 @@ import Table from "../../components/Table"
 import Button from "../../components/Button"
 import t from "../../utils/translate/translate"
 import { push } from "react-router-redux"
-import { priceString } from "Utils/numbers"
+import { priceString } from "../../utils/numbers"
 
 const Checkout = ({ fields, checkout, buyLeads, push, checkoutBuyStart }) => {
   if (!buyLeads.selected.size) {

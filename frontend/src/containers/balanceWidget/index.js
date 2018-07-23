@@ -1,4 +1,4 @@
-import "./BalanceWidget.scss"
-import BalanceWidget from "./BalanceWidget"
+import "./balanceWidget.scss"
+import BalanceWidget from "./balanceWidget"
 
 export default BalanceWidget

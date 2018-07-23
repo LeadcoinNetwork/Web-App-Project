@@ -1,5 +1,5 @@
-import "./SwitchResultsMode.scss"
+import "./switchResultsMode.scss"
 
-import SwitchResultsMode from "./SwitchResultsMode"
+import SwitchResultsMode from "./switchResultsMode"
 
 export default SwitchResultsMode

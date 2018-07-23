@@ -1,4 +1,4 @@
-import "./Withdraw.scss"
-import Withdraw from "./Withdraw"
+import "./withdraw.scss"
+import Withdraw from "./withdraw"
 
 export default Withdraw

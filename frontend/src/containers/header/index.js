@@ -1,5 +1,5 @@
-import "./Header.scss"
+import "./header.scss"
 
-import Header from "./Header"
+import Header from "./header"
 
 export default Header

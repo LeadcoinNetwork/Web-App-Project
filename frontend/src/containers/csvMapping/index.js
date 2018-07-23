@@ -1,3 +1,3 @@
-import "./CSVMapping.scss"
-import CSVMapping from "./CSVMapping"
+import "./csvMapping.scss"
+import CSVMapping from "./csvMapping"
 export default CSVMapping

@@ -1,5 +1,5 @@
-import "./Checkout.scss"
+import "./checkout.scss"
 
-import Checkout from "./Checkout"
+import Checkout from "./checkout"
 
 export default Checkout

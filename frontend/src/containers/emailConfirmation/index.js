@@ -1,2 +1,2 @@
-import EmailConfirmation from "./EmailConfirmation"
+import EmailConfirmation from "./emailConfirmation"
 export default EmailConfirmation

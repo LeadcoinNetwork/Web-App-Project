@@ -1,12 +1,12 @@
 import React from "react"
 import { connect } from "react-redux"
-import Button from "../../components/Button"
-import TextField from "../../components/TextField"
-import Checkbox from "../../components/Checkbox"
-import SocialLogin from "../../components/SocialLogin"
+import Button from "../../components/button"
+import TextField from "../../components/textField"
+import Checkbox from "../../components/checkbox"
+import SocialLogin from "../../components/socialLogin"
 import { Link } from "react-router-dom"
 import { login } from "../../actions"
-import tiger from "Images/tiger.jpg"
+import tiger from "../../images/tiger.jpg"
 import t from "../../utils/translate/translate"
 
 class Login extends React.Component {

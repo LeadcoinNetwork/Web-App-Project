@@ -2,8 +2,8 @@ import React from "react"
 import { storiesOf } from "@storybook/react"
 import { createStoreAndStory } from "storybook-utils/createStoreAndStory"
 import { app, types } from "../../actions"
-import Snackbar from "./Snackbar"
-import snackbar from "Sagas/snackbar"
+import Snackbar from "./snackbar"
+import snackbar from "../../sagas/snackbar"
 import t from "../../utils/translate/translate"
 
 storiesOf("Containers/Snackbar", module)

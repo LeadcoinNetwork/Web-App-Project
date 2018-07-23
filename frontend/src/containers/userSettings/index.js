@@ -1,5 +1,5 @@
-import "./UserSettings.scss"
+import "./userSettings.scss"
 
-import UserSettings from "./UserSettings"
+import UserSettings from "./userSettings"
 
 export default UserSettings

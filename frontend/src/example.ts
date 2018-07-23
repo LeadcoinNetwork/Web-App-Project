@@ -1,4 +1,4 @@
-import "./containers/AddLead"
+import "./containers/addLead"
 import * as a from "./actions"
 
 export default function execute(a: number): { user: string } {

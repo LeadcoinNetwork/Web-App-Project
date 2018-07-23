@@ -1,3 +1,3 @@
-import "./Dispute.scss"
-import Dispute from "./Dispute"
+import "./dispute.scss"
+import Dispute from "./dispute"
 export default Dispute

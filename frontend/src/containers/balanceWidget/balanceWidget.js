@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
-import { priceString } from "Utils/numbers"
+import { priceString } from "../../utils/numbers"
 import t from "../../utils/translate/translate"
 
 const BalanceWidget = ({ balance }) => (

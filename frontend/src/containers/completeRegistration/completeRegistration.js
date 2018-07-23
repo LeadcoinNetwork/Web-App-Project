@@ -1,10 +1,10 @@
 import React from "react"
 import { connect } from "react-redux"
-import Button from "../../components/Button"
-import TextField from "../../components/TextField"
+import Button from "../../components/button"
+import TextField from "../../components/textField"
 import ReactPhoneInput from "react-phone-input-2"
 import { completeRegistration } from "../../actions"
-import tiger from "Images/tiger.jpg"
+import tiger from "../../images/tiger.jpg"
 import t from "../../utils/translate/translate"
 
 class CompleteRegistration extends React.Component {

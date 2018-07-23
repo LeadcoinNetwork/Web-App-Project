@@ -1,6 +1,6 @@
 import React from "react"
-import TextField from "../../components/TextField"
-import Button from "../../components/Button"
+import TextField from "../../components/textField"
+import Button from "../../components/button"
 import { connect } from "react-redux"
 import { userSettings } from "../../actions"
 import t from "../../utils/translate/translate"

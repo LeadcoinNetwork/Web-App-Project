@@ -1,2 +1,2 @@
-import BuyLeads from "./BuyLeads"
+import BuyLeads from "./buyLeads"
 export default BuyLeads

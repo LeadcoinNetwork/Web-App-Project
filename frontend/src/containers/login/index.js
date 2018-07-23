@@ -1,4 +1,4 @@
-import "./Login.scss"
-import Login from "./Login"
+import "./login.scss"
+import Login from "./login"
 
 export default Login
