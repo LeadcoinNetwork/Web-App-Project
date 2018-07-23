@@ -1,5 +1,5 @@
-import "./notifications-table.scss"
+import "./notificationsTable.scss"
 
-import NotificationTable from "./NotificationTable"
+import NotificationTable from "./notificationsTable"
 
 export default NotificationTable
