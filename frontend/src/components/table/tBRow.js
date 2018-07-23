@@ -1,7 +1,7 @@
 import React from "react"
-import Checkbox from "../Checkbox"
-import Button from "../Button"
-import TBRCol from "./TBRCol"
+import Checkbox from "../checkbox"
+import Button from "../button"
+import TBRCol from "./tBRCol"
 
 const TBRow = props => (
   <div className="tb-row">

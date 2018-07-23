@@ -1,5 +1,5 @@
-import "./TextField.scss"
+import "./textField.scss"
 
-import TextField from "./TextField"
+import TextField from "./textField"
 
 export default TextField

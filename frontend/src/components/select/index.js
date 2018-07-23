@@ -1,5 +1,5 @@
-import "./Select.scss"
+import "./select.scss"
 
-import Select from "./Select"
+import Select from "./select"
 
 export default Select

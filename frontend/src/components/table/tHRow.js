@@ -1,6 +1,6 @@
 import React from "react"
-import Checkbox from "../Checkbox"
-import THRCol from "./THRCol"
+import Checkbox from "../checkbox"
+import THRCol from "./tHRCol"
 
 const THRow = props => (
   <div className="th-row">

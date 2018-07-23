@@ -1,4 +1,4 @@
-import "./LoadingDots.scss"
-import LoadingDots from "./LoadingDots"
+import "./loadingDots.scss"
+import LoadingDots from "./loadingDots"
 
 export default LoadingDots

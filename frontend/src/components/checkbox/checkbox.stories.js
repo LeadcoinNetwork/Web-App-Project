@@ -1,6 +1,6 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
-import Checkbox from "./Checkbox"
+import Checkbox from "./index"
 import { action, configureActions } from "@storybook/addon-actions"
 
 class CheckboxState extends React.Component {

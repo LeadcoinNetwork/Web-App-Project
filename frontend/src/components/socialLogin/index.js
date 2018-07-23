@@ -1,4 +1,4 @@
-import "./SocialLogin.scss"
-import SocialLogin from "./SocialLogin"
+import "./socialLogin.scss"
+import SocialLogin from "./socialLogin"
 
 export default SocialLogin

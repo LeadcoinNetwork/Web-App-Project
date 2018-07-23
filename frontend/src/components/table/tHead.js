@@ -1,5 +1,5 @@
 import React from "react"
-import THRow from "./THRow"
+import THRow from "./tHRow"
 
 const THead = props => (
   <div className="t-head">

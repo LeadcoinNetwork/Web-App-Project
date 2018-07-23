@@ -1,6 +1,6 @@
 import React from "react"
-import Button from "../Button"
-import Select from "../Select"
+import Button from "../button"
+import Select from "../select"
 import withInfiniteScroll from "HOC/withInfiniteScroll"
 import t from "../../utils/translate/translate"
 

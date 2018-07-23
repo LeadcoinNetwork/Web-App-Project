@@ -1,5 +1,5 @@
 import React from "react"
-import TBRow from "./TBRow"
+import TBRow from "./tBRow"
 
 const TBody = props => (
   <div className="t-body">

@@ -1,8 +1,8 @@
 import React from "react"
 import withInfiniteScroll from "HOC/withInfiniteScroll"
-import Button from "../Button"
-import THead from "./THead"
-import TBody from "./TBody"
+import Button from "../button"
+import THead from "./tHead"
+import TBody from "./tBody"
 
 class Table extends React.Component {
   constructor(props) {

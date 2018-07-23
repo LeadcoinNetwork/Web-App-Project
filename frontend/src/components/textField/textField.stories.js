@@ -1,6 +1,6 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
-import TextField from "./TextField"
+import TextField from "./index"
 
 class TextFieldState extends React.Component {
   constructor(props) {

@@ -1,6 +1,6 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
-import Table from "./"
+import Table from "./index"
 
 const fields = require("../../mocks/fields.json")
 const leads = require("../../mocks/leads.json")
