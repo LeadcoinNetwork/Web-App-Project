@@ -4,7 +4,7 @@ import "Styles/global.scss"
 
 import React from "react"
 import ReactDOM from "react-dom"
-import App from "Containers/App"
+import App from "./containers/App"
 import { Provider } from "react-redux"
 import {
   routerMiddleware,

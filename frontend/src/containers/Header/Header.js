@@ -1,10 +1,10 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import * as _ from "lodash"
-import BalanceWidget from "Containers/BalanceWidget"
-import NotificationElement from "Containers/NotificationElement"
-import UserMenu from "Containers/UserMenu"
-import LanguageSelector from "Containers/LanguageSelector"
+import BalanceWidget from "../BalanceWidget"
+import NotificationElement from "../NotificationElement"
+import UserMenu from "../UserMenu"
+import LanguageSelector from "../LanguageSelector"
 import t from "../../utils/translate/translate"
 import { connect } from "react-redux"
 import * as actions from "actions"
@@ -63,7 +63,4 @@ var mapDispatchToProps = {
   gotoDefaultHome: actions.route.gotoDefaultHome,
   logout: actions.user.logOut,
 }
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Header)
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

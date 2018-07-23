@@ -1,5 +1,5 @@
 import React from "react"
-import ResultsModeContext from "Containers/App/ResultsModeContext"
+import ResultsModeContext from "../App/ResultsModeContext"
 import t from "../../utils/translate/translate"
 
 const SwitchResultsMode = () => (

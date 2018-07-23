@@ -5,8 +5,8 @@ import Select from "../../components/Select"
 import TextField from "../../components/TextField"
 import t from "../../utils/translate/translate"
 import RealEstateLead from "../../components/RealEstateLead"
-import ResultsModeContext from "Containers/App/ResultsModeContext"
-import SwitchResultsMode from "Containers/SwitchResultsMode"
+import ResultsModeContext from "../App/ResultsModeContext"
+import SwitchResultsMode from "../SwitchResultsMode"
 import { Link } from "react-router-dom"
 
 class LeadsTemplate extends React.Component {
