@@ -806,4 +806,12 @@ export default {
     zh: "搜索...",
     ko: "검색...",
   },
+  "Upload CSV File": {
+    en: "Upload CSV File",
+    he: "העלאת קובץ CSV",
+  },
+  "Create New Lead": {
+    en: "Create New Lead",
+    he: "יצירת לִיד חדש",
+  },
 }

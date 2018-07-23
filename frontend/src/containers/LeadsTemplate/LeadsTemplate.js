@@ -111,8 +111,8 @@ class LeadsTemplate extends React.Component {
               <h1>{t(`${pageName} leads`)}</h1>
               {pageName === "sell" && (
                 <div className="lt-links">
-                  <Link to="/csv-upload">Upload CSV File</Link>
-                  <Link to="/add-lead">Create New Lead</Link>
+                  <Link to="/csv-upload">{t("Upload CSV File")}</Link>
+                  <Link to="/add-lead">{t("Create New Lead")}</Link>
                 </div>
               )}
               {cardsMode ? (
