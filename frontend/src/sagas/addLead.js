@@ -16,8 +16,9 @@ export default function* addLead(api) {
     let res = yield api.leads.sellLeadsAddByForm(values)
     yield put(actions.addLead.addLeadLoadingEnd())
     if (res.error) {
-      for (error in res.error) {
-        yield put(actions.addLead.addLeadAddError(error, res.error[error]))
+      const errors = JSON.parse(res.error)
+      for (let error in errors) {
+        yield put(actions.addLead.addLeadAddError(error, errors[error]))
       }
     } else {
       yield put(actions.addLead.addLeadSubmitSuccess())
