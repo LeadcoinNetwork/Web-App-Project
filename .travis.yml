@@ -19,9 +19,3 @@ script:
 - scripts/local-test-backend.sh
 after_success:
 - '[[ $TRAVIS_BRANCH == "donotautodeploy" ]] && [[ $TRAVIS_PULL_REQUEST == "false" ]] && scripts/deploy.sh'
-cache:
-  directories:
-  - frontend/node_modules
-  - backend/node_modules
-  - node_modules
-  - "/home/travis/.npm"
