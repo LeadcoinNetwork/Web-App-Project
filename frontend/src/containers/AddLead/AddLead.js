@@ -11,7 +11,7 @@ class AddLead extends React.Component {
     const { errors } = this.props
     const error = errors["agree_to_terms"] ? "error" : ""
     return (
-      <div className={error + " twothirds"}>
+      <div className={error + " agree_to_terms twothirds"}>
         <input
           type="checkbox"
           name="agree_to_terms"
