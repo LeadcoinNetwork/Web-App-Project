@@ -16,6 +16,9 @@ test.skip("getting my sold_leads should work", async () => {
   var { user, token } = await ValidatedUserForTests.create({
     users: appLogic.models.users,
   })
+  var { user: user2, token: token2 } = await ValidatedUserForTests.create({
+    users: appLogic.models.users,
+  })
   const lead = {
     date: 1213,
     name: "testlead 8",
@@ -25,10 +28,10 @@ test.skip("getting my sold_leads should work", async () => {
     active: true,
     bought_from: user.id,
   }
-  const { affectedRows, insertId } = await appLogic.models.leads.insertLead(
-    lead,
-  )
-  expect(affectedRows).toBeTruthy()
+  const { insertId } = await appLogic.models.leads.insertLead(lead)
+  expect(insertId).toBeTruthy()
+  //body = await ApiForToken(token2).leads.buyLeadsBuy([insertId])
+
   const res = await request
     .get("/leads/sold")
     .set({
@@ -89,10 +92,12 @@ test("1st user adds lead, 2nd user buys it, everything should work", async () =>
   let [old_record] = body.list
   expect(old_record.ownerId).toBe(user1.id)
   body = await ApiForToken(token2).leads.buyLeadsBuy([body.list[0].id])
-  body = await ApiForToken(token2).leads.buyLeadsGetList()
+  body = await ApiForToken(token2).leads.getMyLeads({})
+  expect(body.list.length).toBe(1)
   let [new_record] = body.list
   expect(new_record.ownerId).toBe(user2.id)
   expect(new_record.name).toBe(lead.name)
+  expect(new_record.forSale).toBeFalsy()
 })
 
 test("getting all leads should work", async () => {
@@ -143,7 +148,35 @@ test("getting all leads should work", async () => {
   expect(typeof body.list).toEqual("object")
 })
 
-test("getting my bought_leads should work", async () => {
+test(`user1 add a lead
+      user2 buys it 
+      user2 move it for sale 
+      user1 buys it back, for symetry`, async () => {
+  var { user, token } = await ValidatedUserForTests.create({
+    users: appLogic.models.users,
+  })
+  var { user: user2, token: token2 } = await ValidatedUserForTests.create({
+    users: appLogic.models.users,
+  })
+  const lead = {
+    date: 1213,
+    name: "testlead for my-leads",
+    phone: "2",
+    email: "moshe@moshe.com",
+    active: true,
+    bought_from: 5,
+  }
+  let body = await ApiForToken(token).leads.sellLeadsAddByForm(lead)
+  body = await ApiForToken(token2).leads.buyLeadsGetList()
+  body = await ApiForToken(token2).leads.buyLeadsBuy([body.list[0].id])
+  body = await ApiForToken(token2).leads.getMyLeads({})
+  const [record] = body.list
+  body = await ApiForToken(token2).leads.myLeadsMoveToSell([body.list[0].id])
+  expect(body.error).toBeFalsy()
+  expect(record.name).toBe(lead.name)
+})
+
+test("user1 add lead, user2 buys it and then he sees it as his lead under /my-leads", async () => {
   var { user, token } = await ValidatedUserForTests.create({
     users: appLogic.models.users,
   })
@@ -242,7 +275,8 @@ test("adding a lead should fail without email", async () => {
   }
   let result = await ApiForToken(token).leads.sellLeadsAddByForm(lead)
   expect(result.error).toBeTruthy()
-  expect(result.error).toBe("email not valid")
+  const error_json = JSON.parse(result.error)
+  expect(error_json.email[0]).toBe("email not valid")
 })
 
 test("adding a lead should fail without token", async () => {
@@ -281,4 +315,7 @@ test("adding a lead should success with data A", async () => {
   }
   let result = await ApiForToken(token).leads.sellLeadsAddByForm(lead)
   expect(result.response.affectedRows).toBeTruthy()
+  let body = await ApiForToken(token).leads.buyLeadsGetList()
+  let [record] = body.list
+  expect(record.forSale).toBeTruthy()
 })
