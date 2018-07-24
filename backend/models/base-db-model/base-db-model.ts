@@ -8,6 +8,8 @@ import NotFound from "../../utils/not-found"
 type tableName = "users" | "leads"
 type SAFE_AND_SANITIZED_SQL_QUERY = string
 
+const private_fields = ["name", "phone"]
+
 export default abstract class BaseDBModel<INew, IExisting, ICondition> {
   fieldName = "doc"
   log = LogModelActions(this.tableName)
@@ -43,6 +45,15 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
   }
 
   leadsQueries = {
+    getLeadFields: async lead_type => {
+      let sql = `SELECT * FROM leadcoin.leads WHERE doc->>"$.type"="${mysql.escape(
+        lead_type,
+      )}";`
+      let rows = await this.sql.query(sql)
+      rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
+      return Object.keys(rows)
+    },
+
     getBoughtLeads: async (user_id: number, options: any) => {
       const { limit, filters, sort } = options
       let where_additions = []

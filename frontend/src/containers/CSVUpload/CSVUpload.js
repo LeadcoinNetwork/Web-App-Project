@@ -41,7 +41,7 @@ class CSVUpload extends React.Component {
         this.props.handleChange("batch_id", "00")
         setImmediate(() => {
           this.props.setFileFields(fields)
-          // mock fields for dev
+          // TODO: replace this mock with field list from /leads/getLeadType
           let mock_fields = {
             private: ["name", "phone"],
             public: ["floor", "size"],
