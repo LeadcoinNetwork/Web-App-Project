@@ -33,7 +33,7 @@ const Header = ({ pathname, loggedIn, disabled, logout, gotoDefaultHome }) => {
         pathname == "/login" && (
           <div className="sign-link">
             <span>{t("don't have an account?")}</span>
-            <Link to="/signup">{t("Start Now")}</Link>
+            <Link to="/signup">{t("Register")}</Link>
           </div>
         )}
       {!disabled &&
