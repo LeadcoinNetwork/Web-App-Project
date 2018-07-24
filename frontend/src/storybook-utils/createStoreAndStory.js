@@ -4,17 +4,17 @@ import { storyReduxLogger } from "./withRedux"
 import { composeWithDevTools } from "redux-devtools-extension"
 import { Provider } from "react-redux"
 import { MemoryRouter } from "react-router"
-import rootReducer from "Reducers"
-import App from "containers/App"
+import rootReducer from "../reducers"
+import App from "../containers/app"
 import createSagaMiddleware from "redux-saga"
-import rootSaga from "sagas"
+import rootSaga from "../sagas"
 import {
   routerMiddleware,
   connectRouter,
   ConnectedRouter,
 } from "connected-react-router"
 import { createBrowserHistory, createMemoryHistory } from "history"
-import { user } from "Actions"
+import { user } from "../actions"
 import languageSaga from "../sagas/language"
 
 // const history = createBrowserHistory()
@@ -67,11 +67,11 @@ export function createStoreAndStory({
     )
   }
   if (module.hot) {
-    module.hot.accept("Reducers", function() {
+    module.hot.accept("../sagas", function() {
       store.replaceReducer(connectRouter(history)(rootReducer))
     })
     if (module.hot) {
-      module.hot.accept("sagas", function() {
+      module.hot.accept("../sagas", function() {
         if (sagaTask) {
           console.log("cancel previous saga task")
           sagaTask.cancel()

@@ -1,0 +1,40 @@
+@import "../../styles/variables";
+
+section.ldc-user-settings {
+  .us-password {
+    display: flow-root;
+    max-width: 250px;
+
+    h3 {
+      font-size: 16px;
+      font-weight: 300;
+      letter-spacing: 1px;
+      text-transform: capitalize;
+    }
+
+    .ldc-textfield {
+      margin-top: 18px;
+    }
+
+    .ldc-button {
+      margin-top: 30px;
+      float: right;
+    }
+  }
+}
+
+@media (max-width: $screen-tablets) {
+  section.ldc-user-settings {
+    .us-password {
+      max-width: 100%;
+
+      .ldc-textfield {
+        margin-top: 20px;
+      }
+
+      .ldc-button {
+        margin-top: 40px;
+      }
+    }
+  }
+}

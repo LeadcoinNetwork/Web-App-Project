@@ -1,0 +1,175 @@
+@import "../../styles/variables";
+
+section.ldc-real-estate-lead {
+  $padding: 25px;
+  $bg-card: #f3eded;
+  $bg-card-checked: #c2dbff;
+
+  position: relative;
+  padding: $padding;
+  margin-bottom: 20px;
+  background-color: $bg-card;
+  border-left: 0 solid $main-color;
+  transform: scaleX(1);
+  transform-origin: right;
+  transition: all 300ms ease, transform 200ms ease;
+
+  .rel-specification {
+    font-size: 16px;
+    letter-spacing: 0.2px;
+    color: $bg-level-2;
+  }
+
+  .rel-price {
+    color: black;
+    font-size: 20px;
+    padding: 16px 0 20px;
+    font-weight: 600;
+  }
+
+  .rel-details-wrapper {
+    display: flex;
+
+    .rel-details {
+      display: inline-block;
+      min-width: 230px;
+
+      .reld-status,
+      .reld-date,
+      .reld-location {
+        color: $main-color;
+        padding-top: 8px;
+      }
+
+      .reld-status {
+        text-transform: uppercase;
+        padding-top: 0;
+      }
+    }
+
+    .rel-features {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      max-height: 75px;
+      color: $main-color;
+
+      span {
+        position: relative;
+        display: inline-block;
+        padding-left: 40px;
+        font-size: 16px;
+        line-height: 24px;
+        text-transform: capitalize;
+
+        &:before {
+          content: "";
+          position: absolute;
+          left: 24px;
+          top: 4px;
+          height: 12px;
+          width: 4px;
+          border-right: 1px solid;
+          border-bottom: 1px solid;
+          border-color: $ldc-color;
+          display: inline-block;
+          transform: rotate(45deg);
+        }
+      }
+    }
+  }
+
+  .rel-buttons {
+    opacity: 0;
+    position: absolute;
+    right: $padding;
+    bottom: $padding;
+
+    .relb-btn {
+      margin-left: 20px;
+      height: 40px;
+      border-radius: 0;
+      padding: 0 30px;
+      color: $main-color;
+      background-color: transparent;
+      border: solid 1px $main-color;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      outline: none;
+      transition: all 300ms ease-in-out;
+
+      &:hover {
+        background-color: $main-color;
+        color: #fff;
+      }
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+
+    .rel-buttons {
+      cursor: pointer;
+      opacity: 1;
+    }
+  }
+
+  &.rel-checked {
+    transform: scaleX(0.98);
+    background-color: $bg-card-checked;
+    border-left: 10px solid $main-color;
+  }
+}
+
+@media (max-width: $screen-tablets) {
+  section.ldc-real-estate-lead {
+    $padding: 20px;
+
+    padding: $padding;
+    transform: scale(1);
+    transform-origin: center;
+
+    .rel-details-wrapper {
+      display: block;
+
+      .rel-details {
+        min-width: auto;
+      }
+
+      .rel-features {
+        margin: 24px 0 30px;
+
+        span {
+          padding-left: 26px;
+
+          &:before {
+            left: 0px;
+          }
+        }
+      }
+    }
+
+    .rel-buttons {
+      opacity: 1;
+      position: static;
+      right: $padding;
+      bottom: $padding;
+
+      .relb-btn {
+        margin: 20px 0 0;
+        width: 100%;
+        height: 60px;
+        color: #fff;
+        background-color: $main-color;
+        font-size: 24px;
+        opacity: 1;
+      }
+    }
+
+    &.rel-checked {
+      border-left: none;
+      transform: scale(0.98);
+    }
+  }
+}

@@ -1,0 +1,50 @@
+@import "../../styles/variables";
+
+.add_lead {
+  padding: 10px;
+  .personal {
+    padding-bottom: 10px;
+    border-bottom: solid 1px black;
+  }
+  .public {
+    padding-top: 10px;
+  }
+  .controls {
+    margin: 5px;
+  }
+  .help_text {
+    width: 200px;
+  }
+  .field_submit {
+    margin-top: 5px;
+    .twothirds {
+      width: 242px;
+    }
+  }
+  .line {
+    &.error {
+      .fieldLabel {
+        color: red;
+        font-weight: bold;
+      }
+    }
+    margin: 10px 15px;
+    height: 50px;
+    line-height: 50px;
+    .fieldLabel {
+      width: 200px;
+      margin-right: 5px;
+      text-transform: capitalize;
+    }
+  }
+  .price {
+    margin-left: 10px;
+    input {
+      margin-left: 10px;
+      width: 150px;
+    }
+  }
+  .flexed {
+    display: flex;
+  }
+}

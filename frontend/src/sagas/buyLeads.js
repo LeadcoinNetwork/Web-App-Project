@@ -1,5 +1,5 @@
-import { types } from "Actions"
-import * as actions from "Actions"
+import { types } from "../actions"
+import * as actions from "../actions"
 import { select, take, put, call } from "redux-saga/effects"
 import { push } from "react-router-redux"
 
@@ -24,7 +24,6 @@ export default function* buyLeads(api) {
 
     if (res.error) {
       yield put(actions.leads.fetchError("BUY_LEADS"))
-      yield put(actions.app.notificationShow(res.error, "error"))
     } else {
       yield put(actions.leads.fetchSuccess("BUY_LEADS", res))
     }

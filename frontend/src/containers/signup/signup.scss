@@ -1,0 +1,291 @@
+@import "../../styles/variables";
+
+section.ldc-signup,
+section.ldc-login,
+section.ldc-complete-registration {
+  position: relative;
+
+  .s-main,
+  .l-main,
+  .cr-main {
+    padding-right: 50px;
+    border-right: 1px solid #6275a7;
+    width: calc(100% - 450px);
+
+    h1 {
+      font-size: 72px;
+      font-weight: 400;
+      letter-spacing: 2.5px;
+      margin-bottom: 40px;
+    }
+
+    h4 {
+      padding: 0 25px;
+      font-weight: 300;
+      font-size: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .sm-social-buttons,
+    .lm-social-buttons {
+      margin-bottom: 40px;
+
+      .ldc-social-login:first-of-type {
+        margin-right: 20px;
+      }
+    }
+
+    .sm-form,
+    .lm-form,
+    .crm-form {
+      display: flow-root;
+      width: calc(100% - 130px);
+
+      input[type="text"],
+      input[type="email"],
+      input[type="password"],
+      .react-tel-input {
+        margin: 16px 0;
+      }
+
+      .ldc-error-text {
+        margin-top: 20px;
+      }
+
+      button {
+        margin-top: 24px;
+        float: right;
+      }
+
+      .smf-agree,
+      .lmf-remember {
+        margin-top: 15px;
+        line-height: 1.5;
+        font-weight: 300;
+        font-size: 20px;
+        letter-spacing: 0.5px;
+      }
+
+      .smf-agree {
+        display: inline-block;
+        margin-top: 15px;
+      }
+
+      .lmf-remember {
+        a {
+          float: right;
+        }
+      }
+    }
+  }
+
+  aside {
+    padding: 20px 0 0 50px;
+    position: absolute;
+    left: calc(100% - 450px);
+    top: 0;
+
+    h3 {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: 0.8px;
+      margin-bottom: 20px;
+      text-transform: capitalize;
+    }
+
+    q {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 33px;
+      font-weight: 300;
+      line-height: 1.2;
+    }
+
+    label {
+      position: relative;
+      display: inline-block;
+      border-radius: 50%;
+      height: 100px;
+      width: 100px;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+
+      span {
+        position: absolute;
+        width: 200px;
+        left: calc(100% + 15px);
+        top: 50%;
+        transform: translateY(-50%);
+        &:nth-child(3) {
+          top: 70%;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $screen-xl) and (min-width: $screen-md) {
+  section.ldc-signup,
+  section.ldc-login,
+  section.ldc-complete-registration {
+    .s-main,
+    .l-main,
+    .cr-main {
+      padding-right: 40px;
+      width: calc(100% - 410px);
+
+      h1 {
+        font-size: 58px;
+      }
+
+      .sm-form,
+      .lm-form,
+      .crm-form {
+        width: calc(100% - 56px);
+      }
+    }
+
+    aside {
+      left: calc(100% - 410px);
+      padding: 20px 0 0 50px;
+    }
+  }
+}
+
+@media (max-width: $screen-md) and (min-width: $screen-sm) {
+  section.ldc-signup,
+  section.ldc-login,
+  section.ldc-complete-registration {
+    .s-main,
+    .l-main,
+    .cr-main {
+      padding-right: 40px;
+      width: calc(100% - 300px);
+
+      h1 {
+        font-size: 52px;
+      }
+
+      .sm-form,
+      .lm-form,
+      .crm-form {
+        width: 100%;
+      }
+    }
+
+    aside {
+      padding: 20px 0 0 40px;
+      left: calc(100% - 300px);
+    }
+  }
+}
+
+@media (max-width: $screen-sm) and (min-width: $screen-tablets) {
+  section.ldc-signup,
+  section.ldc-login,
+  section.ldc-complete-registration {
+    .s-main,
+    .l-main,
+    .cr-main {
+      padding-right: 0;
+      padding-bottom: 60px;
+      border-right: none;
+      border-bottom: 1px solid #6275a7;
+      width: 100%;
+
+      h1 {
+        font-size: 48px;
+      }
+
+      .sm-form,
+      .lm-form,
+      .crm-form {
+        width: 100%;
+      }
+    }
+
+    aside {
+      position: static;
+      padding: 60px 0 0 0;
+      max-width: 410px;
+    }
+  }
+}
+
+@media (max-width: $screen-tablets) {
+  section.ldc-signup,
+  section.ldc-login,
+  section.ldc-complete-registration {
+    margin-top: 20px;
+
+    .s-main,
+    .l-main,
+    .cr-main {
+      padding-right: 0;
+      padding-bottom: 50px;
+      border-right: none;
+      border-bottom: 1px solid #6275a7;
+      width: 100%;
+
+      h1 {
+        font-size: 36px;
+      }
+
+      .sm-social-buttons,
+      .lm-social-buttons {
+        margin-bottom: 40px;
+
+        .ldc-social-login {
+          display: block;
+        }
+
+        .ldc-social-login:first-of-type {
+          margin-right: 0;
+          margin-bottom: 20px;
+        }
+      }
+
+      .sm-form,
+      .lm-form,
+      .crm-form {
+        display: block;
+        width: 100%;
+
+        &.sm-form .ldc-error-text {
+          position: relative;
+          top: -10px;
+        }
+
+        button {
+          width: 100%;
+          margin-top: 20px;
+          float: none;
+          position: relative;
+        }
+
+        &.sm-form button {
+          top: 47px;
+        }
+
+        &.lm-form button {
+          top: 15px;
+        }
+
+        .smf-agree {
+          display: block;
+          margin-top: 0;
+          position: relative;
+          top: -65px;
+          font-size: 14px;
+        }
+      }
+    }
+
+    aside {
+      position: static;
+      padding: 50px 0 0 0;
+      max-width: 450px;
+    }
+  }
+}

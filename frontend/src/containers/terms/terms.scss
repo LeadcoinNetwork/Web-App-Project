@@ -1,0 +1,23 @@
+.terms {
+  font-weight: 300;
+
+  h1 {
+    font-size: 30px;
+    font-weight: 300;
+    padding-bottom: 30px;
+  }
+  div {
+    margin-bottom: 30px;
+
+    .emphasize {
+      font-weight: 600;
+      margin-top: 10px;
+    }
+
+    h3 {
+      font-size: 24px;
+      font-weight: 300;
+      margin-bottom: 8px;
+    }
+  }
+}

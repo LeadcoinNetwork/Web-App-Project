@@ -1,6 +1,6 @@
 import React from "react"
 import { throttle } from "lodash"
-import LoadingDots from "Components/LoadingDots"
+import LoadingDots from "../components/loadingDots"
 
 const withInfiniteScroll = onScrollBottom => WrappedComponent => {
   class WithInfiniteScroll extends React.Component {

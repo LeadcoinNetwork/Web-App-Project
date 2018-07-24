@@ -4,6 +4,7 @@ const CleanWebpackPlugin = require("clean-webpack-plugin")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const Dotenv = require("dotenv-webpack")
 const webpackUtils = require("./webpack.utils.js")
+const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin")
 
 // webpackUtils.JestUpdateModuleResoultionPacker()
 
@@ -20,6 +21,14 @@ module.exports = {
   },
   plugins: [
     new Dotenv({ systemvars: true, safe: true }),
+    // This Webpack plugin enforces the entire path of all required modules
+    // match the exact case of the actual path on disk.
+    // Using this plugin helps alleviate cases where developers working on OSX,
+    // which does not follow strict path case sensitivity,
+    // will cause conflicts with other developers or build boxes
+    // running other operating systems which require correctly cased paths.
+    // https://github.com/Urthen/case-sensitive-paths-webpack-plugin
+    new CaseSensitivePathsPlugin(),
     new ExtractTextPlugin("bundle.css"),
     new CleanWebpackPlugin(["dist"]),
     new HtmlWebpackPlugin({
@@ -105,6 +114,6 @@ module.exports = {
   resolve: {
     modules: ["node_modules", path.resolve(__dirname, "src")],
     extensions: [".js", ".ts", ".json"],
-    alias: webpackUtils.getAliasesFromRootSrcForWebPack(),
+    // alias: webpackUtils.getAliasesFromRootSrcForWebPack(),
   },
 }

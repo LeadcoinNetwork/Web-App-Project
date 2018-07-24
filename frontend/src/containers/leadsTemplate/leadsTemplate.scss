@@ -1,0 +1,70 @@
+@import "../../styles/variables";
+
+.ldc-leads-template {
+  .lt-links {
+    padding-bottom: 30px;
+
+    a {
+      display: inline-block;
+      height: 32px;
+      line-height: 31px;
+      border: 1px solid $bg-level-3;
+      border-radius: 16px;
+      color: #fff;
+      font-size: 14px;
+      padding: 0 18px;
+      margin-right: 20px;
+    }
+  }
+
+  .lt-filters {
+    margin-top: 30px;
+
+    select.ldc-select,
+    input.ldc-textfield {
+      max-width: 220px;
+      margin-right: 20px;
+    }
+  }
+
+  .lt-results-head {
+    position: relative;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 0.8px;
+    text-transform: capitalize;
+    height: 80px;
+    line-height: 80px;
+
+    select.ldc-select {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      max-width: 150px;
+    }
+  }
+
+  .lt-zero-results {
+    padding-top: 40px;
+    text-align: center;
+
+    h3 {
+      font-size: 26px;
+      font-weight: 400;
+      padding-bottom: 10px;
+    }
+
+    span {
+      font-size: 18px;
+      font-weight: 300;
+      letter-spacing: 0.3px;
+
+      a {
+        letter-spacing: 0.5px;
+        font-weight: 400;
+        color: #fff;
+      }
+    }
+  }
+}
