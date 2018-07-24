@@ -75,6 +75,7 @@ export default class Leads extends baseDBModel<
         return Object.assign(lead, {
           id: undefined,
           active: true,
+          forSale: false,
           bought_from: lead.ownerId,
           bought_currency: lead.currency,
           forSale: false,
