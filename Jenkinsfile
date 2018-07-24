@@ -1,9 +1,13 @@
 pipeline {
   agent any
   stages {
-    stage('') {
+    stage('error') {
       steps {
         sh 'ls -la'
+        sh '''nvm
+node
+nodejs
+nodejs -v'''
       }
     }
   }
