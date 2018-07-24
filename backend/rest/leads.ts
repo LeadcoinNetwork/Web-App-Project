@@ -138,6 +138,24 @@ export function start({
   )
 
   /**
+   * @param errString string
+   * "key::msg; key::msg" => {key: [msg,msg]}
+   */
+
+  const errStringToObj = errString => {
+    let errors = errString.split(" ;")
+    const error_obj = {}
+    errors.forEach(e => {
+      const [key, msg] = e.split("::")
+      if (!error_obj[key]) {
+        error_obj[key] = []
+      }
+      error_obj[key].push(msg)
+    })
+    return JSON.stringify(error_obj)
+  }
+
+  /**
    * Post a now lead for selling. Using a form.
    */
   expressApp.post(
@@ -161,7 +179,8 @@ export function start({
               if (err.sqlMessage) {
                 res.send({ error: err.sqlMessage })
               } else {
-                res.send({ error: err.message })
+                const error_obj = errStringToObj(err.message)
+                res.send({ error: error_obj })
               }
             })
         } else {
@@ -178,13 +197,41 @@ export function start({
    * Buying a lead.
    */
   expressApp.post(
+    "/my-leads/move",
+    passport.authenticate("jwt", authOptions),
+    async function(req, res, next) {
+      ;(async () => {
+        const { user } = req
+        const { leads }: { leads: number[] } = req.body
+        if (leads) {
+          appLogic.leads
+            .moveMyLeadsToSellLeads(leads)
+            .then(response => {
+              res.json({ response })
+            })
+            .catch(err => {
+              res.status(400)
+              if (err.sqlMessage) {
+                res.send({ error: err.sqlMessage })
+              } else {
+                res.send({ error: err.message })
+              }
+            })
+        } else {
+          return next()
+        }
+      })().catch(err => {
+        res.status(400)
+        res.send({ error: err.message })
+      })
+    },
+  )
+
+  expressApp.post(
     "/buy-leads/buy",
     passport.authenticate("jwt", authOptions),
     async function(req, res, next) {
       ;(async () => {
-        /*
-      TODO: buy links
-      */
         const { user } = req
         const { leads }: { leads: number[] } = req.body
         if (leads) {

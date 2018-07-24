@@ -54,6 +54,13 @@ export default class Leads extends baseDBModel<
     return await this.leadsQueries.buyLeadsGetAll(options)
   }
 
+  async moveMyToSell(lead_ids: number[]) {
+    const lead_promises = lead_ids.map(async (l_id: number) => {
+      await this.update(l_id, { forSale: "true" })
+    })
+    return Promise.all(lead_promises)
+  }
+
   async buy(lead_ids: number[], new_owner: number) {
     const lead_promises = lead_ids
       .filter(async (l_id: number) => {
@@ -64,6 +71,7 @@ export default class Leads extends baseDBModel<
         return Object.assign(lead, {
           id: undefined,
           active: true,
+          forSale: false,
           bought_from: lead.ownerId,
           bought_currency: lead.currency,
           ownerId: new_owner,
