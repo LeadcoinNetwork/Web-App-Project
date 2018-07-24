@@ -67,11 +67,11 @@ export function createStoreAndStory({
     )
   }
   if (module.hot) {
-    module.hot.accept("Reducers", function() {
+    module.hot.accept("../sagas", function() {
       store.replaceReducer(connectRouter(history)(rootReducer))
     })
     if (module.hot) {
-      module.hot.accept("sagas", function() {
+      module.hot.accept("../sagas", function() {
         if (sagaTask) {
           console.log("cancel previous saga task")
           sagaTask.cancel()
