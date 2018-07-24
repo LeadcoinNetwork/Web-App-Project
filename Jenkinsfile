@@ -4,10 +4,7 @@ pipeline {
     stage('error') {
       steps {
         sh 'ls -la'
-        sh '''nvm
-node
-nodejs
-nodejs -v'''
+        sh 'node -v'
       }
     }
   }
