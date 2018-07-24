@@ -17,7 +17,9 @@ import { compose, createStore, applyMiddleware } from "redux"
 import rootReducer from "./reducers/index"
 import createSagaMiddleware from "redux-saga"
 import rootSaga from "./sagas"
-const history = createBrowserHistory()
+var url = require("url")
+var basename = url.parse(process.env.FRONTEND).path
+const history = createBrowserHistory({ basename })
 
 const ROUTER_MIDDLEWARE = routerMiddleware(history)
 
