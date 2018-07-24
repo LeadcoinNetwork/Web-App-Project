@@ -24,7 +24,7 @@ const LeadsResults = ({
       />
     ))}
     <label className="lr-check-all" onClick={toggleAll}>
-      {isNotAllSelected ? t("check all") : t("uncheck all")}
+      {isNotAllSelected ? t("select all") : t("unselect all")}
     </label>
     {renderFilters()}
     {renderResultsHead()}
