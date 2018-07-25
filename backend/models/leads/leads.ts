@@ -78,7 +78,6 @@ export default class Leads extends baseDBModel<
           forSale: false,
           bought_from: lead.ownerId,
           bought_currency: lead.currency,
-          forSale: false,
           ownerId: new_owner,
         })
       })
