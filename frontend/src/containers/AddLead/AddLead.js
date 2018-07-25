@@ -56,6 +56,9 @@ class AddLead extends React.Component {
     return (
       <div className="add_lead">
         <h1>{t("add lead")}</h1>
+        <h3>
+          {t("Add a new lead for sale by filling out a simple web form.")}
+        </h3>
         <div className="main_container">
           <div className="personal">
             <div className="help_text">

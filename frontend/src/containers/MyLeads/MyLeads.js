@@ -53,6 +53,7 @@ class MyLeads extends React.Component {
       <LeadsTemplate
         {...this.props}
         pageName="my"
+        description="Manage all of your leads from one dashboard."
         getListButtons={this.getListButtons}
         getLeadButtons={this.getLeadButtons}
         getButtons={this.getButtons}

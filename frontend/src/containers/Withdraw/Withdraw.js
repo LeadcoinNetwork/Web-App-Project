@@ -22,6 +22,9 @@ class Withdraw extends React.Component {
     return (
       <div className="withdraw-page">
         <h1>{t("Withdraw Funds")}</h1>
+        <h3>
+          {t("Withdraw the money that you’ve earned to your Paypal account.")}
+        </h3>
         <p className="total">
           {t("Total balance: ") + priceString(balance.total)}
         </p>
@@ -58,7 +61,10 @@ const mapStateToProps = state => ({
   balance: state.balance,
 })
 
-export default connect(mapStateToProps, {
-  onChange: withdraw.withdrawPageFormUpdate,
-  onSubmit: withdraw.withdrawPageSubmit,
-})(Withdraw)
+export default connect(
+  mapStateToProps,
+  {
+    onChange: withdraw.withdrawPageFormUpdate,
+    onSubmit: withdraw.withdrawPageSubmit,
+  },
+)(Withdraw)

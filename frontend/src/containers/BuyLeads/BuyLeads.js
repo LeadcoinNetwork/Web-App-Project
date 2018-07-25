@@ -54,6 +54,7 @@ class BuyLeads extends React.Component {
       <LeadsTemplate
         {...this.props}
         pageName="buy"
+        description="Purchase hot leads for your business now!"
         getListButtons={this.getListButtons}
         getLeadButtons={this.getLeadButtons}
         getButtons={this.getButtons}
@@ -67,9 +68,12 @@ const mapStateToProps = state => ({
   fields: state.fields.filter(lead => !lead.private),
 })
 
-export default connect(mapStateToProps, {
-  push: push,
-  fetchLeads: params => leads.fetchLeads("BUY_LEADS", params),
-  setSelectedLeads: selectedLeads =>
-    leads.setSelectedLeads("BUY_LEADS", selectedLeads),
-})(BuyLeads)
+export default connect(
+  mapStateToProps,
+  {
+    push: push,
+    fetchLeads: params => leads.fetchLeads("BUY_LEADS", params),
+    setSelectedLeads: selectedLeads =>
+      leads.setSelectedLeads("BUY_LEADS", selectedLeads),
+  },
+)(BuyLeads)
