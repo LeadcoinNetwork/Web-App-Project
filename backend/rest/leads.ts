@@ -54,7 +54,8 @@ export function start({
         price: chance
           .integer()
           .toString()
-          .substring(0, 7),
+          .substring(0, 7)
+          .slice(1, -1),
       })
       if (status.affectedRows) rc.push(status.insertId)
     }
@@ -140,9 +141,8 @@ export function start({
 
   /**
    * @param errString string
-   * "key::msg; key::msg" => {key: [msg,msg]}
+   * "key::msg ;key::msg" => {key: [msg,msg]}
    */
-
   const errStringToObj = errString => {
     let errors = errString.split(" ;")
     const error_obj = {}
