@@ -164,7 +164,15 @@ test("update-password endpoint should update the password)", async () => {
     password: "danny-gembom",
   })
   expect(body1.error).toBeFalsy()
-  const done = await ApiForToken(token).users.setNewPassword("thisisjustatest")
+  const done = await ApiForToken(token).users.setNewPassword({
+    currentPassword: "not the right password!",
+    newPassword: "thisisjustatest",
+  })
+  expect(done.error).toBe("wrong password supplied")
+  const done2 = await ApiForToken(token).users.setNewPassword({
+    currentPassword: "danny-gembom",
+    newPassword: "thisisjustatest",
+  })
   const body2 = await ApiForToken(token).users.login({
     email,
     password: "thisisjustatest",

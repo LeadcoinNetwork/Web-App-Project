@@ -37,9 +37,17 @@ export function start({
     passport.authenticate("jwt", authOptions),
     async (req, res, next) => {
       const { user } = req
-      const { newPassword } = req.body
-      const done = await appLogic.auth.setNewPassword(user.id, newPassword)
-      res.send({ done })
+      const { newPassword, currentPassword } = req.body
+      let maybeUser = await appLogic.models.users.getUserByEmailAndPassword(
+        user.email,
+        currentPassword,
+      )
+      if (maybeUser instanceof NotFound) {
+        res.status(409).send({ error: "wrong password supplied" })
+      } else {
+        const done = await appLogic.auth.setNewPassword(user.id, newPassword)
+        res.send({ done })
+      }
     },
   )
 
