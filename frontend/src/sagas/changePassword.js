@@ -12,18 +12,12 @@ export default function* changePassword(api) {
   while (true) {
     yield take(types.USER_SETTINGS_SUBMIT)
 
-    let { user, userSettings } = yield select(state => {
-      return {
-        user: state.user,
-        userSettings: state.userSettings,
-      }
-    })
+    let userSettings = yield select(state => state.userSettings)
     if (userSettings.newPassword === userSettings.confirmPassword) {
       yield put(actions.userSettings.userSettingsLoading())
-      let res = api.user.changePassword({
-        email: user.email,
-        current: userSettings.currentPassword,
-        new: userSettings.newPassword,
+      let res = api.user.setNewPassword({
+        currentPassword: userSettings.currentPassword,
+        newPassword: userSettings.newPassword,
       })
       yield put(actions.userSettings.userSettingsFinish())
       console.log(res)
