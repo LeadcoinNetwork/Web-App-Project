@@ -37,6 +37,7 @@ router.post(
 async function upload(req, res, next) {
   try {
     const { user, files } = req
+    const { map, lead_price, agreeToTerms } = req.body
     csv_reader(user.id, "../../../uploads/" + files[0].filename)
       .then(response => {
         res.json({

@@ -48,7 +48,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     getLeadFields: async lead_type => {
       let sql = `SELECT * FROM leadcoin.leads WHERE doc->>"$.type"="${mysql.escape(
         lead_type,
-      )}";`
+      )}" limit 1;`
       let rows = await this.sql.query(sql)
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
       return Object.keys(rows)
@@ -285,7 +285,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     this.log("create " + this.tableName + " start", record)
 
     let status = await this.sql.query(
-      `INSERT INTO ${this.tableName}  SET ${this.fieldName}=${mysql.escape(
+      `INSERT INTO ${this.tableName} SET ${this.fieldName}=${mysql.escape(
         JSON.stringify(record),
       )}`,
     )
