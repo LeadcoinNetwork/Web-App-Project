@@ -3,9 +3,9 @@ import { Link } from "react-router-dom"
 import t from "../../utils/translate/translate"
 
 const menuItems = [
-  { title: "User Settings", path: "/user-settings" },
   { title: "Payments History", path: "/payments" },
   { title: "Withdraw Funds", path: "/withdraw" },
+  { title: "User Settings", path: "/user-settings" },
 ]
 
 const UserMenuInner = ({ user, logOut }) => (
