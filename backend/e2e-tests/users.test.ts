@@ -4,6 +4,8 @@ import * as _ from "lodash"
 import * as RoutesForTests from "./utils/routes.for.tests"
 import NotFound from "../utils/not-found"
 import { disabledReason } from "../models/users/types"
+import * as ValidatedUserForTests from "./utils/user.for.tests"
+import Auth from "../app-logic/auth"
 
 var {
   ApiForToken,
@@ -150,6 +152,24 @@ test("post /auth/login (create user, try login with invalid password, then using
     cookie: "token=" + token,
   })
   expect(x.body.user.fname).toEqual(fname)
+})
+
+test("update-password endpoint should update the password)", async () => {
+  var { user, token } = await ValidatedUserForTests.create({
+    users: appLogic.models.users,
+  })
+  const { email, password } = user
+  const body1 = await ApiForToken(token).users.login({
+    email,
+    password: "danny-gembom",
+  })
+  expect(body1.error).toBeFalsy()
+  const done = await ApiForToken(token).users.setNewPassword("thisisjustatest")
+  const body2 = await ApiForToken(token).users.login({
+    email,
+    password: "thisisjustatest",
+  })
+  expect(body2.error).toBeFalsy()
 })
 
 test("activateUserByKey (ensure that is disabled before)", async () => {
