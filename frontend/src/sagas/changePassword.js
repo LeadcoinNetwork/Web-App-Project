@@ -15,7 +15,7 @@ export default function* changePassword(api) {
     let userSettings = yield select(state => state.userSettings)
     if (userSettings.newPassword === userSettings.confirmPassword) {
       yield put(actions.userSettings.userSettingsLoading())
-      let res = api.user.setNewPassword({
+      let res = api.users.setNewPassword({
         currentPassword: userSettings.currentPassword,
         newPassword: userSettings.newPassword,
       })
