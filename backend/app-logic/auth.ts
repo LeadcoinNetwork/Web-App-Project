@@ -135,6 +135,11 @@ export default class Auth {
     }
   }
 
+  async setNewPassword(user_id, new_password) {
+    let { users } = this.models
+    return users.setNewPassword(user_id, new_password)
+  }
+
   async resendConfirmationEmail(user) {
     var { users, emailSender, emailCreator } = this.models
     const { emailConfirmationKey } = user
