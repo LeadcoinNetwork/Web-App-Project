@@ -38,7 +38,6 @@ export default function(state = initialState, action) {
     case types.ADD_LEAD_AGREE_TO_TERMS:
       return {
         ...state,
-        errors: {},
         agree_to_terms: action.agree_to_terms.value,
       }
 
@@ -63,13 +62,16 @@ export default function(state = initialState, action) {
       }
 
     case types.ADD_LEAD_HANDLE_FORM_CHANGE:
+      delete state.errors[action.payload.name]
       return {
         ...state,
         values: {
           ...state.values,
           [action.payload.name]: action.payload.value,
         },
-        errors: {},
+        errors: {
+          ...state.errors,
+        },
       }
 
     case types.ADD_LEAD_GET_DB_FIELDS:

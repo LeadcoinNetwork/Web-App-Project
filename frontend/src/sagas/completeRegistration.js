@@ -21,9 +21,7 @@ export default function* completeRegistration(api) {
       )
     } else {
       console.log("here2")
-      yield put({ type: actions.types.FETCH_USER_AGAIN })
-      // yield push("/buy-leads")
-      yield put(actions.route.gotoDefaultHome())
+      yield put(actions.route.bootAgain())
     }
   }
 }
