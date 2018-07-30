@@ -74,9 +74,7 @@ export default function(state = initialState, action) {
           ...state.values,
           [action.payload.name]: action.payload.value,
         },
-        errors: {
-          ...newErrors,
-        },
+        errors: newErrors,
       }
 
     case types.ADD_LEAD_GET_DB_FIELDS:
