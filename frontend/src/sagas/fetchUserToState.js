@@ -22,7 +22,7 @@ export default function* fetchUserToState(api) {
         name: ans.user.fname + " " + ans.user.lname,
         created: new Date().valueOf() / 1000,
       }
-      startPlayerWaitUntilItsLoaded()
+      // startPlayerWaitUntilItsLoaded()
 
       // update the balance
       yield put(actions.balance.balanceUpdate(ans.user.balance))
