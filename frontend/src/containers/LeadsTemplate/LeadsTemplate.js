@@ -105,7 +105,6 @@ class LeadsTemplate extends React.Component {
       isNotAllSelected = this.isNotAllSelected()
 
     return (
-<<<<<<< HEAD
       <div>
         <div className="ldc-leads-template">
           <section className={`ldc-${pageName}-leads`}>
@@ -118,22 +117,6 @@ class LeadsTemplate extends React.Component {
               </div>
             )}
             {/* {cardsMode ? (
-=======
-      <ResultsModeContext.Consumer>
-        {({ cardsMode, toggleMode }) => (
-          <div className="ldc-leads-template">
-            <section className={`ldc-${pageName}-leads`}>
-              <SwitchResultsMode />
-              <h1>{t(`${pageName} leads`)}</h1>
-              <h3>{t(description)}</h3>
-              {pageName === "sell" && (
-                <div className="lt-links">
-                  <Link to="/csv-upload">{t("Upload CSV File")}</Link>
-                  <Link to="/add-lead">{t("Create New Lead")}</Link>
-                </div>
-              )}
-              {cardsMode ? (
->>>>>>> e6d30f107ec9739ff128e5610e11a0cf8a9040f7
                 <LeadsResults
                   leads={leads}
                   buttons={this.props.getListButtons()}
