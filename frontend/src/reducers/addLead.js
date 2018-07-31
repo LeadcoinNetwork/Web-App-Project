@@ -24,6 +24,7 @@ const initialState = {
   loading: false,
 }
 
+let newErrors = null
 export default function(state = initialState, action) {
   switch (action.type) {
     case types.ADD_LEAD_FORM_ERROR:
@@ -36,8 +37,11 @@ export default function(state = initialState, action) {
       }
 
     case types.ADD_LEAD_AGREE_TO_TERMS:
+      newErrors = { ...state.errors }
+      delete newErrors["agree_to_terms"]
       return {
         ...state,
+        errors: newErrors,
         agree_to_terms: action.agree_to_terms.value,
       }
 
@@ -62,16 +66,15 @@ export default function(state = initialState, action) {
       }
 
     case types.ADD_LEAD_HANDLE_FORM_CHANGE:
-      delete state.errors[action.payload.name]
+      newErrors = { ...state.errors }
+      delete newErrors[action.payload.name]
       return {
         ...state,
         values: {
           ...state.values,
           [action.payload.name]: action.payload.value,
         },
-        errors: {
-          ...state.errors,
-        },
+        errors: newErrors,
       }
 
     case types.ADD_LEAD_GET_DB_FIELDS:

@@ -18,10 +18,12 @@ class CSVUpload extends React.Component {
 
   render() {
     let fileLabel = t("Choose File")
-    const { loading, file } = this.props
+    const { loading, file, pickFile } = this.props
     if (file) fileLabel = file.name
     return (
       <div className="csvUpload">
+        <h1>{t("Upload CSV File")}</h1>
+        <h3>{t("Add multiple leads for sale by uploading a CSV file.")}</h3>
         <div className="file-pick">
           <Button appStyle secondary label={fileLabel}>
             <input
@@ -30,7 +32,7 @@ class CSVUpload extends React.Component {
               accept=".csv"
               onChange={e => {
                 if (loading) return false
-                this.props.pickFile(e.target.files[0])
+                pickFile(e.target.files[0])
               }}
             />
           </Button>

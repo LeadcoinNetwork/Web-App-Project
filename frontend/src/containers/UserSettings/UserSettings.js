@@ -28,6 +28,7 @@ class UserSettings extends React.Component {
     return (
       <section className="ldc-user-settings">
         <h1>{t("User Settings")}</h1>
+        {/* <h3>{t("Update your profile, username or password.")}</h3> */}
         <div className="us-password">
           <h3>{t("change your password")}</h3>
           <TextField
@@ -71,7 +72,10 @@ const mapStateToProps = state => ({
   userSettings: state.userSettings,
 })
 
-export default connect(mapStateToProps, {
-  onChange: userSettings.userSettingsHandleChange,
-  onSubmit: userSettings.userSettingsSubmit,
-})(UserSettings)
+export default connect(
+  mapStateToProps,
+  {
+    onChange: userSettings.userSettingsHandleChange,
+    onSubmit: userSettings.userSettingsSubmit,
+  },
+)(UserSettings)

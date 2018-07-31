@@ -11,7 +11,7 @@ class AddLead extends React.Component {
     const { errors } = this.props
     const error = errors["agree_to_terms"] ? "error" : ""
     return (
-      <div className={error + " twothirds"}>
+      <div className={error + " agree_to_terms twothirds"}>
         <input
           type="checkbox"
           name="agree_to_terms"
@@ -56,6 +56,9 @@ class AddLead extends React.Component {
     return (
       <div className="add_lead">
         <h1>{t("add lead")}</h1>
+        <h3>
+          {t("Add a new lead for sale by filling out a simple web form.")}
+        </h3>
         <div className="main_container">
           <div className="personal">
             <div className="help_text">

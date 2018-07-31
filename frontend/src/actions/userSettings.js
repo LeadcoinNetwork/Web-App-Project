@@ -15,6 +15,12 @@ export default {
     }
   },
 
+  userSettingsClear() {
+    return {
+      type: types.USER_SETTINGS_CLEAR,
+    }
+  },
+
   userSettingsSubmit() {
     return {
       type: types.USER_SETTINGS_SUBMIT,

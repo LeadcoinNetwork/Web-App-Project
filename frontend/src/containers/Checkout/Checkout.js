@@ -19,7 +19,7 @@ const Checkout = ({ fields, checkout, buyLeads, push, checkoutBuyStart }) => {
   return (
     <div className="ldc-checkout">
       <h1>{t("Checkout")}</h1>
-
+      <h3>{t("Buy all of your selected leads now.")}</h3>
       <Table
         fields={fields.map(field => ({
           ...field,
@@ -57,7 +57,10 @@ const mapStateToProps = state => ({
   buyLeads: state.buyLeads,
 })
 
-export default connect(mapStateToProps, {
-  push,
-  checkoutBuyStart: Actions.checkout.checkoutBuyStart,
-})(Checkout)
+export default connect(
+  mapStateToProps,
+  {
+    push,
+    checkoutBuyStart: Actions.checkout.checkoutBuyStart,
+  },
+)(Checkout)

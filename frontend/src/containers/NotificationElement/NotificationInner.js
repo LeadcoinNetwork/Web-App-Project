@@ -1,11 +1,12 @@
 import React from "react"
+import { Link } from "react-router-dom"
 import FontAwesomeIcon from "@fortawesome/react-fontawesome"
 import faEye from "@fortawesome/fontawesome-free-solid/faEye"
 import { fromNow } from "../../utils/time"
 import t from "../../utils/translate/translate"
 
-const NotificationInner = ({ list, notificatiosViewAll }) => (
-  <div className="notification-inner" onClick={notificatiosViewAll}>
+const NotificationInner = ({ list }) => (
+  <Link to="/notifications" className="notification-inner">
     <div className="small-arrow" />
     {list.map(notification => (
       <div>
@@ -27,7 +28,7 @@ const NotificationInner = ({ list, notificatiosViewAll }) => (
       />
       <span className="view-all-text">{t("View All Notifications")}</span>
     </div>
-  </div>
+  </Link>
 )
 
 export default NotificationInner

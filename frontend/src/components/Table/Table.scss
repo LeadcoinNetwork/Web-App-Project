@@ -65,6 +65,8 @@
         }
 
         .tbr-checkbox {
+          /*rtl:ignore*/
+          direction: ltr;
           left: 20px;
         }
 

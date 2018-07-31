@@ -14,6 +14,12 @@ export default class UserApi {
   async resendEmail() {
     return await this.request(methods.get, "/auth/resend-email")
   }
+  async setNewPassword({ currentPassword, newPassword }) {
+    return await this.request(methods.post, "/auth/update-password", {
+      currentPassword,
+      newPassword,
+    })
+  }
   async forgotPassword(email) {
     return await this.request(methods.post, "/auth/forgot-password", { email })
   }
