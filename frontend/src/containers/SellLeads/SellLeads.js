@@ -50,14 +50,19 @@ class SellLeads extends React.Component {
   }
   render() {
     return (
-      <LeadsTemplate
-        {...this.props}
-        pageName="sell"
-        description="Earn money by selling your unused leads to other professionals."
-        getListButtons={this.getListButtons}
-        getLeadButtons={this.getLeadButtons}
-        getButtons={this.getButtons}
-      />
+      <>
+        <h1>{t("Sell Leads")}</h1>
+        <h3>
+          {t("Earn money by selling your unused leads to other professionals.")}
+        </h3>
+        <LeadsTemplate
+          {...this.props}
+          pageName="sell"
+          getListButtons={this.getListButtons}
+          getLeadButtons={this.getLeadButtons}
+          getButtons={this.getButtons}
+        />
+      </>
     )
   }
 }

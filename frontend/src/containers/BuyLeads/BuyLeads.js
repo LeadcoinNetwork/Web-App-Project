@@ -56,20 +56,20 @@ class BuyLeads extends React.Component {
   render() {
     return (
       // do not change classnames, it's connected to the manual
-      <div>
-        <h1>Buy Leads</h1>
-        <h3>Purchase hot leads for your business now!</h3>
+      <>
+        <h1>{t("Buy Leads")}</h1>
+        <h3>{t("Purchase hot leads for your business now!")}</h3>
         <select className="industry">
           <option />
-          <option>Real Estate</option>
+          <option>{t("Real Estate")}</option>
           <option disabled>Other1</option>
           <option disabled>Other2</option>
           <option disabled>Other3</option>
         </select>
         <select className="category">
           <option />
-          <option>Buy</option>
-          <option disabled>Sell</option>
+          <option>{t("Buy")}</option>
+          <option disabled>{t("Sell")}</option>
           <option disabled />
           <option disabled />
         </select>
@@ -79,7 +79,7 @@ class BuyLeads extends React.Component {
             this.setState({ showOnlyAfterSearch: true })
           }}
         >
-          Search
+          {t("Search")}
         </button>
         {this.state.showOnlyAfterSearch && (
           <LeadsTemplate
@@ -90,7 +90,7 @@ class BuyLeads extends React.Component {
             getButtons={this.getButtons}
           />
         )}
-      </div>
+      </>
     )
   }
 }
