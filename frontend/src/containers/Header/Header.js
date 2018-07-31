@@ -9,7 +9,14 @@ import t from "../../utils/translate/translate"
 import { connect } from "react-redux"
 import * as actions from "actions"
 import { Route, Switch } from "react-router"
-const Header = ({ pathname, loggedIn, disabled, logout, gotoDefaultHome }) => {
+const Header = ({
+  pathname,
+  loggedIn,
+  disabled,
+  logout,
+  gotoDefaultHome,
+  language,
+}) => {
   return (
     <header
       className={`ldc-header${
@@ -35,7 +42,7 @@ const Header = ({ pathname, loggedIn, disabled, logout, gotoDefaultHome }) => {
         pathname == "/login" && (
           <div className="sign-link">
             <span>{t("don't have an account?")}</span>
-            <Link to="/signup">{t("Start Now")}</Link>
+            <Link to="/signup">{t("Register")}</Link>
           </div>
         )}
       {!disabled &&
@@ -47,7 +54,7 @@ const Header = ({ pathname, loggedIn, disabled, logout, gotoDefaultHome }) => {
         )}
 
       <div className="ham-menu">
-        <BalanceWidget />
+        <BalanceWidget language={language} />
         <NotificationElement />
         <UserMenu />
       </div>

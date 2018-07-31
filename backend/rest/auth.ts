@@ -9,6 +9,8 @@ const authOptions = {
 import * as Express from "express"
 import AppLogic from "../app-logic/index"
 import NotFound from "../utils/not-found"
+import { appLogic } from "../app-logic/types"
+import User from "../models/users/users"
 
 export function start({
   appLogic,
@@ -30,6 +32,24 @@ export function start({
   )
 
   expressApp.post("/auth/login", loginByUserNameAndPassword, login)
+  expressApp.post(
+    "/auth/update-password",
+    passport.authenticate("jwt", authOptions),
+    async (req, res, next) => {
+      const { user } = req
+      const { newPassword, currentPassword } = req.body
+      let maybeUser = await appLogic.models.users.getUserByEmailAndPassword(
+        user.email,
+        currentPassword,
+      )
+      if (maybeUser instanceof NotFound) {
+        res.status(409).send({ error: "wrong password supplied" })
+      } else {
+        const done = await appLogic.auth.setNewPassword(user.id, newPassword)
+        res.send({ done })
+      }
+    },
+  )
 
   // expressApp.get(
   //   ["/auth/linkedin", "/auth/linkedin/callback"],

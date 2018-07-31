@@ -3,6 +3,7 @@ import login from "./login"
 import forgotPassword from "./forgotPassword"
 import fetchUserToState from "./fetchUserToState"
 import logout from "./logout"
+import changePassword from "./changePassword"
 import homesaga from "./homesaga"
 import snackbar from "./snackbar"
 import emailConfirmation from "./emailConfirmation"
@@ -42,6 +43,7 @@ export default function* rootSaga() {
     addLead,
     completeRegistration,
     emailConfirmation,
+    changePassword,
     logout,
     homesaga,
     fetchUserToState,

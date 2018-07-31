@@ -6,6 +6,10 @@ dotenv.config()
 utils.throwOnMissingEnvironmentVariables()
 
 class Config {
+  // FLAGS
+  AUTO_CONFIRM_EMAIL = true
+  SKIP_COMPLETE_PROFILE = true
+
   env = process.env.NODE_ENV
   backend = process.env.BACKEND
   frontend = process.env.FRONTEND

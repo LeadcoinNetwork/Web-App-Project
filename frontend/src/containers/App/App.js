@@ -48,7 +48,8 @@ class App extends React.Component {
             className={loggedIn && !disabled ? "a-app-mode" : "a-sign-mode"}
           >
             <Switch>
-              <Route path="/" exact component={Home} />
+              <Route path="/" exact component={null} />
+              <Route path="/home" component={Home} />
               <Route path="/signup" component={Signup} />
               <Route path="/email-confirmation" component={EmailConfirmation} />
               <Route

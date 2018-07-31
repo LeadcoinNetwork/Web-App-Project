@@ -1,8 +1,15 @@
 .ldc-checkout {
+  display: flow-root;
+
   .c-total {
     padding: 30px 0;
     font-size: 24px;
     font-style: italic;
     font-weight: 300;
+    text-align: right;
+  }
+
+  .ldc-button {
+    float: right;
   }
 }

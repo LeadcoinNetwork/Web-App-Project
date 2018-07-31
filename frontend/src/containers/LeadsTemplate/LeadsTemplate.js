@@ -101,7 +101,7 @@ class LeadsTemplate extends React.Component {
     )
   }
   render() {
-    let { pageName, leads, fields, setSelectedLeads } = this.props,
+    let { pageName, description, leads, fields, setSelectedLeads } = this.props,
       isNotAllSelected = this.isNotAllSelected()
 
     return (
@@ -109,7 +109,6 @@ class LeadsTemplate extends React.Component {
         <div className="ldc-leads-template">
           <section className={`ldc-${pageName}-leads`}>
             {/* <SwitchResultsMode /> */}
-            <h1>{t(`${pageName} leads`)}</h1>
             {pageName === "sell" && (
               <div className="lt-links">
                 <Link to="/csv-upload">{t("Upload CSV File")}</Link>

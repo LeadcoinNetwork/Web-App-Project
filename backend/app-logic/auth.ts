@@ -113,19 +113,22 @@ export default class Auth {
     shouldValidate = true,
   ): Promise<{ user: number; token: string }> {
     var { users, config, emailSender, emailCreator } = this.models
-
     if (shouldValidate) {
       var rs = await UserValidate.checkNewUserValid(user)
       if (rs instanceof Error) {
         throw rs
       }
-      user.disabled = disabledReason.EMAIL_NOT_VERIFIED
-      user.emailConfirmationKey = auth.generateToken()
-      var str = emailCreator.confirmEmail(user, user.emailConfirmationKey)
-      await emailSender.send(str)
+      if (!this.models.config.AUTO_CONFIRM_EMAIL) {
+        user.disabled = disabledReason.EMAIL_NOT_VERIFIED
+        user.emailConfirmationKey = auth.generateToken()
+        var str = emailCreator.confirmEmail(user, user.emailConfirmationKey)
+        await emailSender.send(str)
+      }
     }
     if (!shouldValidate) {
-      user.disabled = disabledReason.PROFILE_NOT_COMPLETED
+      if (!this.models.config.SKIP_COMPLETE_PROFILE) {
+        user.disabled = disabledReason.PROFILE_NOT_COMPLETED
+      }
     }
     var newUserid = await users.createUser(user)
     let token = auth.generateJWT(newUserid, config.auth.jwt.secret)
@@ -133,6 +136,11 @@ export default class Auth {
       user: newUserid,
       token,
     }
+  }
+
+  async setNewPassword(user_id, new_password) {
+    let { users } = this.models
+    return users.setNewPassword(user_id, new_password)
   }
 
   async resendConfirmationEmail(user) {
