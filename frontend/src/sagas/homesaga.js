@@ -26,7 +26,7 @@ export default function* gotoDefaultHome(api) {
       path = disabledPages[user.disabled] // redirect to disabled reason
     } else {
       // user is not disabled. (Active)
-      path = "/my-leads"
+      path = "/home"
     }
     var currentPath = yield select(state => state.router.location.pathname)
     if (currentPath != path) {
