@@ -62,16 +62,16 @@ class BuyLeads extends React.Component {
         <select className="industry">
           <option />
           <option>{t("Real Estate")}</option>
-          <option disabled>Other1</option>
-          <option disabled>Other2</option>
-          <option disabled>Other3</option>
+          <option disabled>{t("Crypto")}</option>
+          <option disabled>{t("Insurance")}</option>
+          <option disabled>{t("Loans")}</option>
         </select>
         <select className="category">
           <option />
-          <option>{t("Buy")}</option>
-          <option disabled>{t("Sell")}</option>
-          <option disabled />
-          <option disabled />
+          <option>{t("Real Estate-Buy")}</option>
+          <option disabled>{t("Real Estate-Sell")}</option>
+          <option disabled>{t("Real Estate-Looking to rent")}</option>
+          <option disabled>{t("Real Estate-Properties for rent")}</option>
         </select>
         <button
           className="search"
