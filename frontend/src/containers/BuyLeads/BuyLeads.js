@@ -58,6 +58,7 @@ class BuyLeads extends React.Component {
       // do not change classnames, it's connected to the manual
       <div>
         <h1>Buy Leads</h1>
+        <h3>Purchase hot leads for your business now!</h3>
         <select className="industry">
           <option />
           <option>Real Estate</option>

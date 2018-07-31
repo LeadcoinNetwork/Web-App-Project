@@ -34,6 +34,11 @@
       text-transform: capitalize;
     }
   }
+  .agree_to_terms {
+    &.error {
+      color: red;
+    }
+  }
   .flexed {
     display: flex;
   }

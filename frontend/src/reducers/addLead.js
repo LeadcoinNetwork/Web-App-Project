@@ -36,6 +36,7 @@ export default function(state = initialState, action) {
       }
 
     case types.ADD_LEAD_AGREE_TO_TERMS:
+      delete state.errors["agree_to_terms"]
       return {
         ...state,
         agree_to_terms: action.agree_to_terms.value,

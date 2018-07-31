@@ -19,13 +19,7 @@ class NotificationElement extends Component {
   }
 
   render() {
-    let {
-      unreadCount,
-      list,
-      isOpen,
-      notificationsClick,
-      notificationsViewAll,
-    } = this.props
+    let { unreadCount, list, isOpen, notificationsClick } = this.props
     return (
       <i
         className="ldc-notification-element far fa-bell"
@@ -41,12 +35,7 @@ class NotificationElement extends Component {
             {unreadCount < 10 ? unreadCount : "9+"}
           </i>
         )}
-        {isOpen && (
-          <NotificationInner
-            list={list}
-            notificationsViewAll={notificationsViewAll}
-          />
-        )}
+        {isOpen && <NotificationInner list={list} />}
       </i>
     )
   }
@@ -56,7 +45,6 @@ const mapStateToProps = state => state.notifications
 
 const mapDispatchToProps = {
   notificationsClick: notifications.notificationsClick,
-  notificationsViewAll: notifications.notificationsViewAll,
 }
 
 const NotificationElementConnected = connect(

@@ -809,53 +809,117 @@ export default {
   "Upload CSV File": {
     en: "Upload CSV File",
     he: "העלאת קובץ CSV",
+    ja: "CSV ファイルをアップロード",
   },
   "Create New Lead": {
     en: "Create New Lead",
     he: "יצירת לִיד חדש",
+    ja: "新規リードを作成",
   },
   "Sorry, we couldn't find any leads": {
     en: "Sorry, we couldn't find any leads",
     he: "סליחה, לא מצאנו לִידים",
+    ja: "申し訳ございませんが、リードが見つかりませんでした",
   },
   "Try expanding your search criteria": {
     en: "Try expanding your search criteria",
     he: "נסה/י להרחיב את קריטריון החיפוש",
+    ja: "検索条件を広げてみてください",
   },
   "Start uploading your leads": {
     en: "Start uploading your leads",
     he: "התחל/י בהעלאת הלִידים שלך",
+    ja: "リードのアップロードを開始してください",
   },
   "Upload your leads now by selecting a": {
     en: "Upload your leads now by selecting a",
     he: 'העלה/י את הלִידים שלך עכשיו ע"י בחירת',
+    ja: "今すぐリードをアップロード",
   },
   "CSV file": {
     en: "CSV file",
     he: "קובץ CSV",
+    ja: "CSV ファイルを",
   },
   " or by filling out a": {
     en: " or by filling out a",
     he: ' או ע"י מילוי',
+    ja: " 選択するか",
   },
   "simple web form": {
     en: "simple web form",
     he: "טופס פשוט",
+    ja: "シンプルなウェブフォームに入力して",
   },
   "You have no leads": {
     en: "You have no leads",
     he: "אין לך לִידים",
+    ja: "リードがありません",
   },
   "Explore and ": {
     en: "Explore and ",
     he: "חפש ",
+    ja: "今すぐ閲覧して ",
   },
   "buy new leads": {
     en: "buy new leads",
     he: "וקנה לִידים חדשים",
+    ja: "新しいリードを",
   },
   " now": {
     en: " now",
     he: " עכשיו",
+    ja: " 購入",
+  },
+  "Purchase hot leads for your business now!": {
+    en: "Purchase hot leads for your business now!",
+    he: "קניית לִידים חמים לעסק שלך!",
+  },
+  "Earn money by selling your unused leads to other professionals.": {
+    en: "Earn money by selling your unused leads to other professionals.",
+    he: 'הרווח/י כסף ע"י מכירת לִידים לעסקים אחרים.',
+  },
+  "Manage all of your leads from one dashboard.": {
+    en: "Manage all of your leads from one dashboard.",
+    he: "ניהול של כל הלִידים שלך במקום אחד.",
+  },
+  "Buy all of your selected leads now.": {
+    en: "Buy all of your selected leads now.",
+    he: "קנה/י כאן את כל הלִידים המסומנים.",
+  },
+  "Add a new lead for sale by filling out a simple web form.": {
+    en: "Add a new lead for sale by filling out a simple web form.",
+    he: 'הוספת לִיד חדש למכירה ע"י מילוי טופס פשוט.',
+  },
+  "Add multiple leads for sale by uploading a CSV file.": {
+    en: "Add multiple leads for sale by uploading a CSV file.",
+    he: 'הוספת לִידים למכירה ע"י העלאת קובץ CSV.',
+  },
+  "See buy/sell alerts and check your system messages.": {
+    en: "See buy/sell alerts and check your system messages.",
+    he: "צפייה בהתראות קניה/מכירה והודעות מערכת.",
+  },
+  "Update your profile, username or password.": {
+    en: "Update your profile, username or password.",
+    he: "עדכון הפרופיל, שם משתמש או סיסמה.",
+  },
+  "See a detailed history of all of your past transactions.": {
+    en: "See a detailed history of all of your past transactions.",
+    he: "היסטוריה מפורטת של כל עסקאות העבר.",
+  },
+  "Withdraw the money that you’ve earned to your Paypal account.": {
+    en: "Withdraw the money that you’ve earned to your Paypal account.",
+    he: "משיכת כספים שהצטברו בחשבונך לחשבון הPayPal שלך.",
+  },
+  "All disputes over misleading or incorrect lead data will be investigated and ruled on by an arbitrator.": {
+    en:
+      "All disputes over misleading or incorrect lead data will be investigated and ruled on by an arbitrator.",
+    he:
+      'כל מחלוקת בנוגע ללִידים מטעים או בעלי נתונים שגויים תחקר ותיושב ע"י בורר.',
+  },
+  "Match the fields in your CSV with ours by utilizing our CSV mapping feature.": {
+    en:
+      "Match the fields in your CSV with ours by utilizing our CSV mapping feature.",
+    he: "מיפוי השדות בCSV שלך בעזרת שימוש בכלי היעודי שלנו.",
   },
 }

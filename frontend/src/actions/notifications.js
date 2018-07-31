@@ -35,10 +35,4 @@ export default {
       payload: { list, unreadCount },
     }
   },
-
-  notificationsViewAll() {
-    return {
-      type: types.NOTIFICATIONS_VIEW_ALL,
-    }
-  },
 }

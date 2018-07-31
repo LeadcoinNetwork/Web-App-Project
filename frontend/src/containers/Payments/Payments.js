@@ -8,8 +8,9 @@ const paymentsConfig = require("./payments_table.config.json")
 
 const PaymentsHistory = ({ list, loading, error, onScrollBottom }) => (
   <div className="payment-history">
+    <h1>{t("Payments History")}</h1>
+    <h3>{t("See a detailed history of all of your past transactions.")}</h3>
     <Table
-      title="Payments History"
       fields={paymentsConfig.fields.map(field => ({
         ...field,
         name: t(field.name),
@@ -36,4 +37,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = state => state.payments
 
-export default connect(mapStateToProps, mapDispatchToProps)(PaymentsHistory)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(PaymentsHistory)
