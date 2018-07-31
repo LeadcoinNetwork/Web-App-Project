@@ -9,6 +9,7 @@ export interface BaseUserInterface {
   country?: string
   phone?: string
   company?: string
+  balance?: number
 }
 export interface ExistingUserInterface extends BaseUserInterface {
   password: string

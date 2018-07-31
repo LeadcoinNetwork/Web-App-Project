@@ -130,6 +130,10 @@ export default class Auth {
         user.disabled = disabledReason.PROFILE_NOT_COMPLETED
       }
     }
+
+    // set balance to user
+    user.balance = this.models.config.INITIAL_BALANCE
+
     var newUserid = await users.createUser(user)
     let token = auth.generateJWT(newUserid, config.auth.jwt.secret)
     return {
