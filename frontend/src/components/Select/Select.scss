@@ -27,6 +27,10 @@
   &:focus {
     border-color: white;
   }
+
+  option {
+    color: $main-color;
+  }
 }
 
 @media (max-width: $screen-tablets) {
