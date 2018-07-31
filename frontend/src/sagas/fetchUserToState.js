@@ -34,6 +34,7 @@ export default function* fetchUserToState(api) {
 }
 
 function startPlayerWaitUntilItsLoaded() {
+  if (localStorage.skip_inline_manual) return
   // This stange method comes from here:
   // https://help.inlinemanual.com/docs/single-page-app-and-people-tracking-angular-react-ember
   var retries = 0
