@@ -18,8 +18,6 @@ import {
 
 import baseDBModel from "../base-db-model/base-db-model"
 
-const INITIAL_BALANCE = 1000
-
 class User extends baseDBModel<
   NewUserInterface,
   ExistingUserInterface,
@@ -61,9 +59,6 @@ class User extends baseDBModel<
       user2Databse.password = auth.hashPassword(user.plainPassword)
       delete user2Databse.plainPassword
     }
-
-    // set balance to user
-    user2Databse.balance = INITIAL_BALANCE
 
     let status = await this.insert(user2Databse)
 
