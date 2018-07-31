@@ -26,6 +26,7 @@ class MyLeads extends React.Component {
     }
   }
   getListButtons = () => {
+    return []
     return [
       {
         value: this.buildButtonLabel(),

@@ -5,7 +5,6 @@ import Select from "Components/Select"
 import TextField from "Components/TextField"
 import t from "../../utils/translate/translate"
 import RealEstateLead from "Components/RealEstateLead"
-import ResultsModeContext from "Containers/App/ResultsModeContext"
 import SwitchResultsMode from "Containers/SwitchResultsMode"
 import { Link } from "react-router-dom"
 
@@ -93,11 +92,11 @@ class LeadsTemplate extends React.Component {
         <label className="ltrh-count">
           {leads.list.length} {t("of")} {leads.total} {t("leads")}
         </label>
-        <Select>
+        {/* <Select>
           <option>{t("Sort By")}</option>
           <option>{t("size")}</option>
           <option>{t("budget")}</option>
-        </Select>
+        </Select> */}
       </div>
     )
   }
@@ -106,19 +105,18 @@ class LeadsTemplate extends React.Component {
       isNotAllSelected = this.isNotAllSelected()
 
     return (
-      <ResultsModeContext.Consumer>
-        {({ cardsMode, toggleMode }) => (
-          <div className="ldc-leads-template">
-            <section className={`ldc-${pageName}-leads`}>
-              <SwitchResultsMode />
-              <h1>{t(`${pageName} leads`)}</h1>
-              {pageName === "sell" && (
-                <div className="lt-links">
-                  <Link to="/csv-upload">{t("Upload CSV File")}</Link>
-                  <Link to="/add-lead">{t("Create New Lead")}</Link>
-                </div>
-              )}
-              {cardsMode ? (
+      <div>
+        <div className="ldc-leads-template">
+          <section className={`ldc-${pageName}-leads`}>
+            {/* <SwitchResultsMode /> */}
+            <h1>{t(`${pageName} leads`)}</h1>
+            {pageName === "sell" && (
+              <div className="lt-links">
+                <Link to="/csv-upload">{t("Upload CSV File")}</Link>
+                <Link to="/add-lead">{t("Create New Lead")}</Link>
+              </div>
+            )}
+            {/* {cardsMode ? (
                 <LeadsResults
                   leads={leads}
                   buttons={this.props.getListButtons()}
@@ -138,32 +136,31 @@ class LeadsTemplate extends React.Component {
                     />
                   )}
                 />
-              ) : (
-                <Table
-                  fields={fields.map(field => ({
-                    ...field,
-                    name: t(field.name),
-                  }))}
-                  loading={leads.loading}
-                  onScrollBottom={this.onScrollBottom}
-                  renderFilters={this.renderFilters}
-                  renderResultsHead={this.renderResultsHead}
-                  records={leads.list}
-                  buttons={this.props.getButtons()}
-                  setSelectedRecords={setSelectedLeads}
-                  isNotAllSelected={isNotAllSelected}
-                  selected={leads.selected}
-                  isSelectable={true}
-                />
+              ) : ( */}
+            <Table
+              fields={fields.map(field => ({
+                ...field,
+                name: t(field.name),
+              }))}
+              loading={leads.loading}
+              onScrollBottom={this.onScrollBottom}
+              renderFilters={this.renderFilters}
+              renderResultsHead={this.renderResultsHead}
+              records={leads.list}
+              buttons={this.props.getButtons()}
+              setSelectedRecords={setSelectedLeads}
+              isNotAllSelected={isNotAllSelected}
+              selected={leads.selected}
+              isSelectable={true}
+            />
+            {/* )} */}
+            {!leads.list.length &&
+              !leads.loading && (
+                <div className="lt-zero-results">{this.zeroResults()}</div>
               )}
-              {!leads.list.length &&
-                !leads.loading && (
-                  <div className="lt-zero-results">{this.zeroResults()}</div>
-                )}
-            </section>
-          </div>
-        )}
-      </ResultsModeContext.Consumer>
+          </section>
+        </div>
+      </div>
     )
   }
 }

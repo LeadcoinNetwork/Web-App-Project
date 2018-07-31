@@ -1,9 +1,8 @@
 import React from "react"
-import ResultsModeContext from "Containers/App/ResultsModeContext"
 import t from "../../utils/translate/translate"
 
 const SwitchResultsMode = () => (
-  <ResultsModeContext.Consumer>
+  <div>
     {({ cardsMode, toggleMode }) => (
       <label className="srm-selector" onClick={toggleMode}>
         {t("Switch to")} &nbsp; &nbsp;
@@ -13,7 +12,7 @@ const SwitchResultsMode = () => (
         />
       </label>
     )}
-  </ResultsModeContext.Consumer>
+  </div>
 )
 
 export default SwitchResultsMode

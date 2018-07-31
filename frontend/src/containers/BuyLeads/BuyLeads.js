@@ -6,6 +6,10 @@ import LeadsTemplate from "Containers/LeadsTemplate"
 import t from "../../utils/translate/translate"
 
 class BuyLeads extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {}
+  }
   buyLeads = () => {
     this.props.push("/checkout")
   }
@@ -51,13 +55,41 @@ class BuyLeads extends React.Component {
   }
   render() {
     return (
-      <LeadsTemplate
-        {...this.props}
-        pageName="buy"
-        getListButtons={this.getListButtons}
-        getLeadButtons={this.getLeadButtons}
-        getButtons={this.getButtons}
-      />
+      // do not change classnames, it's connected to the manual
+      <div>
+        <h1>Buy Leads</h1>
+        <select className="industry">
+          <option />
+          <option>Real Estate</option>
+          <option disabled>Other1</option>
+          <option disabled>Other2</option>
+          <option disabled>Other3</option>
+        </select>
+        <select className="category">
+          <option />
+          <option>Buy</option>
+          <option disabled>Sell</option>
+          <option disabled />
+          <option disabled />
+        </select>
+        <button
+          className="search"
+          onClick={() => {
+            this.setState({ showOnlyAfterSearch: true })
+          }}
+        >
+          Search
+        </button>
+        {this.state.showOnlyAfterSearch && (
+          <LeadsTemplate
+            {...this.props}
+            pageName="buy"
+            getListButtons={this.getListButtons}
+            getLeadButtons={this.getLeadButtons}
+            getButtons={this.getButtons}
+          />
+        )}
+      </div>
     )
   }
 }
@@ -67,9 +99,12 @@ const mapStateToProps = state => ({
   fields: state.fields.filter(lead => !lead.private),
 })
 
-export default connect(mapStateToProps, {
-  push: push,
-  fetchLeads: params => leads.fetchLeads("BUY_LEADS", params),
-  setSelectedLeads: selectedLeads =>
-    leads.setSelectedLeads("BUY_LEADS", selectedLeads),
-})(BuyLeads)
+export default connect(
+  mapStateToProps,
+  {
+    push: push,
+    fetchLeads: params => leads.fetchLeads("BUY_LEADS", params),
+    setSelectedLeads: selectedLeads =>
+      leads.setSelectedLeads("BUY_LEADS", selectedLeads),
+  },
+)(BuyLeads)
