@@ -25,14 +25,13 @@ export interface BaseLead {
   ownerId: number
   forSale: boolean
   active: boolean
-  currency: Currency
-  bought_currency: Currency | null
 }
 
 export interface NewBaseLead {
   date: number
   telephone: string
   bought_from: number | null
+  forSale?: boolean
   active: boolean
   description?: string
 }

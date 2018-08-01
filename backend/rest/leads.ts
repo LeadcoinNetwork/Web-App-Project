@@ -45,12 +45,9 @@ export function start({
         housing_type: "Cardboard Box",
         bought_from: null,
         forSale: true,
-        currency: "USD",
-        bought_currency: null,
         ownerId: owner,
         contact_person: chance.name(),
         telephone: chance.phone(),
-        email: chance.email(),
         active: true,
         price: parseInt(
           chance
