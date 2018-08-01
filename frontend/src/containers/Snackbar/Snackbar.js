@@ -1,16 +1,15 @@
-import "react-toastify/dist/ReactToastify.css"
-
 import React from "react"
 import { ToastContainer } from "react-toastify"
 import { Flip } from "react-toastify"
 
 const Snackbar = () => (
   <ToastContainer
-    position="top-right"
-    autoClose={6000}
+    position="bottom-right"
+    autoClose={10000000}
+    hideProgressBar
+    closeButton={<i className="fas fa-times" />}
     newestOnTop
     closeOnClick
-    draggable
     pauseOnHover
     transition={Flip}
   />

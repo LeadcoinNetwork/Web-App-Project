@@ -4,7 +4,7 @@ import Button from "Components/Button"
 import TBRCol from "./TBRCol"
 
 const TBRow = props => (
-  <div className="tb-row">
+  <div className={`tb-row${props.selected.has(props.id) ? " r-selected" : ""}`}>
     {props.isSelectable && (
       <div className="tbr-checkbox">
         <Checkbox
