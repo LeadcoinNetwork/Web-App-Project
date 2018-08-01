@@ -9,28 +9,27 @@ const initialState = {
   file_fields: [],
   fields_map: {},
   errors: [],
-  price: "",
+  lead_price: "",
   agree_to_terms: false,
 }
 
 export default function(state = initialState, action) {
   switch (action.type) {
     case types.CSV_MAPPING_SUBMIT:
-      const {errors, price, agree_to_terms} = state
+      const { errors, price, agree_to_terms } = state
       if (!price) {
-        errors.push('price') 
+        errors.push("price")
       }
-      if (!agree_to_terms)
-        errors.push('agree_to_terms') 
+      if (!agree_to_terms) errors.push("agree_to_terms")
       if (errors.length > 0)
         return {
           ...state,
           errors: action.errors,
         }
-      else 
+      else
         return {
           ...state,
-          errors: []
+          errors: [],
         }
     case types.CSV_MAPPING_ERROR:
       return {
@@ -42,14 +41,14 @@ export default function(state = initialState, action) {
       return {
         ...state,
         errors: [],
-        agree_to_terms: action.agree_to_terms.value
+        agree_to_terms: action.agree_to_terms.value,
       }
 
     case types.CSV_MAPPING_CLEAR_FORM:
       return {
         ...state,
         fields_map: initialState.fields_map,
-        price: initialState.price,
+        lead_price: initialState.lead_price,
         agree_to_terms: initialState.agree_to_terms,
       }
 
@@ -72,7 +71,7 @@ export default function(state = initialState, action) {
         fields_map: {
           ...state.fields_map,
           [action.map_change.name]: action.map_change.value,
-        }
+        },
       }
 
     case types.CSV_MAPPING_GET_FILE_FIELDS:
