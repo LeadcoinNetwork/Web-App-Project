@@ -26,7 +26,6 @@ class MyLeads extends React.Component {
     }
   }
   getListButtons = () => {
-    return []
     return [
       {
         value: this.buildButtonLabel(),
@@ -57,9 +56,7 @@ class MyLeads extends React.Component {
         <LeadsTemplate
           {...this.props}
           pageName="my"
-          getListButtons={this.getListButtons}
-          getLeadButtons={this.getLeadButtons}
-          getButtons={this.getButtons}
+          // getButtons={this.getButtons}
         />
       </>
     )

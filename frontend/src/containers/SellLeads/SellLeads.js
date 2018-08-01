@@ -58,9 +58,7 @@ class SellLeads extends React.Component {
         <LeadsTemplate
           {...this.props}
           pageName="sell"
-          getListButtons={this.getListButtons}
-          getLeadButtons={this.getLeadButtons}
-          getButtons={this.getButtons}
+          // getButtons={this.getButtons}
         />
       </>
     )
