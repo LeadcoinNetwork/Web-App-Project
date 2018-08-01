@@ -56,22 +56,22 @@ class BuyLeads extends React.Component {
   render() {
     return (
       // do not change classnames, it's connected to the manual
-      <div>
-        <h1>Buy Leads</h1>
-        <h3>Purchase hot leads for your business now!</h3>
+      <>
+        <h1>{t("Buy Leads")}</h1>
+        <h3>{t("Purchase hot leads for your business now!")}</h3>
         <select className="industry">
           <option />
-          <option>Real Estate</option>
-          <option disabled>Other1</option>
-          <option disabled>Other2</option>
-          <option disabled>Other3</option>
+          <option>{t("Real Estate")}</option>
+          <option disabled>{t("Crypto")}</option>
+          <option disabled>{t("Insurance")}</option>
+          <option disabled>{t("Loans")}</option>
         </select>
         <select className="category">
           <option />
-          <option>Buy</option>
-          <option disabled>Sell</option>
-          <option disabled />
-          <option disabled />
+          <option>{t("Real Estate-Buy")}</option>
+          <option disabled>{t("Real Estate-Sell")}</option>
+          <option disabled>{t("Real Estate-Looking to rent")}</option>
+          <option disabled>{t("Real Estate-Properties for rent")}</option>
         </select>
         <button
           className="search"
@@ -79,18 +79,16 @@ class BuyLeads extends React.Component {
             this.setState({ showOnlyAfterSearch: true })
           }}
         >
-          Search
+          {t("Search")}
         </button>
         {this.state.showOnlyAfterSearch && (
           <LeadsTemplate
             {...this.props}
             pageName="buy"
-            getListButtons={this.getListButtons}
-            getLeadButtons={this.getLeadButtons}
             getButtons={this.getButtons}
           />
         )}
-      </div>
+      </>
     )
   }
 }

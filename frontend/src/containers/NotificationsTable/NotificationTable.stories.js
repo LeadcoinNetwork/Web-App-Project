@@ -9,12 +9,14 @@ storiesOf("Containers/Notification Table", module)
   .add("Empty", () => {
     var { store, story } = createStoreAndStory({
       path: "/notifications",
+      loggedIn: true,
     })
     return story
   })
   .add("6 Elements", () => {
     var { store, story } = createStoreAndStory({
       path: "/notifications",
+      loggedIn: true,
     })
     store.dispatch(actions.notificationsTable.notificationsTableLoadingStart())
     store.dispatch(
@@ -26,6 +28,7 @@ storiesOf("Containers/Notification Table", module)
   .add("Loading", () => {
     var { store, story } = createStoreAndStory({
       path: "/notifications",
+      loggedIn: true,
     })
     store.dispatch(actions.notificationsTable.notificationsTableLoadingStart())
     return story
@@ -34,6 +37,7 @@ storiesOf("Containers/Notification Table", module)
   .add("Error", () => {
     var { store, story } = createStoreAndStory({
       path: "/notifications",
+      loggedIn: true,
     })
     store.dispatch(actions.notificationsTable.notificationsTableLoadingStart())
     store.dispatch(actions.notificationsTable.notificationsTableLoadingEnd())

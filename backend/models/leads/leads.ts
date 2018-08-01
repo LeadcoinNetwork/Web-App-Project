@@ -18,7 +18,7 @@ export default class Leads extends baseDBModel<
     return await this.insert(lead)
   }
 
-  public async insertLead(new_lead) {
+  public async insertLead(new_lead: Lead) {
     return this.insert(new_lead)
   }
 
@@ -36,6 +36,10 @@ export default class Leads extends baseDBModel<
 
   public async getSoldLeads(user_id: number, options: LeadQueryOptions) {
     return await this.leadsQueries.getSoldLeads(user_id, options)
+  }
+
+  public async getLeadFields(lead_type: string) {
+    return await this.leadsQueries.getLeadFields(lead_type)
   }
 
   public async getMyLeadsForSale(user_id: number, options: LeadQueryOptions) {
@@ -73,7 +77,6 @@ export default class Leads extends baseDBModel<
           active: true,
           forSale: false,
           bought_from: lead.ownerId,
-          bought_currency: lead.currency,
           ownerId: new_owner,
         })
       })

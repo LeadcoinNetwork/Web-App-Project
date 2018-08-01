@@ -146,11 +146,11 @@ class LeadsTemplate extends React.Component {
               renderFilters={this.renderFilters}
               renderResultsHead={this.renderResultsHead}
               records={leads.list}
-              buttons={this.props.getButtons()}
+              buttons={this.props.getButtons && this.props.getButtons()}
               setSelectedRecords={setSelectedLeads}
               isNotAllSelected={isNotAllSelected}
               selected={leads.selected}
-              isSelectable={true}
+              isSelectable={this.props.getButtons}
             />
             {/* )} */}
             {!leads.list.length &&

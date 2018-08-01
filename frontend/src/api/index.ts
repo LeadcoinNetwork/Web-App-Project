@@ -32,5 +32,7 @@ export default class API {
 
     this.leads = new Leads(r)
     this.users = new Users(r)
+    //@ts-ignore
+    if (window) window.apiClient = this
   }
 }

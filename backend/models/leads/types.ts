@@ -18,39 +18,55 @@ export interface LeadQueryOptions {
 export interface BaseLead {
   id?: number
   price: number
+  description: string
   date: number
-  name: string
-  phone: string
-  email: string
+  telephone: string
   bought_from: number | null
   ownerId: number
   forSale: boolean
   active: boolean
-  currency: Currency
-  bought_currency: Currency | null
 }
 
 export interface NewBaseLead {
   date: number
-  name: string
-  phone: string
-  email: string
+  telephone: string
   bought_from: number | null
+  forSale?: boolean
   active: boolean
-  // bought_currency: Currency
+  description?: string
+}
+export interface NewRealEstateLead extends NewBaseLead {
+  lead_type: "realestate"
+  description: string
+  bedrooms_baths: string
+  contact_person: string
+  ownerId?: number
+  type: "Sell" | "Rent"
+  size?: number
+  lead_price?: number
+  state?: string
+  price: number
+  location?: number
+  housing_type?: string
+  specification?: string
+  property_type?: string
 }
 
+// Description,Bedrooms / Baths,Type,Price,Size,State,Location,Housing Type,Telephone,Contact Person
 export interface RealEstateLead extends BaseLead {
-  type: "realestate"
-  city?: string
+  lead_type: "realestate"
+  description: string
+  price: number
+  bedrooms_baths: string
+  contact_person: string
+  type: "Sell" | "Rent"
   size?: number
   state?: string
-  floor?: number
-  budget?: number
-  bedrooms?: number
+  location?: number
+  housing_type?: string
   specification?: string
   property_type?: string
 }
 
 export type Lead = BaseLead | RealEstateLead
-export type NewLead = NewBaseLead
+export type NewLead = NewBaseLead | NewRealEstateLead

@@ -26,7 +26,6 @@ class MyLeads extends React.Component {
     }
   }
   getListButtons = () => {
-    return []
     return [
       {
         value: this.buildButtonLabel(),
@@ -51,14 +50,15 @@ class MyLeads extends React.Component {
   }
   render() {
     return (
-      <LeadsTemplate
-        {...this.props}
-        pageName="my"
-        description="Manage all of your leads from one dashboard."
-        getListButtons={this.getListButtons}
-        getLeadButtons={this.getLeadButtons}
-        getButtons={this.getButtons}
-      />
+      <>
+        <h1>{t("My Leads")}</h1>
+        <h3>{t("Manage all of your leads from one dashboard.")}</h3>
+        <LeadsTemplate
+          {...this.props}
+          pageName="my"
+          // getButtons={this.getButtons}
+        />
+      </>
     )
   }
 }

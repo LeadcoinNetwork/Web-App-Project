@@ -16,6 +16,9 @@ test.skip("getting my sold_leads should work", async () => {
   var { user, token } = await ValidatedUserForTests.create({
     users: appLogic.models.users,
   })
+  var { user: user2, token: token2 } = await ValidatedUserForTests.create({
+    users: appLogic.models.users,
+  })
   const lead = {
     date: 1213,
     name: "testlead 8",
@@ -25,10 +28,10 @@ test.skip("getting my sold_leads should work", async () => {
     active: true,
     bought_from: user.id,
   }
-  const { affectedRows, insertId } = await appLogic.models.leads.insertLead(
-    lead,
-  )
-  expect(affectedRows).toBeTruthy()
+  const { insertId } = await appLogic.models.leads.insertLead(lead)
+  expect(insertId).toBeTruthy()
+  //body = await ApiForToken(token2).leads.buyLeadsBuy([insertId])
+
   const res = await request
     .get("/leads/sold")
     .set({
