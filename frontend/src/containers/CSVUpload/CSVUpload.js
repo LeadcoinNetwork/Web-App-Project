@@ -180,6 +180,8 @@ class CSVUpload extends React.Component {
     if (file) fileLabel = file.name
     return (
       <div className="csvUpload">
+        <h1>{t("Upload CSV File")}</h1>
+        <h3>{t("Add multiple leads for sale by uploading a CSV file.")}</h3>
         <div className="file-pick">
           <Button appStyle secondary label={fileLabel}>
             <input

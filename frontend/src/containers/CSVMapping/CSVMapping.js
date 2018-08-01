@@ -88,6 +88,12 @@ class CSVMapping extends React.Component {
     const terms = this.renderTerms()
     return (
       <div className="fields_mapper">
+        <h1>{t("CSV File Mapping")}</h1>
+        <h3>
+          {t(
+            "Match the fields in your CSV with ours by utilizing our CSV mapping feature.",
+          )}
+        </h3>
         <div className="main_container">
           <div className="personal flexed">
             <div className="help_text">
@@ -140,11 +146,14 @@ const mapStateToProps = state => ({
   ...state.csvMapping,
 })
 
-export default connect(mapStateToProps, {
-  agreeToTerms: csvMapping.csvMappingAgreeToTerms,
-  handleMapChange: csvMapping.csvMappingMapChange,
-  handleChange: csvMapping.csvMappingFormChange,
-  handleErrors: csvMapping.csvMappingError,
-  clear: csvMapping.csvMappingClearForm,
-  submit: csvMapping.csvMappingSubmit,
-})(CSVMapping)
+export default connect(
+  mapStateToProps,
+  {
+    agreeToTerms: csvMapping.csvMappingAgreeToTerms,
+    handleMapChange: csvMapping.csvMappingMapChange,
+    handleChange: csvMapping.csvMappingFormChange,
+    handleErrors: csvMapping.csvMappingError,
+    clear: csvMapping.csvMappingClearForm,
+    submit: csvMapping.csvMappingSubmit,
+  },
+)(CSVMapping)
