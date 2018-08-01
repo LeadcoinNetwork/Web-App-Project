@@ -6,7 +6,8 @@ import { fromNow } from "../../utils/time"
 import t from "../../utils/translate/translate"
 
 const NotificationInner = ({ list }) => (
-  <Link to="/notifications" className="notification-inner">
+  // <Link to="/notifications" className="notification-inner">
+  <div className="notification-inner">
     <div className="small-arrow" />
     {list.map(notification => (
       <div>
@@ -19,7 +20,7 @@ const NotificationInner = ({ list }) => (
         </div>
       </div>
     ))}
-    <div className="view-all">
+    {/* <div className="view-all">
       <FontAwesomeIcon
         className="view-all-icon"
         icon={faEye}
@@ -27,8 +28,12 @@ const NotificationInner = ({ list }) => (
         size={"1x"}
       />
       <span className="view-all-text">{t("View All Notifications")}</span>
-    </div>
-  </Link>
+    </div> */}
+    {list.length === 0 && (
+      <div className="ni-row">{t("You Have No Notifications")}</div>
+    )}
+  </div>
+  // </Link>
 )
 
 export default NotificationInner
