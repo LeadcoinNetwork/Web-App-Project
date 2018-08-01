@@ -15,29 +15,17 @@ const TBRow = props => (
     )}
     {props.buttons && (
       <div className="tbr-buttons">
-        {props.buttons.map(
-          button =>
-            button.value === "buy" ? (
-              <span
-                key={button.value}
-                className="tbrb-buy"
-                onClick={e => {
-                  e.stopPropagation()
-                  button.onClick(props.id)
-                }}
-              />
-            ) : (
-              <Button
-                key={button.value}
-                appStyle={true}
-                label={button.value}
-                onClick={e => {
-                  e.stopPropagation()
-                  button.onClick(props.id)
-                }}
-              />
-            ),
-        )}
+        {props.buttons.map(button => (
+          <Button
+            key={button.value}
+            appStyle={true}
+            label={button.value}
+            onClick={e => {
+              e.stopPropagation()
+              button.onClick(props.id)
+            }}
+          />
+        ))}
       </div>
     )}
     {props.fields.map(f => (

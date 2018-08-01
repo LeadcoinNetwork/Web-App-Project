@@ -32,21 +32,14 @@ import { connect } from "react-redux"
 import { createBrowserHistory } from "history"
 import Steps from "../steps"
 
-import ResultsModeContext from "./ResultsModeContext"
-
 class App extends React.Component {
   render() {
     let loggedIn = !!_.get(this.props, "user.id")
     let disabled = !!_.get(this.props, "user.disabled")
     let path = _.get(this.props, "location.pathname", "")
 
-    let resultsModeContextValue = {
-      cardsMode: this.props.app.cardsMode,
-      toggleMode: this.props.toggleResultsMode,
-    }
-
     return (
-      <ResultsModeContext.Provider value={resultsModeContextValue}>
+      <div>
         <Steps />
         <div className="ldc-app">
           <Header />
@@ -55,7 +48,8 @@ class App extends React.Component {
             className={loggedIn && !disabled ? "a-app-mode" : "a-sign-mode"}
           >
             <Switch>
-              <Route path="/" exact component={Home} />
+              <Route path="/" exact component={null} />
+              <Route path="/home" component={Home} />
               <Route path="/signup" component={Signup} />
               <Route path="/email-confirmation" component={EmailConfirmation} />
               <Route
@@ -84,7 +78,7 @@ class App extends React.Component {
           </main>
           <Snackbar />
         </div>
-      </ResultsModeContext.Provider>
+      </div>
     )
   }
 }
@@ -100,6 +94,9 @@ const mapStateToProps = state => ({
 })
 
 // export default App
-export default connect(mapStateToProps, {
-  toggleResultsMode: app.toggleResultsMode,
-})(App)
+export default connect(
+  mapStateToProps,
+  {
+    toggleResultsMode: () => {},
+  },
+)(App)

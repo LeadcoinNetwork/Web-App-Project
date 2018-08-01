@@ -13,7 +13,7 @@
     margin: 5px;
   }
   .help_text {
-    width: 200px;
+    max-width: 500px;
   }
   .field_submit {
     margin-top: 5px;
@@ -22,27 +22,22 @@
     }
   }
   .line {
-    &.error {
-      .fieldLabel {
-        color: red;
-        font-weight: bold;
-      }
+    &.error .fieldValue input {
+      border: red solid 1px;
     }
     margin: 10px 15px;
     height: 50px;
     line-height: 50px;
-    .fieldLabel {
-      width: 200px;
-      margin-right: 5px;
+    width: 250px;
+
+    input::placeholder {
       text-transform: capitalize;
     }
   }
-  .price {
-      margin-left: 10px;
-      input {
-        margin-left: 10px;
-        width: 150px;
-      }
+  .agree_to_terms {
+    &.error {
+      color: red;
+    }
   }
   .flexed {
     display: flex;

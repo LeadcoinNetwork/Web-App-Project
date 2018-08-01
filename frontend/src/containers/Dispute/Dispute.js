@@ -29,12 +29,21 @@ class Dispute extends React.Component {
           onChange={this.handleChange}
         />
         {dispute.error && this.getErrors(dispute.error)}
-        <Button
-          label={t("Submit")}
-          loading={dispute.loading}
-          appStyle
-          onClick={submit}
-        />
+        <div className="button-container">
+          <Button
+            label={t("Submit")}
+            loading={dispute.loading}
+            appStyle
+            onClick={submit}
+          />
+        </div>
+        <div className="description">
+          <h4>
+            {t(
+              "All disputes over misleading or incorrect lead data will be investigated and ruled on by an arbitrator.",
+            )}
+          </h4>
+        </div>
       </section>
     )
   }
@@ -44,7 +53,10 @@ const mapStateToProps = state => ({
   dispute: state.dispute,
 })
 
-export default connect(mapStateToProps, {
-  handleChange: dispute.disputeHandleChange,
-  submit: dispute.disputeUserSubmit,
-})(Dispute)
+export default connect(
+  mapStateToProps,
+  {
+    handleChange: dispute.disputeHandleChange,
+    submit: dispute.disputeUserSubmit,
+  },
+)(Dispute)

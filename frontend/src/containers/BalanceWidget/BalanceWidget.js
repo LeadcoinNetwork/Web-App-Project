@@ -9,7 +9,7 @@ const BalanceWidget = ({ balance }) => (
     {balance.loading ? null : (
       <div className="ldc-balance-widget">
         {t("Balance")}: {priceString(balance.total)}
-        <Link to="/withdraw">{t("Withdraw")}</Link>
+        {/* <Link to="/withdraw">{t("Withdraw")}</Link> */}
       </div>
     )}
   </>

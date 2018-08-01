@@ -35,7 +35,11 @@ runSagas()
 
 ReactDOM.render(
   <Provider store={store}>
-    <ConnectedRouter history={history} action="action required?">
+    <ConnectedRouter
+      history={history}
+      baseName={process.env.FRONTEND}
+      action="action required?"
+    >
       <App />
     </ConnectedRouter>
   </Provider>,

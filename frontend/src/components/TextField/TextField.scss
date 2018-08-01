@@ -25,7 +25,8 @@
     padding: 0 12px;
 
     &::placeholder {
-      color: #fff;
+      color: $bg-level-3;
+      font-weight: 100;
     }
 
     &:focus {

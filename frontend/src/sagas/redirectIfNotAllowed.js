@@ -48,6 +48,7 @@ function allowedAnon(path) {
 function allowedLogedIn(path) {
   if (everyone(path)) return true
   if (path == "/") return false
+  if (allowedDisabled(path)) return false
   return !allowedAnon(path)
 }
 
@@ -92,7 +93,7 @@ export default function* redirectIfNotAllowed(api) {
         /** the current path */
         let path = yield select(state => state.router.location.pathname)
 
-        log("user is not enabled")
+        log("user is enabled")
         if (!allowedLogedIn(path)) {
           log("not allowed")
           yield put(Actions.route.gotoDefaultHome())

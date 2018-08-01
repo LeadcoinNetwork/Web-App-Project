@@ -16,6 +16,8 @@ const userSettings = (state = initialState, action) => {
         error: "",
         [action.payload.name]: action.payload.value,
       }
+    case types.USER_SETTINGS_CLEAR:
+      return initialState
     case types.USER_SETTINGS_LOADING:
       return {
         ...state,
