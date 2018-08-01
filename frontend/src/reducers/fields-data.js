@@ -99,7 +99,7 @@ const fields = [
     minWidth: "auto",
   },
   {
-    key: "lead_price",
+    key: "price",
     name: "lead price",
     sortable: true,
     editable: false,
