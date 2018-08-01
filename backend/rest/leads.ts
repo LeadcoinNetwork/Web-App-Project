@@ -33,34 +33,38 @@ export function start({
     for (let i = 1; i < count + 1; i++) {
       let owner = Math.floor(count / i)
       let status = await appLogic.models.leads.insertLead({
-        type: "realestate",
+        lead_type: "realestate",
+        type: "Sell",
+        bedrooms_baths: "2BR / 2BA",
         date: new Date().valueOf(),
-        floor: chance.integer({ min: 1, max: 4 }),
-        rooms: chance.integer({ min: 1, max: 4 }),
         size: chance.integer({ min: 1, max: 20 }),
-        budget: chance.integer({ min: 100000, max: 1000000 }),
-        city: chance.city(),
-        specification: chance.sentence({
+        description: chance.sentence({
           words: chance.integer({ min: 1, max: 9 }),
         }),
         state: chance.state(),
-        propertyType: "Cardboard Box",
+        housing_type: "Cardboard Box",
+        bought_from: null,
         forSale: true,
+        currency: "USD",
+        bought_currency: null,
         ownerId: owner,
-        name: chance.name(),
-        phone: chance.phone(),
+        contact_person: chance.name(),
+        telephone: chance.phone(),
         email: chance.email(),
         active: true,
-        price: chance
-          .integer()
-          .toString()
-          .substring(0, 7)
-          .slice(1, -1),
+        price: parseInt(
+          chance
+            .integer()
+            .toString()
+            .substring(0, 7)
+            .slice(1, -1),
+        ),
       })
       if (status.affectedRows) rc.push(status.insertId)
     }
     return rc
   }
+  // Description,Bedrooms / Baths,Type,Price,Size,State,Location,Housing Type,Telephone,Contact Person
 
   async function mock_leads(req, res, next) {
     ;(async () => {
@@ -270,13 +274,6 @@ export function start({
       ;(async () => {
         const { user } = req
         let { search, sortBy, page, limit, sortOrder, mock } = req.query
-        if (mock == 1) {
-          let mock_lead = `{"id":1,"date":1531902112073,"floor":4,"rooms":1,"size":18,"budget":165362,"city":"Pejkupeni","specification":"Ur uvo gi obaro.","state":"OR","propertyType":"Cardboard Box","ownerId":5,"name":"Virginia Estrada","phone":"(927) 820-4759","email":"agisemen@hastu.tl","active":true,"price":"4090856"}`
-          return res.json({
-            list: [JSON.parse(mock_lead)],
-            total: 1,
-          })
-        }
         let _sort = {
           sortBy: sortBy && sortBy != "id" ? sortBy : "date",
           sortOrder: sortOrder || "DESC",

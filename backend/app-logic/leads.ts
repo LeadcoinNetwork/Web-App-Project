@@ -12,8 +12,8 @@ export interface getLeadsOptions {
 const validate_lead = (lead: Lead) => {
   //TODO: validate lead
   const errors = []
-  if (!lead.email || lead.email.length < 2)
-    errors.push("email::email not valid")
+  if (!lead.description || lead.description.length < 2)
+    errors.push("description:: too short")
   return errors
 }
 

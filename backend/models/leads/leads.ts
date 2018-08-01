@@ -18,7 +18,7 @@ export default class Leads extends baseDBModel<
     return await this.insert(lead)
   }
 
-  public async insertLead(new_lead) {
+  public async insertLead(new_lead: Lead) {
     return this.insert(new_lead)
   }
 
