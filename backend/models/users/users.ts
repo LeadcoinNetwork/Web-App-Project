@@ -17,6 +17,7 @@ import {
 } from "./types"
 
 import baseDBModel from "../base-db-model/base-db-model"
+
 class User extends baseDBModel<
   NewUserInterface,
   ExistingUserInterface,

@@ -11,12 +11,18 @@ import API from "../api/index"
 export default function* addLead(api) {
   while (true) {
     const action = yield take(types.ADD_LEAD_SUBMIT_FORM)
+    let { values, agree_to_terms } = yield select(state => state.addLead)
     yield put(actions.addLead.addLeadLoadingStart())
-    let { values } = yield select(state => state.addLead)
-    let res = yield api.leads.sellLeadsAddByForm(values)
+    let res = yield api.leads.sellLeadsAddByForm({
+      ...values,
+      agree_to_terms,
+    })
     yield put(actions.addLead.addLeadLoadingEnd())
     if (res.error) {
-      yield put(actions.addLead.addLeadAddError("error", res.error))
+      const errors = JSON.parse(res.error)
+      for (let error in errors) {
+        yield put(actions.addLead.addLeadAddError(error, errors[error]))
+      }
     } else {
       yield put(actions.addLead.addLeadSubmitSuccess())
       yield put(actions.addLead.addLeadClearForm())

@@ -6,7 +6,8 @@ import t from "../../utils/translate/translate"
 
 const NotificationsTable = ({ loading, list, error }) => (
   <div className="notifications-table">
-    <div className="nt-title">{t("Notifications")}</div>
+    <h1>{t("Notifications")}</h1>
+    <h3>{t("See buy/sell alerts and check your system messages.")}</h3>
     <div className="nt-content">
       {loading && <div>{t("Loading...")}</div>}
       {error && <div>{t(error)}</div>}

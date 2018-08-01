@@ -1,7 +1,7 @@
 import types from "../actions/types"
 
 const initialState = {
-  cardsMode: true,
+  cardsMode: false,
 }
 
 const app = (state = initialState, action) => {

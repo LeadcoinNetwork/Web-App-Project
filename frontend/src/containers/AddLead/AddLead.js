@@ -11,7 +11,7 @@ class AddLead extends React.Component {
     const { errors } = this.props
     const error = errors["agree_to_terms"] ? "error" : ""
     return (
-      <div className={error + " twothirds"}>
+      <div className={error + " agree_to_terms twothirds"}>
         <input
           type="checkbox"
           name="agree_to_terms"
@@ -31,13 +31,12 @@ class AddLead extends React.Component {
     return fields.map(f => {
       const isError = errors[f.key] ? "error" : ""
       return (
-        <div key={f.key} className={isError + " line flexed"}>
-          <div className="fieldLabel">{t(f.name)}</div>
+        <div key={f.key} className={isError + " line"}>
           <div className="fieldValue">
             <TextField
               disabled={loading}
               appStyle={true}
-              placeholder=" "
+              placeholder={t(f.name)}
               value={values[f.key]}
               onChange={e => {
                 this.props.handleChange(f.key, e.target.value)
@@ -54,12 +53,14 @@ class AddLead extends React.Component {
     if (!db_fields.private.length) {
       return <div>{t("Loading...")}</div>
     }
-    const terms = this.renderTerms()
     return (
       <div className="add_lead">
         <h1>{t("add lead")}</h1>
+        <h3>
+          {t("Add a new lead for sale by filling out a simple web form.")}
+        </h3>
         <div className="main_container">
-          <div className="personal flexed">
+          <div className="personal">
             <div className="help_text">
               <div className="header">
                 {t("Personal Identification Information")}
@@ -70,14 +71,14 @@ class AddLead extends React.Component {
             </div>
             <div className="fields">{this.renderFields(db_fields.private)}</div>
           </div>
-          <div className="public flexed">
+          <div className="public">
             <div className="help_text">
               <div className="header">{t("Public Fields")}</div>
             </div>
             <div className="fields">{this.renderFields(db_fields.public)}</div>
           </div>
+          {this.renderTerms()}
           <div className="controls field_submit flexed">
-            {terms}
             <div>
               <Button
                 loading={loading}

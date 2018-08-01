@@ -46,3 +46,8 @@ body {
     }
   }
 }
+
+// inline manual hide the message: ☑ Do not show this to me again
+.inmplayer-autolaunch-dismiss {
+  display: none;
+}
