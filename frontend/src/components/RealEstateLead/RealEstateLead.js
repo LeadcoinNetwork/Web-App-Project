@@ -4,20 +4,18 @@ import { fromNow } from "Utils/time"
 
 const RealEstateLead = ({
   id,
-  specification,
-  price,
-  status,
   date,
-  state,
-  city,
-  propertyType,
-  bedrooms,
-  floor,
+  description,
+  bedrooms_baths,
+  type,
+  price,
   size,
-  budget,
+  state,
+  location,
+  housing_type,
   name,
-  email,
   phone,
+  lead_price,
   buttons,
   checked,
   toggleCheck,
@@ -27,22 +25,21 @@ const RealEstateLead = ({
       className={`ldc-real-estate-lead${checked ? " rel-checked" : ""}`}
       onClick={toggleCheck}
     >
-      <div className="rel-specification">{specification}</div>
-      <div className="rel-price">LDC {price}</div>
+      <div className="rel-specification">{description}</div>
+      <div className="rel-price">${lead_price}</div>
       <div className="rel-details-wrapper">
         <div className="rel-details">
-          <div className="reld-status">{status}</div>
+          <div className="reld-type">{type}</div>
           <div className="reld-date">{fromNow(Date(date))}</div>
           <div className="reld-location">
-            {state}, {city}
+            {state}, {location}
           </div>
         </div>
         <div className="rel-features">
-          <span>{propertyType}</span>
-          <span>{bedrooms} rooms</span>
-          <span>{floor}th floor</span>
+          <span>{housing_type}</span>
+          <span>{bedrooms_baths}</span>
           <span>{size} SqFt</span>
-          <span>${budget} budget</span>
+          <span>Price ${price}</span>
         </div>
       </div>
       <div className="rel-buttons">
