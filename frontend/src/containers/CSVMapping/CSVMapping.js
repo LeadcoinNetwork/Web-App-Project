@@ -37,7 +37,7 @@ class CSVMapping extends React.Component {
         <span>{t("Lead price")}</span>
         <TextField
           appStyle={true}
-          value={this.props.price}
+          value={this.props.lead_price}
           onChange={e => {
             this.props.handleChange("price", e.target.value)
           }}

@@ -23,17 +23,26 @@
     height: 45px;
     border-radius: 0;
     padding: 0 30px;
-    background-color: $bg-level-3;
+    // background-color: $bg-level-3;
+    background-color: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+
+    &:hover {
+      color: $main-color;
+      background-color: #fff;
+    }
   }
 
   &.b-secondary {
-    border: solid 1px $bg-level-3;
+    // border: solid 1px $bg-level-3;
+    border: solid 1px transparent;
     color: $bg-level-3;
     background-color: transparent;
 
     &:hover {
       color: #fff;
-      border-color: #fff;
+      // border-color: #fff;
     }
   }
 
@@ -55,7 +64,7 @@
 
   &:disabled {
     cursor: default;
-    
+
     &:not(.b-loading) {
       opacity: 0.5;
     }

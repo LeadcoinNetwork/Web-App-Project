@@ -21,6 +21,7 @@
     border-radius: 50%;
     background-color: $ldc-color;
     text-align: center;
+    font-style: normal;
 
     &.plus {
       width: 16px;
@@ -35,6 +36,7 @@
     left: -250px;
     background: #433190;
     line-height: 30px;
+    color: #fff;
 
     .small-arrow {
       position: absolute;

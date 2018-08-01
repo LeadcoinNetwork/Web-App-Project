@@ -11,6 +11,7 @@ const TBRCol = ({ field, value, colCount, staticColsWidth }) => (
     }}
   >
     {field.key === "timestamp" ? localeString(value) : value}
+    {console.log(field, value)}
   </div>
 )
 

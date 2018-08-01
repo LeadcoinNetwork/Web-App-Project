@@ -33,7 +33,7 @@ const Checkout = ({ fields, checkout, buyLeads, push, checkoutBuyStart }) => {
         {t("Total")}:{" "}
         {priceString(
           selectedLeads.reduce(
-            (price, lead) => price + Math.abs(lead.price),
+            (price, lead) => price + Math.abs(Number(lead.lead_price) || 0),
             0,
           ),
         )}

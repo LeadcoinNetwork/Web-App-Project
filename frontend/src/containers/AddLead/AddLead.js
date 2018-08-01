@@ -49,7 +49,7 @@ class AddLead extends React.Component {
   }
 
   render() {
-    const { db_fields, loading } = this.props
+    const { db_fields, loading, errors } = this.props
     if (!db_fields.private.length) {
       return <div>{t("Loading...")}</div>
     }
@@ -81,16 +81,6 @@ class AddLead extends React.Component {
           <div className="controls field_submit flexed">
             <div>
               <Button
-                loading={loading}
-                appStyle={true}
-                onClick={() => {
-                  this.props.submit(this.props.fields_map)
-                }}
-                label={t("Submit")}
-              />
-            </div>
-            <div>
-              <Button
                 appStyle={true}
                 secondary
                 onClick={() => {
@@ -99,7 +89,24 @@ class AddLead extends React.Component {
                 label={t("Clear")}
               />
             </div>
+            <div>
+              <Button
+                loading={loading}
+                appStyle={true}
+                onClick={() => {
+                  this.props.submit(this.props.fields_map)
+                }}
+                label={t("Submit")}
+              />
+            </div>
           </div>
+          {errors && (
+            <div className="errors">
+              {Object.keys(errors).map((error, index) => (
+                <div key={index}>{errors[error]}</div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     )
