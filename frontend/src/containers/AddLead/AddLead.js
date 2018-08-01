@@ -81,22 +81,22 @@ class AddLead extends React.Component {
           <div className="controls field_submit flexed">
             <div>
               <Button
-                loading={loading}
-                appStyle={true}
-                onClick={() => {
-                  this.props.submit(this.props.fields_map)
-                }}
-                label={t("Submit")}
-              />
-            </div>
-            <div>
-              <Button
                 appStyle={true}
                 secondary
                 onClick={() => {
                   this.props.clear()
                 }}
                 label={t("Clear")}
+              />
+            </div>
+            <div>
+              <Button
+                loading={loading}
+                appStyle={true}
+                onClick={() => {
+                  this.props.submit(this.props.fields_map)
+                }}
+                label={t("Submit")}
               />
             </div>
           </div>
