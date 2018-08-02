@@ -13,7 +13,7 @@ class BuyLeads extends React.Component {
     this.state = {}
   }
   buyLeads = () => {
-    this.props.push("/checkout")
+    this.props.push("/shopping-cart")
   }
   buyLead = id => {
     let selected = new Set(this.props.leads.selected)

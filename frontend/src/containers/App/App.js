@@ -69,7 +69,7 @@ class App extends React.Component {
               <Route path="/csv-upload" component={CSVUpload} />
               <Route path="/csv-mapping" component={CSVMapping} />
               <Route path="/add-lead" component={AddLead} />
-              <Route path="/checkout" component={Checkout} />
+              <Route path="/shopping-cart" component={Checkout} />
               <Route path="/dispute" component={Dispute} />
               <Route path="/notifications" component={NotificationTable} />
               <Route path="/terms" component={Terms} />
