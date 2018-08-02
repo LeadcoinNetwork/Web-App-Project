@@ -43,7 +43,7 @@ export class Steps extends React.Component {
   }
 
   render() {
-    console.log("@render steps:", this.state)
+    // console.log("@render steps:", this.state)
     const { steps, run } = this.state
     /**
      * Docs: https://github.com/gilbarbara/react-joyride/tree/v1.11.4

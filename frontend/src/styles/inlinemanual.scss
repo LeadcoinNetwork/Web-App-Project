@@ -25,3 +25,40 @@
 .inmplayer-popover-button-next {
   float: right;
 }
+
+.inline-uploading {
+  .inmplayer-button {
+    animation: show-button 3s linear;
+  }
+
+  .loading {
+    height: 10px;
+    background-color: green;
+    opacity: 0;
+    animation: move-loader 3s linear;
+  }
+}
+
+@keyframes move-loader {
+  0% {
+    width: 0px;
+    opacity: 1;
+  }
+  99% {
+    width: 100%;
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes show-button {
+  0%,
+  99% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
