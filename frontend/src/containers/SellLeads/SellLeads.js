@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from "react-router-dom"
 import { connect } from "react-redux"
 import { leads } from "Actions"
 import LeadsTemplate from "Containers/LeadsTemplate"
@@ -55,6 +56,14 @@ class SellLeads extends React.Component {
         <h3>
           {t("Earn money by selling your unused leads to other professionals.")}
         </h3>
+        <div className="upload-links">
+          <Link to="/csv-upload" className="csv-upload">
+            {t("Upload CSV File")}
+          </Link>
+          <Link to="/add-lead" className="add-lead">
+            {t("Create New Lead")}
+          </Link>
+        </div>
         <LeadsTemplate
           {...this.props}
           pageName="sell"
