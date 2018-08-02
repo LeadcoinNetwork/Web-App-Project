@@ -24,20 +24,18 @@ storiesOf("Containers/CSVMapping", module)
         "date",
         "name",
         "phone",
-        "email",
         "state",
-        "city",
-        "property type",
+        "location",
+        "housing_type",
         "size",
-        "budget",
-        "bedrooms",
-        "floor",
-        "specification",
+        "price",
+        "bedrooms_baths",
+        "description",
       ]),
     )
     let mock_fields = {
       private: ["name", "phone"],
-      public: ["floor", "size"],
+      public: ["housing_type", "size"],
     }
     store.dispatch(actions.csvMapping.csvMappingGetDbFields(mock_fields))
     return story
@@ -54,20 +52,18 @@ storiesOf("Containers/CSVMapping", module)
         "date",
         "name",
         "phone",
-        "email",
         "state",
-        "city",
-        "property type",
+        "location",
+        "housing_type",
         "size",
-        "budget",
-        "bedrooms",
-        "floor",
-        "specification",
+        "price",
+        "bedrooms_baths",
+        "description",
       ]),
     )
     let mock_fields = {
       private: ["name", "phone"],
-      public: ["floor", "size"],
+      public: ["housing_type", "size"],
     }
     store.dispatch(actions.csvMapping.csvMappingGetDbFields(mock_fields))
     store.dispatch(actions.csvMapping.csvMappingAgreeToTerms(false))
@@ -87,20 +83,18 @@ storiesOf("Containers/CSVMapping", module)
         "date",
         "name",
         "phone",
-        "email",
         "state",
-        "city",
-        "property type",
+        "location",
+        "housing_type",
         "size",
-        "budget",
-        "bedrooms",
-        "floor",
-        "specification",
+        "price",
+        "bedrooms_baths",
+        "description",
       ]),
     )
     let mock_fields = {
       private: ["name", "phone"],
-      public: ["floor", "size"],
+      public: ["housing_type", "size"],
     }
     store.dispatch(actions.csvMapping.csvMappingGetDbFields(mock_fields))
     store.dispatch(actions.csvMapping.csvMappingAgreeToTerms(false))
@@ -120,20 +114,18 @@ storiesOf("Containers/CSVMapping", module)
         "date",
         "name",
         "phone",
-        "email",
         "state",
-        "city",
-        "property type",
+        "location",
+        "housing_type",
         "size",
-        "budget",
-        "bedrooms",
-        "floor",
-        "specification",
+        "price",
+        "bedrooms_baths",
+        "description",
       ]),
     )
     let mock_fields = {
       private: ["name", "phone"],
-      public: ["floor", "size"],
+      public: ["housing_type", "size"],
     }
     store.dispatch(actions.csvMapping.csvMappingGetDbFields(mock_fields))
     store.dispatch(actions.csvMapping.csvMappingAgreeToTerms(false))

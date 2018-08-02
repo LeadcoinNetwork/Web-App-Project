@@ -3,7 +3,7 @@ import types from "../actions/types"
 const initialState = {
   list: [],
   metaData: {
-    sortBy: ["price", "propertyType", "city", "budget"],
+    sortBy: ["lead_price", "housing_type", "city", "price"],
     categories: [
       "realEstate",
       "hotels",
@@ -32,7 +32,7 @@ const initialState = {
       "fulton mall",
       "vinegar hill",
     ],
-    propertyTypes: ["rooftop", "gallery", "apartment", "office", "warehouse"],
+    housing_types: ["rooftop", "gallery", "apartment", "office", "warehouse"],
   },
   sortBy: null,
   page: 0,
@@ -41,10 +41,10 @@ const initialState = {
   category: "realEstate",
   country: "US",
   state: "NY",
-  city: "new york city",
+  location: "new york city",
   borough: "brooklyn",
   neighborhood: ["crown heights"],
-  propertyType: ["apartment"],
+  housing_type: ["apartment"],
   price_min: null,
   price_max: null,
   budget_min: null,

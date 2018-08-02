@@ -101,7 +101,7 @@ class LeadsTemplate extends React.Component {
     )
   }
   render() {
-    let { pageName, description, leads, fields, setSelectedLeads } = this.props,
+    let { pageName, leads, fields, setSelectedLeads } = this.props,
       isNotAllSelected = this.isNotAllSelected()
 
     return (
@@ -143,7 +143,7 @@ class LeadsTemplate extends React.Component {
               }))}
               loading={leads.loading}
               onScrollBottom={this.onScrollBottom}
-              renderFilters={this.renderFilters}
+              // renderFilters={this.renderFilters}
               renderResultsHead={this.renderResultsHead}
               records={leads.list}
               buttons={this.props.getButtons && this.props.getButtons()}

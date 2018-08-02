@@ -3,6 +3,8 @@ import { connect } from "react-redux"
 import { leads } from "Actions"
 import { push } from "react-router-redux"
 import LeadsTemplate from "Containers/LeadsTemplate"
+import Select from "Components/Select"
+import Button from "Components/Button"
 import t from "../../utils/translate/translate"
 
 class BuyLeads extends React.Component {
@@ -11,7 +13,7 @@ class BuyLeads extends React.Component {
     this.state = {}
   }
   buyLeads = () => {
-    this.props.push("/checkout")
+    this.props.push("/shopping-cart")
   }
   buyLead = id => {
     let selected = new Set(this.props.leads.selected)
@@ -56,31 +58,32 @@ class BuyLeads extends React.Component {
   render() {
     return (
       // do not change classnames, it's connected to the manual
-      <>
+      <section className="buy_leads">
         <h1>{t("Buy Leads")}</h1>
         <h3>{t("Purchase hot leads for your business now!")}</h3>
-        <select className="industry">
+        <Select className="industry">
           <option />
           <option>{t("Real Estate")}</option>
           <option disabled>{t("Crypto")}</option>
           <option disabled>{t("Insurance")}</option>
           <option disabled>{t("Loans")}</option>
-        </select>
-        <select className="category">
+        </Select>
+        <Select className="category">
           <option />
           <option>{t("Real Estate-Buy")}</option>
           <option disabled>{t("Real Estate-Sell")}</option>
           <option disabled>{t("Real Estate-Looking to rent")}</option>
           <option disabled>{t("Real Estate-Properties for rent")}</option>
-        </select>
-        <button
+        </Select>
+        <Button
           className="search"
           onClick={() => {
             this.setState({ showOnlyAfterSearch: true })
           }}
+          appStyle={true}
         >
           {t("Search")}
-        </button>
+        </Button>
         {this.state.showOnlyAfterSearch && (
           <LeadsTemplate
             {...this.props}
@@ -88,7 +91,7 @@ class BuyLeads extends React.Component {
             getButtons={this.getButtons}
           />
         )}
-      </>
+      </section>
     )
   }
 }
