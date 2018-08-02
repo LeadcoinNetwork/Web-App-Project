@@ -17,7 +17,11 @@ export default function* fetchUserToState(api) {
       yield put(actions.user.loggedIn(ans.user)) // Update the state
       window.inlineManualTracking = {
         // uid: parseInt(Math.random() * 10000),
-        uid: process.env.FRONTEND + "-" + ans.user.id,
+        uid:
+          process.env.FRONTEND +
+          "-" +
+          ans.user.id +
+          (localStorage.random_id_for_inlinemanual ? "-" + Math.random() : ""),
         email: ans.user.email,
         name: ans.user.fname + " " + ans.user.lname,
         created: new Date().valueOf() / 1000,
