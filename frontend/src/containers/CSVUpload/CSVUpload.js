@@ -5,6 +5,7 @@ import TextField from "Components/TextField"
 import { connect } from "react-redux"
 import { csvUpload, csvMapping } from "Actions"
 import t from "../../utils/translate/translate"
+import Dropzone from "react-dropzone"
 
 class CSVUpload extends React.Component {
   generalError() {
@@ -183,8 +184,23 @@ class CSVUpload extends React.Component {
         <h1>{t("Upload CSV File")}</h1>
         <h3>{t("Add multiple leads for sale by uploading a CSV file.")}</h3>
         <div className="file-pick">
-          <Button appStyle secondary label={fileLabel}>
-            <input
+          {/* <Button appStyle secondary label={fileLabel}> */}
+          {!this.maybeCsvMapper() && (
+            <Dropzone
+              accept=".csv"
+              onDrop={acceptedFiles => {
+                this.props.pickFile(acceptedFiles[0])
+                this.tryReadingCsv(acceptedFiles[0])
+              }}
+            >
+              <center>
+                <h3>
+                  <br />Drop a CSV file into this box
+                </h3>
+              </center>
+            </Dropzone>
+          )}
+          {/* <input
               className="displaynone"
               type="file"
               accept=".csv"
@@ -195,8 +211,8 @@ class CSVUpload extends React.Component {
                 }
                 this.props.pickFile(e.target.files[0])
               }}
-            />
-          </Button>
+            /> */}
+          {/* </Button> */}
         </div>
         {this.maybeCsvMapper()}
         {this.generalError()}

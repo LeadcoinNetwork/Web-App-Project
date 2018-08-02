@@ -90,6 +90,7 @@
     "pretty-quick": "^1.6.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
+    "react-dropzone": "^4.2.13",
     "react-hot-loader": "^4.3.3",
     "react-joyride": "^1.11.4",
     "react-phone-input-2": "^2.4.0",
