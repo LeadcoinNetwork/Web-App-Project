@@ -8,8 +8,8 @@ htmlWebpackPlugin.options.scripts = htmlWebpackPlugin.options.scripts || []
 <html class="<%= htmlWebpackPlugin.options.htmlClass%>" lang="<%= htmlWebpackPlugin.options.lang %>"<% if (htmlWebpackPlugin.files.manifest) { %> manifest="<%= htmlWebpackPlugin.files.manifest %>"<% } %>>
   <head>
     <meta charset="utf-8">
-    <meta content="ie=edge" http-equiv="x-ua-compatible"><%
     <link rel="stylesheet" href="https://use.typekit.net/dqs6jxs.css">
+    <meta content="ie=edge" http-equiv="x-ua-compatible"><%
     if (htmlWebpackPlugin.options.baseHref) { %>
     <base href="<%= htmlWebpackPlugin.options.baseHref %>"><%
     } %><%
