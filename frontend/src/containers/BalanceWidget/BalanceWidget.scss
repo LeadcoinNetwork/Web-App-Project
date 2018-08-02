@@ -1,13 +1,14 @@
+@import "../../styles/variables";
+
 .ldc-balance-widget {
   position: relative;
+  left: -12px;
   display: inline-block;
+  height: 32px;
+  line-height: 32px;
+  padding: 0 20px;
   text-align: center;
-  font-weight: 300;
-  margin-top: -6px;
-
-  a {
-    display: block;
-    padding-top: 4px;
-    font-size: 14px;
-  }
+  font-weight: 400;
+  background-color: $bg-level-2;
+  border-radius: 15px;
 }
