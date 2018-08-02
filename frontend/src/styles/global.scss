@@ -1,5 +1,6 @@
 @import "~Styles/helpers";
 @import "~Styles/ldc-rtl";
+@import "./inlinemanual.scss";
 
 * {
   box-sizing: border-box;
@@ -45,9 +46,4 @@ body {
       list-style-type: none;
     }
   }
-}
-
-// inline manual hide the message: ☑ Do not show this to me again
-.inmplayer-autolaunch-dismiss {
-  display: none;
 }

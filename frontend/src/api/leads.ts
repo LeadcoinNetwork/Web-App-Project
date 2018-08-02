@@ -37,7 +37,7 @@ const parseConfig = {
 export default class LeadsApi {
   constructor(private request: request) {}
 
-  async addMockLeads() {
+  addMockLeads = async () => {
     let mock_records = papaParse.parse(mockCsv, parseConfig).data
     mock_records.forEach(line => {
       if (!line["Date Published"]) return
