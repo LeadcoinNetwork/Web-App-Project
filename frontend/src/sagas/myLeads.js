@@ -22,7 +22,6 @@ export default function* myLeads(api) {
     })
 
     if (res.error) {
-      console.log("my saga")
       yield put(actions.leads.fetchError("MY_LEADS"))
     } else {
       yield put(actions.leads.fetchSuccess("MY_LEADS", res))

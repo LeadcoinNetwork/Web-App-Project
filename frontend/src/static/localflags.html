@@ -12,10 +12,18 @@
 	<body bgColor=black color="white" fontFamily="courier new">
 		<h2># Choose Flags</h2>
 		<br/>
-		<a href="javascript:localStorage.skip_inline_manual=true">Skip Inline Manual</a><br/>
-		<a href="javascript:delete localStorage.skip_inline_manual">Disable Skip Inline Manual</a><br/>		
+		<a href="javascript:localStorage.skip_inline_manual=true">set flag - skip inline Manual</a>,
+		<a href="javascript:delete localStorage.skip_inline_manual">remove flag</a><br/>		
+		<br/>
+		<a href="javascript:delete localStorage.random_id_for_inlinemanual">set flag - always launch from begining - use random id</a>,
+		<a href="javascript:delete localStorage.random_id_for_inlinemanual">remove flag</a><br/>		
 		<br/>
 		<br/>
-		<h6> * Tip: You can drag it and use it as a bookmark</h6>
+		<br/>
+		<h4> * Tip: You can drag it and use it as a bookmark</h4>
+		<br/>
+		<br/>
+		<h2># Drag those actions into your bookmark:</h2>
+		<a href="javascript:apiClient.leads.addMockLeads()">Add 10 mock leads</a><br/>		
 		</body>
 	</html>

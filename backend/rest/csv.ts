@@ -1,110 +1,80 @@
 // external modules
-const express = require("express")
-const passport = require("passport")
+import * as passport from "passport"
+import * as Express from "express"
+import AppLogic from "../app-logic/index"
+import NotFound from "../utils/not-found"
+import { appModels } from "../app-logic/types"
+import * as Chance from "chance"
+const chance = Chance()
+import { parseMappedFile, fieldsMap } from "../models/csv_reader/index"
+import * as auth from "../models/user-auth/user-auth"
 
-// internal modules
-import * as leads_upload from "../models/leads-upload/leads_upload"
-import * as leads from "../models/leads/leads"
-import * as csv_reader from "../models/csv_reader/index"
-
-const router = express.Router()
-export default router
+import { Lead } from "../models/leads/types"
 
 const authOptions = {
   session: false,
 }
-var multer = require("multer")
-var _upload = multer({ dest: "uploads/" })
 
-const basic_fields = ["date", "name", "phone", "email"]
-
-const mock_field_list = [
-  "state",
-  "city",
-  "property type",
-  "size",
-  "budget",
-  "bedrooms",
-  "floor",
-  "specification",
-]
-
-router.post(
-  "/csv/upload",
-  [passport.authenticate("jwt", authOptions), _upload.any("file")],
-  upload,
-)
-async function upload(req, res, next) {
-  try {
-    const { user, files } = req
-    csv_reader(user.id, "../../../uploads/" + files[0].filename)
-      .then(response => {
-        res.json({
-          data: response,
-          db_field_list: basic_fields.concat(mock_field_list),
-        })
-      })
-      .catch(e => {
-        next(e)
-      })
-  } catch (e) {
-    next(e)
-  }
+const done = a => {
+  console.log("Unhandled Catch")
 }
 
-router.post(
-  "/csv/mapper/:batchId",
-  passport.authenticate("jwt", authOptions),
-  mapper,
-)
-async function mapper(req, res, next) {
-  try {
-    const { user } = req
-    const { field_map, batch_id, lead_price } = req.body
+export function start({
+  appLogic,
+  expressApp,
+}: {
+  appLogic: AppLogic
+  expressApp: Express.Express
+}) {
+  var multer = require("multer")
+  var _upload = multer({ dest: "uploads/" })
 
-    let lead_uploads = await leads_upload.find({
-      batch_id: req.params.batchId,
-    })
-    let lead_promises = lead_uploads.map(lead => {
-      let insert_params = {
-        user_id: req.user.id,
-        created: new Date().valueOf(),
-        ext_data: {},
-      }
-      let fields = Object.keys(field_map)
-      fields.forEach(our_field => {
-        try {
-          const data = JSON.parse(lead.json)
-          const index = field_map[our_field]
-          if (basic_fields.indexOf(our_field) > -1) {
-            insert_params[our_field] = data[index]
-          } else {
-            insert_params["ext_data"][our_field] = data[index]
-          }
-        } catch (e) {
-          console.log("ERROR")
+  const basic_fields = ["date", "name", "phone", "email"]
+
+  const mock_field_list = [
+    "state",
+    "city",
+    "property type",
+    "size",
+    "budget",
+    "bedrooms",
+    "floor",
+    "specification",
+  ]
+
+  expressApp.post(
+    "/csv/upload",
+    [passport.authenticate("jwt", authOptions), _upload.any("file")],
+    upload,
+  )
+
+  async function upload(req, res, next) {
+    try {
+      const { user, files } = req
+      const {
+        fields_map,
+        lead_price,
+        agreeToTerms,
+      }: {
+        fields_map: fieldsMap
+        lead_price: number
+        agreeToTerms: boolean
+      } = req.body
+      parseMappedFile(
+        user.id,
+        "../../../uploads/" + files[0].filename,
+        fields_map,
+      )
+        .then(csvLines => {
+          csvLines.map(async csvLine => {
+            appLogic.leads.AddLead(csvLine)
+          })
+        })
+        .catch(e => {
           next(e)
-        }
-      })
-      if (insert_params["ext_data"]) {
-        insert_params["ext_data"] = JSON.stringify(insert_params["ext_data"])
-      }
-      // return leads.
-      // (insert_params).then(() => {
-      //   lead.processed = true
-      //   leads_upload.update(lead)
-      // })
-    })
-    Promise.all(lead_promises)
-      .then(results => {
-        res.json({ done: results.length })
-      })
-      .catch(e => {
-        console.error(e)
-        next(e)
-      })
-    return
-  } catch (e) {
-    next(e)
+        })
+    } catch (e) {
+      next(e)
+    }
   }
 }

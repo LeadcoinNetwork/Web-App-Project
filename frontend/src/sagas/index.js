@@ -17,6 +17,7 @@ import checkout from "./checkout"
 import myLeads from "./myLeads"
 import moveToSell from "./moveToSell"
 import language from "./language"
+import inlinemanual from "./inlinemanual"
 
 import { spawn, fork } from "redux-saga/effects"
 import * as superagent from "superagent"
@@ -56,6 +57,7 @@ export default function* rootSaga() {
     checkout,
     myLeads,
     moveToSell,
+    inlinemanual,
   ]
   for (var i in sagas) {
     yield fork(sagas[i], api)
