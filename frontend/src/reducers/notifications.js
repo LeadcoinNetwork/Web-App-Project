@@ -26,7 +26,10 @@ const notifications = (state = initialState, action) => {
     case types.NOTIFICATIONS_UPDATE:
       return {
         ...state,
-        list: action.payload.list,
+        list: {
+          ...state.list,
+          ...action.payload.list,
+        },
         unreadCount: action.payload.unreadCount,
       }
     case types.USER_MENU_OPEN:
