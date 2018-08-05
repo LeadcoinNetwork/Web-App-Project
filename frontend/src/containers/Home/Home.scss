@@ -1,0 +1,44 @@
+@import "~Styles/variables";
+
+.home {
+  .container {
+    width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .option {
+      display: inline-block;
+      width: 250px;
+      height: 250px;
+      line-height: 250px;
+      text-align: center;
+      font-size: 40px;
+      color: $main-color;
+      background-color: $bg-level-3;
+      border-radius: 6px;
+    }
+
+    .buy {
+      margin-right: 10px;
+    }
+
+    .sell {
+      margin-left: 10px;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .container {
+      width: auto;
+
+      .option {
+        display: block;
+        margin: auto;
+      }
+
+      .sell {
+        margin-top: 20px;
+      }
+    }
+  }
+}
