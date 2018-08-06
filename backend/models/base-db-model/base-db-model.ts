@@ -44,6 +44,15 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
   }
 
   notificationsQueries = {
+    markAsReadByIds: async ids => {
+      let sql = `UPDATE leadcoin.notifications
+      SET doc=JSON_set(doc,"$.unread","false")
+      WHERE id in (${ids.join(",")})
+       ;`
+      let rows = await this.sql.query(sql)
+      return rows
+    },
+
     markAsRead: async user_id => {
       let sql = `UPDATE leadcoin.notifications
       SET doc=JSON_set(doc,"$.unread","false")
@@ -61,6 +70,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       AND doc->>"$.unread"= "true"
        ;`
       let rows = await this.sql.query(sql)
+      console.log(sql)
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
       return rows
     },

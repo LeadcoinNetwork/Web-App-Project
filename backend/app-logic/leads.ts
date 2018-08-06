@@ -16,9 +16,11 @@ const validate_lead = (lead: Lead) => {
   //TODO: validate lead
   const errors = []
   if (!lead.description || lead.description.length < 2)
-    errors.push("description:: too short")
+    errors.push("description::too short")
   return errors
 }
+
+const summy = prop => (sum, obj) => (sum += obj[prop])
 
 export default class Leads {
   constructor(private models: IModels) {}
@@ -31,11 +33,19 @@ export default class Leads {
   public async buyLeads(leads: number[], new_owner: number) {
     const result = await this.models.leads.buy(leads, new_owner)
     const groupedByOwner = _.groupBy(result, "bought_from")
+    let overall_cost = 0
     for (let key in groupedByOwner) {
-      const group = groupedByOwner[key]
+      const user_id = parseInt(key)
+      const group: Lead[] = groupedByOwner[key]
+      const transaction_amount = group.reduce(summy("price"), 0)
+      overall_cost += transaction_amount
+      this.models.users.increaseBalance(user_id, overall_cost)
+      this.models.users.decreaseBalance(new_owner, overall_cost)
       this.models.notifications.createNotification({
-        msg: `${group.length} of your leads were bought`,
-        userId: parseInt(key),
+        msg: `${
+          group.length
+        } of your leads were bought for a total of ${overall_cost}$`,
+        userId: user_id,
         unread: true,
       })
     }

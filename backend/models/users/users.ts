@@ -43,6 +43,17 @@ class User extends baseDBModel<
     }
   }
 
+  public async decreaseBalance(user_id, amount) {
+    return this.increaseBalance(user_id, -amount)
+  }
+
+  public async increaseBalance(user_id, amount) {
+    const user = await this.mustGetUserById(user_id)
+    user.balance = user.balance | 0
+    user.balance += amount
+    return this.update(user_id, user)
+  }
+
   public async generateJWT(user_id, secret) {
     // REFACTOR: move secret to the constructr, as dependency
     return auth.generateJWT(user_id, secret)

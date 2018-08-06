@@ -5,6 +5,13 @@ export default class Notifications {
   constructor(private models: IModels) {}
 
   public async getNotifications(user_id: number) {
-    return await this.models.notifications.getNotificationsByUserId(user_id)
+    let notifications = await this.models.notifications.getNotificationsByUserId(
+      user_id,
+    )
+    if (notifications.length > 0) {
+      let ids = notifications.map(n => n.id)
+      await this.models.notifications.MarkNotificationAsRead(ids)
+    }
+    return notifications
   }
 }
