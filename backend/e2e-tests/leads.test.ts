@@ -83,7 +83,7 @@ test("user adds lead and see it as his lead for sale", async () => {
   expect(body.list[0].ownerId).toBe(user.id)
 })
 
-test.only(`
+test(`
   user adds lead, 
   user2 buys it, 
   user1 balance is increased 
