@@ -25,6 +25,7 @@ export interface BaseLead {
   ownerId: number
   forSale: boolean
   active: boolean
+  meta?: any
 }
 
 export interface NewBaseLead {
@@ -34,6 +35,7 @@ export interface NewBaseLead {
   forSale?: boolean
   active: boolean
   description?: string
+  meta?: any
 }
 export interface NewRealEstateLead extends NewBaseLead {
   lead_type: "realestate"

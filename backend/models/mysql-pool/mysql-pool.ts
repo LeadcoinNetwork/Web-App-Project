@@ -7,6 +7,7 @@ import LogModelAction from "../log-model-actions/log-model-actions"
 interface queryResult extends Array<any> {
   insertId?: number
   affectedRows?: number
+  changedRows?: number
 }
 
 export default class SQL {

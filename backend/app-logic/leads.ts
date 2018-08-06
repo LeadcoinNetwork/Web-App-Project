@@ -1,6 +1,9 @@
 import { Lead, LeadQueryOptions } from "../models/leads/types"
 
 import { IModels } from "./index"
+import { Notification } from "../models/notifications/types"
+
+import * as _ from "lodash"
 
 export interface getLeadsOptions {
   sort_by?: [string, "ASC" | "DESC"]
@@ -26,7 +29,18 @@ export default class Leads {
   }
 
   public async buyLeads(leads: number[], new_owner: number) {
-    return await this.models.leads.buy(leads, new_owner)
+    const result = await this.models.leads.buy(leads, new_owner)
+    const groupedByOwner = _.groupBy(result, "bought_from")
+    for (let key in groupedByOwner) {
+      const group = groupedByOwner[key]
+      console.log(key, group.length)
+      this.models.notifications.createNotification({
+        msg: `${group.length} of your leads were bought`,
+        userId: parseInt(key),
+        unread: true,
+      })
+    }
+    return result
   }
 
   public async removeLead(lead_id: number) {
