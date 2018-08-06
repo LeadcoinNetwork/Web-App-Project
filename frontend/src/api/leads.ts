@@ -38,8 +38,10 @@ export default class LeadsApi {
   constructor(private request: request) {}
 
   async buyMeOut() {
+    //@ts-ignore
     if (window.mockIds && window.mockIds.length > 0) {
       return await this.request(methods.post, "/sell-leads/buymyleads", {
+        //@ts-ignore
         leads: window.mockIds,
       })
     }
@@ -47,6 +49,7 @@ export default class LeadsApi {
 
   async addMockLeads() {
     let mock_records = papaParse.parse(mockCsv, parseConfig).data
+    //@ts-ignore
     window.mockIds = []
     mock_records.forEach(async line => {
       if (!line["Date Published"]) return
@@ -69,6 +72,7 @@ export default class LeadsApi {
         active: true,
       }
       let { response } = await this.sellLeadsAddByForm(lead)
+      //@ts-ignore
       window.mockIds.push(response.insertId)
     })
   }
