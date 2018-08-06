@@ -7,6 +7,7 @@ import LogModelAction from "../log-model-actions/log-model-actions"
 interface queryResult extends Array<any> {
   insertId?: number
   affectedRows?: number
+  changedRows?: number
 }
 
 export default class SQL {
@@ -23,6 +24,9 @@ export default class SQL {
   }
   public async query(...args): Promise<queryResult> {
     var query = mysql.format(...args)
+    if (query.includes("NaN")) {
+      console.log(query)
+    }
     try {
       var result = await this.pool.query(query)
     } catch (err) {

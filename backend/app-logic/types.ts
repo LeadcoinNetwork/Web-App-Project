@@ -10,7 +10,6 @@ export interface appModels {
   emailCreator: EmailCreator
   emailSender: EmailSender
 }
-
 export interface appLogic {
   uploadCSV: UploadCSV
   uploadForm: UploadForm

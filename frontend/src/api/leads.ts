@@ -1,3 +1,5 @@
+//@ts-ignore
+
 import { methods, request } from "./request"
 import {
   Lead,
@@ -6,8 +8,6 @@ import {
 } from "../../../backend/models/leads/types"
 
 import papaParse from "papaparse"
-
-console.log(papaParse)
 
 interface LeadsApiOptions {
   sort_by?: [string, "ASC" | "DESC"]
@@ -37,9 +37,21 @@ const parseConfig = {
 export default class LeadsApi {
   constructor(private request: request) {}
 
-  addMockLeads = async () => {
+  async buyMeOut() {
+    //@ts-ignore
+    if (window.mockIds && window.mockIds.length > 0) {
+      return await this.request(methods.post, "/sell-leads/buymyleads", {
+        //@ts-ignore
+        leads: window.mockIds,
+      })
+    }
+  }
+
+  async addMockLeads() {
     let mock_records = papaParse.parse(mockCsv, parseConfig).data
-    mock_records.forEach(line => {
+    //@ts-ignore
+    window.mockIds = []
+    mock_records.forEach(async line => {
       if (!line["Date Published"]) return
       const lead: NewLead = {
         description: line.Description,
@@ -55,10 +67,13 @@ export default class LeadsApi {
         lead_price: line["Lead Price"],
         lead_type: "realestate",
         date: new Date().valueOf(),
+        meta: { mock: true },
         bought_from: null,
         active: true,
       }
-      this.sellLeadsAddByForm(lead)
+      let { response } = await this.sellLeadsAddByForm(lead)
+      //@ts-ignore
+      window.mockIds.push(response.insertId)
     })
   }
 

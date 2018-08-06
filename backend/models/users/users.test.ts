@@ -72,6 +72,30 @@ test("getUserByEmailAndPassword (remove id,created,password from snapshot)", asy
 
 import NotFound from "../../utils/not-found"
 
+test("increaseBalance and decreaseBalance should work", async () => {
+  var user_id = await users.createUser({
+    email: "myemail@myemail.com",
+    plainPassword: "a12345",
+    disabled: null,
+    fname: "",
+    lname: "",
+    balance: 0,
+  })
+
+  await users.increaseBalance(user_id, 20)
+  var t1 = await users.getUserByEmailAndPassword(
+    "myemail@myemail.com",
+    "a12345",
+  )
+  expect(t1.balance).toBe(20)
+  await users.decreaseBalance(user_id, 10)
+  var t1 = await users.getUserByEmailAndPassword(
+    "myemail@myemail.com",
+    "a12345",
+  )
+  expect(t1.balance).toBe(10)
+})
+
 test("setNewPassword, and not found the user (remove password,created,id from snapshot)", async () => {
   var user_id = await users.createUser({
     email: "myemail@myemail.com",

@@ -14,7 +14,9 @@ import RestServer from "../rest/index"
 import userSyntisize from "./user-syntisize"
 import Users from "../models/users/users"
 import LeadsModel from "../models/leads/leads"
+import NotificationsModel from "../models/notifications/notifications"
 import leads from "./leads"
+import notifications from "./notifications"
 
 import NotFound from "@/utils/not-found.ts"
 
@@ -23,6 +25,7 @@ import NotFound from "@/utils/not-found.ts"
 export interface IModels {
   users: Users
   leads: LeadsModel
+  notifications: NotificationsModel
   emailCreator: EmailCreator
   emailSender: EmailSenderAbstraction
   config: IConfig
@@ -37,11 +40,13 @@ export default class AppLogic {
   public models: IModels = {
     users: new Users(this.sql),
     leads: new LeadsModel(this.sql),
+    notifications: new NotificationsModel(this.sql),
     emailCreator: null,
     emailSender: null,
     config: this.config,
   }
   public leads = new leads(this.models)
+  public notifications = new notifications(this.models)
 
   public userSyntisize = userSyntisize
 

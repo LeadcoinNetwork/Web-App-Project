@@ -13,7 +13,6 @@ async function insert(lead) {
 }
 
 async function update(data_id, lead) {
-  console.log(lead, data_id)
   let status = await mysqlPool.query(
     "UPDATE leads_upload SET ? WHERE data_id = ?",
     [lead, data_id],

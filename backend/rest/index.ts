@@ -15,6 +15,7 @@ import * as auth from "./auth"
 import * as leads from "./leads"
 import * as csv from "./csv"
 import * as cors from "./cors"
+import * as notifications from "./notifications"
 
 import AppPassports from "./passport/index"
 const io = require("./io/io")
@@ -74,6 +75,7 @@ export default class RestServer {
     auth.start({ appLogic: this.appLogic, expressApp })
     userRouter.start({ appLogic: this.appLogic, expressApp })
     leads.start({ appLogic, expressApp })
+    notifications.start({ appLogic, expressApp })
     // TODO csv
 
     expressApp.route("/gitlog.txt").get((req, res) => {

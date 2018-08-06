@@ -45,6 +45,7 @@ export function start({
         housing_type: "Cardboard Box",
         bought_from: null,
         forSale: true,
+        lead_price: chance.integer({ min: 1, max: 20 }),
         ownerId: owner,
         contact_person: chance.name(),
         telephone: chance.phone(),
@@ -196,8 +197,39 @@ export function start({
   )
 
   /**
-   * Buying a lead.
+   * make the system buy leads - for inline manual
    */
+  expressApp.post(
+    "/sell-leads/buymyleads",
+    passport.authenticate("jwt", authOptions),
+    async function(req, res, next) {
+      ;(async () => {
+        const { user } = req
+        const { leads }: { leads: number[] } = req.body
+        if (leads) {
+          appLogic.leads
+            .buyLeads(leads, 0)
+            .then(response => {
+              res.json({ response })
+            })
+            .catch(err => {
+              res.status(400)
+              if (err.sqlMessage) {
+                res.send({ error: err.sqlMessage })
+              } else {
+                res.send({ error: err.message })
+              }
+            })
+        } else {
+          return next()
+        }
+      })().catch(err => {
+        res.status(400)
+        res.send({ error: err.message })
+      })
+    },
+  )
+
   expressApp.post(
     "/my-leads/move",
     passport.authenticate("jwt", authOptions),

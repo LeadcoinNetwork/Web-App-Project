@@ -17,6 +17,7 @@ export interface ExistingUserInterface extends BaseUserInterface {
   emailConfirmationKey: string
   disabled: disabledReason
   created: number
+  balance: number
 }
 export interface ExistingUserInterfaceCondition {
   id?: number

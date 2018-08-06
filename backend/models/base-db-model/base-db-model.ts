@@ -5,8 +5,7 @@ import SQL from "../mysql-pool/mysql-pool"
 import LogModelActions from "../log-model-actions/log-model-actions"
 import NotFound from "../../utils/not-found"
 
-type tableName = "users" | "leads"
-type SAFE_AND_SANITIZED_SQL_QUERY = string
+type tableName = "users" | "leads" | "notifications"
 
 const private_fields = ["name", "phone"]
 
@@ -35,13 +34,46 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       ...JSON.parse(row[this.fieldName]),
     }
   }
-  protected async getOne(whatever): Promise<IExisting | NotFound> {
+  protected async getOne(whatever: any): Promise<IExisting | NotFound> {
     var result = await this.find(whatever)
     if (result.length != 1) {
       return new NotFound()
     } else {
       return result[0]
     }
+  }
+
+  notificationsQueries = {
+    markAsReadByIds: async ids => {
+      let sql = `UPDATE leadcoin.notifications
+      SET doc=JSON_set(doc,"$.unread","false")
+      WHERE id in (${ids.join(",")})
+       ;`
+      let rows = await this.sql.query(sql)
+      return rows
+    },
+
+    markAsRead: async user_id => {
+      let sql = `UPDATE leadcoin.notifications
+      SET doc=JSON_set(doc,"$.unread","false")
+      WHERE doc->>"$.userId"=${user_id}
+      AND doc->>"$.unread"= "true"
+       ;`
+      let rows = await this.sql.query(sql)
+      return rows
+    },
+
+    getNotificationsByUserId: async user_id => {
+      let sql = `SELECT * 
+      FROM leadcoin.notifications
+      WHERE doc->>"$.userId"=${user_id}
+      AND doc->>"$.unread"= "true"
+       ;`
+      let rows = await this.sql.query(sql)
+      console.log(sql)
+      rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
+      return rows
+    },
   }
 
   leadsQueries = {
