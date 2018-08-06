@@ -26,6 +26,10 @@ export default class Notifications extends baseDBModel<
     return await this.getOne({ id: notification_id })
   }
 
+  async MarkNotificationAsRead(ids: number[]) {
+    return await this.notificationsQueries.markAsReadByIds(ids)
+  }
+
   async MarkAllNotificationAsReadForUser(userId: number) {
     return await this.notificationsQueries.markAsRead(userId)
   }

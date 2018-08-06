@@ -24,6 +24,9 @@ export default class SQL {
   }
   public async query(...args): Promise<queryResult> {
     var query = mysql.format(...args)
+    if (query.includes("NaN")) {
+      console.log(query)
+    }
     try {
       var result = await this.pool.query(query)
     } catch (err) {
