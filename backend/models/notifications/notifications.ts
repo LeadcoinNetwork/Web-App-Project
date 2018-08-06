@@ -27,7 +27,6 @@ export default class Notifications extends baseDBModel<
   }
 
   async MarkAllNotificationAsReadForUser(userId: number) {
-    console.log("here", userId)
     return await this.notificationsQueries.markAsRead(userId)
   }
 }

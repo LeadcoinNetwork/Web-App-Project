@@ -23,5 +23,5 @@ test("notifications are only being sent once", async () => {
     unread: true,
   })
   let body = await ApiForToken(token).notifications.getNotifications()
-  expect(body.list.length).toBe(1)
+  expect(body.length).toBe(1)
 })
