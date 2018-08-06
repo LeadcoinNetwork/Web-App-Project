@@ -19,6 +19,7 @@ export interface BaseLead {
   id?: number
   price: number
   description: string
+  lead_price: number
   date: number
   telephone: string
   bought_from: number | null
@@ -31,6 +32,7 @@ export interface BaseLead {
 export interface NewBaseLead {
   date: number
   telephone: string
+  lead_price: number
   bought_from: number | null
   forSale?: boolean
   active: boolean
@@ -45,7 +47,6 @@ export interface NewRealEstateLead extends NewBaseLead {
   ownerId?: number
   type: "Sell" | "Rent"
   size?: number
-  lead_price?: number
   state?: string
   price: number
   location?: number

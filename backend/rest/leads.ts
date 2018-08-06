@@ -45,6 +45,7 @@ export function start({
         housing_type: "Cardboard Box",
         bought_from: null,
         forSale: true,
+        lead_price: chance.integer({ min: 1, max: 20 }),
         ownerId: owner,
         contact_person: chance.name(),
         telephone: chance.phone(),
