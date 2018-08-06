@@ -31,6 +31,14 @@ export function start({
     async function(req, res, next) {
       ;(async () => {
         const { user } = req
+        const { mock } = req.query
+        if (mock == 1) {
+          res.json({
+            msg: "ALL YOUR BASE ARE BELONG TO US!",
+            userId: 666,
+          })
+          return
+        }
         await appLogic.notifications
           .getNotifications(user.id)
           .then(response => {

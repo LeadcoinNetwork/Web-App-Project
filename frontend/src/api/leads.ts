@@ -9,8 +9,6 @@ import {
 
 import papaParse from "papaparse"
 
-console.log(papaParse)
-
 interface LeadsApiOptions {
   sort_by?: [string, "ASC" | "DESC"]
   filters?: [string, string][]

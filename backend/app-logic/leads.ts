@@ -33,7 +33,6 @@ export default class Leads {
     const groupedByOwner = _.groupBy(result, "bought_from")
     for (let key in groupedByOwner) {
       const group = groupedByOwner[key]
-      console.log(key, group.length)
       this.models.notifications.createNotification({
         msg: `${group.length} of your leads were bought`,
         userId: parseInt(key),
