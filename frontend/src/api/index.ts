@@ -1,9 +1,11 @@
 import Users from "./users"
 import Leads from "./leads"
+import Notifications from "./notifications"
 
 export default class API {
   users: Users
   leads: Leads
+  notifications: Notifications
   constructor(private request) {
     // Create new request object, that all API's will use.
     // This reuqest object transofrm a reject promise, and return it as an object.
@@ -32,6 +34,7 @@ export default class API {
 
     this.leads = new Leads(r)
     this.users = new Users(r)
+    this.notifications = new Notifications(r)
     //@ts-ignore
     if (window) window.apiClient = this
   }
