@@ -1,0 +1,17 @@
+@import "~Styles/variables";
+
+.upload-links {
+  padding-bottom: 30px;
+
+  a {
+    display: inline-block;
+    height: 32px;
+    line-height: 31px;
+    border: 1px solid $bg-level-3;
+    border-radius: 16px;
+    color: #fff;
+    font-size: 14px;
+    padding: 0 18px;
+    margin-right: 20px;
+  }
+}

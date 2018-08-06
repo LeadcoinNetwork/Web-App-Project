@@ -2,15 +2,6 @@ import types from "./types"
 import { SOCKET } from "./api"
 
 export default {
-  connectToNotifications(dispatch) {
-    // SOCKET.on("notification", notification => {
-    //   dispatch({
-    //     type: types.NOTIFICATION_SHOW,
-    //     payload: notification,
-    //   })
-    // })
-  },
-
   notificationsShow() {
     return {
       type: types.NOTIFICATIONS_SHOW,

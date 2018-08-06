@@ -29,7 +29,13 @@
   }
 
   option {
-    color: $main-color;
+    color: white;
+    background-color: $bg-level-2;
+    font-weight: 300;
+  }
+
+  option:disabled {
+    color: rgba($color: #ffffff, $alpha: 0.4);
   }
 }
 

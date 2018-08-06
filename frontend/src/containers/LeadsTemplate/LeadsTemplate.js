@@ -109,12 +109,6 @@ class LeadsTemplate extends React.Component {
         <div className="ldc-leads-template">
           <section className={`ldc-${pageName}-leads`}>
             {/* <SwitchResultsMode /> */}
-            {pageName === "sell" && (
-              <div className="lt-links">
-                <Link to="/csv-upload">{t("Upload CSV File")}</Link>
-                <Link to="/add-lead">{t("Create New Lead")}</Link>
-              </div>
-            )}
             {/* {cardsMode ? (
                 <LeadsResults
                   leads={leads}
