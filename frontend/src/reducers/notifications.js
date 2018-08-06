@@ -4,6 +4,7 @@ const initialState = {
   list: [],
   unreadCount: 0,
   isOpen: false,
+  error: "",
 }
 
 const notifications = (state = initialState, action) => {
@@ -31,6 +32,12 @@ const notifications = (state = initialState, action) => {
           ...action.payload.list,
         },
         unreadCount: action.payload.unreadCount,
+        error: "",
+      }
+    case types.NOTIFICATIONS_FETCH_ERROR:
+      return {
+        ...state,
+        error: action.payload,
       }
     case types.USER_MENU_OPEN:
       return {

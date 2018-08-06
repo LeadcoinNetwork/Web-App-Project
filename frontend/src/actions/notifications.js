@@ -26,4 +26,10 @@ export default {
       payload: { list, unreadCount },
     }
   },
+  notificationsFetchError(error) {
+    return {
+      type: types.NOTIFICATIONS_FETCH_ERROR,
+      payload: error,
+    }
+  },
 }
