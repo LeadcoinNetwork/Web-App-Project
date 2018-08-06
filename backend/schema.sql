@@ -22,3 +22,10 @@ CREATE TABLE  `leadcoin`.`leads` (
   doc longtext
 ) DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_bin;
+
+DROP TABLE IF EXISTS `leadcoin`.`notifications`;
+CREATE TABLE  `leadcoin`.`notifications` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  doc longtext
+) DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin;

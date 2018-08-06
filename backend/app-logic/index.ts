@@ -16,6 +16,7 @@ import Users from "../models/users/users"
 import LeadsModel from "../models/leads/leads"
 import NotificationsModel from "../models/notifications/notifications"
 import leads from "./leads"
+import notifications from "./notifications"
 
 import NotFound from "@/utils/not-found.ts"
 
@@ -45,6 +46,7 @@ export default class AppLogic {
     config: this.config,
   }
   public leads = new leads(this.models)
+  public notifications = new notifications(this.models)
 
   public userSyntisize = userSyntisize
 
