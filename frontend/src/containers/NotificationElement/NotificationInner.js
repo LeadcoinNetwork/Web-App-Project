@@ -9,14 +9,14 @@ const NotificationInner = ({ list }) => (
   // <Link to="/notifications" className="notification-inner">
   <div className="notification-inner">
     <div className="small-arrow" />
-    {list.map(notification => (
-      <div>
+    {list.slice(0, 9).map(notification => (
+      <div key={notification.id}>
         <div
           className={"ni-row" + (notification.unread ? " unread" : "")}
           key={notification.id}
         >
           <span className="nr-time">{fromNow(notification.timestamp)}</span>{" "}
-          {t(notification.message)}
+          {t(notification.msg)}
         </div>
       </div>
     ))}
