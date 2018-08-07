@@ -10,10 +10,12 @@ const fields_not_for_display = ["active"]
 const initialState = {
   db_fields: {
     private: fields
+      .filter(field => field.editable)
       .filter(field => field.private)
       .map(field => ({ key: field.key, name: field.name }))
       .filter(f => fields_not_for_display.indexOf(f) < 0),
     public: fields
+      .filter(field => field.editable)
       .filter(field => !field.private)
       .map(field => ({ key: field.key, name: field.name }))
       .filter(f => fields_not_for_display.indexOf(f.key) < 0),
