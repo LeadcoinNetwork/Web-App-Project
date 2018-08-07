@@ -43,7 +43,7 @@ export default class Leads {
     for (let key in groupedByOwner) {
       const user_id = parseInt(key)
       const group: Lead[] = groupedByOwner[key]
-      const transaction_amount = group.reduce(summy("price"), 0)
+      const transaction_amount = group.reduce(summy("lead_price"), 0)
       overall_cost += transaction_amount
       this.models.users.increaseBalance(user_id, overall_cost)
       this.models.users.decreaseBalance(new_owner, overall_cost)
@@ -54,6 +54,7 @@ export default class Leads {
         userId: user_id,
         unread: true,
       })
+      overall_cost = 0
     }
     return result
   }
