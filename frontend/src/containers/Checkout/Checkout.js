@@ -16,6 +16,16 @@ const Checkout = ({ fields, checkout, buyLeads, push, checkoutBuyStart }) => {
     buyLeads.selected.has(lead.id),
   )
 
+  const parseLeadPrice = leadPrice => {
+    if (!leadPrice) {
+      return 0
+    } else if (typeof leadPrice === "string") {
+      return Math.abs(Number(leadPrice.replace("$", "")))
+    } else {
+      return leadPrice
+    }
+  }
+
   return (
     <div className="ldc-checkout">
       <h1>{t("Shopping Cart")}</h1>
@@ -33,11 +43,7 @@ const Checkout = ({ fields, checkout, buyLeads, push, checkoutBuyStart }) => {
         {t("Total")}:{" "}
         {priceString(
           selectedLeads.reduce(
-            (price, lead) =>
-              price +
-              ((lead.lead_price &&
-                Math.abs(Number(lead.lead_price.replace("$", "")))) ||
-                0),
+            (price, lead) => price + parseLeadPrice(lead.lead_price),
             0,
           ),
         )}
