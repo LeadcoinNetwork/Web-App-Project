@@ -71,7 +71,8 @@ export default class LeadsApi {
         bought_from: null,
         active: true,
       }
-      let { response } = await this.sellLeadsAddByForm(lead)
+      //@ts-ignore
+      let { response } = await window.apiClient.leads.sellLeadsAddByForm(lead)
       //@ts-ignore
       window.mockIds.push(response.insertId)
     })

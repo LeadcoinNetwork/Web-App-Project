@@ -18,6 +18,7 @@ import myLeads from "./myLeads"
 import moveToSell from "./moveToSell"
 import language from "./language"
 import inlinemanual from "./inlinemanual"
+import notifications from "./notifications"
 
 import { spawn, fork } from "redux-saga/effects"
 import * as superagent from "superagent"
@@ -58,6 +59,7 @@ export default function* rootSaga() {
     myLeads,
     moveToSell,
     inlinemanual,
+    notifications,
   ]
   for (var i in sagas) {
     yield fork(sagas[i], api)
