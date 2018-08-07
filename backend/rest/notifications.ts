@@ -40,9 +40,12 @@ export function start({
           return
         }
         await appLogic.notifications
-          .getNotifications(user.id)
-          .then(response => {
-            res.json(response)
+          .getNotificationsAndCount(user.id)
+          .then(responseTupple => {
+            res.json({
+              list: responseTupple[0],
+              unreadCount: responseTupple[1],
+            })
           })
           .catch(err => {
             res.status(400)
