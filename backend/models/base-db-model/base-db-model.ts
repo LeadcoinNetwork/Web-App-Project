@@ -93,7 +93,6 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         WHERE id IN (${lead_ids.join(",")}) 
         ;`
       let rows = await this.sql.query(sql)
-      rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
       return rows[0].lp
     },
 

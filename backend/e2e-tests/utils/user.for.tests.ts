@@ -19,6 +19,7 @@ export async function create({
     email: chance.email(),
     fname: "moshe",
     lname: "Marilush",
+    balance: config.INITIAL_BALANCE,
     plainPassword: "danny-gembom",
     emailConfirmationKey: UsersAuth.generateToken(),
   })

@@ -50,6 +50,10 @@ export default class Leads extends baseDBModel<
     return await this.leadsQueries.getMyLeads(user_id, options)
   }
 
+  public async getDealPrice(lead_ids: number[]) {
+    return await this.leadsQueries.getDealPrice(lead_ids)
+  }
+
   public async getBoughtLeads(user_id: number, options: LeadQueryOptions) {
     return await this.leadsQueries.getBoughtLeads(user_id, options)
   }

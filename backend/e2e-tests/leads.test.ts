@@ -6,8 +6,8 @@ import API from "../../frontend/src/api/index"
 
 import * as RoutesForTests from "./utils/routes.for.tests"
 import * as ValidatedUserForTests from "./utils/user.for.tests"
-
-const mock_lead = (overload = {}) => {
+import { Lead } from "../models/leads/types"
+const mock_lead = (overload = {}): Lead => {
   return Object.assign(
     {
       lead_type: "realestate",
@@ -26,6 +26,7 @@ const mock_lead = (overload = {}) => {
       contact_person: chance.name(),
       telephone: chance.phone(),
       active: true,
+      lead_price: 10,
       price: parseInt(
         chance
           .integer()
@@ -95,18 +96,20 @@ test(`
   var { user: user2_1, token: token2 } = await ValidatedUserForTests.create({
     users: appLogic.models.users,
   })
-  const lead = mock_lead()
+  const lead = mock_lead({
+    lead_price: 10,
+  })
 
   await ApiForToken(token1).leads.sellLeadsAddByForm(lead)
   let body = await ApiForToken(token2).leads.buyLeadsGetList()
   let [old_record] = body.list
   body = await ApiForToken(token2).leads.buyLeadsBuy([old_record.id])
   let n = await ApiForToken(token1).notifications.getNotifications()
-  expect(n.length).toBe(1)
+  expect(n.list.length).toBe(1)
   let { user: user1_2 } = await ApiForToken(token1).users.getMe()
   let { user: user2_2 } = await ApiForToken(token2).users.getMe()
-  expect(user1_2.balance).toBe(lead.price)
-  expect(user2_2.balance).toBe(-lead.price)
+  expect(user1_2.balance).toBe(user1_1.balance + lead.price)
+  expect(user2_2.balance).toBe(user2_1.balance - lead.price)
 })
 
 test("1st user adds lead, 2nd user buys it, everything should work", async () => {
@@ -163,6 +166,25 @@ test("getting all leads should work", async () => {
   expect(body.total).toBe(1)
   expect(body.error).toBeFalsy()
   expect(typeof body.list).toEqual("object")
+})
+
+test(`user1 add a lead
+      user2 tries to buys it but fails because he has no money
+      user2 dies alone, homeless and poor`, async () => {
+  var { user, token } = await ValidatedUserForTests.create({
+    users: appLogic.models.users,
+  })
+  var { user: user2, token: token2 } = await ValidatedUserForTests.create({
+    users: appLogic.models.users,
+  })
+  const lead = mock_lead({
+    lead_price: 999999999,
+  })
+  let body = await ApiForToken(token).leads.sellLeadsAddByForm(lead)
+  body = await ApiForToken(token2).leads.buyLeadsGetList()
+  let body2 = await ApiForToken(token2).leads.buyLeadsBuy([body.list[0].id])
+  expect(body2.error).toBeTruthy()
+  expect(body2.error).toBe("balance::amount insufficient")
 })
 
 test(`user1 add a lead
