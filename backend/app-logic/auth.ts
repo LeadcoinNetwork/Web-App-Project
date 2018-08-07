@@ -48,7 +48,7 @@ export default class Auth {
     }
   }
 
-  async LoginSocial({ provider_id, provider, email, fname, lname }) {
+  async LoginSocial({ provider_id, provider, email, fname, lname, balance }) {
     let user = await this.models.users.getOne({
       provider_id: provider_id,
       provider: provider,
@@ -68,6 +68,7 @@ export default class Auth {
           fname,
           lname,
           email,
+          balance,
           provider_id: provider_id,
           provider: provider,
           created: Date.now(),

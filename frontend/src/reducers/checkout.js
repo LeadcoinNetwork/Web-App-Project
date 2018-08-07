@@ -23,6 +23,11 @@ const checkout = (state = initialState, action) => {
         loading: false,
         error: action.payload,
       }
+    case types["BUY_SET_SELECTED_LEADS"]:
+      return {
+        ...state,
+        error: "",
+      }
     default:
       return state
   }
