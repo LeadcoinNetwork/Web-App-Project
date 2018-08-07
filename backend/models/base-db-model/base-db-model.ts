@@ -63,20 +63,39 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       return rows
     },
 
+    getUnreadNotificationsCount: async user_id => {
+      let sql = `
+      SELECT COUNT(id) as count
+      FROM leadcoin.notifications
+      WHERE doc->>"$.userId"=${user_id} 
+      AND doc->>"$.unread"= "true"
+      ;`
+      let rows = await this.sql.query(sql)
+      return rows[0].count
+    },
+
     getNotificationsByUserId: async user_id => {
       let sql = `SELECT * 
       FROM leadcoin.notifications
-      WHERE doc->>"$.userId"=${user_id}
-      AND doc->>"$.unread"= "true"
-       ;`
+      WHERE doc->>"$.userId"=${user_id} ;`
       let rows = await this.sql.query(sql)
-      console.log(sql)
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
       return rows
     },
   }
 
   leadsQueries = {
+    getDealPrice: async lead_ids => {
+      if (lead_ids.length === 0) return 0
+      let sql = `
+        SELECT SUM(doc->>"$.lead_price") as lp
+        FROM leadcoin.leads
+        WHERE id IN (${lead_ids.join(",")}) 
+        ;`
+      let rows = await this.sql.query(sql)
+      return rows[0].lp
+    },
+
     getLeadFields: async lead_type => {
       let sql = `SELECT * FROM leadcoin.leads WHERE doc->>"$.type"="${mysql.escape(
         lead_type,

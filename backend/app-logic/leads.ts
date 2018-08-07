@@ -31,6 +31,13 @@ export default class Leads {
   }
 
   public async buyLeads(leads: number[], new_owner: number) {
+    const deal_price = await this.models.leads.getDealPrice(leads)
+    const buyer = await this.models.users.mustGetUserById(new_owner)
+    buyer.balance = buyer.balance | 0
+    console.log({ deal_price, buyer })
+    if (buyer.balance < deal_price) {
+      throw new Error("balance::amount insufficient")
+    }
     const result = await this.models.leads.buy(leads, new_owner)
     const groupedByOwner = _.groupBy(result, "bought_from")
     let overall_cost = 0

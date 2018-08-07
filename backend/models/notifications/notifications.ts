@@ -18,6 +18,10 @@ export default class Notifications extends baseDBModel<
     return await this.insert(notification)
   }
 
+  async getUnreadNotificationsCount(userId: number) {
+    return await this.notificationsQueries.getUnreadNotificationsCount(userId)
+  }
+
   async getNotificationsByUserId(userId: number) {
     return await this.notificationsQueries.getNotificationsByUserId(userId)
   }
