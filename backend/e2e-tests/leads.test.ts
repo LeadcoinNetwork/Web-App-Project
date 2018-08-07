@@ -103,10 +103,10 @@ test("when adding leads currency should be removed from the price", async () => 
 })
 
 test(`
-  user adds lead, 
-  user2 buys it, 
-  user1 balance is increased 
-  user2 balance is decreased
+  User adds lead, 
+  User2 buys it, 
+  User1 balance is increased 
+  User2 balance is decreased
   both get notifications`, async () => {
   var { user: user1_1, token: token1 } = await ValidatedUserForTests.create({
     users: appLogic.models.users,
@@ -126,7 +126,6 @@ test(`
   expect(n.list.length).toBe(1)
   let { user: user1_2 } = await ApiForToken(token1).users.getMe()
   let { user: user2_2 } = await ApiForToken(token2).users.getMe()
-  console.log(user1_1.balance, user1_2.balance)
   expect(user1_2.balance).toBe(user1_1.balance + lead.price)
   expect(user2_2.balance).toBe(user2_1.balance - lead.price)
 })

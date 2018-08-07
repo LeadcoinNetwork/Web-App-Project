@@ -18,7 +18,7 @@ export default function* checkout(api) {
     console.log(res)
 
     if (res.error) {
-      yield put(actions.checkout.checkoutBuyError())
+      yield put(actions.checkout.checkoutBuyError(res.error))
     } else {
       yield put(actions.checkout.checkoutBuySuccess())
       yield put(
