@@ -27,10 +27,7 @@ const notifications = (state = initialState, action) => {
     case types.NOTIFICATIONS_UPDATE:
       return {
         ...state,
-        list: {
-          ...state.list,
-          ...action.payload.list,
-        },
+        list: action.payload.list.concat(state.list),
         unreadCount: action.payload.unreadCount,
         error: "",
       }
