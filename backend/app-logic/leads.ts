@@ -1,4 +1,4 @@
-import { Lead, LeadQueryOptions } from "../models/leads/types"
+import { Lead, LeadQueryOptions, NewBaseLead } from "../models/leads/types"
 
 import { IModels } from "./index"
 import { Notification } from "../models/notifications/types"
@@ -34,7 +34,6 @@ export default class Leads {
     const deal_price = await this.models.leads.getDealPrice(leads)
     const buyer = await this.models.users.mustGetUserById(new_owner)
     buyer.balance = buyer.balance | 0
-    console.log({ deal_price, buyer })
     if (buyer.balance < deal_price) {
       throw new Error("balance::amount insufficient")
     }
@@ -63,9 +62,18 @@ export default class Leads {
     return await this.models.leads.remove(lead_id)
   }
 
+  public async sanitizeLead(lead) {
+    if (lead.lead_price && lead.lead_price.replace)
+      lead.lead_price = Number(lead.lead_price.replace(/[^0-9\.-]+/g, ""))
+    if (lead.price && lead.price.replace)
+      lead.price = Number(lead.price.replace(/[^0-9\.-]+/g, ""))
+    return lead
+  }
+
   public async AddLead(lead: Lead) {
     const problems = validate_lead(lead)
     if (problems.length == 0) {
+      lead = await this.sanitizeLead(lead)
       const id = await this.models.leads.AddLead(lead)
       return id
     }

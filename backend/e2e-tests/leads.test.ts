@@ -84,6 +84,24 @@ test("user adds lead and see it as his lead for sale", async () => {
   expect(body.list[0].ownerId).toBe(user.id)
 })
 
+test("when adding leads currency should be removed from the price", async () => {
+  var { user, token } = await ValidatedUserForTests.create({
+    users: appLogic.models.users,
+  })
+  const lead = mock_lead({
+    lead_price: "10$",
+  })
+
+  await ApiForToken(token).leads.sellLeadsAddByForm(lead)
+  let body = await ApiForToken(token).leads.sellLeadsGetList({})
+  expect(body.list[0].lead_price).toBe(10)
+  //@ts-ignore, cuz $20 is not a number
+  lead.lead_price = "$20"
+  await ApiForToken(token).leads.sellLeadsAddByForm(lead)
+  let body2 = await ApiForToken(token).leads.sellLeadsGetList({})
+  expect(body2.list[1].lead_price).toBe(20)
+})
+
 test(`
   user adds lead, 
   user2 buys it, 
@@ -108,6 +126,7 @@ test(`
   expect(n.list.length).toBe(1)
   let { user: user1_2 } = await ApiForToken(token1).users.getMe()
   let { user: user2_2 } = await ApiForToken(token2).users.getMe()
+  console.log(user1_1.balance, user1_2.balance)
   expect(user1_2.balance).toBe(user1_1.balance + lead.price)
   expect(user2_2.balance).toBe(user2_1.balance - lead.price)
 })
