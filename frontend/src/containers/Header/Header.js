@@ -23,8 +23,10 @@ const Header = ({
         loggedIn && !disabled ? " h-app-mode" : " h-sign-mode"
       }`}
     >
-      <div className="logo-link" onClick={gotoDefaultHome} />
-
+      <div className="logo">
+        <span className="logo-link" onClick={gotoDefaultHome} />
+        <span className="alpha-demo">DEMO</span>
+      </div>
       {/* 
       uncomment bring back the language selector
       <div className="m-both-right">
