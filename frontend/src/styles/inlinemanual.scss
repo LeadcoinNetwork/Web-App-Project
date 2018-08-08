@@ -11,11 +11,21 @@
   height: auto !important;
 }
 
+.ajax-loader {
+  background: url("./ajax-loader.gif");
+  width: 100%;
+  background-size: contain;
+  height: 50px;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  margin: 25px 0px;
+}
+
 .csvclass {
   // margin-top: -250px;
 }
 .csvclass .inmplayer-popover-button-next.inmplayer-button {
-  background: url(https://snag.gy/RoGt1V.jpg) no-repeat;
+  background: url("./savedialog.jpg") no-repeat;
   background-size: contain;
   width: 500px;
   height: 386px;
@@ -46,6 +56,17 @@
   font-family: proxima-nova !important;
 }
 
+.marginalgorithm {
+  .inmplayer-button {
+    animation: show-button 5s linear;
+  }
+
+  .ajax-loader {
+    opacity: 0;
+    animation: hide-ajaxloader 5s linear;
+  }
+}
+
 @keyframes move-loader {
   0% {
     width: 0px;
@@ -70,86 +91,12 @@
   }
 }
 
-.marginalgorithm {
-  .inmplayer-button {
-    animation: show-button 5s linear;
-  }
-
-  i {
-    height: 0;
-    overflow: hidden;
-    color: #180852;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%);
-
-    &.fa-hourglass-start {
-      opacity: 1;
-      animation: hide-hourglass 5s linear,
-        hourglass 4s cubic-bezier(0.85, 0.2, 0.25, 1) infinite,
-        hourglass-start 4s linear infinite;
-    }
-    &.fa-hourglass-end {
-      opacity: 0;
-      animation: hide-hourglass 5s linear,
-        hourglass 4s cubic-bezier(0.85, 0.2, 0.25, 1) infinite,
-        hourglass-end 4s linear infinite;
-    }
-  }
-}
-
-@keyframes hourglass {
-  0% {
-    transform: rotate(0deg);
-  }
-  40%,
-  50% {
-    transform: rotate(180deg);
-  }
-  90%,
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes hourglass-start {
-  0%,
-  80% {
-    opacity: 1;
-  }
-  30%,
-  40% {
-    opacity: 0;
-  }
-}
-
-@keyframes hourglass-end {
-  0%,
-  80% {
-    opacity: 0;
-  }
-  30%,
-  40% {
-    opacity: 1;
-  }
-}
-
-@keyframes show-button {
+@keyframes hide-ajaxloader {
   0%,
   99% {
-    opacity: 0;
-  }
-  100% {
     opacity: 1;
   }
-}
-
-@keyframes hide-hourglass {
-  0%,
-  99% {
-    height: auto;
-  }
   100% {
-    height: 0;
+    opacity: 0;
   }
 }
