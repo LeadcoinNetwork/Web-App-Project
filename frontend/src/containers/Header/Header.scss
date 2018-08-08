@@ -26,6 +26,8 @@ header.ldc-header {
     .alpha-demo {
       margin-left: 15px;
       vertical-align: 34%;
+      opacity: 0.7;
+      font-weight: 100;
     }
   }
 
@@ -115,5 +117,11 @@ header.ldc-header {
         }
       }
     }
+  }
+}
+
+@media (max-width: $screen-narrow) {
+  header.ldc-header .logo .alpha-demo {
+    margin-left: 10px;
   }
 }
