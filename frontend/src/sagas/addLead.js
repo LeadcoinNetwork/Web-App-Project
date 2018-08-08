@@ -26,6 +26,7 @@ export default function* addLead(api) {
     } else {
       yield put(actions.addLead.addLeadSubmitSuccess())
       yield put(actions.addLead.addLeadClearForm())
+      window.triggerFetch()
       yield put(push("/sell-leads"))
     }
   }
