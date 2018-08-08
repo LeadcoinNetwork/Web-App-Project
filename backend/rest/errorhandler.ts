@@ -13,11 +13,13 @@ export function start(app) {
     LogModelActions("Error", err)
 
     if (status == 500) {
-      res
-      res.statusMessage = "Unexpected failure. We have been notified."
-      res
-        .status(500)
-        .json({ error: "Unexpected failure. We have been notified." })
+      try {
+        res
+        res.statusMessage = "Unexpected failure. We have been notified."
+        res
+          .status(500)
+          .json({ error: "Unexpected failure. We have been notified." })
+      } catch (err) {}
     } else {
       res.status(status).json({
         error: err.message,

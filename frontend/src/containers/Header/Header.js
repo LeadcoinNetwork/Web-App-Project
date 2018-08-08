@@ -44,14 +44,18 @@ const Header = ({
         pathname == "/login" && (
           <div className="sign-link">
             <span>{t("don't have an account?")}</span>
-            <Link to="/signup">{t("Register")}</Link>
+            <Link className="no-underline" to="/signup">
+              {t("Register")}
+            </Link>
           </div>
         )}
       {!disabled &&
         pathname != "/login" && (
           <div className="sign-link">
             <span>{t("already have an account?")}</span>
-            <Link to="/login">{t("Login Here")}</Link>
+            <Link className="no-underline" to="/login">
+              {t("Login Here")}
+            </Link>
           </div>
         )}
 

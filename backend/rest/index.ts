@@ -54,6 +54,17 @@ export default class RestServer {
     }
     var expressApp: ExpressInterface = express()
 
+    // Express no cache
+    expressApp.use((req, res, next) => {
+      res.header(
+        "Cache-Control",
+        "private, no-cache, no-store, must-revalidate",
+      )
+      res.header("Expires", "-1")
+      res.header("Pragma", "no-cache")
+      next()
+    })
+
     // Log of request and response
     expressApp.use(LogModelActions.expressMiddleware)
 

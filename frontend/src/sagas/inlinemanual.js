@@ -5,7 +5,9 @@ import { delay } from "redux-saga"
 
 if (localStorage.random_id_for_inlinemanual) {
   for (var i in localStorage) {
-    delete localStorage[i]
+    if (i != "random_id_for_inlinemanual") {
+      delete localStorage[i]
+    }
   }
 }
 export default function* inlinemanualsaga() {
@@ -38,4 +40,11 @@ window.moveToSellLeads = function() {
 }
 window.ldcPush = function(url) {
   localStorage.shouldPushURL = url
+}
+
+window.activateStepUploading = function() {
+  setTimeout(jumpToStepNotYouHaveLeadsToSell, 3000)
+}
+window.jumpToStepNotYouHaveLeadsToSell = function() {
+  inline_manual_player.activateStep(52083, 15)
 }

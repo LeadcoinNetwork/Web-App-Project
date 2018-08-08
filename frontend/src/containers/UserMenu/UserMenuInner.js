@@ -18,14 +18,14 @@ const UserMenuInner = ({ user, logOut }) => (
       </label>
     )}
     {menuItems.map((item, index) => (
-      <Link to={item.path} className="um-row" key={index}>
+      <Link to={item.path} className="no-underline um-row" key={index}>
         {t(item.title)}
       </Link>
     ))}
     <Link
       to={"/"}
       onClick={logOut}
-      className="um-row log-out"
+      className="no-underline um-row log-out"
       key={menuItems.length}
     >
       {t("Log Out")}

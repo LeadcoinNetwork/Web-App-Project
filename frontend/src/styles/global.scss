@@ -35,6 +35,9 @@ body {
 
   a {
     color: #3190fc;
+    text-underline-position: under;
+  }
+  .no-underline {
     text-decoration: none;
   }
 
