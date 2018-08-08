@@ -64,6 +64,13 @@ const initialState = {
 const createReducerFor = namespace => {
   return (state = initialState, action) => {
     switch (action.type) {
+      case types["CLEAR_ALL_LEADS"]:
+        return {
+          ...state,
+          loading: false,
+          error: false,
+          list: [],
+        }
       case types[namespace + "_FETCH_LEADS"]:
         return {
           ...state,

@@ -38,9 +38,11 @@ export default class LeadsApi {
   constructor(private request: request) {}
 
   async buyMeOut() {
-    return await this.request(methods.post, "/sell-leads/buymyleads")
-    // @ts-ignore
-    window.triggerFetch()
+    await this.request(methods.post, "/sell-leads/buymyleads")
+    setTimeout(() => {
+      // @ts-ignore
+      window.triggerFetch()
+    }, 750)
   }
 
   async addMockLeads() {

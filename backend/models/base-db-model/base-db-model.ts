@@ -91,6 +91,8 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       FROM leadcoin.leads
       WHERE doc->>"$.meta.mock" = "true"
       AND doc->>"$.ownerId" = ${user_id}
+      AND doc->>"$.active" = "true" 
+      AND doc->>"$.forSale" = "true"
       ;`
       let rows = await this.sql.query(sql)
       return rows.map(r => r.id)
