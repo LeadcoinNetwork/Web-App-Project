@@ -48,25 +48,25 @@ window.jumpToStepNotYouHaveLeadsToSell = function() {
 
 window.moveToHome = function() {
   window.ldcPush("/home")
-  window.triggerFetch()
 }
 
 window.moveToBuyLeads = function() {
   window.ldcPush("/buy-leads")
-  window.triggerFetch()
 }
 
 window.moveToShoppingCart = function() {
   window.ldcPush("/shopping-cart")
-  window.triggerFetch()
 }
 
 window.moveToMyLeads = function() {
   window.ldcPush("/my-leads")
-  window.triggerFetch()
 }
 
 window.moveToSellLeads = function() {
   window.ldcPush("/sell-leads")
+}
+
+window.moveToSellAndFetch = function() {
+  window.moveToSellLeads()
   window.triggerFetch()
 }
