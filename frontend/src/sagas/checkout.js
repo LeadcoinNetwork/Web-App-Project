@@ -15,7 +15,6 @@ export default function* checkout(api) {
     let { selected } = yield select(state => state.buyLeads)
 
     let res = yield api.leads.buyLeadsBuy(Array.from(selected))
-    console.log(res)
 
     if (res.error) {
       yield put(actions.checkout.checkoutBuyError(res.error))
@@ -28,6 +27,7 @@ export default function* checkout(api) {
         ),
       )
       yield put(actions.leads.setSelectedLeads("BUY_LEADS", new Set()))
+      window.triggerFetch()
       yield put(push("/my-leads"))
     }
   }

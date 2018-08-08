@@ -12,11 +12,18 @@ export interface getLeadsOptions {
   limit?: number
 }
 
+const contains_contact = lead => {
+  return lead.telephone || lead.name || lead.email
+}
+
 const validate_lead = (lead: Lead) => {
-  //TODO: validate lead
   const errors = []
-  if (!lead.description || lead.description.length < 2)
-    errors.push("description::too short")
+  if (!lead.lead_price) errors.push("lead_price::Lead price is required")
+  if (!contains_contact(lead)) {
+    errors.push("phone::At least one contact info is required")
+    errors.push("name::")
+    errors.push("email::")
+  }
   return errors
 }
 
@@ -35,7 +42,7 @@ export default class Leads {
     const buyer = await this.models.users.mustGetUserById(new_owner)
     buyer.balance = buyer.balance | 0
     if (buyer.balance < deal_price) {
-      throw new Error("balance::amount insufficient")
+      throw new Error("balance::Amount insufficient")
     }
     const result = await this.models.leads.buy(leads, new_owner)
     const groupedByOwner = _.groupBy(result, "bought_from")
@@ -78,7 +85,7 @@ export default class Leads {
       const id = await this.models.leads.AddLead(lead)
       return id
     }
-    throw new Error(problems.join("; "))
+    throw new Error(problems.join(" ;"))
   }
 
   public async getSellLeads(user_id: number, options: LeadQueryOptions) {

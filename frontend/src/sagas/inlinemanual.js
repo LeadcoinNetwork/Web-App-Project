@@ -18,6 +18,7 @@ export default function* inlinemanualsaga() {
       delete localStorage.shouldPushURL
     }
     if (localStorage.shouldFetchAgain) {
+      yield put({ type: actions.types.FETCH_USER_AGAIN })
       yield put({ type: actions.types.MY_LEADS_FETCH_LEADS })
       yield put({ type: actions.types.SELL_LEADS_FETCH_LEADS })
       yield put({ type: actions.types.BUY_LEADS_FETCH_LEADS })
@@ -27,9 +28,13 @@ export default function* inlinemanualsaga() {
   }
 }
 
+window.triggerFetch = function() {
+  localStorage.shouldFetchAgain = true
+}
+
 window.moveToSellLeads = function() {
   window.ldcPush("/sell-leads")
-  localStorage.shouldFetchAgain = true
+  window.triggerFetch()
 }
 window.ldcPush = function(url) {
   localStorage.shouldPushURL = url
