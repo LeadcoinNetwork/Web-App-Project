@@ -1,21 +1,32 @@
 @import "~Styles/variables";
 
 .home {
+  .title {
+    text-align: center;
+    font-size: 35px;
+  }
   .container {
-    width: 520px;
+    display: block;
+    text-align: center;
+    margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
 
     .option {
       display: inline-block;
-      width: 250px;
-      height: 250px;
-      line-height: 250px;
-      text-align: center;
-      font-size: 40px;
-      color: $main-color;
-      background-color: $bg-level-3;
-      border-radius: 6px;
+
+      .ldc-button {
+        width: 250px;
+        background-color: white;
+        color: $main-color;
+      }
+
+      .description {
+        width: 250px;
+        color: white;
+        font-weight: 100;
+        margin-top: 5px;
+      }
     }
 
     .buy {
@@ -34,10 +45,12 @@
       .option {
         display: block;
         margin: auto;
-      }
+        margin-top: 40px;
 
-      .sell {
-        margin-top: 20px;
+        .description {
+          margin: auto;
+          margin-top: 5px;
+        }
       }
     }
   }

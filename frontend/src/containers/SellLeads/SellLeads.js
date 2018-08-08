@@ -52,18 +52,23 @@ class SellLeads extends React.Component {
   render() {
     return (
       <>
-        <h1>{t("Sell Leads")}</h1>
+        <div style={{ float: "left" }}>
+          <h1>{t("Sell Leads")}</h1>
+        </div>
+        <div style={{ float: "right" }}>
+          <div className="upload-links">
+            <Link to="/csv-upload" className="csv-upload no-underline">
+              {t("Upload CSV File")}
+            </Link>
+            <Link to="/add-lead" className="add-lead no-underline">
+              {t("Create New Lead")}
+            </Link>
+          </div>
+        </div>
+        <br style={{ clear: "both" }} />
         <h3>
           {t("Earn money by selling your unused leads to other professionals.")}
         </h3>
-        <div className="upload-links">
-          <Link to="/csv-upload" className="csv-upload">
-            {t("Upload CSV File")}
-          </Link>
-          <Link to="/add-lead" className="add-lead">
-            {t("Create New Lead")}
-          </Link>
-        </div>
         <LeadsTemplate
           {...this.props}
           pageName="sell"

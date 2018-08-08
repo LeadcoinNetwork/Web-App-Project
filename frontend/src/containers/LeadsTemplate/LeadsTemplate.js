@@ -59,18 +59,6 @@ class LeadsTemplate extends React.Component {
             <span>{t("Try expanding your search criteria")}</span>
           </>
         )
-      case "sell":
-        return (
-          <>
-            <h3>{t("Start uploading your leads")}</h3>
-            <span>
-              {t("Upload your leads now by selecting a")}{" "}
-              <Link to="/csv-upload">{t("CSV file")}</Link>
-              {t(" or by filling out a")}{" "}
-              <Link to="/add-lead">{t("simple web form")}</Link>
-            </span>
-          </>
-        )
       case "my":
         return (
           <>

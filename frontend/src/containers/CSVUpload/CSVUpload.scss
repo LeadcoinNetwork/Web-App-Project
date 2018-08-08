@@ -60,6 +60,8 @@
     }
   }
   .file-pick {
+    cursor: pointer;
+    display: inline-block;
     margin-bottom: 10px;
     .ldc-button {
       position: relative;

@@ -183,28 +183,30 @@ class CSVUpload extends React.Component {
       <div className="csvUpload">
         <h1>{t("Upload CSV File")}</h1>
         <h3>{t("Add multiple leads for sale by uploading a CSV file.")}</h3>
-        <div className="file-pick">
+        <div>
           {/* <Button appStyle secondary label={fileLabel}> */}
           {!this.maybeCsvMapper() && (
-            <>
-              <Dropzone
-                accept=".csv"
-                onDrop={acceptedFiles => {
-                  this.props.pickFile(acceptedFiles[0])
-                  this.tryReadingCsv(acceptedFiles[0])
-                }}
-              >
-                <center>
-                  <h3>
-                    <br />Drop a CSV file into this box
-                  </h3>
-                </center>
-              </Dropzone>
+            <div>
+              <div className="file-pick">
+                <Dropzone
+                  accept=".csv"
+                  onDrop={acceptedFiles => {
+                    this.props.pickFile(acceptedFiles[0])
+                    this.tryReadingCsv(acceptedFiles[0])
+                  }}
+                >
+                  <center>
+                    <h3>
+                      <br />Drop a CSV file into this box
+                    </h3>
+                  </center>
+                </Dropzone>
+              </div>
               <p className="template">
                 Click <a href="assets/real-estate-csv-template.csv">here</a> to
                 download a template csv file for real estate leads.
               </p>
-            </>
+            </div>
           )}
           {/* <input
               className="displaynone"
