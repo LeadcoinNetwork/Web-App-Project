@@ -22,6 +22,7 @@ const mock_lead = (overload = {}): Lead => {
       housing_type: "Cardboard Box",
       bought_from: null,
       forSale: true,
+      agree_to_terms: true,
       ownerId: 0,
       contact_person: chance.name(),
       telephone: chance.phone(),

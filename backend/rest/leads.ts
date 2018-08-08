@@ -168,8 +168,19 @@ export function start({
       ;(async () => {
         const { user } = req
         const { lead }: { lead: Lead } = req.body
+        // @ts-ignore
+        if (lead && !lead.agree_to_terms) {
+          res.status(400)
+          res.send({
+            error: {
+              agree_to_terms: "Must agree to terms",
+            },
+          })
+          return
+        }
         if (lead) {
           lead.ownerId = user.id
+          delete lead["agree_to_terms"]
           lead.active = true
           lead.forSale = true
           appLogic.leads
