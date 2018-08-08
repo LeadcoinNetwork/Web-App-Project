@@ -6,6 +6,7 @@ import NotFound from "../utils/not-found"
 import { disabledReason } from "../models/users/types"
 import * as ValidatedUserForTests from "./utils/user.for.tests"
 import Auth from "../app-logic/auth"
+import { user } from "../../frontend/src/actions"
 
 var {
   ApiForToken,
@@ -32,6 +33,19 @@ test("POST /user sign up using WRONG username and password", async () => {
       expect(actual).toEqual(expected)
       expect(x.status).toEqual(400)
     })
+})
+
+test("Creating a new user adds a 1000$ to their balance", async () => {
+  var fname = chance.first()
+  var lname = chance.last()
+  var x = await request.post("/user").send({
+    fname,
+    lname,
+    password: "KGHasdF987654&*^%$#",
+    email: chance.email(),
+  })
+  expect(x.body.user.balance).toBe(1000)
+  expect(typeof x.body.user.id).toEqual("number")
 })
 
 test("POST /user sign up using REAL username and password", async () => {

@@ -26,6 +26,10 @@ const Checkout = ({ fields, checkout, buyLeads, push, checkoutBuyStart }) => {
     }
   }
 
+  let errorMsg
+  if (checkout && checkout.error) {
+    errorMsg = "Insufficient Funds"
+  }
   return (
     <div className="ldc-checkout">
       <h1>{t("Shopping Cart")}</h1>
@@ -48,7 +52,7 @@ const Checkout = ({ fields, checkout, buyLeads, push, checkoutBuyStart }) => {
           ),
         )}
       </div>
-
+      {errorMsg && <div className="error">{errorMsg}</div>}
       <Button
         label={t("Buy")}
         onClick={checkoutBuyStart}

@@ -2,6 +2,7 @@ import types from "../actions/types"
 
 const initialState = {
   loading: false,
+  error: "",
 }
 
 const checkout = (state = initialState, action) => {
@@ -12,10 +13,20 @@ const checkout = (state = initialState, action) => {
         loading: true,
       }
     case types.CHECKOUT_BUY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      }
     case types.CHECKOUT_BUY_ERROR:
       return {
         ...state,
         loading: false,
+        error: action.payload,
+      }
+    case types["BUY_LEADS_SET_SELECTED_LEADS"]:
+      return {
+        ...state,
+        error: "",
       }
     default:
       return state

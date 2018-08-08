@@ -11,9 +11,10 @@ export default {
       type: types.CHECKOUT_BUY_SUCCESS,
     }
   },
-  checkoutBuyError() {
+  checkoutBuyError(error) {
     return {
       type: types.CHECKOUT_BUY_ERROR,
+      payload: error,
     }
   },
 }

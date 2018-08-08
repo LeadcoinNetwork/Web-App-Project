@@ -1,4 +1,4 @@
-import { Lead, LeadQueryOptions } from "../models/leads/types"
+import { Lead, LeadQueryOptions, NewBaseLead } from "../models/leads/types"
 
 import { IModels } from "./index"
 import { Notification } from "../models/notifications/types"
@@ -12,11 +12,18 @@ export interface getLeadsOptions {
   limit?: number
 }
 
+const contains_contact = lead => {
+  return lead.telephone || lead.name || lead.email
+}
+
 const validate_lead = (lead: Lead) => {
-  //TODO: validate lead
   const errors = []
-  if (!lead.description || lead.description.length < 2)
-    errors.push("description::too short")
+  if (!lead.lead_price) errors.push("lead_price::Lead price is required")
+  if (!contains_contact(lead)) {
+    errors.push("phone::At least one contact info is required")
+    errors.push("name::")
+    errors.push("email::")
+  }
   return errors
 }
 
@@ -32,11 +39,17 @@ export default class Leads {
 
   public async buyLeads(leads: number[], new_owner: number) {
     const deal_price = await this.models.leads.getDealPrice(leads)
-    const buyer = await this.models.users.mustGetUserById(new_owner)
+    let buyer
+    if (new_owner > 0) {
+      buyer = await this.models.users.mustGetUserById(new_owner)
+    } else {
+      buyer = {
+        balance: 999999999,
+      }
+    }
     buyer.balance = buyer.balance | 0
-    console.log({ deal_price, buyer })
     if (buyer.balance < deal_price) {
-      throw new Error("balance::amount insufficient")
+      throw new Error("balance::Amount insufficient")
     }
     const result = await this.models.leads.buy(leads, new_owner)
     const groupedByOwner = _.groupBy(result, "bought_from")
@@ -44,7 +57,7 @@ export default class Leads {
     for (let key in groupedByOwner) {
       const user_id = parseInt(key)
       const group: Lead[] = groupedByOwner[key]
-      const transaction_amount = group.reduce(summy("price"), 0)
+      const transaction_amount = group.reduce(summy("lead_price"), 0)
       overall_cost += transaction_amount
       this.models.users.increaseBalance(user_id, overall_cost)
       this.models.users.decreaseBalance(new_owner, overall_cost)
@@ -55,6 +68,7 @@ export default class Leads {
         userId: user_id,
         unread: true,
       })
+      overall_cost = 0
     }
     return result
   }
@@ -63,13 +77,26 @@ export default class Leads {
     return await this.models.leads.remove(lead_id)
   }
 
+  public async sanitizeLead(lead) {
+    if (lead.lead_price && lead.lead_price.replace)
+      lead.lead_price = Number(lead.lead_price.replace(/[^0-9\.-]+/g, ""))
+    if (lead.price && lead.price.replace)
+      lead.price = Number(lead.price.replace(/[^0-9\.-]+/g, ""))
+    return lead
+  }
+
   public async AddLead(lead: Lead) {
     const problems = validate_lead(lead)
     if (problems.length == 0) {
+      lead = await this.sanitizeLead(lead)
       const id = await this.models.leads.AddLead(lead)
       return id
     }
-    throw new Error(problems.join("; "))
+    throw new Error(problems.join(" ;"))
+  }
+
+  public async getMockLeads(user_id: number) {
+    return await this.models.leads.getMockLeads(user_id)
   }
 
   public async getSellLeads(user_id: number, options: LeadQueryOptions) {

@@ -46,6 +46,7 @@ export function start({
     var token = await appLogic.auth.LoginSocial({
       provider_id: profile.id,
       provider: "google",
+      balance: appLogic.config.INITIAL_BALANCE,
       email: profile.emails[0].value,
       fname: profile.name.givenName,
       lname: profile.name.familyName,

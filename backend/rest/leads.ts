@@ -168,8 +168,19 @@ export function start({
       ;(async () => {
         const { user } = req
         const { lead }: { lead: Lead } = req.body
+        // @ts-ignore
+        if (lead && !lead.agree_to_terms) {
+          res.status(400)
+          res.send({
+            error: {
+              agree_to_terms: "Must agree to terms",
+            },
+          })
+          return
+        }
         if (lead) {
           lead.ownerId = user.id
+          delete lead["agree_to_terms"]
           lead.active = true
           lead.forSale = true
           appLogic.leads
@@ -183,7 +194,7 @@ export function start({
                 res.send({ error: err.sqlMessage })
               } else {
                 const error_obj = errStringToObj(err.message)
-                res.send({ error: error_obj })
+                res.send({ error: JSON.parse(error_obj) })
               }
             })
         } else {
@@ -205,7 +216,7 @@ export function start({
     async function(req, res, next) {
       ;(async () => {
         const { user } = req
-        const { leads }: { leads: number[] } = req.body
+        const leads = await appLogic.leads.getMockLeads(user.id)
         if (leads) {
           appLogic.leads
             .buyLeads(leads, 0)

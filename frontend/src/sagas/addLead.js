@@ -19,7 +19,7 @@ export default function* addLead(api) {
     })
     yield put(actions.addLead.addLeadLoadingEnd())
     if (res.error) {
-      const errors = JSON.parse(res.error)
+      const errors = res.error
       for (let error in errors) {
         yield put(actions.addLead.addLeadAddError(error, errors[error]))
       }

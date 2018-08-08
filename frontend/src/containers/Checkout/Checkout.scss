@@ -1,6 +1,12 @@
 .ldc-checkout {
   display: flow-root;
 
+  .error {
+    text-align: right;
+    color: orangered;
+    margin: 5px;
+  }
+
   .c-total {
     padding: 30px 0;
     font-size: 24px;

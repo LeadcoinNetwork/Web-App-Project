@@ -38,13 +38,9 @@ export default class LeadsApi {
   constructor(private request: request) {}
 
   async buyMeOut() {
-    //@ts-ignore
-    if (window.mockIds && window.mockIds.length > 0) {
-      return await this.request(methods.post, "/sell-leads/buymyleads", {
-        //@ts-ignore
-        leads: window.mockIds,
-      })
-    }
+    return await this.request(methods.post, "/sell-leads/buymyleads")
+    // @ts-ignore
+    window.triggerFetch()
   }
 
   async addMockLeads() {
@@ -69,12 +65,13 @@ export default class LeadsApi {
         date: new Date().valueOf(),
         meta: { mock: true },
         bought_from: null,
+        agree_to_terms: true,
         active: true,
       }
       //@ts-ignore
       let { response } = await window.apiClient.leads.sellLeadsAddByForm(lead)
       //@ts-ignore
-      window.mockIds.push(response.insertId)
+      window.triggerFetch()
     })
   }
 

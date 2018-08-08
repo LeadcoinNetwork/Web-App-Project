@@ -136,6 +136,7 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
               email: profile.emails[0].value,
               provider_id: profile.id,
               provider: profile.provider,
+              balance: config.INITIAL_BALANCE,
               created: Date.now(),
               role: "user",
             }

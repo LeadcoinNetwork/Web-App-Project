@@ -32,11 +32,12 @@ export interface BaseLead {
 export interface NewBaseLead {
   date: number
   telephone: string
-  lead_price: number
+  lead_price: any
   bought_from: number | null
   forSale?: boolean
   active: boolean
   description?: string
+  agree_to_terms?: boolean
   meta?: any
 }
 export interface NewRealEstateLead extends NewBaseLead {
