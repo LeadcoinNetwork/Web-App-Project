@@ -12,11 +12,14 @@ export interface getLeadsOptions {
   limit?: number
 }
 
+const contains_contact = lead => {
+  return lead.telephone || lead.name || lead.email
+}
+
 const validate_lead = (lead: Lead) => {
-  //TODO: validate lead
   const errors = []
-  if (!lead.description || lead.description.length < 2)
-    errors.push("description::too short")
+  if (!lead.lead_price) errors.push("lead_price:: required")
+  if (!contains_contact(lead)) errors.push("contact:: required")
   return errors
 }
 
