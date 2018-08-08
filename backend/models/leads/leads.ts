@@ -42,6 +42,10 @@ export default class Leads extends baseDBModel<
     return await this.leadsQueries.getLeadFields(lead_type)
   }
 
+  public async getMockLeads(user_id: number) {
+    return await this.leadsQueries.getMockLeads(user_id)
+  }
+
   public async getMyLeadsForSale(user_id: number, options: LeadQueryOptions) {
     return await this.leadsQueries.getMyLeadsForSale(user_id, options)
   }

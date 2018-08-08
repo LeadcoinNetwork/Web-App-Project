@@ -37,6 +37,7 @@ export interface NewBaseLead {
   forSale?: boolean
   active: boolean
   description?: string
+  agree_to_terms?: boolean
   meta?: any
 }
 export interface NewRealEstateLead extends NewBaseLead {
