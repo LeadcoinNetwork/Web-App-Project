@@ -39,6 +39,13 @@
   }
 }
 
+[class*="inmplayer-popover-button"] {
+  border-radius: 20px;
+  padding: 5px 20px;
+  font-size: 16px;
+  font-family: proxima-nova !important;
+}
+
 @keyframes move-loader {
   0% {
     width: 0px;

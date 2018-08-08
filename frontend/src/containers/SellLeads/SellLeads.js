@@ -57,10 +57,10 @@ class SellLeads extends React.Component {
           {t("Earn money by selling your unused leads to other professionals.")}
         </h3>
         <div className="upload-links">
-          <Link to="/csv-upload" className="csv-upload">
+          <Link to="/csv-upload" className="csv-upload no-underline">
             {t("Upload CSV File")}
           </Link>
-          <Link to="/add-lead" className="add-lead">
+          <Link to="/add-lead" className="add-lead no-underline">
             {t("Create New Lead")}
           </Link>
         </div>
