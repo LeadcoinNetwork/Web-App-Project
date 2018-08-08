@@ -19,7 +19,7 @@ export default function* signup(api) {
       password,
     })
     yield put(Actions.signup.signupFinish())
-
+    window.triggerFetch()
     if (ans.error) {
       yield put(Actions.signup.signupError(ans.error))
     } else {

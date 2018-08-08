@@ -18,6 +18,7 @@ export default function* login(api) {
       password,
     })
     yield put(actions.login.loginFinish())
+    window.triggerFetch()
     if (ans.error) {
       yield put(actions.login.loginError(ans.error))
     } else {
