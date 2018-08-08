@@ -77,7 +77,8 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     getNotificationsByUserId: async user_id => {
       let sql = `SELECT * 
       FROM leadcoin.notifications
-      WHERE doc->>"$.userId"=${user_id} ;`
+      WHERE doc->>"$.userId"=${user_id} 
+      ORDER BY id desc;`
       let rows = await this.sql.query(sql)
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
       return rows
