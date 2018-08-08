@@ -18,6 +18,7 @@ export default function* inlinemanualsaga() {
       delete localStorage.shouldPushURL
     }
     if (localStorage.shouldFetchAgain) {
+      yield put({ type: actions.types.CLEAR_ALL_LEADS })
       yield put({ type: actions.types.FETCH_USER_AGAIN })
       yield put({ type: actions.types.MY_LEADS_FETCH_LEADS })
       yield put({ type: actions.types.SELL_LEADS_FETCH_LEADS })
@@ -29,6 +30,7 @@ export default function* inlinemanualsaga() {
 }
 
 window.triggerFetch = function() {
+  console.log("fetch triggered")
   localStorage.shouldFetchAgain = true
 }
 
