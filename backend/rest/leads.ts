@@ -451,7 +451,6 @@ export function start({
           res.status(400)
           res.send({ error: err.message })
         })
-      return next()
     })().catch(done)
   })
 }
