@@ -78,6 +78,13 @@ class AddLead extends React.Component {
             <div className="fields">{this.renderFields(db_fields.public)}</div>
           </div>
           {this.renderTerms()}
+          {errors && (
+            <div className="errors">
+              {Object.keys(errors).map((error, index) => (
+                <div key={index}>{errors[error]}</div>
+              ))}
+            </div>
+          )}
           <div className="controls field_submit flexed">
             <div>
               <Button
@@ -100,13 +107,6 @@ class AddLead extends React.Component {
               />
             </div>
           </div>
-          {errors && (
-            <div className="errors">
-              {Object.keys(errors).map((error, index) => (
-                <div key={index}>{errors[error]}</div>
-              ))}
-            </div>
-          )}
         </div>
       </div>
     )

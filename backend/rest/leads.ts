@@ -194,7 +194,7 @@ export function start({
                 res.send({ error: err.sqlMessage })
               } else {
                 const error_obj = errStringToObj(err.message)
-                res.send({ error: error_obj })
+                res.send({ error: JSON.parse(error_obj) })
               }
             })
         } else {
