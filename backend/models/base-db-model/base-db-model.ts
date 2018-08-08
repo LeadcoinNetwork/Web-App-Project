@@ -85,6 +85,16 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
   }
 
   leadsQueries = {
+    getMockLeads: async user_id => {
+      let sql = `
+      SELECT id
+      FROM leadcoin.leads
+      WHERE doc->>"$.meta.mock" = "true"
+      AND doc->>"$.ownerId" = ${user_id}
+      ;`
+      let rows = await this.sql.query(sql)
+      return rows.map(r => r.id)
+    },
     getDealPrice: async lead_ids => {
       if (lead_ids.length === 0) return 0
       let sql = `

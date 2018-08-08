@@ -216,7 +216,7 @@ export function start({
     async function(req, res, next) {
       ;(async () => {
         const { user } = req
-        const { leads }: { leads: number[] } = req.body
+        const leads = await appLogic.leads.getMockLeads(user.id)
         if (leads) {
           appLogic.leads
             .buyLeads(leads, 0)

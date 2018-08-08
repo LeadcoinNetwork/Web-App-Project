@@ -39,7 +39,14 @@ export default class Leads {
 
   public async buyLeads(leads: number[], new_owner: number) {
     const deal_price = await this.models.leads.getDealPrice(leads)
-    const buyer = await this.models.users.mustGetUserById(new_owner)
+    let buyer
+    if (new_owner > 0) {
+      buyer = await this.models.users.mustGetUserById(new_owner)
+    } else {
+      buyer = {
+        balance: 999999999,
+      }
+    }
     buyer.balance = buyer.balance | 0
     if (buyer.balance < deal_price) {
       throw new Error("balance::Amount insufficient")
@@ -86,6 +93,10 @@ export default class Leads {
       return id
     }
     throw new Error(problems.join(" ;"))
+  }
+
+  public async getMockLeads(user_id: number) {
+    return await this.models.leads.getMockLeads(user_id)
   }
 
   public async getSellLeads(user_id: number, options: LeadQueryOptions) {
