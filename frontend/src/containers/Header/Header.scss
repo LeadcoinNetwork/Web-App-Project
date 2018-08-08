@@ -8,15 +8,25 @@ header.ldc-header {
   padding: 0 25px;
   background-color: $main-color;
 
-  .logo-link {
+  .logo {
     display: inline-block;
     height: 100%;
-    cursor: pointer;
-    width: 108px;
-    background-image: url("~Images/logo.png");
-    background-size: auto 30px;
-    background-repeat: no-repeat;
-    background-position: center;
+
+    .logo-link {
+      cursor: pointer;
+      display: inline-block;
+      height: 100%;
+      width: 108px;
+      background-image: url("~Images/logo.png");
+      background-size: auto 30px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .alpha-demo {
+      margin-left: 15px;
+      vertical-align: 34%;
+    }
   }
 
   .m-both-right {
