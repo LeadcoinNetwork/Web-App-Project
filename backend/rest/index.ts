@@ -78,7 +78,7 @@ export default class RestServer {
     Google.start({ appLogic, expressApp })
 
     // ROUTES
-    expressApp.use(bodyParser.json())
+    expressApp.use(bodyParser.json({ limit: "100mb" }))
     expressApp.use(cookieParser())
     cors.start(expressApp, this.appLogic)
 
@@ -87,7 +87,7 @@ export default class RestServer {
     userRouter.start({ appLogic: this.appLogic, expressApp })
     leads.start({ appLogic, expressApp })
     notifications.start({ appLogic, expressApp })
-    // TODO csv
+    csv.start({ appLogic, expressApp })
 
     expressApp.route("/gitlog.txt").get((req, res) => {
       var gitlog = ""

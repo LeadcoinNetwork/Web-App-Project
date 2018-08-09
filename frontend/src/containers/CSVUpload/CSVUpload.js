@@ -6,6 +6,7 @@ import { connect } from "react-redux"
 import { csvUpload, csvMapping } from "Actions"
 import t from "../../utils/translate/translate"
 import Dropzone from "react-dropzone"
+import papaparse from "papaparse"
 
 class CSVUpload extends React.Component {
   generalError() {
@@ -19,27 +20,35 @@ class CSVUpload extends React.Component {
     return
   }
 
-  process(csv) {
-    let txtLines = csv.split(/\r\n|\n/)
-    let fields = txtLines[0].split(",")
-    this.props.setFileFields(fields)
+  process(fields) {
+    this.props.setFileFields(Object.keys(fields))
     // TODO: replace mock_fields with field list from /leads/getLeadType
     let mock_fields = {
-      private: ["name", "phone"],
-      public: ["floor", "size"],
+      private: ["Contact Person", "Telephone", "Email"],
+      public: [
+        "Description",
+        "Bedrooms/Baths",
+        "Type",
+        "Price",
+        "Size",
+        "State",
+        "Location",
+        "Housing",
+        "Type",
+      ],
     }
     this.props.setDbFields(mock_fields)
   }
 
   tryReadingCsv(file) {
-    let reader = new FileReader()
-    reader.readAsText(file)
-    reader.onload = e => {
-      this.process(e.target.result)
-    }
-    reader.onerror = e => {
-      console.error("DANGER WILL ROBINSON!")
-    }
+    papaparse.parse(file, {
+      dynamicTyping: true,
+      header: true,
+      preview: 1,
+      complete: rows => {
+        this.process(rows.data[0])
+      },
+    })
   }
 
   maybeCsvMapper() {
@@ -81,10 +90,7 @@ class CSVUpload extends React.Component {
               <Button
                 appStyle
                 onClick={() => {
-                  this.props.submit({
-                    map: this.props.fields_map,
-                    file: this.props.file,
-                  })
+                  this.props.submit()
                 }}
                 label={t("Submit")}
               />
@@ -128,7 +134,8 @@ class CSVUpload extends React.Component {
   }
 
   renderPriceElement() {
-    const errors = this.props.csvMapping.errors
+    const errors = this.props.csvUpload.errors
+    if (!errors) return
     const error = errors.indexOf("price") > -1 ? "error" : ""
     return (
       <div className={"price " + error}>
@@ -145,7 +152,8 @@ class CSVUpload extends React.Component {
   }
 
   renderTerms() {
-    const errors = this.props.csvMapping.errors
+    const errors = this.props.csvUpload.errors
+    if (!errors) return
     const error = errors.indexOf("agree_to_terms") > -1 ? "error" : ""
     const cls = "terms " + error
     return (
@@ -244,6 +252,6 @@ export default connect(
     handleMapChange: csvMapping.csvMappingMapChange,
     handleErrors: csvMapping.csvMappingError,
     clear: csvMapping.csvMappingClearForm,
-    submit: csvMapping.csvMappingSubmit,
+    submit: csvUpload.csvUploadSubmit,
   },
 )(CSVUpload)

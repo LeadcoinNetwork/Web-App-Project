@@ -4,4 +4,10 @@ export enum methods {
   delete = "delete",
   put = "put",
 }
-export type request = (method: methods, url, body?, query?) => Promise<any>
+export type request = (
+  method: methods,
+  url,
+  body?,
+  query?,
+  attach?,
+) => Promise<any>

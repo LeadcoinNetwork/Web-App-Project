@@ -1,8 +1,11 @@
 // external modules
 const csv = require("csv")
 const fs = require("fs")
+const papaparse = require("papaparse")
 
-import { Lead } from "../leads/types"
+console.log({ papaparse })
+
+import { Lead, NewRealEstateLead } from "../leads/types"
 
 export interface fieldsMap {
   fieldName: {
@@ -11,34 +14,32 @@ export interface fieldsMap {
   }
 }
 
+const parseConfig = {
+  delimiter: ",",
+  quotedChar: '"',
+  header: true,
+}
+
 export function parseMappedFile(
   user_id,
-  filename,
+  fileContents,
   fields_map: fieldsMap,
-): Promise<Lead[]> {
-  return new Promise((resolve, reject) => {
-    const opts = {
-      delimiter: ",",
-      columns: true,
+  lead_price: number,
+) {
+  let records = papaparse.parse(fileContents, parseConfig).data
+  const leads = records.map(line => {
+    const lead: NewRealEstateLead = {
+      lead_price,
+      ownerId: user_id,
+      date: new Date().valueOf(),
+      lead_type: "realestate",
+      active: true,
     }
-    const parser = csv.parse(opts, (e, data) => {
-      if (e) return reject(e)
-      const response = []
-      data.forEach(line => {
-        let json_obj = {}
-        for (let key in fields_map) {
-          let { mappedIndex } = fields_map[key]
-          json_obj[key] = line[mappedIndex]
-        }
-        response.push(json_obj)
-        return
-      })
-      resolve(response)
-    })
-    try {
-      fs.createReadStream(filename).pipe(parser)
-    } catch (e) {
-      reject(e)
+    for (let key in fields_map) {
+      let mappedIndex = fields_map[key]
+      lead[key] = line[mappedIndex]
     }
+    return lead
   })
+  return leads
 }

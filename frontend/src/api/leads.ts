@@ -8,6 +8,7 @@ import {
 } from "../../../backend/models/leads/types"
 
 import papaParse from "papaparse"
+import { resolve } from "dns"
 
 interface LeadsApiOptions {
   sort_by?: [string, "ASC" | "DESC"]
@@ -34,8 +35,20 @@ const parseConfig = {
   header: true,
 }
 
+const pFileReader = file => {
+  //@ts-ignore
+  return new Promise((resolve, reject) => {
+    //@ts-ignore
+    let reader = new FileReader()
+    reader.onload = () => {
+      resolve(reader.result)
+    }
+    reader.readAsText(file)
+  })
+}
+
 export default class LeadsApi {
-  constructor(private request: request) {}
+  constructor(private request: any) {}
 
   async buyMeOut() {
     await this.request(methods.post, "/sell-leads/buymyleads")
@@ -74,6 +87,17 @@ export default class LeadsApi {
       let { response } = await window.apiClient.leads.sellLeadsAddByForm(lead)
       //@ts-ignore
       window.triggerFetch()
+    })
+  }
+
+  async sellLeadsCsvMapping({ fields_map, lead_price, agree_to_terms, file }) {
+    //@ts-ignore
+    const fileContent = await pFileReader(file)
+    return await this.request(methods.post, "/csv/upload", {
+      fields_map,
+      lead_price,
+      agree_to_terms,
+      fileContent,
     })
   }
 
