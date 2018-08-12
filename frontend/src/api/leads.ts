@@ -85,9 +85,9 @@ export default class LeadsApi {
       }
       //@ts-ignore
       let { response } = await window.apiClient.leads.sellLeadsAddByForm(lead)
-      //@ts-ignore
-      window.triggerFetch()
     })
+    //@ts-ignore
+    window.triggerFetch()
   }
 
   async sellLeadsCsvMapping({ fields_map, lead_price, agree_to_terms, file }) {

@@ -39,10 +39,18 @@ window.ldcPush = function(url) {
   localStorage.shouldPushURL = url
 }
 
+var activateStepUploadingOnlyOnce = false
 window.activateStepUploading = function() {
-  setTimeout(clickNext, 3000)
+  if (activateStepUploadingOnlyOnce) return true
+  activateStepUploadingOnlyOnce = true
+  apiClient.leads.addMockLeads()
+  setTimeout(function() {
+    clickNext()
+    ldcPush("/sell-leads")
+  }, 3000)
 }
 function clickNext() {
+  console.log("clickNext")
   $(".inmplayer-popover-button-next")[0].click()
 }
 
@@ -71,7 +79,8 @@ window.moveToSellLeads = function() {
 }
 
 window.moveToSellAndFetch = function() {
-  window.moveToSellLeads()
+  console.log("moveToSellAndFetch")
+  // window.moveToSellLeads()
   window.triggerFetch()
 }
 
