@@ -1,12 +1,11 @@
 import Users from "./users"
 import Leads from "./leads"
-import Blockchain from "./blockchain"
+//import Blockchain from "./blockchain"
 import Notifications from "./notifications"
 
 export default class API {
   users: Users
   leads: Leads
-  blockchain: Blockchain
   notifications: Notifications
   constructor(private request) {
     // Create new request object, that all API's will use.
@@ -35,7 +34,6 @@ export default class API {
     }
 
     this.leads = new Leads(r)
-    this.blockchain = new Blockchain(request)
     this.users = new Users(r)
     this.notifications = new Notifications(r)
     //@ts-ignore
