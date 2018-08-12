@@ -8,7 +8,7 @@ const fields = [
     minWidth: "80px",
   },
   {
-    key: "description",
+    key: "Description",
     name: "Description",
     sortable: true,
     editable: true,
@@ -16,7 +16,7 @@ const fields = [
     minWidth: "auto",
   },
   {
-    key: "bedrooms_baths",
+    key: "Bedrooms/Baths",
     name: "Bedrooms / Baths",
     sortable: true,
     editable: true,
@@ -24,7 +24,7 @@ const fields = [
     minWidth: "80px",
   },
   {
-    key: "type",
+    key: "Type",
     name: "Type",
     sortable: true,
     editable: true,
@@ -32,7 +32,7 @@ const fields = [
     minWidth: "90px",
   },
   {
-    key: "price",
+    key: "Price",
     name: "Price",
     sortable: true,
     editable: true,
@@ -40,7 +40,7 @@ const fields = [
     minWidth: "70px",
   },
   {
-    key: "size",
+    key: "Size",
     name: "Size (SqFt)",
     sortable: true,
     editable: true,
@@ -48,7 +48,7 @@ const fields = [
     minWidth: "50px",
   },
   {
-    key: "state",
+    key: "State",
     name: "State",
     sortable: true,
     editable: true,
@@ -56,7 +56,7 @@ const fields = [
     minWidth: "80px",
   },
   {
-    key: "location",
+    key: "Location",
     name: "Location",
     sortable: true,
     editable: true,
@@ -64,7 +64,7 @@ const fields = [
     minWidth: "70px",
   },
   {
-    key: "housing_type",
+    key: "Housing Type",
     name: "Housing Type",
     sortable: true,
     editable: true,
@@ -72,7 +72,7 @@ const fields = [
     minWidth: "130px",
   },
   {
-    key: "name",
+    key: "Contact Person",
     name: "Contact Person",
     sortable: true,
     editable: true,
@@ -81,7 +81,7 @@ const fields = [
     private: true,
   },
   {
-    key: "phone",
+    key: "Telephone",
     name: "Telephone",
     sortable: true,
     editable: true,

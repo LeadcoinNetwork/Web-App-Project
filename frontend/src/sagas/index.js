@@ -36,7 +36,7 @@ var request = function(method, url, data, query) {
     .query(query)
     .send(data)
 }
-request._ = superagent
+
 var api = new API(request)
 
 export default function* rootSaga() {
