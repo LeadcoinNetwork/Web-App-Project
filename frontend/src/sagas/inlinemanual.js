@@ -34,10 +34,6 @@ window.triggerFetch = function() {
   localStorage.shouldFetchAgain = true
 }
 
-window.moveToSellLeads = function() {
-  window.ldcPush("/sell-leads")
-  window.triggerFetch()
-}
 window.ldcPush = function(url) {
   localStorage.shouldPushURL = url
 }
@@ -45,6 +41,32 @@ window.ldcPush = function(url) {
 window.activateStepUploading = function() {
   setTimeout(jumpToStepNotYouHaveLeadsToSell, 3000)
 }
+
 window.jumpToStepNotYouHaveLeadsToSell = function() {
   inline_manual_player.activateStep(52083, 15)
+}
+
+window.moveToHome = function() {
+  window.ldcPush("/home")
+}
+
+window.moveToBuyLeads = function() {
+  window.ldcPush("/buy-leads")
+}
+
+window.moveToShoppingCart = function() {
+  window.ldcPush("/shopping-cart")
+}
+
+window.moveToMyLeads = function() {
+  window.ldcPush("/my-leads")
+}
+
+window.moveToSellLeads = function() {
+  window.ldcPush("/sell-leads")
+}
+
+window.moveToSellAndFetch = function() {
+  window.moveToSellLeads()
+  window.triggerFetch()
 }
