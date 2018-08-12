@@ -7,8 +7,8 @@ import {
   LeadQueryOptions,
 } from "../../../backend/models/leads/types"
 
+//@ts-ignore
 import papaParse from "papaparse"
-import { resolve } from "dns"
 
 interface LeadsApiOptions {
   sort_by?: [string, "ASC" | "DESC"]
@@ -52,6 +52,7 @@ export default class LeadsApi {
 
   async buyMeOut() {
     await this.request(methods.post, "/sell-leads/buymyleads")
+    //@ts-ignore
     setTimeout(() => {
       // @ts-ignore
       window.triggerFetch()
@@ -76,7 +77,7 @@ export default class LeadsApi {
         Telephone: line["Telephone"],
         "Contact Person": line["Contact Person"],
         "Lead Price": line["Lead Price"],
-        lead_type: "realestate",
+        "Lead Type": "realestate",
         date: new Date().valueOf(),
         meta: { mock: true },
         bought_from: null,
@@ -84,7 +85,6 @@ export default class LeadsApi {
         active: true,
       }
       //@ts-ignore
-      console.log({lead})
       let { response } = await window.apiClient.leads.sellLeadsAddByForm(lead)
       //@ts-ignore
       window.triggerFetch()
