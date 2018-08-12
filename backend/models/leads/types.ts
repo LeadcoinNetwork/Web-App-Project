@@ -17,11 +17,11 @@ export interface LeadQueryOptions {
 
 export interface BaseLead {
   id?: number
-  price: number
-  description: string
+  Price: number
+  Description: string
   lead_price: number
   date: number
-  telephone: string
+  Telephone: string
   bought_from: number | null
   ownerId: number
   forSale: boolean
@@ -31,45 +31,44 @@ export interface BaseLead {
 
 export interface NewBaseLead {
   date: number
-  telephone?: string
-  lead_price: any
+  Telephone?: string
+  "Lead Price": any
   bought_from?: number | null
   forSale?: boolean
   active: boolean
-  description?: string
+  Description?: string
   agree_to_terms?: boolean
   meta?: any
 }
 export interface NewRealEstateLead extends NewBaseLead {
-  lead_type: "realestate"
-  description?: string
-  bedrooms_baths?: string
-  contact_person?: string
-  ownerId?: number
-  type?: "Sell" | "Rent"
-  size?: number
-  state?: string
-  price?: number
-  location?: number
-  housing_type?: string
-  specification?: string
-  property_type?: string
+  "Lead Type": "realestate"
+  Description: string
+  Price: number
+  "Bedrooms/Baths": string
+  "Contact Person": string
+  Type: "Sell" | "Rent"
+  Size?: number
+  State?: string
+  Location?: number
+  Housing_type?: string
+  Specification?: string
+  "Property Type"?: string
 }
 
 // Description,Bedrooms / Baths,Type,Price,Size,State,Location,Housing Type,Telephone,Contact Person
 export interface RealEstateLead extends BaseLead {
-  lead_type: "realestate"
-  description: string
-  price: number
-  bedrooms_baths: string
-  contact_person: string
-  type: "Sell" | "Rent"
-  size?: number
-  state?: string
-  location?: number
-  housing_type?: string
-  specification?: string
-  property_type?: string
+  "Lead Type": "realestate"
+  Description: string
+  Price: number
+  "Bedrooms/Baths": string
+  "Contact Person": string
+  Type: "Sell" | "Rent"
+  Size?: number
+  State?: string
+  Location?: number
+  Housing_type?: string
+  Specification?: string
+  "Property Type"?: string
 }
 
 export type Lead = BaseLead | RealEstateLead
