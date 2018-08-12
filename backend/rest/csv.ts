@@ -46,7 +46,6 @@ export function start({
         agree_to_terms: boolean
         fileContent: string
       } = req.body
-      console.log(Object.keys(req.body))
       if (!agree_to_terms) {
         res.status(400)
         res.send({
