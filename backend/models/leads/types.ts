@@ -31,9 +31,9 @@ export interface BaseLead {
 
 export interface NewBaseLead {
   date: number
-  telephone: string
+  telephone?: string
   lead_price: any
-  bought_from: number | null
+  bought_from?: number | null
   forSale?: boolean
   active: boolean
   description?: string
@@ -42,14 +42,14 @@ export interface NewBaseLead {
 }
 export interface NewRealEstateLead extends NewBaseLead {
   lead_type: "realestate"
-  description: string
-  bedrooms_baths: string
-  contact_person: string
+  description?: string
+  bedrooms_baths?: string
+  contact_person?: string
   ownerId?: number
-  type: "Sell" | "Rent"
+  type?: "Sell" | "Rent"
   size?: number
   state?: string
-  price: number
+  price?: number
   location?: number
   housing_type?: string
   specification?: string
