@@ -84,6 +84,7 @@ export default class LeadsApi {
         active: true,
       }
       //@ts-ignore
+      console.log({lead})
       let { response } = await window.apiClient.leads.sellLeadsAddByForm(lead)
       //@ts-ignore
       window.triggerFetch()

@@ -34,23 +34,23 @@ export function start({
       let owner = Math.floor(count / i)
       let status = await appLogic.models.leads.insertLead({
         lead_type: "realestate",
-        type: "Sell",
-        bedrooms_baths: "2BR / 2BA",
+        Type: "Sell",
+	"Bedrooms/Baths": "2BR / 2BA",
         date: new Date().valueOf(),
-        size: chance.integer({ min: 1, max: 20 }),
-        description: chance.sentence({
+        Size: chance.integer({ min: 1, max: 20 }),
+        Description: chance.sentence({
           words: chance.integer({ min: 1, max: 9 }),
         }),
-        state: chance.state(),
-        housing_type: "Cardboard Box",
-        bought_from: null,
+        State: chance.state(),
+        Housing Type": "Cardboard Box",
+        Bought_from: null,
         forSale: true,
-        lead_price: chance.integer({ min: 1, max: 20 }),
+        Lead Price": chance.integer({ min: 1, max: 20 }),
         ownerId: owner,
-        contact_person: chance.name(),
-        telephone: chance.phone(),
+        Contact person": chance.name(),
+        Telephone: chance.phone(),
         active: true,
-        price: parseInt(
+        Price: parseInt(
           chance
             .integer()
             .toString()
