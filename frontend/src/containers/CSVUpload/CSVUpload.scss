@@ -3,7 +3,9 @@
 .fields_mapper {
   padding: 10px;
   .terms {
-    margin-right: 5px;
+    margin-right: 160px;
+    width: 200px;
+    padding-top: 15px;
   }
   .personal {
     padding-bottom: 10px;
@@ -17,6 +19,9 @@
   }
   .help_text {
     width: 200px;
+  }
+  .mapSubmit {
+    margin-right: 2px;
   }
   .form_error {
     color: $ldc-error-color;
@@ -34,7 +39,6 @@
     margin: 10px 10px;
     height: 40px;
     line-height: 40px;
-
     .fieldLabel {
       width: 200px;
       margin-right: 5px;
@@ -42,10 +46,10 @@
     }
   }
   .price {
-    margin-left: 10px;
+    margin-left: 212px;
     input {
-      margin-left: 10px;
-      width: 150px;
+      margin-left: 52px;
+      width: 240px;
     }
   }
   .flexed {
@@ -55,13 +59,16 @@
 
 .csvUpload {
   padding: 10px;
-  .error {
-    padding: 5px;
-    margin: 5px;
-    > div {
-      padding: 5px;
-      margin: 5px;
+  .header {
+    &.bigger {
+      margin-top: 10px;
       font-weight: bold;
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+    &.smaller {
+      font-weight: normal;
+      font-size: 18px;
     }
   }
   .file-pick {
