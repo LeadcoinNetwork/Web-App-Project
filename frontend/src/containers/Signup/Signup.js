@@ -20,7 +20,7 @@ class Signup extends React.Component {
     )
   }
   render() {
-    let { fname, lname, email, password, error, loading } = this.props.signup
+    let { fname, lname, email, password, errors, loading } = this.props.signup
 
     return (
       <section className="ldc-signup">
@@ -36,18 +36,21 @@ class Signup extends React.Component {
           <div className="sm-form">
             <h4>{t("Or enter your details:")}</h4>
             <TextField
+              className={"fname" + (errors.fname ? " error" : "")}
               placeholder={t("First Name")}
               value={fname}
               name="fname"
               onChange={this.handleChange}
             />
             <TextField
+              className={"lname" + (errors.lname ? " error" : "")}
               placeholder={t("Last Name")}
               value={lname}
               name="lname"
               onChange={this.handleChange}
             />
             <TextField
+              className={"email" + (errors.email ? " error" : "")}
               placeholder={t("Email")}
               type="email"
               value={email}
@@ -55,13 +58,20 @@ class Signup extends React.Component {
               onChange={this.handleChange}
             />
             <TextField
+              className={"password" + (errors.password ? " error" : "")}
               placeholder={t("Password")}
               value={password}
               name="password"
               onChange={this.handleChange}
               type="password"
             />
-            {error && this.getErrors(error)}
+            {errors && (
+              <div className="errors">
+                {Object.keys(errors).map((error, index) => (
+                  <div key={index}>{t(errors[error])}</div>
+                ))}
+              </div>
+            )}
             <Button
               label={t("register")}
               loading={loading}

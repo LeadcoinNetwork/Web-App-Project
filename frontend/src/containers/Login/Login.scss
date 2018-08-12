@@ -1,17 +1,1 @@
 @import "~Containers/Signup/Signup";
-@import "~Styles/variables";
-
-.ldc-login {
-  .l-main {
-    .lm-form {
-      .ldc-textfield {
-        &.error {
-          background-color: $ldc-error-background-color;
-        }
-      }
-      .errors {
-        color: $ldc-error-color;
-      }
-    }
-  }
-}

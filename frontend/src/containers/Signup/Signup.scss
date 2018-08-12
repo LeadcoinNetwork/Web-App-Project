@@ -48,6 +48,16 @@ section.ldc-complete-registration {
         margin: 16px 0;
       }
 
+      .ldc-textfield {
+        &.error {
+          background-color: $ldc-error-background-color;
+        }
+      }
+
+      .errors {
+        color: $ldc-error-color;
+      }
+
       .ldc-error-text {
         margin-top: 20px;
       }

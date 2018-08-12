@@ -26,12 +26,10 @@ export default {
     }
   },
 
-  signupError(message) {
+  signupError(errors) {
     return {
       type: types.SIGNUP_ERROR,
-      payload: {
-        message,
-      },
+      payload: errors,
     }
   },
 }

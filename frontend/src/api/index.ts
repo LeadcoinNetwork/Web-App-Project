@@ -14,7 +14,7 @@ export default class API {
         var ans = await request.apply(null, arguments)
         if (ans.status >= 400 && !ans.body.error) {
           return {
-            error: "REQUEST_ERROR",
+            error: { req_error: "REQUEST_ERROR" },
             status: ans.status,
           }
         }
@@ -26,7 +26,7 @@ export default class API {
           }
         } else {
           return {
-            error: "NETWORK_ERROR",
+            error: { net_error: "NETWORK_ERROR" },
           }
         }
       }
