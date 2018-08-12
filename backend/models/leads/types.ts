@@ -19,7 +19,7 @@ export interface BaseLead {
   id?: number
   Price: number
   Description: string
-  lead_price: number
+  "Lead Price": number
   date: number
   Telephone: string
   bought_from: number | null
@@ -50,7 +50,7 @@ export interface NewRealEstateLead extends NewBaseLead {
   Size?: number
   State?: string
   Location?: number
-  Housing_type?: string
+  "Housing Type"?: string
   Specification?: string
   "Property Type"?: string
 }
@@ -66,7 +66,7 @@ export interface RealEstateLead extends BaseLead {
   Size?: number
   State?: string
   Location?: number
-  Housing_type?: string
+  "Housing Type"?: string
   Specification?: string
   "Property Type"?: string
 }
