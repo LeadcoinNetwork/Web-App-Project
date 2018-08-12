@@ -18,10 +18,16 @@
   .help_text {
     width: 200px;
   }
+  .form_error {
+    color: $ldc-error-color;
+    select {
+      border-color: $ldc-error-color;
+    }
+  }
   .error {
-    color: red;
+    color: $ldc-error-color;
     label {
-      color: red;
+      color: $ldc-error-color;
     }
   }
   .line {
@@ -55,7 +61,6 @@
     > div {
       padding: 5px;
       margin: 5px;
-      background-color: red;
       font-weight: bold;
     }
   }

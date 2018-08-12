@@ -10,12 +10,16 @@ import papaparse from "papaparse"
 
 class CSVUpload extends React.Component {
   generalError() {
-    const { errors } = this.props
-    if (errors && errors.length > 0) {
-      const errorMsgs = errors.map((e, i) => {
-        return <div key={i}>{t(e)}</div>
+    const { errors } = this.props.csvUpload
+    if (!errors) return
+    if (Object.keys(errors).length > 0) {
+      const msgs = Object.keys(errors).filter(e => {
+        return errors[e] != ""
       })
-      return <div className="error">{errorMsgs}</div>
+      const errorMsgs = msgs.map((e, i) => {
+        return <div key={i}>{t(errors[e])}</div>
+      })
+      return <div className="form_error">{errorMsgs}</div>
     }
     return
   }
@@ -84,6 +88,7 @@ class CSVUpload extends React.Component {
             <div className="fields">{this.renderFields(db_fields.public)}</div>
           </div>
           {price_element}
+          {this.generalError()}
           <div className="controls field_submit flexed">
             {terms}
             <div>
@@ -136,7 +141,7 @@ class CSVUpload extends React.Component {
   renderPriceElement() {
     const errors = this.props.csvUpload.errors
     if (!errors) return
-    const error = errors.indexOf("price") > -1 ? "error" : ""
+    const error = Object.keys(errors).indexOf("price") > -1 ? "error" : ""
     return (
       <div className={"price " + error}>
         <span>{t("Lead price")}</span>
@@ -154,7 +159,8 @@ class CSVUpload extends React.Component {
   renderTerms() {
     const errors = this.props.csvUpload.errors
     if (!errors) return
-    const error = errors.indexOf("agree_to_terms") > -1 ? "error" : ""
+    const error =
+      Object.keys(errors).indexOf("agree_to_terms") > -1 ? "error" : ""
     const cls = "terms " + error
     return (
       <div className={cls}>
@@ -173,9 +179,11 @@ class CSVUpload extends React.Component {
   }
 
   renderFields(fields) {
+    const { errors } = this.props.csvUpload
     return fields.map((f, i) => {
+      let isError = Object.keys(errors).includes(f)
       return (
-        <div key={i} className="line flexed">
+        <div key={i} className={`${isError ? "form_error" : ""} line flexed`}>
           <div className="fieldLabel">{t(f)} </div>
           {this.listItems(f)}
         </div>
@@ -231,7 +239,6 @@ class CSVUpload extends React.Component {
           {/* </Button> */}
         </div>
         {this.maybeCsvMapper()}
-        {this.generalError()}
       </div>
     )
   }
