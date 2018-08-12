@@ -65,7 +65,7 @@ export default class LeadsApi {
     window.mockIds = []
     mock_records.forEach(async line => {
       if (!line["Date Published"]) return
-      const lead: NewLead = {
+      const lead = {
         Description: line.Description,
 	"Bedrooms/Baths": line["Bedrooms / Baths"],
         Type: line.Type,
@@ -76,7 +76,7 @@ export default class LeadsApi {
         "Housing Type": line["Housing Type"],
         Telephone: line["Telephone"],
         "Contact Person": line["Contact Person"],
-        "Lead Price": line["Lead Price"],
+        lead_price: line["Lead Price"],
         "Lead Type": "realestate",
         date: new Date().valueOf(),
         meta: { mock: true },

@@ -35,7 +35,7 @@ export function start({
       let status = await appLogic.models.leads.insertLead({
         "Lead Type": "realestate",
         Type: "Sell",
-	"Bedrooms/Baths": "2BR / 2BA",
+        "Bedrooms/Baths": "2BR / 2BA",
         date: new Date().valueOf(),
         Size: chance.integer({ min: 1, max: 20 }),
         Description: chance.sentence({
