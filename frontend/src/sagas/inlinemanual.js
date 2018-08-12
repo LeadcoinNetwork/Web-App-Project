@@ -2,6 +2,7 @@ import { push } from "connected-react-router"
 import * as actions from "../actions"
 import { take, put } from "redux-saga/effects"
 import { delay } from "redux-saga"
+import * as $ from "jquery"
 
 if (localStorage.random_id_for_inlinemanual) {
   for (var i in localStorage) {
@@ -39,11 +40,14 @@ window.ldcPush = function(url) {
 }
 
 window.activateStepUploading = function() {
-  setTimeout(jumpToStepNotYouHaveLeadsToSell, 3000)
+  setTimeout(clickNext, 3000)
+}
+function clickNext() {
+  $(".inmplayer-popover-button-next")[0].click()
 }
 
 window.jumpToStepNotYouHaveLeadsToSell = function() {
-  inline_manual_player.activateStep(52083, 15)
+  inline_manual_player.activateStep(52083, 16)
 }
 
 window.moveToHome = function() {
@@ -69,4 +73,13 @@ window.moveToSellLeads = function() {
 window.moveToSellAndFetch = function() {
   window.moveToSellLeads()
   window.triggerFetch()
+}
+
+window.machingAlgorithmStart = function() {
+  setTimeout(function() {
+    window.apiClient.leads.buyMeOut()
+  }, 2000)
+  setTimeout(function() {
+    clickNext()
+  }, 5000)
 }
