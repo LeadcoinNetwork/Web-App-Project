@@ -1,9 +1,15 @@
 import types from "./types"
 
 export default {
+  csvUploadSuccess() {
+    return {
+      type: types.CSV_UPLOAD_SUCCESS,
+      loading: false,
+    }
+  },
   csvUploadLoadingDone() {
     return {
-      type: types.CSV_UPLOAD_LOADING_CHANGE,
+      type: types.CSV_UPLOAD_LOADING_DONE,
       loading: false,
     }
   },
@@ -21,10 +27,10 @@ export default {
     }
   },
 
-  csvUploadError(error) {
+  csvUploadError(name, value) {
     return {
       type: types.CSV_UPLOAD_ERROR,
-      error,
+      error: { name, value },
     }
   },
 

@@ -19,16 +19,14 @@ export default function* csvUpload(api) {
       lead_price,
       file,
     })
-    console.log(res)
-    return
-    yield put(Actions.addLead.csvUploadLoadingEnd())
+    yield put(Actions.csvUpload.csvUploadLoadingDone())
     if (res.error) {
       const errors = res.error
       for (let error in errors) {
-        yield put(Actions.addLead.csvUplaodAddError(error, errors[error]))
+        yield put(Actions.csvUpload.csvUploadError(error, errors[error]))
       }
     } else {
-      yield put(Actions.addLead.csvUploadSubmitSuccess())
+      yield put(Actions.csvUpload.csvUploadSuccess())
       window.triggerFetch()
       yield put(push("/sell-leads"))
     }
