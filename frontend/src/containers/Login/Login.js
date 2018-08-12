@@ -16,13 +16,7 @@ class Login extends React.Component {
 
     this.props.handleChange(target.name, value)
   }
-  getErrors(errors) {
-    return (
-      <ul className="ldc-error-text">
-        {errors.split(";").map(e => <li key={e}>{e}</li>)}
-      </ul>
-    )
-  }
+
   render() {
     let { email, password, remember, loading, error } = this.props.login
 
@@ -40,6 +34,7 @@ class Login extends React.Component {
           <div className="lm-form">
             <h4>{t("Or enter your details:")}</h4>
             <TextField
+              className={"email" + (error.credentials ? " error" : "")}
               placeholder={t("Email")}
               type="email"
               name="email"
@@ -47,6 +42,7 @@ class Login extends React.Component {
               onChange={this.handleChange}
             />
             <TextField
+              className={"password" + (error.credentials ? " error" : "")}
               placeholder={t("Password")}
               name="password"
               value={password}
@@ -62,7 +58,13 @@ class Login extends React.Component {
               />
               <Link to="/forgot-password">{t("Forgot your password?")}</Link>
             </p>
-            {error && this.getErrors(error)}
+            {error && (
+              <div className="errors">
+                {Object.keys(error).map((error_i, index) => (
+                  <div key={index}>{t(error[error_i])}</div>
+                ))}
+              </div>
+            )}
             <Button
               label={t("Login")}
               loading={loading}
