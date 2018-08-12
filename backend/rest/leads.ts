@@ -33,7 +33,7 @@ export function start({
     for (let i = 1; i < count + 1; i++) {
       let owner = Math.floor(count / i)
       let status = await appLogic.models.leads.insertLead({
-        lead_type: "realestate",
+        "Lead Type": "realestate",
         Type: "Sell",
 	"Bedrooms/Baths": "2BR / 2BA",
         date: new Date().valueOf(),
@@ -42,12 +42,12 @@ export function start({
           words: chance.integer({ min: 1, max: 9 }),
         }),
         State: chance.state(),
-        Housing Type": "Cardboard Box",
-        Bought_from: null,
+        "Housing Type": "Cardboard Box",
+        bought_from: null,
         forSale: true,
-        Lead Price": chance.integer({ min: 1, max: 20 }),
+        "Lead Price": chance.integer({ min: 1, max: 20 }),
         ownerId: owner,
-        Contact person": chance.name(),
+        "Contact Person": chance.name(),
         Telephone: chance.phone(),
         active: true,
         Price: parseInt(
