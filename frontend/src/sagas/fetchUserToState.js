@@ -15,18 +15,23 @@ export default function* fetchUserToState(api) {
     var ans = yield api.users.getMe()
     if (ans.user) {
       yield put(actions.user.loggedIn(ans.user)) // Update the state
-      window.inlineManualTracking = {
-        // uid: parseInt(Math.random() * 10000),
-        uid:
-          process.env.FRONTEND +
-          "-" +
-          ans.user.id +
-          (localStorage.random_id_for_inlinemanual ? "-" + Math.random() : ""),
-        email: ans.user.email,
-        name: ans.user.fname + " " + ans.user.lname,
-        created: new Date().valueOf() / 1000,
+      if (lastUserId != ans.user.id) {
+        lastUserId = ans.user.id
+        window.inlineManualTracking = {
+          // uid: parseInt(Math.random() * 10000),
+          uid:
+            process.env.FRONTEND +
+            "-" +
+            ans.user.id +
+            (localStorage.random_id_for_inlinemanual
+              ? "-" + Math.random()
+              : ""),
+          email: ans.user.email,
+          name: ans.user.fname + " " + ans.user.lname,
+          created: new Date().valueOf() / 1000,
+        }
+        startPlayerWaitUntilItsLoaded()
       }
-      startPlayerWaitUntilItsLoaded()
 
       // update the balance
       yield put(actions.balance.balanceUpdate(ans.user.balance))
@@ -36,6 +41,7 @@ export default function* fetchUserToState(api) {
     yield take(actions.types.FETCH_USER_AGAIN)
   }
 }
+var lastUserId
 
 function startPlayerWaitUntilItsLoaded() {
   if (localStorage.skip_inline_manual) return

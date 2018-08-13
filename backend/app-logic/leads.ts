@@ -13,10 +13,10 @@ export interface getLeadsOptions {
 }
 
 const contains_contact = lead => {
-  return lead.telephone || lead.name || lead.email
+  return lead.telephone || lead.name || lead.email || lead["Contact Person"]
 }
 
-const validate_lead = (lead: Lead) => {
+const validate_lead = (lead) => {
   const errors = []
   if (!lead.lead_price) errors.push("lead_price::Lead price is required")
   if (!contains_contact(lead)) {
@@ -55,21 +55,20 @@ export default class Leads {
     const groupedByOwner = _.groupBy(result, "bought_from")
     let overall_cost = 0
     for (let key in groupedByOwner) {
-      const user_id = parseInt(key)
+      const seller = parseInt(key)
       const group: Lead[] = groupedByOwner[key]
       const transaction_amount = group.reduce(summy("lead_price"), 0)
       overall_cost += transaction_amount
-      this.models.users.increaseBalance(user_id, overall_cost)
-      this.models.users.decreaseBalance(new_owner, overall_cost)
+      this.models.users.increaseBalance(seller, transaction_amount)
       this.models.notifications.createNotification({
         msg: `${
           group.length
         } of your leads were bought for a total of ${overall_cost}$`,
-        userId: user_id,
+        userId: seller,
         unread: true,
       })
-      overall_cost = 0
     }
+    this.models.users.decreaseBalance(new_owner, overall_cost)
     return result
   }
 

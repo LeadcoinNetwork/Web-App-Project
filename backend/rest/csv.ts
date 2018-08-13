@@ -19,6 +19,48 @@ const done = a => {
   console.log("Unhandled Catch")
 }
 
+const contains_contact = lead => {
+  return lead.telephone || lead.name || lead.email || lead["Contact Person"]
+}
+
+/**
+ * @param errString string
+ * "key::msg ;key::msg" => {key: [msg,msg]}
+ */
+const errStringToObj = errString => {
+  let errors = errString.split(" ;")
+  const error_obj = {}
+  errors.forEach(e => {
+    const [key, msg] = e.split("::")
+    if (!error_obj[key]) {
+      error_obj[key] = []
+    }
+    error_obj[key].push(msg)
+  })
+  return error_obj
+}
+
+const validate_mapping = body => {
+  const errors = []
+  const {
+    fields_map,
+    lead_price,
+    agree_to_terms,
+  }: {
+    fields_map: fieldsMap
+    lead_price: number
+    agree_to_terms: boolean
+  } = body
+  if (!lead_price) errors.push("Lead Price::Lead price is required")
+  if (!agree_to_terms) errors.push("agree_to_terms::Must agree to terms")
+  if (!contains_contact(fields_map)) {
+    errors.push("Telephone::At least one contact info is required")
+    errors.push("Contact Person::")
+    errors.push("Email::")
+  }
+  return errors
+}
+
 export function start({
   appLogic,
   expressApp,
@@ -26,53 +68,45 @@ export function start({
   appLogic: AppLogic
   expressApp: Express.Express
 }) {
-  var multer = require("multer")
-  var _upload = multer({ dest: "uploads/" })
-
-  const basic_fields = ["date", "name", "phone", "email"]
-
-  const mock_field_list = [
-    "state",
-    "city",
-    "property type",
-    "size",
-    "budget",
-    "bedrooms",
-    "floor",
-    "specification",
-  ]
-
   expressApp.post(
     "/csv/upload",
-    [passport.authenticate("jwt", authOptions), _upload.any("file")],
+    passport.authenticate("jwt", authOptions),
     upload,
   )
 
   async function upload(req, res, next) {
     try {
-      const { user, files } = req
+      const { user } = req
       const {
         fields_map,
         lead_price,
-        agreeToTerms,
+        fileContent,
       }: {
         fields_map: fieldsMap
         lead_price: number
-        agreeToTerms: boolean
+        fileContent: string
       } = req.body
-      parseMappedFile(
+      let errors = []
+      errors = validate_mapping(req.body)
+      if (errors.length > 0) {
+        let errorString = errors.join(" ;")
+        let error_obj = errStringToObj(errorString)
+        res.status(400)
+        return res.send({ error: error_obj })
+      }
+
+      const leads = await parseMappedFile(
         user.id,
-        "../../../uploads/" + files[0].filename,
+        fileContent,
         fields_map,
+        lead_price,
       )
-        .then(csvLines => {
-          csvLines.map(async csvLine => {
-            appLogic.leads.AddLead(csvLine)
-          })
-        })
-        .catch(e => {
-          next(e)
-        })
+
+      leads.map(async lead => {
+        const res = await appLogic.leads.AddLead(lead)
+      })
+
+      return
     } catch (e) {
       next(e)
     }

@@ -15,6 +15,7 @@ import sellLeads from "./sellLeads"
 import buyLeads from "./buyLeads"
 import checkout from "./checkout"
 import myLeads from "./myLeads"
+import csvUpload from "./csvUpload"
 import moveToSell from "./moveToSell"
 import language from "./language"
 import inlinemanual from "./inlinemanual"
@@ -35,11 +36,13 @@ var request = function(method, url, data, query) {
     .query(query)
     .send(data)
 }
+
 var api = new API(request)
 
 export default function* rootSaga() {
   var sagas = [
     redirectIfNotAllowed,
+    csvUpload,
     login,
     forgotPassword,
     addLead,

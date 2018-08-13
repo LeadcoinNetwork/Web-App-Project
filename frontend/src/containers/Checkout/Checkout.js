@@ -16,7 +16,7 @@ const Checkout = ({
   checkoutBuyStart,
 }) => {
   if (!buyLeads.selected.size) {
-    push("/buy-leads")
+    // push("/buy-leads")
   }
 
   let selectedLeads = buyLeads.list.filter(lead =>

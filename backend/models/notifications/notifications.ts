@@ -15,6 +15,9 @@ export default class Notifications extends baseDBModel<
   }
 
   async createNotification(notification: NewNotification) {
+    notification = Object.assign(notification, {
+      timestamp: new Date().valueOf(),
+    })
     return await this.insert(notification)
   }
 

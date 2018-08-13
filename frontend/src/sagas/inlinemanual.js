@@ -2,6 +2,7 @@ import { push } from "connected-react-router"
 import * as actions from "../actions"
 import { take, put } from "redux-saga/effects"
 import { delay } from "redux-saga"
+import * as $ from "jquery"
 
 if (localStorage.random_id_for_inlinemanual) {
   for (var i in localStorage) {
@@ -38,12 +39,23 @@ window.ldcPush = function(url) {
   localStorage.shouldPushURL = url
 }
 
+var activateStepUploadingOnlyOnce = false
 window.activateStepUploading = function() {
-  setTimeout(jumpToStepNotYouHaveLeadsToSell, 3000)
+  if (activateStepUploadingOnlyOnce) return true
+  activateStepUploadingOnlyOnce = true
+  apiClient.leads.addMockLeads()
+  setTimeout(function() {
+    clickNext()
+    ldcPush("/sell-leads")
+  }, 3000)
+}
+function clickNext() {
+  console.log("clickNext")
+  $(".inmplayer-popover-button-next")[0].click()
 }
 
 window.jumpToStepNotYouHaveLeadsToSell = function() {
-  inline_manual_player.activateStep(52083, 15)
+  inline_manual_player.activateStep(52083, 16)
 }
 
 window.moveToHome = function() {
@@ -67,6 +79,16 @@ window.moveToSellLeads = function() {
 }
 
 window.moveToSellAndFetch = function() {
-  window.moveToSellLeads()
+  console.log("moveToSellAndFetch")
+  // window.moveToSellLeads()
   window.triggerFetch()
+}
+
+window.machingAlgorithmStart = function() {
+  setTimeout(function() {
+    window.apiClient.leads.buyMeOut()
+  }, 2000)
+  setTimeout(function() {
+    clickNext()
+  }, 5000)
 }

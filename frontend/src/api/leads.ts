@@ -7,6 +7,7 @@ import {
   LeadQueryOptions,
 } from "../../../backend/models/leads/types"
 
+//@ts-ignore
 import papaParse from "papaparse"
 
 interface LeadsApiOptions {
@@ -34,11 +35,24 @@ const parseConfig = {
   header: true,
 }
 
+const pFileReader = file => {
+  //@ts-ignore
+  return new Promise((resolve, reject) => {
+    //@ts-ignore
+    let reader = new FileReader()
+    reader.onload = () => {
+      resolve(reader.result)
+    }
+    reader.readAsText(file)
+  })
+}
+
 export default class LeadsApi {
-  constructor(private request: request) {}
+  constructor(private request: any) {}
 
   async buyMeOut() {
     await this.request(methods.post, "/sell-leads/buymyleads")
+    //@ts-ignore
     setTimeout(() => {
       // @ts-ignore
       window.triggerFetch()
@@ -51,19 +65,19 @@ export default class LeadsApi {
     window.mockIds = []
     mock_records.forEach(async line => {
       if (!line["Date Published"]) return
-      const lead: NewLead = {
-        description: line.Description,
-        bedrooms_baths: line["Bedrooms / Baths"],
-        type: line.Type,
-        price: line.Price,
-        size: line.Size,
-        state: line.State,
-        location: line.Location,
-        housing_type: line["Housing Type"],
-        telephone: line["Telephone"],
-        contact_person: line["Contact Person"],
+      const lead = {
+        Description: line.Description,
+	"Bedrooms/Baths": line["Bedrooms / Baths"],
+        Type: line.Type,
+        Price: line.Price,
+        Size: line.Size,
+        State: line.State,
+        Location: line.Location,
+        "Housing Type": line["Housing Type"],
+        Telephone: line["Telephone"],
+        "Contact Person": line["Contact Person"],
         lead_price: line["Lead Price"],
-        lead_type: "realestate",
+        "Lead Type": "realestate",
         date: new Date().valueOf(),
         meta: { mock: true },
         bought_from: null,
@@ -72,8 +86,19 @@ export default class LeadsApi {
       }
       //@ts-ignore
       let { response } = await window.apiClient.leads.sellLeadsAddByForm(lead)
-      //@ts-ignore
-      window.triggerFetch()
+    })
+    //@ts-ignore
+    window.triggerFetch()
+  }
+
+  async sellLeadsCsvMapping({ fields_map, lead_price, agree_to_terms, file }) {
+    //@ts-ignore
+    const fileContent = await pFileReader(file)
+    return await this.request(methods.post, "/csv/upload", {
+      fields_map,
+      lead_price,
+      agree_to_terms,
+      fileContent,
     })
   }
 
