@@ -37,11 +37,6 @@ const Checkout = ({
     (price, lead) => price + parseLeadPrice(lead.lead_price),
     0,
   )
-
-  let errorMsg
-  if (checkout && checkout.error) {
-    errorMsg = "Insufficient Funds"
-  }
   return (
     <div className="ldc-checkout">
       <h1>{t("Shopping Cart")}</h1>
@@ -85,7 +80,13 @@ const Checkout = ({
           </tbody>
         </table>
       </div>
-      {errorMsg && <div className="error">{errorMsg}</div>}
+      {checkout.error && (
+        <div className="error">
+          {Object.keys(checkout.error).map((error, index) => (
+            <div key={index}>{t(checkout.error[error])}</div>
+          ))}
+        </div>
+      )}
       <div className="button-container">
         <Button
           label={t("Buy")}
