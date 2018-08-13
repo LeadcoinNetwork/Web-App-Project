@@ -23,13 +23,20 @@ export default function* checkout(api) {
       yield put(actions.checkout.checkoutBuySuccess())
       toast(
         <div>
-          <div> Order placed successfully</div>
+          <div> Your order has been completed. </div>
+          <div>
+            {" "}
+            Your TX has been broadcast to the network. Check your TX below:{" "}
+          </div>
+          <div> {res.response.txid} </div>
           <a target="_blank" href={res.response.link}>
+            {" "}
             View It Here{" "}
           </a>
         </div>,
         {
           type: "success",
+          autoClose: 10000,
         },
       )
       yield put(actions.leads.setSelectedLeads("BUY_LEADS", new Set()))
