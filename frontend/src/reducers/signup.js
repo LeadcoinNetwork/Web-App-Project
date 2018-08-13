@@ -4,21 +4,23 @@ const initialState = {
   name: "",
   email: "",
   password: "",
-  error: "",
+  errors: {},
 }
 
 const signup = (state = initialState, action) => {
   switch (action.type) {
     case types.SIGNUP_HANDLE_CHANGE:
+      let newErrors = { ...state.errors }
+      delete newErrors[action.payload.name]
       return {
         ...state,
-        error: "",
+        errors: newErrors,
         [action.payload.name]: action.payload.value,
       }
     case types.SIGNUP_LOADING:
       return {
         ...state,
-        error: "",
+        errors: {},
         loading: true,
       }
     case types.SIGNUP_FINISH:
@@ -30,7 +32,7 @@ const signup = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        error: action.payload.message,
+        errors: action.payload,
       }
     default:
       return state

@@ -70,7 +70,13 @@ export function start({
       password,
     )
     if (user instanceof NotFound) {
-      res.status(409).send({ error: "invalid" })
+      res
+        .status(409)
+        .send({
+          error: {
+            credentials: "The username or password you entered is incorrect",
+          },
+        })
     } else {
       var token = await appLogic.auth.loginUserNameAndPassword(user.id)
       res.cookie("token", token)

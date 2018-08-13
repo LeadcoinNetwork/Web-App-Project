@@ -4,7 +4,7 @@ const initialState = {
   name: "",
   email: "",
   password: "",
-  error: "",
+  error: {},
   remember: true,
 }
 
@@ -13,7 +13,7 @@ const login = (state = initialState, action) => {
     case types.LOGIN_HANDLE_CHANGE:
       return {
         ...state,
-        error: "",
+        error: {},
         [action.payload.name]: action.payload.value,
       }
     case types.LOGIN_LOADING:
@@ -30,7 +30,7 @@ const login = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        error: action.payload.message,
+        error: action.payload,
       }
     default:
       return state
