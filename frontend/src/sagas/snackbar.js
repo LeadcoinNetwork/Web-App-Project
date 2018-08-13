@@ -6,7 +6,7 @@ export default function* snackbar(api) {
   while (true) {
     let notifiction = yield take(types.NOTIFICATION_SHOW)
 
-    toast(String(notifiction.payload.message), {
+    toast(notifiction.payload.message, {
       type: notifiction.payload.type,
     })
   }
