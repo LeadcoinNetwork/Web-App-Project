@@ -141,7 +141,7 @@ class CSVUpload extends React.Component {
   renderPriceElement() {
     const errors = this.props.csvUpload.errors
     if (!errors) return
-    const error = Object.keys(errors).indexOf("price") > -1 ? "error" : ""
+    const error = Object.keys(errors).indexOf("price") > -1 ? "form_error" : ""
     return (
       <div className={"price " + error}>
         <span>{t("Lead price")}</span>
@@ -161,7 +161,7 @@ class CSVUpload extends React.Component {
     const errors = this.props.csvUpload.errors
     if (!errors) return
     const error =
-      Object.keys(errors).indexOf("agree_to_terms") > -1 ? "error" : ""
+      Object.keys(errors).indexOf("agree_to_terms") > -1 ? "form_error" : ""
     const cls = "terms " + error
     return (
       <div className={cls}>

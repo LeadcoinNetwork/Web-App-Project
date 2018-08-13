@@ -4,6 +4,24 @@ import { IModels } from "./index"
 import { Notification } from "../models/notifications/types"
 
 import * as _ from "lodash"
+import config from "./config"
+var request = require("request-promise")
+
+const logTransaction = async ({ fiat_amount, exchange_rate, leads_count }) => {
+  const res = await request({
+    uri: "http://blockchain.leadcoin.network/exchange",
+    method: "POST",
+    json: true,
+    body: {
+      fiat_amount,
+      exchange_rate,
+      leads_count,
+    },
+  })
+  return res
+  //{ txid: '0x9d6cd285dd8ac7bde247da8943ca2b536f58d7cac79deac975ba48766901eb68',
+  //  link: 'http://ropsten.etherscan.io/tx/0x9d6cd285dd8ac7bde247da8943ca2b536f58d7cac79deac975ba48766901eb68' }
+}
 
 export interface getLeadsOptions {
   sort_by?: [string, "ASC" | "DESC"]
@@ -16,7 +34,7 @@ const contains_contact = lead => {
   return lead.telephone || lead.name || lead.email || lead["Contact Person"]
 }
 
-const validate_lead = (lead) => {
+const validate_lead = lead => {
   const errors = []
   if (!lead.lead_price) errors.push("lead_price::Lead price is required")
   if (!contains_contact(lead)) {
@@ -69,7 +87,12 @@ export default class Leads {
       })
     }
     this.models.users.decreaseBalance(new_owner, overall_cost)
-    return result
+    const txDetails = await logTransaction({
+      leads_count: result.length.toString(),
+      fiat_amount: (overall_cost * 100).toString(),
+      exchange_rate: "1999000000000000000",
+    })
+    return txDetails
   }
 
   public async removeLead(lead_id: number) {

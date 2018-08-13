@@ -1,10 +1,11 @@
+import React from "react"
 import { types } from "Actions"
 import * as actions from "Actions"
 import { select, take, put, call } from "redux-saga/effects"
 import { push } from "react-router-redux"
+import { toast } from "react-toastify"
 
 import API from "../api/index"
-
 /**
  * @param api {API} - this is this paramters
  */
@@ -20,11 +21,16 @@ export default function* checkout(api) {
       yield put(actions.checkout.checkoutBuyError(res.error))
     } else {
       yield put(actions.checkout.checkoutBuySuccess())
-      yield put(
-        actions.app.notificationShow(
-          "Your order has been placed successfully",
-          "success",
-        ),
+      toast(
+        <div>
+          <div> Order placed successfully</div>
+          <a target="_blank" href={res.response.link}>
+            View It Here{" "}
+          </a>
+        </div>,
+        {
+          type: "success",
+        },
       )
       yield put(actions.leads.setSelectedLeads("BUY_LEADS", new Set()))
       window.triggerFetch()
