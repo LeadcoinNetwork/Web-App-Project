@@ -72,10 +72,10 @@ class CSVUpload extends React.Component {
         <div className="main_container">
           <div className="personal flexed">
             <div className="help_text">
-              <div className="header">
+              <div className="header bigger">
                 {t("Personal Identification Information")}
               </div>
-              <div className="header">
+              <div className="header smaller">
                 {t("These fields will only be visible to the lead owner")}
               </div>
             </div>
@@ -83,7 +83,7 @@ class CSVUpload extends React.Component {
           </div>
           <div className="public flexed">
             <div className="help_text">
-              <div className="header">{t("Public Fields")}</div>
+              <div className="header bigger">{t("Public Fields")}</div>
             </div>
             <div className="fields">{this.renderFields(db_fields.public)}</div>
           </div>
@@ -91,7 +91,7 @@ class CSVUpload extends React.Component {
           {this.generalError()}
           <div className="controls field_submit flexed">
             {terms}
-            <div>
+            <div className="mapSubmit">
               <Button
                 appStyle
                 onClick={() => {
@@ -146,6 +146,7 @@ class CSVUpload extends React.Component {
       <div className={"price " + error}>
         <span>{t("Lead price")}</span>
         <TextField
+          type="number"
           appStyle={true}
           value={this.props.csvMapping.price}
           onChange={e => {

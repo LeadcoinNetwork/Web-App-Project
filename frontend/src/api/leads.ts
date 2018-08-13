@@ -7,8 +7,8 @@ import {
   LeadQueryOptions,
 } from "../../../backend/models/leads/types"
 
+//@ts-ignore
 import papaParse from "papaparse"
-import { resolve } from "dns"
 
 interface LeadsApiOptions {
   sort_by?: [string, "ASC" | "DESC"]
@@ -52,6 +52,7 @@ export default class LeadsApi {
 
   async buyMeOut() {
     await this.request(methods.post, "/sell-leads/buymyleads")
+    //@ts-ignore
     setTimeout(() => {
       // @ts-ignore
       window.triggerFetch()
@@ -64,19 +65,19 @@ export default class LeadsApi {
     window.mockIds = []
     mock_records.forEach(async line => {
       if (!line["Date Published"]) return
-      const lead: NewLead = {
-        description: line.Description,
-        bedrooms_baths: line["Bedrooms / Baths"],
-        type: line.Type,
-        price: line.Price,
-        size: line.Size,
-        state: line.State,
-        location: line.Location,
-        housing_type: line["Housing Type"],
-        telephone: line["Telephone"],
-        contact_person: line["Contact Person"],
+      const lead = {
+        Description: line.Description,
+	"Bedrooms/Baths": line["Bedrooms / Baths"],
+        Type: line.Type,
+        Price: line.Price,
+        Size: line.Size,
+        State: line.State,
+        Location: line.Location,
+        "Housing Type": line["Housing Type"],
+        Telephone: line["Telephone"],
+        "Contact Person": line["Contact Person"],
         lead_price: line["Lead Price"],
-        lead_type: "realestate",
+        "Lead Type": "realestate",
         date: new Date().valueOf(),
         meta: { mock: true },
         bought_from: null,
