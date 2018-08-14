@@ -186,8 +186,21 @@ class CSVUpload extends React.Component {
 
   render() {
     let fileLabel = t("Choose File")
-    const { loading, file } = this.props.csvUpload
+    const { finished, file } = this.props.csvUpload
     if (file) fileLabel = file.name
+    console.log(this.props.csvUpload)
+    if (finished) {
+      return (
+        <div className="csvUpload">
+          <h1>{t("Upload CSV File")}</h1>
+          <h3>{t("Add multiple leads for sale by uploading a CSV file.")}</h3>
+          <div>
+            <div> Your leads are being proccessed. </div>
+            <i className="fa fa-spinner fa-spin" />
+          </div>
+        </div>
+      )
+    }
     return (
       <div className="csvUpload">
         <h1>{t("Upload CSV File")}</h1>
