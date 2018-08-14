@@ -3,7 +3,7 @@
 .fields_mapper {
   padding: 10px;
   .terms {
-    margin-right: 160px;
+    margin-right: 320px;
     width: 200px;
     padding-top: 15px;
   }
@@ -19,6 +19,7 @@
   }
   .help_text {
     width: 200px;
+    margin-right: 80px;
   }
   .mapSubmit {
     margin-right: 2px;
@@ -46,7 +47,7 @@
     }
   }
   .price {
-    margin-left: 212px;
+    margin-left: 292px;
     input {
       margin-left: 52px;
       width: 240px;
@@ -61,13 +62,14 @@
   padding: 10px;
   .header {
     &.bigger {
+      padding-top: 5px;
       margin-top: 10px;
-      font-weight: bold;
+      font-weight: 500;
       font-size: 20px;
-      margin-bottom: 5px;
+      margin-bottom: 20px;
     }
     &.smaller {
-      font-weight: normal;
+      font-weight: 300;
       font-size: 16px;
     }
   }

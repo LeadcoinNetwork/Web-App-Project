@@ -13,12 +13,12 @@ const initialState = {
       .filter(field => field.editable)
       .filter(field => field.private)
       .map(field => ({ key: field.key, name: field.name }))
-      .filter(f => fields_not_for_display.indexOf(f) < 0),
+      .filter(f => !fields_not_for_display.includes(f)),
     public: fields
       .filter(field => field.editable)
       .filter(field => !field.private)
       .map(field => ({ key: field.key, name: field.name }))
-      .filter(f => fields_not_for_display.indexOf(f.key) < 0),
+      .filter(f => !fields_not_for_display.includes(f.key)),
   },
   values: initialValues,
   errors: {},

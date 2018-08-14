@@ -62,18 +62,20 @@ class AddLead extends React.Component {
         <div className="main_container">
           <div className="personal">
             <div className="help_text">
-              <div className="header">
+              <div className="header bigger">
                 {t("Personal Identification Information")}
               </div>
-              <div className="header">
-                {t("These fields will only be visible to the lead owner")}
+              <div className="header smaller">
+                {t(
+                  "This information will remain hidden until a buyer purchases the lead.",
+                )}
               </div>
             </div>
             <div className="fields">{this.renderFields(db_fields.private)}</div>
           </div>
           <div className="public">
             <div className="help_text">
-              <div className="header">{t("Public Fields")}</div>
+              <div className="header bigger">{t("Public Fields")}</div>
             </div>
             <div className="fields">{this.renderFields(db_fields.public)}</div>
           </div>
@@ -86,16 +88,6 @@ class AddLead extends React.Component {
             </div>
           )}
           <div className="controls field_submit flexed">
-            <div>
-              <Button
-                appStyle={true}
-                secondary
-                onClick={() => {
-                  this.props.clear()
-                }}
-                label={t("Clear")}
-              />
-            </div>
             <div>
               <Button
                 loading={loading}
