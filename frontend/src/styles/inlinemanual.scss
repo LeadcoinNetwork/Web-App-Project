@@ -100,3 +100,17 @@
     opacity: 0;
   }
 }
+
+.inmplayer-popover-wrapper {
+  border-color: white;
+}
+
+.fczbkk-popover-pointer-holder.inmplayer-popover-pointer-holder {
+  z-index: 100023 !important;
+
+  .inmplayer-popover-pointer-shape {
+    fill: white;
+    stroke: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+}

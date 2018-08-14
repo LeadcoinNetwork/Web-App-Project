@@ -5,12 +5,13 @@ import { app, types } from "Actions"
 import Snackbar from "./Snackbar"
 import snackbar from "Sagas/snackbar"
 import t from "../../utils/translate/translate"
+import { toast } from "react-toastify"
 
 storiesOf("Containers/Snackbar", module)
   .add("All", () => {
     let { store, story } = createStoreAndStory({
       component: Snackbar,
-      sagaFunction: snackbar(),
+      sagaFunction: snackbar,
     })
     let kinds = [
         t("default"),
@@ -34,7 +35,7 @@ storiesOf("Containers/Snackbar", module)
   .add("Default", () => {
     let { store, story } = createStoreAndStory({
       component: Snackbar,
-      sagaFunction: snackbar(),
+      sagaFunction: snackbar,
     })
 
     setTimeout(
@@ -43,10 +44,35 @@ storiesOf("Containers/Snackbar", module)
     )
     return story
   })
+  .add("With Link", () => {
+    let { store, story } = createStoreAndStory({
+      component: Snackbar,
+      sagaFunction: snackbar,
+    })
+
+    setTimeout(() => {
+      toast("hi")
+      toast(
+        <a href="http://google.com" target="_blank">
+          hi
+        </a>,
+      )
+
+      app.notificationShow(
+        <div>
+          <a>
+            '<a href="abc">Hello World</a>'
+          </a>abc
+        </div>,
+        "default",
+      )
+    }, 50)
+    return story
+  })
   .add("Success", () => {
     let { store, story } = createStoreAndStory({
       component: Snackbar,
-      sagaFunction: snackbar(),
+      sagaFunction: snackbar,
     })
 
     setTimeout(
@@ -58,7 +84,7 @@ storiesOf("Containers/Snackbar", module)
   .add("Info", () => {
     let { store, story } = createStoreAndStory({
       component: Snackbar,
-      sagaFunction: snackbar(),
+      sagaFunction: snackbar,
     })
 
     setTimeout(
@@ -70,7 +96,7 @@ storiesOf("Containers/Snackbar", module)
   .add("Warning", () => {
     let { store, story } = createStoreAndStory({
       component: Snackbar,
-      sagaFunction: snackbar(),
+      sagaFunction: snackbar,
     })
 
     setTimeout(
@@ -82,7 +108,7 @@ storiesOf("Containers/Snackbar", module)
   .add("Error", () => {
     let { store, story } = createStoreAndStory({
       component: Snackbar,
-      sagaFunction: snackbar(),
+      sagaFunction: snackbar,
     })
 
     setTimeout(
@@ -94,7 +120,7 @@ storiesOf("Containers/Snackbar", module)
   .add("10 Success", () => {
     let { store, story } = createStoreAndStory({
       component: Snackbar,
-      sagaFunction: snackbar(),
+      sagaFunction: snackbar,
     })
     let timeout = 0
 

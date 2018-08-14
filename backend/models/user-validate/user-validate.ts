@@ -68,7 +68,11 @@ export async function checkNewUserValid(user): Promise<true | Error> {
     return true
   } catch (err) {
     if (err.details) {
-      err.message = err.details.map(i => i.message).join("; ")
+      let errors = {}
+      err.details.forEach(error => {
+        errors[error.context.key] = error.message
+      })
+      err.message = errors
     }
     return err
   }

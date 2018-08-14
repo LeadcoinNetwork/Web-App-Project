@@ -36,6 +36,8 @@ export function createStoreAndStory({
     })
     ROUTER_MIDDLEWARE = routerMiddleware(history)
     middlewares.push(ROUTER_MIDDLEWARE)
+  } else {
+    var history = createMemoryHistory({})
   }
 
   // if (sagaFunction || connectToProductionSaga) {

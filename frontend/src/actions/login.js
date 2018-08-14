@@ -29,9 +29,7 @@ export default {
   loginError(message) {
     return {
       type: types.LOGIN_ERROR,
-      payload: {
-        message,
-      },
+      payload: message,
     }
   },
 }

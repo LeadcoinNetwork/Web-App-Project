@@ -1,6 +1,7 @@
 import React from "react"
 
 const TextField = ({
+  className,
   placeholder,
   name,
   value,
@@ -11,7 +12,9 @@ const TextField = ({
 }) => {
   return (
     <input
-      className={`ldc-textfield${appStyle ? " t-app-style" : ""}`}
+      className={`ldc-textfield${appStyle ? " t-app-style" : ""}${
+        className ? " " + className : ""
+      }`}
       name={name}
       value={value}
       disabled={disabeld}
