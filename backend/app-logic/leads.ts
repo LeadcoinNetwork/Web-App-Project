@@ -135,11 +135,16 @@ export default class Leads {
   }
 
   public async getMyLeads(user_id: number, options: LeadQueryOptions) {
-    return await this.models.leads.getMyLeads(user_id, options)
+    const leads = await this.models.leads.getMyLeads(user_id, options)
+    return leads
   }
 
   public async getBoughtLeads(user_id: number, options: LeadQueryOptions) {
-    return await this.models.leads.getBoughtLeads(user_id, options)
+    const leads = await this.models.leads.getBoughtLeads(user_id, options)
+    leads.list = leads.list.map(l => {
+      return Object.assign(l, { lead_price: null })
+    })
+    return leads
   }
 
   public async getAllLeads(options: LeadQueryOptions) {
