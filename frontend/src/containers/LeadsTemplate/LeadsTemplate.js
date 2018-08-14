@@ -43,20 +43,10 @@ class LeadsTemplate extends React.Component {
   }
   renderFilters = () => {
     if (this.props.pageName !== "buy") return
-    return null
+
     return (
       <div className="lt-filters">
-        <TextField
-          disabled={loading}
-          appStyle={true}
-          placeholder={t(f.name)}
-          value={values[f.key]}
-          onChange={e => {
-            this.props.handleChange(f.key, e.target.value)
-          }}
-          placeholder={t("Search...")}
-          appStyle
-        />
+        <TextField placeholder={t("Search...")} appStyle />
       </div>
     )
   }
@@ -135,7 +125,7 @@ class LeadsTemplate extends React.Component {
               }))}
               loading={leads.loading}
               onScrollBottom={this.onScrollBottom}
-              renderFilters={this.renderFilters}
+              // renderFilters={this.renderFilters}
               renderResultsHead={this.renderResultsHead}
               records={leads.list}
               buttons={this.props.getButtons && this.props.getButtons()}

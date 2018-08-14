@@ -163,9 +163,9 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         where_additions = filters
           .map(f => {
             const escaped = mysql.escape(f.val)
-            return ` ${this.fieldName} ->> "$.${f.field}" ${
+            return `${this.fieldName} ->> "$.${f.field}" ${
               f.op
-            } "%${escaped.slice(1, -1)}%" `
+            } "%${escaped.slice(1, -1)}%"`
           })
           .join(" OR ")
       }
@@ -175,8 +175,6 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       let query = `
         FROM leads
         WHERE doc->>"$.active" = "true"
-        AND doc->>"$.Type" <> "Rent" 
-        AND doc->>"$.Type" <> "rent" 
         AND doc->>"$.forSale" = "true" 
       `
       if (where_additions.length > 0) query += `AND ${where_additions}`

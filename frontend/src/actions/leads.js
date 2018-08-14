@@ -1,12 +1,6 @@
 import types from "./types"
 
 export default {
-  setSearch(namespace, params) {
-    return {
-      type: types[namespace + "_SET_SEARCH"],
-      payload: params,
-    }
-  },
   fetchLeads(namespace, params) {
     return {
       type: types[namespace + "_FETCH_LEADS"],

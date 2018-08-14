@@ -55,7 +55,7 @@ const initialState = {
   size_max: null,
   floor_min: null,
   floor_max: null,
-  search: "",
+  search: null,
   error: "",
   loading: true,
   selected: new Set(),
@@ -70,11 +70,6 @@ const createReducerFor = namespace => {
           loading: false,
           error: false,
           list: [],
-        }
-      case types[namespace + "_SET_SEARCH"]:
-        return {
-          ...state,
-          search: action.payload,
         }
       case types[namespace + "_FETCH_LEADS"]:
         return {

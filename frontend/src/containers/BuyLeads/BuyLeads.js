@@ -1,7 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
 import { leads } from "Actions"
-import TextField from "Components/TextField"
 import { push } from "react-router-redux"
 import LeadsTemplate from "Containers/LeadsTemplate"
 import Select from "Components/Select"
@@ -79,23 +78,12 @@ class BuyLeads extends React.Component {
         <Button
           className="search"
           onClick={() => {
-            this.props.fetchLeads()
             this.setState({ showOnlyAfterSearch: true })
           }}
           appStyle={true}
         >
           {t("Search")}
         </Button>
-        <div className="lt-filters">
-          <TextField
-            value={this.props.search}
-            onChange={e => {
-              this.props.setSearch(e.target.value)
-            }}
-            placeholder={t("Search...")}
-            appStyle
-          />
-        </div>
         {this.state.showOnlyAfterSearch && (
           <LeadsTemplate
             {...this.props}
@@ -117,7 +105,6 @@ export default connect(
   mapStateToProps,
   {
     push: push,
-    setSearch: search => leads.setSearch("BUY_LEADS", search),
     fetchLeads: params => leads.fetchLeads("BUY_LEADS", params),
     setSelectedLeads: selectedLeads =>
       leads.setSelectedLeads("BUY_LEADS", selectedLeads),
