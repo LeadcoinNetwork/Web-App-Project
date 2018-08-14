@@ -66,7 +66,9 @@ class AddLead extends React.Component {
                 {t("Personal Identification Information")}
               </div>
               <div className="header smaller">
-                {t("These fields will only be visible to the lead owner")}
+                {t(
+                  "This information will remain hidden until a buyer purchases the lead.",
+                )}
               </div>
             </div>
             <div className="fields">{this.renderFields(db_fields.private)}</div>

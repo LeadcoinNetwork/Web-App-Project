@@ -75,7 +75,9 @@ class CSVUpload extends React.Component {
                 {t("Personal Identification Information")}
               </div>
               <div className="header smaller">
-                {t("These fields will only be visible to the lead owner")}
+                {t(
+                  "This information will remain hidden until a buyer purchases the lead.",
+                )}
               </div>
             </div>
             <div className="fields">{this.renderFields(db_fields.private)}</div>
@@ -188,7 +190,6 @@ class CSVUpload extends React.Component {
     let fileLabel = t("Choose File")
     const { finished, file } = this.props.csvUpload
     if (file) fileLabel = file.name
-    console.log(this.props.csvUpload)
     if (finished) {
       return (
         <div className="csvUpload">
