@@ -425,7 +425,7 @@ export function start({
       }
       let f
       if (search) {
-        f = ["name", "specification", "city"].map(field => {
+        f = ["Location", "Description", "State"].map(field => {
           return {
             field,
             op: "LIKE",
