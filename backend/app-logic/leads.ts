@@ -92,11 +92,15 @@ export default class Leads {
       fiat_amount: (overall_cost * 100).toString(),
       exchange_rate: "1999000000000000000",
     })
+    /*
+    I'll just comment this part out instead of deleting it, maybe they'll want it back someday (@Leekao)
+
     this.models.notifications.createNotification({
       msg: "Your transaction was logged to " + txDetails.link,
       userId: new_owner,
       unread: true,
     })
+    */
     return txDetails
   }
 
