@@ -56,14 +56,8 @@ const Checkout = ({
       />
 
       <div className="c-total">
-        <table>
-          <tbody>
-            <tr>
-              <td>{t("Total")}</td>
-              <td className="amount">{priceString(totalPayment)}</td>
-            </tr>
-          </tbody>
-        </table>
+        <span className="text">{t("Total")}:&nbsp;</span>
+        {priceString(totalPayment)}
       </div>
       <div className="c-details">
         <table>
