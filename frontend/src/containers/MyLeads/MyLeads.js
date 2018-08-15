@@ -65,7 +65,9 @@ class MyLeads extends React.Component {
 
 const mapStateToProps = state => ({
   leads: state.myLeads,
-  fields: state.fields,
+  fields: state.fields.filter(f => {
+    return f.key != "lead_price"
+  }),
 })
 
 export default connect(
