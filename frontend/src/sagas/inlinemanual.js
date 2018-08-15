@@ -2,7 +2,7 @@ import { push } from "connected-react-router"
 import * as actions from "../actions"
 import { take, put } from "redux-saga/effects"
 import { delay } from "redux-saga"
-import * as $ from "jquery"
+// import * as $ from "jquery"
 
 if (localStorage.random_id_for_inlinemanual) {
   for (var i in localStorage) {
@@ -51,7 +51,13 @@ window.activateStepUploading = function() {
 }
 function clickNext() {
   console.log("clickNext")
-  $(".inmplayer-popover-button-next")[0].click()
+  var i = document.getElementsByClassName("inmplayer-popover-button-next")
+  for (var x = 0; x < i.length; i++) {
+    try {
+      i[x].click()
+    } catch (err) {}
+  }
+  // $(".inmplayer-popover-button-next")[0].click()
 }
 
 window.jumpToStepNotYouHaveLeadsToSell = function() {

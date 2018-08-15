@@ -1,4 +1,5 @@
-import * as _ from "lodash"
+var get = require("lodash/get")
+
 import translateDatabase from "./translate-database"
 const storage = window.localStorage
 
@@ -21,7 +22,7 @@ if (!storage.getItem("current")) {
  */
 export default function t(textToTransalte) {
   const current = storage.getItem("current")
-  const value = _.get(translateDatabase, [textToTransalte, current])
+  const value = get(translateDatabase, [textToTransalte, current])
   if (value || value === "") {
     return storage.getItem("translate-verify") ? "☑" + value : value
   } else {

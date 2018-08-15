@@ -6,7 +6,6 @@ import Snackbar from "./Snackbar"
 import snackbar from "Sagas/snackbar"
 import t from "../../utils/translate/translate"
 import { toast } from "react-toastify"
-import $ from "jquery"
 
 storiesOf("Containers/Snackbar", module)
   .add("All", () => {
