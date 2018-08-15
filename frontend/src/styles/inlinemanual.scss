@@ -12,6 +12,7 @@
 }
 
 .ajax-loader {
+  // created with https://loading.io/animation/icon/
   background: url("./ajax-loader.gif");
   width: 100%;
   background-size: contain;
@@ -19,6 +20,21 @@
   background-repeat: no-repeat;
   background-position: 50% 50%;
   margin: 25px 0px;
+}
+
+.marginalgorithm,
+.inline-uploading {
+  background-color: #433190;
+  color: white;
+  padding-top: 30px;
+  font-size: 18px;
+  border: rgba(0, 0, 0, 0.6);
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.marginalgorithm *,
+.inline-uploading p {
+  text-align: center;
 }
 
 .csvclass {
@@ -43,7 +59,8 @@
 
   .loading {
     height: 10px;
-    background-color: green;
+    // background-color: green;
+    background-color: white;
     opacity: 0;
     animation: move-loader 3s linear;
   }

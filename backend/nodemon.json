@@ -3,5 +3,6 @@
   "ext": "js,ts,json",
   "restartable": "rs",
   "ignore": [".git", "node_modules/**/node_modules"],
-  "exec": "node --inspect node_modules/ts-node/dist/bin.js index.ts"
+  "_exec": "node --inspect node_modules/ts-node/dist/bin.js index.ts",
+  "exec": "node node_modules/ts-node/dist/bin.js index.ts"
 }
