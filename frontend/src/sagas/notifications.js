@@ -10,7 +10,6 @@ import API from "../api/index"
 export default function* notifications(api) {
   while (true) {
     let res = yield api.notifications.getNotifications()
-    console.log(res)
 
     if (res.error) {
       yield put(actions.notifications.notificationsFetchError(res.error))
