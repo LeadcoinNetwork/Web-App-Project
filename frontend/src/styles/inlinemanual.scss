@@ -11,6 +11,17 @@
   height: auto !important;
 }
 
+.ajax-loader2 {
+  // created with https://loading.io/animation/icon/
+  background: url("./ajax-loader2.gif");
+  width: 100%;
+  background-size: contain;
+  height: 50px;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  margin: 25px 0px;
+}
+
 .ajax-loader {
   // created with https://loading.io/animation/icon/
   background: url("./ajax-loader.gif");
