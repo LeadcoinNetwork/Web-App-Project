@@ -17,12 +17,17 @@ const signup = (state = initialState, action) => {
         errors: newErrors,
         [action.payload.name]: action.payload.value,
       }
+
+    case types.SIGNUP_LOADING:
+      return initialState
+
     case types.SIGNUP_LOADING:
       return {
         ...state,
         errors: {},
         loading: true,
       }
+
     case types.SIGNUP_FINISH:
       return {
         ...state,
