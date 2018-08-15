@@ -55,14 +55,14 @@ class LeadsTemplate extends React.Component {
       case "buy":
         return (
           <>
-            <h3>{t("Sorry, we couldn't find any leads")}</h3>
-            <span>{t("Try expanding your search criteria")}</span>
+            <h3>{t("Sorry, we couldn't find any leads.")}</h3>
+            <span>{t("Try expanding your search criteria.")}</span>
           </>
         )
       case "my":
         return (
           <>
-            <h3>{t("You have no leads")}</h3>
+            <h3>{t("You have no leads.")}</h3>
             <span>
               {t("Explore and ")}{" "}
               <Link to="/buy-leads">{t("buy new leads")}</Link>
