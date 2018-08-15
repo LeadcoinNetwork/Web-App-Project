@@ -21,22 +21,22 @@ class NotificationElement extends Component {
   render() {
     let { unreadCount, list, isOpen, notificationsClick } = this.props
     return (
-      <i
-        className="ldc-notification-element far fa-bell"
+      <div
+        className="ldc-notification-element far icon bell"
         onClick={e => {
           e.stopPropagation()
           notificationsClick()
         }}
       >
         {unreadCount > 0 && (
-          <i
+          <div
             className={"notification-badge" + (unreadCount > 9 ? " plus" : "")}
           >
             {unreadCount < 10 ? unreadCount : "9+"}
-          </i>
+          </div>
         )}
         {isOpen && <NotificationInner list={list} />}
-      </i>
+      </div>
     )
   }
 }
