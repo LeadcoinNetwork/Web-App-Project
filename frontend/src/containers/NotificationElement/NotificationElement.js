@@ -35,7 +35,7 @@ class NotificationElement extends Component {
             {unreadCount < 10 ? unreadCount : "9+"}
           </div>
         )}
-        {isOpen && <NotificationInner list={list} />}
+        {isOpen && <NotificationInner list={list.slice(0, 5)} />}
       </div>
     )
   }
