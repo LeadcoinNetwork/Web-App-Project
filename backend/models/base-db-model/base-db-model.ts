@@ -189,6 +189,13 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       let count = await this.sql.query(countHeader + query)
       let rows = await this.sql.query(realHeader + query + limit_addition)
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
+      rows = rows.map(row => {
+        return Object.assign(row, {
+          "Contact Person": "**********",
+          Email: "*********@gmail.com",
+          Telephone: row["Telephone"].substring(0, 6) + "******",
+        })
+      }) // remove contact information
       return { list: rows, total: count[0].count }
     },
 
