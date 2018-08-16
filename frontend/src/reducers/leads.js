@@ -81,22 +81,13 @@ const createReducerFor = namespace => {
         }
       case types[namespace + "_FETCH_SUCCESS"]:
         const newLeads = action.payload.list
-
-        if (!newLeads.length) {
-          return {
-            ...state,
-            error: false,
-            loading: false,
-            fullyLoaded: true,
-          }
-        }
-
         let currentIds = state.list.map(lead => lead.id)
 
         return {
           ...state,
           ...action.payload,
           loading: false,
+          fullyLoaded: newLeads.length < state.limit,
           error: false,
           list: [
             ...state.list,
