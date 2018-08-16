@@ -38,6 +38,7 @@ const initialState = {
   page: 0,
   limit: 20,
   total: 0,
+  fullyLoaded: false,
   category: "realEstate",
   country: "US",
   state: "NY",
@@ -79,6 +80,17 @@ const createReducerFor = namespace => {
           error: false,
         }
       case types[namespace + "_FETCH_SUCCESS"]:
+        const newLeads = action.payload.list
+
+        if (!newLeads.length) {
+          return {
+            ...state,
+            error: false,
+            loading: false,
+            fullyLoaded: true,
+          }
+        }
+
         let currentIds = state.list.map(lead => lead.id)
 
         return {
@@ -88,9 +100,7 @@ const createReducerFor = namespace => {
           error: false,
           list: [
             ...state.list,
-            ...action.payload.list.filter(
-              lead => !currentIds.includes(lead.id),
-            ),
+            ...newLeads.filter(lead => !currentIds.includes(lead.id)),
           ],
         }
       case types[namespace + "_FETCH_ERROR"]:
