@@ -24,8 +24,9 @@
     }
   }
   .header {
+    width: 200px;
     &.bigger {
-      padding-top: 5px;
+      padding-top: 15px;
       margin-top: 10px;
       font-weight: 500;
       font-size: 20px;
@@ -57,9 +58,15 @@
     }
   }
   .flexed {
-    width: 510px;
-    justify-content: flex-end;
+    width: auto;
+    justify-content: flex-start;
     display: flex;
+    .fieldValue {
+      width: auto;
+    }
+    .fieldLabel {
+      width: 200px;
+    }
   }
   .errors {
     color: $ldc-error-color;

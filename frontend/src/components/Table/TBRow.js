@@ -9,6 +9,14 @@ const TBRow = props => (
       props.selected && props.selected.has(props.id) ? " r-selected" : ""
     }`}
   >
+    {props.displayLead && (
+      <div
+        className="eye"
+        onClick={() => {
+          props.displayLead(props)
+        }}
+      />
+    )}
     {props.isSelectable && (
       <div className="tbr-checkbox">
         <Checkbox

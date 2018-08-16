@@ -133,6 +133,8 @@ class LeadsTemplate extends React.Component {
               isNotAllSelected={isNotAllSelected}
               selected={leads.selected}
               isSelectable={this.props.getButtons}
+              pageName={pageName}
+              displayLead={this.props.displayLead}
             />
             {/* )} */}
             {!leads.list.length &&

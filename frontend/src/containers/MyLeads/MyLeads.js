@@ -3,6 +3,8 @@ import { connect } from "react-redux"
 import t from "utils/translate/translate"
 import LeadsTemplate from "../LeadsTemplate"
 import { leads, moveToSell } from "Actions"
+import displayLead from "../../actions/displayLead"
+import { push } from "react-router-redux"
 
 class MyLeads extends React.Component {
   moveLeadsToSell = () => {
@@ -48,6 +50,11 @@ class MyLeads extends React.Component {
       record: this.getLeadButtons(),
     }
   }
+  displayLead = lead => {
+    this.props.displayLead(lead)
+    this.props.push("/display-lead")
+  }
+
   render() {
     return (
       <>
@@ -56,6 +63,7 @@ class MyLeads extends React.Component {
         <LeadsTemplate
           {...this.props}
           pageName="my"
+          displayLead={this.displayLead.bind(this)}
           // getButtons={this.getButtons}
         />
       </>
@@ -77,5 +85,7 @@ export default connect(
     setSelectedLeads: selectedLeads =>
       leads.setSelectedLeads("MY_LEADS", selectedLeads),
     moveToSell: moveToSell.myLeadsMoveToSellBegin,
+    displayLead: displayLead.displayLeadGet,
+    push,
   },
 )(MyLeads)

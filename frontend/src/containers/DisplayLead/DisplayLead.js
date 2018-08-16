@@ -1,13 +1,16 @@
 import React from "react"
 import { connect } from "react-redux"
+import Button from "Components/Button"
 import { displayLead } from "Actions"
 import t from "../../utils/translate/translate"
+import { push, goBack } from "react-router-redux"
 
 class DisplayLead extends React.Component {
   renderFields(fieldsObj) {
-    return Object.keys(fieldsObj).map(f => {
+    const data = fieldsObj
+    return Object.keys(data).map(f => {
       return (
-        <div key={f} className="line">
+        <div key={f} className="line flexed">
           <div className="fieldLabel"> {f} </div>
           <div className="fieldValue"> {fieldsObj[f]} </div>
         </div>
@@ -23,6 +26,17 @@ class DisplayLead extends React.Component {
     return (
       <div className="display_lead">
         <h1>{t("Lead Details")}</h1>
+        <div className="controls field_submit flexed">
+          <div>
+            <Button
+              appStyle={true}
+              onClick={() => {
+                this.props.goBack()
+              }}
+              label={t("Back")}
+            />
+          </div>
+        </div>
         <div className="main_container">
           <div className="personal">
             <div className="help_text">
@@ -51,5 +65,8 @@ const mapStateToProps = state => state.displayLead
 
 export default connect(
   mapStateToProps,
-  {},
+  {
+    push,
+    goBack,
+  },
 )(DisplayLead)
