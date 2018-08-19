@@ -98,3 +98,24 @@ window.machingAlgorithmStart = function() {
     clickNext()
   }, 5000)
 }
+
+window.bindShareButton = function() {
+  const shareText =
+    "⚡️⚡️I just bought and sold 10 demo leads testing the #leadcoinalpha, and I earned #LDC tokens! " +
+    "Join the #alphabounty now and you too can earn #LDC. " +
+    "https://alpha.leadcoin.network " +
+    "⚡️⚡️ #leadcoin #alpharelease #blockchain #crypto "
+  window.setTimeout(function() {
+    var e = document.getElementById("twitter-share")
+    if (e) {
+      e.onclick = function() {
+        window.open(
+          "https://twitter.com/intent/tweet?text=" +
+            encodeURIComponent(shareText),
+          "_new",
+        )
+        clickNext()
+      }
+    }
+  }, 50)
+}
