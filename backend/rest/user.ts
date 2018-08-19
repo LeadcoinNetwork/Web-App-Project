@@ -83,7 +83,8 @@ export function start({
       res.json({ user: _user, token })
     })().catch(err => {
       res.status(400)
-      res.send({ error: errStringToObj(err.message) })
+      if (err.message) err = err.message
+      res.send({ error: errStringToObj(err) })
     })
   }
 
