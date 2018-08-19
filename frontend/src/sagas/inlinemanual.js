@@ -84,6 +84,10 @@ window.moveToSellLeads = function() {
   window.ldcPush("/sell-leads")
 }
 
+window.moveToUploadCSV = function() {
+  window.ldcPush("/csv-upload")
+}
+
 window.moveToSellAndFetch = function() {
   console.log("moveToSellAndFetch")
   // window.moveToSellLeads()
