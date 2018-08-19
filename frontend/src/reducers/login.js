@@ -21,6 +21,8 @@ const login = (state = initialState, action) => {
         ...state,
         loading: true,
       }
+    case types.LOGIN_CLEAR:
+      return initialState
     case types.LOGIN_FINISH:
       return {
         ...state,

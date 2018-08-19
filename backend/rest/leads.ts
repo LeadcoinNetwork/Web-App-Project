@@ -155,7 +155,7 @@ export function start({
       }
       error_obj[key].push(msg)
     })
-    return JSON.stringify(error_obj)
+    return error_obj
   }
 
   /**
@@ -193,8 +193,7 @@ export function start({
               if (err.sqlMessage) {
                 res.send({ error: err.sqlMessage })
               } else {
-                const error_obj = errStringToObj(err.message)
-                res.send({ error: JSON.parse(error_obj) })
+                res.send({ error: errStringToObj(err.message) })
               }
             })
         } else {
@@ -288,9 +287,9 @@ export function start({
             .catch(err => {
               res.status(400)
               if (err.sqlMessage) {
-                res.send({ error: err.sqlMessage })
+                res.send({ error: { sqlError: err.sqlMessage } })
               } else {
-                res.send({ error: err.message })
+                res.send({ error: errStringToObj(err.message) })
               }
             })
         } else {
@@ -298,7 +297,7 @@ export function start({
         }
       })().catch(err => {
         res.status(400)
-        res.send({ error: err.message })
+        res.send({ error: { error: err.message } })
       })
     },
   )

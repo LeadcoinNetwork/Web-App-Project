@@ -1,5 +1,33 @@
 @import "~Styles/variables";
 
+.user {
+  background: url("user.svg");
+  color: white;
+  width: 34px;
+  background-size: contain;
+  height: 40px;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-left: 7px;
+  padding: 20px;
+  padding-top: 30px;
+  margin-top: -5px;
+}
+
+.bell {
+  background: url("bell.svg");
+  color: white;
+  width: 50px;
+  background-size: contain;
+  height: 40px;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-left: 7px;
+  padding: 20px;
+  margin-top: -5px;
+  padding-top: 30px;
+}
+
 .ldc-notification-element {
   position: relative;
   display: inline-block;
@@ -45,7 +73,7 @@
       height: 20px;
       top: -6px;
       right: 15px;
-      background: #433190;
+      background: #604db6;
       transform: rotateZ(45deg);
       z-index: -1;
     }

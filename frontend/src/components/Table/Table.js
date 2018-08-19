@@ -114,6 +114,8 @@ class Table extends React.Component {
             isSelectable={props.isSelectable}
           />
           <TBody
+            displayLead={props.displayLead}
+            pageName={props.pageName}
             fields={props.fields}
             records={props.records}
             colCount={dinamicColsCount}

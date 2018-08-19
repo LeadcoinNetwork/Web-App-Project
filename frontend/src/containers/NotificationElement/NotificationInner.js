@@ -30,7 +30,7 @@ const NotificationInner = ({ list }) => (
       <span className="view-all-text">{t("View All Notifications")}</span>
     </div> */}
     {list.length === 0 && (
-      <div className="ni-row">{t("You Have No Notifications")}</div>
+      <div className="ni-row">{t("You Have No Notifications.")}</div>
     )}
   </div>
   // </Link>
