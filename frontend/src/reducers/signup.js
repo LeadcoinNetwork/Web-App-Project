@@ -3,6 +3,8 @@ import { types } from "../actions"
 const initialState = {
   name: "",
   email: "",
+  fname: "",
+  lname: "",
   password: "",
   errors: {},
 }
@@ -19,9 +21,6 @@ const signup = (state = initialState, action) => {
       }
 
     case types.SIGNUP_LOADING:
-      return initialState
-
-    case types.SIGNUP_LOADING:
       return {
         ...state,
         errors: {},
@@ -29,10 +28,7 @@ const signup = (state = initialState, action) => {
       }
 
     case types.SIGNUP_FINISH:
-      return {
-        ...state,
-        loading: false,
-      }
+      return initialState
     case types.SIGNUP_ERROR:
       return {
         ...state,
