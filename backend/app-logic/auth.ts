@@ -117,7 +117,12 @@ export default class Auth {
     if (shouldValidate) {
       var rs = await UserValidate.checkNewUserValid(user)
       if (rs instanceof Error) {
-        throw rs
+        //@ts-ignore
+        const errors = rs.details.map(ve => {
+          const key = ve.path[0]
+          return `${key}::${ve.message}`
+        })
+        throw errors.join(" ;")
       }
       if (!this.models.config.AUTO_CONFIRM_EMAIL) {
         user.disabled = disabledReason.EMAIL_NOT_VERIFIED

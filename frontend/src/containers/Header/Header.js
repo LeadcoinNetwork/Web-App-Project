@@ -25,9 +25,9 @@ const Header = ({
     >
       <div className="logo">
         <span className="logo-link" onClick={gotoDefaultHome} />
-        <span className="alpha-demo">DEMO</span>
       </div>
-      {/* 
+      <span className="alpha-demo">DEMO</span>
+      {/*
       uncomment bring back the language selector
       <div className="m-both-right">
         <LanguageSelector />

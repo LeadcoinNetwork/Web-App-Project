@@ -100,6 +100,7 @@ class LeadsTemplate extends React.Component {
             {/* {cardsMode ? (
                 <LeadsResults
                   leads={leads}
+                  fullyLoaded={leads.fullyLoaded}
                   buttons={this.props.getListButtons()}
                   isNotAllSelected={isNotAllSelected}
                   loading={leads.loading}
@@ -128,6 +129,7 @@ class LeadsTemplate extends React.Component {
               // renderFilters={this.renderFilters}
               renderResultsHead={this.renderResultsHead}
               records={leads.list}
+              fullyLoaded={leads.fullyLoaded}
               buttons={this.props.getButtons && this.props.getButtons()}
               setSelectedRecords={setSelectedLeads}
               isNotAllSelected={isNotAllSelected}
