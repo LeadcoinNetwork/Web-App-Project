@@ -9,6 +9,14 @@ const TBRow = props => (
       props.selected && props.selected.has(props.id) ? " r-selected" : ""
     }`}
   >
+    {props.displayLead && (
+      <div
+        className="eye"
+        onClick={() => {
+          props.displayLead(props)
+        }}
+      />
+    )}
     {props.isSelectable && (
       <div className="tbr-checkbox">
         <Checkbox
@@ -17,21 +25,22 @@ const TBRow = props => (
         />
       </div>
     )}
-    {props.buttons && (
-      <div className="tbr-buttons">
-        {props.buttons.map(button => (
-          <Button
-            key={button.value}
-            appStyle={true}
-            label={button.value}
-            onClick={e => {
-              e.stopPropagation()
-              button.onClick(props.id)
-            }}
-          />
-        ))}
-      </div>
-    )}
+    {props.buttons &&
+      false && (
+        <div className="tbr-buttons">
+          {props.buttons.map(button => (
+            <Button
+              key={button.value}
+              appStyle={true}
+              label={button.value}
+              onClick={e => {
+                e.stopPropagation()
+                button.onClick(props.id)
+              }}
+            />
+          ))}
+        </div>
+      )}
     {props.fields.map(f => (
       <TBRCol
         key={f.key}

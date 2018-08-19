@@ -27,7 +27,10 @@ export default class API {
           }
         } else {
           return {
-            error: { net_error: "NETWORK_ERROR" },
+            error: {
+              net_error:
+                "We're currently experiencing technical difficulties, and our support team is fixing the issue. Please try logging in again soon.",
+            },
           }
         }
       }

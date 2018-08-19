@@ -7,7 +7,6 @@ import { csvUpload, csvMapping } from "Actions"
 import t from "../../utils/translate/translate"
 import Dropzone from "react-dropzone"
 import papaparse from "papaparse"
-
 class CSVUpload extends React.Component {
   generalError() {
     const { errors } = this.props.csvUpload
@@ -197,7 +196,7 @@ class CSVUpload extends React.Component {
           <h3>{t("Add multiple leads for sale by uploading a CSV file.")}</h3>
           <div>
             <div> Your leads are being proccessed. </div>
-            <i className="fa fa-spinner fa-spin" />
+            <div className="ajax-loader2" />
           </div>
         </div>
       )

@@ -60,7 +60,7 @@ class BuyLeads extends React.Component {
       // do not change classnames, it's connected to the manual
       <section className="buy_leads">
         <h1>{t("Buy Leads")}</h1>
-        <h3>{t("Purchase hot leads for your business now!")}</h3>
+        <h3>{t("Purchase hot leads for your business.")}</h3>
         <Select className="industry">
           <option />
           <option>{t("Real Estate")}</option>

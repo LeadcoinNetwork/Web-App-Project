@@ -21,15 +21,15 @@ class UserMenu extends Component {
   render() {
     let { userMenu, user, userMenuClick, logOut } = this.props
     return (
-      <i
-        className="ldc-user-menu fas fa-user-circle"
+      <div
+        className="ldc-user-menu fas user icon"
         onClick={e => {
           e.stopPropagation()
           userMenuClick()
         }}
       >
         {userMenu.isOpen && <UserMenuInner user={user} logOut={logOut} />}
-      </i>
+      </div>
     )
   }
 }

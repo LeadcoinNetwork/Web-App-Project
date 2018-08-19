@@ -18,11 +18,11 @@ export default function* signup(api) {
       email,
       password,
     })
-    yield put(Actions.signup.signupFinish())
     window.triggerFetch()
     if (ans.error) {
       yield put(Actions.signup.signupError(ans.error))
     } else {
+      yield put(Actions.signup.signupFinish())
       yield put(Actions.user.loggedIn(ans.user))
       yield put(push("/email-confirmation"))
     }
