@@ -62,8 +62,8 @@ module.exports = {
               use: [
                 "css-loader",
                 "sass-loader",
-                "./webpack.rtl.duplicate.js", //It takes a CSS syntax and returns SASS Syntax
-                "sass-loader",
+                // "./webpack.rtl.duplicate.js", //It takes a CSS syntax and returns SASS Syntax, must be before and after sass-loader
+                // "sass-loader",
               ],
             }),
           }

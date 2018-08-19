@@ -51,11 +51,27 @@ storiesOf("Containers/Snackbar", module)
     })
 
     setTimeout(() => {
-      toast("hi")
       toast(
-        <a href="http://google.com" target="_blank">
-          hi
-        </a>,
+        <div
+          ref={e => {
+            // console.log(e)
+            // debugger
+            if (e) {
+              e = e.parentElement // toast body
+              e = e.parentElement // toast class
+              e = e.parentElement // toast container
+              e.style.width = "600px"
+            }
+          }}
+        >
+          <a href="http://google.com" target="_blank">
+            hi5 hello world hi5 hello world hi5 hello world hi5 hello world hi5
+            hello world hi5 hello world hi5 hello world
+          </a>
+        </div>,
+        {
+          autoClose: false,
+        },
       )
 
       app.notificationShow(

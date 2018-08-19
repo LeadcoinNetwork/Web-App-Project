@@ -37,8 +37,7 @@ class CSVUpload extends React.Component {
         "Size",
         "State",
         "Location",
-        "Housing",
-        "Type",
+        "Housing Type",
       ],
     }
     this.props.setDbFields(mock_fields)
@@ -76,7 +75,9 @@ class CSVUpload extends React.Component {
                 {t("Personal Identification Information")}
               </div>
               <div className="header smaller">
-                {t("These fields will only be visible to the lead owner")}
+                {t(
+                  "This information will remain hidden until a buyer purchases the lead.",
+                )}
               </div>
             </div>
             <div className="fields">{this.renderFields(db_fields.private)}</div>
@@ -100,16 +101,6 @@ class CSVUpload extends React.Component {
                 label={t("Submit")}
               />
             </div>
-            <div>
-              <Button
-                appStyle
-                secondary
-                onClick={() => {
-                  this.props.clear()
-                }}
-                label={t("Clear")}
-              />
-            </div>
           </div>
         </div>
       </div>
@@ -122,6 +113,8 @@ class CSVUpload extends React.Component {
       let value = ""
       if (fields_map && fields_map[fieldName]) value = fields_map[fieldName]
       const items = file_fields.map((field, i) => {
+        fields_map[fieldName] = value =
+          value === "" && fieldName == field ? field : value
         return t(field)
       })
       items.unshift(["0", t("I Don't have this field")])
@@ -141,7 +134,7 @@ class CSVUpload extends React.Component {
   renderPriceElement() {
     const errors = this.props.csvUpload.errors
     if (!errors) return
-    const error = Object.keys(errors).indexOf("price") > -1 ? "error" : ""
+    const error = Object.keys(errors).includes("price") ? "form_error" : ""
     return (
       <div className={"price " + error}>
         <span>{t("Lead price")}</span>
@@ -160,8 +153,9 @@ class CSVUpload extends React.Component {
   renderTerms() {
     const errors = this.props.csvUpload.errors
     if (!errors) return
-    const error =
-      Object.keys(errors).indexOf("agree_to_terms") > -1 ? "error" : ""
+    const error = Object.keys(errors).includes("agree_to_terms")
+      ? "form_error"
+      : ""
     const cls = "terms " + error
     return (
       <div className={cls}>
@@ -194,8 +188,20 @@ class CSVUpload extends React.Component {
 
   render() {
     let fileLabel = t("Choose File")
-    const { loading, file } = this.props.csvUpload
+    const { finished, file } = this.props.csvUpload
     if (file) fileLabel = file.name
+    if (finished) {
+      return (
+        <div className="csvUpload">
+          <h1>{t("Upload CSV File")}</h1>
+          <h3>{t("Add multiple leads for sale by uploading a CSV file.")}</h3>
+          <div>
+            <div> Your leads are being proccessed. </div>
+            <i className="fa fa-spinner fa-spin" />
+          </div>
+        </div>
+      )
+    }
     return (
       <div className="csvUpload">
         <h1>{t("Upload CSV File")}</h1>

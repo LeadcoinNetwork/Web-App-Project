@@ -1,10 +1,14 @@
 import types from "./types"
 
 export default {
+  csvUploadReset() {
+    return {
+      type: types.CSV_UPLOAD_RESET_FORM,
+    }
+  },
   csvUploadSuccess() {
     return {
       type: types.CSV_UPLOAD_SUCCESS,
-      loading: false,
     }
   },
   csvUploadLoadingDone() {

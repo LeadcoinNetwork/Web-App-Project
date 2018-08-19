@@ -3,17 +3,19 @@
 .add_lead {
   padding: 10px;
   .personal {
+    display: flex;
     padding-bottom: 10px;
     border-bottom: solid 1px black;
   }
   .public {
+    display: flex;
     padding-top: 10px;
   }
   .controls {
     margin: 5px;
   }
   .help_text {
-    max-width: 500px;
+    width: 250px;
   }
   .field_submit {
     margin-top: 5px;
@@ -21,6 +23,20 @@
       width: 242px;
     }
   }
+  .header {
+    &.bigger {
+      padding-top: 5px;
+      margin-top: 10px;
+      font-weight: 500;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    &.smaller {
+      font-weight: 300;
+      font-size: 16px;
+    }
+  }
+
   .line {
     &.error .fieldValue input {
       border: $ldc-error-color solid 1px;
@@ -35,11 +51,14 @@
     }
   }
   .agree_to_terms {
+    padding-left: 10px;
     &.error {
       color: $ldc-error-color;
     }
   }
   .flexed {
+    width: 510px;
+    justify-content: flex-end;
     display: flex;
   }
   .errors {

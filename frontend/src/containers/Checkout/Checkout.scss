@@ -8,9 +8,16 @@
     clear: both;
   }
 
+  .c-total .text {
+    font-weight: 200;
+    font-size: 18px;
+  }
   .c-total {
-    font-size: 14px;
-    font-weight: 300;
+    font-size: 25px;
+    font-weight: 500;
+    margin-top: 10px;
+    margin-right: 10px;
+    text-align: right;
 
     table {
       width: 100%;
@@ -21,7 +28,9 @@
   .c-details {
     position: relative;
     float: right;
-    font-size: 24px;
+    font-weight: 300;
+    font-size: 16px;
+    margin-top: 20px;
 
     table {
       border-collapse: collapse;

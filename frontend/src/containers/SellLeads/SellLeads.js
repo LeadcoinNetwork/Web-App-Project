@@ -61,7 +61,7 @@ class SellLeads extends React.Component {
               {t("Upload CSV File")}
             </Link>
             <Link to="/add-lead" className="add-lead no-underline">
-              {t("Create New Lead")}
+              {t("Upload a Single Lead")}
             </Link>
           </div>
         </div>
