@@ -65,6 +65,8 @@ class CSVUpload extends React.Component {
     const { db_fields } = this.props.csvMapping
     const price_element = this.renderPriceElement()
     const terms = this.renderTerms()
+    const { loading } = this.props.csvUpload
+
     return (
       <div className="fields_mapper">
         <div className="main_container">
@@ -92,13 +94,16 @@ class CSVUpload extends React.Component {
           <div className="controls field_submit flexed">
             {terms}
             <div className="mapSubmit">
-              <Button
-                appStyle
-                onClick={() => {
-                  this.props.submit()
-                }}
-                label={t("Submit")}
-              />
+              {loading && <div className="ajax-loader2" />}
+              {!loading && (
+                <Button
+                  appStyle
+                  onClick={() => {
+                    this.props.submit()
+                  }}
+                  label={t("Submit")}
+                />
+              )}
             </div>
           </div>
         </div>
