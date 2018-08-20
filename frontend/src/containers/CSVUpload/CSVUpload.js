@@ -95,7 +95,7 @@ class CSVUpload extends React.Component {
             {terms}
             <div className="mapSubmit">
               <Button
-                loading
+                loading={loading}
                 appStyle
                 onClick={() => {
                   this.props.submit()
