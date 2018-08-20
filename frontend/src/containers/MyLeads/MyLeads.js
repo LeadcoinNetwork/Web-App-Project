@@ -5,6 +5,7 @@ import LeadsTemplate from "../LeadsTemplate"
 import { leads, moveToSell } from "Actions"
 import displayLead from "../../actions/displayLead"
 import { push } from "react-router-redux"
+import DisplayLead from "../DisplayLead"
 
 class MyLeads extends React.Component {
   moveLeadsToSell = () => {
@@ -52,20 +53,33 @@ class MyLeads extends React.Component {
   }
   displayLead = lead => {
     this.props.displayLead(lead)
+    this.setState({ isDisplayingLead: true })
+    return
     this.props.push("/display-lead")
   }
 
   render() {
+    const isDisplayingLead = this.state ? this.state.isDisplayingLead : false
     return (
       <>
         <h1>{t("My Leads")}</h1>
         <h3>{t("Manage all of your leads from one dashboard.")}</h3>
-        <LeadsTemplate
-          {...this.props}
-          pageName="my"
-          displayLead={this.displayLead.bind(this)}
-          // getButtons={this.getButtons}
-        />
+        {isDisplayingLead && (
+          <DisplayLead
+            noheader
+            backFunction={() => {
+              this.setState({ isDisplayingLead: false })
+            }}
+          />
+        )}
+        {!isDisplayingLead && (
+          <LeadsTemplate
+            {...this.props}
+            pageName="my"
+            displayLead={this.displayLead.bind(this)}
+            // getButtons={this.getButtons}
+          />
+        )}
       </>
     )
   }
