@@ -94,16 +94,14 @@ class CSVUpload extends React.Component {
           <div className="controls field_submit flexed">
             {terms}
             <div className="mapSubmit">
-              {loading && <div className="ajax-loader2" />}
-              {!loading && (
-                <Button
-                  appStyle
-                  onClick={() => {
-                    this.props.submit()
-                  }}
-                  label={t("Submit")}
-                />
-              )}
+              <Button
+                loading
+                appStyle
+                onClick={() => {
+                  this.props.submit()
+                }}
+                label={t("Submit")}
+              />
             </div>
           </div>
         </div>
