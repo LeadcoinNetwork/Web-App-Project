@@ -2,16 +2,23 @@
 
 .home {
   padding-top: 50px;
+
   .title {
     text-align: center;
     font-size: 35px;
   }
+
   .container {
     display: block;
     text-align: center;
     margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
+    padding-top: 110px;
+    background-image: url(~Static/images/business.svg);
+    background-size: 75px auto;
+    background-repeat: no-repeat;
+    background-position: center top;
 
     .option {
       display: inline-block;
@@ -26,16 +33,17 @@
         width: 250px;
         color: white;
         font-weight: 100;
-        margin-top: 5px;
+        margin-top: 15px;
+        line-height: 18px;
       }
     }
 
     .buy {
-      margin-right: 10px;
+      margin-right: 15px;
     }
 
     .sell {
-      margin-left: 10px;
+      margin-left: 15px;
     }
   }
 
@@ -50,7 +58,7 @@
 
         .description {
           margin: auto;
-          margin-top: 5px;
+          margin-top: 15px;
         }
       }
     }
