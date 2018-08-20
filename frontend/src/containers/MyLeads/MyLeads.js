@@ -55,7 +55,7 @@ class MyLeads extends React.Component {
     this.props.displayLead(lead)
     this.setState({ isDisplayingLead: true })
     return
-    this.props.push("/display-lead")
+    //this.props.push("/display-lead")
   }
 
   render() {
