@@ -1,5 +1,19 @@
 @import "~Styles/variables";
 
+@media (max-width: $screen-tablets) {
+  nav.ldc-side-menu {
+    .clipboard {
+      display: none;
+    }
+    .cart {
+      display: none;
+    }
+    .coins {
+      display: none;
+    }
+  }
+}
+
 nav.ldc-side-menu {
   position: fixed;
   top: $header-height;
