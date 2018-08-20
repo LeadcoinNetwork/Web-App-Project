@@ -14,14 +14,26 @@
     margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
-    padding-top: 110px;
-    background-image: url(~Static/images/business.svg);
-    background-size: 75px auto;
-    background-repeat: no-repeat;
-    background-position: center top;
+    // padding-top: 110px;
+    // background-image: url(~Static/images/business.svg);
+    // background-size: 75px auto;
+    // background-repeat: no-repeat;
+    // background-position: center top;
 
     .option {
       display: inline-block;
+      padding-top: 70px;
+      background-size: 48px auto;
+      background-repeat: no-repeat;
+      background-position: center 5px;
+
+      &:first-child {
+        background-image: url(~Static/images/commerce.svg);
+      }
+
+      &:nth-child(2) {
+        background-image: url(~Static/images/online.svg);
+      }
 
       .ldc-button {
         width: 250px;
