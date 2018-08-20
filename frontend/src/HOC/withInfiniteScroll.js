@@ -36,7 +36,10 @@ const withInfiniteScroll = onScrollBottom => WrappedComponent => {
       return (
         <>
           <WrappedComponent {...passThroughProps} />
-          <div style={{opacity: this.props.loading ? 1 : 0}}>
+          <div style={{
+            opacity: this.props.loading ? 1 : 0,
+            display: this.props.fullyLoaded ? 'none' : 'block'
+          }}>
             <LoadingDots />
           </div>
         </>
