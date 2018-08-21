@@ -68,14 +68,10 @@ class LeadsTemplate extends React.Component {
 
     return (
       <div className="lt-results-head">
+        <h4>Search Results</h4>
         <label className="ltrh-count">
           {leads.list.length} {t("of")} {leads.total} {t("leads")}
         </label>
-        {/* <Select>
-          <option>{t("Sort By")}</option>
-          <option>{t("size")}</option>
-          <option>{t("budget")}</option>
-        </Select> */}
       </div>
     )
   }

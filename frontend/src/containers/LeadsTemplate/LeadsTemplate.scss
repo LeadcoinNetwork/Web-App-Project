@@ -4,19 +4,16 @@
 
   .lt-results-head {
     position: relative;
+    padding: 20px 0 15px;
     font-size: 16px;
     font-weight: 300;
     letter-spacing: 0.8px;
     text-transform: capitalize;
-    height: 80px;
-    line-height: 80px;
 
-    select.ldc-select {
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      max-width: 150px;
+    h4 {
+      font-size: 24px;
+      font-weight: 300;
+      padding-bottom: 24px;
     }
   }
 
