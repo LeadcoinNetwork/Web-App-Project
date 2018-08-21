@@ -14,11 +14,6 @@
     margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
-    // padding-top: 110px;
-    // background-image: url(~Static/images/business.svg);
-    // background-size: 75px auto;
-    // background-repeat: no-repeat;
-    // background-position: center top;
 
     .option {
       display: inline-block;
@@ -51,24 +46,40 @@
     }
 
     .buy {
-      margin-right: 15px;
+      margin-right: 20px;
     }
 
     .sell {
-      margin-left: 15px;
+      margin-left: 20px;
     }
   }
 
   @media (max-width: 760px) {
     .container {
       width: auto;
+      padding-top: 65px;
+      background-image: url(~Static/images/business.svg);
+      background-size: 60px auto;
+      background-repeat: no-repeat;
+      background-position: center top;
 
       .option {
         display: block;
         margin: auto;
-        margin-top: 40px;
+        margin-top: 30px;
+        padding-top: 0;
+
+        &:first-child,
+        &:nth-child(2) {
+          background-image: none;
+        }
+
+        .ldc-button {
+          width: 100%;
+        }
 
         .description {
+          width: calc(100% - 50px);
           margin: auto;
           margin-top: 15px;
         }
