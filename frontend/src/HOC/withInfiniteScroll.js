@@ -6,11 +6,12 @@ const withInfiniteScroll = onScrollBottom => WrappedComponent => {
   class WithInfiniteScroll extends React.Component {
     componentDidMount() {
       if (this.props.onScrollBottom) {
-        this.onScrollThrottled = debounce(this.onScroll, 200)
+        this.onScrollThrottled = debounce(this.onScroll, 100)
         window.addEventListener("scroll", this.onScrollThrottled)
       }
     }
-    componentWillUnount() {
+    componentWillUnmount() {
+      console.log("here@")
       window.removeEventListener("scroll", this.onScrollThrottled)
     }
     onScroll = () => {
@@ -36,7 +37,14 @@ const withInfiniteScroll = onScrollBottom => WrappedComponent => {
       return (
         <>
           <WrappedComponent {...passThroughProps} />
-          {this.props.loading ? <LoadingDots /> : null}
+          <div
+            style={{
+              opacity: this.props.loading ? 1 : 0,
+              display: this.props.fullyLoaded ? "none" : "block",
+            }}
+          >
+            <LoadingDots />
+          </div>
         </>
       )
     }

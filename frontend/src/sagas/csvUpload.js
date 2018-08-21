@@ -28,9 +28,9 @@ export default function* csvUpload(api) {
       }
     } else {
       yield put(Actions.csvUpload.csvUploadSuccess())
-      yield delay(5000)
+      yield delay(7500)
       window.triggerFetch()
-      yield delay(2500)
+      yield delay(3000)
       yield put(Actions.csvUpload.csvUploadReset())
       yield put(push("/sell-leads"))
     }

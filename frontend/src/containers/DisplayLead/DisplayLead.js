@@ -19,19 +19,23 @@ class DisplayLead extends React.Component {
   }
 
   render() {
-    const { private_fields, public_fields } = this.props
+    const { private_fields, public_fields, noheader } = this.props
     if (!private_fields) {
       return <div>{t("Loading...")}</div>
     }
     return (
       <div className="display_lead">
-        <h1>{t("Lead Details")}</h1>
+        {!noheader && <h1>{t("Lead Details")}</h1>}
         <div className="controls field_submit flexed">
           <div>
             <Button
               appStyle={true}
               onClick={() => {
-                this.props.goBack()
+                if (this.props.backFunction) {
+                  this.props.backFunction()
+                } else {
+                  this.props.goBack()
+                }
               }}
               label={t("Back")}
             />

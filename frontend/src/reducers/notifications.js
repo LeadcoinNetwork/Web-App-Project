@@ -9,6 +9,8 @@ const initialState = {
 
 const notifications = (state = initialState, action) => {
   switch (action.type) {
+    case types.NOTIFICATIONS_CLEAR:
+      return initialState
     case types.NOTIFICATIONS_SHOW:
       return {
         ...state,
