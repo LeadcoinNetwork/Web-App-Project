@@ -105,9 +105,10 @@ window.machingAlgorithmStart = function() {
 
 window.bindShareButton = function() {
   const shareText =
-    "🚀🚀  Wow, the #leadcoinalpha is amazing, great job team #LeadCoin! Join the #alphabounty now for" +
-    "the chance to earn #LDC tokens." +
-    "https://alpha.leadcoin.network " +
+    "🚀🚀I just tested the amazing #leadcoinalpha, a decentralized lead sharing network! " +
+    "This platform has the potential to offer a true web marketing alternative to Google & Facebook. " +
+    "Join the #alphabounty now & earn #LDC Tokens. " +
+    "https://alpha.leadcoin.network 🚀🚀" +
     "⚡️⚡️ #leadcoin #alpharelease #blockchain #crypto #ethereum"
   window.setTimeout(function() {
     var e = document.getElementById("twitter-share")
