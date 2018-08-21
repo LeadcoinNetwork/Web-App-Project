@@ -23,3 +23,25 @@
     }
   }
 }
+
+@media (max-width: $screen-tablets) {
+
+  .buy_leads {
+
+    .bl-filters {
+      padding-bottom: 40px;
+      position: relative;
+
+      &:after {
+        height: 5px;
+        right: -20px;
+      }
+
+      select {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+      }
+    }
+  }
+}
