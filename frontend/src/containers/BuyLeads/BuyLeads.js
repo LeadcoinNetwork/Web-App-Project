@@ -62,14 +62,14 @@ class BuyLeads extends React.Component {
         <h1>{t("Buy Leads")}</h1>
         <h3>{t("Purchase hot leads for your business.")}</h3>
         <Select className="industry">
-          <option />
+          <option>{t("Choose your industry")}</option>
           <option>{t("Real Estate")}</option>
           <option disabled>{t("Crypto")}</option>
           <option disabled>{t("Insurance")}</option>
           <option disabled>{t("Loans")}</option>
         </Select>
         <Select className="category">
-          <option />
+          <option>{t("Choose your category")}</option>
           <option>{t("Real Estate-Buy")}</option>
           <option disabled>{t("Real Estate-Sell")}</option>
           <option disabled>{t("Real Estate-Looking to rent")}</option>
