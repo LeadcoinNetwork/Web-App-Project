@@ -15,6 +15,7 @@ export default function* logout(api) {
     yield put(Actions.user.loggedOut())
     yield put(Actions.login.loginClear())
     yield put(Actions.signup.signupClear())
+    yield put(Actions.notifications.notificationsClear())
     yield put(push("/login"))
   }
 }

@@ -15,8 +15,8 @@ const NotificationInner = ({ list }) => (
           className={"ni-row" + (notification.unread ? " unread" : "")}
           key={notification.id}
         >
-          <span className="nr-time">{fromNow(notification.timestamp)}</span>{" "}
-          {t(notification.msg)}
+          <div className="nr-time">{fromNow(notification.timestamp)}</div>{" "}
+          <div className="nr-content"> {t(notification.msg)} </div>
         </div>
       </div>
     ))}
