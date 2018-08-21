@@ -65,6 +65,8 @@ class CSVUpload extends React.Component {
     const { db_fields } = this.props.csvMapping
     const price_element = this.renderPriceElement()
     const terms = this.renderTerms()
+    const { loading } = this.props.csvUpload
+
     return (
       <div className="fields_mapper">
         <div className="main_container">
@@ -93,6 +95,7 @@ class CSVUpload extends React.Component {
             {terms}
             <div className="mapSubmit">
               <Button
+                loading={loading}
                 appStyle
                 onClick={() => {
                   this.props.submit()

@@ -15,7 +15,7 @@ class Signup extends React.Component {
   getErrors(errors) {
     return (
       <ul className="ldc-error-text">
-        {errors.split(";").map(e => <li key={e}>{t(e)}</li>)}
+        {errors.split(" ;").map(e => <li key={e}>{t(e)}</li>)}
       </ul>
     )
   }
@@ -91,14 +91,14 @@ class Signup extends React.Component {
           <h3>{t("LeadCoin is the promised land for marketers")}</h3>
           <q>
             {t(
-              "Collaborating with other marketers & sharing leads is 10X more efficient than giving away my budget to Google & Facebook.",
+              "Bitcoin is... well... imagine keeping your car idle 24/7 produced solved Sudokus you could trade for heroin.",
             )}
           </q>
           <label style={{ backgroundImage: `url(${tiger})` }}>
             <span>
-              {t("Meir Cohen")}
+              {t("Erez Hochman")}
               <br />
-              {t("CEO of Crypto")}
+              {t("Crypto Expert")}
             </span>
           </label>
         </aside>
