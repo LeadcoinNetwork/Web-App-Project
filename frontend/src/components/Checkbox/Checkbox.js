@@ -1,8 +1,8 @@
 import React from "react"
 
-const Checkbox = ({ name, label, checked, onClick }) => (
+const Checkbox = ({ name, label, checked, onClick, id }) => (
   <label className="ldc-checkbox">
-    <input type="checkbox" name={name} checked={checked} onChange={onClick} />
+    <input id={id} type="checkbox" name={name} checked={checked} onChange={onClick} />
     <span />
     {label}
   </label>
