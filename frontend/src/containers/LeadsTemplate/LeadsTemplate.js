@@ -41,15 +41,6 @@ class LeadsTemplate extends React.Component {
 
     setSelectedLeads(selected)
   }
-  renderFilters = () => {
-    if (this.props.pageName !== "buy") return
-
-    return (
-      <div className="lt-filters">
-        <TextField placeholder={t("Search...")} appStyle />
-      </div>
-    )
-  }
   zeroResults = () => {
     switch (this.props.pageName) {
       case "buy":
@@ -106,7 +97,6 @@ class LeadsTemplate extends React.Component {
                   loading={leads.loading}
                   onScrollBottom={this.onScrollBottom}
                   toggleAll={this.toggleAll}
-                  renderFilters={this.renderFilters}
                   renderResultsHead={this.renderResultsHead}
                   renderLead={lead => (
                     <RealEstateLead
@@ -126,7 +116,6 @@ class LeadsTemplate extends React.Component {
               }))}
               loading={leads.loading}
               onScrollBottom={this.onScrollBottom}
-              // renderFilters={this.renderFilters}
               renderResultsHead={this.renderResultsHead}
               records={leads.list}
               fullyLoaded={leads.fullyLoaded}

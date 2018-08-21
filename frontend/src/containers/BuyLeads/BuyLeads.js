@@ -75,6 +75,7 @@ class BuyLeads extends React.Component {
           <option disabled>{t("Real Estate-Looking to rent")}</option>
           <option disabled>{t("Real Estate-Properties for rent")}</option>
         </Select>
+        {/*<TextField placeholder={t("Search...")} appStyle />*/}
         <Button
           className="search"
           onClick={() => {
