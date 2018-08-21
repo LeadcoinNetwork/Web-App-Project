@@ -123,3 +123,10 @@ window.bindShareButton = function() {
     }
   }, 50)
 }
+
+window.closeAllNotification = function() {
+  var x = document.getElementsByClassName("times")
+  for (var i = 0; i < x.length; i++) {
+    x[i].click()
+  }
+}
