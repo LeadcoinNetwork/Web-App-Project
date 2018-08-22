@@ -143,6 +143,9 @@
 .laststep .inmplayer-popover-button-next.inmplayer-button {
   opacity: 0 !important;
 }
+.laststep {
+  text-align: center;
+}
 
 .laststep button#twitter-share {
   text-align: center;
@@ -158,4 +161,12 @@
 
 .center {
   text-align: center;
+}
+
+.inmplayer-autolaunch-dismiss {
+  display: none;
+}
+
+.inmplayer-popover-buttons {
+  float: right;
 }

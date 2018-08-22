@@ -7,7 +7,7 @@ const Snackbar = () => (
     position="bottom-right"
     autoClose={5000}
     hideProgressBar
-    closeButton={<div className="times" />}
+    // closeButton={<div className="times" />}
     newestOnTop
     closeOnClick
     pauseOnHover
