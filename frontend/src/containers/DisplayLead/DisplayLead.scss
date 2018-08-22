@@ -80,6 +80,12 @@
 
 @media (max-width: 760px) {
   .display_lead {
+    .header {
+      width: unset;
+    }
+    .help_text {
+      width: unset;
+    }
     .main_container {
       .line.flexed {
         display: block;
