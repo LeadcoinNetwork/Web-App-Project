@@ -3,6 +3,10 @@
   padding: 18px 18px 18px 18px !important;
   text-align: left;
   opacity: 0.8;
+  max-width: 100vw;
+  .alert {
+    max-width: 95vw;
+  }
 }
 .times {
   background: url("times.svg");
