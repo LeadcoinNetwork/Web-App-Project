@@ -2,10 +2,12 @@
 
 .home {
   padding-top: 50px;
+
   .title {
     text-align: center;
     font-size: 35px;
   }
+
   .container {
     display: block;
     text-align: center;
@@ -15,6 +17,18 @@
 
     .option {
       display: inline-block;
+      padding-top: 70px;
+      background-size: 48px auto;
+      background-repeat: no-repeat;
+      background-position: center 5px;
+
+      &:first-child {
+        background-image: url(~Static/images/commerce.svg);
+      }
+
+      &:nth-child(2) {
+        background-image: url(~Static/images/online.svg);
+      }
 
       .ldc-button {
         width: 250px;
@@ -26,31 +40,48 @@
         width: 250px;
         color: white;
         font-weight: 100;
-        margin-top: 5px;
+        margin-top: 15px;
+        line-height: 18px;
       }
     }
 
     .buy {
-      margin-right: 10px;
+      margin-right: 20px;
     }
 
     .sell {
-      margin-left: 10px;
+      margin-left: 20px;
     }
   }
 
   @media (max-width: 760px) {
     .container {
       width: auto;
+      padding-top: 65px;
+      background-image: url(~Static/images/business.svg);
+      background-size: 60px auto;
+      background-repeat: no-repeat;
+      background-position: center top;
 
       .option {
         display: block;
         margin: auto;
-        margin-top: 40px;
+        margin-top: 30px;
+        padding-top: 0;
+
+        &:first-child,
+        &:nth-child(2) {
+          background-image: none;
+        }
+
+        .ldc-button {
+          width: 100%;
+        }
 
         .description {
+          width: calc(100% - 50px);
           margin: auto;
-          margin-top: 5px;
+          margin-top: 15px;
         }
       }
     }
