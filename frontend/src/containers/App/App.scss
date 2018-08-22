@@ -70,6 +70,15 @@
     main {
       padding: 0 20px 80px;
 
+      h1 {
+        padding-bottom: 20px;
+      }
+
+      h3 {
+        font-size: 20px;
+        padding-bottom: 30px;
+      }
+
       &.a-app-mode {
         padding: calc(#{$header-height} + 80px) 20px 20px;
       }

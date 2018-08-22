@@ -46,3 +46,23 @@
     }
   }
 }
+
+
+@media (max-width: $screen-tablets) {
+
+  .ldc-leads-template {
+
+    .lt-results-head {
+
+      h4 {
+        font-size: 26px;
+        padding-bottom: 20px;
+      }
+
+      .ldc-button {
+        position: static;
+        margin-bottom: 20px;
+      }
+    }
+  }
+}
