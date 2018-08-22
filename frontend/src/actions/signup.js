@@ -14,6 +14,12 @@ export default {
     }
   },
 
+  signupClear() {
+    return {
+      type: types.SIGNUP_CLEAR,
+    }
+  },
+
   signupLoading() {
     return {
       type: types.SIGNUP_LOADING,

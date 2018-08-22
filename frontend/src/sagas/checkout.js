@@ -44,8 +44,8 @@ export default function* checkout(api) {
         </div>,
         {
           type: "success",
-          autoClose: 10000,
-          pauseOnHover: true,
+          autoClose: false,
+          // pauseOnHover: true,
         },
       )
       yield put(actions.leads.setSelectedLeads("BUY_LEADS", new Set()))

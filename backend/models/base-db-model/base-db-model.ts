@@ -163,9 +163,9 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         where_additions = filters
           .map(f => {
             const escaped = mysql.escape(f.val)
-            return ` ${this.fieldName} ->> "$.${f.field}" ${
+            return `${this.fieldName} ->> "$.${f.field}" ${
               f.op
-            } "%${escaped.slice(1, -1)}%" `
+            } "%${escaped.slice(1, -1)}%"`
           })
           .join(" OR ")
       }
@@ -175,8 +175,6 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       let query = `
         FROM leads
         WHERE doc->>"$.active" = "true"
-        AND doc->>"$.Type" <> "Rent" 
-        AND doc->>"$.Type" <> "rent" 
         AND doc->>"$.forSale" = "true" 
       `
       if (where_additions.length > 0) query += `AND ${where_additions}`
@@ -191,6 +189,13 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       let count = await this.sql.query(countHeader + query)
       let rows = await this.sql.query(realHeader + query + limit_addition)
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
+      rows = rows.map(row => {
+        return Object.assign(row, {
+          "Contact Person": "**********",
+          Email: "*********@gmail.com",
+          Telephone: row["Telephone"].substring(0, 6) + "******",
+        })
+      }) // remove contact information
       return { list: rows, total: count[0].count }
     },
 

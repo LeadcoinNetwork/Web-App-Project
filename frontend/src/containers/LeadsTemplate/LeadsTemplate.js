@@ -43,20 +43,10 @@ class LeadsTemplate extends React.Component {
   }
   renderFilters = () => {
     if (this.props.pageName !== "buy") return
-    return null
+
     return (
       <div className="lt-filters">
-        <TextField
-          disabled={loading}
-          appStyle={true}
-          placeholder={t(f.name)}
-          value={values[f.key]}
-          onChange={e => {
-            this.props.handleChange(f.key, e.target.value)
-          }}
-          placeholder={t("Search...")}
-          appStyle
-        />
+        <TextField placeholder={t("Search...")} appStyle />
       </div>
     )
   }
@@ -65,14 +55,14 @@ class LeadsTemplate extends React.Component {
       case "buy":
         return (
           <>
-            <h3>{t("Sorry, we couldn't find any leads")}</h3>
-            <span>{t("Try expanding your search criteria")}</span>
+            <h3>{t("Sorry, we couldn't find any leads.")}</h3>
+            <span>{t("Try expanding your search criteria.")}</span>
           </>
         )
       case "my":
         return (
           <>
-            <h3>{t("You have no leads")}</h3>
+            <h3>{t("You have no leads.")}</h3>
             <span>
               {t("Explore and ")}{" "}
               <Link to="/buy-leads">{t("buy new leads")}</Link>
@@ -110,6 +100,7 @@ class LeadsTemplate extends React.Component {
             {/* {cardsMode ? (
                 <LeadsResults
                   leads={leads}
+                  fullyLoaded={leads.fullyLoaded}
                   buttons={this.props.getListButtons()}
                   isNotAllSelected={isNotAllSelected}
                   loading={leads.loading}
@@ -135,14 +126,17 @@ class LeadsTemplate extends React.Component {
               }))}
               loading={leads.loading}
               onScrollBottom={this.onScrollBottom}
-              renderFilters={this.renderFilters}
+              // renderFilters={this.renderFilters}
               renderResultsHead={this.renderResultsHead}
               records={leads.list}
+              fullyLoaded={leads.fullyLoaded}
               buttons={this.props.getButtons && this.props.getButtons()}
               setSelectedRecords={setSelectedLeads}
               isNotAllSelected={isNotAllSelected}
               selected={leads.selected}
               isSelectable={this.props.getButtons}
+              pageName={pageName}
+              displayLead={this.props.displayLead}
             />
             {/* )} */}
             {!leads.list.length &&

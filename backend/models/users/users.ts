@@ -63,7 +63,7 @@ class User extends baseDBModel<
     let { email } = user
     var exist = await this.exist({ email })
     if (exist) {
-      throw new Error("user email already exists")
+      throw new Error("email::user email already exists")
     }
     var user2Databse = <any>user
     if (user.plainPassword) {
@@ -74,7 +74,7 @@ class User extends baseDBModel<
     let status = await this.insert(user2Databse)
 
     if (!status.insertId) {
-      throw new Error("user not inserted")
+      throw new Error("password::user not inserted")
     } else {
       return status.insertId
       // return this.getOne({ id: status.insertId })

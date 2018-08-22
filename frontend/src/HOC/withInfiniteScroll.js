@@ -1,35 +1,50 @@
 import React from "react"
-var throttle = require("lodash/throttle")
 import LoadingDots from "Components/LoadingDots"
+const debounce = require("lodash/debounce")
 
 const withInfiniteScroll = onScrollBottom => WrappedComponent => {
   class WithInfiniteScroll extends React.Component {
     componentDidMount() {
       if (this.props.onScrollBottom) {
-        this.onScrollThrottled = throttle(this.onScroll, 200)
+        this.onScrollThrottled = debounce(this.onScroll, 100)
         window.addEventListener("scroll", this.onScrollThrottled)
       }
     }
-    componentWillUnount() {
+    componentWillUnmount() {
+      console.log("here@")
       window.removeEventListener("scroll", this.onScrollThrottled)
     }
     onScroll = () => {
-      if (!this.props.loading) {
+      let { loading, fullyLoaded, onScrollBottom } = this.props
+
+      if (!fullyLoaded && !loading) {
         let clientHeight = window.document.documentElement.clientHeight,
           rect = window.document.body.getBoundingClientRect()
 
         if (rect.height - Math.abs(rect.top) <= clientHeight + 20) {
-          this.props.onScrollBottom()
+          onScrollBottom()
         }
       }
     }
     render() {
-      const { onScrollBottom, loading, ...passThroughProps } = this.props
+      const {
+        onScrollBottom,
+        loading,
+        fullyLoaded,
+        ...passThroughProps
+      } = this.props
 
       return (
         <>
           <WrappedComponent {...passThroughProps} />
-          {this.props.loading ? <LoadingDots /> : null}
+          <div
+            style={{
+              opacity: this.props.loading ? 1 : 0,
+              display: this.props.fullyLoaded ? "none" : "block",
+            }}
+          >
+            <LoadingDots />
+          </div>
         </>
       )
     }

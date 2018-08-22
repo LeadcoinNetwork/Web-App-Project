@@ -22,9 +22,11 @@ import addLead from "./addLead"
 import fields from "./fields"
 import translate from "./translate"
 import withdraw from "./withdraw"
+import displayLead from "./displayLead"
 
 const rootReducer = combineReducers({
   app,
+  displayLead,
   user,
   language,
   checkout,

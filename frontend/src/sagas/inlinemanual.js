@@ -84,6 +84,10 @@ window.moveToSellLeads = function() {
   window.ldcPush("/sell-leads")
 }
 
+window.moveToUploadCSV = function() {
+  window.ldcPush("/csv-upload")
+}
+
 window.moveToSellAndFetch = function() {
   console.log("moveToSellAndFetch")
   // window.moveToSellLeads()
@@ -97,4 +101,33 @@ window.machingAlgorithmStart = function() {
   setTimeout(function() {
     clickNext()
   }, 5000)
+}
+
+window.bindShareButton = function() {
+  const shareText =
+    "🚀🚀I just tested the amazing #leadcoinalpha, a decentralized lead sharing network! " +
+    "This platform has the potential to offer a true web marketing alternative to Google & Facebook. " +
+    "Join the #alphabounty now & earn #LDC Tokens. " +
+    "https://alpha.leadcoin.network 🚀🚀" +
+    "⚡️⚡️ #leadcoin #alpharelease #blockchain #crypto #ethereum"
+  window.setTimeout(function() {
+    var e = document.getElementById("twitter-share")
+    if (e) {
+      e.onclick = function() {
+        window.open(
+          "https://twitter.com/intent/tweet?text=" +
+            encodeURIComponent(shareText),
+          "_new",
+        )
+        clickNext()
+      }
+    }
+  }, 50)
+}
+
+window.closeAllNotification = function() {
+  var x = document.getElementsByClassName("times")
+  for (var i = 0; i < x.length; i++) {
+    x[i].click()
+  }
 }

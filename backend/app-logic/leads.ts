@@ -36,9 +36,9 @@ const contains_contact = lead => {
 
 const validate_lead = lead => {
   const errors = []
-  if (!lead.lead_price) errors.push("lead_price::Lead price is required")
+  if (!lead.lead_price) errors.push("lead_price::Lead price is required.")
   if (!contains_contact(lead)) {
-    errors.push("phone::At least one contact info is required")
+    errors.push("phone::At least one contact info is required.")
     errors.push("name::")
     errors.push("email::")
   }
@@ -67,7 +67,7 @@ export default class Leads {
     }
     buyer.balance = buyer.balance | 0
     if (buyer.balance < deal_price) {
-      throw new Error("balance::Amount insufficient")
+      throw new Error("balance::Amount insufficient.")
     }
     const result = await this.models.leads.buy(leads, new_owner)
     const groupedByOwner = _.groupBy(result, "bought_from")
@@ -79,9 +79,9 @@ export default class Leads {
       overall_cost += transaction_amount
       this.models.users.increaseBalance(seller, transaction_amount)
       this.models.notifications.createNotification({
-        msg: `${
+        msg: `someone bought ${
           group.length
-        } of your leads were bought for a total of ${overall_cost}$`,
+        } of your leads for a total of ${overall_cost}$`,
         userId: seller,
         unread: true,
       })

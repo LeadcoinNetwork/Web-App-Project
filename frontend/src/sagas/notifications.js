@@ -9,10 +9,7 @@ import API from "../api/index"
  */
 export default function* notifications(api) {
   while (true) {
-    yield take(types.NOTIFICATIONS_FETCH_START)
-
     let res = yield api.notifications.getNotifications()
-    console.log(res)
 
     if (res.error) {
       yield put(actions.notifications.notificationsFetchError(res.error))
@@ -21,5 +18,10 @@ export default function* notifications(api) {
         actions.notifications.notificationsUpdate(res.list, res.unreadCount),
       )
     }
+    yield take([
+      types.NOTIFICATIONS_FETCH_START,
+      types.LOGIN_FINISH,
+      types.LOGGED_OUT,
+    ])
   }
 }

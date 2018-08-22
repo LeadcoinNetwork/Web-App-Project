@@ -3,6 +3,9 @@ import { connect } from "react-redux"
 import t from "utils/translate/translate"
 import LeadsTemplate from "../LeadsTemplate"
 import { leads, moveToSell } from "Actions"
+import displayLead from "../../actions/displayLead"
+import { push } from "react-router-redux"
+import DisplayLead from "../DisplayLead"
 
 class MyLeads extends React.Component {
   moveLeadsToSell = () => {
@@ -48,16 +51,35 @@ class MyLeads extends React.Component {
       record: this.getLeadButtons(),
     }
   }
+  displayLead = lead => {
+    this.props.displayLead(lead)
+    this.setState({ isDisplayingLead: true })
+    return
+    //this.props.push("/display-lead")
+  }
+
   render() {
+    const isDisplayingLead = this.state ? this.state.isDisplayingLead : false
     return (
       <>
         <h1>{t("My Leads")}</h1>
         <h3>{t("Manage all of your leads from one dashboard.")}</h3>
-        <LeadsTemplate
-          {...this.props}
-          pageName="my"
-          // getButtons={this.getButtons}
-        />
+        {isDisplayingLead && (
+          <DisplayLead
+            noheader
+            backFunction={() => {
+              this.setState({ isDisplayingLead: false })
+            }}
+          />
+        )}
+        {!isDisplayingLead && (
+          <LeadsTemplate
+            {...this.props}
+            pageName="my"
+            displayLead={this.displayLead.bind(this)}
+            // getButtons={this.getButtons}
+          />
+        )}
       </>
     )
   }
@@ -65,7 +87,9 @@ class MyLeads extends React.Component {
 
 const mapStateToProps = state => ({
   leads: state.myLeads,
-  fields: state.fields,
+  fields: state.fields.filter(f => {
+    return f.key != "lead_price"
+  }),
 })
 
 export default connect(
@@ -75,5 +99,7 @@ export default connect(
     setSelectedLeads: selectedLeads =>
       leads.setSelectedLeads("MY_LEADS", selectedLeads),
     moveToSell: moveToSell.myLeadsMoveToSellBegin,
+    displayLead: displayLead.displayLeadGet,
+    push,
   },
 )(MyLeads)

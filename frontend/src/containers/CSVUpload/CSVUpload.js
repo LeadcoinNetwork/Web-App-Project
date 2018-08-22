@@ -7,7 +7,6 @@ import { csvUpload, csvMapping } from "Actions"
 import t from "../../utils/translate/translate"
 import Dropzone from "react-dropzone"
 import papaparse from "papaparse"
-
 class CSVUpload extends React.Component {
   generalError() {
     const { errors } = this.props.csvUpload
@@ -66,6 +65,8 @@ class CSVUpload extends React.Component {
     const { db_fields } = this.props.csvMapping
     const price_element = this.renderPriceElement()
     const terms = this.renderTerms()
+    const { loading } = this.props.csvUpload
+
     return (
       <div className="fields_mapper">
         <div className="main_container">
@@ -94,6 +95,7 @@ class CSVUpload extends React.Component {
             {terms}
             <div className="mapSubmit">
               <Button
+                loading={loading}
                 appStyle
                 onClick={() => {
                   this.props.submit()
@@ -197,7 +199,7 @@ class CSVUpload extends React.Component {
           <h3>{t("Add multiple leads for sale by uploading a CSV file.")}</h3>
           <div>
             <div> Your leads are being proccessed. </div>
-            <i className="fa fa-spinner fa-spin" />
+            <div className="ajax-loader2" />
           </div>
         </div>
       )

@@ -14,6 +14,11 @@ export default {
     }
   },
 
+  loginClear() {
+    return {
+      type: types.LOGIN_CLEAR,
+    }
+  },
   loginLoading() {
     return {
       type: types.LOGIN_LOADING,
