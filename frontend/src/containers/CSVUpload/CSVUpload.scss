@@ -96,3 +96,34 @@
     }
   }
 }
+
+@media (max-width: 760px) {
+  .fields_mapper {
+    .help_text {
+      width: unset;
+      margin-right: 0;
+    }
+    .main_container {
+      .price {
+        margin-left: 0;
+        input {
+          margin-left: 11px;
+          width: 300px;
+        }
+      }
+      .line.flexed {
+        display: block;
+        height: unset;
+        line-height: unset;
+        margin-bottom: 10px;
+        .fieldLabel {
+          width: auto;
+          margin-left: -10px;
+        }
+      }
+      > div {
+        display: block;
+      }
+    }
+  }
+}
