@@ -45,6 +45,7 @@ export default function* checkout(api) {
         {
           type: "success",
           autoClose: false,
+          closeOnClick: false,
           // pauseOnHover: true,
         },
       )

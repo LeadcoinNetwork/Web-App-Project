@@ -2,6 +2,7 @@ import React from "react"
 import Select from "Components/Select"
 import Button from "Components/Button"
 import TextField from "Components/TextField"
+import Checkbox from "Components/Checkbox"
 import { connect } from "react-redux"
 import { addLead } from "Actions"
 import t from "../../utils/translate/translate"
@@ -12,16 +13,15 @@ class AddLead extends React.Component {
     const error = errors["agree_to_terms"] ? "error" : ""
     return (
       <div className={error + " agree_to_terms twothirds"}>
-        <input
-          type="checkbox"
-          name="agree_to_terms"
-          id="terms_checkbox"
-          value={this.props.agree_to_terms}
-          onChange={e => {
+        <Checkbox
+          label={t("I AGREE TO THE TERMS")}
+          name='agree_to_terms'
+          id='terms_checkbox'
+          checked={this.props.agree_to_terms}
+          onClick={e => {
             this.props.agreeToTerms(e.target.checked)
           }}
         />
-        <label htmlFor="terms_checkbox">{t("I AGREE TO THE TERMS")}</label>
       </div>
     )
   }

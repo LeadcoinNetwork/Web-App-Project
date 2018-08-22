@@ -1,11 +1,16 @@
 @import "~Styles/variables";
 
 .ldc-table {
+  position: relative;
   font-size: 14px;
   text-align: left;
   min-height: 100%;
 
   .t-buttons {
+    display: none; //temp
+    position: absolute;
+    top: 20px;
+    right: 0;
   }
 
   .t-main {

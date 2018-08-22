@@ -10,21 +10,21 @@ const SideMenu = ({ path }) => {
         className={path === "/buy-leads" ? "sm-active" : ""}
         data-text={t("buy leads")}
       >
-        <div className="cart" />
+        <div className="menu-icons cart" />
       </Link>
       <Link
         to="/sell-leads"
         className={path === "/sell-leads" ? "sm-active" : ""}
         data-text={t("sell leads")}
       >
-        <div className="coins" />
+        <div className="menu-icons coins" />
       </Link>
       <Link
         to="/my-leads"
         className={path === "/my-leads" ? "sm-active" : ""}
         data-text={t("my leads")}
       >
-        <div className="clipboard" />
+        <div className="menu-icons clipboard" />
       </Link>
     </nav>
   )

@@ -28,14 +28,14 @@
     h1 {
       font-size: 30px;
       font-weight: 300;
-      padding-bottom: 30px;
+      padding-bottom: 26px;
       text-transform: capitalize;
     }
 
     h3 {
       font-size: 24px;
       font-weight: 300;
-      padding-bottom: 30px;
+      padding-bottom: 24px;
     }
 
     h4 {
@@ -69,6 +69,15 @@
   .ldc-app {
     main {
       padding: 0 20px 80px;
+
+      h1 {
+        padding-bottom: 20px;
+      }
+
+      h3 {
+        font-size: 20px;
+        padding-bottom: 30px;
+      }
 
       &.a-app-mode {
         padding: calc(#{$header-height} + 80px) 20px 20px;

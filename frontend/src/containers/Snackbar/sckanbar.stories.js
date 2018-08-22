@@ -71,6 +71,7 @@ storiesOf("Containers/Snackbar", module)
         </div>,
         {
           autoClose: false,
+          closeOnClick: false,
         },
       )
 

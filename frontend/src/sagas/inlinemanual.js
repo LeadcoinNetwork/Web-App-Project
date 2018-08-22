@@ -126,7 +126,9 @@ window.bindShareButton = function() {
 }
 
 window.closeAllNotification = function() {
-  var x = document.getElementsByClassName("times")
+  var x = document.getElementsByClassName(
+    "Toastify__close-button Toastify__close-button--success",
+  )
   for (var i = 0; i < x.length; i++) {
     x[i].click()
   }

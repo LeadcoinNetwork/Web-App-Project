@@ -1,5 +1,7 @@
 .srm-selector {
-  float: right;
+  position: absolute;
+  right: 0;
+  bottom: 15px;
   cursor: pointer;
-  padding: 10px 3px 0 0;
+  font-size: 14px;
 }
