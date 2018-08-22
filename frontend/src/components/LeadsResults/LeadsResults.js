@@ -23,7 +23,7 @@ const LeadsResults = ({
           appStyle
         />
       ))}
-    {isSelectable && (
+    {false && isSelectable && (
       <label className="lr-check-all" onClick={toggleAll}>
         {isNotAllSelected ? t("select all") : t("unselect all")}
       </label>
