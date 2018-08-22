@@ -46,6 +46,17 @@ class LeadsTemplate extends React.Component {
   }
   zeroResults = () => {
     switch (this.props.pageName) {
+      case "sell":
+        return (
+          <>
+            <h3>Start uploading your leads</h3>
+            <span>
+              Upload your leads now by selecting a{" "}
+              <Link to="/csv-upload">CSV file</Link> or by filling out a{" "}
+              <Link to="/add-lead">simple web form</Link>
+            </span>
+          </>
+        )
       case "buy":
         return (
           <>
