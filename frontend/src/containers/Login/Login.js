@@ -76,14 +76,14 @@ class Login extends React.Component {
           <h3>{t("LeadCoin is the promised land for marketers")}</h3>
           <q>
             {t(
-              "Bitcoin is... well... imagine keeping your car idle 24/7 produced solved Sudokus you could trade for heroin.",
+              "Collaborating with other marketers & sharing leads is 10X more efficient than giving away my budget to Google & Facebook.",
             )}
           </q>
           <label style={{ backgroundImage: `url(${tiger})` }}>
             <span>
-              {t("Erez Hochman")}
+              {t("Meir Cohen")}
               <br />
-              {t("Crypto Expert")}
+              {t("CEO of Crypto")}
             </span>
           </label>
         </aside>
