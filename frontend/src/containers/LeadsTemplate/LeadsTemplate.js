@@ -2,6 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import * as actions from "Actions"
 import Table from "Components/Table"
+import Button from "Components/Button"
 import LeadsResults from "Components/LeadsResults"
 import Select from "Components/Select"
 import TextField from "Components/TextField"
@@ -65,11 +66,21 @@ class LeadsTemplate extends React.Component {
     }
   }
   renderResultsHead = () => {
-    let { leads, app, toggleResultsMode } = this.props
+    let { leads, app, toggleResultsMode, getButtons } = this.props
 
     return (
       <div className="lt-results-head">
         <h4>Search Results</h4>
+        {getButtons &&
+          getButtons().table.map(button => (
+            <Button
+              key={button.value}
+              label={button.value}
+              onClick={button.onClick}
+              appStyle={true}
+              disabled={button.actionPerSelected && !leads.selected.size}
+            />
+          ))}
         <label className="ltrh-count">
           {leads.list.length} {t("of")} {leads.total} {t("leads")}
         </label>
@@ -84,65 +95,65 @@ class LeadsTemplate extends React.Component {
     let { pageName, leads, fields, setSelectedLeads, app } = this.props
 
     let isNotAllSelected = this.isNotAllSelected()
-
-    console.log(this.props)
     return (
       <div>
         <div className="ldc-leads-template">
           <section className={`ldc-${pageName}-leads`}>
-            {app.cardsMode ? (
-              <LeadsResults
-                leads={leads}
-                fullyLoaded={leads.fullyLoaded}
-                // buttons={this.props.getListButtons()}
-                buttons={this.props.getButtons && this.props.getButtons().table}
-                isSelectable={this.props.getButtons}
-                isNotAllSelected={isNotAllSelected}
-                loading={leads.loading}
-                onScrollBottom={this.onScrollBottom}
-                toggleAll={this.toggleAll}
-                renderFilters={this.renderFilters}
-                renderResultsHead={this.renderResultsHead}
-                renderLead={lead => (
-                  <RealEstateLead
-                    key={lead.id}
-                    {...lead}
-                    checked={
-                      this.props.getButtons && leads.selected.has(lead.id)
+            {leads.list.length || leads.loading ? (
+              app.cardsMode ? (
+                <LeadsResults
+                  leads={leads}
+                  fullyLoaded={leads.fullyLoaded}
+                  isSelectable={this.props.getButtons}
+                  isNotAllSelected={isNotAllSelected}
+                  loading={leads.loading}
+                  onScrollBottom={this.onScrollBottom}
+                  toggleAll={this.toggleAll}
+                  renderFilters={this.renderFilters}
+                  renderResultsHead={this.renderResultsHead}
+                  renderLead={lead => (
+                    <RealEstateLead
+                      key={lead.id}
+                      {...lead}
+                      checked={
+                        this.props.getButtons && leads.selected.has(lead.id)
+                      }
+                      isSelectable={this.props.getButtons}
+                      buttons={
+                        this.props.getButtons && this.props.getButtons().record
+                      }
+                      toggleCheck={event => this.toggleLead(event, lead.id)}
+                    />
+                  )}
+                />
+              ) : (
+                <Table
+                  fields={fields.map(field => ({
+                    ...field,
+                    name: t(field.name),
+                  }))}
+                  loading={leads.loading}
+                  onScrollBottom={this.onScrollBottom}
+                  renderResultsHead={this.renderResultsHead}
+                  records={leads.list}
+                  fullyLoaded={leads.fullyLoaded}
+                  buttons={
+                    this.props.getButtons && {
+                      table: [],
+                      record: this.props.getButtons().record,
                     }
-                    isSelectable={this.props.getButtons}
-                    // buttons={this.props.getLeadButtons()}
-                    buttons={
-                      this.props.getButtons && this.props.getButtons().record
-                    }
-                    toggleCheck={event => this.toggleLead(event, lead.id)}
-                  />
-                )}
-              />
+                  }
+                  setSelectedRecords={setSelectedLeads}
+                  isNotAllSelected={isNotAllSelected}
+                  selected={leads.selected}
+                  isSelectable={this.props.getButtons}
+                  pageName={pageName}
+                  displayLead={this.props.displayLead}
+                />
+              )
             ) : (
-              <Table
-                fields={fields.map(field => ({
-                  ...field,
-                  name: t(field.name),
-                }))}
-                loading={leads.loading}
-                onScrollBottom={this.onScrollBottom}
-                renderResultsHead={this.renderResultsHead}
-                records={leads.list}
-                fullyLoaded={leads.fullyLoaded}
-                buttons={this.props.getButtons && this.props.getButtons()}
-                setSelectedRecords={setSelectedLeads}
-                isNotAllSelected={isNotAllSelected}
-                selected={leads.selected}
-                isSelectable={this.props.getButtons}
-                pageName={pageName}
-                displayLead={this.props.displayLead}
-              />
+              <div className="lt-zero-results">{this.zeroResults()}</div>
             )}
-            {!leads.list.length &&
-              !leads.loading && (
-                <div className="lt-zero-results">{this.zeroResults()}</div>
-              )}
           </section>
         </div>
       </div>

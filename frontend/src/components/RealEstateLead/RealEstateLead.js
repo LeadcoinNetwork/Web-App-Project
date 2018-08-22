@@ -1,57 +1,40 @@
 import React from "react"
 import Button from "Components/Button"
 import { fromNow } from "Utils/time"
+import { priceString } from "../../utils/numbers"
 
-const RealEstateLead = ({
-  id,
-  date,
-  description,
-  bedrooms_baths,
-  type,
-  price,
-  size,
-  state,
-  location,
-  housing_type,
-  name,
-  phone,
-  lead_price,
-  buttons,
-  checked,
-  isSelectable,
-  toggleCheck,
-}) => {
+const RealEstateLead = lead => {
   return (
     <section
-      className={`ldc-real-estate-lead${checked ? " rel-checked" : ""}${
-        isSelectable ? " rel-selectable" : ""
+      className={`ldc-real-estate-lead${lead.checked ? " rel-checked" : ""}${
+        lead.isSelectable ? " rel-selectable" : ""
       }`}
-      onClick={isSelectable && toggleCheck}
+      onClick={lead.isSelectable && lead.toggleCheck}
     >
-      <div className="rel-specification">{description}</div>
-      <div className="rel-price">${lead_price}</div>
+      <div className="rel-specification">{lead.Description}</div>
+      <div className="rel-price">${lead.lead_price}</div>
       <div className="rel-details-wrapper">
         <div className="rel-details">
-          <div className="reld-type">{type}</div>
-          <div className="reld-date">{fromNow(Date(date))}</div>
+          <div className="reld-type">{lead.Type}</div>
+          {/* <div className="reld-date">{fromNow(Date(lead.date))}</div> */}
           <div className="reld-location">
-            {state}, {location}
+            {lead.State}, {lead.Location}
           </div>
         </div>
         <div className="rel-features">
-          <span>{housing_type}</span>
-          <span>{bedrooms_baths}</span>
-          <span>{size} SqFt</span>
-          <span>Price ${price}</span>
+          <span>{lead["Housing Type"]}</span>
+          <span>{lead["Bedrooms/Baths"]}</span>
+          <span>{lead.Size}</span>
+          <span>Price {priceString(lead.Price)}</span>
         </div>
       </div>
       <div className="rel-buttons">
-        {buttons &&
-          buttons.map(button => (
+        {lead.buttons &&
+          lead.buttons.map(button => (
             <button
               key={button.value}
               className="relb-btn"
-              onClick={() => button.onClick(id)}
+              onClick={() => button.onClick(lead.id)}
             >
               {button.value}
             </button>

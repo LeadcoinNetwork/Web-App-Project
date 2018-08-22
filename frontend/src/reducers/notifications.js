@@ -25,6 +25,7 @@ const notifications = (state = initialState, action) => {
       return {
         ...state,
         isOpen: !state.isOpen,
+        unreadCount: 0,
       }
     case types.NOTIFICATIONS_UPDATE:
       return {
