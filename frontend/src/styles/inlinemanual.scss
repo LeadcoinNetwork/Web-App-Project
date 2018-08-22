@@ -170,3 +170,9 @@
 .inmplayer-popover-buttons {
   float: right;
 }
+
+@media (min-width: 800px) {
+  .inmplayer-popover-inner-content {
+    // font-size: 16px;
+  }
+}
