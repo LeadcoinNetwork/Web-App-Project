@@ -97,10 +97,12 @@ class LeadsTemplate extends React.Component {
         <label className="ltrh-count">
           {leads.list.length} {t("of")} {leads.total} {t("leads")}
         </label>
-        <SwitchResultsMode
-          cardsMode={app.cardsMode}
-          toggleMode={toggleResultsMode}
-        />
+        {
+          // <SwitchResultsMode
+          //   cardsMode={app.cardsMode}
+          //   toggleMode={toggleResultsMode}
+          // />
+        }
       </div>
     )
   }
