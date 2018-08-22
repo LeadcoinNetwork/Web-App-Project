@@ -111,3 +111,33 @@
     }
   }
 }
+
+@media (max-width: $screen-tablets) {
+
+  .ldc-notification-element {
+
+    .notification-inner {
+      width: 100vw;
+      height: calc(100vh - 60px);
+      top: 60px;
+      left: auto;
+      right: -60px;
+      border-top: 5px solid $main-color;
+
+      &:before {
+        content: '';
+        height: 80px;
+        width: calc(100vw - 80px);
+        position: absolute;
+        top: -80px;
+        right: 0;
+        z-index: 10;
+        background-color: $main-color;
+      }
+
+      .small-arrow {
+        right: 75px;
+      }
+    }
+  }
+}
