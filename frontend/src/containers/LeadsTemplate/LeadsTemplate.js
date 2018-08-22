@@ -2,6 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import * as actions from "Actions"
 import Table from "Components/Table"
+import Button from "Components/Button"
 import LeadsResults from "Components/LeadsResults"
 import Select from "Components/Select"
 import TextField from "Components/TextField"
@@ -9,6 +10,7 @@ import t from "../../utils/translate/translate"
 import RealEstateLead from "Components/RealEstateLead"
 import SwitchResultsMode from "Containers/SwitchResultsMode"
 import { Link } from "react-router-dom"
+
 class LeadsTemplate extends React.Component {
   onScrollBottom = () => {
     let { fetchLeads, leads } = this.props
@@ -65,11 +67,22 @@ class LeadsTemplate extends React.Component {
     }
   }
   renderResultsHead = () => {
-    let { leads, app, toggleResultsMode } = this.props
+    let { leads, app, toggleResultsMode, getButtons } = this.props
 
     return (
       <div className="lt-results-head">
         <h4>Search Results</h4>
+        {
+          getButtons && getButtons().table.map(button => (
+            <Button
+              key={button.value}
+              label={button.value}
+              onClick={button.onClick}
+              appStyle={true}
+              disabled={button.actionPerSelected && leads.selected.size}
+            />
+          ))
+        }
         <label className="ltrh-count">
           {leads.list.length} {t("of")} {leads.total} {t("leads")}
         </label>
@@ -85,7 +98,6 @@ class LeadsTemplate extends React.Component {
 
     let isNotAllSelected = this.isNotAllSelected()
 
-    console.log(this.props)
     return (
       <div>
         <div className="ldc-leads-template">
@@ -94,8 +106,6 @@ class LeadsTemplate extends React.Component {
               <LeadsResults
                 leads={leads}
                 fullyLoaded={leads.fullyLoaded}
-                // buttons={this.props.getListButtons()}
-                buttons={this.props.getButtons && this.props.getButtons().table}
                 isSelectable={this.props.getButtons}
                 isNotAllSelected={isNotAllSelected}
                 loading={leads.loading}
@@ -111,7 +121,6 @@ class LeadsTemplate extends React.Component {
                       this.props.getButtons && leads.selected.has(lead.id)
                     }
                     isSelectable={this.props.getButtons}
-                    // buttons={this.props.getLeadButtons()}
                     buttons={
                       this.props.getButtons && this.props.getButtons().record
                     }
@@ -130,7 +139,7 @@ class LeadsTemplate extends React.Component {
                 renderResultsHead={this.renderResultsHead}
                 records={leads.list}
                 fullyLoaded={leads.fullyLoaded}
-                buttons={this.props.getButtons && this.props.getButtons()}
+                buttons={this.props.getButtons && {table: [], record: this.props.getButtons().record}}
                 setSelectedRecords={setSelectedLeads}
                 isNotAllSelected={isNotAllSelected}
                 selected={leads.selected}
