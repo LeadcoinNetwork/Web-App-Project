@@ -68,6 +68,7 @@ class LeadsTemplate extends React.Component {
   }
   renderResultsHead = () => {
     let { leads, app, toggleResultsMode, getButtons } = this.props
+    console.log(leads)
 
     return (
       <div className="lt-results-head">
@@ -79,7 +80,7 @@ class LeadsTemplate extends React.Component {
               label={button.value}
               onClick={button.onClick}
               appStyle={true}
-              disabled={button.actionPerSelected && leads.selected.size}
+              disabled={button.actionPerSelected && !leads.selected.size}
             />
           ))
         }
