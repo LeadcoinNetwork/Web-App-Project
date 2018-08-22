@@ -18,12 +18,15 @@ const RealEstateLead = ({
   lead_price,
   buttons,
   checked,
+  isSelectable,
   toggleCheck,
 }) => {
   return (
     <section
-      className={`ldc-real-estate-lead${checked ? " rel-checked" : ""}`}
-      onClick={toggleCheck}
+      className={`ldc-real-estate-lead${checked ? " rel-checked" : ""}${
+        isSelectable ? " rel-selectable" : ""
+      }`}
+      onClick={isSelectable && toggleCheck}
     >
       <div className="rel-specification">{description}</div>
       <div className="rel-price">${lead_price}</div>
@@ -43,15 +46,16 @@ const RealEstateLead = ({
         </div>
       </div>
       <div className="rel-buttons">
-        {buttons.map(button => (
-          <button
-            key={button.value}
-            className="relb-btn"
-            onClick={() => button.onClick(id)}
-          >
-            {button.value}
-          </button>
-        ))}
+        {buttons &&
+          buttons.map(button => (
+            <button
+              key={button.value}
+              className="relb-btn"
+              onClick={() => button.onClick(id)}
+            >
+              {button.value}
+            </button>
+          ))}
       </div>
     </section>
   )

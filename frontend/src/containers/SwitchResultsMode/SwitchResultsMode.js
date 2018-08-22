@@ -1,9 +1,9 @@
 import React from "react"
 import t from "../../utils/translate/translate"
 
-const SwitchResultsMode = () => (
-  <div>
-    {({ cardsMode, toggleMode }) => (
+const SwitchResultsMode = ({ cardsMode, toggleMode }) => {
+  return (
+    <>
       <label className="srm-selector" onClick={toggleMode}>
         {t("Switch to")} &nbsp; &nbsp;
         <i
@@ -11,8 +11,8 @@ const SwitchResultsMode = () => (
           style={{ fontSize: "20px", position: "relative", top: "2px" }}
         />
       </label>
-    )}
-  </div>
-)
+    </>
+  )
+}
 
 export default SwitchResultsMode
