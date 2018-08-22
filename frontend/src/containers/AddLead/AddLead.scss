@@ -67,3 +67,19 @@
     width: 300px;
   }
 }
+
+@media (max-width: 760px) {
+  .add_lead {
+    .personal,
+    .public {
+      display: block;
+      .line {
+        height: unset;
+        line-height: unset;
+      }
+    }
+    .field_submit.flexed {
+      width: unset;
+    }
+  }
+}

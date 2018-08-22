@@ -10,6 +10,7 @@ import t from "../../utils/translate/translate"
 import RealEstateLead from "Components/RealEstateLead"
 import SwitchResultsMode from "Containers/SwitchResultsMode"
 import { Link } from "react-router-dom"
+
 class LeadsTemplate extends React.Component {
   onScrollBottom = () => {
     let { fetchLeads, leads } = this.props
@@ -45,6 +46,17 @@ class LeadsTemplate extends React.Component {
   }
   zeroResults = () => {
     switch (this.props.pageName) {
+      case "sell":
+        return (
+          <>
+            <h3>Start uploading your leads</h3>
+            <span>
+              Upload your leads now by selecting a{" "}
+              <Link to="/csv-upload">CSV file</Link> or by filling out a{" "}
+              <Link to="/add-lead">simple web form</Link>
+            </span>
+          </>
+        )
       case "buy":
         return (
           <>
@@ -84,10 +96,12 @@ class LeadsTemplate extends React.Component {
         <label className="ltrh-count">
           {leads.list.length} {t("of")} {leads.total} {t("leads")}
         </label>
-        <SwitchResultsMode
-          cardsMode={app.cardsMode}
-          toggleMode={toggleResultsMode}
-        />
+        {
+          // <SwitchResultsMode
+          //   cardsMode={app.cardsMode}
+          //   toggleMode={toggleResultsMode}
+          // />
+        }
       </div>
     )
   }
@@ -95,6 +109,7 @@ class LeadsTemplate extends React.Component {
     let { pageName, leads, fields, setSelectedLeads, app } = this.props
 
     let isNotAllSelected = this.isNotAllSelected()
+
     return (
       <div>
         <div className="ldc-leads-template">
