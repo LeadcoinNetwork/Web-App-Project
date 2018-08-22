@@ -79,7 +79,6 @@ class LeadsTemplate extends React.Component {
   }
   renderResultsHead = () => {
     let { leads, app, toggleResultsMode, getButtons } = this.props
-    console.log(leads)
 
     return (
       <div className="lt-results-head">
