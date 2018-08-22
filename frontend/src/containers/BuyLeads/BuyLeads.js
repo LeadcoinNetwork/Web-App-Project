@@ -61,7 +61,7 @@ class BuyLeads extends React.Component {
       <section className="buy_leads">
         <h1>{t("Buy Leads")}</h1>
         <h3>{t("Purchase hot leads for your business.")}</h3>
-        <div className='bl-filters'>
+        <div className="bl-filters">
           <Select className="industry">
             <option>{t("Choose your industry")}</option>
             <option>{t("Real Estate")}</option>
@@ -71,10 +71,10 @@ class BuyLeads extends React.Component {
           </Select>
           <Select className="category">
             <option>{t("Choose your category")}</option>
-            <option>{t("Real Estate-Buy")}</option>
-            <option disabled>{t("Real Estate-Sell")}</option>
-            <option disabled>{t("Real Estate-Looking to rent")}</option>
-            <option disabled>{t("Real Estate-Properties for rent")}</option>
+            <option>{t("Buy")}</option>
+            <option disabled>{t("Sell")}</option>
+            <option disabled>{t("Looking to rent")}</option>
+            <option disabled>{t("Properties for rent")}</option>
           </Select>
           {/*<TextField placeholder={t("Search...")} appStyle />*/}
           <Button
@@ -83,7 +83,7 @@ class BuyLeads extends React.Component {
               this.setState({ showOnlyAfterSearch: true })
             }}
             appStyle={true}
-            >
+          >
             {t("Search")}
           </Button>
         </div>
