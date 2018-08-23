@@ -10,7 +10,7 @@ import API from "../api/index"
  */
 export default function* sellLeads(api) {
   while (true) {
-    let { page, limit, sortBy, category, search, list } = yield select(
+    let { page, limit, sortBy, category, search } = yield select(
       state => state.sellLeads,
     )
 
@@ -26,15 +26,6 @@ export default function* sellLeads(api) {
       yield put(actions.leads.fetchError("SELL_LEADS"))
     } else {
       yield put(actions.leads.fetchSuccess("SELL_LEADS", res))
-      console.log(
-        `in sellLeads saga - res total: ${
-          res.total
-        }, computed total: ${list.length + res.list.length}`,
-      )
-      if (res.total < list.length + res.list.length) {
-        const newPage = page - 1 >= 0 ? page - 1 : 0
-        yield put(actions.leads.fetchLeads("SELL_LEADS", { page: newPage }))
-      }
     }
 
     yield take([
