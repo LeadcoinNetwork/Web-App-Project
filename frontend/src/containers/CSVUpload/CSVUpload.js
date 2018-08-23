@@ -157,7 +157,7 @@ class CSVUpload extends React.Component {
       <div className={"price " + error}>
         <span>
           {t("Lead price")}
-          <span className="astrik-required">*</span>
+          <span className="asterisk-required">*</span>
         </span>
         <TextField
           type="number"
@@ -191,7 +191,7 @@ class CSVUpload extends React.Component {
         />
         <label htmlFor="terms_checkbox">
           {t("I AGREE TO THE TERMS")}
-          <span className="astrik-required">*</span>
+          <span className="asterisk-required">*</span>
         </label>
       </div>
     )
