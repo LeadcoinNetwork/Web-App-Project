@@ -77,12 +77,11 @@ class LeadsTemplate extends React.Component {
         )
     }
   }
-  renderResultsHead = () => {
+  renderResultsHead = isSearchResults => {
     let { leads, app, toggleResultsMode, getButtons } = this.props
-
     return (
       <div className="lt-results-head">
-        <h4>Search Results</h4>
+        {isSearchResults && <h4>Search Results</h4>}
         {getButtons &&
           getButtons().table.map(button => (
             <Button
@@ -121,6 +120,7 @@ class LeadsTemplate extends React.Component {
                   fullyLoaded={leads.fullyLoaded}
                   isSelectable={this.props.getButtons}
                   isNotAllSelected={isNotAllSelected}
+                  isSearchResults={pageName === "buy" ? true : false}
                   loading={leads.loading}
                   onScrollBottom={this.onScrollBottom}
                   toggleAll={this.toggleAll}
@@ -162,7 +162,7 @@ class LeadsTemplate extends React.Component {
                   isNotAllSelected={isNotAllSelected}
                   selected={leads.selected}
                   isSelectable={this.props.getButtons}
-                  pageName={pageName}
+                  isSearchResults={pageName === "buy" ? true : false}
                   displayLead={this.props.displayLead}
                 />
               )

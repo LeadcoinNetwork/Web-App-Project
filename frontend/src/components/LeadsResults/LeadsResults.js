@@ -11,6 +11,7 @@ const LeadsResults = ({
   buttons = [],
   isSelectable,
   isNotAllSelected,
+  isSearchResults,
   toggleAll,
 }) => (
   <section className="ldc-leads-results">
@@ -29,7 +30,7 @@ const LeadsResults = ({
           {isNotAllSelected ? t("select all") : t("unselect all")}
         </label>
       )}
-    {renderResultsHead()}
+    {renderResultsHead(isSearchResults)}
     <div className="lr-main">{leads.list.map(l => renderLead(l))}</div>
   </section>
 )
