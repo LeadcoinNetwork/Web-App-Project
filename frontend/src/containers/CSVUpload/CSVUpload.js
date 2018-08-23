@@ -79,6 +79,13 @@ class CSVUpload extends React.Component {
           )}
         </div>
         <div className="main_container">
+          <div className="titles flexed">
+            <div className="help_text" />
+            <div className="fieldsTitles flexed">
+              <div className="ldcTitle">LeadCoin Field Names</div>
+              <div className="csvTitle">Your Field Names</div>
+            </div>
+          </div>
           <div className="personal flexed">
             <div className="help_text">
               <div className="header bigger">
