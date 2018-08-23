@@ -12,7 +12,7 @@ const RealEstateLead = lead => {
       onClick={lead.isSelectable && lead.toggleCheck}
     >
       <div className="rel-specification">{lead.Description}</div>
-      <div className="rel-price">${lead.lead_price}</div>
+      {lead.lead_price && <div className="rel-price">${lead.lead_price}</div>}
       <div className="rel-details-wrapper">
         <div className="rel-details">
           <div className="reld-type">{lead.Type}</div>
