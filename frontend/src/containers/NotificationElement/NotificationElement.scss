@@ -136,7 +136,32 @@
       }
 
       .small-arrow {
-        right: 75px;
+        width: 0;
+        height: 0;
+        top: -55px;
+        right: 30px;
+        background: #fff;
+        transform: rotateZ(0);
+        z-index: 10;
+
+        &:before,
+        &:after {
+          content: '';
+          height: 20px;
+          width: 1px;
+          background-color: #fff;
+          position: absolute;
+          z-index: 10;
+          top: 0;
+          right: 0;
+        }
+
+        &:before {
+          transform: rotateZ(45deg);
+        }
+        &:after {
+          transform: rotateZ(-45deg);
+        }
       }
     }
   }
