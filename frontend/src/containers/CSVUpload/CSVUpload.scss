@@ -2,6 +2,30 @@
 
 .fields_mapper {
   padding: 10px;
+  .titles {
+    padding-top: 20px;
+    .help_text {
+      width: 210px;
+    }
+    .fieldsTitles {
+      width: 360px;
+      .ldcTitle,
+      .csvTitle {
+        font-weight: 350;
+        font-size: 18px;
+        flex-grow: 1;
+      }
+      .ldcTitle {
+        width: 15px;
+        text-align: left;
+      }
+      .csvTitle {
+        line-height: 35px;
+        text-align: center;
+      }
+    }
+  }
+
   .terms {
     margin-right: 320px;
     width: 200px;
@@ -104,6 +128,9 @@
       margin-right: 0;
     }
     .main_container {
+      .fieldsTitles {
+        display: none;
+      }
       .price {
         margin-left: 0;
         input {
