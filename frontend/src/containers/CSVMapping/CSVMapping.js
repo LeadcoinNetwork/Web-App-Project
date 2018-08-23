@@ -34,7 +34,10 @@ class CSVMapping extends React.Component {
     const error = errors.indexOf("price") > -1 ? "error" : ""
     return (
       <div className={"price " + error}>
-        <span>{t("Lead price")}</span>
+        <span>
+          {t("Lead price")}
+          <span className="astrik-required">*</span>
+        </span>
         <TextField
           appStyle={true}
           value={this.props.lead_price}
@@ -60,7 +63,10 @@ class CSVMapping extends React.Component {
             this.props.agreeToTerms(e.target.checked)
           }}
         />
-        <label htmlFor="terms_checkbox">{t("I AGREE TO THE TERMS")}</label>
+        <label htmlFor="terms_checkbox">
+          {t("I AGREE TO THE TERMS")}
+          <span className="astrik-required">*</span>
+        </label>
       </div>
     )
   }

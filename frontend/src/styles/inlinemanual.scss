@@ -54,6 +54,11 @@
   width: 500px;
   height: 386px;
   border: 0;
+  @media (max-width: 800px) {
+    background: url("./savedialog-mobile.jpg") no-repeat;
+    width: 394px;
+    height: 433px;
+  }
 }
 
 .inmplayer-popover-button-next {
@@ -169,4 +174,10 @@
 
 .inmplayer-popover-buttons {
   float: right;
+}
+
+@media (min-width: 800px) {
+  .inmplayer-popover-inner-content {
+    // font-size: 16px;
+  }
 }

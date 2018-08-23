@@ -132,8 +132,9 @@ export default {
     zh: "状态",
     ko: "상태",
   },
+
   "I AGREE TO THE TERMS": {
-    en: "I AGREE TO THE TERMS",
+    en: "I agree to the terms",
     he: "אני מסכים לתנאים",
     ja: "規約に同意します",
     zh: "我同意条款",
@@ -882,7 +883,7 @@ export default {
     ja: "未使用のリードをその他の企業に販売すれば収入が得られます。",
   },
   "Manage all of your leads from one dashboard.": {
-    en: "Manage all of your leads from one dashboard.",
+    en: "Manage the leads you bought.",
     he: "ניהול של כל הלִידים שלך במקום אחד.",
     ja: "すべてのリードを 1 つのダッシュボードで管理できます。",
   },
