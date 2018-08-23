@@ -1,7 +1,15 @@
+@import "~Styles/variables";
+
 .srm-selector {
   position: absolute;
   right: 0;
   bottom: 15px;
   cursor: pointer;
   font-size: 14px;
+}
+
+@media (max-width: $screen-tablets) {
+  .srm-selector {
+    display: none;
+  }
 }
