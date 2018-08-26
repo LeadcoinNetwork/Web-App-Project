@@ -46,9 +46,14 @@ const user = {
   await page.waitForSelector(".t-body .ldc-checkbox")
   await snapAndClick(".t-body .ldc-checkbox")
   await snapAndClick(".lt-results-head button")
+  await snapAndClick(".button-container button")
+  await snapAndClick()
+  await snapAndClick()
+  await snapAndClick()
+  await snapAndClick(".logo .logo-link")
+  //button-container
   //lt-results-head
   //await page.click('.bl-filters select:nth-child(2)')
-  //await snap()
   // <-- $('.bl-filters select:nth-child(2)')
   //await snap(page)
   //await snap(page)
