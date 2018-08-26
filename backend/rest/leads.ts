@@ -182,6 +182,7 @@ export function start({
           lead.ownerId = user.id
           delete lead["agree_to_terms"]
           lead.active = true
+          lead.date = new Date().valueOf()
           lead.forSale = true
           appLogic.leads
             .AddLead(lead)
