@@ -12,7 +12,7 @@ const user = {
   const browser = await puppeteer.launch({ headless: false })
   let step = 0
   const page = await browser.newPage()
-  const snap = async (selector = ".inmplayer-popover-button-next") => {
+  const snapAndClick = async (selector = ".inmplayer-popover-button-next") => {
     await page.screenshot({ path: `slideshow/${step++}.png` })
     await page.click(selector)
   }
@@ -26,9 +26,9 @@ const user = {
   await page.click(".sm-form .ldc-button")
   await page.waitForNavigation({ waitUntil: "networkidle0" })
   await page.waitForSelector(".inmplayer-firstStep")
-  await snap()
-  await snap()
-  await snap(".buy .ldc-button")
+  await snapAndClick()
+  await snapAndClick()
+  await snapAndClick(".buy .ldc-button")
   await page.waitFor(200)
   await page.select(".bl-filters select:nth-child(1)", "Real Estate")
   await page.evaluate(() =>
@@ -42,7 +42,11 @@ const user = {
       .querySelector(".bl-filters select:nth-child(2)")
       .dispatchEvent(new Event("change")),
   )
-  await snap(".bl-filters .ldc-button")
+  await snapAndClick(".bl-filters .ldc-button")
+  await page.waitForSelector(".t-body .ldc-checkbox")
+  await snapAndClick(".t-body .ldc-checkbox")
+  await snapAndClick(".lt-results-head button")
+  //lt-results-head
   //await page.click('.bl-filters select:nth-child(2)')
   //await snap()
   // <-- $('.bl-filters select:nth-child(2)')
