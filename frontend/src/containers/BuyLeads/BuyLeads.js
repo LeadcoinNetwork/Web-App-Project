@@ -90,6 +90,9 @@ class BuyLeads extends React.Component {
         {this.state.showOnlyAfterSearch && (
           <LeadsTemplate
             {...this.props}
+            buyLeads={() => {
+              this.buyLeads()
+            }}
             pageName="buy"
             getButtons={this.getButtons}
           />

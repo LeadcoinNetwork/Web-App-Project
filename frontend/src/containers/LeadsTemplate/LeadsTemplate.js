@@ -108,7 +108,6 @@ class LeadsTemplate extends React.Component {
     let { pageName, leads, fields, setSelectedLeads, app } = this.props
 
     let isNotAllSelected = this.isNotAllSelected()
-
     return (
       <div>
         <div className="ldc-leads-template">
@@ -170,6 +169,20 @@ class LeadsTemplate extends React.Component {
             ) : (
               <div className="lt-zero-results">{this.zeroResults()}</div>
             )}
+            <div className="mobileOnly downStrip">
+              <Button
+                className="buyLeads"
+                disabled={leads.selected.size === 0}
+                onClick={() => {
+                  if (this.props.buyLeads) this.props.buyLeads()
+                }}
+                appStyle={true}
+              >
+                {leads.selected.size > 0 &&
+                  t("Buy " + leads.selected.size + " Leads")}
+                {leads.selected.size == 0 && t("Buy Leads")}
+              </Button>
+            </div>
           </section>
         </div>
       </div>
