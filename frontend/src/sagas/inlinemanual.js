@@ -31,7 +31,6 @@ export default function* inlinemanualsaga() {
 }
 
 window.triggerFetch = function() {
-  console.log("fetch triggered")
   localStorage.shouldFetchAgain = true
 }
 
@@ -50,7 +49,6 @@ window.activateStepUploading = function() {
   }, 3000)
 }
 function clickNext() {
-  console.log("clickNext")
   var i = document.getElementsByClassName("inmplayer-popover-button-next")
   for (var x = 0; x < i.length; i++) {
     try {
@@ -89,7 +87,6 @@ window.moveToUploadCSV = function() {
 }
 
 window.moveToSellAndFetch = function() {
-  console.log("moveToSellAndFetch")
   // window.moveToSellLeads()
   window.triggerFetch()
 }
