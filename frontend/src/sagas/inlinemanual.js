@@ -116,6 +116,7 @@ window.bindShareButton = function() {
             encodeURIComponent(shareText),
           "_new",
         )
+        addInlineManualEmailToGoogleForms()
         clickNext()
       }
     }
@@ -129,4 +130,20 @@ window.closeAllNotification = function() {
   for (var i = 0; i < x.length; i++) {
     x[i].click()
   }
+}
+
+function addInlineManualEmailToGoogleForms() {
+  var div = document.createElement("div")
+  document.body.appendChild(div)
+  div.innerHTML = `
+  <form target="dodu" id=myf method="post" action="https://docs.google.com/forms/d/e/1FAIpQLSftV0KNtTMrnq9Pb5jzCjQgvnF2QpdGbmzwUstV1y6_SraoZg/formResponse">
+  <input name="entry.82711675" value="${inlineManualTracking.email}" />
+  </form>
+  <iframe name="dodu" />
+  `
+  div.style.display = "none"
+  document.getElementById("myf").submit()
+  setTimeout(function() {
+    document.body.removeChild(div)
+  }, 1000)
 }
