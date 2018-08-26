@@ -15,13 +15,14 @@ class AddLead extends React.Component {
       <div className={error + " agree_to_terms twothirds"}>
         <Checkbox
           label={t("I AGREE TO THE TERMS")}
-          name='agree_to_terms'
-          id='terms_checkbox'
+          name="agree_to_terms"
+          id="terms_checkbox"
           checked={this.props.agree_to_terms}
           onClick={e => {
             this.props.agreeToTerms(e.target.checked)
           }}
         />
+        <span className="asterisk-required">*</span>
       </div>
     )
   }
@@ -31,7 +32,13 @@ class AddLead extends React.Component {
     return fields.map(f => {
       const isError = errors[f.key] ? "error" : ""
       return (
-        <div key={f.key} className={isError + " line"}>
+        <div key={f.key} className={isError + " flexed line"}>
+          <div className="fieldLabel">
+            {t(f.name)}
+            {f.key === "lead_price" && (
+              <span className="asterisk-required">*</span>
+            )}
+          </div>
           <div className="fieldValue">
             <TextField
               disabled={loading}

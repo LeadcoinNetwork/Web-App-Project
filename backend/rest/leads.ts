@@ -415,41 +415,48 @@ export function start({
   /**
    * All the leads
    */
-  expressApp.get("/buy-leads", async (req, res, next) => {
-    ;(async () => {
-      let { search, sortBy, page, limit, sortOrder } = req.query
-      let _sort = {
-        sortBy: sortBy && sortBy != "id" ? sortBy : "date",
-        sortOrder: sortOrder || "DESC",
-      }
-      let f
-      if (search) {
-        f = ["name", "specification", "city"].map(field => {
-          return {
-            field,
-            op: "LIKE",
-            val: search,
-          }
-        })
-      }
-      let _limit = {
-        start: parseInt(page || 0) * parseInt(limit || 50),
-        offset: limit || 50,
-      }
-      await appLogic.leads
-        .getAllLeads({
-          sort: _sort,
-          filters: f,
-          limit: _limit,
-        })
-        .then(response => {
-          let jsonResponse = Object.assign(response, req.query)
-          res.json(jsonResponse)
-        })
-        .catch(err => {
-          res.status(400)
-          res.send({ error: err.message })
-        })
-    })().catch(done)
-  })
+  expressApp.get(
+    "/buy-leads",
+    passport.authenticate("jwt", authOptions),
+    async (req, res, next) => {
+      ;(async () => {
+        let { search, sortBy, page, limit, sortOrder } = req.query
+        const { user } = req
+        let _sort = {
+          sortBy: sortBy && sortBy != "id" ? sortBy : "date",
+          sortOrder: sortOrder || "DESC",
+        }
+        let f
+        if (search) {
+          f = ["Contact Person", "Description", "Location"].map(field => {
+            return {
+              field,
+              op: "LIKE",
+              val: search,
+            }
+          })
+        }
+        let _limit = {
+          start: parseInt(page || 0) * parseInt(limit || 50),
+          offset: limit || 50,
+        }
+        console.log({ user })
+        await appLogic.leads
+          .getAllLeads({
+            sort: _sort,
+            filters: f,
+            limit: _limit,
+            user_id: user.id,
+          })
+          .then(response => {
+            let jsonResponse = Object.assign(response, req.query)
+            res.json(jsonResponse)
+          })
+          .catch(err => {
+            res.status(400)
+            res.send({ error: err.message })
+          })
+      })().catch(done)
+    },
+  )
 }
