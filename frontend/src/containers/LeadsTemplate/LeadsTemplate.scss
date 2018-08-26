@@ -1,7 +1,6 @@
 @import "~Styles/variables";
 
 .ldc-leads-template {
-
   .lt-results-head {
     position: relative;
     padding: 20px 0 15px;
@@ -47,13 +46,9 @@
   }
 }
 
-
 @media (max-width: $screen-tablets) {
-
   .ldc-leads-template {
-
     .lt-results-head {
-
       h4 {
         font-size: 26px;
         padding-bottom: 20px;
