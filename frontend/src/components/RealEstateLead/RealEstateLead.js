@@ -29,7 +29,22 @@ const RealEstateLead = lead => {
           <span>Price {priceString(lead.Price)}</span>
         </div>
       </div>
-      <div className="rel-buttons">
+      <div
+        className={"rel-selector"}
+        onClick={
+          lead.isSelectable &&
+          (e => {
+            e.stopPropagation()
+            lead.toggleCheck(e, lead.id)
+          })
+        }
+      >
+        <div className="select-icon">
+          <div className="up-down" />
+          <div className="left-right" />
+        </div>
+      </div>
+      {/* <div className="rel-buttons">
         {lead.buttons &&
           lead.buttons.map(button => (
             <button
@@ -40,7 +55,7 @@ const RealEstateLead = lead => {
               {button.value}
             </button>
           ))}
-      </div>
+      </div> */}
     </section>
   )
 }
