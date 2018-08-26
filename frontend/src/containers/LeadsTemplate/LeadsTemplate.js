@@ -78,7 +78,7 @@ class LeadsTemplate extends React.Component {
     }
   }
   renderResultsHead = isSearchResults => {
-    let { leads, app, toggleResultsMode, getButtons } = this.props
+    let { pageName, leads, app, toggleResultsMode, getButtons } = this.props
     return (
       <div className="lt-results-head">
         {isSearchResults && <h4>Search Results</h4>}
@@ -169,20 +169,22 @@ class LeadsTemplate extends React.Component {
             ) : (
               <div className="lt-zero-results">{this.zeroResults()}</div>
             )}
-            <div className="mobileOnly downStrip">
-              <Button
-                className="buyLeads"
-                disabled={leads.selected.size === 0}
-                onClick={() => {
-                  if (this.props.buyLeads) this.props.buyLeads()
-                }}
-                appStyle={true}
-              >
-                {leads.selected.size > 0 &&
-                  t("Buy " + leads.selected.size + " Leads")}
-                {leads.selected.size == 0 && t("Buy Leads")}
-              </Button>
-            </div>
+            {pageName == "buy" && (
+              <div className="mobileOnly downStrip">
+                <Button
+                  className="buyLeads"
+                  disabled={leads.selected.size === 0}
+                  onClick={() => {
+                    if (this.props.buyLeads) this.props.buyLeads()
+                  }}
+                  appStyle={true}
+                >
+                  {leads.selected.size > 0 &&
+                    t("Buy " + leads.selected.size + " Leads")}
+                  {leads.selected.size == 0 && t("Buy Leads")}
+                </Button>
+              </div>
+            )}
           </section>
         </div>
       </div>

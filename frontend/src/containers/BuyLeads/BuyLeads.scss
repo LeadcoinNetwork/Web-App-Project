@@ -28,6 +28,14 @@
 
 @media (max-width: $screen-tablets) {
   .buy_leads {
+    .lt-results-head {
+      .ldc-button {
+        display: none;
+      }
+    }
+    .dots_container {
+      margin-bottom: 70px;
+    }
     .mobileOnly {
       display: block;
       position: fixed;
