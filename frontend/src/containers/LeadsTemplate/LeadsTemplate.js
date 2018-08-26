@@ -126,7 +126,7 @@ class LeadsTemplate extends React.Component {
                   toggleAll={this.toggleAll}
                   renderFilters={this.renderFilters}
                   renderResultsHead={this.renderResultsHead}
-                  renderLead={lead => (
+                  renderLead={(lead, index) => (
                     <RealEstateLead
                       key={lead.id}
                       {...lead}
@@ -138,6 +138,7 @@ class LeadsTemplate extends React.Component {
                         this.props.getButtons && this.props.getButtons().record
                       }
                       toggleCheck={event => this.toggleLead(event, lead.id)}
+                      toggleCardView={() => this.props.toggelCardView(index)}
                     />
                   )}
                 />

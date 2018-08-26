@@ -6,10 +6,11 @@ import { priceString } from "../../utils/numbers"
 const RealEstateLead = lead => {
   return (
     <section
-      className={`ldc-real-estate-lead${lead.checked ? " rel-checked" : ""}${
-        lead.isSelectable ? " rel-selectable" : ""
-      }`}
-      onClick={lead.isSelectable && lead.toggleCheck}
+      className={`ldc-real-estate-lead${lead.checked ? " rel-checked" : ""}
+        ${lead.isSelectable ? " rel-selectable" : ""}
+        ${lead.cardOpen ? " rel-card-open" : " rel-card-closed"}`}
+      onClick={lead.toggleCardView}
+      // onClick={lead.isSelectable && lead.toggleCheck}
     >
       <div className="rel-specification">{lead.Description}</div>
       {lead.lead_price && <div className="rel-price">${lead.lead_price}</div>}

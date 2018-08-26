@@ -31,7 +31,9 @@ const LeadsResults = ({
         </label>
       )}
     {renderResultsHead(isSearchResults)}
-    <div className="lr-main">{leads.list.map(l => renderLead(l))}</div>
+    <div className="lr-main">
+      {leads.list.map((l, index) => renderLead(l, index))}
+    </div>
   </section>
 )
 

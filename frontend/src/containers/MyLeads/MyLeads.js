@@ -98,6 +98,7 @@ export default connect(
     fetchLeads: (...params) => leads.fetchLeads("MY_LEADS", ...params),
     setSelectedLeads: selectedLeads =>
       leads.setSelectedLeads("MY_LEADS", selectedLeads),
+    toggelCardView: index => leads.toggelCardView("MY_LEADS", index),
     moveToSell: moveToSell.myLeadsMoveToSellBegin,
     displayLead: displayLead.displayLeadGet,
     push,
