@@ -37,7 +37,10 @@ section.ldc-real-estate-lead {
       .reld-type,
       .reld-status,
       .reld-date,
-      .reld-location {
+      .reld-location,
+      .reld-contact-person,
+      .reld-email,
+      .reld-telephone {
         color: $main-color;
         padding-top: 8px;
       }

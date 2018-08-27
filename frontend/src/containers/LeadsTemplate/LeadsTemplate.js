@@ -107,6 +107,11 @@ class LeadsTemplate extends React.Component {
   render() {
     let { pageName, leads, fields, setSelectedLeads, app } = this.props
 
+    let fieldsCheck = {}
+    fields.forEach(element => {
+      fieldsCheck[element.key] = element.key
+    })
+
     let isNotAllSelected = this.isNotAllSelected()
     return (
       <div>
@@ -128,6 +133,7 @@ class LeadsTemplate extends React.Component {
                   renderLead={(lead, index) => (
                     <RealEstateLead
                       key={lead.id}
+                      fieldsCheck={fieldsCheck}
                       {...lead}
                       checked={
                         this.props.getButtons && leads.selected.has(lead.id)
