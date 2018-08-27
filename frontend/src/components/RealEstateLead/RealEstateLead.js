@@ -29,6 +29,10 @@ const RealEstateLead = lead => {
           <span>Price {priceString(lead.Price)}</span>
         </div>
       </div>
+      <div className="rel-arrow">
+        <div className="arrow-left" />
+        <div className="arrow-right" />
+      </div>
       <div
         className={"rel-selector"}
         onClick={
