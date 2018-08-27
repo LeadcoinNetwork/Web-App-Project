@@ -46,11 +46,11 @@ module.exports = async (page, snapAndClick) => {
       .dispatchEvent(new Event("change")),
   )
   await snapAndClick(".bl-filters .ldc-button")
+  await page.waitForSelector(".ldc-real-estate-lead")
+  await snapAndClick(".ldc-real-estate-lead .rel-selector")
   // <-- TODO: continue from here
-  await page.waitForSelector(".t-body .ldc-checkbox")
-  await snapAndClick(".t-body .ldc-checkbox")
-  await snapAndClick(".lt-results-head button")
-  await snapAndClick(".button-container button")
+  await snapAndClick(".downStrip button")
+  await snapAndClick(".button-container .ldc-button")
   await snapAndClick()
   await snapAndClick()
   await snapAndClick()
