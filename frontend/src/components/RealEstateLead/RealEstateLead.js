@@ -2,6 +2,7 @@ import React from "react"
 import Button from "Components/Button"
 import { fromNow } from "Utils/time"
 import { priceString } from "../../utils/numbers"
+import t from "../../utils/translate/translate"
 
 const RealEstateLead = lead => {
   return (
@@ -10,7 +11,6 @@ const RealEstateLead = lead => {
         ${lead.isSelectable ? " rel-selectable" : ""}
         ${lead.cardOpen ? " rel-card-open" : " rel-card-closed"}`}
       onClick={lead.toggleCardView}
-      // onClick={lead.isSelectable && lead.toggleCheck}
     >
       {lead.fieldsCheck.Description && (
         <div className="rel-specification">{lead.Description}</div>
@@ -23,7 +23,7 @@ const RealEstateLead = lead => {
           {lead.fieldsCheck.Type && (
             <div className="reld-type">{lead.Type}</div>
           )}
-          {/* <div className="reld-date">{fromNow(Date(lead.date))}</div> */}
+          <div className="reld-date">{fromNow(lead.date)}</div>
           <div className="reld-location">
             {lead.State}, {lead.Location}
           </div>
@@ -55,7 +55,12 @@ const RealEstateLead = lead => {
           {lead.fieldsCheck.Size &&
             lead.Size.length > 0 && <span>{lead.Size}</span>}
           {lead.fieldsCheck.Price &&
-            lead.Price && <span>Price {priceString(lead.Price)}</span>}
+            lead.Price && (
+              <span>
+                {t("Price ")}
+                {priceString(lead.Price)}
+              </span>
+            )}
         </div>
       </div>
       <div className="rel-arrow">

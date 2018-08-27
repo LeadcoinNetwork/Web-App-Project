@@ -49,11 +49,12 @@ class LeadsTemplate extends React.Component {
       case "sell":
         return (
           <>
-            <h3>Start uploading your leads</h3>
+            <h3>{t("Start uploading your leads")}</h3>
             <span>
-              Upload your leads now by selecting a{" "}
-              <Link to="/csv-upload">CSV file</Link> or by filling out a{" "}
-              <Link to="/add-lead">simple web form</Link>
+              {t("Upload your leads now by selecting a ")}
+              <Link to="/csv-upload">{t("CSV file")}</Link>
+              {t(" or by filling out a ")}
+              <Link to="/add-lead">{t("simple web form")}</Link>
             </span>
           </>
         )
@@ -81,7 +82,7 @@ class LeadsTemplate extends React.Component {
     let { pageName, leads, app, toggleResultsMode, getButtons } = this.props
     return (
       <div className="lt-results-head">
-        {isSearchResults && <h4>Search Results</h4>}
+        {isSearchResults && <h4>{t("Search Results")}</h4>}
         {getButtons &&
           getButtons().table.map(button => (
             <Button
@@ -186,7 +187,7 @@ class LeadsTemplate extends React.Component {
                   appStyle={true}
                 >
                   {leads.selected.size > 0 &&
-                    t("Buy " + leads.selected.size + " Leads")}
+                    t("Buy ") + leads.selected.size + " Leads"}
                   {leads.selected.size == 0 && t("Buy Leads")}
                 </Button>
               </div>
