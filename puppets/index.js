@@ -12,17 +12,20 @@ const user = {
   email: chance.email(),
 }
 ;(async () => {
-  console.log("Puppet starts...")
-  const browser = await puppeteer.launch({ headless: false })
+  console.log("Waking up Puppets...")
+  const webbrowser = await puppeteer.launch({ headless: true })
+  const mobilebrowser = await puppeteer.launch({ headless: true })
   let step = 0
-  const page = await browser.newPage()
-  await page.goto("http://127.0.0.1.xip.io:8080")
-  const snapAndClick = async (selector = ".inmplayer-popover-button-next") => {
-    await page.screenshot({ path: `slideshow/${step++}.png` })
-    console.log("took picture " + step + "#")
-    await page.click(selector)
-  }
-  await InlineManualMobile(page, snapAndClick)
-  await browser.close()
-  console.log("Puppet ended without errors")
+  const webpage = await webbrowser.newPage()
+  const mobilepage = await mobilebrowser.newPage()
+  await webpage.goto("http://127.0.0.1.xip.io:8080")
+  await mobilepage.goto("http://127.0.0.1.xip.io:8080")
+  const webStatus = InlineManualWeb(webpage)
+  const mobileStatus = InlineManualMobile(mobilepage)
+  console.log({
+    web: await webStatus,
+    mobile: await mobileStatus,
+  })
+  await webbrowser.close()
+  await mobilebrowser.close()
 })()

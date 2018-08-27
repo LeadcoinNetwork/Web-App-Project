@@ -1,7 +1,15 @@
 const Chance = require("chance")
 const chance = new Chance()
 
-module.exports = async (page, snapAndClick) => {
+module.exports = async page => {
+  let step = 0
+  const snapAndClick = async (selector = ".inmplayer-popover-button-next") => {
+    await page.screenshot({ path: `slideshow/web-${step++}.png` })
+    console.log("[WEB] took picture " + step + "#")
+    await page.click(selector)
+    await page.waitFor(500)
+  }
+
   const user = {
     fname: chance.name(),
     lname: "Puppetsky",

@@ -1,7 +1,15 @@
 const Chance = require("chance")
 const chance = new Chance()
 
-module.exports = async (page, snapAndClick) => {
+module.exports = async page => {
+  let step = 0
+  const snapAndClick = async (selector = ".inmplayer-popover-button-next") => {
+    await page.screenshot({ path: `slideshow/mobile-${step++}.png` })
+    console.log("[MOBILE] took picture " + step + "#")
+    await page.click(selector)
+    await page.waitFor(500)
+  }
+
   const user = {
     fname: chance.name(),
     lname: "Puppetsky",
