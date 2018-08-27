@@ -1,13 +1,12 @@
 @import "~Styles/variables";
 
 .buy_leads {
-
   .bl-filters {
     padding-bottom: 40px;
     position: relative;
 
     &:after {
-      content: '';
+      content: "";
       position: absolute;
       height: 10px;
       width: 100vw;
@@ -22,11 +21,31 @@
       margin-right: 25px;
     }
   }
+  .mobileOnly {
+    display: none;
+  }
 }
 
 @media (max-width: $screen-tablets) {
-
   .buy_leads {
+    .lt-results-head {
+      .ldc-button {
+        display: none;
+      }
+    }
+    .dots_container {
+      margin-bottom: 70px;
+    }
+    .mobileOnly {
+      display: block;
+      position: fixed;
+      bottom: 0px;
+      left: 1px;
+      right: 1px;
+      width: auto;
+      padding: 5px;
+      background-color: $main-color;
+    }
 
     .bl-filters {
       padding-bottom: 40px;

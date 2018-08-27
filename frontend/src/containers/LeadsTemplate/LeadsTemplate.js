@@ -78,7 +78,7 @@ class LeadsTemplate extends React.Component {
     }
   }
   renderResultsHead = isSearchResults => {
-    let { leads, app, toggleResultsMode, getButtons } = this.props
+    let { pageName, leads, app, toggleResultsMode, getButtons } = this.props
     return (
       <div className="lt-results-head">
         {isSearchResults && <h4>Search Results</h4>}
@@ -107,8 +107,12 @@ class LeadsTemplate extends React.Component {
   render() {
     let { pageName, leads, fields, setSelectedLeads, app } = this.props
 
-    let isNotAllSelected = this.isNotAllSelected()
+    let fieldsCheck = {}
+    fields.forEach(element => {
+      fieldsCheck[element.key] = element.key
+    })
 
+    let isNotAllSelected = this.isNotAllSelected()
     return (
       <div>
         <div className="ldc-leads-template">
@@ -126,9 +130,10 @@ class LeadsTemplate extends React.Component {
                   toggleAll={this.toggleAll}
                   renderFilters={this.renderFilters}
                   renderResultsHead={this.renderResultsHead}
-                  renderLead={lead => (
+                  renderLead={(lead, index) => (
                     <RealEstateLead
                       key={lead.id}
+                      fieldsCheck={fieldsCheck}
                       {...lead}
                       checked={
                         this.props.getButtons && leads.selected.has(lead.id)
@@ -138,6 +143,7 @@ class LeadsTemplate extends React.Component {
                         this.props.getButtons && this.props.getButtons().record
                       }
                       toggleCheck={event => this.toggleLead(event, lead.id)}
+                      toggleCardView={() => this.props.toggelCardView(index)}
                     />
                   )}
                 />
@@ -168,6 +174,22 @@ class LeadsTemplate extends React.Component {
               )
             ) : (
               <div className="lt-zero-results">{this.zeroResults()}</div>
+            )}
+            {pageName == "buy" && (
+              <div className="mobileOnly downStrip">
+                <Button
+                  className="buyLeads"
+                  disabled={leads.selected.size === 0}
+                  onClick={() => {
+                    if (this.props.buyLeads) this.props.buyLeads()
+                  }}
+                  appStyle={true}
+                >
+                  {leads.selected.size > 0 &&
+                    t("Buy " + leads.selected.size + " Leads")}
+                  {leads.selected.size == 0 && t("Buy Leads")}
+                </Button>
+              </div>
             )}
           </section>
         </div>

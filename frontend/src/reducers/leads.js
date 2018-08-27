@@ -80,7 +80,10 @@ const createReducerFor = namespace => {
           error: false,
         }
       case types[namespace + "_FETCH_SUCCESS"]:
-        const newLeads = action.payload.list
+        const newLeads = action.payload.list.map(lead => ({
+          ...lead,
+          cardOpen: false,
+        }))
         let currentIds = state.list.map(lead => lead.id)
 
         return {
@@ -103,6 +106,12 @@ const createReducerFor = namespace => {
         return {
           ...state,
           selected: action.payload,
+        }
+      case types[namespace + "_TOGGLE_CARD_VIEW"]:
+        state.list[action.payload].cardOpen = !state.list[action.payload]
+          .cardOpen
+        return {
+          ...state,
         }
       default:
         return state
