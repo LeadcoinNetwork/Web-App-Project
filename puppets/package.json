@@ -1,0 +1,15 @@
+{
+  "name": "puppets",
+  "version": "1.0.0",
+  "description": "puppets for leadcoin tests",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chance": "^1.0.16",
+    "puppeteer": "^1.7.0"
+  }
+}
