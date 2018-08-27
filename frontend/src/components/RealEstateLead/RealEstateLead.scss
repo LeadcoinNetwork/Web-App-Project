@@ -89,7 +89,7 @@ section.ldc-real-estate-lead {
     .arrow-right {
       display: inline-block;
       position: relative;
-      bottom: 15px;
+      bottom: 6px;
       height: 10px;
       width: 2px;
       background-color: $bg-level-2;
@@ -111,7 +111,7 @@ section.ldc-real-estate-lead {
   }
 
   &.rel-card-closed {
-    padding: 10px 25px;
+    padding: 15px 25px;
 
     .rel-price {
       padding-bottom: 0;
@@ -257,7 +257,7 @@ section.ldc-real-estate-lead {
     transform-origin: center;
 
     &.rel-card-closed {
-      padding: 10px 20px;
+      padding: 15px 20px;
     }
 
     .rel-details-wrapper {
