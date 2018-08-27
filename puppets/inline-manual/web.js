@@ -1,20 +1,18 @@
-const puppeteer = require("puppeteer")
 const Chance = require("chance")
-
 const chance = new Chance()
-const user = {
-  fname: chance.name(),
-  lname: "Puppetsky",
-  email: chance.email(),
-}
+
 module.exports = async (page, snapAndClick) => {
+  const user = {
+    fname: chance.name(),
+    lname: "Puppetsky",
+    email: chance.email(),
+  }
   await page.setViewport({
     width: 800,
     height: 600,
     isMobile: false,
   })
 
-  await page.goto("http://127.0.0.1.xip.io:8080")
   console.log("[WEB] Puppet is signing-up...")
 
   // first, we sign up a new user
@@ -75,4 +73,5 @@ module.exports = async (page, snapAndClick) => {
   await page.waitForSelector("#twitter-share")
   await snapAndClick("#twitter-share")
   console.log("[WEB] Puppet done")
+  return true
 }

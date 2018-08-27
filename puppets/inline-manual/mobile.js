@@ -74,4 +74,5 @@ module.exports = async (page, snapAndClick) => {
   await page.waitForSelector("#twitter-share")
   await snapAndClick("#twitter-share")
   console.log("[MOBILE] Puppet done")
+  return true
 }
