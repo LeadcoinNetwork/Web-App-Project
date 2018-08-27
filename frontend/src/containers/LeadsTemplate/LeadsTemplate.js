@@ -70,7 +70,7 @@ class LeadsTemplate extends React.Component {
           <>
             <h3>{t("You have no leads.")}</h3>
             <span>
-              {t("Explore and ")}{" "}
+              {t("Explore and ")}
               <Link to="/buy-leads">{t("buy new leads")}</Link>
               {t(" now")}
             </span>

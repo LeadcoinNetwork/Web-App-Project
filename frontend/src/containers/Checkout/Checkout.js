@@ -42,10 +42,14 @@ const Checkout = ({
       <h1>{t("Shopping Cart")}</h1>
       <h3>{t("Buy all of your selected leads now.")}</h3>
       <Table
-        fields={fields.map(field => ({
-          ...field,
-          name: t(field.name),
-        }))}
+        fields={fields
+          .filter(
+            field => field.key === "Description" || field.key === "lead_price",
+          )
+          .map(field => ({
+            ...field,
+            name: t(field.name),
+          }))}
         records={selectedLeads}
         isSelectable={false}
       />
