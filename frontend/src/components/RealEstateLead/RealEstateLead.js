@@ -14,7 +14,7 @@ const RealEstateLead = lead => {
             ? " rel-card-open"
             : " rel-card-closed"
         }
-        ${lead.constantCardOpen ? " constant-open-card" : ""}`}
+        ${lead.constantCardOpen ? " constant-card-open" : ""}`}
       onClick={lead.toggleCardView}
     >
       {lead.fieldsCheck.Description && (
