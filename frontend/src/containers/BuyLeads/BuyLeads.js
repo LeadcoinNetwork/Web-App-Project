@@ -90,6 +90,9 @@ class BuyLeads extends React.Component {
         {this.state.showOnlyAfterSearch && (
           <LeadsTemplate
             {...this.props}
+            buyLeads={() => {
+              this.buyLeads()
+            }}
             pageName="buy"
             getButtons={this.getButtons}
           />
@@ -111,5 +114,6 @@ export default connect(
     fetchLeads: params => leads.fetchLeads("BUY_LEADS", params),
     setSelectedLeads: selectedLeads =>
       leads.setSelectedLeads("BUY_LEADS", selectedLeads),
+    toggelCardView: index => leads.toggelCardView("BUY_LEADS", index),
   },
 )(BuyLeads)

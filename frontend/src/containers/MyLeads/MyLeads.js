@@ -76,6 +76,7 @@ class MyLeads extends React.Component {
           <LeadsTemplate
             {...this.props}
             pageName="my"
+            constantCardOpen={true}
             displayLead={this.displayLead.bind(this)}
             // getButtons={this.getButtons}
           />
@@ -98,6 +99,7 @@ export default connect(
     fetchLeads: (...params) => leads.fetchLeads("MY_LEADS", ...params),
     setSelectedLeads: selectedLeads =>
       leads.setSelectedLeads("MY_LEADS", selectedLeads),
+    toggelCardView: index => leads.toggelCardView("MY_LEADS", index),
     moveToSell: moveToSell.myLeadsMoveToSellBegin,
     displayLead: displayLead.displayLeadGet,
     push,

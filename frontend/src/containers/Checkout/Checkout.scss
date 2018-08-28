@@ -1,5 +1,39 @@
+@import "~Styles/variables";
+
 .ldc-checkout {
   display: flow-root;
+
+  .shopping-cart {
+    border-spacing: 0;
+    border-collapse: collapse;
+    font-size: 14px;
+    width: 100%;
+
+    thead tr {
+      background-color: $main-color;
+
+      th {
+        text-align: left;
+        padding: 10px;
+      }
+    }
+    .h-lead_price,
+    .d-lead_price {
+      width: 100px;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: $table-background-even;
+    }
+    tbody tr:nth-child(odd) {
+      background-color: $table-background-odd;
+    }
+
+    td {
+      padding-top: 10px;
+      padding-left: 10px;
+    }
+  }
 
   .error {
     text-align: right;

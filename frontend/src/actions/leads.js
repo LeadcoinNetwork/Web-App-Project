@@ -24,4 +24,10 @@ export default {
       payload: selected,
     }
   },
+  toggelCardView(namespace, index) {
+    return {
+      type: types[namespace + "_TOGGLE_CARD_VIEW"],
+      payload: index,
+    }
+  },
 }

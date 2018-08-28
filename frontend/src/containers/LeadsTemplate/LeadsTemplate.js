@@ -49,11 +49,12 @@ class LeadsTemplate extends React.Component {
       case "sell":
         return (
           <>
-            <h3>Start uploading your leads</h3>
+            <h3>{t("Start uploading your leads")}</h3>
             <span>
-              Upload your leads now by selecting a{" "}
-              <Link to="/csv-upload">CSV file</Link> or by filling out a{" "}
-              <Link to="/add-lead">simple web form</Link>
+              {t("Upload your leads now by selecting a ")}
+              <Link to="/csv-upload">{t("CSV file")}</Link>
+              {t(" or by filling out a ")}
+              <Link to="/add-lead">{t("simple web form")}</Link>
             </span>
           </>
         )
@@ -69,7 +70,7 @@ class LeadsTemplate extends React.Component {
           <>
             <h3>{t("You have no leads.")}</h3>
             <span>
-              {t("Explore and ")}{" "}
+              {t("Explore and ")}
               <Link to="/buy-leads">{t("buy new leads")}</Link>
               {t(" now")}
             </span>
@@ -78,10 +79,10 @@ class LeadsTemplate extends React.Component {
     }
   }
   renderResultsHead = isSearchResults => {
-    let { leads, app, toggleResultsMode, getButtons } = this.props
+    let { pageName, leads, app, toggleResultsMode, getButtons } = this.props
     return (
       <div className="lt-results-head">
-        {isSearchResults && <h4>Search Results</h4>}
+        {isSearchResults && <h4>{t("Search Results")}</h4>}
         {getButtons &&
           getButtons().table.map(button => (
             <Button
@@ -105,10 +106,21 @@ class LeadsTemplate extends React.Component {
     )
   }
   render() {
-    let { pageName, leads, fields, setSelectedLeads, app } = this.props
+    let {
+      pageName,
+      leads,
+      fields,
+      setSelectedLeads,
+      app,
+      constantCardOpen,
+    } = this.props
+
+    let fieldsCheck = {}
+    fields.forEach(element => {
+      fieldsCheck[element.key] = element.key
+    })
 
     let isNotAllSelected = this.isNotAllSelected()
-
     return (
       <div>
         <div className="ldc-leads-template">
@@ -126,9 +138,10 @@ class LeadsTemplate extends React.Component {
                   toggleAll={this.toggleAll}
                   renderFilters={this.renderFilters}
                   renderResultsHead={this.renderResultsHead}
-                  renderLead={lead => (
+                  renderLead={(lead, index) => (
                     <RealEstateLead
                       key={lead.id}
+                      fieldsCheck={fieldsCheck}
                       {...lead}
                       checked={
                         this.props.getButtons && leads.selected.has(lead.id)
@@ -138,6 +151,8 @@ class LeadsTemplate extends React.Component {
                         this.props.getButtons && this.props.getButtons().record
                       }
                       toggleCheck={event => this.toggleLead(event, lead.id)}
+                      toggleCardView={() => this.props.toggelCardView(index)}
+                      constantCardOpen={constantCardOpen}
                     />
                   )}
                 />
@@ -168,6 +183,22 @@ class LeadsTemplate extends React.Component {
               )
             ) : (
               <div className="lt-zero-results">{this.zeroResults()}</div>
+            )}
+            {pageName == "buy" && (
+              <div className="mobileOnly downStrip">
+                <Button
+                  className="buyLeads"
+                  disabled={leads.selected.size === 0}
+                  onClick={() => {
+                    if (this.props.buyLeads) this.props.buyLeads()
+                  }}
+                  appStyle={true}
+                >
+                  {leads.selected.size > 0 &&
+                    t("Buy ") + leads.selected.size + " Leads"}
+                  {leads.selected.size == 0 && t("Buy Leads")}
+                </Button>
+              </div>
             )}
           </section>
         </div>
