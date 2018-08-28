@@ -106,7 +106,14 @@ class LeadsTemplate extends React.Component {
     )
   }
   render() {
-    let { pageName, leads, fields, setSelectedLeads, app } = this.props
+    let {
+      pageName,
+      leads,
+      fields,
+      setSelectedLeads,
+      app,
+      showAllCardsDetails,
+    } = this.props
 
     let fieldsCheck = {}
     fields.forEach(element => {
@@ -145,6 +152,7 @@ class LeadsTemplate extends React.Component {
                       }
                       toggleCheck={event => this.toggleLead(event, lead.id)}
                       toggleCardView={() => this.props.toggelCardView(index)}
+                      showAllCardsDetails={showAllCardsDetails}
                     />
                   )}
                 />
