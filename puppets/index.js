@@ -13,7 +13,8 @@ const user = {
   lname: "Puppetsky",
   email: chance.email(),
 }
-;(async () => {
+
+const runner = async () => {
   console.log("Waking up Puppets...")
   const webbrowser = await puppeteer.launch({ headless })
   const mobilebrowser = await puppeteer.launch({ headless })
@@ -29,4 +30,10 @@ const user = {
   })
   await webbrowser.close()
   await mobilebrowser.close()
-})()
+}
+
+try {
+  runner()
+} catch (e) {
+  console.error(e)
+}
