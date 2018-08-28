@@ -112,7 +112,7 @@ class LeadsTemplate extends React.Component {
       fields,
       setSelectedLeads,
       app,
-      showAllCardsDetails,
+      constantCardOpen,
     } = this.props
 
     let fieldsCheck = {}
@@ -152,7 +152,7 @@ class LeadsTemplate extends React.Component {
                       }
                       toggleCheck={event => this.toggleLead(event, lead.id)}
                       toggleCardView={() => this.props.toggelCardView(index)}
-                      showAllCardsDetails={showAllCardsDetails}
+                      constantCardOpen={constantCardOpen}
                     />
                   )}
                 />

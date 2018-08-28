@@ -235,13 +235,13 @@ section.ldc-real-estate-lead {
     }
   }
 
-  &:hover {
+  &:not(.constant-card-open):hover {
     cursor: pointer;
+  }
 
-    .rel-buttons {
-      cursor: pointer;
-      opacity: 1;
-    }
+  &:hover .rel-buttons {
+    cursor: pointer;
+    opacity: 1;
   }
 
   &.rel-checked {

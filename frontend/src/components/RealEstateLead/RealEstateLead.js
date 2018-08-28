@@ -10,10 +10,11 @@ const RealEstateLead = lead => {
       className={`ldc-real-estate-lead${lead.checked ? " rel-checked" : ""}
         ${lead.isSelectable ? " rel-selectable" : ""}
         ${
-          lead.cardOpen || lead.showAllCardsDetails
+          lead.cardOpen || lead.constantCardOpen
             ? " rel-card-open"
             : " rel-card-closed"
-        }`}
+        }
+        ${lead.constantCardOpen ? " constant-open-card" : ""}`}
       onClick={lead.toggleCardView}
     >
       {lead.fieldsCheck.Description && (
@@ -67,7 +68,7 @@ const RealEstateLead = lead => {
             )}
         </div>
       </div>
-      {!lead.showAllCardsDetails && (
+      {!lead.constantCardOpen && (
         <div className="rel-arrow">
           <div className="arrow-left" />
           <div className="arrow-right" />
