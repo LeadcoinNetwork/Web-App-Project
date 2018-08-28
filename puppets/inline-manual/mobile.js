@@ -56,7 +56,7 @@ module.exports = async page => {
   await snapAndClick(".bl-filters .ldc-button")
   await page.waitForSelector(".ldc-real-estate-lead")
   await snapAndClick(".ldc-real-estate-lead .rel-selector")
-  // <-- TODO: continue from here
+
   await snapAndClick(".downStrip button")
   await snapAndClick(".button-container .ldc-button")
   await snapAndClick()
