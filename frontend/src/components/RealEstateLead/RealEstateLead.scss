@@ -101,7 +101,7 @@ section.ldc-real-estate-lead {
 
   &.rel-card-open {
     .rel-arrow {
-      bottom: -10px;
+      bottom: -4px;
 
       .arrow-left {
         transform: rotate(45deg) translateX(-3px);
@@ -114,7 +114,7 @@ section.ldc-real-estate-lead {
   }
 
   &.rel-card-closed {
-    padding: 15px 25px;
+    padding: 15px 25px 20px;
 
     .rel-price {
       padding-bottom: 0;
@@ -260,7 +260,7 @@ section.ldc-real-estate-lead {
     transform-origin: center;
 
     &.rel-card-closed {
-      padding: 15px 20px;
+      padding: 15px 20px 20px;
     }
 
     .rel-details-wrapper {

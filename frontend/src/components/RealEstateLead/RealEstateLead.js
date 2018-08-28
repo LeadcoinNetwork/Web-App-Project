@@ -68,27 +68,24 @@ const RealEstateLead = lead => {
         </div>
       </div>
       {!lead.showAllCardsDetails && (
-        <>
-          <div className="rel-arrow">
-            <div className="arrow-left" />
-            <div className="arrow-right" />
+        <div className="rel-arrow">
+          <div className="arrow-left" />
+          <div className="arrow-right" />
+        </div>
+      )}
+      {lead.isSelectable && (
+        <div
+          className={"rel-selector"}
+          onClick={e => {
+            e.stopPropagation()
+            lead.toggleCheck(e, lead.id)
+          }}
+        >
+          <div className="select-icon">
+            <div className="up-down" />
+            <div className="left-right" />
           </div>
-          <div
-            className={"rel-selector"}
-            onClick={
-              lead.isSelectable &&
-              (e => {
-                e.stopPropagation()
-                lead.toggleCheck(e, lead.id)
-              })
-            }
-          >
-            <div className="select-icon">
-              <div className="up-down" />
-              <div className="left-right" />
-            </div>
-          </div>
-        </>
+        </div>
       )}
       {/* <div className="rel-buttons">
         {lead.buttons &&
