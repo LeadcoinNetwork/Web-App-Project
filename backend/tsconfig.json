@@ -11,6 +11,10 @@
     "outDir": "./temp-outdir",
     "sourceMap": true
   },
-  "include": ["./../frontend/src/api/**.*", "./*.*"],
+  "include": [
+    "./../frontend/src/api/**.*",
+    "./*.*",
+    "../../email-searcher-frontend/src/reducers/users.js"
+  ],
   "exclude": ["node_modules", "**/node_modules/*", "./dist"]
 }
