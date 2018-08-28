@@ -2,15 +2,20 @@ import React from "react"
 import Button from "Components/Button"
 import { fromNow } from "Utils/time"
 import { priceString } from "../../utils/numbers"
+import t from "../../utils/translate/translate"
 
 const RealEstateLead = lead => {
   return (
     <section
       className={`ldc-real-estate-lead${lead.checked ? " rel-checked" : ""}
         ${lead.isSelectable ? " rel-selectable" : ""}
-        ${lead.cardOpen ? " rel-card-open" : " rel-card-closed"}`}
+        ${
+          lead.cardOpen || lead.constantCardOpen
+            ? " rel-card-open"
+            : " rel-card-closed"
+        }
+        ${lead.constantCardOpen ? " constant-card-open" : ""}`}
       onClick={lead.toggleCardView}
-      // onClick={lead.isSelectable && lead.toggleCheck}
     >
       {lead.fieldsCheck.Description && (
         <div className="rel-specification">{lead.Description}</div>
@@ -23,7 +28,7 @@ const RealEstateLead = lead => {
           {lead.fieldsCheck.Type && (
             <div className="reld-type">{lead.Type}</div>
           )}
-          {/* <div className="reld-date">{fromNow(Date(lead.date))}</div> */}
+          <div className="reld-date">{fromNow(lead.date)}</div>
           <div className="reld-location">
             {lead.State}, {lead.Location}
           </div>
@@ -55,28 +60,34 @@ const RealEstateLead = lead => {
           {lead.fieldsCheck.Size &&
             lead.Size.length > 0 && <span>{lead.Size}</span>}
           {lead.fieldsCheck.Price &&
-            lead.Price && <span>Price {priceString(lead.Price)}</span>}
+            lead.Price && (
+              <span>
+                {t("Price ")}
+                {priceString(lead.Price)}
+              </span>
+            )}
         </div>
       </div>
-      <div className="rel-arrow">
-        <div className="arrow-left" />
-        <div className="arrow-right" />
-      </div>
-      <div
-        className={"rel-selector"}
-        onClick={
-          lead.isSelectable &&
-          (e => {
+      {!lead.constantCardOpen && (
+        <div className="rel-arrow">
+          <div className="arrow-left" />
+          <div className="arrow-right" />
+        </div>
+      )}
+      {lead.isSelectable && (
+        <div
+          className={"rel-selector"}
+          onClick={e => {
             e.stopPropagation()
             lead.toggleCheck(e, lead.id)
-          })
-        }
-      >
-        <div className="select-icon">
-          <div className="up-down" />
-          <div className="left-right" />
+          }}
+        >
+          <div className="select-icon">
+            <div className="up-down" />
+            <div className="left-right" />
+          </div>
         </div>
-      </div>
+      )}
       {/* <div className="rel-buttons">
         {lead.buttons &&
           lead.buttons.map(button => (

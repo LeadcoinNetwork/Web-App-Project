@@ -76,6 +76,7 @@ class MyLeads extends React.Component {
           <LeadsTemplate
             {...this.props}
             pageName="my"
+            constantCardOpen={true}
             displayLead={this.displayLead.bind(this)}
             // getButtons={this.getButtons}
           />

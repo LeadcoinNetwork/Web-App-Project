@@ -49,12 +49,18 @@
 }
 
 .csvclass .inmplayer-popover-button-next.inmplayer-button {
-  background: url("./savedialog.jpg") no-repeat;
-  background-size: contain;
-  width: 500px;
-  height: 386px;
   border: 0;
+  @media (min-width: 799px) {
+    background: url("./savedialog.jpg") no-repeat;
+    width: 500px;
+    height: 386px;
+    border: 0;
+    background-position-x: 39px;
+    background-size: 460px 346px;
+    background-position-y: 20px;
+  }
   @media (max-width: 800px) {
+    background-size: contain;
     background: url("./savedialog-mobile.jpg") no-repeat;
     width: 394px;
     height: 433px;
