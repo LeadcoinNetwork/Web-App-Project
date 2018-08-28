@@ -63,6 +63,12 @@ module.exports = async page => {
   await snapAndClick()
   await snapAndClick()
   await snapAndClick(".logo .logo-link")
+  await page.waitForFunction( () => {
+    const balance = document.querySelector(
+      '.ldc-balance-widget',
+    ).innerText
+    return (balance=='$880')
+  })
 
   // sell leads
   console.log("[MOBILE] Puppet is learning to sell leads...")
@@ -73,7 +79,13 @@ module.exports = async page => {
   await page.waitFor(500)
   await snapAndClick()
   await page.waitForSelector(".notification-badge")
-  await page.waitFor(2500)
+  await page.waitFor(1500)
+  await page.waitForFunction( () => {
+    const balance = document.querySelector(
+      '.ldc-balance-widget',
+    ).innerText
+    return (balance=='$1,000')
+  })
   await page.evaluate(() =>
     document.querySelector(".ldc-notification-element").click(),
   )
