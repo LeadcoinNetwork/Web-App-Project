@@ -45,6 +45,7 @@ server.listen(30666, async e => {
   console.log({ url, delay })
   const main_browser = await puppeteer.launch({ headless })
   const runner = async () => {
+    let webStatus, mobileStatus
     console.log("Waking up Puppets...")
     const webbrowser = await main_browser.createIncognitoBrowserContext()
     const mobilebrowser = await main_browser.createIncognitoBrowserContext()
@@ -55,13 +56,23 @@ server.listen(30666, async e => {
     const started = new Date()
     await webpage.goto(url)
     await mobilepage.goto(url)
-    const webStatus = inlineManual.web(webpage)
-    const mobileStatus = inlineManual.mobile(mobilepage)
-    global_state = {
-      started,
-      finished: new Date(),
-      web: await webStatus,
-      mobile: await mobileStatus,
+    try {
+      const web = inlineManual.web(webpage)
+      const mobile = inlineManual.mobile(mobilepage)
+      global_state = {
+        started,
+        finished: new Date(),
+        web: await web,
+        mobile: await mobile,
+      }
+    } catch (e) {
+      global_state = {
+        error: true,
+        scope: e.scope,
+        started,
+        finished: new Date(),
+        e,
+      }
     }
     console.log({ global_state })
     runner_TO = setTimeout(runner, delay)
