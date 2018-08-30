@@ -91,7 +91,7 @@ class Signup extends React.Component {
           <h3>{t("Reacing Leads in Real Time")}</h3>
           <q>
             {t(
-              `What I love about LeadCoin is it will aloow us to reach potential clients while they're still "hot" and in need of our product.I can't wait start using it.`,
+              `What I love about LeadCoin is it will allow us to reach potential clients while they're still "hot" and in need of our product.I can't wait start using it.`,
             )}
           </q>
           <label
