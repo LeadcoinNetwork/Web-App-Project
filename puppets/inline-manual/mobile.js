@@ -83,7 +83,6 @@ module.exports = async page => {
     await page.waitForNavigation({ waitUntil: "networkidle0" })
     await snapAndClick()
     await page.waitForSelector(".notification-badge")
-    //await page.waitFor(1500)
     await page.waitForNavigation({ waitUntil: "networkidle0" })
     currentBalance = await page.evaluate(() => {
       //@ts-ignore
