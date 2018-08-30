@@ -25,8 +25,8 @@ server.get("/health", (req, res) => {
 const clear_files = async () => {
   return new Promise((resolve, reject) => {
     fs.readdir(directory, (err, files) => {
-      let file_number = files.length
       if (err) reject(err)
+      let file_number = files.length
       if (files.length == 0) resolve()
       for (const file of files) {
         fs.unlink(path.join(directory, file), err => {
@@ -43,12 +43,11 @@ server.listen(30666, async e => {
   let runner_TO
   console.log("Server Running")
   console.log({ url, delay })
-  const main_browser = await puppeteer.launch({ headless })
   const runner = async () => {
     let webStatus, mobileStatus
     console.log("Waking up Puppets...")
-    const webbrowser = await main_browser.createIncognitoBrowserContext()
-    const mobilebrowser = await main_browser.createIncognitoBrowserContext()
+    const webbrowser = await puppeteer.launch({ headless })
+    const mobilebrowser = await puppeteer.launch({ headless })
     await clear_files()
     console.log("Running Puppets")
     const webpage = await webbrowser.newPage()
@@ -56,9 +55,9 @@ server.listen(30666, async e => {
     const started = new Date()
     await webpage.goto(url)
     await mobilepage.goto(url)
+    const web = inlineManual.web(webpage)
+    const mobile = inlineManual.mobile(mobilepage)
     try {
-      const web = inlineManual.web(webpage)
-      const mobile = inlineManual.mobile(mobilepage)
       global_state = {
         started,
         finished: new Date(),
@@ -75,14 +74,13 @@ server.listen(30666, async e => {
       }
     }
     console.log({ global_state })
-    runner_TO = setTimeout(runner, delay)
     await webbrowser.close()
     await mobilebrowser.close()
+    runner_TO = setTimeout(runner, delay)
   }
   runner_TO = setTimeout(runner, 100)
   process.on("exit", async () => {
     console.log("Shutting Puppets Down")
-    main_browser.close()
     clearTimeout(runner_TO)
   })
 })
