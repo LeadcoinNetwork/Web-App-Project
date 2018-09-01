@@ -1,0 +1,137 @@
+<html>
+  <head>
+    <link rel="stylesheet/less" type="text/css" href="/app.less" />  
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.7.1/less.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.js"></script>
+  </head>
+  <body> 
+  <div class="main"></div>
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+
+  <script type="text/babel">
+  //@ts-check
+
+  class Img extends React.Component {
+    render() {
+      const {src} = this.props
+      return (
+        <img 
+          src={src}
+          onLoad={(e) => {
+            const t = e.target
+            t.style.display="inline-block"
+          }}
+          onError={(e) => {
+            const t = e.target
+            t.style.display="none"
+            setTimeout( () => {
+              const src = t.src
+              t.src = src.substr(0, src.indexOf('?')) + '?t=' + new Date().getTime()
+            }, 250)
+          }}
+      />)
+    }
+  }
+
+  class Gallery extends React.Component {
+    render() {
+      const {title} = this.props
+      const images = []
+      for(let i=0; i < 21; i++) {
+        let src = title+"-"+i+".png"
+        images.push( <Img 
+          key={i} 
+          src={title+'-'+i+".png?t=1"} 
+          />
+        )
+      }
+      return (
+        <div className='gallery'>
+          <div className="header">{title}</div>
+          <div className={"container "+title}>
+            {images}
+          </div>
+        </div>
+      )
+    }
+  }
+  
+  class App extends React.Component {
+    constructor(){
+      super()
+      this.state = {
+        data: false
+      }
+    }
+
+    fetchData() {
+      fetch('/health')
+      .then(res => {
+        if (res.status<400) {
+          setTimeout( () => {
+            this.fetchData()
+          }, 2500)
+          return res.json()
+        } else {
+          setTimeout( () => {
+            this.fetchData()
+          }, 500)
+          return false
+        }
+      })
+      .then(data => {
+        const old_data = this.state.data
+        if (data && !old_data.finished)
+          return this.setState({ data })
+        if (data && data.finished > old_data.finished)
+          return this.setState({ data })
+      })
+    }
+
+    componentDidMount() {
+      this.fetchData()
+    }
+
+    render() {
+      console.log(this.state)
+      const {data} = this.state
+      return (
+        <div>
+          {!data && (
+            <div>
+            Running first test now...
+            </div>
+          )}
+          {data && (
+            <div className="status">
+              <div>Last Test {(!data.error) ? "PASSED" : "FAILED"} </div>
+              <div>Start: {data.started} </div>
+              <div>End: {data.finished} </div>
+            </div>
+          )}
+          {!data.error && (
+            <div className="flexed">
+              <Gallery title="mobile"/>
+              <Gallery title="web" />
+            </div>
+          )}
+          {data.error && (
+            <div className="error">
+              <div className="what"> {data.e} </div>
+              <div className="where">{data.scope} </div>
+              <div className="last"> 
+                <img src={data.scope+"-error.png"} />
+                </div>
+            </div>
+          )}
+        </div>
+      )
+    }
+  }
+
+  const domContainer = document.querySelector('.main');
+  ReactDOM.render(<App />, domContainer);
+  </script>
+  </body>
+</html>
