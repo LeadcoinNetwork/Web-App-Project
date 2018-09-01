@@ -21,6 +21,10 @@
           onLoad={(e) => {
             const t = e.target
             t.style.display="inline-block"
+            setTimeout( () => {
+              const src = t.src
+              t.src = src.substr(0, src.indexOf('?')) + '?t=' + new Date().getTime()
+            }, 1000)
           }}
           onError={(e) => {
             const t = e.target
@@ -40,7 +44,7 @@
       const images = []
       for(let i=0; i < 21; i++) {
         let src = title+"-"+i+".png"
-        images.push( <Img 
+        images.push(<Img 
           key={i} 
           src={title+'-'+i+".png?t=1"} 
           />
@@ -94,10 +98,12 @@
     }
 
     render() {
-      console.log(this.state)
       const {data} = this.state
       return (
         <div>
+          <div className="big_header">
+            MASTER OF PUPPETS
+          </div>
           {!data && (
             <div>
             Running first test now...
@@ -105,9 +111,19 @@
           )}
           {data && (
             <div className="status">
-              <div>Last Test {(!data.error) ? "PASSED" : "FAILED"} </div>
-              <div>Start: {data.started} </div>
-              <div>End: {data.finished} </div>
+              {data.in_progress && (
+                <div> Test Running </div>
+              )}
+              {!data.in_progress && (
+                <div>
+                  <div>Last Test {(!data.error) ? "PASSED" : "FAILED"} </div>
+                  <div>Start: {data.started} </div>
+                  <div>End: {data.finished} </div>
+                  <button onClick={() => {
+                    fetch('/runNow')
+                  }} >Initiate Run </button>
+                </div>
+              )}
             </div>
           )}
           {!data.error && (

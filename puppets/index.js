@@ -15,7 +15,6 @@ const runner = require('./runner')({
   url,
 })
 
-const server = require('./server')
 
 const job = {
   "inline-manual": inlineManual,
@@ -41,21 +40,10 @@ const clear_files = async () => {
 
 const [node, indexjs, command] = process.argv
 if (command==="server") {
+  const server = require('./server')
   console.log("Server Running")
   console.log({ url, delay })
-  let state
-  const get_state = () => state
-  server(get_state)
-  let runner_interval = setInterval(async e => {
-    await clear_files()
-    state = await runner()
-  }, delay)
-  process.on("exit", async () => {
-    console.log("Shutting Puppets Down")
-    clearInterval(runner_interval)
-  })
-  if (delay > 30000)
-    clear_files().then( async () => state = await runner())
+  server(runner, delay, clear_files)
 } else {
   let test = async () => {
     console.log("Single Test Running")
