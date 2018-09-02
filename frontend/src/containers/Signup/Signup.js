@@ -95,7 +95,7 @@ class Signup extends React.Component {
             )}
           </q>
           <label
-            class="floating_head"
+            className="floating_head"
             style={{ backgroundImage: `url(${NimrodMay})` }}
           />
         </aside>

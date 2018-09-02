@@ -1,6 +1,12 @@
 import types from "./types"
 
 export default {
+  searchChange(namespace, new_value) {
+    return {
+      type: types[namespace + "_FETCH_LEADS"],
+      payload: new_value,
+    }
+  },
   fetchLeads(namespace, params) {
     return {
       type: types[namespace + "_FETCH_LEADS"],
