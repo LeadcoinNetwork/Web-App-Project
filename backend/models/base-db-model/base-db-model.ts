@@ -86,6 +86,28 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
   }
 
   leadsQueries = {
+    getOwnedLeads: async () => {
+      let sql = `
+      SELECT count(id) as cid
+      FROM leadcoin.leads
+      WHERE
+          doc->>"$.ownerId" > 0
+      AND doc->>"$.bought_from" > 0 
+      ;`
+      let rows = await this.sql.query(sql)
+      return rows.map(r => r.cid)
+    },
+    getOwners: async () => {
+      let sql = `
+      SELECT DISTINCT doc->>"$.ownerId" as owner
+      FROM leadcoin.leads
+      WHERE
+          doc->>"$.ownerId" > 0
+      AND doc->>"$.bought_from" > 0 
+      ;`
+      let rows = await this.sql.query(sql)
+      return rows.map(r => r.owner)
+    },
     getMockLeads: async user_id => {
       let sql = `
       SELECT id
