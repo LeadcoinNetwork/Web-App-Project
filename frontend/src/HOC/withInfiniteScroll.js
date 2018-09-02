@@ -11,7 +11,6 @@ const withInfiniteScroll = onScrollBottom => WrappedComponent => {
       }
     }
     componentWillUnmount() {
-      console.log("here@")
       window.removeEventListener("scroll", this.onScrollThrottled)
     }
     onScroll = () => {
@@ -38,6 +37,7 @@ const withInfiniteScroll = onScrollBottom => WrappedComponent => {
         <>
           <WrappedComponent {...passThroughProps} />
           <div
+            className="dots_container"
             style={{
               opacity: this.props.loading ? 1 : 0,
               display: this.props.fullyLoaded ? "none" : "block",

@@ -2,6 +2,7 @@ import React from "react"
 import Select from "Components/Select"
 import Button from "Components/Button"
 import TextField from "Components/TextField"
+import Checkbox from "Components/Checkbox"
 import { connect } from "react-redux"
 import { addLead } from "Actions"
 import t from "../../utils/translate/translate"
@@ -12,16 +13,16 @@ class AddLead extends React.Component {
     const error = errors["agree_to_terms"] ? "error" : ""
     return (
       <div className={error + " agree_to_terms twothirds"}>
-        <input
-          type="checkbox"
+        <Checkbox
+          label={t("I AGREE TO THE TERMS")}
           name="agree_to_terms"
           id="terms_checkbox"
-          value={this.props.agree_to_terms}
-          onChange={e => {
+          checked={this.props.agree_to_terms}
+          onClick={e => {
             this.props.agreeToTerms(e.target.checked)
           }}
         />
-        <label htmlFor="terms_checkbox">{t("I AGREE TO THE TERMS")}</label>
+        <span className="asterisk-required">*</span>
       </div>
     )
   }
@@ -31,7 +32,13 @@ class AddLead extends React.Component {
     return fields.map(f => {
       const isError = errors[f.key] ? "error" : ""
       return (
-        <div key={f.key} className={isError + " line"}>
+        <div key={f.key} className={isError + " flexed line"}>
+          <div className="fieldLabel">
+            {t(f.name)}
+            {f.key === "lead_price" && (
+              <span className="asterisk-required">*</span>
+            )}
+          </div>
           <div className="fieldValue">
             <TextField
               disabled={loading}

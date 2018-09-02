@@ -1,1 +1,11 @@
 @import "~Containers/Signup/Signup";
+
+.forgot-password-link {
+  color: white !important;
+  opacity: 0.9;
+  @media (max-width: 800px) {
+    clear: both;
+    float: none !important;
+    display: block;
+  }
+}

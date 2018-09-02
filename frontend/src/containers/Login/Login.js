@@ -6,7 +6,7 @@ import Checkbox from "Components/Checkbox"
 import SocialLogin from "Components/SocialLogin"
 import { Link } from "react-router-dom"
 import { login } from "Actions"
-import tiger from "Images/tiger.jpg"
+import yamRegev from "Images/yam-regev.png"
 import t from "../../utils/translate/translate"
 
 class Login extends React.Component {
@@ -56,7 +56,9 @@ class Login extends React.Component {
                 checked={remember}
                 onClick={this.handleChange}
               />
-              <Link to="/forgot-password">{t("Forgot your password?")}</Link>
+              <Link className="forgot-password-link" to="/forgot-password">
+                {t("Forgot your password?")}
+              </Link>
             </p>
             {error && (
               <div className="errors">
@@ -76,16 +78,13 @@ class Login extends React.Component {
           <h3>{t("LeadCoin is the promised land for marketers")}</h3>
           <q>
             {t(
-              "Bitcoin is... well... imagine keeping your car idle 24/7 produced solved Sudokus you could trade for heroin.",
+              "Collaborating with other marketers & sharing leads is 10X more efficient than giving away my budget to Google & Facebook.",
             )}
           </q>
-          <label style={{ backgroundImage: `url(${tiger})` }}>
-            <span>
-              {t("Erez Hochman")}
-              <br />
-              {t("Crypto Expert")}
-            </span>
-          </label>
+          <label
+            className="floating_head"
+            style={{ backgroundImage: `url(${yamRegev})` }}
+          />
         </aside>
       </section>
     )

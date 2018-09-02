@@ -1,11 +1,16 @@
 @import "~Styles/variables";
 
 .ldc-table {
+  position: relative;
   font-size: 14px;
   text-align: left;
   min-height: 100%;
 
   .t-buttons {
+    display: none; //temp
+    position: absolute;
+    top: 20px;
+    right: 0;
   }
 
   .t-main {
@@ -58,15 +63,15 @@
         margin-bottom: 1px;
 
         &:nth-child(odd) {
-          background-color: #7361bf;
+          background-color: $table-background-odd;
         }
 
         &:nth-child(even) {
-          background-color: #8c7cd2;
+          background-color: $table-background-even;
         }
 
         &.r-selected {
-          background-color: #352189;
+          background-color: $table-background-selected;
         }
 
         .tbr-checkbox,

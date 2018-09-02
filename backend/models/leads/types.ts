@@ -3,6 +3,7 @@ import { Currency } from "../../utils/currency"
 export interface LeadQueryOptions {
   id?: number
   condition?: any
+  user_id?: number
   sort?: any
   sort_by?: any
   email?: string

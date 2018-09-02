@@ -7,10 +7,11 @@ import t from "../../utils/translate/translate"
 const LeadsResults = ({
   leads,
   renderLead,
-  renderFilters,
   renderResultsHead,
-  buttons,
+  buttons = [],
+  isSelectable,
   isNotAllSelected,
+  isSearchResults,
   toggleAll,
 }) => (
   <section className="ldc-leads-results">
@@ -23,12 +24,16 @@ const LeadsResults = ({
         appStyle
       />
     ))}
-    <label className="lr-check-all" onClick={toggleAll}>
-      {isNotAllSelected ? t("select all") : t("unselect all")}
-    </label>
-    {renderFilters()}
-    {renderResultsHead()}
-    <div className="lr-main">{leads.list.map(l => renderLead(l))}</div>
+    {false &&
+      isSelectable && (
+        <label className="lr-check-all" onClick={toggleAll}>
+          {isNotAllSelected ? t("select all") : t("unselect all")}
+        </label>
+      )}
+    {renderResultsHead(isSearchResults)}
+    <div className="lr-main">
+      {leads.list.map((l, index) => renderLead(l, index))}
+    </div>
   </section>
 )
 

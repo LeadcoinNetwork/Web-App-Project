@@ -69,7 +69,23 @@ class CSVUpload extends React.Component {
 
     return (
       <div className="fields_mapper">
+        <div>
+          {t(
+            "Match the fields from your CSV file with the fields that appear in LeadCoin's Network.",
+          )}{" "}
+          <br />
+          {t(
+            "Go through and match each one of your fields with the field name that exists for the real estate category.",
+          )}
+        </div>
         <div className="main_container">
+          <div className="titles flexed">
+            <div className="help_text" />
+            <div className="fieldsTitles flexed">
+              <div className="ldcTitle">LeadCoin Field Names</div>
+              <div className="csvTitle">Your Field Names</div>
+            </div>
+          </div>
           <div className="personal flexed">
             <div className="help_text">
               <div className="header bigger">
@@ -139,7 +155,10 @@ class CSVUpload extends React.Component {
     const error = Object.keys(errors).includes("price") ? "form_error" : ""
     return (
       <div className={"price " + error}>
-        <span>{t("Lead price")}</span>
+        <span>
+          {t("Lead price")}
+          <span className="asterisk-required">*</span>
+        </span>
         <TextField
           type="number"
           appStyle={true}
@@ -170,7 +189,10 @@ class CSVUpload extends React.Component {
             this.props.agreeToTerms(e.target.checked)
           }}
         />
-        <label htmlFor="terms_checkbox">{t("I AGREE TO THE TERMS")}</label>
+        <label htmlFor="terms_checkbox">
+          {t("I AGREE TO THE TERMS")}
+          <span className="asterisk-required">*</span>
+        </label>
       </div>
     )
   }
@@ -207,11 +229,13 @@ class CSVUpload extends React.Component {
     return (
       <div className="csvUpload">
         <h1>{t("Upload CSV File")}</h1>
-        <h3>{t("Add multiple leads for sale by uploading a CSV file.")}</h3>
         <div>
           {/* <Button appStyle secondary label={fileLabel}> */}
           {!this.maybeCsvMapper() && (
             <div>
+              <h3>
+                {t("Add multiple leads for sale by uploading a CSV file.")}
+              </h3>
               <div className="file-pick">
                 <Dropzone
                   accept=".csv"

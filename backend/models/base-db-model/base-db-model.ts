@@ -121,11 +121,12 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     getBoughtLeads: async (user_id: number, options: any) => {
       const { limit, filters, sort } = options
       let where_additions = []
+
       if (filters) {
         where_additions = filters
           .map(f => {
             const escaped = mysql.escape(f.val)
-            return `${this.fieldName} ->> "$.${f.field}" ${
+            return `${this.fieldName} ->> ${mysql.escape("$." + f.field)} ${
               f.op
             } "%${escaped.slice(1, -1)}%"`
           })
@@ -157,13 +158,13 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     },
 
     buyLeadsGetAll: async (options: any) => {
-      const { limit, filters, sort } = options
+      const { limit, filters, sort, user_id } = options
       let where_additions = []
       if (filters) {
         where_additions = filters
           .map(f => {
             const escaped = mysql.escape(f.val)
-            return `${this.fieldName} ->> "$.${f.field}" ${
+            return `${this.fieldName} ->>  ${mysql.escape("$." + f.field)} ${
               f.op
             } "%${escaped.slice(1, -1)}%"`
           })
@@ -177,6 +178,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         WHERE doc->>"$.active" = "true"
         AND doc->>"$.forSale" = "true" 
       `
+      if (user_id) query += `AND doc->>"$.ownerId" <> ${user_id} `
       if (where_additions.length > 0) query += `AND ${where_additions}`
       if (sort) {
         query += ` ORDER BY ${this.fieldName} ->> ${mysql.escape(
@@ -243,7 +245,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         where_additions = filters
           .map(f => {
             const escaped = mysql.escape(f.val)
-            return `${this.fieldName} ->> "$.${f.field}" ${
+            return `${this.fieldName} ->> ${mysql.escape("$." + f.field)} ${
               f.op
             } "%${escaped.slice(1, -1)}%"`
           })

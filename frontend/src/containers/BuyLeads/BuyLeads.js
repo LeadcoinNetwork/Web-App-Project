@@ -61,32 +61,38 @@ class BuyLeads extends React.Component {
       <section className="buy_leads">
         <h1>{t("Buy Leads")}</h1>
         <h3>{t("Purchase hot leads for your business.")}</h3>
-        <Select className="industry">
-          <option />
-          <option>{t("Real Estate")}</option>
-          <option disabled>{t("Crypto")}</option>
-          <option disabled>{t("Insurance")}</option>
-          <option disabled>{t("Loans")}</option>
-        </Select>
-        <Select className="category">
-          <option />
-          <option>{t("Real Estate-Buy")}</option>
-          <option disabled>{t("Real Estate-Sell")}</option>
-          <option disabled>{t("Real Estate-Looking to rent")}</option>
-          <option disabled>{t("Real Estate-Properties for rent")}</option>
-        </Select>
-        <Button
-          className="search"
-          onClick={() => {
-            this.setState({ showOnlyAfterSearch: true })
-          }}
-          appStyle={true}
-        >
-          {t("Search")}
-        </Button>
+        <div className="bl-filters">
+          <Select className="industry">
+            <option>{t("Choose your industry")}</option>
+            <option>{t("Real Estate")}</option>
+            <option disabled>{t("Crypto")}</option>
+            <option disabled>{t("Insurance")}</option>
+            <option disabled>{t("Loans")}</option>
+          </Select>
+          <Select className="category">
+            <option>{t("Choose your category")}</option>
+            <option>{t("Buy")}</option>
+            <option disabled>{t("Sell")}</option>
+            <option disabled>{t("Looking to rent")}</option>
+            <option disabled>{t("Properties for rent")}</option>
+          </Select>
+          {/*<TextField placeholder={t("Search...")} appStyle />*/}
+          <Button
+            className="search"
+            onClick={() => {
+              this.setState({ showOnlyAfterSearch: true })
+            }}
+            appStyle={true}
+          >
+            {t("Search")}
+          </Button>
+        </div>
         {this.state.showOnlyAfterSearch && (
           <LeadsTemplate
             {...this.props}
+            buyLeads={() => {
+              this.buyLeads()
+            }}
             pageName="buy"
             getButtons={this.getButtons}
           />
@@ -108,5 +114,6 @@ export default connect(
     fetchLeads: params => leads.fetchLeads("BUY_LEADS", params),
     setSelectedLeads: selectedLeads =>
       leads.setSelectedLeads("BUY_LEADS", selectedLeads),
+    toggelCardView: index => leads.toggelCardView("BUY_LEADS", index),
   },
 )(BuyLeads)

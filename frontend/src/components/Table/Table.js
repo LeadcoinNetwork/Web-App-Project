@@ -100,8 +100,8 @@ class Table extends React.Component {
               />
             ))}
         </div>
-        {props.renderFilters && props.renderFilters()}
-        {props.renderResultsHead && props.renderResultsHead()}
+        {props.renderResultsHead &&
+          props.renderResultsHead(props.isSearchResults)}
         <div className="t-main">
           <THead
             fields={props.fields}
@@ -115,7 +115,6 @@ class Table extends React.Component {
           />
           <TBody
             displayLead={props.displayLead}
-            pageName={props.pageName}
             fields={props.fields}
             records={props.records}
             colCount={dinamicColsCount}

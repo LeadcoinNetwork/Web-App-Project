@@ -34,9 +34,13 @@ section.ldc-real-estate-lead {
       display: inline-block;
       min-width: 230px;
 
+      .reld-type,
       .reld-status,
       .reld-date,
-      .reld-location {
+      .reld-location,
+      .reld-contact-person,
+      .reld-email,
+      .reld-telephone {
         color: $main-color;
         padding-top: 8px;
       }
@@ -79,6 +83,132 @@ section.ldc-real-estate-lead {
     }
   }
 
+  .rel-arrow {
+    display: inline-block;
+    position: absolute;
+    left: 50%;
+
+    .arrow-left,
+    .arrow-right {
+      display: inline-block;
+      position: relative;
+      bottom: 6px;
+      height: 10px;
+      width: 2px;
+      background-color: $bg-level-2;
+    }
+  }
+
+  &.rel-card-open {
+    .rel-arrow {
+      bottom: -4px;
+
+      .arrow-left {
+        transform: rotate(45deg) translateX(-3px);
+      }
+
+      .arrow-right {
+        transform: rotate(-45deg) translateX(3px);
+      }
+    }
+  }
+
+  &.rel-card-closed {
+    padding: 15px 25px 20px;
+
+    .rel-price {
+      padding-bottom: 0;
+    }
+    .rel-details-wrapper {
+      display: none;
+    }
+
+    .rel-arrow {
+      .arrow-left {
+        transform: rotate(-45deg) translateX(-3px);
+      }
+
+      .arrow-right {
+        transform: rotate(45deg) translateX(3px);
+      }
+    }
+  }
+
+  .rel-selector {
+    display: none;
+  }
+
+  &.rel-selectable {
+    .rel-selector {
+      display: inline-block;
+      position: absolute;
+      cursor: pointer;
+      background-color: $bg-main-btn;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      right: 25px;
+      bottom: 15px;
+
+      .select-icon {
+        display: inline-block;
+        position: relative;
+        left: 50%;
+        top: 14px;
+        transform: translateX(-1px);
+
+        .up-down,
+        .left-right {
+          display: inline-block;
+          position: relative;
+          height: 24px;
+          width: 3px;
+          background-color: white;
+        }
+
+        .left-right {
+          transform: rotateZ(90deg) translateY(3px);
+        }
+      }
+    }
+
+    &.rel-card-closed .rel-selector {
+      width: 35px;
+      height: 35px;
+      right: 25px;
+      bottom: 15px;
+
+      .select-icon {
+        top: 9px;
+        transform: translateX(-1px);
+
+        .up-down,
+        .left-right {
+          height: 18px;
+          width: 2px;
+        }
+
+        .left-right {
+          transform: rotateZ(90deg) translateY(2px);
+        }
+      }
+    }
+
+    &.rel-checked .select-icon,
+    &.rel-card-closed.rel-checked .select-icon {
+      transform: translateX(-3px) rotateZ(45deg);
+    }
+
+    &.rel-checked .rel-selector {
+      background-color: unset;
+
+      .select-icon .up-down,
+      .select-icon .left-right {
+        background-color: $ldc-color;
+      }
+    }
+  }
+
   .rel-buttons {
     opacity: 0;
     position: absolute;
@@ -106,13 +236,13 @@ section.ldc-real-estate-lead {
     }
   }
 
-  &:hover {
+  &:not(.constant-card-open):hover {
     cursor: pointer;
+  }
 
-    .rel-buttons {
-      cursor: pointer;
-      opacity: 1;
-    }
+  &:hover .rel-buttons {
+    cursor: pointer;
+    opacity: 1;
   }
 
   &.rel-checked {
@@ -129,6 +259,10 @@ section.ldc-real-estate-lead {
     padding: $padding;
     transform: scale(1);
     transform-origin: center;
+
+    &.rel-card-closed {
+      padding: 15px 20px 20px;
+    }
 
     .rel-details-wrapper {
       display: block;

@@ -63,9 +63,11 @@
     display: flex;
     .fieldValue {
       width: auto;
+      font-weight: 300;
     }
     .fieldLabel {
       width: 200px;
+      font-weight: 500;
     }
   }
   .errors {
@@ -73,5 +75,31 @@
     font-size: 18px;
     padding: 5px;
     width: 300px;
+  }
+}
+
+@media (max-width: 760px) {
+  .display_lead {
+    .header {
+      width: unset;
+    }
+    .help_text {
+      width: unset;
+    }
+    .main_container {
+      .line.flexed {
+        display: block;
+        height: unset;
+        line-height: unset;
+        margin-bottom: 10px;
+        .fieldLabel {
+          width: auto;
+          margin-left: -10px;
+        }
+      }
+      > div {
+        display: block;
+      }
+    }
   }
 }
