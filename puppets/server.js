@@ -4,6 +4,7 @@ module.exports = (runner, delay, clear_files) => {
   let state
   let runner_TO
   let in_progress = false
+  let next_run
   const run = async () => {
     in_progress = true
     await clear_files()
@@ -14,12 +15,16 @@ module.exports = (runner, delay, clear_files) => {
   const set_timeout = () => {
     clearTimeout(runner_TO)
     runner_TO = setTimeout(run, delay)
+    next_run = (new Date().valueOf()) + delay
   }
 
   server.get("/health", (req, res) => {
     console.log(state)
     if (state) {
-      state.in_progress=in_progress
+      state = Object.assign(state, {
+        in_progress,
+        next_run: new Date(next_run)
+      })
       res.json(state)
     } else {
       res.status(400).send()

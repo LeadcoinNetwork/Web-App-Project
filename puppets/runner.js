@@ -1,8 +1,8 @@
 //@ts-check
 const puppeteer = require("puppeteer")
 
-module.exports = ({headless, instructions, url, delay}) => {
-  let runner = async () => {
+module.exports = ({headless, instructions, url}) => {
+  let runner = async (no_pictures = false) => {
     let state
     console.log("Waking up Puppets...")
     const webbrowser = await puppeteer.launch({ headless })
@@ -10,6 +10,12 @@ module.exports = ({headless, instructions, url, delay}) => {
     console.log("Running Puppets")
     const webpage = await webbrowser.newPage()
     const mobilepage = await mobilebrowser.newPage()
+    if (no_pictures) {
+      //@ts-ignore
+      webpage.screenshot = async () => { }
+      //@ts-ignore
+      mobilepage.screenshot = async () => { }
+    }
     const started = new Date()
     await webpage.goto(url)
     await mobilepage.goto(url)

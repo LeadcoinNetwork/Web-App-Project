@@ -119,7 +119,12 @@
                   <div>Last Test {(!data.error) ? "PASSED" : "FAILED"} </div>
                   <div>Start: {data.started} </div>
                   <div>End: {data.finished} </div>
+                  <div>Next Run: {data.next_run} </div>
                   <button onClick={() => {
+                    const data = Object.assign({
+                      in_progress: true
+                    })
+                    this.setState({data})
                     fetch('/runNow')
                   }} >Initiate Run </button>
                 </div>
