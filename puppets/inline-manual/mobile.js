@@ -13,11 +13,11 @@ module.exports = async page => {
       await page.click(selector)
       await page.waitFor(500)
     }
-
+    const user_first_name = chance.name()
     const user = {
-      fname: chance.name(),
-      lname: "Puppetsky",
-      email: chance.email(),
+      fname: user_first_name,
+      lname: "Puppetstein",
+      email: user_first_name.replace(" ", ".") + "@puppetstore.com",
     }
     await page.setViewport({
       width: 600,

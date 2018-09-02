@@ -8,13 +8,11 @@ const inlineManual = require("./inline-manual")
 const fs = require("fs")
 const path = require("path")
 const directory = "./slideshow"
-const runner = require('./runner')({
+const runner = require("./runner")({
   instructions: inlineManual,
-  headless, 
-  delay, 
+  headless,
   url,
 })
-
 
 const job = {
   "inline-manual": inlineManual,
@@ -37,17 +35,16 @@ const clear_files = async () => {
   })
 }
 
-
 const [node, indexjs, command] = process.argv
-if (command==="server") {
-  const server = require('./server')
+if (command === "server") {
+  const server = require("./server")
   console.log("Server Running")
   console.log({ url, delay })
   server(runner, delay, clear_files)
 } else {
   let test = async () => {
     console.log("Single Test Running")
-    console.log({url})
+    console.log({ url })
     const exit_code = (await runner(true)).error ? 0 : 1
     process.exit(exit_code)
   }
