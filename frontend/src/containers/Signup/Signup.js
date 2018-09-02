@@ -4,7 +4,7 @@ import Button from "Components/Button"
 import TextField from "Components/TextField"
 import SocialLogin from "Components/SocialLogin"
 import { signup } from "Actions"
-import tiger from "Images/tiger.jpg"
+import NimrodMay from "Images/nimrod-may.png"
 import { Link } from "react-router-dom"
 import t from "../../utils/translate/translate"
 
@@ -88,19 +88,16 @@ class Signup extends React.Component {
           <div />
         </div>
         <aside>
-          <h3>{t("LeadCoin is the promised land for marketers")}</h3>
+          <h3>{t("Reaching Leads in Real Time")}</h3>
           <q>
             {t(
-              "Collaborating with other marketers & sharing leads is 10X more efficient than giving away my budget to Google & Facebook.",
+              `What I love about LeadCoin is it will allow us to reach potential clients while they're still "hot" and in need of our product.I can't wait start using it.`,
             )}
           </q>
-          <label style={{ backgroundImage: `url(${tiger})` }}>
-            <span>
-              {t("Meir Cohen")}
-              <br />
-              {t("CEO of Crypto")}
-            </span>
-          </label>
+          <label
+            class="floating_head"
+            style={{ backgroundImage: `url(${NimrodMay})` }}
+          />
         </aside>
       </section>
     )

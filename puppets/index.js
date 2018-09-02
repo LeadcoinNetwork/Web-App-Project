@@ -1,62 +1,86 @@
 //@ts-check
+const dotenv = require("dotenv")
+dotenv.config()
+const headless = process.env.HEADLESS === "true" ? true : false
+const url = process.env.URL
+const delay = parseInt(process.env.DELAY)
 const puppeteer = require("puppeteer")
-const Chance = require("chance")
+const inlineManual = require("./inline-manual")
+const express = require("express")
+const server = express()
+const fs = require("fs")
+const path = require("path")
+const directory = "./slideshow"
 
-const chance = new Chance()
-const user = {
-  fname: chance.name(),
-  lname: chance.name(),
-  email: chance.email(),
+const job = {
+  "inline-manual": inlineManual,
 }
-;(async () => {
-  const browser = await puppeteer.launch({ headless: false })
-  let step = 0
-  const page = await browser.newPage()
-  const snapAndClick = async (selector = ".inmplayer-popover-button-next") => {
-    await page.screenshot({ path: `slideshow/${step++}.png` })
-    await page.click(selector)
+
+let global_state
+
+server.get("/health", (req, res) => {
+  res.json(global_state)
+})
+
+const clear_files = async () => {
+  return new Promise((resolve, reject) => {
+    fs.readdir(directory, (err, files) => {
+      if (err) reject(err)
+      let file_number = files.length
+      if (files.length == 0) resolve()
+      for (const file of files) {
+        fs.unlink(path.join(directory, file), err => {
+          if (err) reject(err)
+          file_number--
+          if (file_number < 1) resolve()
+        })
+      }
+    })
+  })
+}
+
+server.listen(30666, async e => {
+  let runner_TO
+  console.log("Server Running")
+  console.log({ url, delay })
+  const runner = async () => {
+    let webStatus, mobileStatus
+    console.log("Waking up Puppets...")
+    const webbrowser = await puppeteer.launch({ headless })
+    const mobilebrowser = await puppeteer.launch({ headless })
+    await clear_files()
+    console.log("Running Puppets")
+    const webpage = await webbrowser.newPage()
+    const mobilepage = await mobilebrowser.newPage()
+    const started = new Date()
+    await webpage.goto(url)
+    await mobilepage.goto(url)
+    const web = inlineManual.web(webpage)
+    const mobile = inlineManual.mobile(mobilepage)
+    try {
+      global_state = {
+        started,
+        finished: new Date(),
+        web: await web,
+        mobile: await mobile,
+      }
+    } catch (e) {
+      global_state = {
+        error: true,
+        scope: e.scope,
+        started,
+        finished: new Date(),
+        e,
+      }
+    }
+    console.log({ global_state })
+    await webbrowser.close()
+    await mobilebrowser.close()
+    runner_TO = setTimeout(runner, delay)
   }
-
-  const navigationPromise = page.waitForNavigation()
-  await page.goto("http://127.0.0.1.xip.io:8080")
-  await page.click(".sign-link a")
-  await page.type(".ldc-textfield.fname", user.fname)
-  await page.type(".ldc-textfield.lname", user.lname)
-  await page.type(".ldc-textfield.email", user.email)
-  await page.click(".sm-form .ldc-button")
-  await page.waitForNavigation({ waitUntil: "networkidle0" })
-  await page.waitForSelector(".inmplayer-firstStep")
-  await snapAndClick()
-  await snapAndClick()
-  await snapAndClick(".buy .ldc-button")
-  await page.waitFor(200)
-  await page.select(".bl-filters select:nth-child(1)", "Real Estate")
-  await page.evaluate(() =>
-    document
-      .querySelector(".bl-filters select:nth-child(1)")
-      .dispatchEvent(new Event("change")),
-  )
-  await page.select(".bl-filters select:nth-child(2)", "Buy")
-  await page.evaluate(() =>
-    document
-      .querySelector(".bl-filters select:nth-child(2)")
-      .dispatchEvent(new Event("change")),
-  )
-  await snapAndClick(".bl-filters .ldc-button")
-  await page.waitForSelector(".t-body .ldc-checkbox")
-  await snapAndClick(".t-body .ldc-checkbox")
-  await snapAndClick(".lt-results-head button")
-  await snapAndClick(".button-container button")
-  await snapAndClick()
-  await snapAndClick()
-  await snapAndClick()
-  await snapAndClick(".logo .logo-link")
-  //button-container
-  //lt-results-head
-  //await page.click('.bl-filters select:nth-child(2)')
-  // <-- $('.bl-filters select:nth-child(2)')
-  //await snap(page)
-  //await snap(page)
-
-  // await browser.close()
-})()
+  runner_TO = setTimeout(runner, 100)
+  process.on("exit", async () => {
+    console.log("Shutting Puppets Down")
+    clearTimeout(runner_TO)
+  })
+})

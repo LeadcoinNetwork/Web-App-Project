@@ -112,6 +112,11 @@ section.ldc-complete-registration {
     }
 
     label {
+      &.floating_head {
+        width: 160px;
+        height: 200px;
+      }
+
       position: relative;
       display: inline-block;
       border-radius: 50%;

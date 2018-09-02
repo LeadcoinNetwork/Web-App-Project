@@ -79,9 +79,9 @@ export default class Leads {
       overall_cost += transaction_amount
       this.models.users.increaseBalance(seller, transaction_amount)
       this.models.notifications.createNotification({
-        msg: `someone bought ${
+        msg: `Someone bought ${
           group.length
-        } of your leads for a total of ${overall_cost}$`,
+        } of your leads for a total of ${overall_cost}$.`,
         userId: seller,
         unread: true,
       })

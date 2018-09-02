@@ -6,7 +6,7 @@ import Checkbox from "Components/Checkbox"
 import SocialLogin from "Components/SocialLogin"
 import { Link } from "react-router-dom"
 import { login } from "Actions"
-import tiger from "Images/tiger.jpg"
+import yamRegev from "Images/yam-regev.png"
 import t from "../../utils/translate/translate"
 
 class Login extends React.Component {
@@ -81,13 +81,10 @@ class Login extends React.Component {
               "Collaborating with other marketers & sharing leads is 10X more efficient than giving away my budget to Google & Facebook.",
             )}
           </q>
-          <label style={{ backgroundImage: `url(${tiger})` }}>
-            <span>
-              {t("Meir Cohen")}
-              <br />
-              {t("CEO of Crypto")}
-            </span>
-          </label>
+          <label
+            className="floating_head"
+            style={{ backgroundImage: `url(${yamRegev})` }}
+          />
         </aside>
       </section>
     )
