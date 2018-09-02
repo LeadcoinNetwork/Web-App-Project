@@ -4,23 +4,19 @@ dotenv.config()
 const headless = process.env.HEADLESS === "true" ? true : false
 const url = process.env.URL
 const delay = parseInt(process.env.DELAY)
-const puppeteer = require("puppeteer")
 const inlineManual = require("./inline-manual")
-const express = require("express")
-const server = express()
 const fs = require("fs")
 const path = require("path")
 const directory = "./slideshow"
+const runner = require("./runner")({
+  instructions: inlineManual,
+  headless,
+  url,
+})
 
 const job = {
   "inline-manual": inlineManual,
 }
-
-let global_state
-
-server.get("/health", (req, res) => {
-  res.json(global_state)
-})
 
 const clear_files = async () => {
   return new Promise((resolve, reject) => {
@@ -39,48 +35,18 @@ const clear_files = async () => {
   })
 }
 
-server.listen(30666, async e => {
-  let runner_TO
+const [node, indexjs, command] = process.argv
+if (command === "server") {
+  const server = require("./server")
   console.log("Server Running")
   console.log({ url, delay })
-  const runner = async () => {
-    let webStatus, mobileStatus
-    console.log("Waking up Puppets...")
-    const webbrowser = await puppeteer.launch({ headless })
-    const mobilebrowser = await puppeteer.launch({ headless })
-    await clear_files()
-    console.log("Running Puppets")
-    const webpage = await webbrowser.newPage()
-    const mobilepage = await mobilebrowser.newPage()
-    const started = new Date()
-    await webpage.goto(url)
-    await mobilepage.goto(url)
-    const web = inlineManual.web(webpage)
-    const mobile = inlineManual.mobile(mobilepage)
-    try {
-      global_state = {
-        started,
-        finished: new Date(),
-        web: await web,
-        mobile: await mobile,
-      }
-    } catch (e) {
-      global_state = {
-        error: true,
-        scope: e.scope,
-        started,
-        finished: new Date(),
-        e,
-      }
-    }
-    console.log({ global_state })
-    await webbrowser.close()
-    await mobilebrowser.close()
-    runner_TO = setTimeout(runner, delay)
+  server(runner, delay, clear_files)
+} else {
+  let test = async () => {
+    console.log("Single Test Running")
+    console.log({ url })
+    const exit_code = (await runner(true)).error ? 0 : 1
+    process.exit(exit_code)
   }
-  runner_TO = setTimeout(runner, 100)
-  process.on("exit", async () => {
-    console.log("Shutting Puppets Down")
-    clearTimeout(runner_TO)
-  })
-})
+  test()
+}
