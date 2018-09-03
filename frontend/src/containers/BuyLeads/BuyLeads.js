@@ -77,25 +77,25 @@ class BuyLeads extends React.Component {
             <option disabled>{t("Looking to rent")}</option>
             <option disabled>{t("Properties for rent")}</option>
           </Select>
-          <Button
-            className="search"
-            onClick={() => {
-              this.setState({ showOnlyAfterSearch: true })
-            }}
-            appStyle={true}
-          >
-            {t("Search")}
-          </Button>
-          {/* 
           <TextField
             appStyle
+            className="search_bar"
             placeholder={t("Search...")}
             value={this.props.leads.search}
             onChange={e => {
               this.props.handleSearch(e.target.value)
             }}
           />
-          */}
+          <Button
+            className="search"
+            onClick={() => {
+              this.setState({ showOnlyAfterSearch: true })
+              this.props.fetchLeads()
+            }}
+            appStyle={true}
+          >
+            {t("Search")}
+          </Button>
         </div>
         {this.state.showOnlyAfterSearch && (
           <LeadsTemplate

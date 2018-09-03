@@ -1,9 +1,14 @@
 import types from "./types"
 
 export default {
+  clearLeads() {
+    return {
+      type: types["CLEAR_ALL_LEADS"],
+    }
+  },
   searchChange(namespace, new_value) {
     return {
-      type: types[namespace + "_FETCH_LEADS"],
+      type: types[namespace + "_SEARCH_CHANGE"],
       payload: new_value,
     }
   },

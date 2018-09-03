@@ -126,7 +126,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         where_additions = filters
           .map(f => {
             const escaped = mysql.escape(f.val)
-            return `${this.fieldName} ->> ${mysql.escape("$." + f.field)} ${
+            return `${this.fieldName}->>${mysql.escape("$." + f.field)} ${
               f.op
             } "%${escaped.slice(1, -1)}%"`
           })
@@ -164,7 +164,8 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         where_additions = filters
           .map(f => {
             const escaped = mysql.escape(f.val)
-            return `${this.fieldName} ->>  ${mysql.escape("$." + f.field)} ${
+            if (f.field.includes(" ")) f.field = '"' + f.field + '"'
+            return `${this.fieldName}->>${mysql.escape("$." + f.field)} ${
               f.op
             } "%${escaped.slice(1, -1)}%"`
           })
