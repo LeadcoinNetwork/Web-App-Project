@@ -45,7 +45,8 @@ if (command === "server") {
   let test = async () => {
     console.log("Single Test Running")
     console.log({ url })
-    const exit_code = (await runner(true)).error ? 0 : 1
+    const exit_code = (await runner(true)).error ? 1 : 0
+    console.log("exit code is ", exit_code)
     process.exit(exit_code)
   }
   test()
