@@ -15,15 +15,16 @@ const LeadsResults = ({
   toggleAll,
 }) => (
   <section className="ldc-leads-results">
-    {buttons.map(button => (
-      <Button
-        key={button.value}
-        label={button.value}
-        onClick={button.onClick}
-        disabled={button.actionPerSelected && !leads.selected.size}
-        appStyle
-      />
-    ))}
+    {isSelectable &&
+      buttons.map(button => (
+        <Button
+          key={button.value}
+          label={button.value}
+          onClick={button.onClick}
+          disabled={!leads.selected.size}
+          appStyle
+        />
+      ))}
     {false &&
       isSelectable && (
         <label className="lr-check-all" onClick={toggleAll}>

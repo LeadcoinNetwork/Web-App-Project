@@ -21,46 +21,22 @@
       margin-right: 25px;
     }
   }
-  .mobileOnly {
-    display: none;
-  }
 }
 
 @media (max-width: $screen-tablets) {
-  .buy_leads {
-    .lt-results-head {
-      .ldc-button {
-        display: none;
-      }
-    }
-    .dots_container {
-      margin-bottom: 70px;
-    }
-    .mobileOnly {
-      display: block;
-      position: fixed;
-      bottom: 0px;
-      left: 1px;
-      right: 1px;
-      width: auto;
-      padding: 5px;
-      background-color: $main-color;
+  .buy_leads .bl-filters {
+    padding-bottom: 40px;
+    position: relative;
+
+    &:after {
+      height: 5px;
+      right: -20px;
     }
 
-    .bl-filters {
-      padding-bottom: 40px;
-      position: relative;
-
-      &:after {
-        height: 5px;
-        right: -20px;
-      }
-
-      select {
-        width: 100%;
-        margin-right: 0;
-        margin-bottom: 20px;
-      }
+    select {
+      width: 100%;
+      margin-right: 0;
+      margin-bottom: 20px;
     }
   }
 }

@@ -14,10 +14,13 @@
     background-position: center;
     padding: 15px;
     padding-top: 35px;
+    margin-left: 40px;
+
     &:hover {
       cursor: pointer;
     }
   }
+
   &:hover {
     .eye {
       display: inline-block;

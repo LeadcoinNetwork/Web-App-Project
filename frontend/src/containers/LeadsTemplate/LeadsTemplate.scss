@@ -9,10 +9,15 @@
     letter-spacing: 0.8px;
     text-transform: capitalize;
 
-    h4 {
+    &.is-search-results h4 {
       font-size: 24px;
       font-weight: 300;
       padding-bottom: 40px;
+    }
+
+    &.not-search-results {
+      height: 69px;
+      box-sizing: content-box;
     }
 
     .ldc-button {
@@ -44,20 +49,44 @@
       }
     }
   }
+
+  .mobileOnly {
+    display: none;
+  }
 }
 
 @media (max-width: $screen-tablets) {
   .ldc-leads-template {
+    &.selectable {
+      margin-bottom: 70px;
+    }
+
     .lt-results-head {
-      h4 {
+      &.is-search-results h4 {
         font-size: 26px;
         padding-bottom: 20px;
       }
 
-      .ldc-button {
-        position: static;
-        margin-bottom: 20px;
+      &.not-search-results {
+        height: unset;
+        box-sizing: unset;
+        padding: 0;
       }
+
+      .ldc-button {
+        display: none;
+      }
+    }
+
+    .mobileOnly {
+      display: block;
+      position: fixed;
+      bottom: 0px;
+      left: 1px;
+      right: 1px;
+      width: auto;
+      padding: 5px;
+      background-color: $main-color;
     }
   }
 }
