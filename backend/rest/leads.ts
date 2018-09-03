@@ -315,8 +315,8 @@ export function start({
         res.json({
           stats: {
             owners: await appLogic.leads.getOwners(),
-            leads: await appLogic.leads.getOwnedLeads()
-          }
+            leads: await appLogic.leads.getOwnedLeads(),
+          },
         })
       })().catch(err => {
         res.status(400)
@@ -324,7 +324,6 @@ export function start({
       })
     },
   )
-
 
   /**
    * Leads I bought
@@ -452,7 +451,7 @@ export function start({
         }
         let f
         if (search) {
-          f = ["Contact Person", "Description", "Location"].map(field => {
+          f = ["Bedrooms/Baths", "Description", "Location"].map(field => {
             return {
               field,
               op: "LIKE",
