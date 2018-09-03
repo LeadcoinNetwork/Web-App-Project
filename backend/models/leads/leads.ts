@@ -34,6 +34,9 @@ export default class Leads extends baseDBModel<
     return this.find({ condition, sort, limit })
   }
 
+  public async getOwnedLeads() {
+    return await this.leadsQueries.getOwnedLeads()
+  }
   public async getOwners() {
     return await this.leadsQueries.getOwners()
   }
