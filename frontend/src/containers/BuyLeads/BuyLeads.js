@@ -4,6 +4,7 @@ import { leads } from "Actions"
 import { push } from "react-router-redux"
 import LeadsTemplate from "Containers/LeadsTemplate"
 import Select from "Components/Select"
+import TextField from "Components/TextField"
 import Button from "Components/Button"
 import t from "../../utils/translate/translate"
 
@@ -76,11 +77,20 @@ class BuyLeads extends React.Component {
             <option disabled>{t("Looking to rent")}</option>
             <option disabled>{t("Properties for rent")}</option>
           </Select>
-          {/*<TextField placeholder={t("Search...")} appStyle />*/}
+          <TextField
+            appStyle
+            className="search_bar"
+            placeholder={t("Search...")}
+            value={this.props.leads.search}
+            onChange={e => {
+              this.props.handleSearch(e.target.value)
+            }}
+          />
           <Button
             className="search"
             onClick={() => {
               this.setState({ showOnlyAfterSearch: true })
+              this.props.fetchLeads()
             }}
             appStyle={true}
           >
@@ -111,6 +121,7 @@ export default connect(
   mapStateToProps,
   {
     push: push,
+    handleSearch: new_value => leads.searchChange("BUY_LEADS", new_value),
     fetchLeads: params => leads.fetchLeads("BUY_LEADS", params),
     setSelectedLeads: selectedLeads =>
       leads.setSelectedLeads("BUY_LEADS", selectedLeads),

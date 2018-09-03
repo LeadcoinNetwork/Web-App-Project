@@ -51,6 +51,13 @@ export default class Leads {
   constructor(private models: IModels) {}
   public UploadCSV() {}
 
+  public async getOwnedLeads() {
+    return await this.models.leads.getOwnedLeads()
+  }
+  public async getOwners() {
+    return await this.models.leads.getOwners()
+  }
+
   public async moveMyLeadsToSellLeads(leads: number[]) {
     return await this.models.leads.moveMyToSell(leads)
   }

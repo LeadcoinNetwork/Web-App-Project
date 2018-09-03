@@ -303,6 +303,28 @@ export function start({
     },
   )
 
+  // -->
+
+  expressApp.get(
+    "/leads/stats",
+    passport.authenticate("jwt", authOptions),
+    async function(req, res, next) {
+      ;(async () => {
+        const { user } = req
+        if (user.email != "erez@leadcoin.network") return res.sendStatus(400)
+        res.json({
+          stats: {
+            owners: await appLogic.leads.getOwners(),
+            leads: await appLogic.leads.getOwnedLeads(),
+          },
+        })
+      })().catch(err => {
+        res.status(400)
+        res.send({ error: { error: err.message } })
+      })
+    },
+  )
+
   /**
    * Leads I bought
    */
@@ -429,7 +451,7 @@ export function start({
         }
         let f
         if (search) {
-          f = ["Contact Person", "Description", "Location"].map(field => {
+          f = ["Bedrooms/Baths", "Description", "Location"].map(field => {
             return {
               field,
               op: "LIKE",

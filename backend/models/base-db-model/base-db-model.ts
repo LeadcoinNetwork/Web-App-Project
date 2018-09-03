@@ -86,6 +86,28 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
   }
 
   leadsQueries = {
+    getOwnedLeads: async () => {
+      let sql = `
+      SELECT count(id) as cid
+      FROM leadcoin.leads
+      WHERE
+          doc->>"$.ownerId" > 0
+      AND doc->>"$.bought_from" > 0 
+      ;`
+      let rows = await this.sql.query(sql)
+      return rows.map(r => r.cid)
+    },
+    getOwners: async () => {
+      let sql = `
+      SELECT DISTINCT doc->>"$.ownerId" as owner
+      FROM leadcoin.leads
+      WHERE
+          doc->>"$.ownerId" > 0
+      AND doc->>"$.bought_from" > 0 
+      ;`
+      let rows = await this.sql.query(sql)
+      return rows.map(r => r.owner)
+    },
     getMockLeads: async user_id => {
       let sql = `
       SELECT id
@@ -126,7 +148,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         where_additions = filters
           .map(f => {
             const escaped = mysql.escape(f.val)
-            return `${this.fieldName} ->> ${mysql.escape("$." + f.field)} ${
+            return `${this.fieldName}->>${mysql.escape("$." + f.field)} ${
               f.op
             } "%${escaped.slice(1, -1)}%"`
           })
@@ -164,7 +186,8 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         where_additions = filters
           .map(f => {
             const escaped = mysql.escape(f.val)
-            return `${this.fieldName} ->>  ${mysql.escape("$." + f.field)} ${
+            if (f.field.includes(" ")) f.field = '"' + f.field + '"'
+            return `${this.fieldName}->>${mysql.escape("$." + f.field)} ${
               f.op
             } "%${escaped.slice(1, -1)}%"`
           })

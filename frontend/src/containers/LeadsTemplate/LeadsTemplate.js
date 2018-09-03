@@ -45,6 +45,15 @@ class LeadsTemplate extends React.Component {
     setSelectedLeads(selected)
   }
   zeroResults = () => {
+    const { loading } = this.props.leads
+    console.log({ loading })
+    if (loading) {
+      return (
+        <>
+          <div className="ajax-loader2" />
+        </>
+      )
+    }
     switch (this.props.pageName) {
       case "sell":
         return (
@@ -125,7 +134,7 @@ class LeadsTemplate extends React.Component {
       <div>
         <div className="ldc-leads-template">
           <section className={`ldc-${pageName}-leads`}>
-            {leads.list.length || leads.loading ? (
+            {leads.list.length ? (
               app.cardsMode ? (
                 <LeadsResults
                   leads={leads}

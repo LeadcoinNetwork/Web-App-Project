@@ -8,12 +8,21 @@ import API from "../api/index"
 /**
  * @param api {API} - this is this paramters
  */
+let last_search
 export default function* buyLeads(api) {
   while (true) {
     let { page, limit, sortBy, category, search } = yield select(
       state => state.buyLeads,
     )
-
+    console.log(search)
+    if (search) {
+      if (last_search == search) {
+        // do nothing
+      } else {
+        last_search = search
+        yield put(actions.leads.clearLeads())
+      }
+    }
     let res = yield api.leads.buyLeadsGetList({
       page,
       limit,

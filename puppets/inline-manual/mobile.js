@@ -61,6 +61,13 @@ module.exports = async page => {
     await page.waitForSelector(".ldc-real-estate-lead")
     await snapAndClick(".ldc-real-estate-lead .rel-selector")
 
+    await page.evaluate(() => {
+      //@ts-ignore
+      const x = document
+        .querySelector(".ldc-real-estate-lead .rel-selector")
+        .click()
+    })
+
     await snapAndClick(".downStrip button")
     await snapAndClick(".button-container .ldc-button")
     await snapAndClick()
