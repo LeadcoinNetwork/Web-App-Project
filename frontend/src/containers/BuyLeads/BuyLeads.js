@@ -38,7 +38,6 @@ class BuyLeads extends React.Component {
       {
         value: this.buildButtonLabel(),
         onClick: this.buyLeads,
-        actionPerSelected: true,
       },
     ]
   }
@@ -100,10 +99,9 @@ class BuyLeads extends React.Component {
         {this.state.showOnlyAfterSearch && (
           <LeadsTemplate
             {...this.props}
-            buyLeads={() => {
-              this.buyLeads()
-            }}
             pageName="buy"
+            constantCardOpen={false}
+            isSelectable={true}
             getButtons={this.getButtons}
           />
         )}
