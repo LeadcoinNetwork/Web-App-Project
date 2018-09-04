@@ -69,15 +69,15 @@ class BuyLeads extends React.Component {
               })
             }}
           >
-            <option value="all">{t("Choose your industry")}</option>
-            <option value="real_estate">{t("Real Estate")}</option>
-            <option value="crypto" disabled>
+            <option value="All">{t("Choose your industry")}</option>
+            <option value="Real Estate">{t("Real Estate")}</option>
+            <option value="Crypto" disabled>
               {t("Crypto")}
             </option>
-            <option value="insurance" disabled>
+            <option value="Insurance" disabled>
               {t("Insurance")}
             </option>
-            <option value="loans" disabled>
+            <option value="Loans" disabled>
               {t("Loans")}
             </option>
           </Select>
@@ -92,15 +92,15 @@ class BuyLeads extends React.Component {
               })
             }}
           >
-            <option value="all">{t("Choose your category")}</option>
-            <option value="buy">{t("Buy")}</option>
-            <option value="sell" disabled>
+            <option value="All">{t("Choose your category")}</option>
+            <option value="Buy">{t("Buy")}</option>
+            <option value="Sell" disabled>
               {t("Sell")}
             </option>
-            <option value="looking_to_rent" disabled>
+            <option value="Looking to rent" disabled>
               {t("Looking to rent")}
             </option>
-            <option value="properties_for_rent" disabled>
+            <option value="Properties for rent" disabled>
               {t("Properties for rent")}
             </option>
           </Select>

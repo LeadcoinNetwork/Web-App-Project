@@ -181,19 +181,28 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
 
     buyLeadsGetAll: async (options: any) => {
       const { limit, filters, sort, user_id } = options
-      let where_additions = []
-      if (filters) {
-        where_additions = filters
+      let where_additions = ""
+      let search_additions = []
+      if (filters.search) {
+        search_additions = filters.search
           .map(f => {
             const escaped = mysql.escape(f.val)
             if (f.field.includes(" ") || f.field.includes("/"))
               f.field = '"' + f.field + '"'
-            return `${this.fieldName}->>${mysql.escape("$." + f.field)} ${
-              f.op
-            } "%${escaped.slice(1, -1)}%"`
+            return `${this.fieldName}->>${mysql.escape("$." + f.field)} 
+              ${f.op} "%${escaped.slice(1, -1)}%"`
           })
           .join(" OR ")
       }
+      if (filters.industry)
+        where_additions = `${this.fieldName}->>Industry = "${filters.industry}"`
+      if (filters.category)
+        where_additions += ` AND ${this.fieldName}->>Category = "${
+          filters.category
+        }"`
+      if (search_additions.length > 0)
+        where_additions +=
+          (where_additions ? " AND " : "") + "(" + search_additions + ")"
       let limit_addition = ""
       let countHeader = "SELECT COUNT(*) as count "
       let realHeader = "SELECT *"
