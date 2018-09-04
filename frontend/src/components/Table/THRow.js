@@ -3,7 +3,11 @@ import Checkbox from "Components/Checkbox"
 import THRCol from "./THRCol"
 
 const THRow = props => (
-  <div className="th-row">
+  <div
+    className={`th-row
+    ${props.displayLead ? " display-lead" : ""}
+  `}
+  >
     {props.isSelectable && (
       <div className="thr-checkbox">
         <Checkbox checked={props.isAllSelected} onClick={props.toggleAll} />

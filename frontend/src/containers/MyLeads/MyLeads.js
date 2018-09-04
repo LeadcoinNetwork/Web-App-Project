@@ -33,7 +33,6 @@ class MyLeads extends React.Component {
       {
         value: this.buildButtonLabel(),
         onClick: this.moveLeadsToSell,
-        actionPerSelected: true,
       },
     ]
   }
@@ -77,8 +76,9 @@ class MyLeads extends React.Component {
             {...this.props}
             pageName="my"
             constantCardOpen={true}
+            isSelectable={true}
+            getButtons={this.getButtons}
             displayLead={this.displayLead.bind(this)}
-            // getButtons={this.getButtons}
           />
         )}
       </>

@@ -28,7 +28,6 @@ class SellLeads extends React.Component {
       {
         value: this.buildButtonLabel(),
         onClick: this.buyLeads,
-        actionPerSelected: true,
       },
     ]
   }
@@ -40,7 +39,7 @@ class SellLeads extends React.Component {
       },
     ]
   }
-  getButtons = amountSelected => {
+  getButtons = () => {
     return {
       table: this.getListButtons(),
       record: this.getLeadButtons(),
@@ -73,7 +72,7 @@ class SellLeads extends React.Component {
           {...this.props}
           pageName="sell"
           constantCardOpen={true}
-          // getButtons={this.getButtons}
+          isSelectable={false}
         />
       </>
     )

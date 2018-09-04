@@ -5,9 +5,10 @@ import TBRCol from "./TBRCol"
 
 const TBRow = props => (
   <div
-    className={`tb-row${
-      props.selected && props.selected.has(props.id) ? " r-selected" : ""
-    }`}
+    className={`tb-row
+    ${props.selected && props.selected.has(props.id) ? " r-selected" : ""}
+    ${props.displayLead ? " display-lead" : ""}
+  `}
   >
     {props.displayLead && (
       <div

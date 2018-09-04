@@ -88,18 +88,30 @@ class LeadsTemplate extends React.Component {
     }
   }
   renderResultsHead = isSearchResults => {
-    let { pageName, leads, app, toggleResultsMode, getButtons } = this.props
+    let {
+      pageName,
+      leads,
+      app,
+      toggleResultsMode,
+      isSelectable,
+      getButtons,
+    } = this.props
     return (
-      <div className="lt-results-head">
+      <div
+        className={`lt-results-head
+        ${isSearchResults ? " is-search-results" : " not-search-results"}
+      `}
+      >
         {isSearchResults && <h4>{t("Search Results")}</h4>}
-        {getButtons &&
+        {isSelectable &&
+          getButtons &&
           getButtons().table.map(button => (
             <Button
               key={button.value}
               label={button.value}
               onClick={button.onClick}
               appStyle={true}
-              disabled={button.actionPerSelected && !leads.selected.size}
+              disabled={!leads.selected.size}
             />
           ))}
         {/* <label className="ltrh-count">
@@ -121,7 +133,10 @@ class LeadsTemplate extends React.Component {
       fields,
       setSelectedLeads,
       app,
+      getButtons,
+      isSelectable,
       constantCardOpen,
+      displayLead,
     } = this.props
 
     let fieldsCheck = {}
@@ -132,14 +147,16 @@ class LeadsTemplate extends React.Component {
     let isNotAllSelected = this.isNotAllSelected()
     return (
       <div>
-        <div className="ldc-leads-template">
+        <div
+          className={`ldc-leads-template${isSelectable ? " selectable" : ""}`}
+        >
           <section className={`ldc-${pageName}-leads`}>
             {leads.list.length ? (
               app.cardsMode ? (
                 <LeadsResults
                   leads={leads}
                   fullyLoaded={leads.fullyLoaded}
-                  isSelectable={this.props.getButtons}
+                  isSelectable={isSelectable}
                   isNotAllSelected={isNotAllSelected}
                   isSearchResults={pageName === "buy" ? true : false}
                   loading={leads.loading}
@@ -152,13 +169,9 @@ class LeadsTemplate extends React.Component {
                       key={lead.id}
                       fieldsCheck={fieldsCheck}
                       {...lead}
-                      checked={
-                        this.props.getButtons && leads.selected.has(lead.id)
-                      }
-                      isSelectable={this.props.getButtons}
-                      buttons={
-                        this.props.getButtons && this.props.getButtons().record
-                      }
+                      checked={isSelectable && leads.selected.has(lead.id)}
+                      isSelectable={isSelectable}
+                      buttons={getButtons && getButtons().record}
                       toggleCheck={event => this.toggleLead(event, lead.id)}
                       toggleCardView={() => this.props.toggelCardView(index)}
                       constantCardOpen={constantCardOpen}
@@ -177,38 +190,34 @@ class LeadsTemplate extends React.Component {
                   records={leads.list}
                   fullyLoaded={leads.fullyLoaded}
                   buttons={
-                    this.props.getButtons && {
+                    getButtons && {
                       table: [],
-                      record: this.props.getButtons().record,
+                      record: getButtons().record,
                     }
                   }
                   setSelectedRecords={setSelectedLeads}
                   isNotAllSelected={isNotAllSelected}
                   selected={leads.selected}
-                  isSelectable={this.props.getButtons}
+                  isSelectable={isSelectable}
                   isSearchResults={pageName === "buy" ? true : false}
-                  displayLead={this.props.displayLead}
+                  displayLead={displayLead}
                 />
               )
             ) : (
               <div className="lt-zero-results">{this.zeroResults()}</div>
             )}
-            {pageName == "buy" && (
-              <div className="mobileOnly downStrip">
-                <Button
-                  className="buyLeads"
-                  disabled={leads.selected.size === 0}
-                  onClick={() => {
-                    if (this.props.buyLeads) this.props.buyLeads()
-                  }}
-                  appStyle={true}
-                >
-                  {leads.selected.size > 0 &&
-                    t("Buy ") + leads.selected.size + " Leads"}
-                  {leads.selected.size == 0 && t("Buy Leads")}
-                </Button>
-              </div>
-            )}
+            {isSelectable &&
+              getButtons && (
+                <div className="mobileOnly downStrip">
+                  <Button
+                    className={pageName + "Leads"}
+                    label={getButtons().table[0].value}
+                    onClick={getButtons().table[0].onClick}
+                    appStyle={true}
+                    disabled={!leads.selected.size}
+                  />
+                </div>
+              )}
           </section>
         </div>
       </div>
