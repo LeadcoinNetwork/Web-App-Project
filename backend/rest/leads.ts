@@ -62,7 +62,7 @@ export function start({
     }
     return rc
   }
-  // Description,Bedrooms / Baths,Type,Price,Size,State,Location,Housing Type,Telephone,Contact Person
+  // Industry,Category,Description,Bedrooms / Baths,Price,Size,State,Location,Housing Type,Telephone,Contact Person
 
   async function mock_leads(req, res, next) {
     ;(async () => {

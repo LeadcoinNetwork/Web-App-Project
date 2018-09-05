@@ -29,9 +29,10 @@ class CSVUpload extends React.Component {
     let mock_fields = {
       private: ["Contact Person", "Telephone", "Email"],
       public: [
+        "Industry",
+        "Category",
         "Description",
         "Bedrooms/Baths",
-        "Type",
         "Price",
         "Size",
         "State",

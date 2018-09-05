@@ -14,7 +14,13 @@ section.ldc-real-estate-lead {
   transform-origin: right;
   transition: all 300ms ease, transform 200ms ease;
 
-  .rel-specification {
+  .rel-industry {
+    font-size: 12px;
+    letter-spacing: 0.2px;
+    color: $main-color;
+  }
+
+  .rel-description {
     font-size: 16px;
     letter-spacing: 0.2px;
     color: $bg-level-2;
@@ -34,7 +40,7 @@ section.ldc-real-estate-lead {
       display: inline-block;
       min-width: 230px;
 
-      .reld-type,
+      .reld-category,
       .reld-status,
       .reld-date,
       .reld-location,

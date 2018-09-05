@@ -56,8 +56,8 @@ const initialState = {
   floor_min: null,
   floor_max: null,
   filter: {
-    industry: "all",
-    category: "all",
+    industry: "All",
+    category: "All",
     search: "",
   },
   searchClicked: false,
@@ -85,8 +85,8 @@ const createReducerFor = namespace => {
           ...state,
           list: [],
           filter: {
-            industry: "all",
-            category: "all",
+            industry: "All",
+            category: "All",
             search: "",
           },
           selected: new Set(),

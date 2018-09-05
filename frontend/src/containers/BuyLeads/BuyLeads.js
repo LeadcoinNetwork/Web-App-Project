@@ -93,14 +93,14 @@ class BuyLeads extends React.Component {
             }}
           >
             <option value="All">{t("Choose your category")}</option>
-            <option value="Buy">{t("Buy")}</option>
-            <option value="Sell" disabled>
-              {t("Sell")}
+            <option value="Buy" disabled>
+              {t("Buy")}
             </option>
+            <option value="Sell">{t("Sell")}</option>
             <option value="Looking to rent" disabled>
               {t("Looking to rent")}
             </option>
-            <option value="Properties for rent" disabled>
+            <option value="Properties for rent">
               {t("Properties for rent")}
             </option>
           </Select>

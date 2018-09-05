@@ -71,7 +71,7 @@ export interface NewRealEstateLead extends NewBaseLead {
   "Property Type"?: string
 }
 
-// Description,Bedrooms / Baths,Type,Price,Size,State,Location,Housing Type,Telephone,Contact Person
+// Industry,Category,Description,Bedrooms / Baths,Price,Size,State,Location,Housing Type,Telephone,Contact Person
 export interface RealEstateLead extends BaseLead {
   Industry: "Real Estate"
   Category: RealEstateCategory
