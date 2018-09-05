@@ -1,0 +1,33 @@
+@import "~Styles/variables";
+
+.ldc-dialog-background {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 999999;
+
+  .ldc-dialog-body {
+    max-width: 500px;
+    margin: 200px auto 0;
+    padding: 25px;
+    background-color: $bg-level-2;
+    box-shadow: 0px 0px 15px 8px rgba(0, 0, 0, 0.25);
+
+    .ldc-dialog-description {
+      color: #ffffff;
+      font-size: 18px;
+    }
+
+    .ldc-dialog-selection {
+      margin-top: 25px;
+      text-align: right;
+
+      .ldc-button {
+        margin-left: 30px;
+      }
+    }
+  }
+}

@@ -7,7 +7,12 @@ import { csvUpload, csvMapping } from "Actions"
 import t from "../../utils/translate/translate"
 import Dropzone from "react-dropzone"
 import papaparse from "papaparse"
+import ConfirmationDialog from "../../components/ConfirmationDialog"
 class CSVUpload extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { showConfirmation: false }
+  }
   generalError() {
     const { errors } = this.props.csvUpload
     if (!errors) return
@@ -114,10 +119,22 @@ class CSVUpload extends React.Component {
                 loading={loading}
                 appStyle
                 onClick={() => {
-                  this.props.submit()
+                  console.log("submit clicked")
+                  this.setState({ showConfirmation: true })
                 }}
                 label={t("Submit")}
               />
+              {this.state.showConfirmation && (
+                <ConfirmationDialog
+                  description="You are about to upload new leads to be publicly traded. Are you sure you want to proceed?"
+                  confirmText="Yes"
+                  onConfirm={() => {
+                    this.setState({ showConfirmation: false })
+                    this.props.submit()
+                  }}
+                  onDismiss={() => this.setState({ showConfirmation: false })}
+                />
+              )}
             </div>
           </div>
         </div>
