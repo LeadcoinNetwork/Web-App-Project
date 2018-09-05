@@ -112,7 +112,6 @@ class AddLead extends React.Component {
               {this.state.showConfirmation && (
                 <ConfirmationDialog
                   description="You are about to upload a new lead to be publicly traded. Are you sure you want to proceed?"
-                  confirmText="Yes"
                   onConfirm={() => {
                     this.setState({ showConfirmation: false })
                     this.props.submit(this.props.fields_map)

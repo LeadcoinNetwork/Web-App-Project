@@ -13,7 +13,7 @@ const ConfirmationDialog = ({
       <div className="ldc-dialog-description">{description}</div>
       <div className="ldc-dialog-selection">
         <Button appStyle={true} onClick={onConfirm}>
-          {confirmText ? confirmText : "OK"}
+          {confirmText ? confirmText : "Yes"}
         </Button>
         <Button appStyle={true} onClick={onDismiss}>
           {dismissText ? dismissText : "Cancel"}
