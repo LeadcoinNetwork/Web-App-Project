@@ -6,8 +6,13 @@ import Checkbox from "Components/Checkbox"
 import { connect } from "react-redux"
 import { addLead } from "Actions"
 import t from "../../utils/translate/translate"
+import ConfirmationDialog from "../../components/ConfirmationDialog"
 
 class AddLead extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { showConfirmation: false }
+  }
   renderTerms() {
     const { errors } = this.props
     const error = errors["agree_to_terms"] ? "error" : ""
@@ -100,10 +105,21 @@ class AddLead extends React.Component {
                 loading={loading}
                 appStyle={true}
                 onClick={() => {
-                  this.props.submit(this.props.fields_map)
+                  this.setState({ showConfirmation: true })
                 }}
                 label={t("Submit")}
               />
+              {this.state.showConfirmation && (
+                <ConfirmationDialog
+                  description="You are about to upload a new lead to be publicly traded. Are you sure you want to proceed?"
+                  confirmText="Yes"
+                  onConfirm={() => {
+                    this.setState({ showConfirmation: false })
+                    this.props.submit(this.props.fields_map)
+                  }}
+                  onDismiss={() => this.setState({ showConfirmation: false })}
+                />
+              )}
             </div>
           </div>
         </div>

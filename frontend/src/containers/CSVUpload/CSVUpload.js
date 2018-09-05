@@ -120,7 +120,6 @@ class CSVUpload extends React.Component {
                 loading={loading}
                 appStyle
                 onClick={() => {
-                  console.log("submit clicked")
                   this.setState({ showConfirmation: true })
                 }}
                 label={t("Submit")}
