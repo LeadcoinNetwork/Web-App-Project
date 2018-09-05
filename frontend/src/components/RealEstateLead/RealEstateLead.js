@@ -17,16 +17,19 @@ const RealEstateLead = lead => {
         ${lead.constantCardOpen ? " constant-card-open" : ""}`}
       onClick={lead.toggleCardView}
     >
+      {lead.fieldsCheck.Industry && (
+        <div className="rel-industry">{lead.Industry}</div>
+      )}
       {lead.fieldsCheck.Description && (
-        <div className="rel-specification">{lead.Description}</div>
+        <div className="rel-description">{lead.Description}</div>
       )}
       {lead.fieldsCheck.lead_price && (
         <div className="rel-price">{priceString(lead.lead_price)}</div>
       )}
       <div className="rel-details-wrapper">
         <div className="rel-details">
-          {lead.fieldsCheck.Type && (
-            <div className="reld-type">{lead.Type}</div>
+          {lead.fieldsCheck.Category && (
+            <div className="reld-category">{lead.Category}</div>
           )}
           <div className="reld-date">{fromNow(lead.date)}</div>
           <div className="reld-location">
