@@ -99,14 +99,14 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     },
     getOwners: async () => {
       let sql = `
-      SELECT DISTINCT doc->>"$.ownerId" as owner
+      SELECT count(DISTINCT doc->>"$.ownerId") as cid
       FROM leadcoin.leads
       WHERE
           doc->>"$.ownerId" > 0
       AND doc->>"$.bought_from" > 0 
       ;`
       let rows = await this.sql.query(sql)
-      return rows.map(r => r.owner)
+      return rows.map(r => r.cid)
     },
     getMockLeads: async user_id => {
       let sql = `
@@ -186,7 +186,8 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         where_additions = filters
           .map(f => {
             const escaped = mysql.escape(f.val)
-            if (f.field.includes(" ")) f.field = '"' + f.field + '"'
+            if (f.field.includes(" ") || f.field.includes("/"))
+              f.field = '"' + f.field + '"'
             return `${this.fieldName}->>${mysql.escape("$." + f.field)} ${
               f.op
             } "%${escaped.slice(1, -1)}%"`
@@ -204,7 +205,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       if (user_id) query += `AND doc->>"$.ownerId" <> ${user_id} `
       if (where_additions.length > 0) query += `AND ${where_additions}`
       if (sort) {
-        query += ` ORDER BY ${this.fieldName} ->> ${mysql.escape(
+        query += ` ORDER BY ${this.fieldName}->>${mysql.escape(
           "$." + sort.sortBy,
         )} ${sort.sortOrder}`
       }
