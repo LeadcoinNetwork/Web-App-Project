@@ -118,6 +118,10 @@ window.bindShareButton = function() {
         )
         addInlineManualEmailToGoogleForms()
         clickNext()
+        setTimeout(function() {
+          console.log("here")
+          inline_manual_player.activateTopic(53879)
+        }, 1000)
       }
     }
   }, 50)
