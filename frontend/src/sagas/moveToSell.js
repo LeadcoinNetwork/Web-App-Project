@@ -1,5 +1,5 @@
-import { types } from "Actions"
-import * as actions from "Actions"
+import { types } from "../actions"
+import * as actions from "../actions"
 import { select, take, put, call } from "redux-saga/effects"
 import { push } from "react-router-redux"
 
@@ -20,11 +20,12 @@ export default function* moveToSell(api) {
     if (res.error) {
       yield put(actions.moveToSell.myLeadsMoveToSellError())
     } else {
+      yield put({ type: actions.types.MY_LEADS_CLEAR_LEADS })
+      yield put({ type: actions.types.SELL_LEADS_CLEAR_LEADS })
       yield put(actions.moveToSell.myLeadsMoveToSellSuccess())
       yield put(
         actions.app.notificationShow("Leads moved successfully", "success"),
       )
-      yield put(actions.leads.setSelectedLeads("MY_LEADS", new Set()))
     }
   }
 }

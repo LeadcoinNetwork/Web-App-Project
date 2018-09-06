@@ -1,5 +1,21 @@
 const fields = [
   {
+    key: "Industry",
+    name: "Industry",
+    sortable: true,
+    editable: true,
+    maxWidth: "90px",
+    minWidth: "90px",
+  },
+  {
+    key: "Category",
+    name: "Category",
+    sortable: true,
+    editable: true,
+    maxWidth: "100px",
+    minWidth: "100px",
+  },
+  {
     key: "date",
     name: "Date Published",
     sortable: true,
@@ -22,14 +38,6 @@ const fields = [
     editable: true,
     maxWidth: "120px",
     minWidth: "120px",
-  },
-  {
-    key: "Type",
-    name: "Type",
-    sortable: true,
-    editable: true,
-    maxWidth: "90px",
-    minWidth: "90px",
   },
   {
     key: "Price",

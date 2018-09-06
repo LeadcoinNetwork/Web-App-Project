@@ -25,6 +25,10 @@
         position: relative;
         padding-left: 50px;
 
+        &.display-lead {
+          padding-left: 80px;
+        }
+
         .thr-checkbox {
           /*rtl:ignore*/
           direction: ltr;

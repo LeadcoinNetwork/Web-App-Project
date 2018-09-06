@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
-import { leads } from "Actions"
 import { push } from "react-router-redux"
+import { leads } from "../../actions"
 import LeadsTemplate from "Containers/LeadsTemplate"
 import Select from "Components/Select"
 import TextField from "Components/TextField"
@@ -9,10 +9,6 @@ import Button from "Components/Button"
 import t from "../../utils/translate/translate"
 
 class BuyLeads extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
   buyLeads = () => {
     this.props.push("/shopping-cart")
   }
@@ -38,7 +34,6 @@ class BuyLeads extends React.Component {
       {
         value: this.buildButtonLabel(),
         onClick: this.buyLeads,
-        actionPerSelected: true,
       },
     ]
   }
@@ -63,33 +58,69 @@ class BuyLeads extends React.Component {
         <h1>{t("Buy Leads")}</h1>
         <h3>{t("Purchase hot leads for your business.")}</h3>
         <div className="bl-filters">
-          <Select className="industry">
-            <option>{t("Choose your industry")}</option>
-            <option>{t("Real Estate")}</option>
-            <option disabled>{t("Crypto")}</option>
-            <option disabled>{t("Insurance")}</option>
-            <option disabled>{t("Loans")}</option>
+          <Select
+            className="industry"
+            value={this.props.leads.filter.industry}
+            onChange={e => {
+              const filter = this.props.leads.filter
+              this.props.handleFilter({
+                ...filter,
+                industry: e.target.value,
+              })
+            }}
+          >
+            <option value="All">{t("Choose your industry")}</option>
+            <option value="Real Estate">{t("Real Estate")}</option>
+            <option value="Crypto" disabled>
+              {t("Crypto")}
+            </option>
+            <option value="Insurance" disabled>
+              {t("Insurance")}
+            </option>
+            <option value="Loans" disabled>
+              {t("Loans")}
+            </option>
           </Select>
-          <Select className="category">
-            <option>{t("Choose your category")}</option>
-            <option>{t("Buy")}</option>
-            <option disabled>{t("Sell")}</option>
-            <option disabled>{t("Looking to rent")}</option>
-            <option disabled>{t("Properties for rent")}</option>
+          <Select
+            className="category"
+            value={this.props.leads.filter.category}
+            onChange={e => {
+              const filter = this.props.leads.filter
+              this.props.handleFilter({
+                ...filter,
+                category: e.target.value,
+              })
+            }}
+          >
+            <option value="All">{t("Choose your category")}</option>
+            <option value="Buy" disabled>
+              {t("Buy")}
+            </option>
+            <option value="Sell">{t("Sell")}</option>
+            <option value="Looking to rent" disabled>
+              {t("Looking to rent")}
+            </option>
+            <option value="Properties for rent">
+              {t("Properties for rent")}
+            </option>
           </Select>
           <TextField
             appStyle
             className="search_bar"
             placeholder={t("Search...")}
-            value={this.props.leads.search}
+            value={this.props.leads.filter.search}
             onChange={e => {
-              this.props.handleSearch(e.target.value)
+              const filter = this.props.leads.filter
+              this.props.handleFilter({
+                ...filter,
+                search: e.target.value,
+              })
             }}
           />
           <Button
             className="search"
             onClick={() => {
-              this.setState({ showOnlyAfterSearch: true })
+              this.props.searchClicked()
               this.props.fetchLeads()
             }}
             appStyle={true}
@@ -97,13 +128,12 @@ class BuyLeads extends React.Component {
             {t("Search")}
           </Button>
         </div>
-        {this.state.showOnlyAfterSearch && (
+        {this.props.leads.searchClicked && (
           <LeadsTemplate
             {...this.props}
-            buyLeads={() => {
-              this.buyLeads()
-            }}
             pageName="buy"
+            constantCardOpen={false}
+            isSelectable={true}
             getButtons={this.getButtons}
           />
         )}
@@ -121,10 +151,11 @@ export default connect(
   mapStateToProps,
   {
     push: push,
-    handleSearch: new_value => leads.searchChange("BUY_LEADS", new_value),
+    handleFilter: newFilter => leads.filterChange("BUY_LEADS", newFilter),
     fetchLeads: params => leads.fetchLeads("BUY_LEADS", params),
     setSelectedLeads: selectedLeads =>
       leads.setSelectedLeads("BUY_LEADS", selectedLeads),
     toggelCardView: index => leads.toggelCardView("BUY_LEADS", index),
+    searchClicked: () => leads.searchClicked("BUY_LEADS"),
   },
 )(BuyLeads)

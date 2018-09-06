@@ -9,7 +9,7 @@ const chance = Chance()
 
 import * as auth from "../models/user-auth/user-auth"
 
-import { Lead } from "../models/leads/types"
+import { Lead, Industry, Categories } from "../models/leads/types"
 
 const authOptions = {
   session: false,
@@ -33,8 +33,8 @@ export function start({
     for (let i = 1; i < count + 1; i++) {
       let owner = Math.floor(count / i)
       let status = await appLogic.models.leads.insertLead({
-        "Lead Type": "realestate",
-        Type: "Sell",
+        Industry: "Real Estate",
+        Category: "Sell",
         "Bedrooms/Baths": "2BR / 2BA",
         date: new Date().valueOf(),
         Size: chance.integer({ min: 1, max: 20 }),
@@ -62,7 +62,7 @@ export function start({
     }
     return rc
   }
-  // Description,Bedrooms / Baths,Type,Price,Size,State,Location,Housing Type,Telephone,Contact Person
+  // Industry,Category,Description,Bedrooms / Baths,Price,Size,State,Location,Housing Type,Telephone,Contact Person
 
   async function mock_leads(req, res, next) {
     ;(async () => {
@@ -443,22 +443,35 @@ export function start({
     passport.authenticate("jwt", authOptions),
     async (req, res, next) => {
       ;(async () => {
-        let { search, sortBy, page, limit, sortOrder } = req.query
+        const { sortBy, page, limit, sortOrder } = req.query
+        const {
+          industry,
+          category,
+          search,
+        }: {
+          industry: Industry
+          category: Categories
+          search: string
+        } = req.query.filter
         const { user } = req
         let _sort = {
           sortBy: sortBy && sortBy != "id" ? sortBy : "date",
           sortOrder: sortOrder || "DESC",
         }
-        let f
+        let filters = { search: null, industry: null, category: null }
         if (search) {
-          f = ["Bedrooms/Baths", "Description", "Location"].map(field => {
-            return {
-              field,
-              op: "LIKE",
-              val: search,
-            }
-          })
+          filters.search = ["Bedrooms/Baths", "Description", "Location"].map(
+            field => {
+              return {
+                field,
+                op: "LIKE",
+                val: search,
+              }
+            },
+          )
         }
+        filters.industry = industry === "All" ? "" : industry
+        filters.category = category === "All" ? "" : category
         let _limit = {
           start: parseInt(page || 0) * parseInt(limit || 50),
           offset: limit || 50,
@@ -467,7 +480,7 @@ export function start({
         await appLogic.leads
           .getAllLeads({
             sort: _sort,
-            filters: f,
+            filters,
             limit: _limit,
             user_id: user.id,
           })

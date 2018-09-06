@@ -22,6 +22,10 @@
       width: 100px;
     }
 
+    .d-lead_price {
+      text-align: right;
+    }
+
     tbody tr:nth-child(even) {
       background-color: $table-background-even;
     }
@@ -30,8 +34,7 @@
     }
 
     td {
-      padding-top: 10px;
-      padding-left: 10px;
+      padding: 8px;
     }
   }
 
