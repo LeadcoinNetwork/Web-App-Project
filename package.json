@@ -9,7 +9,6 @@
   "scripts": {
     "cypress:open": "cypress open",
     "precommit": "pretty-quick --staged",
-    "cypress:open": "cypress open",
     "prettier-all": "prettier --write **/*.js"
   },
   "version": "1.0.0",
