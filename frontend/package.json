@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "cypress:open": "cypress open",
     "start": "webpack-dev-server --hot --config webpack.dev.js --profile ",
     "build": "./node_modules/.bin/webpack --config webpack.prod.js --profile",
     "webpack-stats": "./node_modules/.bin/webpack --profile --config webpack.prod.js --json >stats.json",
@@ -154,6 +155,7 @@
     }
   },
   "devDependencies": {
-    "cross-env": "^5.2.0"
+    "cross-env": "^5.2.0",
+    "cypress": "^3.1.0"
   }
 }

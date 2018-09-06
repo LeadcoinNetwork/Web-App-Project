@@ -1,34 +1,27 @@
-import { types } from "Actions"
-import * as actions from "Actions"
+import * as _ from "lodash"
 import { select, take, put, call } from "redux-saga/effects"
 import { push } from "react-router-redux"
+import { types } from "../actions"
+import * as actions from "../actions"
 
 import API from "../api/index"
 
 /**
  * @param api {API} - this is this paramters
  */
-let last_search
+let last_filter = {}
 export default function* buyLeads(api) {
   while (true) {
-    let { page, limit, sortBy, category, search } = yield select(
-      state => state.buyLeads,
-    )
-    console.log(search)
-    if (search) {
-      if (last_search == search) {
-        // do nothing
-      } else {
-        last_search = search
-        yield put(actions.leads.clearLeads())
-      }
+    let { page, limit, sortBy, filter } = yield select(state => state.buyLeads)
+    if (!_.isEqual(filter, last_filter)) {
+      last_filter = filter
+      yield put(actions.leads.clearLeads("BUY_LEADS"))
     }
     let res = yield api.leads.buyLeadsGetList({
       page,
       limit,
       sortBy,
-      category,
-      search,
+      filter,
     })
 
     if (res.error) {

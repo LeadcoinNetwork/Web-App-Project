@@ -39,7 +39,6 @@ const initialState = {
   limit: 20,
   total: 0,
   fullyLoaded: false,
-  category: "realEstate",
   country: "US",
   state: "NY",
   location: "new york city",
@@ -56,7 +55,12 @@ const initialState = {
   size_max: null,
   floor_min: null,
   floor_max: null,
-  search: null,
+  filter: {
+    industry: "All",
+    category: "All",
+    search: "",
+  },
+  searchClicked: false,
   error: "",
   loading: true,
   selected: new Set(),
@@ -65,17 +69,26 @@ const initialState = {
 const createReducerFor = namespace => {
   return (state = initialState, action) => {
     switch (action.type) {
-      case types[namespace + "_SEARCH_CHANGE"]:
+      case types[namespace + "_FILTER_CHANGE"]:
         return {
           ...state,
-          search: action.payload,
+          filter: action.payload,
         }
-
+      case types[namespace + "_SEARCH_CLICKED"]:
+        return {
+          ...state,
+          searchClicked: true,
+        }
       case types["CLEAR_ALL_LEADS"]:
       case types[namespace + "_CLEAR_LEADS"]:
         return {
           ...state,
           list: [],
+          filter: {
+            industry: "All",
+            category: "All",
+            search: "",
+          },
           selected: new Set(),
         }
       case types[namespace + "_FETCH_LEADS"]:
