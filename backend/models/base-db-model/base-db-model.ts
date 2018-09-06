@@ -187,7 +187,8 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         search_additions = filters.search
           .map(f => {
             const escaped = mysql.escape(f.val)
-            if (f.field.includes(" ")) f.field = '"' + f.field + '"'
+            if (f.field.includes(" ") || f.field.includes("/"))
+              f.field = '"' + f.field + '"'
             return `${this.fieldName}->>${mysql.escape("$." + f.field)} ${
               f.op
             } "%${escaped.slice(1, -1)}%"`
