@@ -6,8 +6,16 @@ import { leads, moveToSell } from "Actions"
 import displayLead from "../../actions/displayLead"
 import { push } from "react-router-redux"
 import DisplayLead from "../DisplayLead"
+import ConfirmationDialog from "../../components/ConfirmationDialog"
 
 class MyLeads extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      showConfirmation: false,
+      isDisplayingLead: false,
+    }
+  }
   moveLeadsToSell = () => {
     this.props.moveToSell()
   }
@@ -32,7 +40,7 @@ class MyLeads extends React.Component {
     return [
       {
         value: this.buildButtonLabel(),
-        onClick: this.moveLeadsToSell,
+        onClick: () => this.setState({ showConfirmation: true }),
       },
     ]
   }
@@ -79,6 +87,16 @@ class MyLeads extends React.Component {
             isSelectable={true}
             getButtons={this.getButtons}
             displayLead={this.displayLead.bind(this)}
+          />
+        )}
+        {this.state.showConfirmation && (
+          <ConfirmationDialog
+            description="You are about to move the selected leads to be publicly traded. Are you sure you want to proceed?"
+            onConfirm={() => {
+              this.setState({ showConfirmation: false })
+              this.moveLeadsToSell()
+            }}
+            onDismiss={() => this.setState({ showConfirmation: false })}
           />
         )}
       </>
