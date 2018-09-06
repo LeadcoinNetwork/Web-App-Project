@@ -7,6 +7,7 @@ import { connect } from "react-redux"
 import { addLead } from "Actions"
 import t from "../../utils/translate/translate"
 import ConfirmationDialog from "../../components/ConfirmationDialog"
+import { push } from "react-router-redux"
 
 class AddLead extends React.Component {
   constructor(props) {
@@ -67,6 +68,18 @@ class AddLead extends React.Component {
     }
     return (
       <div className="add_lead">
+        <div className="back-wrapper">
+          <div
+            className="back"
+            onClick={() => {
+              this.props.clear()
+              this.props.push("/sell-leads")
+            }}
+          >
+            <div className="back-arrow" />
+            <div className="back-text">Back</div>
+          </div>
+        </div>
         <h1>{t("add lead")}</h1>
         <h3>
           {t("Add a new lead for sale by filling out a simple web form.")}
@@ -136,5 +149,6 @@ export default connect(
     handleChange: addLead.addLeadHandleFormChange,
     submit: addLead.addLeadSubmitForm,
     clear: addLead.addLeadClearForm,
+    push,
   },
 )(AddLead)

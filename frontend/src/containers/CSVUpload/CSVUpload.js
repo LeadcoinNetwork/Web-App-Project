@@ -3,11 +3,12 @@ import Button from "Components/Button"
 import Select from "Components/Select"
 import TextField from "Components/TextField"
 import { connect } from "react-redux"
-import { csvUpload, csvMapping } from "Actions"
+import { csvUpload, csvMapping } from "../../actions"
 import t from "../../utils/translate/translate"
 import Dropzone from "react-dropzone"
 import papaparse from "papaparse"
 import ConfirmationDialog from "../../components/ConfirmationDialog"
+import { push } from "react-router-redux"
 class CSVUpload extends React.Component {
   constructor(props) {
     super(props)
@@ -225,7 +226,10 @@ class CSVUpload extends React.Component {
       )
     })
   }
-
+  componentWillUnmount() {
+    this.props.clear()
+    this.props.reset()
+  }
   render() {
     let fileLabel = t("Choose File")
     const { finished, file } = this.props.csvUpload
@@ -244,6 +248,17 @@ class CSVUpload extends React.Component {
     }
     return (
       <div className="csvUpload">
+        <div className="back-wrapper">
+          <div
+            className="back"
+            onClick={() => {
+              this.props.push("/sell-leads")
+            }}
+          >
+            <div className="back-arrow" />
+            <div className="back-text">Back</div>
+          </div>
+        </div>
         <h1>{t("Upload CSV File")}</h1>
         <div>
           {/* <Button appStyle secondary label={fileLabel}> */}
@@ -308,6 +323,8 @@ export default connect(
     handleMapChange: csvMapping.csvMappingMapChange,
     handleErrors: csvMapping.csvMappingError,
     clear: csvMapping.csvMappingClearForm,
+    reset: csvUpload.csvUploadReset,
     submit: csvUpload.csvUploadSubmit,
+    push,
   },
 )(CSVUpload)
