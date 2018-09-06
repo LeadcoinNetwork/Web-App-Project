@@ -5,7 +5,6 @@ const initialState = {
     private: [],
     public: [],
   },
-  batch_id: null,
   file_fields: [],
   fields_map: {},
   errors: [],
