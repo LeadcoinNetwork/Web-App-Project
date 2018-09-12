@@ -5,7 +5,6 @@ const initialState = {
     private: [],
     public: [],
   },
-  batch_id: null,
   file_fields: [],
   fields_map: {},
   errors: [],
@@ -45,12 +44,7 @@ export default function(state = initialState, action) {
       }
 
     case types.CSV_MAPPING_CLEAR_FORM:
-      return {
-        ...state,
-        fields_map: initialState.fields_map,
-        lead_price: initialState.lead_price,
-        agree_to_terms: initialState.agree_to_terms,
-      }
+      return initialState
 
     case types.CSV_MAPPING_FORM_HANDLE_CHANGE:
       return {

@@ -25,6 +25,37 @@
     margin: auto;
     padding: 0 30px 80px;
 
+    .back-wrapper {
+      .back {
+        display: inline-block;
+        cursor: pointer;
+        margin-bottom: 24px;
+        color: $bg-level-3;
+
+        &:hover {
+          opacity: 0.8;
+        }
+
+        .back-arrow,
+        .back-text {
+          display: inline-block;
+          height: 13px;
+        }
+
+        .back-arrow {
+          width: 13px;
+          border-left: 1px solid $bg-level-3;
+          border-bottom: 1px solid $bg-level-3;
+          transform: rotateZ(45deg);
+        }
+
+        .back-text {
+          position: relative;
+          font-size: 20px;
+        }
+      }
+    }
+
     h1 {
       font-size: 30px;
       font-weight: 300;

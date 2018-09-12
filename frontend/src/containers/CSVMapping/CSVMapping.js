@@ -83,13 +83,8 @@ class CSVMapping extends React.Component {
   }
 
   render() {
-    const { db_fields, batch_id } = this.props
-    if (!batch_id)
-      return (
-        <div className="fields_mapper">
-          <div>{t("LOADING")}</div>
-        </div>
-      )
+    const { db_fields } = this.props
+
     const price_element = this.renderPriceElement()
     const terms = this.renderTerms()
     return (

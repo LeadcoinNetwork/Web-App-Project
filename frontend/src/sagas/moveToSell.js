@@ -20,8 +20,9 @@ export default function* moveToSell(api) {
     if (res.error) {
       yield put(actions.moveToSell.myLeadsMoveToSellError())
     } else {
-      yield put({ type: actions.types.MY_LEADS_CLEAR_LEADS })
-      yield put({ type: actions.types.SELL_LEADS_CLEAR_LEADS })
+      yield put(actions.leads.loadingStart("MY_LEADS"))
+      yield put(actions.leads.clearLeads("MY_LEADS"))
+      yield put(actions.leads.clearLeads("SELL_LEADS"))
       yield put(actions.moveToSell.myLeadsMoveToSellSuccess())
       yield put(
         actions.app.notificationShow("Leads moved successfully", "success"),
