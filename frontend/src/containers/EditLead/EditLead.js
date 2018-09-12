@@ -34,24 +34,22 @@ class EditLead extends React.Component {
 
   renderFields(fields) {
     const { errors, values, loading } = this.props
-    return fields.map(f => {
-      const isError = errors[f.key] ? "error" : ""
+    return Object.keys(fields).map(f => {
+      const isError = errors[f] ? "error" : ""
       return (
-        <div key={f.key} className={isError + " flexed line"}>
+        <div key={f} className={isError + " flexed line"}>
           <div className="fieldLabel">
-            {t(f.name)}
-            {f.key === "lead_price" && (
-              <span className="asterisk-required">*</span>
-            )}
+            {t(f)}
+            {f === "lead_price" && <span className="asterisk-required">*</span>}
           </div>
           <div className="fieldValue">
             <TextField
               disabled={loading}
               appStyle={true}
-              placeholder={t(f.name)}
-              value={values[f.key]}
+              placeholder={t(f)}
+              value={fields[f]}
               onChange={e => {
-                this.props.handleChange(f.key, e.target.value)
+                this.props.handleChange(f, e.target.value)
               }}
             />
           </div>
@@ -61,13 +59,14 @@ class EditLead extends React.Component {
   }
 
   render() {
-    const { db_fields, loading, errors } = this.props
-    if (!db_fields.private.length) {
+    const { private_fields, public_fields, loading, errors } = this.props
+    console.log({ private_fields, public_fields })
+    if (Object.keys(private_fields) === 0) {
       return <div>{t("Loading...")}</div>
     }
     return (
-      <div className="add_lead">
-        <h1>{t("add lead")}</h1>
+      <div className="edit_lead">
+        <h1>{t("edit lead")}</h1>
         <h3>
           {t("Add a new lead for sale by filling out a simple web form.")}
         </h3>
@@ -83,13 +82,13 @@ class EditLead extends React.Component {
                 )}
               </div>
             </div>
-            <div className="fields">{this.renderFields(db_fields.private)}</div>
+            <div className="fields">{this.renderFields(private_fields)}</div>
           </div>
           <div className="public">
             <div className="help_text">
               <div className="header bigger">{t("Public Fields")}</div>
             </div>
-            <div className="fields">{this.renderFields(db_fields.public)}</div>
+            <div className="fields">{this.renderFields(public_fields)}</div>
           </div>
           {this.renderTerms()}
           {errors && (
@@ -111,7 +110,7 @@ class EditLead extends React.Component {
               />
               {this.state.showConfirmation && (
                 <ConfirmationDialog
-                  description="You are about to upload a new lead to be publicly traded. Are you sure you want to proceed?"
+                  description="Are you sure you want to proceed?"
                   onConfirm={() => {
                     this.setState({ showConfirmation: false })
                     this.props.submit(this.props.fields_map)
@@ -137,4 +136,4 @@ export default connect(
     submit: editLead.editLeadSubmitForm,
     clear: editLead.editLeadClearForm,
   },
-)(AddLead)
+)(EditLead)

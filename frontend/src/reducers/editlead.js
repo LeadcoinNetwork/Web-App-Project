@@ -1,34 +1,49 @@
 import { types } from "../actions"
 import fields from "./fields-data"
 
-const initialValues = fields.reduce((values, field) => {
-  values[field.key] = ""
-  return values
-}, {})
-
-const fields_not_for_display = ["active"]
 const initialState = {
-  db_fields: {
-    private: fields
-      .filter(field => field.editable)
-      .filter(field => field.private)
-      .map(field => ({ key: field.key, name: field.name }))
-      .filter(f => !fields_not_for_display.includes(f)),
-    public: fields
-      .filter(field => field.editable)
-      .filter(field => !field.private)
-      .map(field => ({ key: field.key, name: field.name }))
-      .filter(f => !fields_not_for_display.includes(f.key)),
-  },
-  values: initialValues,
+  private_fields: {},
+  public_fields: {},
   errors: {},
   agree_to_terms: false,
   loading: false,
 }
 
+const contact_info_fields = ["Contact Person", "Telephone", "Email"]
+const lead_fields = [
+  "Description",
+  "Size",
+  "Housing Type",
+  "State",
+  "Price",
+  "Type",
+  "Bedrooms/Baths",
+  "Location",
+]
+
+const seperateLead = lead => {
+  let priv = {},
+    pub = {}
+  contact_info_fields.forEach(f => {
+    if (lead[f]) {
+      priv[f] = lead[f]
+    }
+  })
+  lead_fields.forEach(f => {
+    if (lead[f]) {
+      pub[f] = lead[f]
+    }
+  })
+  return [priv, pub]
+}
+
 let newErrors = null
 export default function(state = initialState, action) {
   switch (action.type) {
+    case types.EDIT_LEAD_EDIT_LEAD:
+      const [private_fields, public_fields] = seperateLead(action.lead)
+      return { ...state, private_fields, public_fields }
+
     case types.EDIT_LEAD_FORM_ERROR:
       return {
         ...state,
@@ -60,12 +75,7 @@ export default function(state = initialState, action) {
       }
 
     case types.EDIT_LEAD_CLEAR_FORM:
-      return {
-        ...state,
-        values: initialValues,
-        errors: {},
-        agree_to_terms: state.agree_to_terms,
-      }
+      return initialState
 
     case types.EDIT_LEAD_HANDLE_FORM_CHANGE:
       newErrors = { ...state.errors }

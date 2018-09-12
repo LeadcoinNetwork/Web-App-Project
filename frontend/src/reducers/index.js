@@ -19,6 +19,7 @@ import dispute from "./dispute"
 import csvMapping from "./csvMapping"
 import csvUpload from "./csvUpload"
 import addLead from "./addLead"
+import editLead from "./editlead"
 import fields from "./fields"
 import translate from "./translate"
 import withdraw from "./withdraw"
@@ -47,6 +48,7 @@ const rootReducer = combineReducers({
   dispute,
   csvMapping,
   csvUpload,
+  editLead,
   addLead,
   fields,
   translate,

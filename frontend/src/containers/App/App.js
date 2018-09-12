@@ -16,6 +16,7 @@ import UploadForm from "containers/UploadForm"
 import CSVUpload from "Containers/CSVUpload"
 import CSVMapping from "Containers/CSVMapping"
 import AddLead from "Containers/AddLead"
+import EditLead from "Containers/EditLead"
 import DisplayLead from "Containers/DisplayLead"
 import Dispute from "Containers/Dispute"
 import Checkout from "Containers/Checkout"
@@ -69,6 +70,7 @@ class App extends React.Component {
               {/* <Route path="/uploadform" component={UploadForm} /> */}
               <Route path="/csv-upload" component={CSVUpload} />
               <Route path="/csv-mapping" component={CSVMapping} />
+              <Route path="/edit-lead" component={EditLead} />
               <Route path="/add-lead" component={AddLead} />
               <Route path="/display-lead" component={DisplayLead} />
               <Route path="/shopping-cart" component={Checkout} />

@@ -1,6 +1,12 @@
 import types from "./types"
 
 export default {
+  editLead(lead) {
+    return {
+      type: types.EDIT_LEAD_EDIT_LEAD,
+      lead,
+    }
+  },
   editLeadAddError(name, value) {
     return {
       type: types.EDIT_LEAD_FORM_ERROR,

@@ -16,6 +16,30 @@ storiesOf("Containers/EditLead", module)
       path: "/edit-lead",
       loggedIn: true,
     })
+    const mock_lead = {
+      id: 134917,
+      lead_price: 10,
+      ownerId: 8434,
+      date: 1534322606144,
+      lead_type: "realestate",
+      active: true,
+      forSale: true,
+      bought_from: 0,
+      "Contact Person": "Erez",
+      Telephone: "(225)65734",
+      Email: "whatisthisemail@gmail.com",
+      Description: "Beautiful Cattle and Horse Country Farm Approx 125 Acres",
+      "Bedrooms/Baths": "2BD / 2BR",
+      Type: "Rent",
+      Price: "10,500",
+      Size: "127",
+      State: "Ohio",
+      Location: "Akron",
+      "Housing Type": "apartment",
+    }
+
+    store.dispatch(actions.editLead.editLead(mock_lead))
+
     return story
   })
   .add("EditLead - Connect to real saga", () => {
