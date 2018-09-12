@@ -1,0 +1,95 @@
+@import "~Styles/variables";
+
+.add_lead {
+  padding: 10px;
+  .personal {
+    display: flex;
+    padding-bottom: 10px;
+    border-bottom: solid 1px black;
+  }
+  .public {
+    display: flex;
+    padding-top: 10px;
+  }
+  .help_text {
+    width: 250px;
+  }
+  .field_submit {
+    margin-top: 5px;
+    .twothirds {
+      width: 242px;
+    }
+  }
+  .header {
+    &.bigger {
+      padding-top: 5px;
+      margin-top: 10px;
+      font-weight: 500;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    &.smaller {
+      font-weight: 300;
+      font-size: 16px;
+    }
+  }
+  .flexed {
+    width: 510px;
+    justify-content: flex-end;
+    display: flex;
+  }
+
+  .line {
+    &.error .fieldValue input {
+      border: $ldc-error-color solid 1px;
+    }
+
+    .fieldValue {
+      width: 240px;
+    }
+
+    .fieldLabel {
+      width: 140px;
+    }
+
+    margin: 10px 15px;
+    height: 50px;
+    line-height: 50px;
+    justify-content: flex-start;
+
+    input::placeholder {
+      text-transform: capitalize;
+    }
+  }
+  .agree_to_terms {
+    margin: 20px 0;
+
+    &.error {
+      color: $ldc-error-color;
+    }
+  }
+  .errors {
+    color: $ldc-error-color;
+    font-size: 18px;
+    padding: 5px;
+    width: 300px;
+  }
+}
+
+@media (max-width: 760px) {
+  .add_lead {
+    .personal,
+    .public {
+      display: block;
+      .line {
+        height: unset;
+        line-height: unset;
+        width: unset;
+        display: block;
+      }
+    }
+    .field_submit.flexed {
+      width: unset;
+    }
+  }
+}
