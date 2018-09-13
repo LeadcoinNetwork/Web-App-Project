@@ -2,10 +2,11 @@ import React from "react"
 import { connect } from "react-redux"
 import { push } from "react-router-redux"
 import { leads } from "../../actions"
-import LeadsTemplate from "Containers/LeadsTemplate"
-import Select from "Components/Select"
-import TextField from "Components/TextField"
-import Button from "Components/Button"
+import LeadsTemplate from "../LeadsTemplate"
+import IndustryFilters from "../../components/IndustryFilters"
+import Select from "../../components/Select"
+import TextField from "../../components/TextField"
+import Button from "../../components/Button"
 import t from "../../utils/translate/translate"
 
 class BuyLeads extends React.Component {
@@ -127,6 +128,11 @@ class BuyLeads extends React.Component {
           >
             {t("Search")}
           </Button>
+          <IndustryFilters
+            filters={this.props.leads.filter.industryFilters}
+            show={this.props.leads.showIndustryFilters}
+            onShowClick={this.props.showFiltersClick}
+          />
         </div>
         {this.props.leads.searchClicked && (
           <LeadsTemplate
@@ -157,5 +163,6 @@ export default connect(
       leads.setSelectedLeads("BUY_LEADS", selectedLeads),
     toggelCardView: index => leads.toggelCardView("BUY_LEADS", index),
     searchClicked: () => leads.searchClicked("BUY_LEADS"),
+    showFiltersClick: () => leads.showFiltersClick("BUY_LEADS"),
   },
 )(BuyLeads)

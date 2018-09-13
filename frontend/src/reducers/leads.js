@@ -1,4 +1,42 @@
 import types from "../actions/types"
+import statesData from "./states-data"
+
+const RealEstateFilters = [
+  {
+    name: "Date",
+    type: "date",
+  },
+  {
+    name: "State",
+    type: "select",
+    data: statesData,
+  },
+  {
+    name: "Price",
+    type: "range",
+  },
+  {
+    name: "Size",
+    type: "range",
+  },
+  {
+    name: "Housing Type",
+    type: "select",
+    options: [
+      "Apartment",
+      "House",
+      "Cottage",
+      "Flat",
+      "Studio",
+      "Farm",
+      "Building",
+      "Roof-Top",
+      "Gallery",
+      "Office",
+      "Warehouse",
+    ],
+  },
+]
 
 const initialState = {
   list: [],
@@ -59,8 +97,10 @@ const initialState = {
     industry: "All",
     category: "All",
     search: "",
+    industryFilters: null,
   },
   searchClicked: false,
+  showIndustryFilters: false,
   error: "",
   loading: true,
   selected: new Set(),
@@ -70,9 +110,32 @@ const createReducerFor = namespace => {
   return (state = initialState, action) => {
     switch (action.type) {
       case types[namespace + "_FILTER_CHANGE"]:
+        let filter = action.payload
+        switch (filter.industry) {
+          case "Real Estate":
+            filter.industryFilters = RealEstateFilters
+            break
+          default:
+            filter.industryFilters = null
+        }
         return {
           ...state,
-          filter: action.payload,
+          filter,
+        }
+      case types[namespace + "_SHOW_FILTERS_CLICK"]:
+        return {
+          ...state,
+          showIndustryFilters: !state.showIndustryFilters,
+        }
+      case types[namespace + "_SHOW_FILTERS"]:
+        return {
+          ...state,
+          showIndustryFilters: true,
+        }
+      case types[namespace + "_HIDE_FILTERS"]:
+        return {
+          ...state,
+          showIndustryFilters: false,
         }
       case types[namespace + "_SEARCH_CLICKED"]:
         return {
@@ -88,6 +151,7 @@ const createReducerFor = namespace => {
             industry: "All",
             category: "All",
             search: "",
+            industryFilters: null,
           },
           selected: new Set(),
         }

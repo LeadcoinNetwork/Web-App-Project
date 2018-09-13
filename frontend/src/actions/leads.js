@@ -17,6 +17,21 @@ export default {
       payload: newFilter,
     }
   },
+  showFiltersClick(namespace) {
+    return {
+      type: types[namespace + "_SHOW_FILTERS_CLICK"],
+    }
+  },
+  showFilters(namespace) {
+    return {
+      type: types[namespace + "_SHOW_FILTERS"],
+    }
+  },
+  hideFilters(namespace) {
+    return {
+      type: types[namespace + "_HIDE_FILTERS"],
+    }
+  },
   searchClicked(namespace) {
     return {
       type: types[namespace + "_SEARCH_CLICKED"],
