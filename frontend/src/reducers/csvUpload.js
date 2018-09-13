@@ -1,7 +1,6 @@
 import { types } from "../actions"
 
 const initialState = {
-  batch_id: 0,
   loading: false,
   file: "",
   errors: {},

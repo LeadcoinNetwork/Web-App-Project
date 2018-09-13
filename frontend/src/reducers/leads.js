@@ -91,6 +91,16 @@ const createReducerFor = namespace => {
           },
           selected: new Set(),
         }
+      case types[namespace + "_LOADING_START"]:
+        return {
+          ...state,
+          loading: true,
+        }
+      case types[namespace + "_LOADING_END"]:
+        return {
+          ...state,
+          loading: false,
+        }
       case types[namespace + "_FETCH_LEADS"]:
         return {
           ...state,

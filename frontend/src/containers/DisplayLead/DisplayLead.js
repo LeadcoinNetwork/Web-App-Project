@@ -25,22 +25,22 @@ class DisplayLead extends React.Component {
     }
     return (
       <div className="display_lead">
-        {!noheader && <h1>{t("Lead Details")}</h1>}
-        <div className="controls field_submit flexed">
-          <div>
-            <Button
-              appStyle={true}
-              onClick={() => {
-                if (this.props.backFunction) {
-                  this.props.backFunction()
-                } else {
-                  this.props.goBack()
-                }
-              }}
-              label={t("Back")}
-            />
+        <div className="back-wrapper">
+          <div
+            className="back"
+            onClick={() => {
+              if (this.props.backFunction) {
+                this.props.backFunction()
+              } else {
+                this.props.goBack()
+              }
+            }}
+          >
+            <div className="back-arrow" />
+            <div className="back-text">Back</div>
           </div>
         </div>
+        {!noheader && <h1>{t("Lead Details")}</h1>}
         <div className="main_container">
           <div className="personal">
             <div className="help_text">

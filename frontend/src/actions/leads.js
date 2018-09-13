@@ -22,6 +22,16 @@ export default {
       type: types[namespace + "_SEARCH_CLICKED"],
     }
   },
+  loadingStart(namespace) {
+    return {
+      type: types[namespace + "_LOADING_START"],
+    }
+  },
+  loadingEnd(namespace) {
+    return {
+      type: types[namespace + "_LOADING_END"],
+    }
+  },
   fetchLeads(namespace, params) {
     return {
       type: types[namespace + "_FETCH_LEADS"],
