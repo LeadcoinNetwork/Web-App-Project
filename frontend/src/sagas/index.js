@@ -9,6 +9,8 @@ import snackbar from "./snackbar"
 import emailConfirmation from "./emailConfirmation"
 import csvMapping from "./csvMapping"
 import completeRegistration from "./completeRegistration"
+import editLead from "./editLead"
+import loadLeadForEdit from "./loadLeadForEdit"
 import addLead from "./addLead"
 import redirectIfNotAllowed from "./redirectIfNotAllowed"
 import sellLeads from "./sellLeads"
@@ -47,6 +49,8 @@ export default function* rootSaga() {
     login,
     forgotPassword,
     addLead,
+    editLead,
+    loadLeadForEdit,
     completeRegistration,
     emailConfirmation,
     changePassword,

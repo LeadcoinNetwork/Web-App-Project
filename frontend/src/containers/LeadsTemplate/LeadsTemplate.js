@@ -137,6 +137,7 @@ class LeadsTemplate extends React.Component {
       isSelectable,
       constantCardOpen,
       displayLead,
+      editLead,
     } = this.props
 
     let fieldsCheck = {}
@@ -200,6 +201,7 @@ class LeadsTemplate extends React.Component {
                   selected={leads.selected}
                   isSelectable={isSelectable}
                   isSearchResults={pageName === "buy" ? true : false}
+                  editLead={editLead}
                   displayLead={displayLead}
                 />
               )

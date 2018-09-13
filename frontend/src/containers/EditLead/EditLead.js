@@ -7,6 +7,7 @@ import { connect } from "react-redux"
 import { editLead } from "Actions"
 import t from "../../utils/translate/translate"
 import ConfirmationDialog from "../../components/ConfirmationDialog"
+import { push } from "react-router-redux"
 
 class EditLead extends React.Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class EditLead extends React.Component {
     this.state = { showConfirmation: false }
   }
   renderTerms() {
-    const { errors } = this.props
+    const { errors, agree_to_terms } = this.props.editLead
     const error = errors["agree_to_terms"] ? "error" : ""
     return (
       <div className={error + " agree_to_terms twothirds"}>
@@ -22,7 +23,7 @@ class EditLead extends React.Component {
           label={t("I AGREE TO THE TERMS")}
           name="agree_to_terms"
           id="terms_checkbox"
-          checked={this.props.agree_to_terms}
+          checked={agree_to_terms}
           onClick={e => {
             this.props.agreeToTerms(e.target.checked)
           }}
@@ -33,7 +34,7 @@ class EditLead extends React.Component {
   }
 
   renderFields(fields) {
-    const { errors, values, loading } = this.props
+    const { errors, values, loading } = this.props.editLead
     return Object.keys(fields).map(f => {
       const isError = errors[f] ? "error" : ""
       return (
@@ -58,14 +59,40 @@ class EditLead extends React.Component {
     })
   }
 
+  componentDidMount() {
+    const { id } = this.props.match.params
+    if (id) {
+      this.props.getLead(id)
+    }
+  }
+
   render() {
-    const { private_fields, public_fields, loading, errors } = this.props
-    console.log({ private_fields, public_fields })
+    const {
+      private_fields,
+      public_fields,
+      loading,
+      errors,
+    } = this.props.editLead
     if (Object.keys(private_fields) === 0) {
+      if (id) {
+        console.log(this.props.buyLeads)
+      }
       return <div>{t("Loading...")}</div>
     }
     return (
       <div className="edit_lead">
+        <div className="back-wrapper">
+          <div
+            className="back"
+            onClick={() => {
+              this.props.clear()
+              this.props.push("/my-leads")
+            }}
+          >
+            <div className="back-arrow" />
+            <div className="back-text">Back</div>
+          </div>
+        </div>
         <h1>{t("edit lead")}</h1>
         <h3>
           {t("Add a new lead for sale by filling out a simple web form.")}
@@ -113,7 +140,7 @@ class EditLead extends React.Component {
                   description="Are you sure you want to proceed?"
                   onConfirm={() => {
                     this.setState({ showConfirmation: false })
-                    this.props.submit(this.props.fields_map)
+                    this.props.submit()
                   }}
                   onDismiss={() => this.setState({ showConfirmation: false })}
                 />
@@ -126,14 +153,19 @@ class EditLead extends React.Component {
   }
 }
 
-const mapStateToProps = state => state.editLead
+const mapStateToProps = state => ({
+  editLead: state.editLead,
+})
 
 export default connect(
   mapStateToProps,
   {
-    agreeToTerms: editLead.editLeadgreeToTerms,
+    getLead: editLead.editLeadLoadLeadForEdit,
+    loadLead: editLead.editLead,
+    agreeToTerms: editLead.editLeadAgreeToTerms,
     handleChange: editLead.editLeadHandleFormChange,
     submit: editLead.editLeadSubmitForm,
     clear: editLead.editLeadClearForm,
+    push,
   },
 )(EditLead)

@@ -13,7 +13,7 @@ storiesOf("Containers/EditLead", module)
   })
   .add("EditLead - with fields", () => {
     var { store, story } = createStoreAndStory({
-      path: "/edit-lead",
+      path: "/edit-lead/134917",
       loggedIn: true,
     })
     const mock_lead = {

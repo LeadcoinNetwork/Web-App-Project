@@ -107,6 +107,37 @@ export function start({
    */
 
   expressApp.get(
+    "/leads/:id",
+    passport.authenticate("jwt", authOptions),
+    async function(req, res, next) {
+      ;(async () => {
+        const { user } = req
+        const { id } = req.params
+        await appLogic.leads
+          .getSingleLead(parseInt(id))
+          .then(lead => {
+            if (lead.ownerId != user.id)
+              lead = Object.assign({
+                email: "***@gmail.com",
+                "Contact Person": "***",
+                Telephone: "***",
+              })
+            res.json(lead)
+          })
+          .catch(err => {
+            res.status(400)
+            res.send({ error: err.message })
+          })
+        return next()
+      })().catch(done)
+    },
+  )
+
+  /**
+   * get leads I added for selling
+   */
+
+  expressApp.get(
     "/sell-leads",
     passport.authenticate("jwt", authOptions),
 
@@ -157,6 +188,60 @@ export function start({
     })
     return error_obj
   }
+
+  /**
+   * update lead
+   */
+
+  expressApp.post(
+    "/leads/update",
+    passport.authenticate("jwt", authOptions),
+    async function(req, res, next) {
+      ;(async () => {
+        const { user } = req
+        const { lead }: { lead: Lead } = req.body
+        if (lead) {
+          //@ts-ignore
+          console.log(lead)
+          switch (true) {
+            //@ts-ignore
+            case !lead.agree_to_terms:
+              return res.status(400).send({
+                error: {
+                  agree_to_terms: "Must agree to terms",
+                },
+              })
+            case lead.ownerId != user.id:
+            case !lead.active:
+              return res.status(400).send({
+                error: {
+                  general: "you cannot edit this lead",
+                },
+              })
+          }
+          delete lead["agree_to_terms"]
+          appLogic.leads
+            .EditLead(lead)
+            .then(response => {
+              res.json({ response })
+            })
+            .catch(err => {
+              res.status(400)
+              if (err.sqlMessage) {
+                res.send({ error: err.sqlMessage })
+              } else {
+                res.send({ error: errStringToObj(err.message) })
+              }
+            })
+        } else {
+          return next()
+        }
+      })().catch(err => {
+        res.status(400)
+        res.send({ error: err.message })
+      })
+    },
+  )
 
   /**
    * Post a now lead for selling. Using a form.

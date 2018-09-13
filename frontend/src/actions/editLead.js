@@ -59,10 +59,10 @@ export default {
     }
   },
 
-  editLeadGetDbFields(payload) {
+  editLeadLoadLeadForEdit(id) {
     return {
-      type: types.EDIT_LEAD_GET_DB_FIELDS,
-      db_fields: payload,
+      type: types.EDIT_LEAD_LOAD_LEAD,
+      id,
     }
   },
 }

@@ -11,14 +11,18 @@ import API from "../api/index"
 export default function* editLead(api) {
   while (true) {
     const action = yield take(types.EDIT_LEAD_SUBMIT_FORM)
-    let { values, agree_to_terms } = yield select(state => state.editLead)
-    console.log({ values })
-    /*
-    yield put(actions.editLead.editLeadLoadingStart())
-    let res = yield api.leads.editLeadsEditByForm({
-      ...values,
+    let {
+      private_fields,
+      public_fields,
+      original_copy,
+      agree_to_terms,
+    } = yield select(state => state.editLead)
+    const lead = Object.assign(original_copy, private_fields, public_fields, {
       agree_to_terms,
     })
+    console.log({ lead })
+    yield put(actions.editLead.editLeadLoadingStart())
+    let res = yield api.leads.editLeadsEditByForm({ lead })
     yield put(actions.editLead.editLeadLoadingEnd())
     if (res.error) {
       const errors = res.error
@@ -27,10 +31,8 @@ export default function* editLead(api) {
       }
     } else {
       yield put(actions.editLead.editLeadSubmitSuccess())
-      yield put(actions.editLead.editLeadClearForm())
       window.triggerFetch()
-      yield put(push("/sell-leads"))
+      yield put(push("/my-leads"))
     }
-    */
   }
 }

@@ -2,11 +2,13 @@ import { types } from "../actions"
 import fields from "./fields-data"
 
 const initialState = {
+  original_copy: null,
   private_fields: {},
   public_fields: {},
   errors: {},
   agree_to_terms: false,
   loading: false,
+  values: {},
 }
 
 const contact_info_fields = ["Contact Person", "Telephone", "Email"]
@@ -42,7 +44,12 @@ export default function(state = initialState, action) {
   switch (action.type) {
     case types.EDIT_LEAD_EDIT_LEAD:
       const [private_fields, public_fields] = seperateLead(action.lead)
-      return { ...state, private_fields, public_fields }
+      return {
+        ...state,
+        private_fields,
+        public_fields,
+        original_copy: action.lead,
+      }
 
     case types.EDIT_LEAD_FORM_ERROR:
       return {
@@ -80,20 +87,13 @@ export default function(state = initialState, action) {
     case types.EDIT_LEAD_HANDLE_FORM_CHANGE:
       newErrors = { ...state.errors }
       delete newErrors[action.payload.name]
-      return {
-        ...state,
-        values: {
-          ...state.values,
-          [action.payload.name]: action.payload.value,
-        },
-        errors: newErrors,
+      if (contact_info_fields.includes(action.payload.name)) {
+        state.private_fields[action.payload.name] = action.payload.value
+      } else {
+        state.public_fields[action.payload.name] = action.payload.value
       }
+      return { ...state, errors: newErrors }
 
-    case types.EDIT_LEAD_GET_DB_FIELDS:
-      return {
-        ...state,
-        db_fields: action.db_fields,
-      }
     default:
       return state
   }

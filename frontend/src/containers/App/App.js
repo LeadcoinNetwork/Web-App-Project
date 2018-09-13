@@ -70,7 +70,7 @@ class App extends React.Component {
               {/* <Route path="/uploadform" component={UploadForm} /> */}
               <Route path="/csv-upload" component={CSVUpload} />
               <Route path="/csv-mapping" component={CSVMapping} />
-              <Route path="/edit-lead" component={EditLead} />
+              <Route path="/edit-lead-:id" component={EditLead} />
               <Route path="/add-lead" component={AddLead} />
               <Route path="/display-lead" component={DisplayLead} />
               <Route path="/shopping-cart" component={Checkout} />

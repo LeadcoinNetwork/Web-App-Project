@@ -414,7 +414,10 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     this.log("update " + this.tableName + " start", record)
     var str = ""
     var values = Object.keys(record).forEach(key => {
-      str += `, ${mysql.escape("$." + key)} , ${mysql.escape(record[key])}`
+      const value = record[key]
+      if (key.includes(" ")) key = '"' + key + '"'
+      if (key.includes("/")) key = '"' + key + '"'
+      str += `, ${mysql.escape("$." + key)} , ${mysql.escape(value)}`
     })
 
     var query = `UPDATE ${this.tableName} SET ${this.fieldName}=JSON_SET(${

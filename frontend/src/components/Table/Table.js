@@ -117,6 +117,7 @@ class Table extends React.Component {
           />
           <TBody
             displayLead={props.displayLead}
+            editLead={props.editLead}
             fields={props.fields}
             records={props.records}
             colCount={dinamicColsCount}

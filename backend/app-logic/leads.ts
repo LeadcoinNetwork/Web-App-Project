@@ -54,6 +54,11 @@ export default class Leads {
   public async getOwnedLeads() {
     return await this.models.leads.getOwnedLeads()
   }
+
+  public async getSingleLead(id) {
+    return await this.models.leads.getSingleLead(id)
+  }
+
   public async getOwners() {
     return await this.models.leads.getOwners()
   }
@@ -131,6 +136,20 @@ export default class Leads {
       return id
     }
     throw new Error(problems.join(" ;"))
+  }
+
+  public async EditLead(lead: Lead) {
+    const problems = validate_lead(lead)
+    if (problems.length > 0) throw new Error(problems.join(" ;"))
+    lead = await this.sanitizeLead(lead)
+    const current_lead = await this.models.leads.getSingleLead(lead.id)
+    console.log({ current_lead, lead })
+    switch (true) {
+      case current_lead.ownerId != lead.ownerId:
+      case !current_lead.active:
+        throw new Error("general::lead mutated.")
+    }
+    return await this.models.leads.EditLead(lead)
   }
 
   public async getMockLeads(user_id: number) {
