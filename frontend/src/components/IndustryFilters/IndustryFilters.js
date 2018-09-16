@@ -1,6 +1,7 @@
 import React from "react"
+import Filter from "./Filter"
 
-const IndustryFilters = ({ filters, expand, onExpandClick }) => (
+const IndustryFilters = ({ filters, expand, onExpandClick, handleFilter }) => (
   <div
     className={
       "industry-filters" +
@@ -9,13 +10,22 @@ const IndustryFilters = ({ filters, expand, onExpandClick }) => (
     }
   >
     <div className="expand-selection" onClick={onExpandClick}>
-      <span>More Filters</span>
+      <span>Advanced Filters</span>
       <div className="expand-arrow">
         <div className="arrow-left" />
         <div className="arrow-right" />
       </div>
     </div>
-    {expand && <div>Here go more filters</div>}
+    {expand &&
+      filters.map((f, index) => (
+        <Filter
+          key={index}
+          index={index}
+          filter={f}
+          filters={filters}
+          handleFilter={handleFilter}
+        />
+      ))}
   </div>
 )
 

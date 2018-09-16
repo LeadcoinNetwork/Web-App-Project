@@ -5,36 +5,46 @@ const RealEstateFilters = [
   {
     name: "Date",
     type: "date",
+    from: "",
+    to: "",
   },
   {
     name: "State",
     type: "select",
-    data: statesData,
+    options: statesData,
+    value: "",
   },
   {
     name: "Price",
     type: "range",
+    min: "",
+    max: "",
   },
   {
     name: "Size",
     type: "range",
+    min: "",
+    max: "",
   },
   {
     name: "Housing Type",
     type: "select",
     options: [
-      "Apartment",
-      "House",
-      "Cottage",
-      "Flat",
-      "Studio",
-      "Farm",
       "Building",
-      "Roof-Top",
+      "House",
+      "Apartment",
+      "Flat",
+      "Condo",
+      "Cottage",
+      "Rooftop",
+      "Penthouse",
+      "Studio",
       "Gallery",
+      "Farm",
       "Office",
       "Warehouse",
     ],
+    value: "",
   },
 ]
 
@@ -111,12 +121,14 @@ const createReducerFor = namespace => {
     switch (action.type) {
       case types[namespace + "_FILTER_CHANGE"]:
         let filter = action.payload
-        switch (filter.industry) {
-          case "Real Estate":
-            filter.industryFilters = RealEstateFilters
-            break
-          default:
-            filter.industryFilters = null
+        if (!filter.industryFilters) {
+          switch (filter.industry) {
+            case "Real Estate":
+              filter.industryFilters = RealEstateFilters
+              break
+            default:
+              filter.industryFilters = null
+          }
         }
         return {
           ...state,

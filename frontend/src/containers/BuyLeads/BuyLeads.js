@@ -132,6 +132,11 @@ class BuyLeads extends React.Component {
             filters={this.props.leads.filter.industryFilters}
             expand={this.props.leads.expandIndustryFilters}
             onExpandClick={this.props.expandFiltersClick}
+            handleFilter={industryFilters => {
+              const filter = this.props.leads.filter
+              filter.industryFilters = industryFilters
+              this.props.handleFilter(filter)
+            }}
           />
         </div>
         {this.props.leads.searchClicked && (
