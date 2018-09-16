@@ -130,8 +130,8 @@ class BuyLeads extends React.Component {
           </Button>
           <IndustryFilters
             filters={this.props.leads.filter.industryFilters}
-            show={this.props.leads.showIndustryFilters}
-            onShowClick={this.props.showFiltersClick}
+            expand={this.props.leads.expandIndustryFilters}
+            onExpandClick={this.props.expandFiltersClick}
           />
         </div>
         {this.props.leads.searchClicked && (
@@ -163,6 +163,6 @@ export default connect(
       leads.setSelectedLeads("BUY_LEADS", selectedLeads),
     toggelCardView: index => leads.toggelCardView("BUY_LEADS", index),
     searchClicked: () => leads.searchClicked("BUY_LEADS"),
-    showFiltersClick: () => leads.showFiltersClick("BUY_LEADS"),
+    expandFiltersClick: () => leads.expandFiltersClick("BUY_LEADS"),
   },
 )(BuyLeads)

@@ -17,19 +17,19 @@ export default {
       payload: newFilter,
     }
   },
-  showFiltersClick(namespace) {
+  expandFiltersClick(namespace) {
     return {
-      type: types[namespace + "_SHOW_FILTERS_CLICK"],
+      type: types[namespace + "_EXPAND_FILTERS_CLICK"],
     }
   },
-  showFilters(namespace) {
+  expandFilters(namespace) {
     return {
-      type: types[namespace + "_SHOW_FILTERS"],
+      type: types[namespace + "_EXPAND_FILTERS"],
     }
   },
-  hideFilters(namespace) {
+  contractFilters(namespace) {
     return {
-      type: types[namespace + "_HIDE_FILTERS"],
+      type: types[namespace + "_CONTRACT_FILTERS"],
     }
   },
   searchClicked(namespace) {

@@ -100,7 +100,7 @@ const initialState = {
     industryFilters: null,
   },
   searchClicked: false,
-  showIndustryFilters: false,
+  expandIndustryFilters: false,
   error: "",
   loading: true,
   selected: new Set(),
@@ -122,20 +122,20 @@ const createReducerFor = namespace => {
           ...state,
           filter,
         }
-      case types[namespace + "_SHOW_FILTERS_CLICK"]:
+      case types[namespace + "_EXPAND_FILTERS_CLICK"]:
         return {
           ...state,
-          showIndustryFilters: !state.showIndustryFilters,
+          expandIndustryFilters: !state.expandIndustryFilters,
         }
-      case types[namespace + "_SHOW_FILTERS"]:
+      case types[namespace + "_EXPAND_FILTERS"]:
         return {
           ...state,
-          showIndustryFilters: true,
+          expandIndustryFilters: true,
         }
-      case types[namespace + "_HIDE_FILTERS"]:
+      case types[namespace + "_CONTRACT_FILTERS"]:
         return {
           ...state,
-          showIndustryFilters: false,
+          expandIndustryFilters: false,
         }
       case types[namespace + "_SEARCH_CLICKED"]:
         return {

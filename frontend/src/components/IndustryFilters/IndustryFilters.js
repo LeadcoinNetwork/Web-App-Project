@@ -1,12 +1,12 @@
 import React from "react"
 
-const IndustryFilters = ({ filters, show, onShowClick }) => (
+const IndustryFilters = ({ filters, expand, onExpandClick }) => (
   <div
     className={"industry-filters" + (!filters ? " hide" : "")}
-    onClick={onShowClick}
+    onClick={onExpandClick}
   >
     More Filters ^
-    {show && <div>Here go more filters</div>}
+    {expand && <div>Here go more filters</div>}
   </div>
 )
 
