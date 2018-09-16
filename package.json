@@ -1,13 +1,11 @@
 {
   "devDependencies": {
-    "cypress": "^3.1.0",
     "husky": "^0.14.3",
     "prettier": "^1.11.1",
     "pretty-quick": "^1.4.1"
   },
   "name": "leadcoin-web",
   "scripts": {
-    "cypress:open": "cypress open",
     "precommit": "pretty-quick --staged",
     "prettier-all": "prettier --write **/*.js"
   },
