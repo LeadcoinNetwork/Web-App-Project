@@ -20,6 +20,28 @@ section.ldc-real-estate-lead {
     color: $main-color;
   }
 
+  .lead_ops {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    height: 40px;
+    width: 200px;
+    display: flex;
+    justify-content: flex-end;
+    .op {
+      width: 40px;
+      height: 40px;
+      background-color: $bg-main-btn;
+      border: solid 1px black;
+      cursor: pointer;
+      > div {
+        height: 80%;
+        margin: 2px auto;
+        width: 90%;
+      }
+    }
+  }
+
   .rel-description {
     font-size: 16px;
     letter-spacing: 0.2px;

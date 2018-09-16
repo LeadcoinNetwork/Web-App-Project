@@ -17,6 +17,16 @@ const RealEstateLead = lead => {
         ${lead.constantCardOpen ? " constant-card-open" : ""}`}
       onClick={lead.toggleCardView}
     >
+      <div className="lead_ops">
+        <div className="edit op">
+          <div
+            className="pencil"
+            onClick={() => {
+              lead.push("/edit-lead-" + lead.id)
+            }}
+          />
+        </div>
+      </div>
       {lead.fieldsCheck.Industry && (
         <div className="rel-industry">{lead.Industry}</div>
       )}

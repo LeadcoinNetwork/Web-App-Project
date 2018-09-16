@@ -1,19 +1,14 @@
 @import "~Styles/variables";
 
 .tb-row {
-  .pencil {
-    background: url("pencil.svg");
-    color: white;
+  .eye {
     position: absolute;
     left: 10px;
     display: none;
     width: 10px;
-    background-size: contain;
     height: 10px;
-    background-repeat: no-repeat;
-    background-position: center;
     padding: 10px;
-    top: 5px;
+    top: 25px;
     margin-left: 40px;
 
     &:hover {
@@ -21,19 +16,14 @@
     }
   }
 
-  .eye {
-    background: url("eye.svg");
-    color: white;
+  .pencil {
     position: absolute;
     left: 10px;
     display: none;
     width: 10px;
-    background-size: contain;
     height: 10px;
-    background-repeat: no-repeat;
-    background-position: center;
     padding: 10px;
-    top: 25px;
+    top: 5px;
     margin-left: 40px;
 
     &:hover {

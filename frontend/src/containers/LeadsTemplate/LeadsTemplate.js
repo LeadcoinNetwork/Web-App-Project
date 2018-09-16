@@ -10,6 +10,7 @@ import t from "../../utils/translate/translate"
 import RealEstateLead from "Components/RealEstateLead"
 import SwitchResultsMode from "Containers/SwitchResultsMode"
 import { Link } from "react-router-dom"
+import { push } from "react-router-redux"
 
 class LeadsTemplate extends React.Component {
   onScrollBottom = () => {
@@ -172,6 +173,7 @@ class LeadsTemplate extends React.Component {
                       {...lead}
                       checked={isSelectable && leads.selected.has(lead.id)}
                       isSelectable={isSelectable}
+                      push={this.props.push}
                       buttons={getButtons && getButtons().record}
                       toggleCheck={event => this.toggleLead(event, lead.id)}
                       toggleCardView={() => this.props.toggelCardView(index)}
@@ -233,6 +235,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   toggleResultsMode: actions.app.toggleResultsMode,
+  push,
 }
 
 export default connect(
