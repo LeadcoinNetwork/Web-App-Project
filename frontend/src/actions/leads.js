@@ -11,6 +11,11 @@ export default {
       type: types[namespace + "_CLEAR_LEADS"],
     }
   },
+  clearList(namespace) {
+    return {
+      type: types[namespace + "_CLEAR_LIST"],
+    }
+  },
   filterChange(namespace, newFilter) {
     return {
       type: types[namespace + "_FILTER_CHANGE"],

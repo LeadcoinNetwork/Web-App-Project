@@ -9,7 +9,6 @@ import API from "../api/index"
 /**
  * @param api {API} - this is this paramters
  */
-let last_filter = {}
 export default function* buyLeads(api) {
   while (true) {
     let { page, limit, sortBy, filter } = yield select(state => state.buyLeads)
@@ -24,10 +23,6 @@ export default function* buyLeads(api) {
     if (res.error) {
       yield put(actions.leads.fetchError("BUY_LEADS"))
     } else {
-      if (!_.isEqual(filter, last_filter)) {
-        last_filter = filter
-        yield put(actions.leads.clearLeads("BUY_LEADS"))
-      }
       yield put(actions.leads.fetchSuccess("BUY_LEADS", res))
     }
 
