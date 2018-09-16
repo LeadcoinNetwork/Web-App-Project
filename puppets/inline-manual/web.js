@@ -58,6 +58,7 @@ module.exports = async page => {
         .querySelector(".bl-filters select:nth-child(2)")
         .dispatchEvent(new Event("change")),
     )
+
     await snapAndClick(".bl-filters .ldc-button")
     await page.waitForSelector(".t-body .ldc-checkbox")
     await snapAndClick(".t-body .ldc-checkbox")
