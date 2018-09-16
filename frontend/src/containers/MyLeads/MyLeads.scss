@@ -2,13 +2,13 @@
 
 .tb-row {
   .eye {
-    position: absolute;
-    left: 10px;
     display: none;
+    position: absolute;
+    top: 30px;
+    left: 10px;
     width: 10px;
     height: 10px;
     padding: 10px;
-    top: 25px;
     margin-left: 40px;
 
     &:hover {
@@ -17,13 +17,13 @@
   }
 
   .pencil {
-    position: absolute;
-    left: 10px;
     display: none;
+    position: absolute;
+    top: 6px;
+    left: 10px;
     width: 10px;
     height: 10px;
     padding: 10px;
-    top: 5px;
     margin-left: 40px;
 
     &:hover {
