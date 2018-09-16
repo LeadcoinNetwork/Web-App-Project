@@ -1,4 +1,3 @@
-import * as _ from "lodash"
 import { select, take, put, call } from "redux-saga/effects"
 import { push } from "react-router-redux"
 import { types } from "../actions"
