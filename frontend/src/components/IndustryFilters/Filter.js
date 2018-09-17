@@ -7,15 +7,10 @@ const Filter = ({ index, filter, filters, handleFilter }) => (
     {filter.type === "select" && (
       <Select
         value={filters[index].value}
-        onChange={e =>
-          handleFilter({
-            ...filters,
-            [index]: {
-              ...filters[index],
-              value: e.target.value,
-            },
-          })
-        }
+        onChange={e => {
+          filters[index].value = e.target.value
+          handleFilter(filters)
+        }}
       >
         {<option vlaue="All">{"Choose " + filter.name}</option>}
         {filter.options.map((option, index) => (
@@ -28,39 +23,51 @@ const Filter = ({ index, filter, filters, handleFilter }) => (
     {filter.type === "range" && (
       <>
         <TextField
+          value={filters[index].min}
           appStyle
           placeholder={"Min " + filter.name}
-          onChange={e =>
-            handleFilter({
-              ...filters,
-              [index]: {
-                ...filters[index],
-                min: e.target.value,
-              },
-            })
-          }
+          type={filter.inputType || "text"}
+          onChange={e => {
+            filters[index].min = e.target.value
+            handleFilter(filters)
+          }}
         />
         <TextField
+          value={filters[index].max}
           appStyle
           placeholder={"Max " + filter.name}
-          onChange={e =>
-            handleFilter({
-              ...filters,
-              [index]: {
-                ...filters[index],
-                max: e.target.value,
-              },
-            })
-          }
+          type={filter.inputType || "text"}
+          onChange={e => {
+            filters[index].max = e.target.value
+            handleFilter(filters)
+          }}
         />
       </>
     )}
-    {/* {filter.type === "date" &&
+    {filter.type === "date" && (
       <>
-        <TextField appStyle value={filters[index].from} type="date" />
-        <TextField appStyle value={filters[index].to} type="date" />
+        <TextField
+          appStyle
+          placeholder="From"
+          value={filters[index].from}
+          type="date"
+          onChange={e => {
+            filters[index].from = e.target.value
+            handleFilter(filters)
+          }}
+        />
+        <TextField
+          appStyle
+          placeholder="To"
+          value={filters[index].to}
+          type="date"
+          onChange={e => {
+            filters[index].to = e.target.value
+            handleFilter(filters)
+          }}
+        />
       </>
-    } */}
+    )}
   </div>
 )
 

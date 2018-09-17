@@ -17,12 +17,14 @@ const RealEstateFilters = [
   {
     name: "Price",
     type: "range",
+    inputType: "number",
     min: "",
     max: "",
   },
   {
     name: "Size",
     type: "range",
+    inputType: "number",
     min: "",
     max: "",
   },
