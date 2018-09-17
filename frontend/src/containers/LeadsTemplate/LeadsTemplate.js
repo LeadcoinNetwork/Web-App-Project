@@ -178,6 +178,7 @@ class LeadsTemplate extends React.Component {
                       toggleCheck={event => this.toggleLead(event, lead.id)}
                       toggleCardView={() => this.props.toggelCardView(index)}
                       constantCardOpen={constantCardOpen}
+                      editLead={editLead}
                     />
                   )}
                 />

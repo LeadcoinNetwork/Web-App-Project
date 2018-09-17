@@ -84,11 +84,21 @@ const createReducerFor = namespace => {
         return {
           ...state,
           list: [],
+          page: 0,
+          total: 0,
           filter: {
             industry: "All",
             category: "All",
             search: "",
           },
+          selected: new Set(),
+        }
+      case types[namespace + "_CLEAR_LIST"]:
+        return {
+          ...state,
+          list: [],
+          page: 0,
+          total: 0,
           selected: new Set(),
         }
       case types[namespace + "_LOADING_START"]:

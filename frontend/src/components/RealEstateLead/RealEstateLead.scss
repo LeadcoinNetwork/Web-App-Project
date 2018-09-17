@@ -22,22 +22,21 @@ section.ldc-real-estate-lead {
 
   .lead_ops {
     position: absolute;
-    top: 5px;
-    right: 5px;
-    height: 40px;
-    width: 200px;
     display: flex;
     justify-content: flex-end;
+    right: 25px;
+    height: 50px;
+    width: 50px;
+
     .op {
-      width: 40px;
-      height: 40px;
-      background-color: $bg-main-btn;
-      border: solid 1px black;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
       cursor: pointer;
       > div {
-        height: 80%;
+        height: 90%;
         margin: 2px auto;
-        width: 90%;
+        width: 50%;
       }
     }
   }
