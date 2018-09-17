@@ -101,6 +101,7 @@ window.machingAlgorithmStart = function() {
 }
 
 window.bindShareButton = function() {
+  addInlineManualEmailToGoogleForms()
   const shareText =
     "🚀🚀I just tested the amazing #leadcoinalpha, a decentralized lead sharing network! " +
     "This platform has the potential to offer a true web marketing alternative to Google & Facebook. " +
@@ -116,10 +117,8 @@ window.bindShareButton = function() {
             encodeURIComponent(shareText),
           "_new",
         )
-        addInlineManualEmailToGoogleForms()
         clickNext()
         setTimeout(function() {
-          console.log("here")
           inline_manual_player.activateTopic(53879)
         }, 1000)
       }

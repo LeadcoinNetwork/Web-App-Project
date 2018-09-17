@@ -2,18 +2,28 @@
 
 .tb-row {
   .eye {
-    background: url("eye.svg");
-    color: white;
-    position: absolute;
-    left: 10px;
     display: none;
-    width: 30px;
-    background-size: contain;
-    height: 30px;
-    background-repeat: no-repeat;
-    background-position: center;
-    padding: 15px;
-    padding-top: 35px;
+    position: absolute;
+    top: 30px;
+    left: 10px;
+    width: 10px;
+    height: 10px;
+    padding: 10px;
+    margin-left: 40px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .pencil {
+    display: none;
+    position: absolute;
+    top: 6px;
+    left: 10px;
+    width: 10px;
+    height: 10px;
+    padding: 10px;
     margin-left: 40px;
 
     &:hover {
@@ -22,7 +32,8 @@
   }
 
   &:hover {
-    .eye {
+    .eye,
+    .pencil {
       display: inline-block;
     }
   }

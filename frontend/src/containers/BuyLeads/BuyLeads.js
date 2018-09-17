@@ -121,6 +121,7 @@ class BuyLeads extends React.Component {
           <Button
             className="search"
             onClick={() => {
+              this.props.clearList()
               this.props.searchClicked()
               this.props.fetchLeads()
             }}
@@ -169,5 +170,6 @@ export default connect(
     toggelCardView: index => leads.toggelCardView("BUY_LEADS", index),
     searchClicked: () => leads.searchClicked("BUY_LEADS"),
     expandFiltersClick: () => leads.expandFiltersClick("BUY_LEADS"),
+    clearList: () => leads.clearList("BUY_LEADS"),
   },
 )(BuyLeads)

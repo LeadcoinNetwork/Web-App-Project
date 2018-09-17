@@ -99,14 +99,14 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     },
     getOwners: async () => {
       let sql = `
-      SELECT count(DISTINCT doc->>"$.ownerId") as cid
+      SELECT DISTINCT doc->>"$.ownerId" as owner
       FROM leadcoin.leads
       WHERE
           doc->>"$.ownerId" > 0
       AND doc->>"$.bought_from" > 0 
       ;`
       let rows = await this.sql.query(sql)
-      return rows.map(r => r.cid)
+      return rows.map(r => r.owner)
     },
     getMockLeads: async user_id => {
       let sql = `
@@ -187,8 +187,8 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         search_additions = filters.search
           .map(f => {
             const escaped = mysql.escape(f.val)
-            if (f.field.includes(" ") || f.field.includes("/"))
-              f.field = '"' + f.field + '"'
+            if (f.field.includes(" ")) f.field = '"' + f.field + '"'
+            if (f.field.includes("/")) f.field = '"' + f.field + '"'
             return `${this.fieldName}->>${mysql.escape("$." + f.field)} ${
               f.op
             } "%${escaped.slice(1, -1)}%"`
@@ -415,7 +415,10 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     this.log("update " + this.tableName + " start", record)
     var str = ""
     var values = Object.keys(record).forEach(key => {
-      str += `, ${mysql.escape("$." + key)} , ${mysql.escape(record[key])}`
+      const value = record[key]
+      if (key.includes(" ")) key = '"' + key + '"'
+      if (key.includes("/")) key = '"' + key + '"'
+      str += `, ${mysql.escape("$." + key)} , ${mysql.escape(value)}`
     })
 
     var query = `UPDATE ${this.tableName} SET ${this.fieldName}=JSON_SET(${

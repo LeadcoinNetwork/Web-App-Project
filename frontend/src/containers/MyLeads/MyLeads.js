@@ -65,6 +65,11 @@ class MyLeads extends React.Component {
     //this.props.push("/display-lead")
   }
 
+  editLead = lead => {
+    this.props.push("/edit-lead-" + lead.id)
+    return
+  }
+
   render() {
     const isDisplayingLead = this.state ? this.state.isDisplayingLead : false
     return (
@@ -86,6 +91,7 @@ class MyLeads extends React.Component {
             constantCardOpen={true}
             isSelectable={true}
             getButtons={this.getButtons}
+            editLead={this.editLead.bind(this)}
             displayLead={this.displayLead.bind(this)}
           />
         )}

@@ -5,6 +5,27 @@
 * {
   box-sizing: border-box;
 }
+.eye {
+  background: url("eye.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: white;
+}
+
+.pencil {
+  background: url("pencil.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.pencil-ldc {
+  background: url("pencil-ldc.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
 
 body {
   direction: ltr; // We need it, so rtlcss, will change it to rtl

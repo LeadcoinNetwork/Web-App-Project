@@ -59,6 +59,14 @@ export default class LeadsApi {
     }, 750)
   }
 
+  async editLeadsEditByForm(lead) {
+    return await this.request(methods.post, "/leads/update", lead)
+  }
+
+  async loadLeadForEdit(id) {
+    return await this.request(methods.get, "/leads/" + id)
+  }
+
   async addMockLeads() {
     let mock_records = papaParse.parse(mockCsv, parseConfig).data
     //@ts-ignore
