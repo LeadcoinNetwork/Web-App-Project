@@ -156,7 +156,7 @@ export function start({
         await appLogic.leads
           .getSellLeads(user.id, {
             sort: _sort,
-            filters: [],
+            filter: [],
             limit: _limit,
           })
           .then(response => {
@@ -432,7 +432,7 @@ export function start({
         await appLogic.leads
           .getBoughtLeads(user.id, {
             sort: _sort,
-            filters: [],
+            filter: [],
             limit: _limit,
           })
           .then(response => {
@@ -528,46 +528,16 @@ export function start({
     passport.authenticate("jwt", authOptions),
     async (req, res, next) => {
       ;(async () => {
-        const { sortBy, page, limit, sortOrder } = req.query
-        const {
-          industry,
-          category,
-          search,
-        }: {
-          industry: Industry
-          category: Categories
-          search: string
-        } = req.query.filter
+        const { sortBy, page, limit, sortOrder, filter } = req.query
         const { user } = req
-        let _sort = {
-          sortBy: sortBy && sortBy != "id" ? sortBy : "date",
-          sortOrder: sortOrder || "DESC",
-        }
-        let filters = { search: null, industry: null, category: null }
-        if (search) {
-          filters.search = ["Bedrooms/Baths", "Description", "Location"].map(
-            field => {
-              return {
-                field,
-                op: "LIKE",
-                val: search,
-              }
-            },
-          )
-        }
-        filters.industry = industry === "All" ? "" : industry
-        filters.category = category === "All" ? "" : category
-        let _limit = {
-          start: parseInt(page || 0) * parseInt(limit || 50),
-          offset: limit || 50,
-        }
-        console.log({ user })
         await appLogic.leads
           .getAllLeads({
-            sort: _sort,
-            filters,
-            limit: _limit,
-            user_id: user.id,
+            sortBy,
+            page,
+            limit,
+            sortOrder,
+            filter,
+            user,
           })
           .then(response => {
             let jsonResponse = Object.assign(response, req.query)

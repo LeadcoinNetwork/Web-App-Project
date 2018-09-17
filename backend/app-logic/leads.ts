@@ -1,4 +1,11 @@
-import { Lead, LeadQueryOptions, NewBaseLead } from "../models/leads/types"
+import {
+  Lead,
+  RawLeadQueryOptions,
+  LeadQueryOptions,
+  NewBaseLead,
+  Industry,
+  Categories,
+} from "../models/leads/types"
 
 import { IModels } from "./index"
 import { Notification } from "../models/notifications/types"
@@ -177,7 +184,60 @@ export default class Leads {
     return leads
   }
 
-  public async getAllLeads(options: LeadQueryOptions) {
-    return await this.models.leads.buyLeadsGetAll(options)
+  public async getAllLeads(query: RawLeadQueryOptions) {
+    return await this.models.leads.buyLeadsGetAll(this.buildLeadsOptions(query))
+  }
+
+  private buildLeadsOptions(query: RawLeadQueryOptions) {
+    const { sortBy, page, limit, sortOrder, filter, user } = query
+    let _sort = {
+      sortBy: sortBy && sortBy != "id" ? sortBy : "date",
+      sortOrder: sortOrder || "DESC",
+    }
+    let _limit = {
+      start: parseInt(page || "0") * parseInt(limit || "50"),
+      offset: limit || 50,
+    }
+    const { industry, category, industryFilters } = filter
+    let _filter = {
+      search: null,
+      industry: null,
+      category: null,
+      industryFilters: null,
+    }
+    _filter.industry = industry === "All" ? "" : industry
+    _filter.category = category === "All" ? "" : category
+    _filter.industryFilters = industryFilters
+    switch (industry) {
+      case "Real Estate":
+        _filter.search = this.buildRealEstateSearch(filter)
+        break
+      default:
+        break
+    }
+
+    return {
+      sort: _sort,
+      filter: _filter,
+      limit: _limit,
+      user_id: user.id,
+    }
+  }
+
+  private buildRealEstateSearch(filter) {
+    const { search } = filter
+    let _search
+    if (search) {
+      _search = ["Bedrooms/Baths", "Description", "Location"].map(field => {
+        return {
+          field,
+          op: "LIKE",
+          val: search,
+        }
+      })
+    }
+    return {
+      search: _search,
+    }
   }
 }

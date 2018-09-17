@@ -1,9 +1,11 @@
 const mysql = require("mysql")
 import * as _ from "lodash"
+import moment from "moment"
 
 import SQL from "../mysql-pool/mysql-pool"
 import LogModelActions from "../log-model-actions/log-model-actions"
 import NotFound from "../../utils/not-found"
+import { RealEstateFilter } from "../leads/types"
 
 type tableName = "users" | "leads" | "notifications"
 
@@ -41,6 +43,26 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     } else {
       return result[0]
     }
+  }
+
+  private buildRealEstateFilters(industryFilters: RealEstateFilter[]) {
+    return industryFilters.map(filter => {
+      switch (filter.type) {
+        case "date":
+          ;`${this.fieldName}->>'$.date' < '${filter.from}' AND ${
+            this.fieldName
+          }->>'$.date' > '${moment(filter.to)}'`
+          break
+        case "select":
+          ;`${this.fieldName}->>'$.Category' = '${filter.category}'`
+          break
+        case "range":
+          ;`${this.fieldName}->>'$.Category' = '${filter.category}'`
+          break
+        default:
+          break
+      }
+    })
   }
 
   notificationsQueries = {
@@ -180,11 +202,32 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     },
 
     buyLeadsGetAll: async (options: any) => {
-      const { limit, filters, sort, user_id } = options
+      const { limit, filter, sort, user_id } = options
       let where_additions = ""
+      if (filter.industry)
+        where_additions = `${this.fieldName}->>'$.Industry' = '${
+          filter.industry
+        }'`
+      if (filter.category)
+        where_additions +=
+          (where_additions ? `\nAND ` : "") +
+          `${this.fieldName}->>'$.Category' = '${filter.category}'`
+      if (filter.industryFilters) {
+        let buildIndustryFiltersFunc = undefined
+        switch (filter.industry) {
+          case "Real Estate":
+            buildIndustryFiltersFunc = this.buildRealEstateFilters
+            break
+          default:
+            break
+        }
+        where_additions +=
+          (where_additions ? `\nAND ` : "") +
+          buildIndustryFiltersFunc(filter.industryFilters)
+      }
       let search_additions = []
-      if (filters.search) {
-        search_additions = filters.search
+      if (filter.search) {
+        search_additions = filter.search
           .map(f => {
             const escaped = mysql.escape(f.val)
             if (f.field.includes(" ")) f.field = '"' + f.field + '"'
@@ -195,17 +238,10 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
           })
           .join(`\nOR `)
       }
-      if (filters.industry)
-        where_additions = `${this.fieldName}->>'$.Industry' = '${
-          filters.industry
-        }'`
-      if (filters.category)
-        where_additions +=
-          (where_additions ? `\nAND ` : "") +
-          `${this.fieldName}->>'$.Category' = '${filters.category}'`
       if (search_additions.length > 0)
         where_additions +=
           (where_additions ? `\nAND ` : "") + "(" + search_additions + ")"
+
       let limit_addition = ""
       let countHeader = "SELECT COUNT(*) as count "
       let realHeader = "SELECT *"
