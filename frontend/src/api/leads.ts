@@ -63,6 +63,10 @@ export default class LeadsApi {
     return await this.request(methods.post, "/leads/update", lead)
   }
 
+  async deleteLead(ids) {
+    return await this.request(methods.post, "/myleads/remove", { ids })
+  }
+
   async loadLeadForEdit(id) {
     return await this.request(methods.get, "/leads/" + id)
   }

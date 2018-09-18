@@ -14,6 +14,7 @@ import loadLeadForEdit from "./loadLeadForEdit"
 import addLead from "./addLead"
 import redirectIfNotAllowed from "./redirectIfNotAllowed"
 import sellLeads from "./sellLeads"
+import deleteLead from "./deleteLead"
 import buyLeads from "./buyLeads"
 import checkout from "./checkout"
 import myLeads from "./myLeads"
@@ -57,6 +58,7 @@ export default function* rootSaga() {
     logout,
     homesaga,
     fetchUserToState,
+    deleteLead,
     signup,
     csvMapping,
     snackbar,

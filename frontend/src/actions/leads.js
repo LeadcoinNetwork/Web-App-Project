@@ -1,6 +1,12 @@
 import types from "./types"
 
 export default {
+  deleteLead(id) {
+    return {
+      type: types["DELETE_LEAD"],
+      id,
+    }
+  },
   clearAllLeads() {
     return {
       type: types["CLEAR_ALL_LEADS"],

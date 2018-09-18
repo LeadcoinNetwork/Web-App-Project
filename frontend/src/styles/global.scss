@@ -13,6 +13,20 @@
   color: white;
 }
 
+.trash {
+  background: url("trash.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.times {
+  background: url("times.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .pencil {
   background: url("pencil.svg");
   background-size: contain;

@@ -17,8 +17,18 @@ const RealEstateLead = lead => {
         ${lead.constantCardOpen ? " constant-card-open" : ""}`}
       onClick={lead.toggleCardView}
     >
-      {lead.editLead && (
-        <div className="lead_ops">
+      <div className="lead_ops">
+        {lead.deleteLead && (
+          <div className="delete op">
+            <div
+              className="trash"
+              onClick={() => {
+                lead.deleteLead(lead.id)
+              }}
+            />
+          </div>
+        )}
+        {lead.editLead && (
           <div className="edit op">
             <div
               className="pencil-ldc"
@@ -27,8 +37,8 @@ const RealEstateLead = lead => {
               }}
             />
           </div>
-        </div>
-      )}
+        )}
+      </div>
       {lead.fieldsCheck.Industry && (
         <div className="rel-industry">{lead.Industry}</div>
       )}

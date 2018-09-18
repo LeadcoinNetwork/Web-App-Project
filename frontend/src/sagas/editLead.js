@@ -20,7 +20,6 @@ export default function* editLead(api) {
     const lead = Object.assign(original_copy, private_fields, public_fields, {
       agree_to_terms,
     })
-    console.log({ lead })
     yield put(actions.editLead.editLeadLoadingStart())
     let res = yield api.leads.editLeadsEditByForm({ lead })
     yield put(actions.editLead.editLeadLoadingEnd())

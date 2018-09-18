@@ -115,8 +115,26 @@ export default class Leads {
     */
     return txDetails
   }
+  public async removeLead(lead_ids: number[], user_id: number) {
+    const insertLead = async (pa, lead_id) => {
+      const lead: Lead = await this.getSingleLead(lead_id)
+      if (lead.ownerId == user_id && lead.active == true) {
+        lead.active = false
+        pa.push(this.models.leads.EditLead(lead))
+      }
+      return pa
+    }
+    let promises: Promise<boolean>[] = await lead_ids.reduce(insertLead, [])
+    Promise.all(promises).then(() => {
+      this.models.notifications.createNotification({
+        msg: ` ${promises.length} leads deleted.`,
+        userId: user_id,
+        unread: true,
+      })
+    })
+  }
 
-  public async removeLead(lead_id: number) {
+  public async deleteLead(lead_id: number) {
     return await this.models.leads.remove(lead_id)
   }
 

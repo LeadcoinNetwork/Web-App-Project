@@ -138,6 +138,7 @@ class LeadsTemplate extends React.Component {
       isSelectable,
       constantCardOpen,
       displayLead,
+      deleteLead,
       editLead,
     } = this.props
 
@@ -178,6 +179,7 @@ class LeadsTemplate extends React.Component {
                       toggleCheck={event => this.toggleLead(event, lead.id)}
                       toggleCardView={() => this.props.toggelCardView(index)}
                       constantCardOpen={constantCardOpen}
+                      deleteLead={deleteLead}
                       editLead={editLead}
                     />
                   )}

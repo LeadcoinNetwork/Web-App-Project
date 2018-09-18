@@ -8,6 +8,7 @@ const inlineManual = require("./inline-manual")
 const fs = require("fs")
 const path = require("path")
 const directory = "./slideshow"
+const devices = require("puppeteer/DeviceDescriptors")
 const runner = require("./runner")({
   instructions: inlineManual,
   headless,
@@ -45,7 +46,7 @@ if (command === "server") {
   let test = async () => {
     console.log("Single Test Running")
     console.log({ url })
-    const exit_code = (await runner(true)).error ? 1 : 0
+    const exit_code = (await runner({ tourist: false })).error ? 1 : 0
     console.log("exit code is ", exit_code)
     process.exit(exit_code)
   }

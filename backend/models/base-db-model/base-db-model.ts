@@ -132,7 +132,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     },
 
     getLeadFields: async lead_type => {
-      let sql = `SELECT * FROM leadcoin.leads WHERE doc->>"$.type"="${mysql.escape(
+      let sql = `SELECT * FROM leadcoin.leads WHERE doc->>"$.Industry"="${mysql.escape(
         lead_type,
       )}" limit 1;`
       let rows = await this.sql.query(sql)

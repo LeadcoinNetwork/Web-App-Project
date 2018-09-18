@@ -76,6 +76,55 @@ export function start({
   }
 
   /**
+   * remove leads (sellleads/myleads)
+   */
+
+  expressApp.post(
+    "/myleads/remove",
+    passport.authenticate("jwt", authOptions),
+    remove_my_lead,
+  )
+  async function remove_my_lead(req, res, next) {
+    ;(async () => {
+      const { user } = req
+      const { ids } = req.body
+      appLogic.leads
+        .removeLead(ids, user.id)
+        .then(() => {
+          res.status(200)
+          res.send({ ok: true })
+        })
+        .catch(err => {
+          res.status(400)
+          res.send({ error: err.message })
+        })
+    })().catch(done)
+  }
+
+  expressApp.post(
+    "/sellleads/remove/:id",
+    passport.authenticate("jwt", authOptions),
+    remove_sell_lead,
+  )
+  async function remove_sell_lead(req, res, next) {
+    ;(async () => {
+      const { user } = req
+      const { lead_id }: { lead_id: number } = req.params.id
+      appLogic.leads
+        .removeLead([lead_id], user.id)
+        .then(() => {
+          res.status(200)
+          res.send({ ok: true })
+        })
+        .catch(err => {
+          res.status(400)
+          res.send({ error: err.message })
+        })
+      next()
+    })().catch(done)
+  }
+
+  /**
    * There is no option yet to remove a lead
    * Later should e 2 endpoints. (selleads/remove , myleads/remove)
    */
@@ -201,8 +250,6 @@ export function start({
         const { user } = req
         const { lead }: { lead: Lead } = req.body
         if (lead) {
-          //@ts-ignore
-          console.log(lead)
           switch (true) {
             //@ts-ignore
             case !lead.agree_to_terms:

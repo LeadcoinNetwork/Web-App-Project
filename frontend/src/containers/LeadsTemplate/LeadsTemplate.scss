@@ -8,6 +8,8 @@
     font-weight: 300;
     letter-spacing: 0.8px;
     text-transform: capitalize;
+    justify-content: flex-end;
+    display: flex;
 
     &.is-search-results h4 {
       font-size: 24px;
@@ -21,9 +23,7 @@
     }
 
     .ldc-button {
-      position: absolute;
-      top: 20px;
-      right: 0;
+      margin: 0 5px;
     }
   }
 
