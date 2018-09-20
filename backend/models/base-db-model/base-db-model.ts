@@ -1,6 +1,5 @@
 const mysql = require("mysql")
 import * as _ from "lodash"
-import moment from "moment"
 
 import SQL from "../mysql-pool/mysql-pool"
 import LogModelActions from "../log-model-actions/log-model-actions"
@@ -49,16 +48,33 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     return industryFilters.map(filter => {
       switch (filter.type) {
         case "date":
-          ;`${this.fieldName}->>'$.date' < '${filter.from}' AND ${
-            this.fieldName
-          }->>'$.date' > '${moment(filter.to)}'`
-          break
+          return (
+            (filter.from
+              ? `${this.fieldName}->>'$.date' > '${new Date(
+                  filter.from,
+                ).valueOf()}'`
+              : ``) +
+            (filter.to
+              ? (filter.from ? ` AND ` : ``) +
+                `${this.fieldName}->>'$.date' < '${new Date(
+                  filter.to,
+                ).valueOf()}'`
+              : ``)
+          )
         case "select":
-          ;`${this.fieldName}->>'$.Category' = '${filter.category}'`
-          break
+          return filter.value
+            ? `${this.fieldName}->>'$.${filter.name}' = '${filter.value}'`
+            : ``
         case "range":
-          ;`${this.fieldName}->>'$.Category' = '${filter.category}'`
-          break
+          return (
+            (filter.min
+              ? `${this.fieldName}->>'$.${filter.name}' > '${filter.min}'`
+              : ``) +
+            (filter.max
+              ? (filter.min ? ` AND ` : ``) +
+                `${this.fieldName}->>'$.${filter.name}' < '${filter.max}'`
+              : ``)
+          )
         default:
           break
       }
@@ -221,9 +237,15 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
           default:
             break
         }
-        where_additions +=
-          (where_additions ? `\nAND ` : "") +
-          buildIndustryFiltersFunc(filter.industryFilters)
+        if (buildIndustryFiltersFunc) {
+          let industryFilters_additions = buildIndustryFiltersFunc
+            .call(this, filter.industryFilters)
+            .filter(Boolean)
+            .join("\nAND ")
+          where_additions +=
+            (where_additions && industryFilters_additions ? `\nAND ` : "") +
+            industryFilters_additions
+        }
       }
       let search_additions = []
       if (filter.search) {
@@ -256,6 +278,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       if (limit) {
         limit_addition += `\nLIMIT ${limit.start},${limit.offset} `
       }
+      // console.log("buyLeadsGetAll-query: " + query)
       let count = await this.sql.query(countHeader + query)
       let rows = await this.sql.query(realHeader + query + limit_addition)
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class

@@ -70,7 +70,7 @@ class BuyLeads extends React.Component {
               })
             }}
           >
-            <option value="All">{t("Choose your industry")}</option>
+            <option value="">{t("Choose your industry")}</option>
             <option value="Real Estate">{t("Real Estate")}</option>
             <option value="Crypto" disabled>
               {t("Crypto")}
@@ -93,7 +93,7 @@ class BuyLeads extends React.Component {
               })
             }}
           >
-            <option value="All">{t("Choose your category")}</option>
+            <option value="">{t("Choose your category")}</option>
             <option value="Buy" disabled>
               {t("Buy")}
             </option>

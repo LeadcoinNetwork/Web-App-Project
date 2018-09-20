@@ -12,9 +12,13 @@ const Filter = ({ index, filter, filters, handleFilter }) => (
           handleFilter(filters)
         }}
       >
-        {<option vlaue="All">{"Choose " + filter.name}</option>}
+        {
+          <option key="0" vlaue="">
+            {"Choose " + filter.name}
+          </option>
+        }
         {filter.options.map((option, index) => (
-          <option key={index} value={option}>
+          <option key={index + 1} value={option}>
             {option}
           </option>
         ))}

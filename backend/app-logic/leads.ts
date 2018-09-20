@@ -198,19 +198,10 @@ export default class Leads {
       start: parseInt(page || "0") * parseInt(limit || "50"),
       offset: limit || 50,
     }
-    const { industry, category, industryFilters } = filter
-    let _filter = {
-      search: null,
-      industry: null,
-      category: null,
-      industryFilters: null,
-    }
-    _filter.industry = industry === "All" ? "" : industry
-    _filter.category = category === "All" ? "" : category
-    _filter.industryFilters = industryFilters
-    switch (industry) {
+    let _filter = { ...filter }
+    switch (filter.industry) {
       case "Real Estate":
-        _filter.search = this.buildRealEstateSearch(filter)
+        _filter.search = this.buildRealEstateSearch(filter.search)
         break
       default:
         break
@@ -224,8 +215,7 @@ export default class Leads {
     }
   }
 
-  private buildRealEstateSearch(filter) {
-    const { search } = filter
+  private buildRealEstateSearch(search) {
     let _search
     if (search) {
       _search = ["Bedrooms/Baths", "Description", "Location"].map(field => {
@@ -236,8 +226,6 @@ export default class Leads {
         }
       })
     }
-    return {
-      search: _search,
-    }
+    return _search
   }
 }

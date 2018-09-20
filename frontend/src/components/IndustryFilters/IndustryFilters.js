@@ -16,7 +16,8 @@ const IndustryFilters = ({ filters, expand, onExpandClick, handleFilter }) => (
         <div className="arrow-right" />
       </div>
     </div>
-    {expand &&
+    {filters &&
+      expand &&
       filters.map((f, index) => (
         <Filter
           key={index}

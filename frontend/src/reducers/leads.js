@@ -106,8 +106,8 @@ const initialState = {
   floor_min: null,
   floor_max: null,
   filter: {
-    industry: "All",
-    category: "All",
+    industry: "",
+    category: "",
     search: "",
     industryFilters: null,
   },
@@ -123,14 +123,14 @@ const createReducerFor = namespace => {
     switch (action.type) {
       case types[namespace + "_FILTER_CHANGE"]:
         let filter = action.payload
-        if (!filter.industryFilters) {
-          switch (filter.industry) {
-            case "Real Estate":
+        switch (filter.industry) {
+          case "Real Estate":
+            if (!filter.industryFilters) {
               filter.industryFilters = RealEstateFilters
-              break
-            default:
-              filter.industryFilters = null
-          }
+            }
+            break
+          default:
+            filter.industryFilters = null
         }
         return {
           ...state,
@@ -164,8 +164,8 @@ const createReducerFor = namespace => {
           page: 0,
           total: 0,
           filter: {
-            industry: "All",
-            category: "All",
+            industry: "",
+            category: "",
             search: "",
             industryFilters: null,
           },

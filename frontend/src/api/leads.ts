@@ -115,7 +115,22 @@ export default class LeadsApi {
   }
 
   async buyLeadsGetList(filters?) {
-    return await this.request(methods.get, "/buy-leads", null, { ...filters })
+    let res = await this.request(methods.get, "/buy-leads", null, {
+      ...filters,
+      filter: {
+        ...filters.filter,
+        industryFilters: JSON.stringify(filters.filter.industryFilters),
+      },
+    })
+    return res.error
+      ? res
+      : {
+          ...res,
+          filter: {
+            ...res.filter,
+            industryFilters: JSON.parse(res.filter.industryFilters),
+          },
+        }
   }
 
   async buyLeadsBuy(leads: string[]) {

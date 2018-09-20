@@ -15,8 +15,8 @@ const authOptions = {
   session: false,
 }
 
-const done = a => {
-  console.log("Unhandled Catch")
+const done = (api, error) => {
+  console.log(api + ": Unhandled Catch- " + error.message + "\n" + error.stack)
 }
 
 export function start({
@@ -72,7 +72,7 @@ export function start({
       res.send({ done })
       return
       next()
-    })().catch(done)
+    })().catch(e => done("mock_leads", e))
   }
 
   /**
@@ -129,7 +129,7 @@ export function start({
             res.send({ error: err.message })
           })
         return next()
-      })().catch(done)
+      })().catch(e => done("leads/:id", e))
     },
   )
 
@@ -168,7 +168,7 @@ export function start({
             res.send({ error: err.message })
           })
         return next()
-      })().catch(done)
+      })().catch(e => done("sell_leads", e))
     },
   )
 
@@ -444,7 +444,7 @@ export function start({
             res.send({ error: err.message })
           })
         return next()
-      })().catch(done)
+      })().catch(e => done("my_leads", e))
     },
   )
 
@@ -536,7 +536,10 @@ export function start({
             page,
             limit,
             sortOrder,
-            filter,
+            filter: {
+              ...filter,
+              industryFilters: JSON.parse(filter.industryFilters),
+            },
             user,
           })
           .then(response => {
@@ -547,7 +550,7 @@ export function start({
             res.status(400)
             res.send({ error: err.message })
           })
-      })().catch(done)
+      })().catch(e => done("buy-leads", e))
     },
   )
 }

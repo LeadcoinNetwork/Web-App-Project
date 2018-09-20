@@ -24,12 +24,14 @@ export interface LeadQueryOptions {
   bought_from?: number
   ownerId?: number
   active?: boolean
-  filter?: {
-    industry: Industry
-    category: Categories
-    search: string
-    industryFilters: RealEstateFilter[] | CryptoFilter[]
-  }
+  filter?:
+    | undefined[]
+    | {
+        industry: Industry
+        category: Categories
+        search: string
+        industryFilters: RealEstateFilter[] | CryptoFilter[]
+      }
 }
 
 export interface RawLeadQueryOptions {
