@@ -13,7 +13,7 @@ const Filter = ({ index, filter, filters, handleFilter }) => (
         }}
       >
         {
-          <option key="0" vlaue="">
+          <option key="0" value="">
             {"Choose " + filter.name}
           </option>
         }
