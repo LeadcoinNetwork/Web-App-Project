@@ -44,6 +44,15 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     }
   }
 
+  private escape(value, isId) {
+    if (isId && (value.includes(" ") || value.includes("/"))) {
+      value = '"' + value + '"'
+    }
+    return isId
+      ? mysql.escapeId(value).slice(1, -1)
+      : mysql.escape(value).slice(1, -1)
+  }
+
   private buildRealEstateFilters(industryFilters: RealEstateFilter[]) {
     return industryFilters.map(filter => {
       switch (filter.type) {
@@ -63,16 +72,25 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
           )
         case "select":
           return filter.value
-            ? `${this.fieldName}->>'$.${filter.name}' = '${filter.value}'`
+            ? `${this.fieldName}->>'$.${this.escape(
+                filter.name,
+                true,
+              )}' = '${this.escape(filter.value, false)}'`
             : ``
         case "range":
           return (
             (filter.min
-              ? `${this.fieldName}->>'$.${filter.name}' > ${filter.min}`
+              ? `${this.fieldName}->>'$.${this.escape(
+                  filter.name,
+                  true,
+                )}' > ${this.escape(filter.min, false)}`
               : ``) +
             (filter.max
               ? (filter.min ? ` AND ` : ``) +
-                `${this.fieldName}->>'$.${filter.name}' < ${filter.max}`
+                `${this.fieldName}->>'$.${this.escape(
+                  filter.name,
+                  true,
+                )}' < ${this.escape(filter.max, false)}`
               : ``)
           )
         default:
@@ -221,13 +239,17 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       const { limit, filter, sort, user_id } = options
       let where_additions = ""
       if (filter.industry)
-        where_additions = `${this.fieldName}->>'$.Industry' = '${
-          filter.industry
-        }'`
+        where_additions = `${this.fieldName}->>'$.Industry' = '${this.escape(
+          filter.industry,
+          false,
+        )}'`
       if (filter.category)
         where_additions +=
           (where_additions ? `\nAND ` : "") +
-          `${this.fieldName}->>'$.Category' = '${filter.category}'`
+          `${this.fieldName}->>'$.Category' = '${this.escape(
+            filter.category,
+            false,
+          )}'`
       if (filter.industryFilters) {
         let buildIndustryFiltersFunc = undefined
         switch (filter.industry) {
@@ -251,12 +273,10 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       if (filter.search) {
         search_additions = filter.search
           .map(f => {
-            const escaped = mysql.escape(f.val)
-            if (f.field.includes(" ")) f.field = '"' + f.field + '"'
-            if (f.field.includes("/")) f.field = '"' + f.field + '"'
-            return `${this.fieldName}->>${mysql.escape("$." + f.field)} ${
+            const escaped = this.escape(f.val, false)
+            return `${this.fieldName}->>'$.${this.escape(f.field, true)}' ${
               f.op
-            } "%${escaped.slice(1, -1)}%"`
+            } "%${escaped}%"`
           })
           .join(`\nOR `)
       }
@@ -271,9 +291,10 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       if (user_id) query += `\nAND doc->>'$.ownerId' <> ${user_id} `
       if (where_additions) query += `\nAND ${where_additions}`
       if (sort) {
-        query += `\nORDER BY ${this.fieldName}->>${mysql.escape(
-          "$." + sort.sortBy,
-        )} ${sort.sortOrder}`
+        query += `\nORDER BY ${this.fieldName}->>'$.${this.escape(
+          sort.sortBy,
+          true,
+        )}' ${sort.sortOrder}`
       }
       if (limit) {
         limit_addition += `\nLIMIT ${limit.start},${limit.offset} `
