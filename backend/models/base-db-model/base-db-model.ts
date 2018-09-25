@@ -50,15 +50,15 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         case "date":
           return (
             (filter.from
-              ? `${this.fieldName}->>'$.date' > '${new Date(
+              ? `${this.fieldName}->>'$.date' > ${new Date(
                   filter.from,
-                ).valueOf()}'`
+                ).valueOf()}`
               : ``) +
             (filter.to
               ? (filter.from ? ` AND ` : ``) +
-                `${this.fieldName}->>'$.date' < '${new Date(
+                `${this.fieldName}->>'$.date' < ${new Date(
                   filter.to,
-                ).valueOf()}'`
+                ).valueOf()}`
               : ``)
           )
         case "select":
@@ -68,11 +68,11 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         case "range":
           return (
             (filter.min
-              ? `${this.fieldName}->>'$.${filter.name}' > '${filter.min}'`
+              ? `${this.fieldName}->>'$.${filter.name}' > ${filter.min}`
               : ``) +
             (filter.max
               ? (filter.min ? ` AND ` : ``) +
-                `${this.fieldName}->>'$.${filter.name}' < '${filter.max}'`
+                `${this.fieldName}->>'$.${filter.name}' < ${filter.max}`
               : ``)
           )
         default:
