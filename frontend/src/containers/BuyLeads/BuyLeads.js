@@ -118,17 +118,6 @@ class BuyLeads extends React.Component {
               })
             }}
           />
-          <Button
-            className="search"
-            onClick={() => {
-              this.props.clearList()
-              this.props.searchClicked()
-              this.props.fetchLeads()
-            }}
-            appStyle={true}
-          >
-            {t("Search")}
-          </Button>
           <IndustryFilters
             filters={this.props.leads.filter.industryFilters}
             expand={this.props.leads.expandIndustryFilters}
@@ -139,6 +128,19 @@ class BuyLeads extends React.Component {
               this.props.handleFilter(filter)
             }}
           />
+          <div>
+            <Button
+              className="search"
+              onClick={() => {
+                this.props.clearList()
+                this.props.searchClicked()
+                this.props.fetchLeads()
+              }}
+              appStyle={true}
+            >
+              {t("Search")}
+            </Button>
+          </div>
         </div>
         {this.props.leads.searchClicked && (
           <LeadsTemplate

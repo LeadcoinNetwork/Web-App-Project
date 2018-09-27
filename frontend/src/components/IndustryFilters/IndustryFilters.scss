@@ -4,7 +4,7 @@
   .expand-selection {
     display: inline-block;
     cursor: pointer;
-    padding-right: 28px;
+    padding-right: 30px;
 
     .expand-arrow {
       display: inline-block;
@@ -30,16 +30,22 @@
       }
     }
   }
+
   &.filters-expanded {
-    .expand-arrow {
-      bottom: -4px;
+    .expand-selection {
+      height: 40px;
+      vertical-align: middle;
 
-      .arrow-left {
-        transform: rotate(45deg) translateX(-3px);
-      }
+      .expand-arrow {
+        bottom: -4px;
 
-      .arrow-right {
-        transform: rotate(-45deg) translateX(3px);
+        .arrow-left {
+          transform: rotate(45deg) translateX(-3px);
+        }
+
+        .arrow-right {
+          transform: rotate(-45deg) translateX(3px);
+        }
       }
     }
   }
@@ -50,5 +56,13 @@
 
   .filter {
     display: inline-block;
+    vertical-align: top;
+    margin-bottom: 15px;
+
+    .ldc-select,
+    .ldc-textfield {
+      width: 170px;
+      margin-right: 25px;
+    }
   }
 }
