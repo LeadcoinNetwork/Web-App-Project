@@ -44,7 +44,7 @@ const fields = [
     name: "Price",
     sortable: true,
     editable: true,
-    maxWidth: "70px",
+    maxWidth: "100px",
     minWidth: "70px",
   },
   {
@@ -52,7 +52,7 @@ const fields = [
     name: "Size (SqFt)",
     sortable: true,
     editable: true,
-    maxWidth: "50px",
+    maxWidth: "100px",
     minWidth: "50px",
   },
   {
@@ -60,15 +60,15 @@ const fields = [
     name: "State",
     sortable: true,
     editable: true,
-    maxWidth: "80px",
-    minWidth: "80px",
+    maxWidth: "50px",
+    minWidth: "40px",
   },
   {
     key: "Location",
     name: "Location",
     sortable: true,
     editable: true,
-    maxWidth: "70px",
+    maxWidth: "200px",
     minWidth: "70px",
   },
   {
