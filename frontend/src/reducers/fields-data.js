@@ -45,7 +45,7 @@ const fields = [
     sortable: true,
     editable: true,
     maxWidth: "100px",
-    minWidth: "70px",
+    minWidth: "100px",
   },
   {
     key: "Size",

@@ -37,9 +37,16 @@ const Checkout = ({
     (price, lead) => price + parseLeadPrice(lead.lead_price),
     0,
   )
-  const shoppingCartFields = fields.filter(
-    field => field.key === "Description" || field.key === "lead_price",
-  )
+  const shoppingCartFields = fields.filter(field => {
+    switch (field.key) {
+      case "Description":
+      case "lead_price":
+      case "Price":
+        return true
+      default:
+        return false
+    }
+  })
   return (
     <div className="ldc-checkout">
       <h1>{t("Shopping Cart")}</h1>
@@ -55,13 +62,18 @@ const Checkout = ({
         <tbody>
           {selectedLeads.map(lead => (
             <tr>
-              {shoppingCartFields.map(field => (
-                <td className={"d-" + field.key}>
-                  {field.key === "lead_price"
-                    ? priceString(lead.lead_price)
-                    : lead[field.key]}
-                </td>
-              ))}
+              {shoppingCartFields.map(field => {
+                let content
+                switch (field.key) {
+                  case "lead_price":
+                  case "Price":
+                    content = priceString(lead[field.key])
+                    break
+                  default:
+                    content = lead[field.key]
+                }
+                return <td className={"d-" + field.key}>{content}</td>
+              })}
             </tr>
           ))}
         </tbody>
