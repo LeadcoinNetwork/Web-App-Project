@@ -1,0 +1,68 @@
+.industry-filters {
+  padding: 15px 0 0;
+
+  .expand-selection {
+    display: inline-block;
+    cursor: pointer;
+    padding-right: 30px;
+
+    .expand-arrow {
+      display: inline-block;
+      position: relative;
+      left: 15px;
+
+      .arrow-left,
+      .arrow-right {
+        display: inline-block;
+        position: relative;
+        bottom: 2px;
+        height: 10px;
+        width: 2px;
+        background-color: white;
+      }
+
+      .arrow-left {
+        transform: rotate(-45deg) translateX(-3px);
+      }
+
+      .arrow-right {
+        transform: rotate(45deg) translateX(3px);
+      }
+    }
+  }
+
+  &.filters-expanded {
+    .expand-selection {
+      height: 40px;
+      vertical-align: middle;
+
+      .expand-arrow {
+        bottom: -4px;
+
+        .arrow-left {
+          transform: rotate(45deg) translateX(-3px);
+        }
+
+        .arrow-right {
+          transform: rotate(-45deg) translateX(3px);
+        }
+      }
+    }
+  }
+
+  &.hide {
+    display: none;
+  }
+
+  .filter {
+    display: inline-block;
+    vertical-align: top;
+    margin-bottom: 15px;
+
+    .ldc-select,
+    .ldc-textfield {
+      width: 170px;
+      margin-right: 25px;
+    }
+  }
+}

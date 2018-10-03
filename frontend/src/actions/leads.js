@@ -28,6 +28,21 @@ export default {
       payload: newFilter,
     }
   },
+  expandFiltersClick(namespace) {
+    return {
+      type: types[namespace + "_EXPAND_FILTERS_CLICK"],
+    }
+  },
+  expandFilters(namespace) {
+    return {
+      type: types[namespace + "_EXPAND_FILTERS"],
+    }
+  },
+  contractFilters(namespace) {
+    return {
+      type: types[namespace + "_CONTRACT_FILTERS"],
+    }
+  },
   searchClicked(namespace) {
     return {
       type: types[namespace + "_SEARCH_CLICKED"],

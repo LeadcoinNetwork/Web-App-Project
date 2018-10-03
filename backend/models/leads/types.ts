@@ -24,7 +24,28 @@ export interface LeadQueryOptions {
   bought_from?: number
   ownerId?: number
   active?: boolean
-  filters?: object
+  filter?:
+    | undefined[]
+    | {
+        industry: Industry
+        category: Categories
+        search: string
+        industryFilters: RealEstateFilter[] | CryptoFilter[]
+      }
+}
+
+export interface RawLeadQueryOptions {
+  sortBy?: string
+  page?: string
+  limit?: string
+  sortOrder?: string
+  filter?: {
+    industry: Industry
+    category: Categories
+    search: string
+    industryFilters: RealEstateFilter[] | CryptoFilter[]
+  }
+  user?: any
 }
 
 export interface BaseLead {
@@ -85,6 +106,23 @@ export interface RealEstateLead extends BaseLead {
   "Housing Type"?: string
   Specification?: string
   "Property Type"?: string
+}
+
+export interface RealEstateFilter {
+  name: string
+  type: string
+  inputType?: string
+  min?: string
+  max?: string
+  options?: string[]
+  value?: string
+  from?: string
+  to?: string
+}
+
+export interface CryptoFilter {
+  name: string
+  type: string
 }
 
 export type Lead = BaseLead | RealEstateLead

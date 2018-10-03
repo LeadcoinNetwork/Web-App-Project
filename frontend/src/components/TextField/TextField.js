@@ -12,8 +12,8 @@ const TextField = ({
 }) => {
   return (
     <input
-      className={`ldc-textfield${appStyle ? " t-app-style" : ""}${
-        className ? " " + className : ""
+      className={`ldc-textfield${className ? " " + className : ""}${
+        appStyle ? " t-app-style" : ""
       }`}
       name={name}
       value={value}

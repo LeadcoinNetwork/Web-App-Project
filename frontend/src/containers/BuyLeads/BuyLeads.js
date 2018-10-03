@@ -2,10 +2,11 @@ import React from "react"
 import { connect } from "react-redux"
 import { push } from "react-router-redux"
 import { leads } from "../../actions"
-import LeadsTemplate from "Containers/LeadsTemplate"
-import Select from "Components/Select"
-import TextField from "Components/TextField"
-import Button from "Components/Button"
+import LeadsTemplate from "../LeadsTemplate"
+import IndustryFilters from "../../components/IndustryFilters"
+import Select from "../../components/Select"
+import TextField from "../../components/TextField"
+import Button from "../../components/Button"
 import t from "../../utils/translate/translate"
 
 class BuyLeads extends React.Component {
@@ -69,7 +70,7 @@ class BuyLeads extends React.Component {
               })
             }}
           >
-            <option value="All">{t("Choose your industry")}</option>
+            <option value="">{t("Choose your industry")}</option>
             <option value="Real Estate">{t("Real Estate")}</option>
             <option value="Crypto" disabled>
               {t("Crypto")}
@@ -92,7 +93,7 @@ class BuyLeads extends React.Component {
               })
             }}
           >
-            <option value="All">{t("Choose your category")}</option>
+            <option value="">{t("Choose your category")}</option>
             <option value="Buy" disabled>
               {t("Buy")}
             </option>
@@ -117,17 +118,29 @@ class BuyLeads extends React.Component {
               })
             }}
           />
-          <Button
-            className="search"
-            onClick={() => {
-              this.props.clearList()
-              this.props.searchClicked()
-              this.props.fetchLeads()
+          <IndustryFilters
+            filters={this.props.leads.filter.industryFilters}
+            expand={this.props.leads.expandIndustryFilters}
+            onExpandClick={this.props.expandFiltersClick}
+            handleFilter={industryFilters => {
+              const filter = this.props.leads.filter
+              filter.industryFilters = industryFilters
+              this.props.handleFilter(filter)
             }}
-            appStyle={true}
-          >
-            {t("Search")}
-          </Button>
+          />
+          <div>
+            <Button
+              className="search"
+              onClick={() => {
+                this.props.clearList()
+                this.props.searchClicked()
+                this.props.fetchLeads()
+              }}
+              appStyle={true}
+            >
+              {t("Search")}
+            </Button>
+          </div>
         </div>
         {this.props.leads.searchClicked && (
           <LeadsTemplate
@@ -158,6 +171,7 @@ export default connect(
       leads.setSelectedLeads("BUY_LEADS", selectedLeads),
     toggelCardView: index => leads.toggelCardView("BUY_LEADS", index),
     searchClicked: () => leads.searchClicked("BUY_LEADS"),
+    expandFiltersClick: () => leads.expandFiltersClick("BUY_LEADS"),
     clearList: () => leads.clearList("BUY_LEADS"),
   },
 )(BuyLeads)

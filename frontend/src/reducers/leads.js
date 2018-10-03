@@ -1,4 +1,58 @@
 import types from "../actions/types"
+import statesData from "./states-data"
+
+const RealEstateFilters = [
+  {
+    name: "Date",
+    type: "date",
+    from: "",
+    to: "",
+  },
+  {
+    name: "State",
+    type: "select",
+    options: statesData,
+    value: "",
+  },
+  {
+    name: "Price",
+    type: "range",
+    inputType: "number",
+    min: "",
+    max: "",
+  },
+  {
+    name: "Size",
+    type: "range",
+    inputType: "number",
+    min: "",
+    max: "",
+  },
+  {
+    name: "Housing Type",
+    type: "select",
+    options: [
+      "Building",
+      "House",
+      "Apartment",
+      "Flat",
+      "Condo",
+      "Duplex",
+      "Townhouse",
+      "Cottage",
+      "Rooftop",
+      "Penthouse",
+      "Manufactured",
+      "Studio",
+      "Gallery",
+      "Farm",
+      "Office",
+      "Warehouse",
+      "Land",
+    ],
+    value: "",
+  },
+]
 
 const initialState = {
   list: [],
@@ -56,11 +110,13 @@ const initialState = {
   floor_min: null,
   floor_max: null,
   filter: {
-    industry: "All",
-    category: "All",
+    industry: "",
+    category: "",
     search: "",
+    industryFilters: null,
   },
   searchClicked: false,
+  expandIndustryFilters: false,
   error: "",
   loading: true,
   selected: new Set(),
@@ -70,9 +126,34 @@ const createReducerFor = namespace => {
   return (state = initialState, action) => {
     switch (action.type) {
       case types[namespace + "_FILTER_CHANGE"]:
+        let filter = action.payload
+        switch (filter.industry) {
+          case "Real Estate":
+            if (!filter.industryFilters) {
+              filter.industryFilters = RealEstateFilters
+            }
+            break
+          default:
+            filter.industryFilters = null
+        }
         return {
           ...state,
-          filter: action.payload,
+          filter,
+        }
+      case types[namespace + "_EXPAND_FILTERS_CLICK"]:
+        return {
+          ...state,
+          expandIndustryFilters: !state.expandIndustryFilters,
+        }
+      case types[namespace + "_EXPAND_FILTERS"]:
+        return {
+          ...state,
+          expandIndustryFilters: true,
+        }
+      case types[namespace + "_CONTRACT_FILTERS"]:
+        return {
+          ...state,
+          expandIndustryFilters: false,
         }
       case types[namespace + "_SEARCH_CLICKED"]:
         return {
@@ -87,9 +168,10 @@ const createReducerFor = namespace => {
           page: 0,
           total: 0,
           filter: {
-            industry: "All",
-            category: "All",
+            industry: "",
+            category: "",
             search: "",
+            industryFilters: null,
           },
           selected: new Set(),
         }

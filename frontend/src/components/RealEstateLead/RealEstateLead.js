@@ -1,7 +1,7 @@
 import React from "react"
 import Button from "Components/Button"
 import { fromNow } from "Utils/time"
-import { priceString } from "../../utils/numbers"
+import { priceString, areaSpanEl } from "../../utils/numbers"
 import t from "../../utils/translate/translate"
 
 const RealEstateLead = lead => {
@@ -83,7 +83,8 @@ const RealEstateLead = lead => {
               <span>{lead["Bedrooms/Baths"]}</span>
             )}
           {lead.fieldsCheck.Size &&
-            lead.Size.length > 0 && <span>{lead.Size}</span>}
+            lead.Size.length > 0 &&
+            areaSpanEl(lead.Size)}
           {lead.fieldsCheck.Price &&
             lead.Price && (
               <span>
