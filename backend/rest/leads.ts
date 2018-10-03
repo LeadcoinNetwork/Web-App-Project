@@ -608,7 +608,6 @@ export function start({
           start: parseInt(page || 0) * parseInt(limit || 50),
           offset: limit || 50,
         }
-        console.log({ user })
         await appLogic.leads
           .getAllLeads({
             sort: _sort,
