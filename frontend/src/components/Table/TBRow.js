@@ -7,23 +7,23 @@ class TBrowOptions extends React.Component {
   componentWillMount() {
     this.setState({ open: false })
   }
-  render() {
-    const { open } = this.state
-    const optionsContainer = Object.keys(this.props.options).map(o => {
-      console.log(o)
+
+  options() {
+    return Object.keys(this.props.options).reduce((mem, o) => {
       let className
+      if (!this.props.options[o]) return
       switch (o) {
         case "deleteLead":
-          return (
+          mem.push(
             <div
               key={o}
               className="trash"
               onClick={() => {
-                this.props.options.deleteLead(this.props.outerProps.id)
+                this.props.options.deleteLead([this.props.outerProps.id])
               }}
-            />
+            />,
           )
-          break
+          return mem
         case "editLead":
           className = "pencil"
           break
@@ -31,25 +31,39 @@ class TBrowOptions extends React.Component {
           className = "eye"
           break
       }
-      return (
-        <div
-          key={o}
-          className={className}
-          onClick={() => {
-            this.props.options[o](this.props.outerProps)
-          }}
-        />
+      mem.push(
+        <>
+          |
+          <div
+            className={className}
+            onClick={() => {
+              this.props.options[o](this.props.outerProps)
+            }}
+          />
+        </>,
       )
-    })
+      return mem
+    }, [])
+  }
+
+  render() {
+    const { open } = this.state
+    const optionsContainer = this.options()
     return (
       <>
-        {open && <div className="options_bar">{optionsContainer}</div>}
-        <div
-          className="options"
-          onClick={() => {
-            this.setState({ open: !open })
-          }}
-        />
+        {optionsContainer && (
+          <div
+            className="options"
+            onClick={() => {
+              this.setState({ open: !open })
+            }}
+            onMouseLeave={() => {
+              this.setState({ open: false })
+            }}
+          >
+            {open && <div className="options_bar">{optionsContainer}</div>}
+          </div>
+        )}
       </>
     )
   }

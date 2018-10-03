@@ -14,32 +14,24 @@
       cursor: pointer;
     }
   }
-  .trash {
+  .trash1 {
     width: 10px;
     height: 10px;
     padding: 10px;
     margin: 5px;
   }
 
-  .eye {
+  .eye1 {
     width: 10px;
     height: 10px;
     padding: 10px;
     margin: 5px;
   }
 
-  .pencil {
+  .pencil1 {
     width: 10px;
     height: 10px;
     padding: 10px;
     margin: 5px;
-  }
-
-  &:hover {
-    .trash,
-    .eye,
-    .pencil {
-      cursor: pointer;
-    }
   }
 }
