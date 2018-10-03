@@ -59,7 +59,6 @@ module.exports = async page => {
     )
     await snapAndClick(".bl-filters .ldc-button")
     await page.waitForSelector(".ldc-real-estate-lead .rel-selector")
-    //await snapAndClick(".ldc-real-estate-lead .rel-selector")
 
     await page.evaluate(() => {
       //@ts-ignore
