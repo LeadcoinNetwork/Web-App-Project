@@ -52,7 +52,7 @@ module.exports = async page => {
         .querySelector(".bl-filters select:nth-child(1)")
         .dispatchEvent(new Event("change")),
     )
-    await page.select(".bl-filters select:nth-child(2)", "Buy")
+    await page.select(".bl-filters select:nth-child(2)", "Sell")
     await page.evaluate(() =>
       document
         .querySelector(".bl-filters select:nth-child(2)")

@@ -6,7 +6,7 @@ module.exports = ({ headless, instructions, url }) => {
     tourist = true,
     overrideInstructions = null,
     emulateDevice = null,
-  }) => {
+  } = {}) => {
     let state
     console.log("Waking up Puppets...")
     const webbrowser = await puppeteer.launch({ headless })

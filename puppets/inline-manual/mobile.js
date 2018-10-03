@@ -51,15 +51,15 @@ module.exports = async page => {
         .querySelector(".bl-filters select:nth-child(1)")
         .dispatchEvent(new Event("change")),
     )
-    await page.select(".bl-filters select:nth-child(2)", "Buy")
+    await page.select(".bl-filters select:nth-child(2)", "Sell")
     await page.evaluate(() =>
       document
         .querySelector(".bl-filters select:nth-child(2)")
         .dispatchEvent(new Event("change")),
     )
     await snapAndClick(".bl-filters .ldc-button")
-    await page.waitForSelector(".ldc-real-estate-lead")
-    await snapAndClick(".ldc-real-estate-lead .rel-selector")
+    await page.waitForSelector(".ldc-real-estate-lead .rel-selector")
+    //await snapAndClick(".ldc-real-estate-lead .rel-selector")
 
     await page.evaluate(() => {
       //@ts-ignore
