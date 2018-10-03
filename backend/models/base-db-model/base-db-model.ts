@@ -53,6 +53,10 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       : mysql.escape(value).slice(1, -1)
   }
 
+  private addDays(date: Date, days: number): Date {
+    return new Date(date.setDate(date.getDate() + days))
+  }
+
   private buildRealEstateFilters(industryFilters: RealEstateFilter[]) {
     return industryFilters.map(filter => {
       switch (filter.type) {
@@ -65,8 +69,9 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
               : ``) +
             (filter.to
               ? (filter.from ? ` AND ` : ``) +
-                `${this.fieldName}->>'$.date' < ${new Date(
-                  filter.to,
+                `${this.fieldName}->>'$.date' < ${this.addDays(
+                  new Date(filter.to),
+                  1,
                 ).valueOf()}`
               : ``)
           )
