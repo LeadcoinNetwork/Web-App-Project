@@ -128,7 +128,7 @@ class BuyLeads extends React.Component {
               this.props.handleFilter(filter)
             }}
           />
-          <div>
+          <div className="search-button-wrapper">
             <Button
               className="search"
               onClick={() => {
