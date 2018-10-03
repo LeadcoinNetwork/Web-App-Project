@@ -3,7 +3,6 @@ import { localeString } from "../../utils/time"
 import { priceString, areaSpanEl } from "../../utils/numbers"
 
 const TBRCol = ({ field, value, colCount, staticColsWidth }) => {
-  debugger
   return (
     <div
       className="tbr-col"

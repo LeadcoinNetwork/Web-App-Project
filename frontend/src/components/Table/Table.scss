@@ -13,6 +13,19 @@
     right: 0;
   }
 
+  .options_bar {
+    position: absolute;
+    top: -15px;
+    z-index: 1000;
+    left: 30px;
+    line-height: 30px;
+    height: 30px;
+    width: auto;
+    display: flex;
+    border: solid thin black;
+    background-color: $bg-level-2;
+  }
+
   .t-main {
     overflow-x: auto;
 

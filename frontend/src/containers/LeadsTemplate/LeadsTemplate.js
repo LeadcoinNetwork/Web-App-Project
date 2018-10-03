@@ -206,6 +206,7 @@ class LeadsTemplate extends React.Component {
                   selected={leads.selected}
                   isSelectable={isSelectable}
                   isSearchResults={pageName === "buy" ? true : false}
+                  deleteLead={deleteLead}
                   editLead={editLead}
                   displayLead={displayLead}
                 />

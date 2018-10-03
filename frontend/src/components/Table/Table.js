@@ -116,6 +116,11 @@ class Table extends React.Component {
             isSelectable={props.isSelectable}
           />
           <TBody
+            options={{
+              deleteLead: props.deleteLead,
+              displayLead: props.displayLead,
+              editLead: props.editLead,
+            }}
             displayLead={props.displayLead}
             editLead={props.editLead}
             fields={props.fields}

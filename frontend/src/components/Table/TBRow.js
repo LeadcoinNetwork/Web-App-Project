@@ -3,6 +3,58 @@ import Checkbox from "Components/Checkbox"
 import Button from "Components/Button"
 import TBRCol from "./TBRCol"
 
+class TBrowOptions extends React.Component {
+  componentWillMount() {
+    this.setState({ open: false })
+  }
+  render() {
+    const { open } = this.state
+    const optionsContainer = Object.keys(this.props.options).map(o => {
+      console.log(o)
+      let className
+      switch (o) {
+        case "deleteLead":
+          return (
+            <div
+              key={o}
+              className="trash"
+              onClick={() => {
+                this.props.options.deleteLead(this.props.outerProps.id)
+              }}
+            />
+          )
+          break
+        case "editLead":
+          className = "pencil"
+          break
+        case "displayLead":
+          className = "eye"
+          break
+      }
+      return (
+        <div
+          key={o}
+          className={className}
+          onClick={() => {
+            this.props.options[o](this.props.outerProps)
+          }}
+        />
+      )
+    })
+    return (
+      <>
+        {open && <div className="options_bar">{optionsContainer}</div>}
+        <div
+          className="options"
+          onClick={() => {
+            this.setState({ open: !open })
+          }}
+        />
+      </>
+    )
+  }
+}
+
 const TBRow = props => (
   <div
     className={`tb-row
@@ -10,21 +62,8 @@ const TBRow = props => (
     ${props.displayLead ? " display-lead" : ""}
   `}
   >
-    {props.displayLead && (
-      <>
-        <div
-          className="pencil"
-          onClick={() => {
-            props.editLead(props)
-          }}
-        />
-        <div
-          className="eye"
-          onClick={() => {
-            props.displayLead(props)
-          }}
-        />
-      </>
+    {props.options && (
+      <TBrowOptions options={props.options} outerProps={props} />
     )}
     {props.isSelectable && (
       <div className="tbr-checkbox">
