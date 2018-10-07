@@ -26,13 +26,15 @@ class Signup extends React.Component {
       <section className="ldc-signup">
         <div className="s-main">
           <h1>{t("Register to LeadCoin")}</h1>
-          <div className="sm-social-buttons">
-            <SocialLogin
-              connectWithText={t("connect with")}
-              provider={"google"}
-            />
-            {/* <SocialLogin connectWithText={t("connect with")} provider={"linkedin"} /> */}
-          </div>
+          {!navigator.userAgent.includes("gonative") && (
+            <div className="sm-social-buttons">
+              <SocialLogin
+                connectWithText={t("connect with")}
+                provider={"google"}
+              />
+              {/* <SocialLogin connectWithText={t("connect with")} provider={"linkedin"} /> */}
+            </div>
+          )}
           <div className="sm-form">
             <h4>{t("Or enter your details:")}</h4>
             <TextField
