@@ -56,6 +56,9 @@ class SellLeads extends React.Component {
         </div>
         <div style={{ float: "right" }}>
           <div className="upload-links">
+            <Link to="/salesforce-upload" className="csv-upload no-underline">
+              {t("Upload from Salesforce")}
+            </Link>
             <Link to="/csv-upload" className="csv-upload no-underline">
               {t("Upload CSV File")}
             </Link>

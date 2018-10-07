@@ -233,12 +233,27 @@ class CSVUpload extends React.Component {
   render() {
     let fileLabel = t("Choose File")
     const { finished, file } = this.props.csvUpload
+    const { isSalesforce } = this.props
     if (file) fileLabel = file.name
     if (finished) {
       return (
         <div className="csvUpload">
-          <h1>{t("Upload CSV File")}</h1>
-          <h3>{t("Add multiple leads for sale by uploading a CSV file.")}</h3>
+          {isSalesforce && (
+            <>
+              <h1>{t("Upload Salesforce Data")}</h1>
+              <h3>
+                {t("Export your data from Salesforce and upload it here.")}
+              </h3>
+            </>
+          )}
+          {!isSalesforce && (
+            <>
+              <h1>{t("Upload CSV File")}</h1>
+              <h3>
+                {t("Add multiple leads for sale by uploading a CSV file.")}
+              </h3>
+            </>
+          )}
           <div>
             <div> Your leads are being proccessed. </div>
             <div className="ajax-loader2" />
@@ -259,14 +274,23 @@ class CSVUpload extends React.Component {
             <div className="back-text">Back</div>
           </div>
         </div>
-        <h1>{t("Upload CSV File")}</h1>
+        {/* <h1>{t("Upload CSV File")}</h1> */}
+        {isSalesforce && <h1>{t("Upload Salesforce Data")}</h1>}
+        {!isSalesforce && <h1>{t("Upload CSV File")}</h1>}
         <div>
           {/* <Button appStyle secondary label={fileLabel}> */}
           {!this.maybeCsvMapper() && (
             <div>
-              <h3>
-                {t("Add multiple leads for sale by uploading a CSV file.")}
-              </h3>
+              {isSalesforce && (
+                <h3>
+                  {t("Export your data from Salesforce and upload it here.")}
+                </h3>
+              )}
+              {!isSalesforce && (
+                <h3>
+                  {t("Add multiple leads for sale by uploading a CSV file.")}
+                </h3>
+              )}
               <div className="file-pick">
                 <Dropzone
                   accept=".csv"

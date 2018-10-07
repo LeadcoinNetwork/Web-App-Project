@@ -68,6 +68,10 @@ class App extends React.Component {
               <Route path="/payments" component={Payments} />
               <Route path="/withdraw" component={Withdraw} />
               {/* <Route path="/uploadform" component={UploadForm} /> */}
+              <Route
+                path="/salesforce-upload"
+                render={() => <CSVUpload isSalesforce={true} />}
+              />
               <Route path="/csv-upload" component={CSVUpload} />
               <Route path="/csv-mapping" component={CSVMapping} />
               <Route path="/edit-lead-:id" component={EditLead} />
