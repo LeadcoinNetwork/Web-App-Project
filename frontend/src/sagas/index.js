@@ -9,6 +9,8 @@ import snackbar from "./snackbar"
 import emailConfirmation from "./emailConfirmation"
 import csvMapping from "./csvMapping"
 import completeRegistration from "./completeRegistration"
+import editLead from "./editLead"
+import loadLeadForEdit from "./loadLeadForEdit"
 import addLead from "./addLead"
 import redirectIfNotAllowed from "./redirectIfNotAllowed"
 import sellLeads from "./sellLeads"
@@ -20,6 +22,7 @@ import moveToSell from "./moveToSell"
 import language from "./language"
 import inlinemanual from "./inlinemanual"
 import notifications from "./notifications"
+import googleAnalytics from "./googleanalytics"
 
 import { spawn, fork } from "redux-saga/effects"
 import * as superagent from "superagent"
@@ -46,6 +49,8 @@ export default function* rootSaga() {
     login,
     forgotPassword,
     addLead,
+    editLead,
+    loadLeadForEdit,
     completeRegistration,
     emailConfirmation,
     changePassword,
@@ -63,6 +68,7 @@ export default function* rootSaga() {
     moveToSell,
     inlinemanual,
     notifications,
+    googleAnalytics,
   ]
   for (var i in sagas) {
     yield fork(sagas[i], api)

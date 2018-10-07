@@ -4,6 +4,24 @@ import { IModels } from "./index"
 import { Notification } from "../models/notifications/types"
 
 import * as _ from "lodash"
+import config from "./config"
+var request = require("request-promise")
+
+const logTransaction = async ({ fiat_amount, exchange_rate, leads_count }) => {
+  const res = await request({
+    uri: "http://blockchain.leadcoin.network/exchange",
+    method: "POST",
+    json: true,
+    body: {
+      fiat_amount,
+      exchange_rate,
+      leads_count,
+    },
+  })
+  return res
+  //{ txid: '0x9d6cd285dd8ac7bde247da8943ca2b536f58d7cac79deac975ba48766901eb68',
+  //  link: 'http://ropsten.etherscan.io/tx/0x9d6cd285dd8ac7bde247da8943ca2b536f58d7cac79deac975ba48766901eb68' }
+}
 
 export interface getLeadsOptions {
   sort_by?: [string, "ASC" | "DESC"]
@@ -16,11 +34,11 @@ const contains_contact = lead => {
   return lead.telephone || lead.name || lead.email || lead["Contact Person"]
 }
 
-const validate_lead = (lead) => {
+const validate_lead = lead => {
   const errors = []
-  if (!lead.lead_price) errors.push("lead_price::Lead price is required")
+  if (!lead.lead_price) errors.push("lead_price::Lead price is required.")
   if (!contains_contact(lead)) {
-    errors.push("phone::At least one contact info is required")
+    errors.push("phone::At least one contact info is required.")
     errors.push("name::")
     errors.push("email::")
   }
@@ -32,6 +50,18 @@ const summy = prop => (sum, obj) => (sum += obj[prop])
 export default class Leads {
   constructor(private models: IModels) {}
   public UploadCSV() {}
+
+  public async getOwnedLeads() {
+    return await this.models.leads.getOwnedLeads()
+  }
+
+  public async getSingleLead(id) {
+    return await this.models.leads.getSingleLead(id)
+  }
+
+  public async getOwners() {
+    return await this.models.leads.getOwners()
+  }
 
   public async moveMyLeadsToSellLeads(leads: number[]) {
     return await this.models.leads.moveMyToSell(leads)
@@ -49,7 +79,7 @@ export default class Leads {
     }
     buyer.balance = buyer.balance | 0
     if (buyer.balance < deal_price) {
-      throw new Error("balance::Amount insufficient")
+      throw new Error("balance::Amount insufficient.")
     }
     const result = await this.models.leads.buy(leads, new_owner)
     const groupedByOwner = _.groupBy(result, "bought_from")
@@ -61,15 +91,29 @@ export default class Leads {
       overall_cost += transaction_amount
       this.models.users.increaseBalance(seller, transaction_amount)
       this.models.notifications.createNotification({
-        msg: `${
+        msg: `Someone bought ${
           group.length
-        } of your leads were bought for a total of ${overall_cost}$`,
+        } of your leads for a total of ${overall_cost}$.`,
         userId: seller,
         unread: true,
       })
     }
     this.models.users.decreaseBalance(new_owner, overall_cost)
-    return result
+    const txDetails = await logTransaction({
+      leads_count: result.length.toString(),
+      fiat_amount: (overall_cost * 100).toString(),
+      exchange_rate: "1999000000000000000",
+    })
+    /*
+    I'll just comment this part out instead of deleting it, maybe they'll want it back someday (@Leekao)
+
+    this.models.notifications.createNotification({
+      msg: "Your transaction was logged to " + txDetails.link,
+      userId: new_owner,
+      unread: true,
+    })
+    */
+    return txDetails
   }
 
   public async removeLead(lead_id: number) {
@@ -94,6 +138,20 @@ export default class Leads {
     throw new Error(problems.join(" ;"))
   }
 
+  public async EditLead(lead: Lead) {
+    const problems = validate_lead(lead)
+    if (problems.length > 0) throw new Error(problems.join(" ;"))
+    lead = await this.sanitizeLead(lead)
+    const current_lead = await this.models.leads.getSingleLead(lead.id)
+    console.log({ current_lead, lead })
+    switch (true) {
+      case current_lead.ownerId != lead.ownerId:
+      case !current_lead.active:
+        throw new Error("general::lead mutated.")
+    }
+    return await this.models.leads.EditLead(lead)
+  }
+
   public async getMockLeads(user_id: number) {
     return await this.models.leads.getMockLeads(user_id)
   }
@@ -107,11 +165,16 @@ export default class Leads {
   }
 
   public async getMyLeads(user_id: number, options: LeadQueryOptions) {
-    return await this.models.leads.getMyLeads(user_id, options)
+    const leads = await this.models.leads.getMyLeads(user_id, options)
+    return leads
   }
 
   public async getBoughtLeads(user_id: number, options: LeadQueryOptions) {
-    return await this.models.leads.getBoughtLeads(user_id, options)
+    const leads = await this.models.leads.getBoughtLeads(user_id, options)
+    leads.list = leads.list.map(l => {
+      return Object.assign(l, { lead_price: null })
+    })
+    return leads
   }
 
   public async getAllLeads(options: LeadQueryOptions) {

@@ -1,5 +1,8 @@
 import React from "react"
+import { connect } from "react-redux"
+import * as actions from "Actions"
 import Table from "Components/Table"
+import Button from "Components/Button"
 import LeadsResults from "Components/LeadsResults"
 import Select from "Components/Select"
 import TextField from "Components/TextField"
@@ -7,6 +10,7 @@ import t from "../../utils/translate/translate"
 import RealEstateLead from "Components/RealEstateLead"
 import SwitchResultsMode from "Containers/SwitchResultsMode"
 import { Link } from "react-router-dom"
+import { push } from "react-router-redux"
 
 class LeadsTemplate extends React.Component {
   onScrollBottom = () => {
@@ -41,30 +45,42 @@ class LeadsTemplate extends React.Component {
 
     setSelectedLeads(selected)
   }
-  renderFilters = () => {
-    if (this.props.pageName !== "buy") return
-
-    return (
-      <div className="lt-filters">
-        <TextField placeholder={t("Search...")} appStyle />
-      </div>
-    )
-  }
   zeroResults = () => {
+    const { loading } = this.props.leads
+    console.log({ loading })
+    if (loading) {
+      return (
+        <>
+          <div className="ajax-loader2" />
+        </>
+      )
+    }
     switch (this.props.pageName) {
+      case "sell":
+        return (
+          <>
+            <h3>{t("Start uploading your leads")}</h3>
+            <span>
+              {t("Upload your leads now by selecting a ")}
+              <Link to="/csv-upload">{t("CSV file")}</Link>
+              {t(" or by filling out a ")}
+              <Link to="/add-lead">{t("simple web form")}</Link>
+            </span>
+          </>
+        )
       case "buy":
         return (
           <>
-            <h3>{t("Sorry, we couldn't find any leads")}</h3>
-            <span>{t("Try expanding your search criteria")}</span>
+            <h3>{t("Sorry, we couldn't find any leads.")}</h3>
+            <span>{t("Try expanding your search criteria.")}</span>
           </>
         )
       case "my":
         return (
           <>
-            <h3>{t("You have no leads")}</h3>
+            <h3>{t("You have no leads.")}</h3>
             <span>
-              {t("Explore and ")}{" "}
+              {t("Explore and ")}
               <Link to="/buy-leads">{t("buy new leads")}</Link>
               {t(" now")}
             </span>
@@ -72,72 +88,140 @@ class LeadsTemplate extends React.Component {
         )
     }
   }
-  renderResultsHead = () => {
-    let { leads } = this.props
-
+  renderResultsHead = isSearchResults => {
+    let {
+      pageName,
+      leads,
+      app,
+      toggleResultsMode,
+      isSelectable,
+      getButtons,
+    } = this.props
     return (
-      <div className="lt-results-head">
-        <label className="ltrh-count">
+      <div
+        className={`lt-results-head
+        ${isSearchResults ? " is-search-results" : " not-search-results"}
+      `}
+      >
+        {isSearchResults && <h4>{t("Search Results")}</h4>}
+        {isSelectable &&
+          getButtons &&
+          getButtons().table.map(button => (
+            <Button
+              key={button.value}
+              label={button.value}
+              onClick={button.onClick}
+              appStyle={true}
+              disabled={!leads.selected.size}
+            />
+          ))}
+        {/* <label className="ltrh-count">
           {leads.list.length} {t("of")} {leads.total} {t("leads")}
-        </label>
-        {/* <Select>
-          <option>{t("Sort By")}</option>
-          <option>{t("size")}</option>
-          <option>{t("budget")}</option>
-        </Select> */}
+        </label> */}
+        {
+          <SwitchResultsMode
+            cardsMode={app.cardsMode}
+            toggleMode={toggleResultsMode}
+          />
+        }
       </div>
     )
   }
   render() {
-    let { pageName, leads, fields, setSelectedLeads } = this.props,
-      isNotAllSelected = this.isNotAllSelected()
+    let {
+      pageName,
+      leads,
+      fields,
+      setSelectedLeads,
+      app,
+      getButtons,
+      isSelectable,
+      constantCardOpen,
+      displayLead,
+      editLead,
+    } = this.props
 
+    let fieldsCheck = {}
+    fields.forEach(element => {
+      fieldsCheck[element.key] = element.key
+    })
+
+    let isNotAllSelected = this.isNotAllSelected()
     return (
       <div>
-        <div className="ldc-leads-template">
+        <div
+          className={`ldc-leads-template${isSelectable ? " selectable" : ""}`}
+        >
           <section className={`ldc-${pageName}-leads`}>
-            {/* <SwitchResultsMode /> */}
-            {/* {cardsMode ? (
+            {leads.list.length ? (
+              app.cardsMode ? (
                 <LeadsResults
                   leads={leads}
-                  buttons={this.props.getListButtons()}
+                  fullyLoaded={leads.fullyLoaded}
+                  isSelectable={isSelectable}
                   isNotAllSelected={isNotAllSelected}
+                  isSearchResults={pageName === "buy" ? true : false}
                   loading={leads.loading}
                   onScrollBottom={this.onScrollBottom}
                   toggleAll={this.toggleAll}
                   renderFilters={this.renderFilters}
                   renderResultsHead={this.renderResultsHead}
-                  renderLead={lead => (
+                  renderLead={(lead, index) => (
                     <RealEstateLead
                       key={lead.id}
+                      fieldsCheck={fieldsCheck}
                       {...lead}
-                      checked={leads.selected.has(lead.id)}
-                      buttons={this.props.getLeadButtons()}
+                      checked={isSelectable && leads.selected.has(lead.id)}
+                      isSelectable={isSelectable}
+                      push={this.props.push}
+                      buttons={getButtons && getButtons().record}
                       toggleCheck={event => this.toggleLead(event, lead.id)}
+                      toggleCardView={() => this.props.toggelCardView(index)}
+                      constantCardOpen={constantCardOpen}
+                      editLead={editLead}
                     />
                   )}
                 />
-              ) : ( */}
-            <Table
-              fields={fields.map(field => ({
-                ...field,
-                name: t(field.name),
-              }))}
-              loading={leads.loading}
-              onScrollBottom={this.onScrollBottom}
-              // renderFilters={this.renderFilters}
-              renderResultsHead={this.renderResultsHead}
-              records={leads.list}
-              buttons={this.props.getButtons && this.props.getButtons()}
-              setSelectedRecords={setSelectedLeads}
-              isNotAllSelected={isNotAllSelected}
-              selected={leads.selected}
-              isSelectable={this.props.getButtons}
-            />
-            {/* )} */}
-            {!leads.list.length &&
-              !leads.loading && (
-                <div className="lt-zero-results">{this.zeroResults()}</div>
+              ) : (
+                <Table
+                  fields={fields.map(field => ({
+                    ...field,
+                    name: t(field.name),
+                  }))}
+                  loading={leads.loading}
+                  onScrollBottom={this.onScrollBottom}
+                  renderResultsHead={this.renderResultsHead}
+                  records={leads.list}
+                  fullyLoaded={leads.fullyLoaded}
+                  buttons={
+                    getButtons && {
+                      table: [],
+                      record: getButtons().record,
+                    }
+                  }
+                  setSelectedRecords={setSelectedLeads}
+                  isNotAllSelected={isNotAllSelected}
+                  selected={leads.selected}
+                  isSelectable={isSelectable}
+                  isSearchResults={pageName === "buy" ? true : false}
+                  editLead={editLead}
+                  displayLead={displayLead}
+                />
+              )
+            ) : (
+              <div className="lt-zero-results">{this.zeroResults()}</div>
+            )}
+            {isSelectable &&
+              getButtons && (
+                <div className="mobileOnly downStrip">
+                  <Button
+                    className={pageName + "Leads"}
+                    label={getButtons().table[0].value}
+                    onClick={getButtons().table[0].onClick}
+                    appStyle={true}
+                    disabled={!leads.selected.size}
+                  />
+                </div>
               )}
           </section>
         </div>
@@ -146,4 +230,16 @@ class LeadsTemplate extends React.Component {
   }
 }
 
-export default LeadsTemplate
+const mapStateToProps = state => ({
+  app: state.app,
+})
+
+const mapDispatchToProps = {
+  toggleResultsMode: actions.app.toggleResultsMode,
+  push,
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(LeadsTemplate)

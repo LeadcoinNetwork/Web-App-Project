@@ -1,6 +1,6 @@
 //@ts-check
-import { types } from "Actions"
-import * as Actions from "Actions"
+import { types } from "../actions"
+import * as Actions from "../actions"
 import { select, take, put, call } from "redux-saga/effects"
 import { push } from "react-router-redux"
 
@@ -13,6 +13,9 @@ export default function* logout(api) {
     yield take(types.LOG_OUT)
     yield api.users.logout()
     yield put(Actions.user.loggedOut())
+    yield put(Actions.login.loginClear())
+    yield put(Actions.signup.signupClear())
+    yield put(Actions.notifications.notificationsClear())
     yield put(push("/login"))
   }
 }

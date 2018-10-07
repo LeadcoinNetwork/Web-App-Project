@@ -1,15 +1,23 @@
 import { types } from "../actions"
 
 const initialState = {
-  batch_id: 0,
   loading: false,
   file: "",
   errors: {},
+  finished: false,
 }
 
 let newErrors = null
 export default function(state = initialState, action) {
   switch (action.type) {
+    case types.CSV_UPLOAD_RESET_FORM:
+      return initialState
+    case types.CSV_UPLOAD_SUCCESS:
+      return {
+        ...state,
+        finished: true,
+        errors: {},
+      }
     case types.CSV_MAPPING_MAP_HANDLE_CHANGE:
     case types.CSV_MAPPING_FORM_HANDLE_CHANGE:
     case types.CSV_UPLOAD_LOADING_CHANGE:
@@ -38,6 +46,7 @@ export default function(state = initialState, action) {
     case types.CSV_UPLOAD_ERROR:
       return {
         ...state,
+        loading: false,
         errors: {
           ...state.errors,
           [action.error.name]: action.error.value,

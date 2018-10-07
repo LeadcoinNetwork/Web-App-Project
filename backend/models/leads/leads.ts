@@ -18,6 +18,10 @@ export default class Leads extends baseDBModel<
     return await this.insert(lead)
   }
 
+  public async EditLead(lead: Lead) {
+    return await this.update(lead.id, lead)
+  }
+
   public async insertLead(new_lead: Lead) {
     return this.insert(new_lead)
   }
@@ -32,6 +36,13 @@ export default class Leads extends baseDBModel<
     limit?: { start: number; offset: number }
   }): Promise<Lead[]> {
     return this.find({ condition, sort, limit })
+  }
+
+  public async getOwnedLeads() {
+    return await this.leadsQueries.getOwnedLeads()
+  }
+  public async getOwners() {
+    return await this.leadsQueries.getOwners()
   }
 
   public async getSoldLeads(user_id: number, options: LeadQueryOptions) {
@@ -52,6 +63,10 @@ export default class Leads extends baseDBModel<
 
   public async getMyLeads(user_id: number, options: LeadQueryOptions) {
     return await this.leadsQueries.getMyLeads(user_id, options)
+  }
+
+  public async getSingleLead(lead_id: number) {
+    return await this.getById(lead_id)
   }
 
   public async getDealPrice(lead_ids: number[]) {

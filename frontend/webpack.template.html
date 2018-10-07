@@ -7,6 +7,14 @@ htmlWebpackPlugin.options.scripts = htmlWebpackPlugin.options.scripts || []
 %><!DOCTYPE html>
 <html class="<%= htmlWebpackPlugin.options.htmlClass%>" lang="<%= htmlWebpackPlugin.options.lang %>"<% if (htmlWebpackPlugin.files.manifest) { %> manifest="<%= htmlWebpackPlugin.files.manifest %>"<% } %>>
   <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KKFXVHG');</script>
+    <!-- End Google Tag Manager -->
+
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://use.typekit.net/dqs6jxs.css">
     <meta content="ie=edge" http-equiv="x-ua-compatible"><%
@@ -51,7 +59,12 @@ htmlWebpackPlugin.options.scripts = htmlWebpackPlugin.options.scripts || []
     <%= htmlWebpackPlugin.options.headHtmlSnippet %><%
     } %>
   </head>
-  <body><%
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KKFXVHG"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <%
     if (htmlWebpackPlugin.options.unsupportedBrowser) { %>
     <style>.unsupported-browser { display: none; }</style>
     <div class="unsupported-browser">
@@ -125,5 +138,18 @@ htmlWebpackPlugin.options.scripts = htmlWebpackPlugin.options.scripts || []
     } %>
     <script>window.inlineManualOptions = { language: 'en'};</script>
     <script>!function(){var e=document.createElement("script"),t=document.getElementsByTagName("script")[0];e.async=1,e.src="https://inlinemanual.com/embed/player.d361355005fd15c82ca071299e055a6e.bare.js",e.charset="UTF-8",t.parentNode.insertBefore(e,t)}();</script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-110168671-5"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-110168671-5');
+    </script>
+
+    
+
   </body>
 </html>

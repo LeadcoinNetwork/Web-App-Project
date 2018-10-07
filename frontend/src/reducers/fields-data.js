@@ -1,5 +1,21 @@
 const fields = [
   {
+    key: "Industry",
+    name: "Industry",
+    sortable: true,
+    editable: true,
+    maxWidth: "90px",
+    minWidth: "90px",
+  },
+  {
+    key: "Category",
+    name: "Category",
+    sortable: true,
+    editable: true,
+    maxWidth: "100px",
+    minWidth: "100px",
+  },
+  {
     key: "date",
     name: "Date Published",
     sortable: true,
@@ -17,19 +33,11 @@ const fields = [
   },
   {
     key: "Bedrooms/Baths",
-    name: "Bedrooms / Baths",
+    name: "Bedrooms/Baths",
     sortable: true,
     editable: true,
-    maxWidth: "80px",
-    minWidth: "80px",
-  },
-  {
-    key: "Type",
-    name: "Type",
-    sortable: true,
-    editable: true,
-    maxWidth: "90px",
-    minWidth: "90px",
+    maxWidth: "120px",
+    minWidth: "120px",
   },
   {
     key: "Price",
@@ -78,6 +86,15 @@ const fields = [
     editable: true,
     maxWidth: "90px",
     minWidth: "90px",
+    private: true,
+  },
+  {
+    key: "Email",
+    name: "Email",
+    sortable: true,
+    editable: true,
+    maxWidth: "auto",
+    minWidth: "auto",
     private: true,
   },
   {

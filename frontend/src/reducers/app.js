@@ -1,7 +1,7 @@
 import types from "../actions/types"
 
 const initialState = {
-  cardsMode: false,
+  cardsMode: screen.width > 700 ? false : true,
 }
 
 const app = (state = initialState, action) => {

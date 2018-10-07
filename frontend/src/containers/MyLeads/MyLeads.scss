@@ -1,0 +1,40 @@
+@import "~Styles/variables";
+
+.tb-row {
+  .eye {
+    display: none;
+    position: absolute;
+    top: 30px;
+    left: 10px;
+    width: 10px;
+    height: 10px;
+    padding: 10px;
+    margin-left: 40px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .pencil {
+    display: none;
+    position: absolute;
+    top: 6px;
+    left: 10px;
+    width: 10px;
+    height: 10px;
+    padding: 10px;
+    margin-left: 40px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &:hover {
+    .eye,
+    .pencil {
+      display: inline-block;
+    }
+  }
+}

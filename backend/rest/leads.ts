@@ -9,7 +9,7 @@ const chance = Chance()
 
 import * as auth from "../models/user-auth/user-auth"
 
-import { Lead } from "../models/leads/types"
+import { Lead, Industry, Categories } from "../models/leads/types"
 
 const authOptions = {
   session: false,
@@ -33,8 +33,8 @@ export function start({
     for (let i = 1; i < count + 1; i++) {
       let owner = Math.floor(count / i)
       let status = await appLogic.models.leads.insertLead({
-        "Lead Type": "realestate",
-        Type: "Sell",
+        Industry: "Real Estate",
+        Category: "Sell",
         "Bedrooms/Baths": "2BR / 2BA",
         date: new Date().valueOf(),
         Size: chance.integer({ min: 1, max: 20 }),
@@ -62,7 +62,7 @@ export function start({
     }
     return rc
   }
-  // Description,Bedrooms / Baths,Type,Price,Size,State,Location,Housing Type,Telephone,Contact Person
+  // Industry,Category,Description,Bedrooms / Baths,Price,Size,State,Location,Housing Type,Telephone,Contact Person
 
   async function mock_leads(req, res, next) {
     ;(async () => {
@@ -101,6 +101,37 @@ export function start({
   //     next()
   //   })().catch(done)
   // }
+
+  /**
+   * get leads I added for selling
+   */
+
+  expressApp.get(
+    "/leads/:id",
+    passport.authenticate("jwt", authOptions),
+    async function(req, res, next) {
+      ;(async () => {
+        const { user } = req
+        const { id } = req.params
+        await appLogic.leads
+          .getSingleLead(parseInt(id))
+          .then(lead => {
+            if (lead.ownerId != user.id)
+              lead = Object.assign({
+                email: "***@gmail.com",
+                "Contact Person": "***",
+                Telephone: "***",
+              })
+            res.json(lead)
+          })
+          .catch(err => {
+            res.status(400)
+            res.send({ error: err.message })
+          })
+        return next()
+      })().catch(done)
+    },
+  )
 
   /**
    * get leads I added for selling
@@ -155,8 +186,62 @@ export function start({
       }
       error_obj[key].push(msg)
     })
-    return JSON.stringify(error_obj)
+    return error_obj
   }
+
+  /**
+   * update lead
+   */
+
+  expressApp.post(
+    "/leads/update",
+    passport.authenticate("jwt", authOptions),
+    async function(req, res, next) {
+      ;(async () => {
+        const { user } = req
+        const { lead }: { lead: Lead } = req.body
+        if (lead) {
+          //@ts-ignore
+          console.log(lead)
+          switch (true) {
+            //@ts-ignore
+            case !lead.agree_to_terms:
+              return res.status(400).send({
+                error: {
+                  agree_to_terms: "Must agree to terms",
+                },
+              })
+            case lead.ownerId != user.id:
+            case !lead.active:
+              return res.status(400).send({
+                error: {
+                  general: "you cannot edit this lead",
+                },
+              })
+          }
+          delete lead["agree_to_terms"]
+          appLogic.leads
+            .EditLead(lead)
+            .then(response => {
+              res.json({ response })
+            })
+            .catch(err => {
+              res.status(400)
+              if (err.sqlMessage) {
+                res.send({ error: err.sqlMessage })
+              } else {
+                res.send({ error: errStringToObj(err.message) })
+              }
+            })
+        } else {
+          return next()
+        }
+      })().catch(err => {
+        res.status(400)
+        res.send({ error: err.message })
+      })
+    },
+  )
 
   /**
    * Post a now lead for selling. Using a form.
@@ -182,6 +267,7 @@ export function start({
           lead.ownerId = user.id
           delete lead["agree_to_terms"]
           lead.active = true
+          lead.date = new Date().valueOf()
           lead.forSale = true
           appLogic.leads
             .AddLead(lead)
@@ -193,8 +279,7 @@ export function start({
               if (err.sqlMessage) {
                 res.send({ error: err.sqlMessage })
               } else {
-                const error_obj = errStringToObj(err.message)
-                res.send({ error: JSON.parse(error_obj) })
+                res.send({ error: errStringToObj(err.message) })
               }
             })
         } else {
@@ -288,9 +373,9 @@ export function start({
             .catch(err => {
               res.status(400)
               if (err.sqlMessage) {
-                res.send({ error: err.sqlMessage })
+                res.send({ error: { sqlError: err.sqlMessage } })
               } else {
-                res.send({ error: err.message })
+                res.send({ error: errStringToObj(err.message) })
               }
             })
         } else {
@@ -298,7 +383,29 @@ export function start({
         }
       })().catch(err => {
         res.status(400)
-        res.send({ error: err.message })
+        res.send({ error: { error: err.message } })
+      })
+    },
+  )
+
+  // -->
+
+  expressApp.get(
+    "/leads/stats",
+    passport.authenticate("jwt", authOptions),
+    async function(req, res, next) {
+      ;(async () => {
+        const { user } = req
+        if (user.email != "erez@leadcoin.network") return res.sendStatus(400)
+        res.json({
+          stats: {
+            owners: await appLogic.leads.getOwners(),
+            leads: await appLogic.leads.getOwnedLeads(),
+          },
+        })
+      })().catch(err => {
+        res.status(400)
+        res.send({ error: { error: err.message } })
       })
     },
   )
@@ -416,41 +523,61 @@ export function start({
   /**
    * All the leads
    */
-  expressApp.get("/buy-leads", async (req, res, next) => {
-    ;(async () => {
-      let { search, sortBy, page, limit, sortOrder } = req.query
-      let _sort = {
-        sortBy: sortBy && sortBy != "id" ? sortBy : "date",
-        sortOrder: sortOrder || "DESC",
-      }
-      let f
-      if (search) {
-        f = ["name", "specification", "city"].map(field => {
-          return {
-            field,
-            op: "LIKE",
-            val: search,
-          }
-        })
-      }
-      let _limit = {
-        start: parseInt(page || 0) * parseInt(limit || 50),
-        offset: limit || 50,
-      }
-      await appLogic.leads
-        .getAllLeads({
-          sort: _sort,
-          filters: f,
-          limit: _limit,
-        })
-        .then(response => {
-          let jsonResponse = Object.assign(response, req.query)
-          res.json(jsonResponse)
-        })
-        .catch(err => {
-          res.status(400)
-          res.send({ error: err.message })
-        })
-    })().catch(done)
-  })
+  expressApp.get(
+    "/buy-leads",
+    passport.authenticate("jwt", authOptions),
+    async (req, res, next) => {
+      ;(async () => {
+        const { sortBy, page, limit, sortOrder } = req.query
+        const {
+          industry,
+          category,
+          search,
+        }: {
+          industry: Industry
+          category: Categories
+          search: string
+        } = req.query.filter
+        const { user } = req
+        let _sort = {
+          sortBy: sortBy && sortBy != "id" ? sortBy : "date",
+          sortOrder: sortOrder || "DESC",
+        }
+        let filters = { search: null, industry: null, category: null }
+        if (search) {
+          filters.search = ["Bedrooms/Baths", "Description", "Location"].map(
+            field => {
+              return {
+                field,
+                op: "LIKE",
+                val: search,
+              }
+            },
+          )
+        }
+        filters.industry = industry === "All" ? "" : industry
+        filters.category = category === "All" ? "" : category
+        let _limit = {
+          start: parseInt(page || 0) * parseInt(limit || 50),
+          offset: limit || 50,
+        }
+        console.log({ user })
+        await appLogic.leads
+          .getAllLeads({
+            sort: _sort,
+            filters,
+            limit: _limit,
+            user_id: user.id,
+          })
+          .then(response => {
+            let jsonResponse = Object.assign(response, req.query)
+            res.json(jsonResponse)
+          })
+          .catch(err => {
+            res.status(400)
+            res.send({ error: err.message })
+          })
+      })().catch(done)
+    },
+  )
 }

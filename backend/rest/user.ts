@@ -13,6 +13,23 @@ const authOptions = {
 
 import AppLogic from "../app-logic/index"
 
+/**
+ * @param errString string
+ * "key::msg ;key::msg" => {key: msg[]}
+ */
+const errStringToObj = errString => {
+  let errors = errString.split(" ;")
+  const error_obj = {}
+  errors.forEach(e => {
+    const [key, msg] = e.split("::")
+    if (!error_obj[key]) {
+      error_obj[key] = []
+    }
+    error_obj[key].push(msg)
+  })
+  return error_obj
+}
+
 export function start({
   expressApp,
   appLogic,
@@ -65,8 +82,9 @@ export function start({
       res.cookie("token", token)
       res.json({ user: _user, token })
     })().catch(err => {
-      res.status(400)
-      res.send({ error: err.message })
+      res.status(400)      
+      if (err.message) err = err.message
+      res.send({ error: errStringToObj(err) })
     })
   }
 

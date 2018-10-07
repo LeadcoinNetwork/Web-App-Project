@@ -1,5 +1,33 @@
 @import "~Styles/variables";
 
+.user {
+  background: url("user.svg");
+  color: white;
+  width: 34px;
+  background-size: contain;
+  height: 40px;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-left: 7px;
+  padding: 20px;
+  padding-top: 30px;
+  margin-top: -5px;
+}
+
+.bell {
+  background: url("bell.svg");
+  color: white;
+  width: 50px;
+  background-size: contain;
+  height: 40px;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-left: 7px;
+  padding: 20px;
+  margin-top: -5px;
+  padding-top: 30px;
+}
+
 .ldc-notification-element {
   position: relative;
   display: inline-block;
@@ -45,7 +73,7 @@
       height: 20px;
       top: -6px;
       right: 15px;
-      background: #433190;
+      background: #604db6;
       transform: rotateZ(45deg);
       z-index: -1;
     }
@@ -60,7 +88,9 @@
         background: #604db6;
 
         .nr-time {
-          font-weight: 500;
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 16px;
         }
       }
 
@@ -77,6 +107,61 @@
       .view-all-text {
         margin-left: 10px;
         font-weight: 500;
+      }
+    }
+  }
+}
+
+@media (max-width: $screen-tablets) {
+
+  .ldc-notification-element {
+
+    .notification-inner {
+      width: 100vw;
+      height: calc(100vh - 60px);
+      top: 60px;
+      left: auto;
+      right: -60px;
+      border-top: 5px solid $main-color;
+
+      &:before {
+        content: '';
+        height: 80px;
+        width: calc(100vw - 80px);
+        position: absolute;
+        top: -80px;
+        right: 0;
+        z-index: 10;
+        background-color: $main-color;
+      }
+
+      .small-arrow {
+        width: 0;
+        height: 0;
+        top: -55px;
+        right: 30px;
+        background: #fff;
+        transform: rotateZ(0);
+        z-index: 10;
+
+        &:before,
+        &:after {
+          content: '';
+          height: 20px;
+          width: 1px;
+          background-color: #fff;
+          position: absolute;
+          z-index: 10;
+          top: 0;
+          right: 0;
+        }
+
+        &:before {
+          transform: rotateZ(45deg);
+        }
+        &:after {
+          transform: rotateZ(-45deg);
+        }
       }
     }
   }

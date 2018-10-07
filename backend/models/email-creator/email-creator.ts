@@ -75,13 +75,6 @@ class EmailCreator {
         "Temporary password: " +
         password +
         "<br><br>" +
-        "This password is temporary, so please " +
-        '<a href="' +
-        this.backend +
-        "/login" +
-        '">' +
-        "login" +
-        "</a> and immediately change it.<br><br> " +
         "Best Regards,<br><br>" +
         "The LeadCoin Team",
     }

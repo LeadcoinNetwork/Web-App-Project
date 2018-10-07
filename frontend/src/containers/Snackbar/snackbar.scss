@@ -1,4 +1,23 @@
 .Toastify__toast--success {
   background: rgba(0, 0, 0, 0.7) !important;
-  padding: 18px 18px 18px 50px !important;
+  padding: 18px 18px 18px 18px !important;
+  text-align: left;
+  opacity: 0.8;
+  max-width: 100vw;
+  .Toastify__toast-body {
+    max-width: 90vw;
+  }
+}
+.times {
+  background: url("times.svg");
+  color: white;
+  width: 40px;
+  background-size: contain;
+  height: 40px;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-left: 7px;
+  padding: 10px;
+  padding-top: 10px;
+  margin-top: -20px;
 }

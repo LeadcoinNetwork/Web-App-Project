@@ -3,12 +3,17 @@ import Button from "Components/Button"
 import Select from "Components/Select"
 import TextField from "Components/TextField"
 import { connect } from "react-redux"
-import { csvUpload, csvMapping } from "Actions"
+import { csvUpload, csvMapping } from "../../actions"
 import t from "../../utils/translate/translate"
 import Dropzone from "react-dropzone"
 import papaparse from "papaparse"
-
+import ConfirmationDialog from "../../components/ConfirmationDialog"
+import { push } from "react-router-redux"
 class CSVUpload extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { showConfirmation: false }
+  }
   generalError() {
     const { errors } = this.props.csvUpload
     if (!errors) return
@@ -30,15 +35,15 @@ class CSVUpload extends React.Component {
     let mock_fields = {
       private: ["Contact Person", "Telephone", "Email"],
       public: [
+        "Industry",
+        "Category",
         "Description",
         "Bedrooms/Baths",
-        "Type",
         "Price",
         "Size",
         "State",
         "Location",
-        "Housing",
-        "Type",
+        "Housing Type",
       ],
     }
     this.props.setDbFields(mock_fields)
@@ -67,16 +72,36 @@ class CSVUpload extends React.Component {
     const { db_fields } = this.props.csvMapping
     const price_element = this.renderPriceElement()
     const terms = this.renderTerms()
+    const { loading } = this.props.csvUpload
+
     return (
       <div className="fields_mapper">
+        <div>
+          {t(
+            "Match the fields from your CSV file with the fields that appear in LeadCoin's Network.",
+          )}{" "}
+          <br />
+          {t(
+            "Go through and match each one of your fields with the field name that exists for the real estate category.",
+          )}
+        </div>
         <div className="main_container">
+          <div className="titles flexed">
+            <div className="help_text" />
+            <div className="fieldsTitles flexed">
+              <div className="ldcTitle">LeadCoin Field Names</div>
+              <div className="csvTitle">Your Field Names</div>
+            </div>
+          </div>
           <div className="personal flexed">
             <div className="help_text">
               <div className="header bigger">
                 {t("Personal Identification Information")}
               </div>
               <div className="header smaller">
-                {t("These fields will only be visible to the lead owner")}
+                {t(
+                  "This information will remain hidden until a buyer purchases the lead.",
+                )}
               </div>
             </div>
             <div className="fields">{this.renderFields(db_fields.private)}</div>
@@ -93,22 +118,23 @@ class CSVUpload extends React.Component {
             {terms}
             <div className="mapSubmit">
               <Button
+                loading={loading}
                 appStyle
                 onClick={() => {
-                  this.props.submit()
+                  this.setState({ showConfirmation: true })
                 }}
                 label={t("Submit")}
               />
-            </div>
-            <div>
-              <Button
-                appStyle
-                secondary
-                onClick={() => {
-                  this.props.clear()
-                }}
-                label={t("Clear")}
-              />
+              {this.state.showConfirmation && (
+                <ConfirmationDialog
+                  description="You are about to upload new leads to be publicly traded. Are you sure you want to proceed?"
+                  onConfirm={() => {
+                    this.setState({ showConfirmation: false })
+                    this.props.submit()
+                  }}
+                  onDismiss={() => this.setState({ showConfirmation: false })}
+                />
+              )}
             </div>
           </div>
         </div>
@@ -122,6 +148,8 @@ class CSVUpload extends React.Component {
       let value = ""
       if (fields_map && fields_map[fieldName]) value = fields_map[fieldName]
       const items = file_fields.map((field, i) => {
+        fields_map[fieldName] = value =
+          value === "" && fieldName == field ? field : value
         return t(field)
       })
       items.unshift(["0", t("I Don't have this field")])
@@ -141,10 +169,13 @@ class CSVUpload extends React.Component {
   renderPriceElement() {
     const errors = this.props.csvUpload.errors
     if (!errors) return
-    const error = Object.keys(errors).indexOf("price") > -1 ? "error" : ""
+    const error = Object.keys(errors).includes("price") ? "form_error" : ""
     return (
       <div className={"price " + error}>
-        <span>{t("Lead price")}</span>
+        <span>
+          {t("Lead price")}
+          <span className="asterisk-required">*</span>
+        </span>
         <TextField
           type="number"
           appStyle={true}
@@ -160,8 +191,9 @@ class CSVUpload extends React.Component {
   renderTerms() {
     const errors = this.props.csvUpload.errors
     if (!errors) return
-    const error =
-      Object.keys(errors).indexOf("agree_to_terms") > -1 ? "error" : ""
+    const error = Object.keys(errors).includes("agree_to_terms")
+      ? "form_error"
+      : ""
     const cls = "terms " + error
     return (
       <div className={cls}>
@@ -174,7 +206,10 @@ class CSVUpload extends React.Component {
             this.props.agreeToTerms(e.target.checked)
           }}
         />
-        <label htmlFor="terms_checkbox">{t("I AGREE TO THE TERMS")}</label>
+        <label htmlFor="terms_checkbox">
+          {t("I AGREE TO THE TERMS")}
+          <span className="asterisk-required">*</span>
+        </label>
       </div>
     )
   }
@@ -191,19 +226,47 @@ class CSVUpload extends React.Component {
       )
     })
   }
-
+  componentWillUnmount() {
+    this.props.clear()
+    this.props.reset()
+  }
   render() {
     let fileLabel = t("Choose File")
-    const { loading, file } = this.props.csvUpload
+    const { finished, file } = this.props.csvUpload
     if (file) fileLabel = file.name
+    if (finished) {
+      return (
+        <div className="csvUpload">
+          <h1>{t("Upload CSV File")}</h1>
+          <h3>{t("Add multiple leads for sale by uploading a CSV file.")}</h3>
+          <div>
+            <div> Your leads are being proccessed. </div>
+            <div className="ajax-loader2" />
+          </div>
+        </div>
+      )
+    }
     return (
       <div className="csvUpload">
+        <div className="back-wrapper">
+          <div
+            className="back"
+            onClick={() => {
+              this.props.push("/sell-leads")
+            }}
+          >
+            <div className="back-arrow" />
+            <div className="back-text">Back</div>
+          </div>
+        </div>
         <h1>{t("Upload CSV File")}</h1>
-        <h3>{t("Add multiple leads for sale by uploading a CSV file.")}</h3>
         <div>
           {/* <Button appStyle secondary label={fileLabel}> */}
           {!this.maybeCsvMapper() && (
             <div>
+              <h3>
+                {t("Add multiple leads for sale by uploading a CSV file.")}
+              </h3>
               <div className="file-pick">
                 <Dropzone
                   accept=".csv"
@@ -260,6 +323,8 @@ export default connect(
     handleMapChange: csvMapping.csvMappingMapChange,
     handleErrors: csvMapping.csvMappingError,
     clear: csvMapping.csvMappingClearForm,
+    reset: csvUpload.csvUploadReset,
     submit: csvUpload.csvUploadSubmit,
+    push,
   },
 )(CSVUpload)

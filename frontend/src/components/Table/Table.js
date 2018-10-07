@@ -88,7 +88,8 @@ class Table extends React.Component {
     return (
       <section className="ldc-table">
         <div className="t-buttons">
-          {props.buttons &&
+          {props.isSelectable &&
+            props.buttons &&
             props.buttons.table &&
             props.buttons.table.map(button => (
               <Button
@@ -96,14 +97,15 @@ class Table extends React.Component {
                 label={button.value}
                 onClick={button.onClick}
                 appStyle={true}
-                disabled={button.actionPerSelected && !props.selected.size}
+                disabled={!props.selected.size}
               />
             ))}
         </div>
-        {props.renderFilters && props.renderFilters()}
-        {props.renderResultsHead && props.renderResultsHead()}
+        {props.renderResultsHead &&
+          props.renderResultsHead(props.isSearchResults)}
         <div className="t-main">
           <THead
+            displayLead={props.displayLead}
             fields={props.fields}
             colCount={dinamicColsCount}
             staticColsWidth={widthOfStaticCols}
@@ -114,6 +116,8 @@ class Table extends React.Component {
             isSelectable={props.isSelectable}
           />
           <TBody
+            displayLead={props.displayLead}
+            editLead={props.editLead}
             fields={props.fields}
             records={props.records}
             colCount={dinamicColsCount}

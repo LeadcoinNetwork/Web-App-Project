@@ -1,5 +1,42 @@
+@import "~Styles/variables";
+
 .ldc-checkout {
   display: flow-root;
+
+  .shopping-cart {
+    border-spacing: 0;
+    border-collapse: collapse;
+    font-size: 14px;
+    width: 100%;
+
+    thead tr {
+      background-color: $main-color;
+
+      th {
+        text-align: left;
+        padding: 10px;
+      }
+    }
+    .h-lead_price,
+    .d-lead_price {
+      width: 100px;
+    }
+
+    .d-lead_price {
+      text-align: right;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: $table-background-even;
+    }
+    tbody tr:nth-child(odd) {
+      background-color: $table-background-odd;
+    }
+
+    td {
+      padding: 8px;
+    }
+  }
 
   .error {
     text-align: right;
@@ -8,9 +45,16 @@
     clear: both;
   }
 
+  .c-total .text {
+    font-weight: 200;
+    font-size: 18px;
+  }
   .c-total {
-    font-size: 14px;
-    font-weight: 300;
+    font-size: 25px;
+    font-weight: 500;
+    margin-top: 10px;
+    margin-right: 10px;
+    text-align: right;
 
     table {
       width: 100%;
@@ -21,7 +65,9 @@
   .c-details {
     position: relative;
     float: right;
-    font-size: 24px;
+    font-weight: 300;
+    font-size: 16px;
+    margin-top: 20px;
 
     table {
       border-collapse: collapse;

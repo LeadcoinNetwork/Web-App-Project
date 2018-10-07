@@ -38,7 +38,7 @@ const initialState = {
   page: 0,
   limit: 20,
   total: 0,
-  category: "realEstate",
+  fullyLoaded: false,
   country: "US",
   state: "NY",
   location: "new york city",
@@ -55,7 +55,12 @@ const initialState = {
   size_max: null,
   floor_min: null,
   floor_max: null,
-  search: null,
+  filter: {
+    industry: "All",
+    category: "All",
+    search: "",
+  },
+  searchClicked: false,
   error: "",
   loading: true,
   selected: new Set(),
@@ -64,12 +69,47 @@ const initialState = {
 const createReducerFor = namespace => {
   return (state = initialState, action) => {
     switch (action.type) {
+      case types[namespace + "_FILTER_CHANGE"]:
+        return {
+          ...state,
+          filter: action.payload,
+        }
+      case types[namespace + "_SEARCH_CLICKED"]:
+        return {
+          ...state,
+          searchClicked: true,
+        }
       case types["CLEAR_ALL_LEADS"]:
+      case types[namespace + "_CLEAR_LEADS"]:
+        return {
+          ...state,
+          list: [],
+          page: 0,
+          total: 0,
+          filter: {
+            industry: "All",
+            category: "All",
+            search: "",
+          },
+          selected: new Set(),
+        }
+      case types[namespace + "_CLEAR_LIST"]:
+        return {
+          ...state,
+          list: [],
+          page: 0,
+          total: 0,
+          selected: new Set(),
+        }
+      case types[namespace + "_LOADING_START"]:
+        return {
+          ...state,
+          loading: true,
+        }
+      case types[namespace + "_LOADING_END"]:
         return {
           ...state,
           loading: false,
-          error: false,
-          list: [],
         }
       case types[namespace + "_FETCH_LEADS"]:
         return {
@@ -79,18 +119,21 @@ const createReducerFor = namespace => {
           error: false,
         }
       case types[namespace + "_FETCH_SUCCESS"]:
+        const newLeads = action.payload.list.map(lead => ({
+          ...lead,
+          cardOpen: false,
+        }))
         let currentIds = state.list.map(lead => lead.id)
 
         return {
           ...state,
           ...action.payload,
           loading: false,
+          fullyLoaded: newLeads.length < state.limit,
           error: false,
           list: [
             ...state.list,
-            ...action.payload.list.filter(
-              lead => !currentIds.includes(lead.id),
-            ),
+            ...newLeads.filter(lead => !currentIds.includes(lead.id)),
           ],
         }
       case types[namespace + "_FETCH_ERROR"]:
@@ -102,6 +145,12 @@ const createReducerFor = namespace => {
         return {
           ...state,
           selected: action.payload,
+        }
+      case types[namespace + "_TOGGLE_CARD_VIEW"]:
+        state.list[action.payload].cardOpen = !state.list[action.payload]
+          .cardOpen
+        return {
+          ...state,
         }
       default:
         return state

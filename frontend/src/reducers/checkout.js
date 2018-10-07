@@ -2,7 +2,7 @@ import types from "../actions/types"
 
 const initialState = {
   loading: false,
-  error: "",
+  error: {},
 }
 
 const checkout = (state = initialState, action) => {
@@ -26,7 +26,7 @@ const checkout = (state = initialState, action) => {
     case types["BUY_LEADS_SET_SELECTED_LEADS"]:
       return {
         ...state,
-        error: "",
+        error: {},
       }
     default:
       return state

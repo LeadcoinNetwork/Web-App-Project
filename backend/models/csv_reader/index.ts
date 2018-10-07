@@ -26,7 +26,7 @@ export function parseMappedFile(
 ) {
   let records = papaparse.parse(fileContents, parseConfig).data
   const leads = records.map(line => {
-    const lead: NewRealEstateLead = {
+    const lead = {
       lead_price,
       ownerId: user_id,
       date: new Date().valueOf(),

@@ -4,7 +4,7 @@ import Button from "Components/Button"
 import TextField from "Components/TextField"
 import ReactPhoneInput from "react-phone-input-2"
 import { completeRegistration } from "Actions"
-import tiger from "Images/tiger.jpg"
+import yossiPerez from "Images/yossi-peretz.png"
 import t from "../../utils/translate/translate"
 
 class CompleteRegistration extends React.Component {
@@ -61,19 +61,16 @@ class CompleteRegistration extends React.Component {
           </div>
         </div>
         <aside>
-          <h3>{t("LeadCoin is the promised land for marketers")}</h3>
+          <h3>{t("A True Alternative to Google & Facebook")}</h3>
           <q>
             {t(
-              "Collaborating with other marketers & sharing leads is 10X more efficient than giving away my budget to Google & Facebook.",
+              `LeadCoin is going to change the way blockchain and crypto companies find their leads. With Google banning advertising for crypto companies, LeadCoin offers the alternative that all of these companies need.`,
             )}
           </q>
-          <label style={{ backgroundImage: `url(${tiger})` }}>
-            <span>
-              {t("Meir Cohen")}
-              <br />
-              {t("CEO of Crypto")}
-            </span>
-          </label>
+          <label
+            className="floating_head"
+            style={{ backgroundImage: `url(${yossiPeretz})` }}
+          />
         </aside>
       </section>
     )

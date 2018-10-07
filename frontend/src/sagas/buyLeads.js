@@ -1,7 +1,7 @@
-import { types } from "Actions"
-import * as actions from "Actions"
 import { select, take, put, call } from "redux-saga/effects"
 import { push } from "react-router-redux"
+import { types } from "../actions"
+import * as actions from "../actions"
 
 import API from "../api/index"
 
@@ -10,16 +10,13 @@ import API from "../api/index"
  */
 export default function* buyLeads(api) {
   while (true) {
-    let { page, limit, sortBy, category, search } = yield select(
-      state => state.buyLeads,
-    )
+    let { page, limit, sortBy, filter } = yield select(state => state.buyLeads)
 
     let res = yield api.leads.buyLeadsGetList({
       page,
       limit,
       sortBy,
-      category,
-      search,
+      filter,
     })
 
     if (res.error) {

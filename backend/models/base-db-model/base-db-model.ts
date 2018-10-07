@@ -86,6 +86,28 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
   }
 
   leadsQueries = {
+    getOwnedLeads: async () => {
+      let sql = `
+      SELECT count(id) as cid
+      FROM leadcoin.leads
+      WHERE
+          doc->>"$.ownerId" > 0
+      AND doc->>"$.bought_from" > 0 
+      ;`
+      let rows = await this.sql.query(sql)
+      return rows.map(r => r.cid)
+    },
+    getOwners: async () => {
+      let sql = `
+      SELECT DISTINCT doc->>"$.ownerId" as owner
+      FROM leadcoin.leads
+      WHERE
+          doc->>"$.ownerId" > 0
+      AND doc->>"$.bought_from" > 0 
+      ;`
+      let rows = await this.sql.query(sql)
+      return rows.map(r => r.owner)
+    },
     getMockLeads: async user_id => {
       let sql = `
       SELECT id
@@ -121,11 +143,12 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     getBoughtLeads: async (user_id: number, options: any) => {
       const { limit, filters, sort } = options
       let where_additions = []
+
       if (filters) {
         where_additions = filters
           .map(f => {
             const escaped = mysql.escape(f.val)
-            return `${this.fieldName} ->> "$.${f.field}" ${
+            return `${this.fieldName}->>${mysql.escape("$." + f.field)} ${
               f.op
             } "%${escaped.slice(1, -1)}%"`
           })
@@ -157,38 +180,56 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     },
 
     buyLeadsGetAll: async (options: any) => {
-      const { limit, filters, sort } = options
-      let where_additions = []
-      if (filters) {
-        where_additions = filters
+      const { limit, filters, sort, user_id } = options
+      let where_additions = ""
+      let search_additions = []
+      if (filters.search) {
+        search_additions = filters.search
           .map(f => {
             const escaped = mysql.escape(f.val)
-            return `${this.fieldName} ->> "$.${f.field}" ${
+            if (f.field.includes(" ")) f.field = '"' + f.field + '"'
+            if (f.field.includes("/")) f.field = '"' + f.field + '"'
+            return `${this.fieldName}->>${mysql.escape("$." + f.field)} ${
               f.op
             } "%${escaped.slice(1, -1)}%"`
           })
-          .join(" OR ")
+          .join(`\nOR `)
       }
+      if (filters.industry)
+        where_additions = `${this.fieldName}->>'$.Industry' = '${
+          filters.industry
+        }'`
+      if (filters.category)
+        where_additions +=
+          (where_additions ? `\nAND ` : "") +
+          `${this.fieldName}->>'$.Category' = '${filters.category}'`
+      if (search_additions.length > 0)
+        where_additions +=
+          (where_additions ? `\nAND ` : "") + "(" + search_additions + ")"
       let limit_addition = ""
       let countHeader = "SELECT COUNT(*) as count "
       let realHeader = "SELECT *"
-      let query = `
-        FROM leads
-        WHERE doc->>"$.active" = "true"
-        AND doc->>"$.forSale" = "true" 
-      `
-      if (where_additions.length > 0) query += `AND ${where_additions}`
+      let query = `\nFROM leads\nWHERE doc->>'$.active' = 'true'\nAND doc->>'$.forSale' = 'true'`
+      if (user_id) query += `\nAND doc->>'$.ownerId' <> ${user_id} `
+      if (where_additions) query += `\nAND ${where_additions}`
       if (sort) {
-        query += ` ORDER BY ${this.fieldName} ->> ${mysql.escape(
+        query += `\nORDER BY ${this.fieldName}->>${mysql.escape(
           "$." + sort.sortBy,
         )} ${sort.sortOrder}`
       }
       if (limit) {
-        limit_addition += ` LIMIT ${limit.start},${limit.offset} `
+        limit_addition += `\nLIMIT ${limit.start},${limit.offset} `
       }
       let count = await this.sql.query(countHeader + query)
       let rows = await this.sql.query(realHeader + query + limit_addition)
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
+      rows = rows.map(row => {
+        return Object.assign(row, {
+          "Contact Person": "**********",
+          Email: "*********@gmail.com",
+          Telephone: row["Telephone"].substring(0, 6) + "******",
+        })
+      }) // remove contact information
       return { list: rows, total: count[0].count }
     },
 
@@ -236,7 +277,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         where_additions = filters
           .map(f => {
             const escaped = mysql.escape(f.val)
-            return `${this.fieldName} ->> "$.${f.field}" ${
+            return `${this.fieldName} ->> ${mysql.escape("$." + f.field)} ${
               f.op
             } "%${escaped.slice(1, -1)}%"`
           })
@@ -374,7 +415,10 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     this.log("update " + this.tableName + " start", record)
     var str = ""
     var values = Object.keys(record).forEach(key => {
-      str += `, ${mysql.escape("$." + key)} , ${mysql.escape(record[key])}`
+      const value = record[key]
+      if (key.includes(" ")) key = '"' + key + '"'
+      if (key.includes("/")) key = '"' + key + '"'
+      str += `, ${mysql.escape("$." + key)} , ${mysql.escape(value)}`
     })
 
     var query = `UPDATE ${this.tableName} SET ${this.fieldName}=JSON_SET(${

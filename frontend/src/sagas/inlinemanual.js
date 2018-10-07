@@ -2,7 +2,7 @@ import { push } from "connected-react-router"
 import * as actions from "../actions"
 import { take, put } from "redux-saga/effects"
 import { delay } from "redux-saga"
-import * as $ from "jquery"
+// import * as $ from "jquery"
 
 if (localStorage.random_id_for_inlinemanual) {
   for (var i in localStorage) {
@@ -31,7 +31,6 @@ export default function* inlinemanualsaga() {
 }
 
 window.triggerFetch = function() {
-  console.log("fetch triggered")
   localStorage.shouldFetchAgain = true
 }
 
@@ -50,8 +49,13 @@ window.activateStepUploading = function() {
   }, 3000)
 }
 function clickNext() {
-  console.log("clickNext")
-  $(".inmplayer-popover-button-next")[0].click()
+  var i = document.getElementsByClassName("inmplayer-popover-button-next")
+  for (var x = 0; x < i.length; i++) {
+    try {
+      i[x].click()
+    } catch (err) {}
+  }
+  // $(".inmplayer-popover-button-next")[0].click()
 }
 
 window.jumpToStepNotYouHaveLeadsToSell = function() {
@@ -78,8 +82,11 @@ window.moveToSellLeads = function() {
   window.ldcPush("/sell-leads")
 }
 
+window.moveToUploadCSV = function() {
+  window.ldcPush("/csv-upload")
+}
+
 window.moveToSellAndFetch = function() {
-  console.log("moveToSellAndFetch")
   // window.moveToSellLeads()
   window.triggerFetch()
 }
@@ -91,4 +98,55 @@ window.machingAlgorithmStart = function() {
   setTimeout(function() {
     clickNext()
   }, 5000)
+}
+
+window.bindShareButton = function() {
+  addInlineManualEmailToGoogleForms()
+  const shareText =
+    "🚀🚀I just tested the amazing #leadcoinalpha, a decentralized lead sharing network! " +
+    "This platform has the potential to offer a true web marketing alternative to Google & Facebook. " +
+    "Join the #alphabounty now & earn #LDC Tokens. " +
+    "https://alpha.leadcoin.network 🚀🚀" +
+    "⚡️⚡️ #leadcoin #alpharelease #blockchain #crypto #ethereum"
+  window.setTimeout(function() {
+    var e = document.getElementById("twitter-share")
+    if (e) {
+      e.onclick = function() {
+        window.open(
+          "https://twitter.com/intent/tweet?text=" +
+            encodeURIComponent(shareText),
+          "_new",
+        )
+        clickNext()
+        setTimeout(function() {
+          inline_manual_player.activateTopic(53879)
+        }, 1000)
+      }
+    }
+  }, 50)
+}
+
+window.closeAllNotification = function() {
+  var x = document.getElementsByClassName(
+    "Toastify__close-button Toastify__close-button--success",
+  )
+  for (var i = 0; i < x.length; i++) {
+    x[i].click()
+  }
+}
+
+function addInlineManualEmailToGoogleForms() {
+  var div = document.createElement("div")
+  document.body.appendChild(div)
+  div.innerHTML = `
+  <form target="dodu" id=myf method="post" action="https://docs.google.com/forms/d/e/1FAIpQLSftV0KNtTMrnq9Pb5jzCjQgvnF2QpdGbmzwUstV1y6_SraoZg/formResponse">
+  <input name="entry.82711675" value="${inlineManualTracking.email}" />
+  </form>
+  <iframe name="dodu" />
+  `
+  div.style.display = "none"
+  document.getElementById("myf").submit()
+  setTimeout(function() {
+    document.body.removeChild(div)
+  }, 1000)
 }

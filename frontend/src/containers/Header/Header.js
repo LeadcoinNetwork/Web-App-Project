@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import * as _ from "lodash"
+var get = require("lodash/get")
 import BalanceWidget from "../BalanceWidget"
 import NotificationElement from "../NotificationElement"
 import UserMenu from "../UserMenu"
@@ -25,9 +25,9 @@ const Header = ({
     >
       <div className="logo">
         <span className="logo-link" onClick={gotoDefaultHome} />
-        <span className="alpha-demo">DEMO</span>
       </div>
-      {/* 
+      <span className="alpha-demo">DEMO</span>
+      {/*
       uncomment bring back the language selector
       <div className="m-both-right">
         <LanguageSelector />
@@ -69,9 +69,9 @@ const Header = ({
 }
 
 var mapStateToProps = state => ({
-  loggedIn: !!_.get(state, "user.id"),
-  disabled: !!_.get(state, "user.disabled"),
-  pathname: _.get(state, "router.location.pathname"),
+  loggedIn: !!get(state, "user.id"),
+  disabled: !!get(state, "user.disabled"),
+  pathname: get(state, "router.location.pathname"),
   language: state.language,
 })
 var mapDispatchToProps = {

@@ -5,10 +5,29 @@ import TBRCol from "./TBRCol"
 
 const TBRow = props => (
   <div
-    className={`tb-row${
-      props.selected && props.selected.has(props.id) ? " r-selected" : ""
-    }`}
+    className={`tb-row
+    ${props.selected && props.selected.has(props.id) ? " r-selected" : ""}
+    ${props.displayLead ? " display-lead" : ""}
+  `}
   >
+    {props.displayLead && (
+      <>
+        <div
+          className="pencil"
+          onClick={() => {
+            console.log("erez")
+            props.editLead(props)
+          }}
+        />
+        <div
+          className="eye"
+          onClick={() => {
+            console.log("eye")
+            props.displayLead(props)
+          }}
+        />
+      </>
+    )}
     {props.isSelectable && (
       <div className="tbr-checkbox">
         <Checkbox
@@ -17,21 +36,22 @@ const TBRow = props => (
         />
       </div>
     )}
-    {props.buttons && (
-      <div className="tbr-buttons">
-        {props.buttons.map(button => (
-          <Button
-            key={button.value}
-            appStyle={true}
-            label={button.value}
-            onClick={e => {
-              e.stopPropagation()
-              button.onClick(props.id)
-            }}
-          />
-        ))}
-      </div>
-    )}
+    {props.buttons &&
+      false && (
+        <div className="tbr-buttons">
+          {props.buttons.map(button => (
+            <Button
+              key={button.value}
+              appStyle={true}
+              label={button.value}
+              onClick={e => {
+                e.stopPropagation()
+                button.onClick(props.id)
+              }}
+            />
+          ))}
+        </div>
+      )}
     {props.fields.map(f => (
       <TBRCol
         key={f.key}

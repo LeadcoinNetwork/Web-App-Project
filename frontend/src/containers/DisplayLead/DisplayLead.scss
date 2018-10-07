@@ -1,0 +1,105 @@
+@import "~Styles/variables";
+
+.display_lead {
+  padding: 10px;
+  .personal {
+    display: flex;
+    padding-bottom: 10px;
+    border-bottom: solid 1px black;
+  }
+  .public {
+    display: flex;
+    padding-top: 10px;
+  }
+  .controls {
+    margin: 5px;
+  }
+  .help_text {
+    width: 250px;
+  }
+  .field_submit {
+    margin-top: 5px;
+    .twothirds {
+      width: 242px;
+    }
+  }
+  .header {
+    width: 200px;
+    &.bigger {
+      padding-top: 15px;
+      margin-top: 10px;
+      font-weight: 500;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    &.smaller {
+      font-weight: 300;
+      font-size: 16px;
+    }
+  }
+
+  .line {
+    &.error .fieldValue input {
+      border: $ldc-error-color solid 1px;
+    }
+    margin: 10px 15px;
+    height: 50px;
+    line-height: 50px;
+    width: 250px;
+
+    input::placeholder {
+      text-transform: capitalize;
+    }
+  }
+  .agree_to_terms {
+    padding-left: 10px;
+    &.error {
+      color: $ldc-error-color;
+    }
+  }
+  .flexed {
+    width: auto;
+    justify-content: flex-start;
+    display: flex;
+    .fieldValue {
+      width: auto;
+      font-weight: 300;
+    }
+    .fieldLabel {
+      width: 200px;
+      font-weight: 500;
+    }
+  }
+  .errors {
+    color: $ldc-error-color;
+    font-size: 18px;
+    padding: 5px;
+    width: 300px;
+  }
+}
+
+@media (max-width: 760px) {
+  .display_lead {
+    .header {
+      width: unset;
+    }
+    .help_text {
+      width: unset;
+    }
+    .main_container {
+      .line.flexed {
+        display: block;
+        height: unset;
+        line-height: unset;
+        margin-bottom: 10px;
+        .fieldLabel {
+          width: auto;
+          margin-left: -10px;
+        }
+      }
+      > div {
+        display: block;
+      }
+    }
+  }
+}

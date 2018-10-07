@@ -28,7 +28,6 @@ class SellLeads extends React.Component {
       {
         value: this.buildButtonLabel(),
         onClick: this.buyLeads,
-        actionPerSelected: true,
       },
     ]
   }
@@ -40,7 +39,7 @@ class SellLeads extends React.Component {
       },
     ]
   }
-  getButtons = amountSelected => {
+  getButtons = () => {
     return {
       table: this.getListButtons(),
       record: this.getLeadButtons(),
@@ -61,7 +60,7 @@ class SellLeads extends React.Component {
               {t("Upload CSV File")}
             </Link>
             <Link to="/add-lead" className="add-lead no-underline">
-              {t("Create New Lead")}
+              {t("Upload a Single Lead")}
             </Link>
           </div>
         </div>
@@ -72,7 +71,8 @@ class SellLeads extends React.Component {
         <LeadsTemplate
           {...this.props}
           pageName="sell"
-          // getButtons={this.getButtons}
+          constantCardOpen={true}
+          isSelectable={false}
         />
       </>
     )
@@ -90,5 +90,7 @@ export default connect(
     fetchLeads: (...params) => leads.fetchLeads("SELL_LEADS", ...params),
     setSelectedLeads: selectedLeads =>
       leads.setSelectedLeads("SELL_LEADS", selectedLeads),
+
+    toggelCardView: index => leads.toggelCardView("SELL_LEADS", index),
   },
 )(SellLeads)

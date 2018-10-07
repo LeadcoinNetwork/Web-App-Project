@@ -94,7 +94,8 @@ export function start({
         res.status(400)
         return res.send({ error: error_obj })
       }
-
+      res.status(200)
+      res.send({ status: true })
       const leads = await parseMappedFile(
         user.id,
         fileContent,

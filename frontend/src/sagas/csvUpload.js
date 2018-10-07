@@ -2,6 +2,7 @@ import { types } from "../actions"
 import * as Actions from "../actions"
 import { select, take, put, call } from "redux-saga/effects"
 import { routerMiddleware, push } from "react-router-redux"
+import { delay } from "redux-saga"
 
 import API from "../api/index"
 
@@ -27,7 +28,10 @@ export default function* csvUpload(api) {
       }
     } else {
       yield put(Actions.csvUpload.csvUploadSuccess())
+      yield delay(7500)
       window.triggerFetch()
+      yield delay(3000)
+      yield put(Actions.csvUpload.csvUploadReset())
       yield put(push("/sell-leads"))
     }
   }

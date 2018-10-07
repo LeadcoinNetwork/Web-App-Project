@@ -9,6 +9,8 @@ const initialState = {
 
 const notifications = (state = initialState, action) => {
   switch (action.type) {
+    case types.NOTIFICATIONS_CLEAR:
+      return initialState
     case types.NOTIFICATIONS_SHOW:
       return {
         ...state,
@@ -23,6 +25,7 @@ const notifications = (state = initialState, action) => {
       return {
         ...state,
         isOpen: !state.isOpen,
+        unreadCount: 0,
       }
     case types.NOTIFICATIONS_UPDATE:
       return {

@@ -21,18 +21,8 @@
   }
 
   &.b-app-style {
-    height: 45px;
-    // border-radius: 0;
+    height: 40px;
     padding: 0 30px;
-    // background-color: $bg-level-3;
-    background-color: transparent;
-    border: 1px solid #fff;
-    color: #fff;
-
-    &:hover {
-      color: $main-color;
-      background-color: #fff;
-    }
   }
 
   &.b-secondary {

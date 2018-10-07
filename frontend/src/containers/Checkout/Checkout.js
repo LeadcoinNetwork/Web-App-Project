@@ -37,33 +37,39 @@ const Checkout = ({
     (price, lead) => price + parseLeadPrice(lead.lead_price),
     0,
   )
-
-  let errorMsg
-  if (checkout && checkout.error) {
-    errorMsg = "Insufficient Funds"
-  }
+  const shoppingCartFields = fields.filter(
+    field => field.key === "Description" || field.key === "lead_price",
+  )
   return (
     <div className="ldc-checkout">
       <h1>{t("Shopping Cart")}</h1>
       <h3>{t("Buy all of your selected leads now.")}</h3>
-      <Table
-        fields={fields.map(field => ({
-          ...field,
-          name: t(field.name),
-        }))}
-        records={selectedLeads}
-        isSelectable={false}
-      />
+      <table className="shopping-cart">
+        <thead>
+          <tr>
+            {shoppingCartFields.map(field => (
+              <th className={"h-" + field.key}>{t(field.name)}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {selectedLeads.map(lead => (
+            <tr>
+              {shoppingCartFields.map(field => (
+                <td className={"d-" + field.key}>
+                  {field.key === "lead_price"
+                    ? priceString(lead.lead_price)
+                    : lead[field.key]}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
 
       <div className="c-total">
-        <table>
-          <tbody>
-            <tr>
-              <td>{t("Total")}</td>
-              <td className="amount">{priceString(totalPayment)}</td>
-            </tr>
-          </tbody>
-        </table>
+        <span className="text">{t("Total")}:&nbsp;</span>
+        {priceString(totalPayment)}
       </div>
       <div className="c-details">
         <table>
@@ -85,7 +91,13 @@ const Checkout = ({
           </tbody>
         </table>
       </div>
-      {errorMsg && <div className="error">{errorMsg}</div>}
+      {checkout.error && (
+        <div className="error">
+          {Object.keys(checkout.error).map((error, index) => (
+            <div key={index}>{t(checkout.error[error])}</div>
+          ))}
+        </div>
+      )}
       <div className="button-container">
         <Button
           label={t("Buy")}

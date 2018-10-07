@@ -2,26 +2,33 @@ import React from "react"
 import Select from "Components/Select"
 import Button from "Components/Button"
 import TextField from "Components/TextField"
+import Checkbox from "Components/Checkbox"
 import { connect } from "react-redux"
 import { addLead } from "Actions"
 import t from "../../utils/translate/translate"
+import ConfirmationDialog from "../../components/ConfirmationDialog"
+import { push } from "react-router-redux"
 
 class AddLead extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { showConfirmation: false }
+  }
   renderTerms() {
     const { errors } = this.props
     const error = errors["agree_to_terms"] ? "error" : ""
     return (
       <div className={error + " agree_to_terms twothirds"}>
-        <input
-          type="checkbox"
+        <Checkbox
+          label={t("I AGREE TO THE TERMS")}
           name="agree_to_terms"
           id="terms_checkbox"
-          value={this.props.agree_to_terms}
-          onChange={e => {
+          checked={this.props.agree_to_terms}
+          onClick={e => {
             this.props.agreeToTerms(e.target.checked)
           }}
         />
-        <label htmlFor="terms_checkbox">{t("I AGREE TO THE TERMS")}</label>
+        <span className="asterisk-required">*</span>
       </div>
     )
   }
@@ -31,7 +38,13 @@ class AddLead extends React.Component {
     return fields.map(f => {
       const isError = errors[f.key] ? "error" : ""
       return (
-        <div key={f.key} className={isError + " line"}>
+        <div key={f.key} className={isError + " flexed line"}>
+          <div className="fieldLabel">
+            {t(f.name)}
+            {f.key === "lead_price" && (
+              <span className="asterisk-required">*</span>
+            )}
+          </div>
           <div className="fieldValue">
             <TextField
               disabled={loading}
@@ -55,6 +68,18 @@ class AddLead extends React.Component {
     }
     return (
       <div className="add_lead">
+        <div className="back-wrapper">
+          <div
+            className="back"
+            onClick={() => {
+              this.props.clear()
+              this.props.push("/sell-leads")
+            }}
+          >
+            <div className="back-arrow" />
+            <div className="back-text">Back</div>
+          </div>
+        </div>
         <h1>{t("add lead")}</h1>
         <h3>
           {t("Add a new lead for sale by filling out a simple web form.")}
@@ -62,18 +87,20 @@ class AddLead extends React.Component {
         <div className="main_container">
           <div className="personal">
             <div className="help_text">
-              <div className="header">
+              <div className="header bigger">
                 {t("Personal Identification Information")}
               </div>
-              <div className="header">
-                {t("These fields will only be visible to the lead owner")}
+              <div className="header smaller">
+                {t(
+                  "This information will remain hidden until a buyer purchases the lead.",
+                )}
               </div>
             </div>
             <div className="fields">{this.renderFields(db_fields.private)}</div>
           </div>
           <div className="public">
             <div className="help_text">
-              <div className="header">{t("Public Fields")}</div>
+              <div className="header bigger">{t("Public Fields")}</div>
             </div>
             <div className="fields">{this.renderFields(db_fields.public)}</div>
           </div>
@@ -88,23 +115,23 @@ class AddLead extends React.Component {
           <div className="controls field_submit flexed">
             <div>
               <Button
-                appStyle={true}
-                secondary
-                onClick={() => {
-                  this.props.clear()
-                }}
-                label={t("Clear")}
-              />
-            </div>
-            <div>
-              <Button
                 loading={loading}
                 appStyle={true}
                 onClick={() => {
-                  this.props.submit(this.props.fields_map)
+                  this.setState({ showConfirmation: true })
                 }}
                 label={t("Submit")}
               />
+              {this.state.showConfirmation && (
+                <ConfirmationDialog
+                  description="You are about to upload a new lead to be publicly traded. Are you sure you want to proceed?"
+                  onConfirm={() => {
+                    this.setState({ showConfirmation: false })
+                    this.props.submit(this.props.fields_map)
+                  }}
+                  onDismiss={() => this.setState({ showConfirmation: false })}
+                />
+              )}
             </div>
           </div>
         </div>
@@ -122,5 +149,6 @@ export default connect(
     handleChange: addLead.addLeadHandleFormChange,
     submit: addLead.addLeadSubmitForm,
     clear: addLead.addLeadClearForm,
+    push,
   },
 )(AddLead)
