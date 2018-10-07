@@ -232,8 +232,10 @@ class CSVUpload extends React.Component {
   }
   render() {
     let fileLabel = t("Choose File")
-    const { finished, file } = this.props.csvUpload
-    const { isSalesforce } = this.props
+    const {
+      isSalesforce,
+      csvUpload: { finished, file },
+    } = this.props
     if (file) fileLabel = file.name
     if (finished) {
       return (
