@@ -45,7 +45,9 @@ const RealEstateLead = lead => {
           )}
           <div className="reld-date">{fromNow(lead.date)}</div>
           <div className="reld-location">
-            {lead.State}, {lead.Location}
+            {lead.State}
+            {lead.State && lead.Location ? ", " : ""}
+            {lead.Location}
           </div>
           {lead.fieldsCheck["Contact Person"] && (
             <div className="rel-contact-details">
