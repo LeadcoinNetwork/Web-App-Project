@@ -70,7 +70,7 @@ class BuyLeads extends React.Component {
               })
             }}
           >
-            <option value="">{t("Choose your industry")}</option>
+            <option value="">{t("Choose Industry")}</option>
             <option value="Real Estate">{t("Real Estate")}</option>
             <option value="Crypto" disabled>
               {t("Crypto")}
@@ -82,29 +82,36 @@ class BuyLeads extends React.Component {
               {t("Loans")}
             </option>
           </Select>
-          <Select
-            className="category"
-            value={this.props.leads.filter.category}
-            onChange={e => {
-              const filter = this.props.leads.filter
-              this.props.handleFilter({
-                ...filter,
-                category: e.target.value,
-              })
-            }}
-          >
-            <option value="">{t("Choose your category")}</option>
-            <option value="Buy" disabled>
-              {t("Buy")}
-            </option>
-            <option value="Sell">{t("Sell")}</option>
-            <option value="Looking to rent" disabled>
-              {t("Looking to rent")}
-            </option>
-            <option value="Properties for rent">
-              {t("Properties for rent")}
-            </option>
-          </Select>
+          {this.props.leads.filter.industryFilters &&
+            this.props.leads.filter.industryFilters[0].name === "Category" && (
+              <Select
+                className="category"
+                value={this.props.leads.filter.industryFilters[0].value}
+                onChange={e => {
+                  const industryFilters = this.props.leads.filter
+                    .industryFilters
+                  industryFilters[0].value = e.target.value
+                  this.props.handleFilter({
+                    ...this.props.leads.filter,
+                    industryFilters,
+                  })
+                }}
+              >
+                {
+                  <option key="0" value="">
+                    {"Choose " +
+                      this.props.leads.filter.industryFilters[0].name}
+                  </option>
+                }
+                {this.props.leads.filter.industryFilters[0].options.map(
+                  (option, index) => (
+                    <option key={index + 1} value={option}>
+                      {option}
+                    </option>
+                  ),
+                )}
+              </Select>
+            )}
           <TextField
             appStyle
             className="search_bar"

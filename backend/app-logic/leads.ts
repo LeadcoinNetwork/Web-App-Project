@@ -204,6 +204,7 @@ export default class Leads {
         _filter.search = this.buildRealEstateSearch(filter.search)
         break
       default:
+        _filter.search = this.buildDefaultSearch(filter.search)
         break
     }
 
@@ -213,6 +214,19 @@ export default class Leads {
       limit: _limit,
       user_id: user.id,
     }
+  }
+  private buildDefaultSearch(search: string): string {
+    let _search
+    if (search) {
+      _search = ["Description"].map(field => {
+        return {
+          field,
+          op: "LIKE",
+          val: search,
+        }
+      })
+    }
+    return _search
   }
 
   private buildRealEstateSearch(search) {

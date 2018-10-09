@@ -1,12 +1,18 @@
 import types from "../actions/types"
 import statesData from "./states-data"
 
+//filter 0 should always be the relevent industry categories with name: "Category", type: "select"
 const RealEstateFilters = [
   {
-    name: "Date",
-    type: "date",
-    from: "",
-    to: "",
+    name: "Category",
+    type: "select",
+    options: [
+      // "Buy",
+      "Sell",
+      // "Looking to rent",
+      "Properties for rent",
+    ],
+    value: "",
   },
   {
     name: "State",
@@ -51,6 +57,12 @@ const RealEstateFilters = [
       "Land",
     ],
     value: "",
+  },
+  {
+    name: "Date",
+    type: "date",
+    from: "",
+    to: "",
   },
 ]
 
