@@ -1,13 +1,16 @@
 import { Currency } from "../../utils/currency"
 
-export type Industry = "All" | "Real Estate" | "Crypto" | "Insurance" | "Loans"
+export type Lead = BaseLead | RealEstateLead
+export type NewLead = NewBaseLead | NewRealEstateLead
+
+export type Industry = "Real Estate" | "Crypto" | "Insurance" | "Loans"
 export type RealEstateCategory =
   | "Buy"
   | "Sell"
   | "Looking to rent"
   | "Properties for rent"
 export type CryptoCategory = "Buy" | "Sell"
-export type Categories = "All" | RealEstateCategory | CryptoCategory
+export type Categories = RealEstateCategory | CryptoCategory
 
 export interface LeadQueryOptions {
   id?: number
@@ -24,14 +27,7 @@ export interface LeadQueryOptions {
   bought_from?: number
   ownerId?: number
   active?: boolean
-  filter?:
-    | undefined[]
-    | {
-        industry: Industry
-        category: Categories
-        search: string
-        industryFilters: RealEstateFilter[] | CryptoFilter[]
-      }
+  filter?: undefined[] | Filter
 }
 
 export interface RawLeadQueryOptions {
@@ -39,12 +35,7 @@ export interface RawLeadQueryOptions {
   page?: string
   limit?: string
   sortOrder?: string
-  filter?: {
-    industry: Industry
-    category: Categories
-    search: string
-    industryFilters: RealEstateFilter[] | CryptoFilter[]
-  }
+  filter?: Filter
   user?: any
 }
 
@@ -108,7 +99,14 @@ export interface RealEstateLead extends BaseLead {
   "Property Type"?: string
 }
 
-export interface RealEstateFilter {
+export interface Filter {
+  industry: Industry
+  category: Categories
+  search: string
+  industryFilters: IndustryFilter[]
+}
+
+export interface IndustryFilter {
   name: string
   type: string
   inputType?: string
@@ -119,11 +117,3 @@ export interface RealEstateFilter {
   from?: string
   to?: string
 }
-
-export interface CryptoFilter {
-  name: string
-  type: string
-}
-
-export type Lead = BaseLead | RealEstateLead
-export type NewLead = NewBaseLead | NewRealEstateLead

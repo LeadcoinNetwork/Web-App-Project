@@ -4,7 +4,7 @@ import * as _ from "lodash"
 import SQL from "../mysql-pool/mysql-pool"
 import LogModelActions from "../log-model-actions/log-model-actions"
 import NotFound from "../../utils/not-found"
-import { RealEstateFilter } from "../leads/types"
+import { IndustryFilter } from "../leads/types"
 
 type tableName = "users" | "leads" | "notifications"
 
@@ -44,7 +44,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     }
   }
 
-  private escape(value, isId) {
+  private escape(value: string, isId: boolean): string {
     if (isId && (value.includes(" ") || value.includes("/"))) {
       value = '"' + value + '"'
     }
@@ -57,7 +57,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     return new Date(date.setDate(date.getDate() + days))
   }
 
-  private buildRealEstateFilters(industryFilters: RealEstateFilter[]) {
+  private buildIndustryFilters(industryFilters: IndustryFilter[]) {
     return industryFilters.map(filter => {
       switch (filter.type) {
         case "date":
@@ -256,23 +256,14 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
             false,
           )}'`
       if (filter.industryFilters) {
-        let buildIndustryFiltersFunc = undefined
-        switch (filter.industry) {
-          case "Real Estate":
-            buildIndustryFiltersFunc = this.buildRealEstateFilters
-            break
-          default:
-            break
-        }
-        if (buildIndustryFiltersFunc) {
-          let industryFilters_additions = buildIndustryFiltersFunc
-            .call(this, filter.industryFilters)
-            .filter(Boolean)
-            .join("\nAND ")
-          where_additions +=
-            (where_additions && industryFilters_additions ? `\nAND ` : "") +
-            industryFilters_additions
-        }
+        let industryFilters_additions = this.buildIndustryFilters(
+          filter.industryFilters,
+        )
+          .filter(Boolean)
+          .join("\nAND ")
+        where_additions +=
+          (where_additions && industryFilters_additions ? `\nAND ` : "") +
+          industryFilters_additions
       }
       let search_additions = []
       if (filter.search) {
