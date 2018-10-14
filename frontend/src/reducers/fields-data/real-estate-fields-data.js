@@ -1,4 +1,4 @@
-const fields = [
+const realEstateFields = [
   {
     key: "Industry",
     name: "Industry",

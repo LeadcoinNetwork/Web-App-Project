@@ -32,6 +32,7 @@ export function start({
     count = parseInt(count)
     for (let i = 1; i < count + 1; i++) {
       let owner = Math.floor(count / i)
+      const name = chance.name()
       let status = await appLogic.models.leads.insertLead({
         Industry: "Real Estate",
         Category: "Sell",
@@ -47,8 +48,9 @@ export function start({
         forSale: true,
         "Lead Price": chance.integer({ min: 1, max: 20 }),
         ownerId: owner,
-        "Contact Person": chance.name(),
+        "Contact Person": name,
         Telephone: chance.phone(),
+        Email: name.replace(" ", "") + "@test.example",
         active: true,
         Price: parseInt(
           chance
