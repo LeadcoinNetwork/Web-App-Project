@@ -73,8 +73,8 @@ const initialState = {
   limit: 20,
   total: 0,
   fullyLoaded: false,
+  industry: "",
   filter: {
-    industry: "",
     category: "",
     search: "",
     industryFilters: null,

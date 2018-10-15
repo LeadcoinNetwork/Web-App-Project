@@ -170,6 +170,7 @@ class BuyLeads extends React.Component {
 const mapStateToProps = state => ({
   leads: state.buyLeads,
   fields: state.fields.public,
+  industry: state.industry,
 })
 
 export default connect(

@@ -1,10 +1,19 @@
 import types from "../actions/types"
 import fieldsData from "./fields-data"
 
-const initialState = fieldsData
+const initialState = {
+  fieldsData: undefined,
+}
 
 const fields = (state = initialState, action) => {
-  return state
+  switch (action.type) {
+    case types.INDUSTRY_UPDATE:
+      return {
+        fieldsData: fieldsData[action.payload],
+      }
+    default:
+      return state
+  }
 }
 
 export default fields

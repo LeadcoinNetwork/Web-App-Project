@@ -50,7 +50,7 @@ class AddLead extends React.Component {
               disabled={loading}
               appStyle={true}
               placeholder={t(f.name)}
-              value={values[f.key]}
+              value={values[f.key] ? values[f.key] : ""}
               onChange={e => {
                 this.props.handleChange(f.key, e.target.value)
               }}

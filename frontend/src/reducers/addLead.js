@@ -1,11 +1,6 @@
 import { types } from "../actions"
 import fields from "./fields-data"
 
-const initialValues = fields.reduce((values, field) => {
-  values[field.key] = ""
-  return values
-}, {})
-
 const fields_not_for_display = ["active"]
 const initialState = {
   db_fields: {
@@ -13,14 +8,15 @@ const initialState = {
       .filter(field => field.editable)
       .filter(field => field.private)
       .map(field => ({ key: field.key, name: field.name }))
-      .filter(f => !fields_not_for_display.includes(f)),
+      .filter(f => !fields_not_for_display.includes(f.key)),
     public: fields
       .filter(field => field.editable)
       .filter(field => !field.private)
       .map(field => ({ key: field.key, name: field.name }))
       .filter(f => !fields_not_for_display.includes(f.key)),
   },
-  values: initialValues,
+  industry: "",
+  values: {},
   errors: {},
   agree_to_terms: false,
   loading: false,
