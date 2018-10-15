@@ -116,4 +116,4 @@ const realEstateFields = [
   },
 ]
 
-export default fields
+export default realEstateFields

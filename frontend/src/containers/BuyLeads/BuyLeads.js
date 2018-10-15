@@ -53,6 +53,14 @@ class BuyLeads extends React.Component {
     }
   }
   render() {
+    let {
+      leads: { filter, expandIndustryFilters },
+      handleFilter,
+      expandFiltersClick,
+      clearList,
+      searchClicked,
+      fetchLeads,
+    } = this.props
     return (
       // do not change classnames, it's connected to the manual
       <section className="buy_leads">
@@ -61,9 +69,8 @@ class BuyLeads extends React.Component {
         <div className="bl-filters">
           <Select
             className="industry"
-            value={this.props.leads.filter.industry}
+            value={filter.industry}
             onChange={e => {
-              const filter = this.props.leads.filter
               this.props.handleFilter({
                 ...filter,
                 industry: e.target.value,
@@ -72,6 +79,7 @@ class BuyLeads extends React.Component {
           >
             <option value="">{t("Choose Industry")}</option>
             <option value="Real Estate">{t("Real Estate")}</option>
+            <option value="Design">{t("Design")}</option>
             <option value="Crypto" disabled>
               {t("Crypto")}
             </option>
@@ -82,43 +90,38 @@ class BuyLeads extends React.Component {
               {t("Loans")}
             </option>
           </Select>
-          {this.props.leads.filter.industryFilters &&
-            this.props.leads.filter.industryFilters[0].name === "Category" && (
+          {filter.industryFilters &&
+            filter.industryFilters[0].name === "Category" && (
               <Select
                 className="category"
-                value={this.props.leads.filter.industryFilters[0].value}
+                value={filter.industryFilters[0].value}
                 onChange={e => {
-                  const industryFilters = this.props.leads.filter
-                    .industryFilters
+                  const industryFilters = filter.industryFilters
                   industryFilters[0].value = e.target.value
                   this.props.handleFilter({
-                    ...this.props.leads.filter,
+                    ...filter,
                     industryFilters,
                   })
                 }}
               >
                 {
                   <option key="0" value="">
-                    {"Choose " +
-                      this.props.leads.filter.industryFilters[0].name}
+                    {"Choose " + filter.industryFilters[0].name}
                   </option>
                 }
-                {this.props.leads.filter.industryFilters[0].options.map(
-                  (option, index) => (
-                    <option key={index + 1} value={option}>
-                      {option}
-                    </option>
-                  ),
-                )}
+                {filter.industryFilters[0].options.map((option, index) => (
+                  <option key={index + 1} value={option}>
+                    {option}
+                  </option>
+                ))}
               </Select>
             )}
           <TextField
             appStyle
             className="search_bar"
             placeholder={t("Search...")}
-            value={this.props.leads.filter.search}
+            value={filter.search}
             onChange={e => {
-              const filter = this.props.leads.filter
               this.props.handleFilter({
                 ...filter,
                 search: e.target.value,
@@ -126,11 +129,10 @@ class BuyLeads extends React.Component {
             }}
           />
           <IndustryFilters
-            filters={this.props.leads.filter.industryFilters}
-            expand={this.props.leads.expandIndustryFilters}
-            onExpandClick={this.props.expandFiltersClick}
+            filters={filter.industryFilters.slice(1)} // first filter is the category filter above
+            expand={expandIndustryFilters}
+            onExpandClick={expandFiltersClick}
             handleFilter={industryFilters => {
-              const filter = this.props.leads.filter
               filter.industryFilters = industryFilters
               this.props.handleFilter(filter)
             }}
@@ -139,25 +141,27 @@ class BuyLeads extends React.Component {
             <Button
               className="search"
               onClick={() => {
-                this.props.clearList()
-                this.props.searchClicked()
-                this.props.fetchLeads()
+                clearList()
+                searchClicked()
+                fetchLeads()
               }}
               appStyle={true}
+              disabled={!filter.indusrty}
             >
               {t("Search")}
             </Button>
           </div>
         </div>
-        {this.props.leads.searchClicked && (
-          <LeadsTemplate
-            {...this.props}
-            pageName="buy"
-            constantCardOpen={false}
-            isSelectable={true}
-            getButtons={this.getButtons}
-          />
-        )}
+        {leads.searchClicked &&
+          leads.filter.industry && (
+            <LeadsTemplate
+              {...this.props}
+              pageName="buy"
+              constantCardOpen={false}
+              isSelectable={true}
+              getButtons={this.getButtons}
+            />
+          )}
       </section>
     )
   }
@@ -165,7 +169,7 @@ class BuyLeads extends React.Component {
 
 const mapStateToProps = state => ({
   leads: state.buyLeads,
-  fields: state.fields.filter(lead => !lead.private),
+  fields: state.fields.public,
 })
 
 export default connect(

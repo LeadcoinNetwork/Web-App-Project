@@ -18,17 +18,15 @@ const IndustryFilters = ({ filters, expand, onExpandClick, handleFilter }) => (
     </div>
     {filters &&
       expand &&
-      filters
-        .slice(1)
-        .map((f, index) => (
-          <Filter
-            key={index}
-            index={index}
-            filter={f}
-            filters={filters}
-            handleFilter={handleFilter}
-          />
-        ))}
+      filters.map((f, index) => (
+        <Filter
+          key={index}
+          index={index}
+          filter={f}
+          filters={filters}
+          handleFilter={handleFilter}
+        />
+      ))}
   </div>
 )
 

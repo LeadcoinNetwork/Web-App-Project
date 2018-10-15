@@ -1,14 +1,15 @@
 import React from "react"
 import { connect } from "react-redux"
 import * as actions from "Actions"
-import Table from "Components/Table"
-import Button from "Components/Button"
-import LeadsResults from "Components/LeadsResults"
-import Select from "Components/Select"
-import TextField from "Components/TextField"
+import Table from "../../components/Table"
+import Button from "../../components/Button"
+import LeadsResults from "../../components/LeadsResults"
+import Select from "../../components/Select"
+import TextField from "../../components/TextField"
 import t from "../../utils/translate/translate"
-import RealEstateLead from "Components/RealEstateLead"
-import SwitchResultsMode from "Containers/SwitchResultsMode"
+import RealEstateLead from "../../components/CardView/RealEstateLead"
+import DesignLead from "../../components/CardView/DesignLead"
+import SwitchResultsMode from "../../containers/SwitchResultsMode"
 import { Link } from "react-router-dom"
 import { push } from "react-router-redux"
 
@@ -141,11 +142,6 @@ class LeadsTemplate extends React.Component {
       editLead,
     } = this.props
 
-    let fieldsCheck = {}
-    fields.forEach(element => {
-      fieldsCheck[element.key] = element.key
-    })
-
     let isNotAllSelected = this.isNotAllSelected()
     return (
       <div>
@@ -167,19 +163,40 @@ class LeadsTemplate extends React.Component {
                   renderFilters={this.renderFilters}
                   renderResultsHead={this.renderResultsHead}
                   renderLead={(lead, index) => (
-                    <RealEstateLead
-                      key={lead.id}
-                      fieldsCheck={fieldsCheck}
-                      {...lead}
-                      checked={isSelectable && leads.selected.has(lead.id)}
-                      isSelectable={isSelectable}
-                      push={this.props.push}
-                      buttons={getButtons && getButtons().record}
-                      toggleCheck={event => this.toggleLead(event, lead.id)}
-                      toggleCardView={() => this.props.toggelCardView(index)}
-                      constantCardOpen={constantCardOpen}
-                      editLead={editLead}
-                    />
+                    <>
+                      {leads.filter.industry === "Real Estate" && (
+                        <RealEstateLead
+                          key={lead.id}
+                          {...lead}
+                          checked={isSelectable && leads.selected.has(lead.id)}
+                          isSelectable={isSelectable}
+                          push={this.props.push}
+                          buttons={getButtons && getButtons().record}
+                          toggleCheck={event => this.toggleLead(event, lead.id)}
+                          toggleCardView={() =>
+                            this.props.toggelCardView(index)
+                          }
+                          constantCardOpen={constantCardOpen}
+                          editLead={editLead}
+                        />
+                      )}
+                      {leads.filter.industry === "Design" && (
+                        <DesignLead
+                          key={lead.id}
+                          {...lead}
+                          checked={isSelectable && leads.selected.has(lead.id)}
+                          isSelectable={isSelectable}
+                          push={this.props.push}
+                          buttons={getButtons && getButtons().record}
+                          toggleCheck={event => this.toggleLead(event, lead.id)}
+                          toggleCardView={() =>
+                            this.props.toggelCardView(index)
+                          }
+                          constantCardOpen={constantCardOpen}
+                          editLead={editLead}
+                        />
+                      )}
+                    </>
                   )}
                 />
               ) : (

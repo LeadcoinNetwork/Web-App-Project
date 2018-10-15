@@ -108,4 +108,4 @@ const designFields = [
   },
 ]
 
-export default fields
+export default designFields
