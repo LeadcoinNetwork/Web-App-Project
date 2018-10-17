@@ -66,6 +66,34 @@ const RealEstateFilters = [
   },
 ]
 
+const DesignFilters = [
+  {
+    name: "Category",
+    type: "select",
+    options: ["Order", "Offer"],
+    value: "",
+  },
+  {
+    name: "State",
+    type: "select",
+    options: statesData,
+    value: "",
+  },
+  {
+    name: "Price",
+    type: "range",
+    inputType: "number",
+    min: "",
+    max: "",
+  },
+  {
+    name: "Date",
+    type: "date",
+    from: "",
+    to: "",
+  },
+]
+
 const initialState = {
   list: [],
   sortBy: null,
@@ -73,13 +101,13 @@ const initialState = {
   limit: 20,
   total: 0,
   fullyLoaded: false,
-  industry: "",
   filter: {
+    industry: "",
     category: "",
     search: "",
-    industryFilters: null,
+    industryFilters: undefined,
   },
-  searchClicked: false,
+  wasSearchClicked: false,
   expandIndustryFilters: false,
   error: "",
   loading: true,
@@ -90,19 +118,9 @@ const createReducerFor = namespace => {
   return (state = initialState, action) => {
     switch (action.type) {
       case types[namespace + "_FILTER_CHANGE"]:
-        let filter = action.payload
-        switch (filter.industry) {
-          case "Real Estate":
-            if (!filter.industryFilters) {
-              filter.industryFilters = RealEstateFilters
-            }
-            break
-          default:
-            filter.industryFilters = null
-        }
         return {
           ...state,
-          filter,
+          filter: action.payload,
         }
       case types[namespace + "_EXPAND_FILTERS_CLICK"]:
         return {
@@ -122,7 +140,7 @@ const createReducerFor = namespace => {
       case types[namespace + "_SEARCH_CLICKED"]:
         return {
           ...state,
-          searchClicked: true,
+          wasSearchClicked: true,
         }
       case types["CLEAR_ALL_LEADS"]:
       case types[namespace + "_CLEAR_LEADS"]:
@@ -197,6 +215,32 @@ const createReducerFor = namespace => {
           .cardOpen
         return {
           ...state,
+        }
+      case types.INDUSTRY_UPDATE:
+        let industryFilters = state.filter.industryFilters
+        switch (action.payload) {
+          case "Real Estate":
+            if (state.filter.industry !== action.payload) {
+              industryFilters = RealEstateFilters
+            }
+            break
+          case "Design":
+            if (state.filter.industry !== action.payload) {
+              industryFilters = DesignFilters
+            }
+            break
+          default:
+            industryFilters = []
+        }
+        return {
+          ...state,
+          wasSearchClicked: false,
+          loading: true,
+          filter: {
+            ...state.filter,
+            industry: action.payload,
+            industryFilters,
+          },
         }
       default:
         return state

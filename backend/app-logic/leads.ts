@@ -203,6 +203,9 @@ export default class Leads {
       case "Real Estate":
         _filter.search = this.buildRealEstateSearch(filter.search)
         break
+      case "Design":
+        _filter.search = this.buildDesignSearch(filter.search)
+        break
       default:
         _filter.search = this.buildDefaultSearch(filter.search)
         break
@@ -239,6 +242,21 @@ export default class Leads {
           val: search,
         }
       })
+    }
+    return _search
+  }
+  buildDesignSearch(search: string): string {
+    let _search
+    if (search) {
+      _search = ["Description", "Location", "Specification", "Website"].map(
+        field => {
+          return {
+            field,
+            op: "LIKE",
+            val: search,
+          }
+        },
+      )
     }
     return _search
   }

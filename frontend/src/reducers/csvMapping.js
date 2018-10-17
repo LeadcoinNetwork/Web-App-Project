@@ -1,4 +1,5 @@
 import { types } from "../actions"
+import fields from "./fields-data"
 
 const initialState = {
   db_fields: {
@@ -73,7 +74,20 @@ export default function(state = initialState, action) {
         ...state,
         file_fields: action.file_fields,
       }
-
+    case types.INDUSTRY_UPDATE:
+      return {
+        ...state,
+        db_fields: {
+          private: fields[action.payload]
+            ? fields[action.payload].private.map(field => field.name)
+            : [],
+          public: fields[action.payload]
+            ? fields[action.payload].public
+                .filter(f => f.key !== "lead_price")
+                .map(field => field.name)
+            : [],
+        },
+      }
     default:
       return state
   }

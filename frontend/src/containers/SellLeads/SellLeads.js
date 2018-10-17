@@ -68,12 +68,14 @@ class SellLeads extends React.Component {
         <h3>
           {t("Earn money by selling your unused leads to other professionals.")}
         </h3>
-        <LeadsTemplate
-          {...this.props}
-          pageName="sell"
-          constantCardOpen={true}
-          isSelectable={false}
-        />
+        {this.props.leads.filter.industry && (
+          <LeadsTemplate
+            {...this.props}
+            pageName="sell"
+            constantCardOpen={true}
+            isSelectable={false}
+          />
+        )}
       </>
     )
   }
@@ -81,7 +83,7 @@ class SellLeads extends React.Component {
 
 const mapStateToProps = state => ({
   leads: state.sellLeads,
-  fields: state.fields,
+  fields: state.fields.public,
 })
 
 export default connect(

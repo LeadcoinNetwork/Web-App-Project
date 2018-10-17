@@ -540,7 +540,9 @@ export function start({
             sortOrder,
             filter: {
               ...filter,
-              industryFilters: JSON.parse(filter.industryFilters),
+              industryFilters: filter.industryFilters
+                ? JSON.parse(filter.industryFilters)
+                : filter.industryFilters,
             },
             user,
           })

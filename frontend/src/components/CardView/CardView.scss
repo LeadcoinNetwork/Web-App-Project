@@ -63,13 +63,13 @@ section {
         display: inline-block;
         min-width: 230px;
 
-        .reld-category,
-        .reld-status,
-        .reld-date,
-        .reld-location,
-        .reld-contact-person,
-        .reld-email,
-        .reld-telephone {
+        .card-detail-category,
+        .card-detail-status,
+        .card-detail-date,
+        .card-detail-location,
+        .card-detail-contact-person,
+        .card-detail-email,
+        .card-detail-telephone {
           color: $main-color;
           padding-top: 8px;
         }

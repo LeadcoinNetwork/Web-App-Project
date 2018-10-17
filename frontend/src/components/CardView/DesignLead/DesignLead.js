@@ -1,12 +1,11 @@
 import React from "react"
-import Button from "../../../components/Button"
 import { fromNow } from "../../../utils/time"
 import { priceString } from "../../../utils/numbers"
 import t from "../../../utils/translate/translate"
 
 const DesignLead = lead => {
   let fieldsCheck = {}
-  fields.forEach(element => {
+  lead.fields.forEach(element => {
     fieldsCheck[element.key] = element.key
   })
 
@@ -44,38 +43,30 @@ const DesignLead = lead => {
       <div className="card-details-wrapper">
         <div className="card-details">
           {fieldsCheck.Category && (
-            <div className="card-details-category">{lead.Category}</div>
+            <div className="card-detail-category">{lead.Category}</div>
           )}
-          <div className="card-details-date">{fromNow(lead.date)}</div>
-          <div className="card-details-location">
-            {lead.State}, {lead.Location}
+          <div className="card-detail-date">{fromNow(lead.date)}</div>
+          <div className="card-detail-location">
+            {lead.State}
+            {lead.State && lead.Location ? ", " : ""}
+            {lead.Location}
           </div>
-          {fieldsCheck["Contact Person"] && (
-            <div className="card-contact-details">
-              {fieldsCheck["Contact Person"] && (
-                <div className="card-details-contact-person">
-                  {lead["Contact Person"]}
-                </div>
-              )}
-              {fieldsCheck.Email && (
-                <div className="card-details-email">{lead.Email}</div>
-              )}
-              {fieldsCheck.Telephone && (
-                <div className="card-details-telephone">{lead.Telephone}</div>
-              )}
-            </div>
-          )}
+          <div className="card-contact-details">
+            {fieldsCheck["Contact Person"] && (
+              <div className="card-detail-contact-person">
+                {lead["Contact Person"]}
+              </div>
+            )}
+            {fieldsCheck.Email && (
+              <div className="card-detail-email">{lead.Email}</div>
+            )}
+            {fieldsCheck.Telephone && (
+              <div className="card-detail-telephone">{lead.Telephone}</div>
+            )}
+          </div>
         </div>
         <div className="card-features">
-          {fieldsCheck["Housing Type"] &&
-            lead["Housing Type"].length > 0 && (
-              <span>{lead["Housing Type"]}</span>
-            )}
-          {fieldsCheck["Bedrooms/Baths"] &&
-            lead["Bedrooms/Baths"].length > 0 && (
-              <span>{lead["Bedrooms/Baths"]}</span>
-            )}
-          {fieldsCheck.Size && lead.Size.length > 0 && areaSpanEl(lead.Size)}
+          {fieldsCheck.Specification && <span>{lead.Specification}</span>}
           {fieldsCheck.Price &&
             lead.Price && (
               <span>
@@ -83,6 +74,11 @@ const DesignLead = lead => {
                 {priceString(lead.Price)}
               </span>
             )}
+          {fieldsCheck.Website && (
+            <span>
+              <a href={lead.Website}>{lead.Website}</a>
+            </span>
+          )}
         </div>
       </div>
       {!lead.constantCardOpen && (
@@ -114,7 +110,7 @@ const DesignLead = lead => {
               onClick={() => button.onClick(lead.id)}
             >
               {button.value}
-            </button>
+            </Button>
           ))}
       </div> */}
     </section>

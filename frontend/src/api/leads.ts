@@ -128,7 +128,9 @@ export default class LeadsApi {
           ...res,
           filter: {
             ...res.filter,
-            industryFilters: JSON.parse(res.filter.industryFilters),
+            industryFilters: res.filter.industryFilters
+              ? JSON.parse(res.filter.industryFilters)
+              : res.filter.industryFilters,
           },
         }
   }

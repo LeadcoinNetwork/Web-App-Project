@@ -141,7 +141,7 @@ class LeadsTemplate extends React.Component {
       displayLead,
       editLead,
     } = this.props
-
+    // debugger
     let isNotAllSelected = this.isNotAllSelected()
     return (
       <div>
@@ -168,6 +168,7 @@ class LeadsTemplate extends React.Component {
                         <RealEstateLead
                           key={lead.id}
                           {...lead}
+                          fields={fields}
                           checked={isSelectable && leads.selected.has(lead.id)}
                           isSelectable={isSelectable}
                           push={this.props.push}
@@ -184,6 +185,7 @@ class LeadsTemplate extends React.Component {
                         <DesignLead
                           key={lead.id}
                           {...lead}
+                          fields={fields}
                           checked={isSelectable && leads.selected.has(lead.id)}
                           isSelectable={isSelectable}
                           push={this.props.push}

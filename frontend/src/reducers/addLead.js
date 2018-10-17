@@ -3,18 +3,7 @@ import fields from "./fields-data"
 
 const fields_not_for_display = ["active"]
 const initialState = {
-  db_fields: {
-    private: fields
-      .filter(field => field.editable)
-      .filter(field => field.private)
-      .map(field => ({ key: field.key, name: field.name }))
-      .filter(f => !fields_not_for_display.includes(f.key)),
-    public: fields
-      .filter(field => field.editable)
-      .filter(field => !field.private)
-      .map(field => ({ key: field.key, name: field.name }))
-      .filter(f => !fields_not_for_display.includes(f.key)),
-  },
+  db_fields: undefined,
   industry: "",
   values: {},
   errors: {},
@@ -75,10 +64,21 @@ export default function(state = initialState, action) {
         errors: newErrors,
       }
 
-    case types.ADD_LEAD_GET_DB_FIELDS:
+    case types.INDUSTRY_UPDATE:
       return {
         ...state,
-        db_fields: action.db_fields,
+        db_fields: fields[action.payload]
+          ? {
+              private: fields[action.payload].private
+                .filter(field => field.editable)
+                .map(field => ({ key: field.key, name: field.name }))
+                .filter(f => !fields_not_for_display.includes(f.key)),
+              public: fields[action.payload].public
+                .filter(field => field.editable)
+                .map(field => ({ key: field.key, name: field.name }))
+                .filter(f => !fields_not_for_display.includes(f.key)),
+            }
+          : undefined,
       }
     default:
       return state

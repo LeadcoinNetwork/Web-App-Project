@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import { push } from "react-router-redux"
-import { leads } from "../../actions"
+import { leads, industry } from "../../actions"
 import LeadsTemplate from "../LeadsTemplate"
 import IndustryFilters from "../../components/IndustryFilters"
 import Select from "../../components/Select"
@@ -54,7 +54,7 @@ class BuyLeads extends React.Component {
   }
   render() {
     let {
-      leads: { filter, expandIndustryFilters },
+      leads: { filter, expandIndustryFilters, wasSearchClicked },
       handleFilter,
       expandFiltersClick,
       clearList,
@@ -71,10 +71,7 @@ class BuyLeads extends React.Component {
             className="industry"
             value={filter.industry}
             onChange={e => {
-              this.props.handleFilter({
-                ...filter,
-                industry: e.target.value,
-              })
+              this.props.industryUpdate(e.target.value)
             }}
           >
             <option value="">{t("Choose Industry")}</option>
@@ -98,7 +95,7 @@ class BuyLeads extends React.Component {
                 onChange={e => {
                   const industryFilters = filter.industryFilters
                   industryFilters[0].value = e.target.value
-                  this.props.handleFilter({
+                  handleFilter({
                     ...filter,
                     industryFilters,
                   })
@@ -122,19 +119,23 @@ class BuyLeads extends React.Component {
             placeholder={t("Search...")}
             value={filter.search}
             onChange={e => {
-              this.props.handleFilter({
+              handleFilter({
                 ...filter,
                 search: e.target.value,
               })
             }}
           />
           <IndustryFilters
-            filters={filter.industryFilters.slice(1)} // first filter is the category filter above
+            filters={
+              filter.industryFilters
+                ? filter.industryFilters.slice(1)
+                : undefined
+            } // first filter is the category filter above
             expand={expandIndustryFilters}
             onExpandClick={expandFiltersClick}
             handleFilter={industryFilters => {
               filter.industryFilters = industryFilters
-              this.props.handleFilter(filter)
+              handleFilter(filter)
             }}
           />
           <div className="search-button-wrapper">
@@ -146,14 +147,14 @@ class BuyLeads extends React.Component {
                 fetchLeads()
               }}
               appStyle={true}
-              disabled={!filter.indusrty}
+              disabled={!filter.industry}
             >
               {t("Search")}
             </Button>
           </div>
         </div>
-        {leads.searchClicked &&
-          leads.filter.industry && (
+        {wasSearchClicked &&
+          filter.industry && (
             <LeadsTemplate
               {...this.props}
               pageName="buy"
@@ -170,7 +171,6 @@ class BuyLeads extends React.Component {
 const mapStateToProps = state => ({
   leads: state.buyLeads,
   fields: state.fields.public,
-  industry: state.industry,
 })
 
 export default connect(
@@ -178,6 +178,7 @@ export default connect(
   {
     push: push,
     handleFilter: newFilter => leads.filterChange("BUY_LEADS", newFilter),
+    industryUpdate: industry.industryUpdate,
     fetchLeads: params => leads.fetchLeads("BUY_LEADS", params),
     setSelectedLeads: selectedLeads =>
       leads.setSelectedLeads("BUY_LEADS", selectedLeads),

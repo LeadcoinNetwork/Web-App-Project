@@ -84,17 +84,18 @@ class MyLeads extends React.Component {
             }}
           />
         )}
-        {!isDisplayingLead && (
-          <LeadsTemplate
-            {...this.props}
-            pageName="my"
-            constantCardOpen={true}
-            isSelectable={true}
-            getButtons={this.getButtons}
-            editLead={this.editLead.bind(this)}
-            displayLead={this.displayLead.bind(this)}
-          />
-        )}
+        {!isDisplayingLead &&
+          this.props.leads.filter.industry && (
+            <LeadsTemplate
+              {...this.props}
+              pageName="my"
+              constantCardOpen={true}
+              isSelectable={true}
+              getButtons={this.getButtons}
+              editLead={this.editLead.bind(this)}
+              displayLead={this.displayLead.bind(this)}
+            />
+          )}
         {this.state.showConfirmation && (
           <ConfirmationDialog
             description="You are about to move the selected leads to be publicly traded. Are you sure you want to proceed?"
@@ -112,9 +113,11 @@ class MyLeads extends React.Component {
 
 const mapStateToProps = state => ({
   leads: state.myLeads,
-  fields: state.fields.filter(f => {
-    return f.key != "lead_price"
-  }),
+  fields: state.fields.public
+    ? state.fields.public.concat(state.fields.private).filter(f => {
+        return f.key !== "lead_price"
+      })
+    : undefined,
 })
 
 export default connect(

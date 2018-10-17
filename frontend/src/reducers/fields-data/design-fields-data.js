@@ -83,14 +83,6 @@ const designFields = [
     private: true,
   },
   {
-    key: "lead_price",
-    name: "Lead Price",
-    sortable: true,
-    editable: true,
-    maxWidth: "100px",
-    minWidth: "100px",
-  },
-  {
     key: "Specification",
     name: "Specification",
     sortable: true,
@@ -101,6 +93,14 @@ const designFields = [
   {
     key: "Website",
     name: "Website",
+    sortable: true,
+    editable: true,
+    maxWidth: "100px",
+    minWidth: "100px",
+  },
+  {
+    key: "lead_price",
+    name: "Lead Price",
     sortable: true,
     editable: true,
     maxWidth: "100px",

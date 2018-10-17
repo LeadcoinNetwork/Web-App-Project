@@ -29,33 +29,13 @@ class CSVUpload extends React.Component {
     return
   }
 
-  process(fields) {
-    this.props.setFileFields(Object.keys(fields))
-    // TODO: replace mock_fields with field list from /leads/getLeadType
-    let mock_fields = {
-      private: ["Contact Person", "Telephone", "Email"],
-      public: [
-        "Industry",
-        "Category",
-        "Description",
-        "Bedrooms/Baths",
-        "Price",
-        "Size",
-        "State",
-        "Location",
-        "Housing Type",
-      ],
-    }
-    this.props.setDbFields(mock_fields)
-  }
-
   tryReadingCsv(file) {
     papaparse.parse(file, {
       dynamicTyping: true,
       header: true,
       preview: 1,
       complete: rows => {
-        this.process(rows.data[0])
+        this.props.setFileFields(Object.keys(rows.data[0]))
       },
     })
   }
