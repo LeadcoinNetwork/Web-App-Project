@@ -31,6 +31,7 @@ export default function* sellLeads(api) {
       types.ADD_LEAD_SUBMIT_SUCCESS,
       types.MY_LEADS_MOVE_TO_SELL_SUCCESS,
       types.INDUSTRY_UPDATE,
+      types.LOGIN_FINISH,
       types.LOGGED_OUT,
     ])
   }

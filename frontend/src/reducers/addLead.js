@@ -1,10 +1,22 @@
 import { types } from "../actions"
 import fields from "./fields-data"
 
+const initialIndustry = window.localStorage.getItem("industry")
+
 const fields_not_for_display = ["active"]
 const initialState = {
-  db_fields: undefined,
-  industry: "",
+  db_fields: fields[initialIndustry]
+    ? {
+        private: fields[initialIndustry].private
+          .filter(field => field.editable)
+          .map(field => ({ key: field.key, name: field.name }))
+          .filter(f => !fields_not_for_display.includes(f.key)),
+        public: fields[initialIndustry].public
+          .filter(field => field.editable)
+          .map(field => ({ key: field.key, name: field.name }))
+          .filter(f => !fields_not_for_display.includes(f.key)),
+      }
+    : undefined,
   values: {},
   errors: {},
   agree_to_terms: false,

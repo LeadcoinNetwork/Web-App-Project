@@ -1,7 +1,10 @@
 import types from "../actions/types"
 import fieldsData from "./fields-data"
 
-const initialState = {}
+const initialIndustry = window.localStorage.getItem("industry")
+const initialState = fieldsData[initialIndustry]
+  ? fieldsData[initialIndustry]
+  : {}
 
 const fields = (state = initialState, action) => {
   switch (action.type) {

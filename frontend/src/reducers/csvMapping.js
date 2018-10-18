@@ -1,10 +1,18 @@
 import { types } from "../actions"
 import fields from "./fields-data"
 
+const initialIndustry = window.localStorage.getItem("industry")
+
 const initialState = {
   db_fields: {
-    private: [],
-    public: [],
+    private: fields[initialIndustry]
+      ? fields[initialIndustry].private.map(field => field.name)
+      : [],
+    public: fields[initialIndustry]
+      ? fields[initialIndustry].public
+          .filter(f => f.key !== "lead_price")
+          .map(field => field.name)
+      : [],
   },
   file_fields: [],
   fields_map: {},

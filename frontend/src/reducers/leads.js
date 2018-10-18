@@ -1,99 +1,27 @@
 import types from "../actions/types"
-import statesData from "./states-data"
+import { RealEstateFilters, DesignFilters } from "./filters-data"
 
-//filter 0 should always be the relevent industry categories with name: "Category", type: "select"
-const RealEstateFilters = [
-  {
-    name: "Category",
-    type: "select",
-    options: [
-      // "Buy",
-      "Sell",
-      // "Looking to rent",
-      "Properties for rent",
-    ],
-    value: "",
-  },
-  {
-    name: "State",
-    type: "select",
-    options: statesData,
-    value: "",
-  },
-  {
-    name: "Price",
-    type: "range",
-    inputType: "number",
-    min: "",
-    max: "",
-  },
-  {
-    name: "Size",
-    type: "range",
-    inputType: "number",
-    min: "",
-    max: "",
-  },
-  {
-    name: "Housing Type",
-    type: "select",
-    options: [
-      "Building",
-      "House",
-      "Apartment",
-      "Flat",
-      "Condo",
-      "Duplex",
-      "Townhouse",
-      "Cottage",
-      "Rooftop",
-      "Penthouse",
-      "Manufactured",
-      "Studio",
-      "Gallery",
-      "Farm",
-      "Office",
-      "Warehouse",
-      "Land",
-    ],
-    value: "",
-  },
-  {
-    name: "Date",
-    type: "date",
-    from: "",
-    to: "",
-  },
-]
-
-const DesignFilters = [
-  {
-    name: "Category",
-    type: "select",
-    options: ["Order", "Offer"],
-    value: "",
-  },
-  {
-    name: "State",
-    type: "select",
-    options: statesData,
-    value: "",
-  },
-  {
-    name: "Price",
-    type: "range",
-    inputType: "number",
-    min: "",
-    max: "",
-  },
-  {
-    name: "Date",
-    type: "date",
-    from: "",
-    to: "",
-  },
-]
-
+const getCurrentIndustry = () => {
+  const industry = window.localStorage.getItem("industry")
+    ? window.localStorage.getItem("industry")
+    : ""
+  let industryFilters
+  switch (industry) {
+    case "Real Estate":
+      industryFilters = RealEstateFilters
+      break
+    case "Design":
+      industryFilters = DesignFilters
+      break
+    default:
+      industryFilters = undefined
+  }
+  return {
+    industry,
+    industryFilters,
+  }
+}
+const initialIndustry = getCurrentIndustry()
 const initialState = {
   list: [],
   sortBy: null,
@@ -102,10 +30,10 @@ const initialState = {
   total: 0,
   fullyLoaded: false,
   filter: {
-    industry: "",
+    industry: initialIndustry.industry,
     category: "",
     search: "",
-    industryFilters: undefined,
+    industryFilters: initialIndustry.industryFilters,
   },
   wasSearchClicked: false,
   expandIndustryFilters: false,
@@ -144,16 +72,17 @@ const createReducerFor = namespace => {
         }
       case types["CLEAR_ALL_LEADS"]:
       case types[namespace + "_CLEAR_LEADS"]:
+        const currentIndustry = getCurrentIndustry()
         return {
           ...state,
           list: [],
           page: 0,
           total: 0,
           filter: {
-            industry: "",
+            industry: currentIndustry.industry,
             category: "",
             search: "",
-            industryFilters: null,
+            industryFilters: currentIndustry.industryFilters,
           },
           selected: new Set(),
         }

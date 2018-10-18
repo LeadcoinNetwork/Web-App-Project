@@ -32,6 +32,7 @@ export default function* myLeads(api) {
       types.CHECKOUT_BUY_SUCCESS,
       types.MY_LEADS_MOVE_TO_SELL_SUCCESS,
       types.INDUSTRY_UPDATE,
+      types.LOGIN_FINISH,
       types.LOGGED_OUT,
     ])
   }
