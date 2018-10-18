@@ -3,10 +3,7 @@ import { connect } from "react-redux"
 import { push } from "react-router-redux"
 import { leads, industry } from "../../actions"
 import LeadsTemplate from "../LeadsTemplate"
-import IndustryFilters from "../../components/IndustryFilters"
-import Select from "../../components/Select"
-import TextField from "../../components/TextField"
-import Button from "../../components/Button"
+import SearchFilterBar from "../../components/SearchFilterBar"
 import t from "../../utils/translate/translate"
 
 class BuyLeads extends React.Component {
@@ -60,99 +57,24 @@ class BuyLeads extends React.Component {
       clearList,
       searchClicked,
       fetchLeads,
+      industryUpdate,
     } = this.props
     return (
       // do not change classnames, it's connected to the manual
       <section className="buy_leads">
         <h1>{t("Buy Leads")}</h1>
         <h3>{t("Purchase hot leads for your business.")}</h3>
-        <div className="bl-filters">
-          <Select
-            className="industry"
-            value={filter.industry}
-            onChange={e => {
-              this.props.industryUpdate(e.target.value)
-            }}
-          >
-            <option value="">{t("Choose Industry")}</option>
-            <option value="Real Estate">{t("Real Estate")}</option>
-            <option value="Design">{t("Design")}</option>
-            <option value="Crypto" disabled>
-              {t("Crypto")}
-            </option>
-            <option value="Insurance" disabled>
-              {t("Insurance")}
-            </option>
-            <option value="Loans" disabled>
-              {t("Loans")}
-            </option>
-          </Select>
-          {filter.industryFilters &&
-            filter.industryFilters[0].name === "Category" && (
-              <Select
-                className="category"
-                value={filter.industryFilters[0].value}
-                onChange={e => {
-                  const industryFilters = filter.industryFilters
-                  industryFilters[0].value = e.target.value
-                  handleFilter({
-                    ...filter,
-                    industryFilters,
-                  })
-                }}
-              >
-                {
-                  <option key="0" value="">
-                    {"Choose " + filter.industryFilters[0].name}
-                  </option>
-                }
-                {filter.industryFilters[0].options.map((option, index) => (
-                  <option key={index + 1} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </Select>
-            )}
-          <TextField
-            appStyle
-            className="search_bar"
-            placeholder={t("Search...")}
-            value={filter.search}
-            onChange={e => {
-              handleFilter({
-                ...filter,
-                search: e.target.value,
-              })
-            }}
-          />
-          <IndustryFilters
-            filters={
-              filter.industryFilters
-                ? filter.industryFilters.slice(1)
-                : undefined
-            } // first filter is the category filter above
-            expand={expandIndustryFilters}
-            onExpandClick={expandFiltersClick}
-            handleFilter={industryFilters => {
-              filter.industryFilters = industryFilters
-              handleFilter(filter)
-            }}
-          />
-          <div className="search-button-wrapper">
-            <Button
-              className="search"
-              onClick={() => {
-                clearList()
-                searchClicked()
-                fetchLeads()
-              }}
-              appStyle={true}
-              disabled={!filter.industry}
-            >
-              {t("Search")}
-            </Button>
-          </div>
-        </div>
+        <SearchFilterBar
+          className="bl-filters"
+          filter={filter}
+          handleFilter={handleFilter}
+          clearList={clearList}
+          searchClicked={searchClicked}
+          fetchLeads={fetchLeads}
+          expandFiltersClick={expandFiltersClick}
+          expandIndustryFilters={expandIndustryFilters}
+          industryUpdate={industryUpdate}
+        />
         {wasSearchClicked &&
           filter.industry && (
             <LeadsTemplate

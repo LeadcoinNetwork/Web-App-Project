@@ -28,7 +28,6 @@ export default function* buyLeads(api) {
     yield take([
       types.BUY_LEADS_FETCH_LEADS,
       types.CHECKOUT_BUY_SUCCESS,
-      types.INDUSTRY_UPDATE,
       types.LOGIN_FINISH,
       types.LOGGED_OUT,
     ])

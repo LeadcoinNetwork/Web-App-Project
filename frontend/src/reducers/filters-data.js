@@ -1,6 +1,6 @@
 import statesData from "./states-data"
 
-//filter 0 should always be the relevent industry categories with name: "Category", type: "select"
+//filters should always have a categories filter with name: "Category", type: "select" and options: the relevent categories
 export const RealEstateFilters = [
   {
     name: "Category",

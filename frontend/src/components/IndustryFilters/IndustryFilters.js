@@ -18,15 +18,20 @@ const IndustryFilters = ({ filters, expand, onExpandClick, handleFilter }) => (
     </div>
     {filters &&
       expand &&
-      filters.map((f, index) => (
-        <Filter
-          key={index}
-          index={index}
-          filter={f}
-          filters={filters}
-          handleFilter={handleFilter}
-        />
-      ))}
+      filters.map(
+        (f, index) =>
+          f.name === "Category" ? (
+            undefined // category filter is displayed separately
+          ) : (
+            <Filter
+              key={index}
+              index={index}
+              filter={f}
+              filters={filters}
+              handleFilter={handleFilter}
+            />
+          ),
+      )}
   </div>
 )
 

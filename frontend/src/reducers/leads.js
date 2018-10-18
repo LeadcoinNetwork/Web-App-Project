@@ -159,12 +159,11 @@ const createReducerFor = namespace => {
             }
             break
           default:
-            industryFilters = []
+            industryFilters = undefined
         }
         return {
           ...state,
           wasSearchClicked: false,
-          loading: true,
           filter: {
             ...state.filter,
             industry: action.payload,
