@@ -10,14 +10,15 @@ import API from "../api/index.ts"
  */
 export default function* myLeads(api) {
   while (true) {
-    let { page, limit, sortBy, filter, mock } = yield select(
+    let { page, limit, sortBy, sortOrder, filter } = yield select(
       state => state.myLeads,
     )
 
-    let res = yield api.leads.getMyLeads({
+    let res = yield api.leads.getLeadsList("/my-leads", {
       page,
       limit,
       sortBy,
+      sortOrder,
       filter,
     })
 

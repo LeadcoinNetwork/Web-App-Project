@@ -12,8 +12,28 @@ import papaParse from "papaparse"
 
 interface LeadsApiOptions {
   sort_by?: [string, "ASC" | "DESC"]
-  filters?: [string, string][]
+  filter?: Filter
 }
+
+interface Filter {
+  industry: Industry
+  search: string
+  industryFilters: IndustryFilter[]
+}
+
+interface IndustryFilter {
+  name: string
+  type: string
+  inputType?: string
+  min?: string
+  max?: string
+  options?: string[]
+  value?: string
+  from?: string
+  to?: string
+}
+
+type Industry = "Real Estate" | "Design" | "Crypto" | "Insurance" | "Loans"
 
 let mockCsv = `Industry,Category,Date Published,Description,Bedrooms / Baths,Price,Size,State,Location,Housing Type,Telephone,Contact Person,Lead Price
 Real Estate,Sell,Jul 31,LARGE-2-FAMILY HOUSE FOR SALE BY OWNER BIG INDIAN UP STATE NY ON 3 AC,8BR,479000,3000,NY,Big Indian NY,Apartment,845-254-5455,Jerry,10
@@ -114,12 +134,12 @@ export default class LeadsApi {
     return await this.request(methods.post, "/sell-leads/addbyform", { lead })
   }
 
-  async buyLeadsGetList(filters?) {
-    let res = await this.request(methods.get, "/buy-leads", null, {
-      ...filters,
+  async getLeadsList(route, options: LeadsApiOptions) {
+    let res = await this.request(methods.get, route, null, {
+      ...options,
       filter: {
-        ...filters.filter,
-        industryFilters: JSON.stringify(filters.filter.industryFilters),
+        ...options.filter,
+        industryFilters: JSON.stringify(options.filter.industryFilters),
       },
     })
     return res.error
@@ -137,14 +157,6 @@ export default class LeadsApi {
 
   async buyLeadsBuy(leads: string[]) {
     return await this.request(methods.post, "/buy-leads/buy", { leads })
-  }
-
-  async sellLeadsGetList(options: LeadsApiOptions) {
-    return await this.request(methods.get, "/sell-leads", null, { ...options })
-  }
-
-  async getMyLeads(options: LeadsApiOptions) {
-    return await this.request(methods.get, "/my-leads", null, { ...options })
   }
 
   async myLeadsMoveToSell(leads: string[]) {

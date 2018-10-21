@@ -146,20 +146,21 @@ export function start({
     async function(req, res, next) {
       ;(async () => {
         const { user } = req
-        let { search, sortBy, page, limit, sortOrder } = req.query
-        let _sort = {
-          sortBy: sortBy && sortBy != "id" ? sortBy : "date",
-          sortOrder: sortOrder || "DESC",
-        }
-        let _limit = {
-          start: parseInt(page || 0) * parseInt(limit || 50),
-          offset: limit || 50,
-        }
+        let { sortBy, page, limit, sortOrder, filter } = req.query
+
         await appLogic.leads
-          .getSellLeads(user.id, {
-            sort: _sort,
-            filter: [],
-            limit: _limit,
+          .getSellLeads({
+            sortBy,
+            page,
+            limit,
+            sortOrder,
+            filter: {
+              ...filter,
+              industryFilters: filter.industryFilters
+                ? JSON.parse(filter.industryFilters)
+                : filter.industryFilters,
+            },
+            user,
           })
           .then(response => {
             let jsonResponse = Object.assign(response, req.query)
@@ -421,21 +422,21 @@ export function start({
 
     async function(req, res, next) {
       ;(async () => {
+        let { sortBy, page, limit, sortOrder, filter } = req.query
         const { user } = req
-        let { search, sortBy, page, limit, sortOrder, mock } = req.query
-        let _sort = {
-          sortBy: sortBy && sortBy != "id" ? sortBy : "date",
-          sortOrder: sortOrder || "DESC",
-        }
-        let _limit = {
-          start: parseInt(page || 0) * parseInt(limit || 50),
-          offset: limit || 50,
-        }
         await appLogic.leads
-          .getBoughtLeads(user.id, {
-            sort: _sort,
-            filter: [],
-            limit: _limit,
+          .getBoughtLeads({
+            sortBy,
+            page,
+            limit,
+            sortOrder,
+            filter: {
+              ...filter,
+              industryFilters: filter.industryFilters
+                ? JSON.parse(filter.industryFilters)
+                : filter.industryFilters,
+            },
+            user,
           })
           .then(response => {
             let jsonResponse = Object.assign(response, req.query)

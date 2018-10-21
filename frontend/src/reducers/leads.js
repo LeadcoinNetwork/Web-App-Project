@@ -25,6 +25,7 @@ const initialIndustry = getCurrentIndustry()
 const initialState = {
   list: [],
   sortBy: null,
+  sortOrder: null,
   page: 0,
   limit: 20,
   total: 0,
@@ -120,6 +121,7 @@ const createReducerFor = namespace => {
           ...state,
           ...action.payload,
           loading: false,
+          wasSearchClicked: state.filter.industry ? true : false,
           fullyLoaded: newLeads.length < state.limit,
           error: false,
           list: [

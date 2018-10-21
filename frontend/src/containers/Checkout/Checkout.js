@@ -113,7 +113,7 @@ const Checkout = ({
 }
 
 const mapStateToProps = state => ({
-  fields: state.fields,
+  fields: state.fields.public,
   checkout: state.checkout,
   buyLeads: state.buyLeads,
   balance: state.balance,

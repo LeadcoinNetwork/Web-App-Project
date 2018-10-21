@@ -141,7 +141,6 @@ class LeadsTemplate extends React.Component {
       displayLead,
       editLead,
     } = this.props
-    // debugger
     let isNotAllSelected = this.isNotAllSelected()
     return (
       <div>

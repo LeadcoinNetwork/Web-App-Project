@@ -10,12 +10,15 @@ import API from "../api/index"
  */
 export default function* sellLeads(api) {
   while (true) {
-    let { page, limit, sortBy, filter } = yield select(state => state.sellLeads)
+    let { page, limit, sortBy, sortOrder, filter } = yield select(
+      state => state.sellLeads,
+    )
 
-    let res = yield api.leads.sellLeadsGetList({
+    let res = yield api.leads.getLeadsList("/sell-leads", {
       page,
       limit,
       sortBy,
+      sortOrder,
       filter,
     })
 

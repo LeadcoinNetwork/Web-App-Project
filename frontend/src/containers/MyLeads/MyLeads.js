@@ -1,11 +1,11 @@
 import React from "react"
 import { connect } from "react-redux"
-import t from "utils/translate/translate"
+import t from "../../utils/translate/translate"
 import LeadsTemplate from "../LeadsTemplate"
-import { leads, moveToSell } from "Actions"
+import { leads, moveToSell, industry } from "../../actions"
 import displayLead from "../../actions/displayLead"
-import { push } from "react-router-redux"
 import DisplayLead from "../DisplayLead"
+import SearchFilterBar from "../../components/SearchFilterBar"
 import ConfirmationDialog from "../../components/ConfirmationDialog"
 
 class MyLeads extends React.Component {
@@ -71,6 +71,15 @@ class MyLeads extends React.Component {
   }
 
   render() {
+    let {
+      leads: { filter, expandIndustryFilters, wasSearchClicked },
+      handleFilter,
+      expandFiltersClick,
+      clearList,
+      searchClicked,
+      fetchLeads,
+      industryUpdate,
+    } = this.props
     const isDisplayingLead = this.state ? this.state.isDisplayingLead : false
     return (
       <>
@@ -84,8 +93,22 @@ class MyLeads extends React.Component {
             }}
           />
         )}
+        {!isDisplayingLead && (
+          <SearchFilterBar
+            className="ml-filters"
+            filter={filter}
+            handleFilter={handleFilter}
+            clearList={clearList}
+            searchClicked={searchClicked}
+            fetchLeads={fetchLeads}
+            expandFiltersClick={expandFiltersClick}
+            expandIndustryFilters={expandIndustryFilters}
+            industryUpdate={industryUpdate}
+          />
+        )}
         {!isDisplayingLead &&
-          this.props.leads.filter.industry && (
+          wasSearchClicked &&
+          filter.industry && (
             <LeadsTemplate
               {...this.props}
               pageName="my"
@@ -123,12 +146,16 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
+    handleFilter: newFilter => leads.filterChange("MY_LEADS", newFilter),
+    industryUpdate: industry.industryUpdate,
     fetchLeads: (...params) => leads.fetchLeads("MY_LEADS", ...params),
     setSelectedLeads: selectedLeads =>
       leads.setSelectedLeads("MY_LEADS", selectedLeads),
     toggelCardView: index => leads.toggelCardView("MY_LEADS", index),
     moveToSell: moveToSell.myLeadsMoveToSellBegin,
     displayLead: displayLead.displayLeadGet,
-    push,
+    searchClicked: () => leads.searchClicked("MY_LEADS"),
+    expandFiltersClick: () => leads.expandFiltersClick("MY_LEADS"),
+    clearList: () => leads.clearList("MY_LEADS"),
   },
 )(MyLeads)

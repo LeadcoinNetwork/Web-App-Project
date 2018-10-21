@@ -33,7 +33,6 @@ const SearchFilterBar = ({
               className="category"
               value={categoryFilter.value}
               onChange={e => {
-                debugger
                 const industryFilters = filter.industryFilters.map(f => {
                   if (f.name === "Category") {
                     f.value = e.target.value

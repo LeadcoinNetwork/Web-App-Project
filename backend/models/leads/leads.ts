@@ -57,8 +57,8 @@ export default class Leads extends baseDBModel<
     return await this.leadsQueries.getMockLeads(user_id)
   }
 
-  public async getMyLeadsForSale(user_id: number, options: LeadQueryOptions) {
-    return await this.leadsQueries.getMyLeadsForSale(user_id, options)
+  public async getMyLeadsForSale(options: LeadQueryOptions) {
+    return await this.leadsQueries.getMyLeadsForSale(options)
   }
 
   public async getMyLeads(user_id: number, options: LeadQueryOptions) {
@@ -73,8 +73,8 @@ export default class Leads extends baseDBModel<
     return await this.leadsQueries.getDealPrice(lead_ids)
   }
 
-  public async getBoughtLeads(user_id: number, options: LeadQueryOptions) {
-    return await this.leadsQueries.getBoughtLeads(user_id, options)
+  public async getBoughtLeads(options: LeadQueryOptions) {
+    return await this.leadsQueries.getBoughtLeads(options)
   }
 
   public async buyLeadsGetAll(options: LeadQueryOptions) {

@@ -54,8 +54,6 @@ storiesOf("Containers/Snackbar", module)
       toast(
         <div
           ref={e => {
-            // console.log(e)
-            // debugger
             if (e) {
               e = e.parentElement // toast body
               e = e.parentElement // toast class

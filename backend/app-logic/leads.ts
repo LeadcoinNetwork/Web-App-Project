@@ -163,8 +163,10 @@ export default class Leads {
     return await this.models.leads.getMockLeads(user_id)
   }
 
-  public async getSellLeads(user_id: number, options: LeadQueryOptions) {
-    return await this.models.leads.getMyLeadsForSale(user_id, options)
+  public async getSellLeads(query: RawLeadQueryOptions) {
+    return await this.models.leads.getMyLeadsForSale(
+      this.buildLeadsOptions(query),
+    )
   }
 
   public async getSoldLeads(user_id: number, options: LeadQueryOptions) {
@@ -176,8 +178,10 @@ export default class Leads {
     return leads
   }
 
-  public async getBoughtLeads(user_id: number, options: LeadQueryOptions) {
-    const leads = await this.models.leads.getBoughtLeads(user_id, options)
+  public async getBoughtLeads(query: RawLeadQueryOptions) {
+    const leads = await this.models.leads.getBoughtLeads(
+      this.buildLeadsOptions(query),
+    )
     leads.list = leads.list.map(l => {
       return Object.assign(l, { lead_price: null })
     })
