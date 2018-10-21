@@ -31,7 +31,6 @@ const initialState = {
   fullyLoaded: false,
   filter: {
     industry: initialIndustry.industry,
-    category: "",
     search: "",
     industryFilters: initialIndustry.industryFilters,
   },
@@ -80,7 +79,6 @@ const createReducerFor = namespace => {
           total: 0,
           filter: {
             industry: currentIndustry.industry,
-            category: "",
             search: "",
             industryFilters: currentIndustry.industryFilters,
           },

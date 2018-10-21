@@ -248,13 +248,6 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
           filter.industry,
           false,
         )}'`
-      if (filter.category)
-        where_additions +=
-          (where_additions ? `\nAND ` : "") +
-          `${this.fieldName}->>'$.Category' = '${this.escape(
-            filter.category,
-            false,
-          )}'`
       if (filter.industryFilters) {
         let industryFilters_additions = this.buildIndustryFilters(
           filter.industryFilters,

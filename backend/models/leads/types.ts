@@ -133,7 +133,6 @@ export interface DesignLead extends BaseLead {
 
 export interface Filter {
   industry: Industry
-  category: Categories
   search: string
   industryFilters: IndustryFilter[]
 }
