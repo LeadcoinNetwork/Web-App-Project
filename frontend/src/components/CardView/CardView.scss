@@ -74,7 +74,7 @@ section {
           padding-top: 8px;
         }
 
-        .reld-status {
+        .card-detail-status {
           text-transform: uppercase;
           padding-top: 0;
         }
@@ -94,6 +94,10 @@ section {
           font-size: 16px;
           line-height: 24px;
           text-transform: capitalize;
+
+          a {
+            text-transform: lowercase;
+          }
 
           &:before {
             content: "";

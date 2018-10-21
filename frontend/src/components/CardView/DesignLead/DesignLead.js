@@ -8,7 +8,7 @@ const DesignLead = lead => {
   lead.fields.forEach(element => {
     fieldsCheck[element.key] = element.key
   })
-
+  const url = new String(lead.Website).trim().match(/^https?:\/\//i)
   return (
     <section
       className={`ldc-design-lead${lead.checked ? " card-checked" : ""}
@@ -76,7 +76,15 @@ const DesignLead = lead => {
             )}
           {fieldsCheck.Website && (
             <span>
-              <a href={lead.Website}>{lead.Website}</a>
+              <a
+                onClick={e => {
+                  e.stopPropagation()
+                }}
+                href={url ? lead.Website : `http://${lead.Website}`}
+                target="_blank"
+              >
+                {lead.Website}
+              </a>
             </span>
           )}
         </div>
