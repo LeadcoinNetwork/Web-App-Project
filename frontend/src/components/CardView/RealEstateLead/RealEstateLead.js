@@ -69,14 +69,10 @@ const RealEstateLead = lead => {
         </div>
         <div className="card-features">
           {fieldsCheck["Housing Type"] &&
-            lead["Housing Type"].length > 0 && (
-              <span>{lead["Housing Type"]}</span>
-            )}
+            lead["Housing Type"] && <span>{lead["Housing Type"]}</span>}
           {fieldsCheck["Bedrooms/Baths"] &&
-            lead["Bedrooms/Baths"].length > 0 && (
-              <span>{lead["Bedrooms/Baths"]}</span>
-            )}
-          {fieldsCheck.Size && lead.Size.length > 0 && areaSpanEl(lead.Size)}
+            lead["Bedrooms/Baths"] && <span>{lead["Bedrooms/Baths"]}</span>}
+          {fieldsCheck.Size && lead.Size && areaSpanEl(lead.Size)}
           {fieldsCheck.Price &&
             lead.Price && (
               <span>

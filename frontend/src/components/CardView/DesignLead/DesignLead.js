@@ -66,7 +66,8 @@ const DesignLead = lead => {
           </div>
         </div>
         <div className="card-features">
-          {fieldsCheck.Specification && <span>{lead.Specification}</span>}
+          {fieldsCheck.Specification &&
+            lead.Specification && <span>{lead.Specification}</span>}
           {fieldsCheck.Price &&
             lead.Price && (
               <span>
@@ -74,19 +75,20 @@ const DesignLead = lead => {
                 {priceString(lead.Price)}
               </span>
             )}
-          {fieldsCheck.Website && (
-            <span>
-              <a
-                onClick={e => {
-                  e.stopPropagation()
-                }}
-                href={url ? lead.Website : `http://${lead.Website}`}
-                target="_blank"
-              >
-                {lead.Website}
-              </a>
-            </span>
-          )}
+          {fieldsCheck.Website &&
+            lead.Website && (
+              <span>
+                <a
+                  onClick={e => {
+                    e.stopPropagation()
+                  }}
+                  href={url ? lead.Website : `http://${lead.Website}`}
+                  target="_blank"
+                >
+                  {lead.Website}
+                </a>
+              </span>
+            )}
         </div>
       </div>
       {!lead.constantCardOpen && (
