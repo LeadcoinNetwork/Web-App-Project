@@ -1,13 +1,14 @@
 import React from "react"
-import Button from "Components/Button"
-import Select from "Components/Select"
-import TextField from "Components/TextField"
+import Button from "../../components/Button"
+import Select from "../../components/Select"
+import TextField from "../../components/TextField"
 import { connect } from "react-redux"
-import { csvUpload, csvMapping } from "../../actions"
+import { csvUpload, csvMapping, industry } from "../../actions"
 import t from "../../utils/translate/translate"
 import Dropzone from "react-dropzone"
 import papaparse from "papaparse"
 import ConfirmationDialog from "../../components/ConfirmationDialog"
+import IndustrySelector from "../../components/IndustrySelector"
 import { push } from "react-router-redux"
 class CSVUpload extends React.Component {
   constructor(props) {
@@ -212,7 +213,13 @@ class CSVUpload extends React.Component {
   }
   render() {
     let fileLabel = t("Choose File")
-    const { finished, file } = this.props.csvUpload
+    const {
+      csvUpload: { finished, file },
+      push,
+      industry,
+      industryUpdate,
+      pickFile,
+    } = this.props
     if (file) fileLabel = file.name
     if (finished) {
       return (
@@ -247,25 +254,31 @@ class CSVUpload extends React.Component {
               <h3>
                 {t("Add multiple leads for sale by uploading a CSV file.")}
               </h3>
-              <div className="file-pick">
-                <Dropzone
-                  accept=".csv"
-                  onDrop={acceptedFiles => {
-                    this.props.pickFile(acceptedFiles[0])
-                    this.tryReadingCsv(acceptedFiles[0])
-                  }}
-                >
-                  <center>
-                    <h3>
-                      <br />Drop a CSV file into this box
-                    </h3>
-                  </center>
-                </Dropzone>
-              </div>
-              <p className="template">
-                Click <a href="assets/real-estate-csv-template.csv">here</a> to
-                download a template csv file for real estate leads.
-              </p>
+              <IndustrySelector
+                className="display-block"
+                industry={industry}
+                industryUpdate={industryUpdate}
+              />
+              {industry && (
+                <>
+                  <div className="file-pick">
+                    <Dropzone
+                      className="csv-file"
+                      accept=".csv"
+                      onDrop={acceptedFiles => {
+                        pickFile(acceptedFiles[0])
+                        this.tryReadingCsv(acceptedFiles[0])
+                      }}
+                    >
+                      <h3>Drop a CSV file into this box</h3>
+                    </Dropzone>
+                  </div>
+                  <p className="template">
+                    Click <a href="assets/real-estate-csv-template.csv">here</a>{" "}
+                    to download a template csv file for real estate leads.
+                  </p>
+                </>
+              )}
             </div>
           )}
           {/* <input
@@ -277,7 +290,7 @@ class CSVUpload extends React.Component {
                 if (window.FileReader) {
                   this.tryReadingCsv(e.target.files[0])
                 }
-                this.props.pickFile(e.target.files[0])
+                pickFile(e.target.files[0])
               }}
             /> */}
           {/* </Button> */}
@@ -291,10 +304,12 @@ class CSVUpload extends React.Component {
 const mapStateToProps = state => ({
   csvUpload: state.csvUpload,
   csvMapping: state.csvMapping,
+  industry: state.industry,
 })
 export default connect(
   mapStateToProps,
   {
+    industryUpdate: industry.industryUpdate,
     pickFile: csvUpload.csvUploadPickFile,
     handleChange: csvMapping.csvMappingFormChange,
     setFileFields: csvMapping.csvMappingGetFileFields,

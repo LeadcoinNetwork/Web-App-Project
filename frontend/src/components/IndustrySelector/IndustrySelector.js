@@ -2,9 +2,9 @@ import React from "react"
 import Select from "../Select"
 import t from "../../utils/translate/translate"
 
-export const IndustrySelector = ({ industry, industryUpdate }) => (
+export const IndustrySelector = ({ className, industry, industryUpdate }) => (
   <Select
-    className="industry"
+    className={`industry${className ? " " + className : ""}`}
     value={industry}
     onChange={e => {
       industryUpdate(e.target.value)
