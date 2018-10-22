@@ -1,4 +1,4 @@
-import types from "../actions/types"
+import { types } from "../actions"
 import { push } from "react-router-redux"
 import { select, take, put, call } from "redux-saga/effects"
 

@@ -1,4 +1,4 @@
-import types from "../actions/types"
+import { types } from "../actions"
 import * as actions from "../actions"
 import { take, put } from "redux-saga/effects"
 

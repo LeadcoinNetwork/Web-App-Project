@@ -1,4 +1,4 @@
-import types from "../actions/types"
+import { types } from "../actions"
 const storage = window.localStorage
 
 const initialState = storage.getItem("industry")

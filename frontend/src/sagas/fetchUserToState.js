@@ -1,4 +1,5 @@
 //ts-check
+import { types } from "../actions"
 import * as actions from "../actions"
 import { select, put, take } from "redux-saga/effects"
 import { push } from "react-router-redux"
@@ -38,7 +39,7 @@ export default function* fetchUserToState(api) {
     }
 
     yield put(actions.route.redirectIfNeeded())
-    yield take(actions.types.FETCH_USER_AGAIN)
+    yield take(types.FETCH_USER_AGAIN)
   }
 }
 var lastUserId

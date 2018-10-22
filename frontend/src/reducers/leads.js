@@ -1,4 +1,4 @@
-import types from "../actions/types"
+import { types } from "../actions"
 import { RealEstateFilters, DesignFilters } from "./filters-data"
 
 const getCurrentIndustry = () => {

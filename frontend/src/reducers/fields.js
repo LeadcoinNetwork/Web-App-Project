@@ -1,4 +1,4 @@
-import types from "../actions/types"
+import { types } from "../actions"
 import fieldsData from "./fields-data"
 
 const initialIndustry = window.localStorage.getItem("industry")
