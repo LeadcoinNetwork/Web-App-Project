@@ -15,14 +15,12 @@ const TBRow = props => (
         <div
           className="pencil"
           onClick={() => {
-            console.log("erez")
             props.editLead(props)
           }}
         />
         <div
           className="eye"
           onClick={() => {
-            console.log("eye")
             props.displayLead(props)
           }}
         />

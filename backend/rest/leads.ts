@@ -15,8 +15,8 @@ const authOptions = {
   session: false,
 }
 
-const done = a => {
-  console.log("Unhandled Catch")
+const done = (api, error) => {
+  console.log(api + ": Unhandled Catch- " + error.message + "\n" + error.stack)
 }
 
 export function start({
@@ -72,7 +72,56 @@ export function start({
       res.send({ done })
       return
       next()
-    })().catch(done)
+    })().catch(e => done("mock_leads", e))
+  }
+
+  /**
+   * remove leads (sellleads/myleads)
+   */
+
+  expressApp.post(
+    "/myleads/remove",
+    passport.authenticate("jwt", authOptions),
+    remove_my_lead,
+  )
+  async function remove_my_lead(req, res, next) {
+    ;(async () => {
+      const { user } = req
+      const { ids } = req.body
+      appLogic.leads
+        .removeLead(ids, user.id)
+        .then(() => {
+          res.status(200)
+          res.send({ ok: true })
+        })
+        .catch(err => {
+          res.status(400)
+          res.send({ error: err.message })
+        })
+    })().catch(e => done("mock_leads", e))
+  }
+
+  expressApp.post(
+    "/sellleads/remove/:id",
+    passport.authenticate("jwt", authOptions),
+    remove_sell_lead,
+  )
+  async function remove_sell_lead(req, res, next) {
+    ;(async () => {
+      const { user } = req
+      const { lead_id }: { lead_id: number } = req.params.id
+      appLogic.leads
+        .removeLead([lead_id], user.id)
+        .then(() => {
+          res.status(200)
+          res.send({ ok: true })
+        })
+        .catch(err => {
+          res.status(400)
+          res.send({ error: err.message })
+        })
+      next()
+    })().catch(e => done("mock_leads", e))
   }
 
   /**
@@ -129,7 +178,7 @@ export function start({
             res.send({ error: err.message })
           })
         return next()
-      })().catch(done)
+      })().catch(e => done("leads/:id", e))
     },
   )
 
@@ -156,7 +205,7 @@ export function start({
         await appLogic.leads
           .getSellLeads(user.id, {
             sort: _sort,
-            filters: [],
+            filter: [],
             limit: _limit,
           })
           .then(response => {
@@ -168,7 +217,7 @@ export function start({
             res.send({ error: err.message })
           })
         return next()
-      })().catch(done)
+      })().catch(e => done("sell_leads", e))
     },
   )
 
@@ -201,8 +250,6 @@ export function start({
         const { user } = req
         const { lead }: { lead: Lead } = req.body
         if (lead) {
-          //@ts-ignore
-          console.log(lead)
           switch (true) {
             //@ts-ignore
             case !lead.agree_to_terms:
@@ -432,7 +479,7 @@ export function start({
         await appLogic.leads
           .getBoughtLeads(user.id, {
             sort: _sort,
-            filters: [],
+            filter: [],
             limit: _limit,
           })
           .then(response => {
@@ -444,7 +491,7 @@ export function start({
             res.send({ error: err.message })
           })
         return next()
-      })().catch(done)
+      })().catch(e => done("my_leads", e))
     },
   )
 
@@ -528,46 +575,19 @@ export function start({
     passport.authenticate("jwt", authOptions),
     async (req, res, next) => {
       ;(async () => {
-        const { sortBy, page, limit, sortOrder } = req.query
-        const {
-          industry,
-          category,
-          search,
-        }: {
-          industry: Industry
-          category: Categories
-          search: string
-        } = req.query.filter
+        const { sortBy, page, limit, sortOrder, filter } = req.query
         const { user } = req
-        let _sort = {
-          sortBy: sortBy && sortBy != "id" ? sortBy : "date",
-          sortOrder: sortOrder || "DESC",
-        }
-        let filters = { search: null, industry: null, category: null }
-        if (search) {
-          filters.search = ["Bedrooms/Baths", "Description", "Location"].map(
-            field => {
-              return {
-                field,
-                op: "LIKE",
-                val: search,
-              }
-            },
-          )
-        }
-        filters.industry = industry === "All" ? "" : industry
-        filters.category = category === "All" ? "" : category
-        let _limit = {
-          start: parseInt(page || 0) * parseInt(limit || 50),
-          offset: limit || 50,
-        }
-        console.log({ user })
         await appLogic.leads
           .getAllLeads({
-            sort: _sort,
-            filters,
-            limit: _limit,
-            user_id: user.id,
+            sortBy,
+            page,
+            limit,
+            sortOrder,
+            filter: {
+              ...filter,
+              industryFilters: JSON.parse(filter.industryFilters),
+            },
+            user,
           })
           .then(response => {
             let jsonResponse = Object.assign(response, req.query)
@@ -577,7 +597,7 @@ export function start({
             res.status(400)
             res.send({ error: err.message })
           })
-      })().catch(done)
+      })().catch(e => done("buy-leads", e))
     },
   )
 }

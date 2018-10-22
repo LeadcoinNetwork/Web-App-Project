@@ -1,4 +1,11 @@
-import { Lead, LeadQueryOptions, NewBaseLead } from "../models/leads/types"
+import {
+  Lead,
+  RawLeadQueryOptions,
+  LeadQueryOptions,
+  NewBaseLead,
+  Industry,
+  Categories,
+} from "../models/leads/types"
 
 import { IModels } from "./index"
 import { Notification } from "../models/notifications/types"
@@ -115,8 +122,26 @@ export default class Leads {
     */
     return txDetails
   }
+  public async removeLead(lead_ids: number[], user_id: number) {
+    const insertLead = async (pa, lead_id) => {
+      const lead: Lead = await this.getSingleLead(lead_id)
+      if (lead.ownerId == user_id && lead.active == true) {
+        lead.active = false
+        pa.push(this.models.leads.EditLead(lead))
+      }
+      return pa
+    }
+    let promises: Promise<boolean>[] = await lead_ids.reduce(insertLead, [])
+    Promise.all(promises).then(() => {
+      this.models.notifications.createNotification({
+        msg: ` ${promises.length} leads deleted.`,
+        userId: user_id,
+        unread: true,
+      })
+    })
+  }
 
-  public async removeLead(lead_id: number) {
+  public async deleteLead(lead_id: number) {
     return await this.models.leads.remove(lead_id)
   }
 
@@ -177,7 +202,48 @@ export default class Leads {
     return leads
   }
 
-  public async getAllLeads(options: LeadQueryOptions) {
-    return await this.models.leads.buyLeadsGetAll(options)
+  public async getAllLeads(query: RawLeadQueryOptions) {
+    return await this.models.leads.buyLeadsGetAll(this.buildLeadsOptions(query))
+  }
+
+  private buildLeadsOptions(query: RawLeadQueryOptions) {
+    const { sortBy, page, limit, sortOrder, filter, user } = query
+    let _sort = {
+      sortBy: sortBy && sortBy != "id" ? sortBy : "date",
+      sortOrder: sortOrder || "DESC",
+    }
+    let _limit = {
+      start: parseInt(page || "0") * parseInt(limit || "50"),
+      offset: limit || 50,
+    }
+    let _filter = { ...filter }
+    switch (filter.industry) {
+      case "Real Estate":
+        _filter.search = this.buildRealEstateSearch(filter.search)
+        break
+      default:
+        break
+    }
+
+    return {
+      sort: _sort,
+      filter: _filter,
+      limit: _limit,
+      user_id: user.id,
+    }
+  }
+
+  private buildRealEstateSearch(search) {
+    let _search
+    if (search) {
+      _search = ["Bedrooms/Baths", "Description", "Location"].map(field => {
+        return {
+          field,
+          op: "LIKE",
+          val: search,
+        }
+      })
+    }
+    return _search
   }
 }

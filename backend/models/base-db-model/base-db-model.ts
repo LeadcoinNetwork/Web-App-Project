@@ -4,6 +4,7 @@ import * as _ from "lodash"
 import SQL from "../mysql-pool/mysql-pool"
 import LogModelActions from "../log-model-actions/log-model-actions"
 import NotFound from "../../utils/not-found"
+import { RealEstateFilter } from "../leads/types"
 
 type tableName = "users" | "leads" | "notifications"
 
@@ -41,6 +42,61 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     } else {
       return result[0]
     }
+  }
+
+  private escape(value, isId) {
+    if (isId && (value.includes(" ") || value.includes("/"))) {
+      value = '"' + value + '"'
+    }
+    return isId
+      ? mysql.escapeId(value).slice(1, -1)
+      : mysql.escape(value).slice(1, -1)
+  }
+
+  private buildRealEstateFilters(industryFilters: RealEstateFilter[]) {
+    return industryFilters.map(filter => {
+      switch (filter.type) {
+        case "date":
+          return (
+            (filter.from
+              ? `${this.fieldName}->>'$.date' > ${new Date(
+                  filter.from,
+                ).valueOf()}`
+              : ``) +
+            (filter.to
+              ? (filter.from ? ` AND ` : ``) +
+                `${this.fieldName}->>'$.date' < ${new Date(
+                  filter.to,
+                ).valueOf()}`
+              : ``)
+          )
+        case "select":
+          return filter.value
+            ? `${this.fieldName}->>'$.${this.escape(
+                filter.name,
+                true,
+              )}' = '${this.escape(filter.value, false)}'`
+            : ``
+        case "range":
+          return (
+            (filter.min
+              ? `${this.fieldName}->>'$.${this.escape(
+                  filter.name,
+                  true,
+                )}' > ${this.escape(filter.min, false)}`
+              : ``) +
+            (filter.max
+              ? (filter.min ? ` AND ` : ``) +
+                `${this.fieldName}->>'$.${this.escape(
+                  filter.name,
+                  true,
+                )}' < ${this.escape(filter.max, false)}`
+              : ``)
+          )
+        default:
+          break
+      }
+    })
   }
 
   notificationsQueries = {
@@ -132,7 +188,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     },
 
     getLeadFields: async lead_type => {
-      let sql = `SELECT * FROM leadcoin.leads WHERE doc->>"$.type"="${mysql.escape(
+      let sql = `SELECT * FROM leadcoin.leads WHERE doc->>"$.Industry"="${mysql.escape(
         lead_type,
       )}" limit 1;`
       let rows = await this.sql.query(sql)
@@ -180,32 +236,54 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     },
 
     buyLeadsGetAll: async (options: any) => {
-      const { limit, filters, sort, user_id } = options
+      const { limit, filter, sort, user_id } = options
       let where_additions = ""
+      if (filter.industry)
+        where_additions = `${this.fieldName}->>'$.Industry' = '${this.escape(
+          filter.industry,
+          false,
+        )}'`
+      if (filter.category)
+        where_additions +=
+          (where_additions ? `\nAND ` : "") +
+          `${this.fieldName}->>'$.Category' = '${this.escape(
+            filter.category,
+            false,
+          )}'`
+      if (filter.industryFilters) {
+        let buildIndustryFiltersFunc = undefined
+        switch (filter.industry) {
+          case "Real Estate":
+            buildIndustryFiltersFunc = this.buildRealEstateFilters
+            break
+          default:
+            break
+        }
+        if (buildIndustryFiltersFunc) {
+          let industryFilters_additions = buildIndustryFiltersFunc
+            .call(this, filter.industryFilters)
+            .filter(Boolean)
+            .join("\nAND ")
+          where_additions +=
+            (where_additions && industryFilters_additions ? `\nAND ` : "") +
+            industryFilters_additions
+        }
+      }
       let search_additions = []
-      if (filters.search) {
-        search_additions = filters.search
+      if (filter.search) {
+        search_additions = filter.search
           .map(f => {
-            const escaped = mysql.escape(f.val)
-            if (f.field.includes(" ")) f.field = '"' + f.field + '"'
-            if (f.field.includes("/")) f.field = '"' + f.field + '"'
-            return `${this.fieldName}->>${mysql.escape("$." + f.field)} ${
+            const escaped = this.escape(f.val, false)
+            return `${this.fieldName}->>'$.${this.escape(f.field, true)}' ${
               f.op
-            } "%${escaped.slice(1, -1)}%"`
+            } "%${escaped}%"`
           })
           .join(`\nOR `)
       }
-      if (filters.industry)
-        where_additions = `${this.fieldName}->>'$.Industry' = '${
-          filters.industry
-        }'`
-      if (filters.category)
-        where_additions +=
-          (where_additions ? `\nAND ` : "") +
-          `${this.fieldName}->>'$.Category' = '${filters.category}'`
       if (search_additions.length > 0)
         where_additions +=
           (where_additions ? `\nAND ` : "") + "(" + search_additions + ")"
+
       let limit_addition = ""
       let countHeader = "SELECT COUNT(*) as count "
       let realHeader = "SELECT *"
@@ -213,13 +291,15 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       if (user_id) query += `\nAND doc->>'$.ownerId' <> ${user_id} `
       if (where_additions) query += `\nAND ${where_additions}`
       if (sort) {
-        query += `\nORDER BY ${this.fieldName}->>${mysql.escape(
-          "$." + sort.sortBy,
-        )} ${sort.sortOrder}`
+        query += `\nORDER BY ${this.fieldName}->>'$.${this.escape(
+          sort.sortBy,
+          true,
+        )}' ${sort.sortOrder}`
       }
       if (limit) {
         limit_addition += `\nLIMIT ${limit.start},${limit.offset} `
       }
+      // console.log("buyLeadsGetAll-query: " + query)
       let count = await this.sql.query(countHeader + query)
       let rows = await this.sql.query(realHeader + query + limit_addition)
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class

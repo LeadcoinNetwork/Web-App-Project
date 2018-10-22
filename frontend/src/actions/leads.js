@@ -1,6 +1,12 @@
 import types from "./types"
 
 export default {
+  deleteLead(id) {
+    return {
+      type: types["DELETE_LEAD"],
+      id,
+    }
+  },
   clearAllLeads() {
     return {
       type: types["CLEAR_ALL_LEADS"],
@@ -20,6 +26,21 @@ export default {
     return {
       type: types[namespace + "_FILTER_CHANGE"],
       payload: newFilter,
+    }
+  },
+  expandFiltersClick(namespace) {
+    return {
+      type: types[namespace + "_EXPAND_FILTERS_CLICK"],
+    }
+  },
+  expandFilters(namespace) {
+    return {
+      type: types[namespace + "_EXPAND_FILTERS"],
+    }
+  },
+  contractFilters(namespace) {
+    return {
+      type: types[namespace + "_CONTRACT_FILTERS"],
     }
   },
   searchClicked(namespace) {

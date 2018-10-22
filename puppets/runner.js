@@ -1,8 +1,12 @@
 //@ts-check
 const puppeteer = require("puppeteer")
 
-module.exports = ({headless, instructions, url}) => {
-  let runner = async (no_pictures = false) => {
+module.exports = ({ headless, instructions, url }) => {
+  return async ({
+    tourist = true,
+    overrideInstructions = null,
+    emulateDevice = null,
+  } = {}) => {
     let state
     console.log("Waking up Puppets...")
     const webbrowser = await puppeteer.launch({ headless })
@@ -10,12 +14,18 @@ module.exports = ({headless, instructions, url}) => {
     console.log("Running Puppets")
     const webpage = await webbrowser.newPage()
     const mobilepage = await mobilebrowser.newPage()
-    if (no_pictures) {
+    if (!tourist) {
       //@ts-ignore
-      webpage.screenshot = async () => { }
+      webpage.screenshot = async () => {}
       //@ts-ignore
-      mobilepage.screenshot = async () => { }
+      mobilepage.screenshot = async () => {}
     }
+    if (overrideInstructions) instructions = overrideInstructions
+
+    if (emulateDevice) {
+      mobilepage.emulate(emulateDevice)
+    }
+
     const started = new Date()
     await webpage.goto(url)
     await mobilepage.goto(url)
@@ -43,5 +53,4 @@ module.exports = ({headless, instructions, url}) => {
     await mobilebrowser.close()
     return state
   }
-  return runner
 }

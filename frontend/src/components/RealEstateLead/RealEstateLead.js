@@ -1,7 +1,7 @@
 import React from "react"
 import Button from "Components/Button"
 import { fromNow } from "Utils/time"
-import { priceString } from "../../utils/numbers"
+import { priceString, areaSpanEl } from "../../utils/numbers"
 import t from "../../utils/translate/translate"
 
 const RealEstateLead = lead => {
@@ -17,8 +17,18 @@ const RealEstateLead = lead => {
         ${lead.constantCardOpen ? " constant-card-open" : ""}`}
       onClick={lead.toggleCardView}
     >
-      {lead.editLead && (
-        <div className="lead_ops">
+      <div className="lead_ops">
+        {lead.deleteLead && (
+          <div className="delete op">
+            <div
+              className="trash"
+              onClick={() => {
+                lead.deleteLead(lead.id)
+              }}
+            />
+          </div>
+        )}
+        {lead.editLead && (
           <div className="edit op">
             <div
               className="pencil-ldc"
@@ -27,8 +37,8 @@ const RealEstateLead = lead => {
               }}
             />
           </div>
-        </div>
-      )}
+        )}
+      </div>
       {lead.fieldsCheck.Industry && (
         <div className="rel-industry">{lead.Industry}</div>
       )}
@@ -75,7 +85,8 @@ const RealEstateLead = lead => {
               <span>{lead["Bedrooms/Baths"]}</span>
             )}
           {lead.fieldsCheck.Size &&
-            lead.Size.length > 0 && <span>{lead.Size}</span>}
+            lead.Size.length > 0 &&
+            areaSpanEl(lead.Size)}
           {lead.fieldsCheck.Price &&
             lead.Price && (
               <span>

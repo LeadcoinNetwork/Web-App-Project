@@ -19,18 +19,19 @@ class Login extends React.Component {
 
   render() {
     let { email, password, remember, loading, error } = this.props.login
-
     return (
       <section className="ldc-login">
         <div className="l-main">
           <h1>{t("Login")}</h1>
-          <div className="lm-social-buttons">
-            <SocialLogin
-              connectWithText={t("connect with")}
-              provider="google"
-            />
-            {/* <SocialLogin connectWithText={t("connect with")} provider="linkedin" /> */}
-          </div>
+          {!navigator.userAgent.includes("gonative") && (
+            <div className="lm-social-buttons">
+              <SocialLogin
+                connectWithText={t("connect with")}
+                provider="google"
+              />
+              {/* <SocialLogin connectWithText={t("connect with")} provider="linkedin" /> */}
+            </div>
+          )}
           <div className="lm-form">
             <h4>{t("Or enter your details:")}</h4>
             <TextField

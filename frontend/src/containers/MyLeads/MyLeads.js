@@ -40,7 +40,11 @@ class MyLeads extends React.Component {
     return [
       {
         value: this.buildButtonLabel(),
-        onClick: () => this.setState({ showConfirmation: true }),
+        onClick: () => this.setState({ showMoveConfirmation: true }),
+      },
+      {
+        value: t("Delete Lead"),
+        onClick: () => this.setState({ showDeleteConfirmation: true }),
       },
     ]
   }
@@ -91,18 +95,30 @@ class MyLeads extends React.Component {
             constantCardOpen={true}
             isSelectable={true}
             getButtons={this.getButtons}
+            deleteLead={this.props.deleteLead}
             editLead={this.editLead.bind(this)}
             displayLead={this.displayLead.bind(this)}
           />
         )}
-        {this.state.showConfirmation && (
+        {this.state.showDeleteConfirmation && (
+          <ConfirmationDialog
+            description="You are about to delete the selected leads. Are you sure you want to proceed?"
+            onConfirm={() => {
+              this.setState({ showDeleteConfirmation: false })
+              const selected = [...this.props.leads.selected]
+              this.props.deleteLead(selected)
+            }}
+            onDismiss={() => this.setState({ showDeleteConfirmation: false })}
+          />
+        )}
+        {this.state.showMoveConfirmation && (
           <ConfirmationDialog
             description="You are about to move the selected leads to be publicly traded. Are you sure you want to proceed?"
             onConfirm={() => {
-              this.setState({ showConfirmation: false })
+              this.setState({ showMoveConfirmation: false })
               this.moveLeadsToSell()
             }}
-            onDismiss={() => this.setState({ showConfirmation: false })}
+            onDismiss={() => this.setState({ showMoveConfirmation: false })}
           />
         )}
       </>
@@ -125,6 +141,7 @@ export default connect(
       leads.setSelectedLeads("MY_LEADS", selectedLeads),
     toggelCardView: index => leads.toggelCardView("MY_LEADS", index),
     moveToSell: moveToSell.myLeadsMoveToSellBegin,
+    deleteLead: leads.deleteLead,
     displayLead: displayLead.displayLeadGet,
     push,
   },
