@@ -59,9 +59,9 @@ export default function(state = initialState, action) {
     case types.ADD_LEAD_CLEAR_FORM:
       return {
         ...state,
-        values: initialValues,
+        values: {},
         errors: {},
-        agree_to_terms: state.agree_to_terms,
+        agree_to_terms: false,
       }
 
     case types.ADD_LEAD_HANDLE_FORM_CHANGE:
