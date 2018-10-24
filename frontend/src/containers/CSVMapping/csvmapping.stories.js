@@ -20,7 +20,7 @@ storiesOf("Containers/CSVMapping", module)
     })
     store.dispatch(actions.csvMapping.csvMappingFormChange("batch_id", "666"))
     store.dispatch(
-      actions.csvMapping.csvMappingGetFileFields([
+      actions.csvMapping.csvMappingSetFileFields([
         "date",
         "name",
         "phone",
@@ -37,7 +37,7 @@ storiesOf("Containers/CSVMapping", module)
       private: ["name", "phone"],
       public: ["housing_type", "size"],
     }
-    store.dispatch(actions.csvMapping.csvMappingGetDbFields(mock_fields))
+    store.dispatch(actions.csvMapping.csvMappingSetDbFields(mock_fields))
     return story
   })
 
@@ -48,7 +48,7 @@ storiesOf("Containers/CSVMapping", module)
     })
     store.dispatch(actions.csvMapping.csvMappingFormChange("batch_id", "666"))
     store.dispatch(
-      actions.csvMapping.csvMappingGetFileFields([
+      actions.csvMapping.csvMappingSetFileFields([
         "date",
         "name",
         "phone",
@@ -65,7 +65,7 @@ storiesOf("Containers/CSVMapping", module)
       private: ["name", "phone"],
       public: ["housing_type", "size"],
     }
-    store.dispatch(actions.csvMapping.csvMappingGetDbFields(mock_fields))
+    store.dispatch(actions.csvMapping.csvMappingSetDbFields(mock_fields))
     store.dispatch(actions.csvMapping.csvMappingAgreeToTerms(false))
     store.dispatch(actions.csvMapping.csvMappingFormChange("price", ""))
     store.dispatch(actions.csvMapping.csvMappingError(["price"]))
@@ -79,7 +79,7 @@ storiesOf("Containers/CSVMapping", module)
     })
     store.dispatch(actions.csvMapping.csvMappingFormChange("batch_id", "666"))
     store.dispatch(
-      actions.csvMapping.csvMappingGetFileFields([
+      actions.csvMapping.csvMappingSetFileFields([
         "date",
         "name",
         "phone",
@@ -96,7 +96,7 @@ storiesOf("Containers/CSVMapping", module)
       private: ["name", "phone"],
       public: ["housing_type", "size"],
     }
-    store.dispatch(actions.csvMapping.csvMappingGetDbFields(mock_fields))
+    store.dispatch(actions.csvMapping.csvMappingSetDbFields(mock_fields))
     store.dispatch(actions.csvMapping.csvMappingAgreeToTerms(false))
     store.dispatch(actions.csvMapping.csvMappingFormChange("price", ""))
     store.dispatch(actions.csvMapping.csvMappingError(["agree_to_terms"]))
@@ -110,7 +110,7 @@ storiesOf("Containers/CSVMapping", module)
     })
     store.dispatch(actions.csvMapping.csvMappingFormChange("batch_id", "666"))
     store.dispatch(
-      actions.csvMapping.csvMappingGetFileFields([
+      actions.csvMapping.csvMappingSetFileFields([
         "date",
         "name",
         "phone",
@@ -127,7 +127,7 @@ storiesOf("Containers/CSVMapping", module)
       private: ["name", "phone"],
       public: ["housing_type", "size"],
     }
-    store.dispatch(actions.csvMapping.csvMappingGetDbFields(mock_fields))
+    store.dispatch(actions.csvMapping.csvMappingSetDbFields(mock_fields))
     store.dispatch(actions.csvMapping.csvMappingAgreeToTerms(false))
     store.dispatch(actions.csvMapping.csvMappingFormChange("price", ""))
     store.dispatch(

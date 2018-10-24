@@ -10,7 +10,6 @@ const initialState = {
       lead_price: 10,
       ownerId: 8434,
       date: 1534322606144,
-      lead_type: "realestate",
       active: true,
       forSale: true,
       bought_from: 0,

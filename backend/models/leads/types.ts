@@ -50,7 +50,7 @@ export interface BaseLead {
   Category: RealEstateCategory | DesignCategory
   Price: number
   Description: string
-  "Lead Price": number
+  lead_price: number
   date: number
   "Contact Person": string
   Telephone: string
@@ -69,7 +69,7 @@ export interface NewBaseLead {
   "Contact Person"?: string
   Telephone?: string
   Email?: string
-  "Lead Price": any
+  lead_price: any
   bought_from?: number | null
   forSale?: boolean
   active: boolean
@@ -91,7 +91,7 @@ export interface NewRealEstateLead extends NewBaseLead {
   "Property Type"?: string
 }
 
-// Industry,Category,Description,Bedrooms / Baths,Price,Size,State,Location,Housing Type,Telephone,Contact Person
+// Industry,Category,Description,Bedrooms/Baths,Price,Size,State,Location,Housing Type,Telephone,Contact Person
 export interface RealEstateLead extends BaseLead {
   Industry: "Real Estate"
   Category: RealEstateCategory

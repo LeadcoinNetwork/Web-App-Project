@@ -123,14 +123,34 @@ class CSVUpload extends React.Component {
     )
   }
 
-  listItems(fieldName) {
+  renderFields(fields) {
+    const { errors } = this.props.csvUpload
+    return fields.map((f, i) => {
+      let isError = Object.keys(errors).includes(f.key)
+      return (
+        <div key={i} className={`${isError ? "form_error" : ""} line flexed`}>
+          <div className="fieldLabel">{t(f.name)} </div>
+          {this.listItems(f)}
+        </div>
+      )
+    })
+  }
+
+  listItems(fieldType) {
     const { fields_map, file_fields } = this.props.csvMapping
     if (file_fields) {
       let value = ""
-      if (fields_map && fields_map[fieldName]) value = fields_map[fieldName]
+      if (fields_map && fields_map[fieldType.key]) {
+        value = fields_map[fieldType.key]
+      }
       const items = file_fields.map((field, i) => {
-        fields_map[fieldName] = value =
-          value === "" && fieldName == field ? field : value
+        value =
+          value === "" && (fieldType.key === field || fieldType.name === field)
+            ? field
+            : value
+        if (fields_map[fieldType.key] !== value) {
+          this.props.handleMapChange(fieldType.key, value)
+        }
         return t(field)
       })
       items.unshift(["0", t("I Don't have this field")])
@@ -139,7 +159,7 @@ class CSVUpload extends React.Component {
           options={items}
           value={value}
           onChange={e => {
-            this.props.handleMapChange(fieldName, e.target.value)
+            this.props.handleMapChange(fieldType.key, e.target.value)
           }}
         />
       )
@@ -195,18 +215,6 @@ class CSVUpload extends React.Component {
     )
   }
 
-  renderFields(fields) {
-    const { errors } = this.props.csvUpload
-    return fields.map((f, i) => {
-      let isError = Object.keys(errors).includes(f)
-      return (
-        <div key={i} className={`${isError ? "form_error" : ""} line flexed`}>
-          <div className="fieldLabel">{t(f)} </div>
-          {this.listItems(f)}
-        </div>
-      )
-    })
-  }
   componentWillUnmount() {
     this.props.clear()
     this.props.reset()
@@ -312,8 +320,8 @@ export default connect(
     industryUpdate: industry.industryUpdate,
     pickFile: csvUpload.csvUploadPickFile,
     handleChange: csvMapping.csvMappingFormChange,
-    setFileFields: csvMapping.csvMappingGetFileFields,
-    setDbFields: csvMapping.csvMappingGetDbFields,
+    setFileFields: csvMapping.csvMappingSetFileFields,
+    setDbFields: csvMapping.csvMappingSetDbFields,
     agreeToTerms: csvMapping.csvMappingAgreeToTerms,
     handleMapChange: csvMapping.csvMappingMapChange,
     handleErrors: csvMapping.csvMappingError,

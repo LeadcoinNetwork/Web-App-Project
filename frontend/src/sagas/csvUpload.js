@@ -9,16 +9,20 @@ import API from "../api/index"
 export default function* csvUpload(api) {
   while (true) {
     yield take(types.CSV_UPLOAD_SUBMIT)
-    let { fields_map, agree_to_terms, price: lead_price } = yield select(
-      state => state.csvMapping,
-    )
-    let { file } = yield select(state => state.csvUpload)
+    const {
+      fields_map,
+      agree_to_terms,
+      price: lead_price,
+      industry,
+    } = yield select(state => state.csvMapping)
+    const { file } = yield select(state => state.csvUpload)
     yield put(actions.csvUpload.csvUploadLoadingStart())
-    let res = yield api.leads.sellLeadsCsvMapping({
+    const res = yield api.leads.sellLeadsCsvMapping({
       fields_map,
       agree_to_terms,
       lead_price,
       file,
+      industry,
     })
     yield put(actions.csvUpload.csvUploadLoadingDone())
     if (res.error) {

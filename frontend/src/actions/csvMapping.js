@@ -1,9 +1,9 @@
 import types from "./types"
 
 export default {
-  csvMappingGetDbFields(payload) {
+  csvMappingSetDbFields(payload) {
     return {
-      type: types.CSV_MAPPING_GET_DB_FIELDS,
+      type: types.CSV_MAPPING_SET_DB_FIELDS,
       db_fields: payload,
     }
   },
@@ -13,9 +13,9 @@ export default {
     }
   },
 
-  csvMappingGetFileFields(payload) {
+  csvMappingSetFileFields(payload) {
     return {
-      type: types.CSV_MAPPING_GET_FILE_FIELDS,
+      type: types.CSV_MAPPING_SET_FILE_FIELDS,
       file_fields: payload,
     }
   },

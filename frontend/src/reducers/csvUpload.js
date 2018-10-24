@@ -20,8 +20,12 @@ export default function(state = initialState, action) {
       }
     case types.CSV_MAPPING_MAP_HANDLE_CHANGE:
     case types.CSV_MAPPING_FORM_HANDLE_CHANGE:
+      return {
+        ...state,
+        errors: {},
+      }
     case types.CSV_UPLOAD_LOADING_CHANGE:
-      const { loading } = action
+      let { loading } = action
       return {
         ...state,
         loading,

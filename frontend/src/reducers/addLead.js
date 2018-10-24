@@ -1,9 +1,9 @@
 import { types } from "../actions"
 import fields from "./fields-data"
 
-const initialIndustry = window.localStorage.getItem("industry")
+let initialIndustry = window.localStorage.getItem("industry")
 
-const fields_not_for_display = ["active"]
+const fields_not_for_display = ["active", "Industry"]
 const initialState = {
   db_fields: fields[initialIndustry]
     ? {
@@ -17,7 +17,9 @@ const initialState = {
           .filter(f => !fields_not_for_display.includes(f.key)),
       }
     : undefined,
-  values: {},
+  values: {
+    Industry: initialIndustry,
+  },
   errors: {},
   agree_to_terms: false,
   loading: false,
@@ -59,7 +61,9 @@ export default function(state = initialState, action) {
     case types.ADD_LEAD_CLEAR_FORM:
       return {
         ...state,
-        values: {},
+        values: {
+          Industry: initialIndustry,
+        },
         errors: {},
         agree_to_terms: false,
       }
@@ -77,6 +81,7 @@ export default function(state = initialState, action) {
       }
 
     case types.INDUSTRY_UPDATE:
+      initialIndustry = action.payload
       return {
         ...state,
         db_fields: fields[action.payload]
@@ -91,6 +96,9 @@ export default function(state = initialState, action) {
                 .filter(f => !fields_not_for_display.includes(f.key)),
             }
           : undefined,
+        vlaues: {
+          Industry: action.payload,
+        },
       }
     default:
       return state

@@ -192,10 +192,10 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       return rows[0].lp
     },
 
-    getLeadFields: async lead_type => {
-      let sql = `SELECT * FROM leadcoin.leads WHERE doc->>"$.type"="${mysql.escape(
-        lead_type,
-      )}" limit 1;`
+    getLeadFields: async industry => {
+      let sql = `SELECT * FROM leadcoin.leads WHERE ${
+        this.fieldName
+      }->>'$.Industry' = '${mysql.escape(industry)}' limit 1;`
       let rows = await this.sql.query(sql)
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
       return Object.keys(rows)
