@@ -1,7 +1,7 @@
 import Leads from "./leads"
 import * as Chance from "chance"
 var chance = Chance()
-import { Lead } from "./types"
+import { Lead, Industry, Categories } from "./types"
 import config from "../../app-logic/config"
 
 import SQL from "../mysql-pool/mysql-pool"
@@ -15,13 +15,27 @@ import NotFound from "../../utils/not-found"
 
 test("delete lead - insert, delete and then test cannot find lead after deleted", async () => {
   const status = await leads.insertLead({
+    Industry: "Design" as Industry,
+    Category: "Order" as Categories,
     date: 1212,
     ownerId: 1,
-    name: "test lead",
-    phone: "12301212",
-    email: "moshe@moshe.com",
+    "Contact Person": "test lead",
+    Telephone: "12301212",
+    Email: "moshe@moshe.com",
     active: true,
     bought_from: null,
+    Description: chance.sentence({
+      words: chance.integer({ min: 1, max: 9 }),
+    }),
+    forSale: true,
+    lead_price: 10,
+    Price: parseInt(
+      chance
+        .integer()
+        .toString()
+        .substring(0, 7)
+        .slice(1, -1),
+    ),
   })
   expect(status.insertId).toBeTruthy()
   const id = status.insertId
@@ -48,15 +62,21 @@ const add_leads = async count => {
   const rc = []
   for (let i = 1; i < count + 1; i++) {
     let status = await leads.insertLead({
+      Industry: "Design" as Industry,
+      Category: "Order" as Categories,
       date: 1212,
       ownerId: i,
-      name: chance.name(),
-      phone: "12301212",
-      email: "moshe@moshe.com",
+      "Contact Person": chance.name(),
+      Telephone: "12301212",
+      Email: "moshe@moshe.com",
       active: true,
-      price: 0,
-      bought_currency: "USD",
+      Price: 0,
       bought_from: null,
+      Description: chance.sentence({
+        words: chance.integer({ min: 1, max: 9 }),
+      }),
+      forSale: true,
+      lead_price: 20,
     })
     if (status.affectedRows) rc.push(status.insertId)
   }
@@ -120,45 +140,65 @@ test("paging and limit should work", async () => {
 
 test("add new lead", async () => {
   const success = await leads.insertLead({
+    Industry: "Design" as Industry,
+    Category: "Order" as Categories,
     date: 1212,
     ownerId: 1,
-    name: "test lead",
-    phone: "12301212",
-    email: "moshe@moshe.com",
+    "Contact Person": "test lead",
+    Telephone: "12301212",
+    Email: "moshe@moshe.com",
     active: true,
+    Price: 200,
     bought_from: null,
+    Description: chance.sentence({
+      words: chance.integer({ min: 1, max: 9 }),
+    }),
+    forSale: true,
+    lead_price: 15,
   })
   expect(success).toBeTruthy()
 })
 
 test("find lead", async () => {
   await leads.insertLead({
+    Industry: "Design" as Industry,
+    Category: "Offer" as Categories,
     date: 1212,
-    bought_currency: "USD",
-    price: 0,
+    Price: 0,
     ownerId: 1,
-    name: "test lead",
+    "Contact Person": "test lead",
     active: true,
-    phone: "1",
-    email: "moshe@moshe.com",
+    Telephone: "1",
+    Email: "moshe@moshe.com",
     bought_from: null,
+    Description: chance.sentence({
+      words: chance.integer({ min: 1, max: 9 }),
+    }),
+    forSale: true,
+    lead_price: 25,
   })
   const [record]: Lead[] = await leads.findLeads({
     condition: {
       email: "moshe@moshe.com",
     },
   })
-  expect(record.email).toBe("moshe@moshe.com")
+  expect(record.Email).toBe("moshe@moshe.com")
   await leads.insertLead({
+    Industry: "Design" as Industry,
+    Category: "Offer" as Categories,
     date: 1213,
-    bought_currency: "USD",
-    price: 0,
+    Price: 0,
     ownerId: 1,
-    name: "test lead 2",
+    "Contact Person": "test lead 2",
     active: true,
-    phone: "2",
-    email: "moshe@moshe.com",
+    Telephone: "2",
+    Email: "moshe@moshe.com",
     bought_from: null,
+    Description: chance.sentence({
+      words: chance.integer({ min: 1, max: 9 }),
+    }),
+    forSale: true,
+    lead_price: 5,
   })
   const [record3, record4]: Lead[] = await leads.findLeads({
     condition: {
@@ -169,8 +209,8 @@ test("find lead", async () => {
       sortOrder: "DESC",
     },
   })
-  expect(record3.name).toBe("test lead 2")
-  expect(record4.name).toBe("test lead")
+  expect(record3["Contact Person"]).toBe("test lead 2")
+  expect(record4["Contact Person"]).toBe("test lead")
   const [record5, record6]: Lead[] = await leads.findLeads({
     condition: {
       email: "moshe@moshe.com",
@@ -180,19 +220,27 @@ test("find lead", async () => {
       sortOrder: "ASC",
     },
   })
-  expect(record6.name).toBe("test lead 2")
-  expect(record5.name).toBe("test lead")
+  expect(record6["Contact Person"]).toBe("test lead 2")
+  expect(record5["Contact Person"]).toBe("test lead")
 })
 
 test("delete lead", async () => {
   await leads.insertLead({
+    Industry: "Design" as Industry,
+    Category: "Order" as Categories,
     date: 1212,
     ownerId: 1,
     active: true,
-    name: "test lead",
-    phone: "12301212",
-    email: "moshe@moshe.com",
+    Price: 300,
+    "Contact Person": "test lead",
+    Telephone: "12301212",
+    Email: "moshe@moshe.com",
     bought_from: null,
+    Description: chance.sentence({
+      words: chance.integer({ min: 1, max: 9 }),
+    }),
+    forSale: true,
+    lead_price: 35,
   })
   const [record]: Lead[] = await leads.findLeads({
     condition: {
