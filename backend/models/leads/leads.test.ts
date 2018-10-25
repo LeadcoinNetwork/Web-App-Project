@@ -102,6 +102,7 @@ test("buying leads should work", async () => {
 
 test("paging and limit should work", async () => {
   const done = await add_leads(50)
+  console.log({ done })
   expect(done.length).toBeTruthy()
   const records1: Lead[] = await leads.findLeads({
     condition: {
