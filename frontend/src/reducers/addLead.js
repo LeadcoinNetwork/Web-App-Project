@@ -96,7 +96,7 @@ export default function(state = initialState, action) {
                 .filter(f => !fields_not_for_display.includes(f.key)),
             }
           : undefined,
-        vlaues: {
+        values: {
           Industry: action.payload,
         },
       }
