@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
+import { push } from "react-router-redux"
 import t from "../../utils/translate/translate"
 import LeadsTemplate from "../LeadsTemplate"
 import { leads, moveToSell, industry } from "../../actions"
@@ -62,12 +63,10 @@ class MyLeads extends React.Component {
     this.props.displayLead(lead)
     this.setState({ isDisplayingLead: true })
     return
-    //this.props.push("/display-lead")
   }
 
   editLead = lead => {
     this.props.push("/edit-lead-" + lead.id)
-    return
   }
 
   render() {
@@ -157,5 +156,6 @@ export default connect(
     searchClicked: () => leads.searchClicked("MY_LEADS"),
     expandFiltersClick: () => leads.expandFiltersClick("MY_LEADS"),
     clearList: () => leads.clearList("MY_LEADS"),
+    push,
   },
 )(MyLeads)
