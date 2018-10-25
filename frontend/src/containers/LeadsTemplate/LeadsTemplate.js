@@ -4,11 +4,8 @@ import * as actions from "Actions"
 import Table from "../../components/Table"
 import Button from "../../components/Button"
 import LeadsResults from "../../components/LeadsResults"
-import Select from "../../components/Select"
-import TextField from "../../components/TextField"
 import t from "../../utils/translate/translate"
-import RealEstateLead from "../../components/CardView/RealEstateLead"
-import DesignLead from "../../components/CardView/DesignLead"
+import CardView from "../../components/CardView"
 import SwitchResultsMode from "../../containers/SwitchResultsMode"
 import { Link } from "react-router-dom"
 import { push } from "react-router-redux"
@@ -162,42 +159,20 @@ class LeadsTemplate extends React.Component {
                   renderFilters={this.renderFilters}
                   renderResultsHead={this.renderResultsHead}
                   renderLead={(lead, index) => (
-                    <>
-                      {leads.filter.industry === "Real Estate" && (
-                        <RealEstateLead
-                          key={lead.id}
-                          {...lead}
-                          fields={fields}
-                          checked={isSelectable && leads.selected.has(lead.id)}
-                          isSelectable={isSelectable}
-                          push={this.props.push}
-                          buttons={getButtons && getButtons().record}
-                          toggleCheck={event => this.toggleLead(event, lead.id)}
-                          toggleCardView={() =>
-                            this.props.toggelCardView(index)
-                          }
-                          constantCardOpen={constantCardOpen}
-                          editLead={editLead}
-                        />
-                      )}
-                      {leads.filter.industry === "Design" && (
-                        <DesignLead
-                          key={lead.id}
-                          {...lead}
-                          fields={fields}
-                          checked={isSelectable && leads.selected.has(lead.id)}
-                          isSelectable={isSelectable}
-                          push={this.props.push}
-                          buttons={getButtons && getButtons().record}
-                          toggleCheck={event => this.toggleLead(event, lead.id)}
-                          toggleCardView={() =>
-                            this.props.toggelCardView(index)
-                          }
-                          constantCardOpen={constantCardOpen}
-                          editLead={editLead}
-                        />
-                      )}
-                    </>
+                    <CardView
+                      industry={leads.filter.industry}
+                      key={lead.id}
+                      {...lead}
+                      fields={fields}
+                      checked={isSelectable && leads.selected.has(lead.id)}
+                      isSelectable={isSelectable}
+                      push={this.props.push}
+                      buttons={getButtons && getButtons().record}
+                      toggleCheck={event => this.toggleLead(event, lead.id)}
+                      toggleCardView={() => this.props.toggelCardView(index)}
+                      constantCardOpen={constantCardOpen}
+                      editLead={editLead}
+                    />
                   )}
                 />
               ) : (
