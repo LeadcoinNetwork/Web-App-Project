@@ -1,5 +1,4 @@
 import React from "react"
-import Select from "Components/Select"
 import Button from "Components/Button"
 import TextField from "Components/TextField"
 import Checkbox from "Components/Checkbox"
@@ -34,20 +33,20 @@ class EditLead extends React.Component {
   }
 
   renderFields(fields) {
-    const { errors, values, loading } = this.props.editLead
+    const { errors, loading } = this.props.editLead
     return Object.keys(fields).map(f => {
       const isError = errors[f] ? "error" : ""
       return (
         <div key={f} className={isError + " flexed line"}>
           <div className="fieldLabel">
-            {t(f)}
+            {t(f.replace("_", " "))}
             {f === "lead_price" && <span className="asterisk-required">*</span>}
           </div>
           <div className="fieldValue">
             <TextField
               disabled={loading}
               appStyle={true}
-              placeholder={t(f)}
+              placeholder={t(f.replace("_", " "))}
               value={fields[f]}
               onChange={e => {
                 this.props.handleChange(f, e.target.value)

@@ -1,6 +1,28 @@
 import { types } from "../actions"
 import fields from "./fields-data"
 
+const initialIndustry = window.localStorage.getItem("industry")
+
+const fields_not_for_display = ["active", "Industry"]
+let contact_info_fields = []
+let lead_fields = []
+
+const setFields = industry => {
+  contact_info_fields = fields[industry]
+    ? fields[industry].private
+        .filter(field => field.editable)
+        .map(field => ({ key: field.key, name: field.name }))
+        .filter(f => !fields_not_for_display.includes(f.key))
+    : []
+  lead_fields = fields[industry]
+    ? fields[industry].public
+        .filter(field => field.editable)
+        .map(field => ({ key: field.key, name: field.name }))
+        .filter(f => !fields_not_for_display.includes(f.key))
+    : []
+}
+setFields(initialIndustry)
+
 const initialState = {
   original_copy: null,
   private_fields: {},
@@ -11,29 +33,17 @@ const initialState = {
   values: {},
 }
 
-const contact_info_fields = ["Contact Person", "Telephone", "Email"]
-const lead_fields = [
-  "Description",
-  "Size",
-  "Housing Type",
-  "State",
-  "Price",
-  "Type",
-  "Bedrooms/Baths",
-  "Location",
-]
-
 const seperateLead = lead => {
   let priv = {},
     pub = {}
   contact_info_fields.forEach(f => {
-    if (lead[f]) {
-      priv[f] = lead[f]
+    if (lead[f.key]) {
+      priv[f.key] = lead[f.key]
     }
   })
   lead_fields.forEach(f => {
-    if (lead[f]) {
-      pub[f] = lead[f]
+    if (lead[f.key]) {
+      pub[f.key] = lead[f.key]
     }
   })
   return [priv, pub]
@@ -87,13 +97,24 @@ export default function(state = initialState, action) {
     case types.EDIT_LEAD_HANDLE_FORM_CHANGE:
       newErrors = { ...state.errors }
       delete newErrors[action.payload.name]
-      if (contact_info_fields.includes(action.payload.name)) {
+      let isPrivate = false
+      for (let i = 0; i < contact_info_fields.length; i++) {
+        if (contact_info_fields[i].key === action.payload.name) {
+          isPrivate = true
+          break
+        }
+      }
+      if (isPrivate) {
         state.private_fields[action.payload.name] = action.payload.value
       } else {
         state.public_fields[action.payload.name] = action.payload.value
       }
       return { ...state, errors: newErrors }
-
+    case types.INDUSTRY_UPDATE:
+      setFields(action.payload)
+      return {
+        ...state,
+      }
     default:
       return state
   }
