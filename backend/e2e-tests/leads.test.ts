@@ -48,32 +48,33 @@ beforeEach(async () => {
   await appLogic.models.leads.deleteAll()
 })
 
-test.skip("getting my sold_leads should work", async () => {
-  var { user, token } = await ValidatedUserForTests.create({
-    users: appLogic.models.users,
-  })
-  var { user: user2, token: token2 } = await ValidatedUserForTests.create({
-    users: appLogic.models.users,
-  })
-  const lead = mock_lead({
-    bought_from: user.id,
-  })
-  const { insertId } = await appLogic.models.leads.insertLead(lead)
-  expect(insertId).toBeTruthy()
-  //body = await ApiForToken(token2).leads.buyLeadsBuy([insertId])
-
-  const res = await request
-    .get("/leads/sold")
-    .set({
-      cookie: "token=" + token,
-    })
-    .send({
-      filters: [["name", "testlead"]],
-    })
-  expect(res.error).toBeFalsy()
-  const [record] = res.body.list
-  expect(record.id).toBe(insertId)
-})
+// skiping, not relevent for now
+// test.skip("getting my sold_leads should work", async () => {
+//   var { user, token } = await ValidatedUserForTests.create({
+//     users: appLogic.models.users,
+//   })
+//   var { user: user2, token: token2 } = await ValidatedUserForTests.create({
+//     users: appLogic.models.users,
+//   })
+//   const lead = mock_lead({
+//     bought_from: user.id,
+//   })
+//   const { insertId } = await appLogic.models.leads.insertLead(lead)
+//   expect(insertId).toBeTruthy()
+//   //body = await ApiForToken(token2).leads.buyLeadsBuy([insertId])
+//
+//   const res = await request
+//     .get("/leads/sold")
+//     .set({
+//       cookie: "token=" + token,
+//     })
+//     .send({
+//       filters: [["name", "testlead"]],
+//     })
+//   expect(res.error).toBeFalsy()
+//   const [record] = res.body.list
+//   expect(record.id).toBe(insertId)
+// })
 
 test("user adds lead and see it as his lead for sale", async () => {
   var { user, token } = await ValidatedUserForTests.create({
@@ -82,7 +83,14 @@ test("user adds lead and see it as his lead for sale", async () => {
   const lead = mock_lead({})
 
   await ApiForToken(token).leads.sellLeadsAddByForm(lead)
-  let body = await ApiForToken(token).leads.getLeadsList("/sell-leads", {})
+  let body = await ApiForToken(token).leads.getLeadsList("/sell-leads", {
+    page: 0,
+    filter: {
+      industry: "Real Estate",
+      industryFilters: undefined,
+      search: "",
+    },
+  })
   expect(body.list.length).toBe(1)
   expect(body.list[0].ownerId).toBe(user.id)
 })
@@ -96,13 +104,27 @@ test("when adding leads currency should be removed from the price", async () => 
   })
 
   await ApiForToken(token).leads.sellLeadsAddByForm(lead)
-  let body = await ApiForToken(token).leads.getLeadsList("/sell-leads", {})
+  let body = await ApiForToken(token).leads.getLeadsList("/sell-leads", {
+    page: 0,
+    filter: {
+      industry: "Real Estate",
+      industryFilters: undefined,
+      search: "",
+    },
+  })
   expect(body.list[0].lead_price).toBe(10)
   //@ts-ignore, cuz $20 is not a number
   lead.lead_price = "$20"
   await ApiForToken(token).leads.sellLeadsAddByForm(lead)
-  let body2 = await ApiForToken(token).leads.getLeadsList("/sell-leads", {})
-  expect(body2.list[1].lead_price).toBe(20)
+  let body2 = await ApiForToken(token).leads.getLeadsList("/sell-leads", {
+    page: 0,
+    filter: {
+      industry: "Real Estate",
+      industryFilters: undefined,
+      search: "",
+    },
+  })
+  expect(body2.list[0].lead_price).toBe(20)
 })
 
 test(`
@@ -122,15 +144,22 @@ test(`
   })
 
   await ApiForToken(token1).leads.sellLeadsAddByForm(lead)
-  let body = await ApiForToken(token2).leads.getLeadsList("/buy-leads", {})
+  let body = await ApiForToken(token2).leads.getLeadsList("/buy-leads", {
+    page: 0,
+    filter: {
+      industry: "Real Estate",
+      industryFilters: undefined,
+      search: "",
+    },
+  })
   let [old_record] = body.list
   body = await ApiForToken(token2).leads.buyLeadsBuy([old_record.id])
   let n = await ApiForToken(token1).notifications.getNotifications()
   expect(n.list.length).toBe(1)
   let { user: user1_2 } = await ApiForToken(token1).users.getMe()
   let { user: user2_2 } = await ApiForToken(token2).users.getMe()
-  expect(user1_2.balance).toBe(user1_1.balance + lead.Price)
-  expect(user2_2.balance).toBe(user2_1.balance - lead.Price)
+  expect(user1_2.balance).toBe(user1_1.balance + lead.lead_price)
+  expect(user2_2.balance).toBe(user2_1.balance - lead.lead_price)
 })
 
 test("1st user adds lead, 2nd user buys it, everything should work", async () => {
@@ -143,17 +172,31 @@ test("1st user adds lead, 2nd user buys it, everything should work", async () =>
   const lead = mock_lead()
 
   await ApiForToken(token1).leads.sellLeadsAddByForm(lead)
-  let body = await ApiForToken(token2).leads.getLeadsList("/buy-leads", {})
+  let body = await ApiForToken(token2).leads.getLeadsList("/buy-leads", {
+    page: 0,
+    filter: {
+      industry: "Real Estate",
+      industryFilters: undefined,
+      search: "",
+    },
+  })
   expect(body.error).toBeFalsy()
   expect(body.list.length).toBe(1)
   let [old_record] = body.list
   expect(old_record.ownerId).toBe(user1.id)
   body = await ApiForToken(token2).leads.buyLeadsBuy([body.list[0].id])
-  body = await ApiForToken(token2).leads.getLeadsList("/my-leads", {})
+  body = await ApiForToken(token2).leads.getLeadsList("/my-leads", {
+    page: 0,
+    filter: {
+      industry: "Real Estate",
+      industryFilters: undefined,
+      search: "",
+    },
+  })
   expect(body.list.length).toBe(1)
   let [new_record] = body.list
   expect(new_record.ownerId).toBe(user2.id)
-  expect(new_record.description).toBe(lead.Description)
+  expect(new_record.Description).toBe(lead.Description)
   expect(new_record.forSale).toBeFalsy()
 })
 
@@ -166,15 +209,21 @@ test("getting all leads should work", async () => {
   })
 
   const lead = mock_lead({
-    name: "testlead 1",
+    Description: "testlead 1",
   })
-
   const lead2 = mock_lead({
-    name: "unique",
+    Description: "unique",
   })
 
   await ApiForToken(token1).leads.sellLeadsAddByForm(lead)
-  var body = await ApiForToken(token2).leads.getLeadsList("/buy-leads", {})
+  var body = await ApiForToken(token2).leads.getLeadsList("/buy-leads", {
+    page: 0,
+    filter: {
+      industry: "Real Estate",
+      industryFilters: undefined,
+      search: "",
+    },
+  })
   expect(body.total).toBe(1)
   expect(body.error).toBeFalsy()
   expect(typeof body.list).toEqual("object")
@@ -182,6 +231,7 @@ test("getting all leads should work", async () => {
   await ApiForToken(token1).leads.sellLeadsAddByForm(lead2)
 
   var body = await ApiForToken(token2).leads.getLeadsList("/buy-leads", {
+    page: 0,
     filter: {
       industry: "Real Estate",
       industryFilters: undefined,
@@ -206,10 +256,17 @@ test(`user1 add a lead
     lead_price: 999999999,
   })
   let body = await ApiForToken(token).leads.sellLeadsAddByForm(lead)
-  body = await ApiForToken(token2).leads.getLeadsList("/buy-leads", {})
+  body = await ApiForToken(token2).leads.getLeadsList("/buy-leads", {
+    page: 0,
+    filter: {
+      industry: "Real Estate",
+      industryFilters: undefined,
+      search: "",
+    },
+  })
   let body2 = await ApiForToken(token2).leads.buyLeadsBuy([body.list[0].id])
   expect(body2.error).toBeTruthy()
-  expect(body2.error).toBe("balance::amount insufficient")
+  expect(body2.error).toEqual({ balance: ["Amount insufficient."] })
 })
 
 test(`user1 add a lead
@@ -224,13 +281,27 @@ test(`user1 add a lead
   })
   const lead = mock_lead()
   let body = await ApiForToken(token).leads.sellLeadsAddByForm(lead)
-  body = await ApiForToken(token2).leads.getLeadsList("/buy-leads", {})
+  body = await ApiForToken(token2).leads.getLeadsList("/buy-leads", {
+    page: 0,
+    filter: {
+      industry: "Real Estate",
+      industryFilters: undefined,
+      search: "",
+    },
+  })
   body = await ApiForToken(token2).leads.buyLeadsBuy([body.list[0].id])
-  body = await ApiForToken(token2).leads.getLeadsList("/my-leads", {})
+  body = await ApiForToken(token2).leads.getLeadsList("/my-leads", {
+    page: 0,
+    filter: {
+      industry: "Real Estate",
+      industryFilters: undefined,
+      search: "",
+    },
+  })
   const [record] = body.list
-  body = await ApiForToken(token2).leads.myLeadsMoveToSell([body.list[0].id])
+  body = await ApiForToken(token2).leads.myLeadsMoveToSell([record.id])
   expect(body.error).toBeFalsy()
-  expect(record.description).toBe(lead.Description)
+  expect(record.Description).toBe(lead.Description)
 })
 
 test("user1 add lead, user2 buys it and then he sees it as his lead under /my-leads", async () => {
@@ -242,16 +313,33 @@ test("user1 add lead, user2 buys it and then he sees it as his lead under /my-le
   })
   const lead = mock_lead()
   let body = await ApiForToken(token).leads.sellLeadsAddByForm(lead)
-  body = await ApiForToken(token2).leads.getLeadsList("/buy-leads", {})
+  body = await ApiForToken(token2).leads.getLeadsList("/buy-leads", {
+    page: 0,
+    filter: {
+      industry: "Real Estate",
+      industryFilters: undefined,
+      search: "",
+    },
+  })
   body = await ApiForToken(token2).leads.buyLeadsBuy([body.list[0].id])
-  body = await ApiForToken(token2).leads.getLeadsList("/my-leads", {})
+  body = await ApiForToken(token2).leads.getLeadsList("/my-leads", {
+    page: 0,
+    filter: {
+      industry: "Real Estate",
+      industryFilters: undefined,
+      search: "",
+    },
+  })
   expect(body.error).toBeFalsy()
   const [record] = body.list
-  expect(record.description).toBe(lead.Description)
+  expect(record.Description).toBe(lead.Description)
 })
 
-test("getting my leads at order should work", async () => {
+test("getting my leads in order should work", async () => {
   var { user, token } = await ValidatedUserForTests.create({
+    users: appLogic.models.users,
+  })
+  var { user: user2, token: token2 } = await ValidatedUserForTests.create({
     users: appLogic.models.users,
   })
   let body
@@ -271,10 +359,15 @@ test("getting my leads at order should work", async () => {
   expect(body.error).toBeFalsy()
 
   // get leads ordered by date, order should be [lead2, lead]
-  body = await ApiForToken(token).leads.getLeadsList("/buy-leads", {
+  body = await ApiForToken(token2).leads.getLeadsList("/buy-leads", {
     page: 0,
     limit: 5,
-    sortBy: "Description",
+    sortBy: "date",
+    filter: {
+      industry: "Real Estate",
+      industryFilters: undefined,
+      search: "",
+    },
   })
   expect(body.error).toBeFalsy()
   const [record1, record2] = body.list
@@ -282,36 +375,51 @@ test("getting my leads at order should work", async () => {
   expect(record2.Description).toBe(lead.Description)
 
   // get leads ordered by phone, order should be [lead2, lead]
-  body = await ApiForToken(token).leads.getLeadsList("/buy-leads", {
+  body = await ApiForToken(token2).leads.getLeadsList("/buy-leads", {
     page: 0,
     limit: 5,
     sortBy: "Telephone",
+    filter: {
+      industry: "Real Estate",
+      industryFilters: undefined,
+      search: "",
+    },
   })
   expect(body.error).toBeFalsy()
   const [record3, record4] = body.list
-  expect(record4.Description).toBe(lead.Description)
   expect(record3.Description).toBe(lead2.Description)
+  expect(record4.Description).toBe(lead.Description)
 
-  body = await ApiForToken(token).leads.getLeadsList("/buy-leads", {
+  body = await ApiForToken(token2).leads.getLeadsList("/buy-leads", {
     page: 0,
     limit: 1,
     sortBy: "Telephone",
+    filter: {
+      industry: "Real Estate",
+      industryFilters: undefined,
+      search: "",
+    },
   })
   expect(body.list.length).toBe(1)
 })
 
-test("adding a lead should fail without email", async () => {
+test("adding a lead should fail with no contact info", async () => {
   var { user, token } = await ValidatedUserForTests.create({
     users: appLogic.models.users,
   })
 
   const lead = mock_lead({
-    description: " ",
+    Email: " ",
+    "Contact Person": "",
+    Telephone: "",
   })
   let result = await ApiForToken(token).leads.sellLeadsAddByForm(lead)
   expect(result.error).toBeTruthy()
-  const error_json = JSON.parse(result.error)
-  expect(error_json.description[0]).toBe("too short")
+  expect(result.error).toEqual({
+    Telephone: ["At least one contact info is required."],
+    "Contact Person": [""],
+    Email: [""],
+  })
 })
 
 test("adding a lead should fail without token", async () => {
@@ -327,10 +435,20 @@ test("adding a lead should success with data A", async () => {
   var { user, token } = await ValidatedUserForTests.create({
     users: appLogic.models.users,
   })
+  var { user: user2, token: token2 } = await ValidatedUserForTests.create({
+    users: appLogic.models.users,
+  })
   const lead = mock_lead()
   let result = await ApiForToken(token).leads.sellLeadsAddByForm(lead)
   expect(result.response.affectedRows).toBeTruthy()
-  let body = await ApiForToken(token).leads.getLeadsList("/buy-leads", {})
+  let body = await ApiForToken(token2).leads.getLeadsList("/buy-leads", {
+    page: 0,
+    filter: {
+      industry: "Real Estate",
+      industryFilters: undefined,
+      search: "",
+    },
+  })
   let [record] = body.list
   expect(record.forSale).toBeTruthy()
 })

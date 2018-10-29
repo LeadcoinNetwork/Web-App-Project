@@ -6,6 +6,7 @@ import NotFound from "../utils/not-found"
 import { disabledReason } from "../models/users/types"
 import * as ValidatedUserForTests from "./utils/user.for.tests"
 import Auth from "../app-logic/auth"
+import Config from "../app-logic/config"
 import { user } from "../../frontend/src/actions"
 
 var {
@@ -27,8 +28,12 @@ test("POST /user sign up using WRONG username and password", async () => {
       firstname: "moshe",
     })
     .then(x => {
-      var expected =
-        '"First name" is required; "Last name" is required; "Email" is required; "Password" is required'
+      var expected = {
+        email: ['"Email" is required'],
+        fname: ['"First name" is required'],
+        lname: ['"Last name" is required'],
+        plainPassword: ['"Password" is required'],
+      }
       var actual = JSON.parse(x.error.text).error
       expect(actual).toEqual(expected)
       expect(x.status).toEqual(400)
@@ -59,53 +64,49 @@ test("POST /user sign up using REAL username and password", async () => {
   })
   expect(typeof x.body.user.id).toEqual("number")
 })
+if (!Config.AUTO_CONFIRM_EMAIL) {
+  describe("POST /user is sending emails that contain the right link", () => {
+    test("using mock email provider", async () => {
+      // We create routes here. Because we need to use the emailSenderMock
+      var { request, emailSenderMock, appLogic } = RoutesForTests.create()
+      var x = await request.post("/user").send({
+        fname: chance.first(),
+        lname: chance.last(),
+        password: "KGHasdF987654&*^%$#",
+        email: chance.email(),
+      })
+      var userid = x.body.user.id
+      expect(typeof userid).toEqual("number")
 
-describe("POST /user is sending emails that contain the right link", () => {
-  test("using mock email provider", async () => {
-    // We create routes here. Because we need to use the emailSenderMock
-    var { request, emailSenderMock, appLogic } = RoutesForTests.create()
-    var fname = chance.first()
-    var lname = chance.last()
-    var x = await request.post("/user").send({
-      fname,
-      lname,
-      password: "KGHasdF987654&*^%$#",
-      email: chance.email(),
+      var user = await appLogic.models.users.mustGetUserById(userid)
+      var key = user.emailConfirmationKey
+      var emailHTML = emailSenderMock.lastCall().html
+      expect(emailHTML).toMatch("/auth/confirm-email-update?key=" + key)
     })
-    var userid = x.body.user.id
-    expect(typeof userid).toEqual("number")
 
-    var user = await appLogic.models.users.mustGetUserById(userid)
-    var key = user.emailConfirmationKey
-    var emailHTML = emailSenderMock.lastCall().html
-    expect(emailHTML).toMatch("/auth/confirm-email-update?key=" + key)
+    test.skip("using real email provider", async () => {
+      // We create routes here. Because we need to use the emailSenderMock
+
+      var { request, emailSenderMock, appLogic } = RoutesForTests.create({
+        realEmail: true,
+      })
+
+      var x = await request.post("/user").send({
+        fname: chance.first(),
+        lname: chance.last(),
+        password: "KGHasdF987654&*^%$#",
+        email: "noam@leadcoin.network",
+      })
+      expect(x.error).toBeFalsy()
+      var userid = x.body.user.id
+      expect(typeof userid).toEqual("number")
+
+      var user = await appLogic.models.users.mustGetUserById(userid)
+      var key = user.emailConfirmationKey
+      expect(user.id).toBe(userid)
+    })
   })
-
-  test.skip("using real email provider", async () => {
-    // We create routes here. Because we need to use the emailSenderMock
-
-    var { request, emailSenderMock, appLogic } = RoutesForTests.create({
-      realEmail: true,
-    })
-
-    var fname = chance.first()
-    var lname = chance.last()
-    var x = await request.post("/user").send({
-      fname,
-      lname,
-      password: "KGHasdF987654&*^%$#",
-      email: "aminadav@leadcoin.network",
-    })
-    expect(x.error).toBeFalsy()
-    var userid = x.body.user
-    expect(typeof userid).toEqual("number")
-
-    var user = await appLogic.models.users.mustGetUserById(userid)
-    var key = user.emailConfirmationKey
-    // var emailHTML = emailSenderMock.lastCall().html
-    // expect(emailHTML).toMatch("/auth/confirm-email-update?key=" + key)
-  })
-})
+}
 
 test("GET /me sign up using real username and password", async () => {
   var fname = chance.first()
@@ -194,41 +195,43 @@ test("update-password endpoint should update the password)", async () => {
   expect(body2.error).toBeFalsy()
 })
 
-test("activateUserByKey (ensure that is disabled before)", async () => {
-  const fname = chance.first()
-  const lname = chance.last()
-  const email = chance.email()
-  var x = await request.post("/user").send({
-    fname,
-    lname,
-    password: "KGHasdF987654&*^%$#",
-    email,
+if (!Config.AUTO_CONFIRM_EMAIL) {
+  test("activateUserByKey (ensure that is disabled before)", async () => {
+    const fname = chance.first()
+    const lname = chance.last()
+    const email = chance.email()
+    var x = await request.post("/user").send({
+      fname,
+      lname,
+      password: "KGHasdF987654&*^%$#",
+      email,
+    })
+
+    var TokenCookie = _.get(x, _.toPath("header['set-cookie'][0]"))
+    var tokenFromCookie = TokenCookie.replace(/token=(.*?);.*/, "$1")
+
+    var x = await request.get("/me").set({
+      cookie: "token=" + tokenFromCookie,
+    })
+    expect(x.body.user.disabled).toEqual("EMAIL_NOT_VERIFIED")
+
+    var user = await appLogic.models.users.mustGetUserById(x.body.user.id)
+
+    var j = await request.get("/auth/confirm-email-update").query({
+      key: "aasdads",
+    })
+    expect(j.error).toBeTruthy()
+
+    var y = await request.get("/auth/confirm-email-update").query({
+      key: user.emailConfirmationKey,
+    })
+    expect(y.headers.location).toMatch("/")
+    expect(y.headers["set-cookie"][0]).toMatch("token")
+
+    var user = await appLogic.models.users.mustGetUserById(x.body.user.id)
+    expect(user.disabled).toBe(disabledReason.PROFILE_NOT_COMPLETED)
   })
-
-  var TokenCookie = _.get(x, _.toPath("header['set-cookie'][0]"))
-  var tokenFromCookie = TokenCookie.replace(/token=(.*?);.*/, "$1")
-
-  var x = await request.get("/me").set({
-    cookie: "token=" + tokenFromCookie,
-  })
-  expect(x.body.user.disabled).toEqual("EMAIL_NOT_VERIFIED")
-
-  var user = await appLogic.models.users.mustGetUserById(x.body.user.id)
-
-  var j = await request.get("/auth/confirm-email-update").query({
-    key: "aasdads",
-  })
-  expect(j.error).toBeTruthy()
-
-  var y = await request.get("/auth/confirm-email-update").query({
-    key: user.emailConfirmationKey,
-  })
-  expect(y.headers.location).toMatch("/")
-  expect(y.headers["set-cookie"][0]).toMatch("token")
-
-  var user = await appLogic.models.users.mustGetUserById(x.body.user.id)
-  expect(user.disabled).toBe(disabledReason.PROFILE_NOT_COMPLETED)
-})
+}
 
 describe("/complete-profile", () => {
   test("using invalid date (no phone) should not update database, and set disabled as null", async () => {

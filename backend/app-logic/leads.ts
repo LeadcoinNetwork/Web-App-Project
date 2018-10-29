@@ -38,16 +38,18 @@ export interface getLeadsOptions {
 }
 
 const contains_contact = lead => {
-  return lead.telephone || lead.name || lead.email || lead["Contact Person"]
+  return (
+    lead.Telephone.trim() || lead.Email.trim() || lead["Contact Person"].trim()
+  )
 }
 
 const validate_lead = lead => {
   const errors = []
   if (!lead.lead_price) errors.push("lead_price::Lead price is required.")
   if (!contains_contact(lead)) {
-    errors.push("phone::At least one contact info is required.")
-    errors.push("name::")
-    errors.push("email::")
+    errors.push("Telephone::At least one contact info is required.")
+    errors.push("Contact Person::")
+    errors.push("Email::")
   }
   return errors
 }

@@ -102,11 +102,10 @@ test("buying leads should work", async () => {
 
 test("paging and limit should work", async () => {
   const done = await add_leads(50)
-  console.log({ done })
-  expect(done.length).toBeTruthy()
+  expect(done.length).toBe(50)
   const records1: Lead[] = await leads.findLeads({
     condition: {
-      email: "moshe@moshe.com",
+      Email: "moshe@moshe.com",
     },
     limit: {
       start: 0,
@@ -117,7 +116,7 @@ test("paging and limit should work", async () => {
   expect(records1.pop().ownerId).toBe(20)
   const records2: Lead[] = await leads.findLeads({
     condition: {
-      email: "moshe@moshe.com",
+      Email: "moshe@moshe.com",
     },
     limit: {
       start: 20,
@@ -128,7 +127,7 @@ test("paging and limit should work", async () => {
   expect(records2.pop().ownerId).toBe(40)
   const records3: Lead[] = await leads.findLeads({
     condition: {
-      email: "moshe@moshe.com",
+      Email: "moshe@moshe.com",
     },
     limit: {
       start: 40,
@@ -180,7 +179,7 @@ test("find lead", async () => {
   })
   const [record]: Lead[] = await leads.findLeads({
     condition: {
-      email: "moshe@moshe.com",
+      Email: "moshe@moshe.com",
     },
   })
   expect(record.Email).toBe("moshe@moshe.com")
@@ -203,10 +202,10 @@ test("find lead", async () => {
   })
   const [record3, record4]: Lead[] = await leads.findLeads({
     condition: {
-      email: "moshe@moshe.com",
+      Email: "moshe@moshe.com",
     },
     sort: {
-      sortBy: "phone",
+      sortBy: "Telephone",
       sortOrder: "DESC",
     },
   })
@@ -214,15 +213,15 @@ test("find lead", async () => {
   expect(record4["Contact Person"]).toBe("test lead")
   const [record5, record6]: Lead[] = await leads.findLeads({
     condition: {
-      email: "moshe@moshe.com",
+      Email: "moshe@moshe.com",
     },
     sort: {
-      sortBy: "phone",
+      sortBy: "Telephone",
       sortOrder: "ASC",
     },
   })
-  expect(record6["Contact Person"]).toBe("test lead 2")
   expect(record5["Contact Person"]).toBe("test lead")
+  expect(record6["Contact Person"]).toBe("test lead 2")
 })
 
 test("delete lead", async () => {
@@ -245,14 +244,14 @@ test("delete lead", async () => {
   })
   const [record]: Lead[] = await leads.findLeads({
     condition: {
-      email: "moshe@moshe.com",
+      Email: "moshe@moshe.com",
     },
   })
   const { id } = record
   await leads.remove(id)
   const [record2]: Lead[] = await leads.findLeads({
     condition: {
-      email: "moshe@moshe.com",
+      Email: "moshe@moshe.com",
       active: true,
     },
   })

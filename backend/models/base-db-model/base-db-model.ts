@@ -307,7 +307,6 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       if (limit) {
         limit_addition += `\nLIMIT ${limit.start},${limit.offset} `
       }
-      // console.log("buyLeadsGetAll-query: " + query)
       let count = await this.sql.query(countHeader + query)
       let rows = await this.sql.query(realHeader + query + limit_addition)
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class

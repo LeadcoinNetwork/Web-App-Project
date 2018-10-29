@@ -19,13 +19,13 @@ export type Categories = RealEstateCategory | DesignCategory
 
 export interface LeadQueryOptions {
   id?: number
-  industry?: Industry
-  category?: RealEstateCategory | DesignCategory
+  Industry?: Industry
+  Category?: RealEstateCategory | DesignCategory
   condition?: any
   user_id?: number
   sort?: any
   sort_by?: any
-  email?: string
+  Email?: string
   fields?: string[]
   page?: number
   limit?: any
