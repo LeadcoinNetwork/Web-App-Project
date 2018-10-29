@@ -4,7 +4,7 @@ import * as _ from "lodash"
 import SQL from "../mysql-pool/mysql-pool"
 import LogModelActions from "../log-model-actions/log-model-actions"
 import NotFound from "../../utils/not-found"
-import { RealEstateFilter } from "../leads/types"
+import { IndustryFilter } from "../leads/types"
 
 type tableName = "users" | "leads" | "notifications"
 
@@ -44,7 +44,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     }
   }
 
-  private escape(value, isId) {
+  private escape(value: string, isId: boolean): string {
     if (isId && (value.includes(" ") || value.includes("/"))) {
       value = '"' + value + '"'
     }
@@ -53,7 +53,11 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       : mysql.escape(value).slice(1, -1)
   }
 
-  private buildRealEstateFilters(industryFilters: RealEstateFilter[]) {
+  private addDays(date: Date, days: number): Date {
+    return new Date(date.setDate(date.getDate() + days))
+  }
+
+  private buildIndustryFilters(industryFilters: IndustryFilter[]) {
     return industryFilters.map(filter => {
       switch (filter.type) {
         case "date":
@@ -65,8 +69,9 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
               : ``) +
             (filter.to
               ? (filter.from ? ` AND ` : ``) +
-                `${this.fieldName}->>'$.date' < ${new Date(
-                  filter.to,
+                `${this.fieldName}->>'$.date' < ${this.addDays(
+                  new Date(filter.to),
+                  1,
                 ).valueOf()}`
               : ``)
           )
@@ -187,29 +192,48 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       return rows[0].lp
     },
 
-    getLeadFields: async lead_type => {
-      let sql = `SELECT * FROM leadcoin.leads WHERE doc->>"$.Industry"="${mysql.escape(
-        lead_type,
-      )}" limit 1;`
+    getLeadFields: async industry => {
+      let sql = `SELECT * FROM leadcoin.leads WHERE ${
+        this.fieldName
+      }->>'$.Industry' = '${mysql.escape(industry)}' limit 1;`
       let rows = await this.sql.query(sql)
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
       return Object.keys(rows)
     },
 
-    getBoughtLeads: async (user_id: number, options: any) => {
-      const { limit, filters, sort } = options
-      let where_additions = []
+    getBoughtLeads: async (options: any) => {
+      const { user_id, limit, filter, sort } = options
+      let where_additions = ""
 
-      if (filters) {
-        where_additions = filters
-          .map(f => {
-            const escaped = mysql.escape(f.val)
-            return `${this.fieldName}->>${mysql.escape("$." + f.field)} ${
-              f.op
-            } "%${escaped.slice(1, -1)}%"`
-          })
-          .join(" OR ")
+      if (filter.industry)
+        where_additions = `${this.fieldName}->>'$.Industry' = '${this.escape(
+          filter.industry,
+          false,
+        )}'`
+      if (filter.industryFilters) {
+        let industryFilters_additions = this.buildIndustryFilters(
+          filter.industryFilters,
+        )
+          .filter(Boolean)
+          .join("\nAND ")
+        where_additions +=
+          (where_additions && industryFilters_additions ? `\nAND ` : "") +
+          industryFilters_additions
       }
+      let search_additions = []
+      if (filter.search) {
+        search_additions = filter.search
+          .map(f => {
+            const escaped = this.escape(f.val, false)
+            return `${this.fieldName}->>'$.${this.escape(f.field, true)}' ${
+              f.op
+            } "%${escaped}%"`
+          })
+          .join(`\nOR `)
+      }
+      if (search_additions.length > 0)
+        where_additions +=
+          (where_additions ? `\nAND ` : "") + "(" + search_additions + ")"
       let limit_addition = ""
       let countHeader = "SELECT COUNT(*) as count "
       let realHeader = "SELECT * "
@@ -220,14 +244,14 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         AND doc->>"$.bought_from" > 0
         AND doc->>"$.forSale" = "false"
       `
-      if (where_additions.length > 0) query += `AND ${where_additions};`
+      if (where_additions.length > 0) query += `AND ${where_additions}`
       if (sort) {
         query += ` ORDER BY ${this.fieldName} ->> ${mysql.escape(
           "$." + sort.sortBy,
         )} ${sort.sortOrder}`
       }
       if (limit) {
-        limit_addition += ` LIMIT ${limit.start},${limit.offset} `
+        limit_addition += ` LIMIT ${limit.start},${limit.offset}`
       }
       let count = await this.sql.query(countHeader + query)
       let rows = await this.sql.query(realHeader + query + limit_addition)
@@ -236,38 +260,22 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     },
 
     buyLeadsGetAll: async (options: any) => {
-      const { limit, filter, sort, user_id } = options
+      const { user_id, limit, filter, sort } = options
       let where_additions = ""
       if (filter.industry)
         where_additions = `${this.fieldName}->>'$.Industry' = '${this.escape(
           filter.industry,
           false,
         )}'`
-      if (filter.category)
-        where_additions +=
-          (where_additions ? `\nAND ` : "") +
-          `${this.fieldName}->>'$.Category' = '${this.escape(
-            filter.category,
-            false,
-          )}'`
       if (filter.industryFilters) {
-        let buildIndustryFiltersFunc = undefined
-        switch (filter.industry) {
-          case "Real Estate":
-            buildIndustryFiltersFunc = this.buildRealEstateFilters
-            break
-          default:
-            break
-        }
-        if (buildIndustryFiltersFunc) {
-          let industryFilters_additions = buildIndustryFiltersFunc
-            .call(this, filter.industryFilters)
-            .filter(Boolean)
-            .join("\nAND ")
-          where_additions +=
-            (where_additions && industryFilters_additions ? `\nAND ` : "") +
-            industryFilters_additions
-        }
+        let industryFilters_additions = this.buildIndustryFilters(
+          filter.industryFilters,
+        )
+          .filter(Boolean)
+          .join("\nAND ")
+        where_additions +=
+          (where_additions && industryFilters_additions ? `\nAND ` : "") +
+          industryFilters_additions
       }
       let search_additions = []
       if (filter.search) {
@@ -299,7 +307,6 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       if (limit) {
         limit_addition += `\nLIMIT ${limit.start},${limit.offset} `
       }
-      // console.log("buyLeadsGetAll-query: " + query)
       let count = await this.sql.query(countHeader + query)
       let rows = await this.sql.query(realHeader + query + limit_addition)
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
@@ -350,19 +357,39 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       return { list: rows, total: count[0].count }
     },
 
-    getMyLeadsForSale: async (user_id: number, options: any) => {
-      const { limit, filters, sort } = options
-      let where_additions = []
-      if (filters) {
-        where_additions = filters
-          .map(f => {
-            const escaped = mysql.escape(f.val)
-            return `${this.fieldName} ->> ${mysql.escape("$." + f.field)} ${
-              f.op
-            } "%${escaped.slice(1, -1)}%"`
-          })
-          .join(" OR ")
+    getMyLeadsForSale: async (options: any) => {
+      const { user_id, limit, filter, sort } = options
+      let where_additions = ""
+
+      if (filter.industry)
+        where_additions = `${this.fieldName}->>'$.Industry' = '${this.escape(
+          filter.industry,
+          false,
+        )}'`
+      if (filter.industryFilters) {
+        let industryFilters_additions = this.buildIndustryFilters(
+          filter.industryFilters,
+        )
+          .filter(Boolean)
+          .join("\nAND ")
+        where_additions +=
+          (where_additions && industryFilters_additions ? `\nAND ` : "") +
+          industryFilters_additions
       }
+      let search_additions = []
+      if (filter.search) {
+        search_additions = filter.search
+          .map(f => {
+            const escaped = this.escape(f.val, false)
+            return `${this.fieldName}->>'$.${this.escape(f.field, true)}' ${
+              f.op
+            } "%${escaped}%"`
+          })
+          .join(`\nOR `)
+      }
+      if (search_additions.length > 0)
+        where_additions +=
+          (where_additions ? `\nAND ` : "") + "(" + search_additions + ")"
       let limit_addition = ""
       let countHeader = "SELECT COUNT(*) as count "
       let realHeader = "SELECT *"

@@ -9,7 +9,7 @@ const chance = Chance()
 import { parseMappedFile, fieldsMap } from "../models/csv_reader/index"
 import * as auth from "../models/user-auth/user-auth"
 
-import { Lead } from "../models/leads/types"
+import { Industry } from "../models/leads/types"
 
 const authOptions = {
   session: false,
@@ -81,10 +81,12 @@ export function start({
         fields_map,
         lead_price,
         fileContent,
+        industry,
       }: {
         fields_map: fieldsMap
         lead_price: number
         fileContent: string
+        industry: Industry
       } = req.body
       let errors = []
       errors = validate_mapping(req.body)
@@ -101,6 +103,7 @@ export function start({
         fileContent,
         fields_map,
         lead_price,
+        industry,
       )
 
       leads.map(async lead => {

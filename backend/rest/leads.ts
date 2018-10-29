@@ -32,6 +32,7 @@ export function start({
     count = parseInt(count)
     for (let i = 1; i < count + 1; i++) {
       let owner = Math.floor(count / i)
+      const name = chance.name()
       let status = await appLogic.models.leads.insertLead({
         Industry: "Real Estate",
         Category: "Sell",
@@ -45,10 +46,11 @@ export function start({
         "Housing Type": "Cardboard Box",
         bought_from: null,
         forSale: true,
-        "Lead Price": chance.integer({ min: 1, max: 20 }),
+        lead_price: chance.integer({ min: 1, max: 20 }),
         ownerId: owner,
-        "Contact Person": chance.name(),
+        "Contact Person": name,
         Telephone: chance.phone(),
+        Email: name.replace(" ", "") + "@test.example",
         active: true,
         Price: parseInt(
           chance
@@ -193,20 +195,21 @@ export function start({
     async function(req, res, next) {
       ;(async () => {
         const { user } = req
-        let { search, sortBy, page, limit, sortOrder } = req.query
-        let _sort = {
-          sortBy: sortBy && sortBy != "id" ? sortBy : "date",
-          sortOrder: sortOrder || "DESC",
-        }
-        let _limit = {
-          start: parseInt(page || 0) * parseInt(limit || 50),
-          offset: limit || 50,
-        }
+        let { sortBy, page, limit, sortOrder, filter } = req.query
+
         await appLogic.leads
-          .getSellLeads(user.id, {
-            sort: _sort,
-            filter: [],
-            limit: _limit,
+          .getSellLeads({
+            sortBy,
+            page,
+            limit,
+            sortOrder,
+            filter: {
+              ...filter,
+              industryFilters: filter.industryFilters
+                ? JSON.parse(filter.industryFilters)
+                : filter.industryFilters,
+            },
+            user,
           })
           .then(response => {
             let jsonResponse = Object.assign(response, req.query)
@@ -466,21 +469,21 @@ export function start({
 
     async function(req, res, next) {
       ;(async () => {
+        let { sortBy, page, limit, sortOrder, filter } = req.query
         const { user } = req
-        let { search, sortBy, page, limit, sortOrder, mock } = req.query
-        let _sort = {
-          sortBy: sortBy && sortBy != "id" ? sortBy : "date",
-          sortOrder: sortOrder || "DESC",
-        }
-        let _limit = {
-          start: parseInt(page || 0) * parseInt(limit || 50),
-          offset: limit || 50,
-        }
         await appLogic.leads
-          .getBoughtLeads(user.id, {
-            sort: _sort,
-            filter: [],
-            limit: _limit,
+          .getBoughtLeads({
+            sortBy,
+            page,
+            limit,
+            sortOrder,
+            filter: {
+              ...filter,
+              industryFilters: filter.industryFilters
+                ? JSON.parse(filter.industryFilters)
+                : filter.industryFilters,
+            },
+            user,
           })
           .then(response => {
             let jsonResponse = Object.assign(response, req.query)
@@ -585,7 +588,9 @@ export function start({
             sortOrder,
             filter: {
               ...filter,
-              industryFilters: JSON.parse(filter.industryFilters),
+              industryFilters: filter.industryFilters
+                ? JSON.parse(filter.industryFilters)
+                : filter.industryFilters,
             },
             user,
           })

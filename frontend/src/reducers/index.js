@@ -3,6 +3,7 @@ import app from "./app"
 import createLeadsReducerFor from "./leads"
 import user from "./user"
 import language from "./language"
+import industry from "./industry"
 import checkout from "./checkout"
 import payments from "./payments"
 import notifications from "./notifications"
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   displayLead,
   user,
   language,
+  industry,
   checkout,
   payments,
   balance,

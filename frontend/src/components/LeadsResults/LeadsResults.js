@@ -1,7 +1,7 @@
 import React from "react"
-import Button from "Components/Button"
-import Select from "Components/Select"
-import withInfiniteScroll from "HOC/withInfiniteScroll"
+import Button from "../Button"
+import Select from "../Select"
+import withInfiniteScroll from "../../HOC/withInfiniteScroll"
 import t from "../../utils/translate/translate"
 
 const LeadsResults = ({

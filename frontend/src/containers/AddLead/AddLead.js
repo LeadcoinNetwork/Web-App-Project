@@ -1,12 +1,13 @@
 import React from "react"
-import Select from "Components/Select"
-import Button from "Components/Button"
-import TextField from "Components/TextField"
-import Checkbox from "Components/Checkbox"
+import Select from "../../components/Select"
+import Button from "../../components/Button"
+import TextField from "../../components/TextField"
+import Checkbox from "../../components/Checkbox"
 import { connect } from "react-redux"
-import { addLead } from "Actions"
+import { addLead, industry } from "../../actions"
 import t from "../../utils/translate/translate"
 import ConfirmationDialog from "../../components/ConfirmationDialog"
+import IndustrySelector from "../../components/IndustrySelector"
 import { push } from "react-router-redux"
 
 class AddLead extends React.Component {
@@ -15,7 +16,10 @@ class AddLead extends React.Component {
     this.state = { showConfirmation: false }
   }
   renderTerms() {
-    const { errors } = this.props
+    const {
+      addLead: { errors, agree_to_terms },
+      agreeToTerms,
+    } = this.props
     const error = errors["agree_to_terms"] ? "error" : ""
     return (
       <div className={error + " agree_to_terms twothirds"}>
@@ -23,9 +27,9 @@ class AddLead extends React.Component {
           label={t("I AGREE TO THE TERMS")}
           name="agree_to_terms"
           id="terms_checkbox"
-          checked={this.props.agree_to_terms}
+          checked={agree_to_terms}
           onClick={e => {
-            this.props.agreeToTerms(e.target.checked)
+            agreeToTerms(e.target.checked)
           }}
         />
         <span className="asterisk-required">*</span>
@@ -34,7 +38,10 @@ class AddLead extends React.Component {
   }
 
   renderFields(fields) {
-    const { errors, values, loading } = this.props
+    const {
+      addLead: { errors, values, loading },
+      handleChange,
+    } = this.props
     return fields.map(f => {
       const isError = errors[f.key] ? "error" : ""
       return (
@@ -50,9 +57,9 @@ class AddLead extends React.Component {
               disabled={loading}
               appStyle={true}
               placeholder={t(f.name)}
-              value={values[f.key]}
+              value={values[f.key] ? values[f.key] : ""}
               onChange={e => {
-                this.props.handleChange(f.key, e.target.value)
+                handleChange(f.key, e.target.value)
               }}
             />
           </div>
@@ -62,18 +69,22 @@ class AddLead extends React.Component {
   }
 
   render() {
-    const { db_fields, loading, errors } = this.props
-    if (!db_fields.private.length) {
-      return <div>{t("Loading...")}</div>
-    }
+    const {
+      addLead: { db_fields, loading, errors },
+      industry,
+      industryUpdate,
+      clear,
+      push,
+      submit,
+    } = this.props
     return (
       <div className="add_lead">
         <div className="back-wrapper">
           <div
             className="back"
             onClick={() => {
-              this.props.clear()
-              this.props.push("/sell-leads")
+              clear()
+              push("/sell-leads")
             }}
           >
             <div className="back-arrow" />
@@ -85,66 +96,85 @@ class AddLead extends React.Component {
           {t("Add a new lead for sale by filling out a simple web form.")}
         </h3>
         <div className="main_container">
-          <div className="personal">
-            <div className="help_text">
-              <div className="header bigger">
-                {t("Personal Identification Information")}
+          <IndustrySelector
+            className="display-block"
+            industry={industry}
+            industryUpdate={industryUpdate}
+          />
+          {industry && (
+            <>
+              <div className="personal">
+                <div className="help_text">
+                  <div className="header bigger">
+                    {t("Personal Identification Information")}
+                  </div>
+                  <div className="header smaller">
+                    {t(
+                      "This information will remain hidden until a buyer purchases the lead.",
+                    )}
+                  </div>
+                </div>
+                <div className="fields">
+                  {this.renderFields(db_fields.private)}
+                </div>
               </div>
-              <div className="header smaller">
-                {t(
-                  "This information will remain hidden until a buyer purchases the lead.",
-                )}
+              <div className="public">
+                <div className="help_text">
+                  <div className="header bigger">{t("Public Fields")}</div>
+                </div>
+                <div className="fields">
+                  {this.renderFields(db_fields.public)}
+                </div>
               </div>
-            </div>
-            <div className="fields">{this.renderFields(db_fields.private)}</div>
-          </div>
-          <div className="public">
-            <div className="help_text">
-              <div className="header bigger">{t("Public Fields")}</div>
-            </div>
-            <div className="fields">{this.renderFields(db_fields.public)}</div>
-          </div>
-          {this.renderTerms()}
-          {errors && (
-            <div className="errors">
-              {Object.keys(errors).map((error, index) => (
-                <div key={index}>{errors[error]}</div>
-              ))}
-            </div>
-          )}
-          <div className="controls field_submit flexed">
-            <div>
-              <Button
-                loading={loading}
-                appStyle={true}
-                onClick={() => {
-                  this.setState({ showConfirmation: true })
-                }}
-                label={t("Submit")}
-              />
-              {this.state.showConfirmation && (
-                <ConfirmationDialog
-                  description="You are about to upload a new lead to be publicly traded. Are you sure you want to proceed?"
-                  onConfirm={() => {
-                    this.setState({ showConfirmation: false })
-                    this.props.submit(this.props.fields_map)
-                  }}
-                  onDismiss={() => this.setState({ showConfirmation: false })}
-                />
+              {this.renderTerms()}
+              {errors && (
+                <div className="errors">
+                  {Object.keys(errors).map((error, index) => (
+                    <div key={index}>{errors[error]}</div>
+                  ))}
+                </div>
               )}
-            </div>
-          </div>
+              <div className="controls field_submit flexed">
+                <div>
+                  <Button
+                    loading={loading}
+                    appStyle={true}
+                    onClick={() => {
+                      this.setState({ showConfirmation: true })
+                    }}
+                    label={t("Submit")}
+                  />
+                  {this.state.showConfirmation && (
+                    <ConfirmationDialog
+                      description="You are about to upload a new lead to be publicly traded. Are you sure you want to proceed?"
+                      onConfirm={() => {
+                        this.setState({ showConfirmation: false })
+                        submit()
+                      }}
+                      onDismiss={() =>
+                        this.setState({ showConfirmation: false })
+                      }
+                    />
+                  )}
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
     )
   }
 }
 
-const mapStateToProps = state => state.addLead
+const mapStateToProps = state => ({
+  addLead: state.addLead,
+  industry: state.industry,
+})
 
 export default connect(
   mapStateToProps,
   {
+    industryUpdate: industry.industryUpdate,
     agreeToTerms: addLead.addLeadAgreeToTerms,
     handleChange: addLead.addLeadHandleFormChange,
     submit: addLead.addLeadSubmitForm,

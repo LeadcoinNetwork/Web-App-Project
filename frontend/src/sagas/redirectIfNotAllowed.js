@@ -27,7 +27,7 @@ logedin click on link in user menu.
 /privacy
 */
 
-import * as Actions from "Actions"
+import * as actions from "../actions"
 import { select, put, take } from "redux-saga/effects"
 
 function everyone(path) {
@@ -65,38 +65,28 @@ import API from "../api/index"
  */
 export default function* redirectIfNotAllowed(api) {
   while (true) {
-    log("redirect if need before take")
-    yield take([Actions.types.REDIRECT_IF_NEEDED, "@@router/LOCATION_CHANGE"])
-    // yield take(Actions.types.REDIRECT_IF_NEEDED)
-    log("redirect if need after take")
+    yield take([actions.types.REDIRECT_IF_NEEDED, "@@router/LOCATION_CHANGE"])
     var user = yield select(state => state.user)
-    log("redirect if need user:", user)
     var path = yield select(state => state.router.location.pathname)
 
     if (!user) {
       // user is not logged in.
-      log("not user")
       if (!allowedAnon(path)) {
-        log("not user is not allowed")
-        yield put(Actions.route.gotoDefaultHome())
+        yield put(actions.route.gotoDefaultHome())
       }
     } else {
       // user is logged in
       if (user.disabled) {
-        log("user disabled")
         // user is disabled. Go to default page
         if (!allowedDisabled(path)) {
-          log("disabled user is not allowed page")
-          yield put(Actions.route.gotoDefaultHome())
+          yield put(actions.route.gotoDefaultHome())
         }
       } else {
-        /** the current path */
+        // the current path
         let path = yield select(state => state.router.location.pathname)
 
-        log("user is enabled")
         if (!allowedLogedIn(path)) {
-          log("not allowed")
-          yield put(Actions.route.gotoDefaultHome())
+          yield put(actions.route.gotoDefaultHome())
         }
       }
     }

@@ -1,16 +1,11 @@
-import types from "../actions/types"
-
-const initialState = {
-  private_fields: null,
-  public_fields: null,
-}
+import { types } from "../actions"
+import fields from "./fields-data"
 
 /**
       id: 134917,
       lead_price: 10,
       ownerId: 8434,
       date: 1534322606144,
-      lead_type: "realestate",
       active: true,
       forSale: true,
       bought_from: 0,
@@ -26,30 +21,44 @@ const initialState = {
       Location: "Akron",
       "Housing Type": "apartment",
  */
+const initialIndustry = window.localStorage.getItem("industry")
 
-const contact_info_fields = ["Contact Person", "Telephone", "Email"]
-const lead_fields = [
-  "Description",
-  "Size",
-  "Housing Type",
-  "State",
-  "Price",
-  "Type",
-  "Bedrooms/Baths",
-  "Location",
-]
+const fields_not_for_display = ["active", "Industry"]
+let contact_info_fields = []
+let lead_fields = []
+
+const setFields = industry => {
+  contact_info_fields = fields[industry]
+    ? fields[industry].private
+        .filter(field => field.editable)
+        .map(field => ({ key: field.key, name: field.name }))
+        .filter(f => !fields_not_for_display.includes(f.key))
+    : []
+  lead_fields = fields[industry]
+    ? fields[industry].public
+        .filter(field => field.editable)
+        .map(field => ({ key: field.key, name: field.name }))
+        .filter(f => !fields_not_for_display.includes(f.key))
+    : []
+}
+setFields(initialIndustry)
+
+const initialState = {
+  private_fields: null,
+  public_fields: null,
+}
 
 const seperateLead = lead => {
   let priv = {},
     pub = {}
   contact_info_fields.forEach(f => {
-    if (lead[f]) {
-      priv[f] = lead[f]
+    if (lead[f.key]) {
+      priv[f.key] = lead[f.key]
     }
   })
   lead_fields.forEach(f => {
-    if (lead[f]) {
-      pub[f] = lead[f]
+    if (lead[f.key]) {
+      pub[f.key] = lead[f.key]
     }
   })
   return [priv, pub]
@@ -62,6 +71,11 @@ const displayLead = (state = initialState, action) => {
       return { ...state, private_fields, public_fields }
     case types.DISPLAY_LEAD_CLEAR:
       return initialState
+    case types.INDUSTRY_UPDATE:
+      setFields(action.payload)
+      return {
+        ...state,
+      }
     default:
       return state
   }

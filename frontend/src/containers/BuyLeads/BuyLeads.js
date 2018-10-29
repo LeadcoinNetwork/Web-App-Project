@@ -1,12 +1,9 @@
 import React from "react"
 import { connect } from "react-redux"
 import { push } from "react-router-redux"
-import { leads } from "../../actions"
+import { leads, industry } from "../../actions"
 import LeadsTemplate from "../LeadsTemplate"
-import IndustryFilters from "../../components/IndustryFilters"
-import Select from "../../components/Select"
-import TextField from "../../components/TextField"
-import Button from "../../components/Button"
+import SearchFilterBar from "../../components/SearchFilterBar"
 import t from "../../utils/translate/translate"
 
 class BuyLeads extends React.Component {
@@ -53,104 +50,41 @@ class BuyLeads extends React.Component {
     }
   }
   render() {
+    let {
+      leads: { filter, expandIndustryFilters, wasSearchClicked },
+      handleFilter,
+      expandFiltersClick,
+      clearList,
+      searchClicked,
+      fetchLeads,
+      industryUpdate,
+    } = this.props
     return (
       // do not change classnames, it's connected to the manual
       <section className="buy_leads">
         <h1>{t("Buy Leads")}</h1>
         <h3>{t("Purchase hot leads for your business.")}</h3>
-        <div className="bl-filters">
-          <Select
-            className="industry"
-            value={this.props.leads.filter.industry}
-            onChange={e => {
-              const filter = this.props.leads.filter
-              this.props.handleFilter({
-                ...filter,
-                industry: e.target.value,
-              })
-            }}
-          >
-            <option value="">{t("Choose your industry")}</option>
-            <option value="Real Estate">{t("Real Estate")}</option>
-            <option value="Crypto" disabled>
-              {t("Crypto")}
-            </option>
-            <option value="Insurance" disabled>
-              {t("Insurance")}
-            </option>
-            <option value="Loans" disabled>
-              {t("Loans")}
-            </option>
-          </Select>
-          <Select
-            className="category"
-            value={this.props.leads.filter.category}
-            onChange={e => {
-              const filter = this.props.leads.filter
-              this.props.handleFilter({
-                ...filter,
-                category: e.target.value,
-              })
-            }}
-          >
-            <option value="">{t("Choose your category")}</option>
-            <option value="Buy" disabled>
-              {t("Buy")}
-            </option>
-            <option value="Sell">{t("Sell")}</option>
-            <option value="Looking to rent" disabled>
-              {t("Looking to rent")}
-            </option>
-            <option value="Properties for rent">
-              {t("Properties for rent")}
-            </option>
-          </Select>
-          <TextField
-            appStyle
-            className="search_bar"
-            placeholder={t("Search...")}
-            value={this.props.leads.filter.search}
-            onChange={e => {
-              const filter = this.props.leads.filter
-              this.props.handleFilter({
-                ...filter,
-                search: e.target.value,
-              })
-            }}
-          />
-          <IndustryFilters
-            filters={this.props.leads.filter.industryFilters}
-            expand={this.props.leads.expandIndustryFilters}
-            onExpandClick={this.props.expandFiltersClick}
-            handleFilter={industryFilters => {
-              const filter = this.props.leads.filter
-              filter.industryFilters = industryFilters
-              this.props.handleFilter(filter)
-            }}
-          />
-          <div>
-            <Button
-              className="search"
-              onClick={() => {
-                this.props.clearList()
-                this.props.searchClicked()
-                this.props.fetchLeads()
-              }}
-              appStyle={true}
-            >
-              {t("Search")}
-            </Button>
-          </div>
-        </div>
-        {this.props.leads.searchClicked && (
-          <LeadsTemplate
-            {...this.props}
-            pageName="buy"
-            constantCardOpen={false}
-            isSelectable={true}
-            getButtons={this.getButtons}
-          />
-        )}
+        <SearchFilterBar
+          className="bl-filters"
+          filter={filter}
+          handleFilter={handleFilter}
+          clearList={clearList}
+          searchClicked={searchClicked}
+          fetchLeads={fetchLeads}
+          expandFiltersClick={expandFiltersClick}
+          expandIndustryFilters={expandIndustryFilters}
+          industryUpdate={industryUpdate}
+        />
+        {wasSearchClicked &&
+          filter.industry && (
+            <LeadsTemplate
+              {...this.props}
+              pageName="buy"
+              constantCardOpen={false}
+              isSelectable={true}
+              getButtons={this.getButtons}
+            />
+          )}
       </section>
     )
   }
@@ -158,7 +92,7 @@ class BuyLeads extends React.Component {
 
 const mapStateToProps = state => ({
   leads: state.buyLeads,
-  fields: state.fields.filter(lead => !lead.private),
+  fields: state.fields.public,
 })
 
 export default connect(
@@ -166,6 +100,7 @@ export default connect(
   {
     push: push,
     handleFilter: newFilter => leads.filterChange("BUY_LEADS", newFilter),
+    industryUpdate: industry.industryUpdate,
     fetchLeads: params => leads.fetchLeads("BUY_LEADS", params),
     setSelectedLeads: selectedLeads =>
       leads.setSelectedLeads("BUY_LEADS", selectedLeads),

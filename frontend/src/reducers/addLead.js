@@ -1,26 +1,25 @@
 import { types } from "../actions"
 import fields from "./fields-data"
 
-const initialValues = fields.reduce((values, field) => {
-  values[field.key] = ""
-  return values
-}, {})
+let initialIndustry = window.localStorage.getItem("industry")
 
-const fields_not_for_display = ["active"]
+const fields_not_for_display = ["active", "Industry"]
 const initialState = {
-  db_fields: {
-    private: fields
-      .filter(field => field.editable)
-      .filter(field => field.private)
-      .map(field => ({ key: field.key, name: field.name }))
-      .filter(f => !fields_not_for_display.includes(f)),
-    public: fields
-      .filter(field => field.editable)
-      .filter(field => !field.private)
-      .map(field => ({ key: field.key, name: field.name }))
-      .filter(f => !fields_not_for_display.includes(f.key)),
+  db_fields: fields[initialIndustry]
+    ? {
+        private: fields[initialIndustry].private
+          .filter(field => field.editable)
+          .map(field => ({ key: field.key, name: field.name }))
+          .filter(f => !fields_not_for_display.includes(f.key)),
+        public: fields[initialIndustry].public
+          .filter(field => field.editable)
+          .map(field => ({ key: field.key, name: field.name }))
+          .filter(f => !fields_not_for_display.includes(f.key)),
+      }
+    : undefined,
+  values: {
+    Industry: initialIndustry,
   },
-  values: initialValues,
   errors: {},
   agree_to_terms: false,
   loading: false,
@@ -62,9 +61,11 @@ export default function(state = initialState, action) {
     case types.ADD_LEAD_CLEAR_FORM:
       return {
         ...state,
-        values: initialValues,
+        values: {
+          Industry: initialIndustry,
+        },
         errors: {},
-        agree_to_terms: state.agree_to_terms,
+        agree_to_terms: false,
       }
 
     case types.ADD_LEAD_HANDLE_FORM_CHANGE:
@@ -79,10 +80,25 @@ export default function(state = initialState, action) {
         errors: newErrors,
       }
 
-    case types.ADD_LEAD_GET_DB_FIELDS:
+    case types.INDUSTRY_UPDATE:
+      initialIndustry = action.payload
       return {
         ...state,
-        db_fields: action.db_fields,
+        db_fields: fields[action.payload]
+          ? {
+              private: fields[action.payload].private
+                .filter(field => field.editable)
+                .map(field => ({ key: field.key, name: field.name }))
+                .filter(f => !fields_not_for_display.includes(f.key)),
+              public: fields[action.payload].public
+                .filter(field => field.editable)
+                .map(field => ({ key: field.key, name: field.name }))
+                .filter(f => !fields_not_for_display.includes(f.key)),
+            }
+          : undefined,
+        values: {
+          Industry: action.payload,
+        },
       }
     default:
       return state

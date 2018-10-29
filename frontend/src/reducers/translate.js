@@ -1,4 +1,4 @@
-import types from "../actions/types"
+import { types } from "../actions"
 
 const storage = window.localStorage
 
@@ -7,7 +7,7 @@ const flagLanguageConverter = {
   cn: "zh",
   jp: "ja",
   kr: "ko",
-  il: "he"
+  il: "he",
 }
 
 const initialState = {

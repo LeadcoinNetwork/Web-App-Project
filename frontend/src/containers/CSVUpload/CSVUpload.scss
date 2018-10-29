@@ -100,9 +100,28 @@
   .file-pick {
     cursor: pointer;
     display: inline-block;
+    margin-top: 24px;
     margin-bottom: 10px;
+
+    .csv-file {
+      display: flex;
+      position: relative;
+      width: 200px;
+      height: 200px;
+      border-width: 2px;
+      border-color: rgb(102, 102, 102);
+      border-style: dashed;
+      border-radius: 5px;
+      align-items: center;
+
+      h3 {
+        text-align: center;
+      }
+    }
+
     .ldc-button {
       position: relative;
+
       .displaynone {
         position: absolute;
         opacity: 0;

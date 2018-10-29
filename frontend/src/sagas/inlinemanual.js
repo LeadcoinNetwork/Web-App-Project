@@ -1,5 +1,5 @@
 import { push } from "connected-react-router"
-import * as actions from "../actions"
+import { types } from "../actions"
 import { take, put } from "redux-saga/effects"
 import { delay } from "redux-saga"
 // import * as $ from "jquery"
@@ -19,12 +19,12 @@ export default function* inlinemanualsaga() {
       delete localStorage.shouldPushURL
     }
     if (localStorage.shouldFetchAgain) {
-      yield put({ type: actions.types.CLEAR_ALL_LEADS })
-      yield put({ type: actions.types.FETCH_USER_AGAIN })
-      yield put({ type: actions.types.MY_LEADS_FETCH_LEADS })
-      yield put({ type: actions.types.SELL_LEADS_FETCH_LEADS })
-      yield put({ type: actions.types.BUY_LEADS_FETCH_LEADS })
-      yield put({ type: actions.types.NOTIFICATIONS_FETCH_START })
+      yield put({ type: types.CLEAR_ALL_LEADS })
+      yield put({ type: types.FETCH_USER_AGAIN })
+      yield put({ type: types.MY_LEADS_FETCH_LEADS })
+      yield put({ type: types.SELL_LEADS_FETCH_LEADS })
+      yield put({ type: types.BUY_LEADS_FETCH_LEADS })
+      yield put({ type: types.NOTIFICATIONS_FETCH_START })
       delete localStorage.shouldFetchAgain
     }
   }

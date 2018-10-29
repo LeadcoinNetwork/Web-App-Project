@@ -1,18 +1,27 @@
 import { types } from "../actions"
+import fields from "./fields-data"
 
-const initialState = {
+let initialIndustry = window.localStorage.getItem("industry")
+
+const initialState = () => ({
   db_fields: {
-    private: [],
-    public: [],
+    private: fields[initialIndustry] ? fields[initialIndustry].private : [],
+    public: fields[initialIndustry]
+      ? fields[initialIndustry].public.filter(
+          f =>
+            f.key !== "lead_price" && f.key !== "Industry" && f.key !== "date",
+        )
+      : [],
   },
   file_fields: [],
   fields_map: {},
   errors: [],
   lead_price: "",
+  industry: initialIndustry,
   agree_to_terms: false,
-}
+})
 
-export default function(state = initialState, action) {
+export default function(state = initialState(), action) {
   switch (action.type) {
     case types.CSV_MAPPING_SUBMIT:
       const { errors, lead_price, agree_to_terms } = state
@@ -44,7 +53,7 @@ export default function(state = initialState, action) {
       }
 
     case types.CSV_MAPPING_CLEAR_FORM:
-      return initialState
+      return initialState()
 
     case types.CSV_MAPPING_FORM_HANDLE_CHANGE:
       return {
@@ -53,7 +62,7 @@ export default function(state = initialState, action) {
         [action.payload.name]: action.payload.value,
       }
 
-    case types.CSV_MAPPING_GET_DB_FIELDS:
+    case types.CSV_MAPPING_SET_DB_FIELDS:
       return {
         ...state,
         db_fields: action.db_fields,
@@ -68,12 +77,28 @@ export default function(state = initialState, action) {
         },
       }
 
-    case types.CSV_MAPPING_GET_FILE_FIELDS:
+    case types.CSV_MAPPING_SET_FILE_FIELDS:
       return {
         ...state,
         file_fields: action.file_fields,
       }
-
+    case types.INDUSTRY_UPDATE:
+      initialIndustry = action.payload
+      return {
+        ...state,
+        db_fields: {
+          private: fields[action.payload] ? fields[action.payload].private : [],
+          public: fields[action.payload]
+            ? fields[action.payload].public.filter(
+                f =>
+                  f.key !== "lead_price" &&
+                  f.key !== "Industry" &&
+                  f.key !== "date",
+              )
+            : [],
+        },
+        industry: action.payload,
+      }
     default:
       return state
   }

@@ -1,121 +1,41 @@
-import types from "../actions/types"
-import statesData from "./states-data"
+import { types } from "../actions"
+import { RealEstateFilters, DesignFilters } from "./filters-data"
 
-const RealEstateFilters = [
-  {
-    name: "Date",
-    type: "date",
-    from: "",
-    to: "",
-  },
-  {
-    name: "State",
-    type: "select",
-    options: statesData,
-    value: "",
-  },
-  {
-    name: "Price",
-    type: "range",
-    inputType: "number",
-    min: "",
-    max: "",
-  },
-  {
-    name: "Size",
-    type: "range",
-    inputType: "number",
-    min: "",
-    max: "",
-  },
-  {
-    name: "Housing Type",
-    type: "select",
-    options: [
-      "Building",
-      "House",
-      "Apartment",
-      "Flat",
-      "Condo",
-      "Duplex",
-      "Townhouse",
-      "Cottage",
-      "Rooftop",
-      "Penthouse",
-      "Manufactured",
-      "Studio",
-      "Gallery",
-      "Farm",
-      "Office",
-      "Warehouse",
-      "Land",
-    ],
-    value: "",
-  },
-]
-
+const getCurrentIndustry = () => {
+  const industry = window.localStorage.getItem("industry")
+    ? window.localStorage.getItem("industry")
+    : ""
+  let industryFilters
+  switch (industry) {
+    case "Real Estate":
+      industryFilters = RealEstateFilters
+      break
+    case "Design":
+      industryFilters = DesignFilters
+      break
+    default:
+      industryFilters = undefined
+  }
+  return {
+    industry,
+    industryFilters,
+  }
+}
+const initialIndustry = getCurrentIndustry()
 const initialState = {
   list: [],
-  metaData: {
-    sortBy: ["lead_price", "housing_type", "city", "price"],
-    categories: [
-      "realEstate",
-      "hotels",
-      "finance",
-      "insurance",
-      "automobile",
-      "localServiceProviders",
-      "websiteBuilding",
-      "foodServices",
-    ],
-    countries: ["US", "IL", "AU", "IR"],
-    states: ["NY", "ND", "SF", "AZ", "AK"],
-    cities: ["new york city", "rochester", "albany", "yonkers", "white plains"],
-    boroughs: ["bronx", "brooklyn", "manhattan", "queens", "staten island"],
-    neighborhoods: [
-      "crown heights",
-      "prospect heights",
-      "weeksville",
-      "boerum hill",
-      "brooklyn heights",
-      "brooklyn navy yard",
-      "clinton hill",
-      "dumbo",
-      "fort greene",
-      "fulton ferry",
-      "fulton mall",
-      "vinegar hill",
-    ],
-    housing_types: ["rooftop", "gallery", "apartment", "office", "warehouse"],
-  },
   sortBy: null,
+  sortOrder: null,
   page: 0,
   limit: 20,
   total: 0,
   fullyLoaded: false,
-  country: "US",
-  state: "NY",
-  location: "new york city",
-  borough: "brooklyn",
-  neighborhood: ["crown heights"],
-  housing_type: ["apartment"],
-  price_min: null,
-  price_max: null,
-  budget_min: null,
-  budget_max: null,
-  rooms_min: null,
-  rooms_max: null,
-  size_min: null,
-  size_max: null,
-  floor_min: null,
-  floor_max: null,
   filter: {
-    industry: "",
-    category: "",
+    industry: initialIndustry.industry,
     search: "",
-    industryFilters: null,
+    industryFilters: initialIndustry.industryFilters,
   },
-  searchClicked: false,
+  wasSearchClicked: false,
   expandIndustryFilters: false,
   error: "",
   loading: true,
@@ -126,19 +46,9 @@ const createReducerFor = namespace => {
   return (state = initialState, action) => {
     switch (action.type) {
       case types[namespace + "_FILTER_CHANGE"]:
-        let filter = action.payload
-        switch (filter.industry) {
-          case "Real Estate":
-            if (!filter.industryFilters) {
-              filter.industryFilters = RealEstateFilters
-            }
-            break
-          default:
-            filter.industryFilters = null
-        }
         return {
           ...state,
-          filter,
+          filter: action.payload,
         }
       case types[namespace + "_EXPAND_FILTERS_CLICK"]:
         return {
@@ -158,20 +68,20 @@ const createReducerFor = namespace => {
       case types[namespace + "_SEARCH_CLICKED"]:
         return {
           ...state,
-          searchClicked: true,
+          wasSearchClicked: true,
         }
       case types["CLEAR_ALL_LEADS"]:
       case types[namespace + "_CLEAR_LEADS"]:
+        const currentIndustry = getCurrentIndustry()
         return {
           ...state,
           list: [],
           page: 0,
           total: 0,
           filter: {
-            industry: "",
-            category: "",
+            industry: currentIndustry.industry,
             search: "",
-            industryFilters: null,
+            industryFilters: currentIndustry.industryFilters,
           },
           selected: new Set(),
         }
@@ -211,6 +121,7 @@ const createReducerFor = namespace => {
           ...state,
           ...action.payload,
           loading: false,
+          wasSearchClicked: state.filter.industry ? true : false,
           fullyLoaded: newLeads.length < state.limit,
           error: false,
           list: [
@@ -233,6 +144,31 @@ const createReducerFor = namespace => {
           .cardOpen
         return {
           ...state,
+        }
+      case types.INDUSTRY_UPDATE:
+        let industryFilters = state.filter.industryFilters
+        switch (action.payload) {
+          case "Real Estate":
+            if (state.filter.industry !== action.payload) {
+              industryFilters = RealEstateFilters
+            }
+            break
+          case "Design":
+            if (state.filter.industry !== action.payload) {
+              industryFilters = DesignFilters
+            }
+            break
+          default:
+            industryFilters = undefined
+        }
+        return {
+          ...state,
+          wasSearchClicked: false,
+          filter: {
+            ...state.filter,
+            industry: action.payload,
+            industryFilters,
+          },
         }
       default:
         return state

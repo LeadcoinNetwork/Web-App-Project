@@ -38,16 +38,18 @@ export interface getLeadsOptions {
 }
 
 const contains_contact = lead => {
-  return lead.telephone || lead.name || lead.email || lead["Contact Person"]
+  return (
+    lead.Telephone.trim() || lead.Email.trim() || lead["Contact Person"].trim()
+  )
 }
 
 const validate_lead = lead => {
   const errors = []
   if (!lead.lead_price) errors.push("lead_price::Lead price is required.")
   if (!contains_contact(lead)) {
-    errors.push("phone::At least one contact info is required.")
-    errors.push("name::")
-    errors.push("email::")
+    errors.push("Telephone::At least one contact info is required.")
+    errors.push("Contact Person::")
+    errors.push("Email::")
   }
   return errors
 }
@@ -181,8 +183,10 @@ export default class Leads {
     return await this.models.leads.getMockLeads(user_id)
   }
 
-  public async getSellLeads(user_id: number, options: LeadQueryOptions) {
-    return await this.models.leads.getMyLeadsForSale(user_id, options)
+  public async getSellLeads(query: RawLeadQueryOptions) {
+    return await this.models.leads.getMyLeadsForSale(
+      this.buildLeadsOptions(query),
+    )
   }
 
   public async getSoldLeads(user_id: number, options: LeadQueryOptions) {
@@ -194,8 +198,10 @@ export default class Leads {
     return leads
   }
 
-  public async getBoughtLeads(user_id: number, options: LeadQueryOptions) {
-    const leads = await this.models.leads.getBoughtLeads(user_id, options)
+  public async getBoughtLeads(query: RawLeadQueryOptions) {
+    const leads = await this.models.leads.getBoughtLeads(
+      this.buildLeadsOptions(query),
+    )
     leads.list = leads.list.map(l => {
       return Object.assign(l, { lead_price: null })
     })
@@ -221,7 +227,11 @@ export default class Leads {
       case "Real Estate":
         _filter.search = this.buildRealEstateSearch(filter.search)
         break
+      case "Design":
+        _filter.search = this.buildDesignSearch(filter.search)
+        break
       default:
+        _filter.search = this.buildDefaultSearch(filter.search)
         break
     }
 
@@ -231,6 +241,19 @@ export default class Leads {
       limit: _limit,
       user_id: user.id,
     }
+  }
+  private buildDefaultSearch(search: string): string {
+    let _search
+    if (search) {
+      _search = ["Description"].map(field => {
+        return {
+          field,
+          op: "LIKE",
+          val: search,
+        }
+      })
+    }
+    return _search
   }
 
   private buildRealEstateSearch(search) {
@@ -243,6 +266,21 @@ export default class Leads {
           val: search,
         }
       })
+    }
+    return _search
+  }
+  buildDesignSearch(search: string): string {
+    let _search
+    if (search) {
+      _search = ["Description", "Location", "Specification", "Website"].map(
+        field => {
+          return {
+            field,
+            op: "LIKE",
+            val: search,
+          }
+        },
+      )
     }
     return _search
   }

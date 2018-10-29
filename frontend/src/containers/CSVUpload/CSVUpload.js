@@ -1,13 +1,14 @@
 import React from "react"
-import Button from "Components/Button"
-import Select from "Components/Select"
-import TextField from "Components/TextField"
+import Button from "../../components/Button"
+import Select from "../../components/Select"
+import TextField from "../../components/TextField"
 import { connect } from "react-redux"
-import { csvUpload, csvMapping } from "../../actions"
+import { csvUpload, csvMapping, industry } from "../../actions"
 import t from "../../utils/translate/translate"
 import Dropzone from "react-dropzone"
 import papaparse from "papaparse"
 import ConfirmationDialog from "../../components/ConfirmationDialog"
+import IndustrySelector from "../../components/IndustrySelector"
 import { push } from "react-router-redux"
 class CSVUpload extends React.Component {
   constructor(props) {
@@ -29,33 +30,13 @@ class CSVUpload extends React.Component {
     return
   }
 
-  process(fields) {
-    this.props.setFileFields(Object.keys(fields))
-    // TODO: replace mock_fields with field list from /leads/getLeadType
-    let mock_fields = {
-      private: ["Contact Person", "Telephone", "Email"],
-      public: [
-        "Industry",
-        "Category",
-        "Description",
-        "Bedrooms/Baths",
-        "Price",
-        "Size",
-        "State",
-        "Location",
-        "Housing Type",
-      ],
-    }
-    this.props.setDbFields(mock_fields)
-  }
-
   tryReadingCsv(file) {
     papaparse.parse(file, {
       dynamicTyping: true,
       header: true,
       preview: 1,
       complete: rows => {
-        this.process(rows.data[0])
+        this.props.setFileFields(Object.keys(rows.data[0]))
       },
     })
   }
@@ -142,14 +123,34 @@ class CSVUpload extends React.Component {
     )
   }
 
-  listItems(fieldName) {
+  renderFields(fields) {
+    const { errors } = this.props.csvUpload
+    return fields.map((f, i) => {
+      let isError = Object.keys(errors).includes(f.key)
+      return (
+        <div key={i} className={`${isError ? "form_error" : ""} line flexed`}>
+          <div className="fieldLabel">{t(f.name)} </div>
+          {this.listItems(f)}
+        </div>
+      )
+    })
+  }
+
+  listItems(fieldType) {
     const { fields_map, file_fields } = this.props.csvMapping
     if (file_fields) {
       let value = ""
-      if (fields_map && fields_map[fieldName]) value = fields_map[fieldName]
+      if (fields_map && fields_map[fieldType.key]) {
+        value = fields_map[fieldType.key]
+      }
       const items = file_fields.map((field, i) => {
-        fields_map[fieldName] = value =
-          value === "" && fieldName == field ? field : value
+        value =
+          value === "" && (fieldType.key === field || fieldType.name === field)
+            ? field
+            : value
+        if (fields_map[fieldType.key] !== value) {
+          this.props.handleMapChange(fieldType.key, value)
+        }
         return t(field)
       })
       items.unshift(["0", t("I Don't have this field")])
@@ -158,7 +159,7 @@ class CSVUpload extends React.Component {
           options={items}
           value={value}
           onChange={e => {
-            this.props.handleMapChange(fieldName, e.target.value)
+            this.props.handleMapChange(fieldType.key, e.target.value)
           }}
         />
       )
@@ -214,18 +215,6 @@ class CSVUpload extends React.Component {
     )
   }
 
-  renderFields(fields) {
-    const { errors } = this.props.csvUpload
-    return fields.map((f, i) => {
-      let isError = Object.keys(errors).includes(f)
-      return (
-        <div key={i} className={`${isError ? "form_error" : ""} line flexed`}>
-          <div className="fieldLabel">{t(f)} </div>
-          {this.listItems(f)}
-        </div>
-      )
-    })
-  }
   componentWillUnmount() {
     this.props.clear()
     this.props.reset()
@@ -235,6 +224,10 @@ class CSVUpload extends React.Component {
     const {
       isSalesforce,
       csvUpload: { finished, file },
+      push,
+      industry,
+      industryUpdate,
+      pickFile,
     } = this.props
     if (file) fileLabel = file.name
     if (finished) {
@@ -293,25 +286,31 @@ class CSVUpload extends React.Component {
                   {t("Add multiple leads for sale by uploading a CSV file.")}
                 </h3>
               )}
-              <div className="file-pick">
-                <Dropzone
-                  accept=".csv"
-                  onDrop={acceptedFiles => {
-                    this.props.pickFile(acceptedFiles[0])
-                    this.tryReadingCsv(acceptedFiles[0])
-                  }}
-                >
-                  <center>
-                    <h3>
-                      <br />Drop a CSV file into this box
-                    </h3>
-                  </center>
-                </Dropzone>
-              </div>
-              <p className="template">
-                Click <a href="assets/real-estate-csv-template.csv">here</a> to
-                download a template csv file for real estate leads.
-              </p>
+              <IndustrySelector
+                className="display-block"
+                industry={industry}
+                industryUpdate={industryUpdate}
+              />
+              {industry && (
+                <>
+                  <div className="file-pick">
+                    <Dropzone
+                      className="csv-file"
+                      accept=".csv"
+                      onDrop={acceptedFiles => {
+                        pickFile(acceptedFiles[0])
+                        this.tryReadingCsv(acceptedFiles[0])
+                      }}
+                    >
+                      <h3>Drop a CSV file into this box</h3>
+                    </Dropzone>
+                  </div>
+                  <p className="template">
+                    Click <a href="assets/real-estate-csv-template.csv">here</a>{" "}
+                    to download a template csv file for real estate leads.
+                  </p>
+                </>
+              )}
             </div>
           )}
           {/* <input
@@ -323,7 +322,7 @@ class CSVUpload extends React.Component {
                 if (window.FileReader) {
                   this.tryReadingCsv(e.target.files[0])
                 }
-                this.props.pickFile(e.target.files[0])
+                pickFile(e.target.files[0])
               }}
             /> */}
           {/* </Button> */}
@@ -337,14 +336,16 @@ class CSVUpload extends React.Component {
 const mapStateToProps = state => ({
   csvUpload: state.csvUpload,
   csvMapping: state.csvMapping,
+  industry: state.industry,
 })
 export default connect(
   mapStateToProps,
   {
+    industryUpdate: industry.industryUpdate,
     pickFile: csvUpload.csvUploadPickFile,
     handleChange: csvMapping.csvMappingFormChange,
-    setFileFields: csvMapping.csvMappingGetFileFields,
-    setDbFields: csvMapping.csvMappingGetDbFields,
+    setFileFields: csvMapping.csvMappingSetFileFields,
+    setDbFields: csvMapping.csvMappingSetDbFields,
     agreeToTerms: csvMapping.csvMappingAgreeToTerms,
     handleMapChange: csvMapping.csvMappingMapChange,
     handleErrors: csvMapping.csvMappingError,

@@ -1,18 +1,20 @@
 import React from "react"
 import { connect } from "react-redux"
-import t from "utils/translate/translate"
-import LeadsTemplate from "../LeadsTemplate"
-import { leads, moveToSell } from "Actions"
-import displayLead from "../../actions/displayLead"
 import { push } from "react-router-redux"
+import t from "../../utils/translate/translate"
+import LeadsTemplate from "../LeadsTemplate"
+import { leads, moveToSell, industry } from "../../actions"
+import displayLead from "../../actions/displayLead"
 import DisplayLead from "../DisplayLead"
+import SearchFilterBar from "../../components/SearchFilterBar"
 import ConfirmationDialog from "../../components/ConfirmationDialog"
 
 class MyLeads extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      showConfirmation: false,
+      showDeleteConfirmation: false,
+      showMoveConfirmation: false,
       isDisplayingLead: false,
     }
   }
@@ -66,15 +68,22 @@ class MyLeads extends React.Component {
     this.props.displayLead(lead)
     this.setState({ isDisplayingLead: true })
     return
-    //this.props.push("/display-lead")
   }
 
   editLead = lead => {
     this.props.push("/edit-lead-" + lead.id)
-    return
   }
 
   render() {
+    let {
+      leads: { filter, expandIndustryFilters, wasSearchClicked },
+      handleFilter,
+      expandFiltersClick,
+      clearList,
+      searchClicked,
+      fetchLeads,
+      industryUpdate,
+    } = this.props
     const isDisplayingLead = this.state ? this.state.isDisplayingLead : false
     return (
       <>
@@ -88,18 +97,31 @@ class MyLeads extends React.Component {
             }}
           />
         )}
-        {!isDisplayingLead && (
-          <LeadsTemplate
-            {...this.props}
-            pageName="my"
-            constantCardOpen={true}
-            isSelectable={true}
-            getButtons={this.getButtons}
-            deleteLead={this.props.deleteLead}
-            editLead={this.editLead.bind(this)}
-            displayLead={this.displayLead.bind(this)}
-          />
-        )}
+        <SearchFilterBar
+          className="ml-filters"
+          filter={filter}
+          handleFilter={handleFilter}
+          clearList={clearList}
+          searchClicked={searchClicked}
+          fetchLeads={fetchLeads}
+          expandFiltersClick={expandFiltersClick}
+          expandIndustryFilters={expandIndustryFilters}
+          industryUpdate={industryUpdate}
+        />
+        {!isDisplayingLead &&
+          wasSearchClicked &&
+          filter.industry && (
+            <LeadsTemplate
+              {...this.props}
+              pageName="my"
+              constantCardOpen={true}
+              isSelectable={true}
+              getButtons={this.getButtons}
+              deleteLead={this.props.deleteLead}
+              editLead={this.editLead.bind(this)}
+              displayLead={this.displayLead.bind(this)}
+            />
+          )}
         {this.state.showDeleteConfirmation && (
           <ConfirmationDialog
             description="You are about to delete the selected leads. Are you sure you want to proceed?"
@@ -128,14 +150,18 @@ class MyLeads extends React.Component {
 
 const mapStateToProps = state => ({
   leads: state.myLeads,
-  fields: state.fields.filter(f => {
-    return f.key != "lead_price"
-  }),
+  fields: state.fields.public
+    ? state.fields.public.concat(state.fields.private).filter(f => {
+        return f.key !== "lead_price"
+      })
+    : undefined,
 })
 
 export default connect(
   mapStateToProps,
   {
+    handleFilter: newFilter => leads.filterChange("MY_LEADS", newFilter),
+    industryUpdate: industry.industryUpdate,
     fetchLeads: (...params) => leads.fetchLeads("MY_LEADS", ...params),
     setSelectedLeads: selectedLeads =>
       leads.setSelectedLeads("MY_LEADS", selectedLeads),
@@ -143,6 +169,9 @@ export default connect(
     moveToSell: moveToSell.myLeadsMoveToSellBegin,
     deleteLead: leads.deleteLead,
     displayLead: displayLead.displayLeadGet,
+    searchClicked: () => leads.searchClicked("MY_LEADS"),
+    expandFiltersClick: () => leads.expandFiltersClick("MY_LEADS"),
+    clearList: () => leads.clearList("MY_LEADS"),
     push,
   },
 )(MyLeads)

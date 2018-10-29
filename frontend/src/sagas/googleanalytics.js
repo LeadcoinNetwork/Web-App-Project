@@ -1,4 +1,4 @@
-import { types } from "Actions"
+import { types } from "../actions"
 import { take } from "redux-saga/effects"
 
 export default function* googleAnalyticsSasga() {

@@ -1,8 +1,9 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import { connect } from "react-redux"
-import { leads } from "Actions"
-import LeadsTemplate from "Containers/LeadsTemplate"
+import { leads, industry } from "../../actions"
+import LeadsTemplate from "../LeadsTemplate"
+import SearchFilterBar from "../../components/SearchFilterBar"
 import t from "../../utils/translate/translate"
 
 class SellLeads extends React.Component {
@@ -49,6 +50,15 @@ class SellLeads extends React.Component {
     this.props.dispatch(leads.setSelectedLeads(selectedLeads))
   }
   render() {
+    let {
+      leads: { filter, expandIndustryFilters, wasSearchClicked },
+      handleFilter,
+      expandFiltersClick,
+      clearList,
+      searchClicked,
+      fetchLeads,
+      industryUpdate,
+    } = this.props
     return (
       <>
         <div style={{ float: "left" }}>
@@ -74,12 +84,26 @@ class SellLeads extends React.Component {
         <h3>
           {t("Earn money by selling your unused leads to other professionals.")}
         </h3>
-        <LeadsTemplate
-          {...this.props}
-          pageName="sell"
-          constantCardOpen={true}
-          isSelectable={false}
+        <SearchFilterBar
+          className="sl-filters"
+          filter={filter}
+          handleFilter={handleFilter}
+          clearList={clearList}
+          searchClicked={searchClicked}
+          fetchLeads={fetchLeads}
+          expandFiltersClick={expandFiltersClick}
+          expandIndustryFilters={expandIndustryFilters}
+          industryUpdate={industryUpdate}
         />
+        {wasSearchClicked &&
+          filter.industry && (
+            <LeadsTemplate
+              {...this.props}
+              pageName="sell"
+              constantCardOpen={true}
+              isSelectable={false}
+            />
+          )}
       </>
     )
   }
@@ -87,16 +111,21 @@ class SellLeads extends React.Component {
 
 const mapStateToProps = state => ({
   leads: state.sellLeads,
-  fields: state.fields,
+  fields: state.fields.public,
 })
 
 export default connect(
   mapStateToProps,
   {
+    handleFilter: newFilter => leads.filterChange("SELL_LEADS", newFilter),
+    industryUpdate: industry.industryUpdate,
     fetchLeads: (...params) => leads.fetchLeads("SELL_LEADS", ...params),
     setSelectedLeads: selectedLeads =>
       leads.setSelectedLeads("SELL_LEADS", selectedLeads),
 
     toggelCardView: index => leads.toggelCardView("SELL_LEADS", index),
+    searchClicked: () => leads.searchClicked("SELL_LEADS"),
+    expandFiltersClick: () => leads.expandFiltersClick("SELL_LEADS"),
+    clearList: () => leads.clearList("SELL_LEADS"),
   },
 )(SellLeads)

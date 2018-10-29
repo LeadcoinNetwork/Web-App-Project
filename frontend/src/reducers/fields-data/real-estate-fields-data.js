@@ -1,4 +1,4 @@
-const fields = [
+const realEstateFields = [
   {
     key: "Industry",
     name: "Industry",
@@ -116,4 +116,4 @@ const fields = [
   },
 ]
 
-export default fields
+export default realEstateFields

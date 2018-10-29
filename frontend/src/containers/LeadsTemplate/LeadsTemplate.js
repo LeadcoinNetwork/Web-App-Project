@@ -1,14 +1,12 @@
 import React from "react"
 import { connect } from "react-redux"
 import * as actions from "Actions"
-import Table from "Components/Table"
-import Button from "Components/Button"
-import LeadsResults from "Components/LeadsResults"
-import Select from "Components/Select"
-import TextField from "Components/TextField"
+import Table from "../../components/Table"
+import Button from "../../components/Button"
+import LeadsResults from "../../components/LeadsResults"
 import t from "../../utils/translate/translate"
-import RealEstateLead from "Components/RealEstateLead"
-import SwitchResultsMode from "Containers/SwitchResultsMode"
+import CardView from "../../components/CardView"
+import SwitchResultsMode from "../../containers/SwitchResultsMode"
 import { Link } from "react-router-dom"
 import { push } from "react-router-redux"
 
@@ -141,12 +139,6 @@ class LeadsTemplate extends React.Component {
       deleteLead,
       editLead,
     } = this.props
-
-    let fieldsCheck = {}
-    fields.forEach(element => {
-      fieldsCheck[element.key] = element.key
-    })
-
     let isNotAllSelected = this.isNotAllSelected()
     return (
       <div>
@@ -168,10 +160,11 @@ class LeadsTemplate extends React.Component {
                   renderFilters={this.renderFilters}
                   renderResultsHead={this.renderResultsHead}
                   renderLead={(lead, index) => (
-                    <RealEstateLead
+                    <CardView
+                      industry={leads.filter.industry}
                       key={lead.id}
-                      fieldsCheck={fieldsCheck}
                       {...lead}
+                      fields={fields}
                       checked={isSelectable && leads.selected.has(lead.id)}
                       isSelectable={isSelectable}
                       push={this.props.push}

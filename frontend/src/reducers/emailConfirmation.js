@@ -1,4 +1,4 @@
-import types from "Actions/types"
+import { types } from "../actions"
 
 const emailConfirmation = (state = {}, action) => {
   switch (action.type) {
