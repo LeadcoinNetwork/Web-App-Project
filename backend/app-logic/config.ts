@@ -7,8 +7,8 @@ utils.throwOnMissingEnvironmentVariables()
 
 class Config {
   // FLAGS
-  AUTO_CONFIRM_EMAIL = false
-  SKIP_COMPLETE_PROFILE = false
+  AUTO_CONFIRM_EMAIL = true
+  SKIP_COMPLETE_PROFILE = true
   INITIAL_BALANCE = 1000
 
   env = process.env.NODE_ENV
