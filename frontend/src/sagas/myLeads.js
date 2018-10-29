@@ -32,6 +32,7 @@ export default function* myLeads(api) {
       types.MY_LEADS_FETCH_LEADS,
       types.CHECKOUT_BUY_SUCCESS,
       types.MY_LEADS_MOVE_TO_SELL_SUCCESS,
+      types.MY_LEADS_DELETE_LEADS_SUCCESS,
       types.LOGIN_FINISH,
       types.LOGGED_OUT,
     ])

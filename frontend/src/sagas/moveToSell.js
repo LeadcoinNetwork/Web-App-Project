@@ -15,7 +15,6 @@ export default function* moveToSell(api) {
     let { selected } = yield select(state => state.myLeads)
 
     let res = yield api.leads.myLeadsMoveToSell(Array.from(selected))
-    console.log(res)
 
     if (res.error) {
       yield put(actions.moveToSell.myLeadsMoveToSellError())

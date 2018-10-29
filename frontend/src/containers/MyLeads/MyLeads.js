@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { push } from "react-router-redux"
 import t from "../../utils/translate/translate"
 import LeadsTemplate from "../LeadsTemplate"
-import { leads, moveToSell, industry } from "../../actions"
+import { leads, moveToSell, deleteLead, industry } from "../../actions"
 import displayLead from "../../actions/displayLead"
 import DisplayLead from "../DisplayLead"
 import SearchFilterBar from "../../components/SearchFilterBar"
@@ -127,8 +127,7 @@ class MyLeads extends React.Component {
             description="You are about to delete the selected leads. Are you sure you want to proceed?"
             onConfirm={() => {
               this.setState({ showDeleteConfirmation: false })
-              const selected = [...this.props.leads.selected]
-              this.props.deleteLead(selected)
+              this.props.deleteLead()
             }}
             onDismiss={() => this.setState({ showDeleteConfirmation: false })}
           />
@@ -167,7 +166,7 @@ export default connect(
       leads.setSelectedLeads("MY_LEADS", selectedLeads),
     toggelCardView: index => leads.toggelCardView("MY_LEADS", index),
     moveToSell: moveToSell.myLeadsMoveToSellBegin,
-    deleteLead: leads.deleteLead,
+    deleteLead: deleteLead.myLeadsDeleteLeadBegin,
     displayLead: displayLead.displayLeadGet,
     searchClicked: () => leads.searchClicked("MY_LEADS"),
     expandFiltersClick: () => leads.expandFiltersClick("MY_LEADS"),

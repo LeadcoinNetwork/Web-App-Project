@@ -45,7 +45,6 @@ class LeadsTemplate extends React.Component {
   }
   zeroResults = () => {
     const { loading } = this.props.leads
-    console.log({ loading })
     if (loading) {
       return (
         <>
