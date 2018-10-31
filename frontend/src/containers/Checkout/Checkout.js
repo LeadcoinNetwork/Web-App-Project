@@ -55,14 +55,16 @@ const Checkout = ({
         <thead>
           <tr>
             {shoppingCartFields.map(field => (
-              <th className={"h-" + field.key}>{t(field.name)}</th>
+              <th className={"h-" + field.key} key={field.key}>
+                {t(field.name)}
+              </th>
             ))}
           </tr>
         </thead>
         <tbody>
-          {selectedLeads.map(lead => (
-            <tr>
-              {shoppingCartFields.map(field => {
+          {selectedLeads.map((lead, index) => (
+            <tr key={"row" + index}>
+              {shoppingCartFields.map((field, dataIndex) => {
                 let content
                 switch (field.key) {
                   case "lead_price":
@@ -72,7 +74,11 @@ const Checkout = ({
                   default:
                     content = lead[field.key]
                 }
-                return <td className={"d-" + field.key}>{content}</td>
+                return (
+                  <td className={"d-" + field.key} key={"data" + dataIndex}>
+                    {content}
+                  </td>
+                )
               })}
             </tr>
           ))}
