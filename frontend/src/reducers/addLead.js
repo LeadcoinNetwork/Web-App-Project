@@ -70,7 +70,18 @@ export default function(state = initialState, action) {
 
     case types.ADD_LEAD_HANDLE_FORM_CHANGE:
       newErrors = { ...state.errors }
-      delete newErrors[action.payload.name]
+      switch (action.payload.name) {
+        case "Telephone":
+        case "Email":
+        case "Contact Person":
+          delete newErrors.Telephone
+          delete newErrors.Email
+          delete newErrors["Contact Person"]
+          break
+        default:
+          delete newErrors[action.payload.name]
+          break
+      }
       return {
         ...state,
         values: {
