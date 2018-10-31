@@ -39,7 +39,9 @@ export interface getLeadsOptions {
 
 const contains_contact = lead => {
   return (
-    lead.Telephone.trim() || lead.Email.trim() || lead["Contact Person"].trim()
+    (lead.Telephone && lead.Telephone.trim()) ||
+    (lead.Email && lead.Email.trim()) ||
+    (lead["Contact Person"] && lead["Contact Person"].trim())
   )
 }
 
