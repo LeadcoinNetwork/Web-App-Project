@@ -15,7 +15,7 @@ module.exports = (runner, delay, clear_files) => {
   const set_timeout = () => {
     clearTimeout(runner_TO)
     runner_TO = setTimeout(run, delay)
-    next_run = (new Date().valueOf()) + delay
+    next_run = new Date().valueOf() + delay
   }
 
   server.get("/health", (req, res) => {
@@ -23,7 +23,7 @@ module.exports = (runner, delay, clear_files) => {
     if (state) {
       state = Object.assign(state, {
         in_progress,
-        next_run: new Date(next_run)
+        next_run: new Date(next_run),
       })
       res.json(state)
     } else {
@@ -31,19 +31,19 @@ module.exports = (runner, delay, clear_files) => {
     }
   })
 
-  server.use(express.static('slideshow'))
+  server.use(express.static("slideshow"))
 
-  server.get('/runNow', (req, res) => {
-    if (in_progress) return res.send({in_progress})
+  server.get("/runNow", (req, res) => {
+    if (in_progress) return res.send({ in_progress })
     run()
-    res.send({ok:1})
+    res.send({ ok: 1 })
   })
 
-  server.get('/app.less', (req, res) => {
-    res.sendFile(__dirname+'/app.less')
+  server.get("/app.less", (req, res) => {
+    res.sendFile(__dirname + "/app.less")
   })
-  server.get('/', (req, res) => {
-    res.sendFile(__dirname+'/app.html')
+  server.get("/", (req, res) => {
+    res.sendFile(__dirname + "/app.html")
   })
 
   server.listen(30666, async e => {
@@ -52,7 +52,6 @@ module.exports = (runner, delay, clear_files) => {
       clearTimeout(runner_TO)
     })
     set_timeout()
-    if (delay > 30000)
-      await run()
+    if (delay > 30000) await run()
   })
 }

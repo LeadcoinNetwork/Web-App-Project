@@ -20,7 +20,9 @@ const THRCol = ({ field, colCount, staticColsWidth, onSort, sortedBy }) => (
               field.name,
               !sortedBy || sortedBy.key !== field.name
                 ? "asc"
-                : sortedBy.direction === "asc" ? "desc" : "asc",
+                : sortedBy.direction === "asc"
+                  ? "desc"
+                  : "asc",
             )
         : undefined
     }

@@ -9,7 +9,9 @@ const ForgotPassword = ({ forgotPassword, handleChange, submit }) => (
   <section className="ldc-forgot-password">
     <h1>{t("Forgot your password?")}</h1>
     <p>
-      {t("Enter the email address associated with your account, and we’ll email you a link to reset your password.")}
+      {t(
+        "Enter the email address associated with your account, and we’ll email you a link to reset your password.",
+      )}
     </p>
     <TextField
       placeholder={t("Email")}
@@ -31,7 +33,10 @@ const mapStateToProps = state => ({
   forgotPassword: state.forgotPassword,
 })
 
-export default connect(mapStateToProps, {
-  handleChange: forgotPassword.forgotPassswordHandleChange,
-  submit: forgotPassword.forgotPassswordUserSubmit,
-})(ForgotPassword)
+export default connect(
+  mapStateToProps,
+  {
+    handleChange: forgotPassword.forgotPassswordHandleChange,
+    submit: forgotPassword.forgotPassswordUserSubmit,
+  },
+)(ForgotPassword)

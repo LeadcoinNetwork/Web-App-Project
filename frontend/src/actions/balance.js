@@ -26,7 +26,7 @@ export default {
       payload: {
         name,
         value,
-      }
+      },
     }
   },
   withdrawPageLoadingStart() {
