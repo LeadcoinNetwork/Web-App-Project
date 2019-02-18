@@ -1,18 +1,15 @@
-import { Currency } from "../../utils/currency"
+// import { Currency } from "../../utils/currency"
 
-export type Industry = "All" | "Real Estate" | "Crypto" | "Insurance" | "Loans"
-export type RealEstateCategory =
-  | "Buy"
-  | "Sell"
-  | "Looking to rent"
-  | "Properties for rent"
-export type CryptoCategory = "Buy" | "Sell"
-export type Categories = "All" | RealEstateCategory | CryptoCategory
+export type Industry = "All" | "Web Building" | "Crypto" | "Insurance" | "Loans"
+// export type WebBuildingCategory = "Buy" | "Sell"
+// export type CryptoCategory = "Buy" | "Sell"
+
+// export type Categories = "All" | WebBuildingCategory | CryptoCategory
 
 export interface LeadQueryOptions {
   id?: number
   industry?: Industry
-  category?: RealEstateCategory | CryptoCategory
+  // category?: WebBuildingCategory | CryptoCategory
   condition?: any
   user_id?: number
   sort?: any
@@ -30,7 +27,8 @@ export interface LeadQueryOptions {
 export interface BaseLead {
   id?: number
   Industry: Industry
-  Category: RealEstateCategory | CryptoCategory
+  "Contact Person": string
+  // Category: WebBuildingCategory | CryptoCategory
   Price: number
   Description: string
   "Lead Price": number
@@ -43,49 +41,21 @@ export interface BaseLead {
   meta?: any
 }
 
-export interface NewBaseLead {
-  Industry: Industry
-  Category: RealEstateCategory | CryptoCategory
-  date: number
-  Telephone?: string
-  "Lead Price": any
-  bought_from?: number | null
-  forSale?: boolean
-  active: boolean
-  Description?: string
-  agree_to_terms?: boolean
-  meta?: any
-}
-export interface NewRealEstateLead extends NewBaseLead {
-  Industry: "Real Estate"
-  Category: RealEstateCategory
-  Description: string
-  Price: number
-  "Bedrooms/Baths": string
-  "Contact Person": string
-  Size?: number
-  State?: string
-  Location?: number
-  "Housing Type"?: string
-  Specification?: string
-  "Property Type"?: string
+export interface WebBuildingLead extends BaseLead {
+  Industry: "Web Building"
+  // Category: WebBuildingCategory
+  "Number of pages": number
+  "Content Updates": string
+  Functionality: string[]
+  "Mobile Design": boolean
+  SEO: boolean
+  "Content Management": boolean
+  "E-commerce": boolean
+  Blog: boolean
+  Budget: number
+  Languages: string[]
+  Hosting: boolean
+  Comments: string
 }
 
-// Industry,Category,Description,Bedrooms / Baths,Price,Size,State,Location,Housing Type,Telephone,Contact Person
-export interface RealEstateLead extends BaseLead {
-  Industry: "Real Estate"
-  Category: RealEstateCategory
-  Description: string
-  Price: number
-  "Bedrooms/Baths": string
-  "Contact Person": string
-  Size?: number
-  State?: string
-  Location?: number
-  "Housing Type"?: string
-  Specification?: string
-  "Property Type"?: string
-}
-
-export type Lead = BaseLead | RealEstateLead
-export type NewLead = NewBaseLead | NewRealEstateLead
+export type Lead = WebBuildingLead
