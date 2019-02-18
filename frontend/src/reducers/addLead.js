@@ -2,7 +2,7 @@ import { types } from "../actions"
 import fields from "./fields-data"
 
 const initialValues = fields.reduce((values, field) => {
-  values[field.key] = ""
+  values[field.key] = field.type === "input" ? "" : field.options[0]
   return values
 }, {})
 
@@ -12,12 +12,17 @@ const initialState = {
     private: fields
       .filter(field => field.editable)
       .filter(field => field.private)
-      .map(field => ({ key: field.key, name: field.name }))
+      .map(field => ({ key: field.key, name: field.name, type: field.type }))
       .filter(f => !fields_not_for_display.includes(f)),
     public: fields
       .filter(field => field.editable)
       .filter(field => !field.private)
-      .map(field => ({ key: field.key, name: field.name }))
+      .map(field => ({
+        key: field.key,
+        name: field.name,
+        options: field.options,
+        type: field.type,
+      }))
       .filter(f => !fields_not_for_display.includes(f.key)),
   },
   values: initialValues,
@@ -68,6 +73,18 @@ export default function(state = initialState, action) {
       }
 
     case types.ADD_LEAD_HANDLE_FORM_CHANGE:
+      newErrors = { ...state.errors }
+      delete newErrors[action.payload.name]
+      console.log(state)
+      return {
+        ...state,
+        values: {
+          ...state.values,
+          [action.payload.name]: action.payload.value,
+        },
+        errors: newErrors,
+      }
+    case types.ADD_LEAD_HANDLE_SELECT_CHANGE:
       newErrors = { ...state.errors }
       delete newErrors[action.payload.name]
       return {
