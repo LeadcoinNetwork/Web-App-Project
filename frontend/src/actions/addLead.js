@@ -14,6 +14,13 @@ export default {
       payload: { name, value },
     }
   },
+  addLeadHandleSelectChange(name, value) {
+    console.log(name, value)
+    return {
+      type: types.ADD_LEAD_HANDLE_SELECT_CHANGE,
+      payload: { name, value },
+    }
+  },
 
   addLeadAgreeToTerms(value) {
     return {

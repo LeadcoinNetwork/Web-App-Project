@@ -37,6 +37,8 @@ class AddLead extends React.Component {
     const { errors, values, loading } = this.props
     return fields.map(f => {
       const isError = errors[f.key] ? "error" : ""
+      console.log(f)
+      console.log(this.props)
       return (
         <div key={f.key} className={isError + " flexed line"}>
           <div className="fieldLabel">
@@ -46,15 +48,26 @@ class AddLead extends React.Component {
             )}
           </div>
           <div className="fieldValue">
-            <TextField
-              disabled={loading}
-              appStyle={true}
-              placeholder={t(f.name)}
-              value={values[f.key]}
-              onChange={e => {
-                this.props.handleChange(f.key, e.target.value)
-              }}
-            />
+            {f.type === "input" ? (
+              <TextField
+                disabled={loading}
+                appStyle={true}
+                placeholder={t(f.name)}
+                value={values[f.key]}
+                onChange={e => {
+                  this.props.handleChange(f.key, e.target.value)
+                }}
+              />
+            ) : (
+              <Select
+                className="category"
+                value={this.props.values[f.key]}
+                options={f.options}
+                onChange={e => {
+                  this.props.handleSelectChange(f.key, e.target.value)
+                }}
+              />
+            )}
           </div>
         </div>
       )
@@ -147,6 +160,7 @@ export default connect(
   {
     agreeToTerms: addLead.addLeadAgreeToTerms,
     handleChange: addLead.addLeadHandleFormChange,
+    handleSelectChange: addLead.addLeadHandleSelectChange,
     submit: addLead.addLeadSubmitForm,
     clear: addLead.addLeadClearForm,
     push,
