@@ -84,17 +84,6 @@ export default function(state = initialState, action) {
         },
         errors: newErrors,
       }
-    case types.ADD_LEAD_HANDLE_SELECT_CHANGE:
-      newErrors = { ...state.errors }
-      delete newErrors[action.payload.name]
-      return {
-        ...state,
-        values: {
-          ...state.values,
-          [action.payload.name]: action.payload.value,
-        },
-        errors: newErrors,
-      }
 
     case types.ADD_LEAD_GET_DB_FIELDS:
       return {

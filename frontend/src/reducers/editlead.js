@@ -1,54 +1,75 @@
 import { types } from "../actions"
 import fields from "./fields-data"
 
+const lead_fields = [
+  "Contact Person",
+  "Telephone",
+  "Email",
+  "Number of pages",
+  "Content Updates",
+  "Functionality",
+  "Mobile Design",
+  "SEO",
+  "Content Management",
+  "E-commerce",
+  "Blog",
+  "Budget",
+  "Language",
+  "Hosting",
+  "Comments",
+]
+
 const initialState = {
   original_copy: null,
-  private_fields: {},
-  public_fields: {},
+  fields: {
+    private: fields
+      .filter(field => field.private)
+      .map(field => {
+        return {
+          key: field.key,
+          name: field.name,
+          type: field.type,
+          options: field.options,
+        }
+      })
+      .filter(field => lead_fields.includes(field.key)),
+    public: fields
+      .filter(field => !field.private)
+      .map(field => {
+        return {
+          key: field.key,
+          name: field.name,
+          type: field.type,
+          options: field.options,
+        }
+      })
+      .filter(field => lead_fields.includes(field.key)),
+  },
   errors: {},
   agree_to_terms: false,
   loading: false,
   values: {},
 }
 
-const contact_info_fields = ["Contact Person", "Telephone", "Email"]
-const lead_fields = [
-  "Description",
-  "Size",
-  "Housing Type",
-  "State",
-  "Price",
-  "Type",
-  "Bedrooms/Baths",
-  "Location",
-]
-
-const seperateLead = lead => {
-  let priv = {},
-    pub = {}
-  contact_info_fields.forEach(f => {
-    if (lead[f]) {
-      priv[f] = lead[f]
-    }
-  })
+const filterFields = lead => {
+  let obj = {}
   lead_fields.forEach(f => {
     if (lead[f]) {
-      pub[f] = lead[f]
+      obj[f] = lead[f]
     }
   })
-  return [priv, pub]
+  return obj
 }
 
 let newErrors = null
 export default function(state = initialState, action) {
   switch (action.type) {
     case types.EDIT_LEAD_EDIT_LEAD:
-      const [private_fields, public_fields] = seperateLead(action.lead)
+      const filteredFields = filterFields(action.lead)
       return {
         ...state,
-        private_fields,
-        public_fields,
         original_copy: action.lead,
+        values: filteredFields,
       }
 
     case types.EDIT_LEAD_FORM_ERROR:
@@ -87,12 +108,14 @@ export default function(state = initialState, action) {
     case types.EDIT_LEAD_HANDLE_FORM_CHANGE:
       newErrors = { ...state.errors }
       delete newErrors[action.payload.name]
-      if (contact_info_fields.includes(action.payload.name)) {
-        state.private_fields[action.payload.name] = action.payload.value
-      } else {
-        state.public_fields[action.payload.name] = action.payload.value
+      return {
+        ...state,
+        values: {
+          ...state.values,
+          [action.payload.name]: action.payload.value,
+        },
+        errors: newErrors,
       }
-      return { ...state, errors: newErrors }
 
     default:
       return state

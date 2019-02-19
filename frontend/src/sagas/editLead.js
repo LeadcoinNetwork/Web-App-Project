@@ -11,13 +11,10 @@ import API from "../api/index"
 export default function* editLead(api) {
   while (true) {
     const action = yield take(types.EDIT_LEAD_SUBMIT_FORM)
-    let {
-      private_fields,
-      public_fields,
-      original_copy,
-      agree_to_terms,
-    } = yield select(state => state.editLead)
-    const lead = Object.assign(original_copy, private_fields, public_fields, {
+    let { original_copy, values, agree_to_terms } = yield select(
+      state => state.editLead,
+    )
+    const lead = Object.assign(original_copy, values, {
       agree_to_terms,
     })
     console.log({ lead })

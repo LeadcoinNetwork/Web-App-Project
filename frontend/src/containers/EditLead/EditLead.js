@@ -14,6 +14,7 @@ class EditLead extends React.Component {
     super(props)
     this.state = { showConfirmation: false }
   }
+
   renderTerms() {
     const { errors, agree_to_terms } = this.props.editLead
     const error = errors["agree_to_terms"] ? "error" : ""
@@ -34,25 +35,38 @@ class EditLead extends React.Component {
   }
 
   renderFields(fields) {
-    const { errors, values, loading } = this.props.editLead
-    return Object.keys(fields).map(f => {
+    const { errors, loading } = this.props.editLead
+    return fields.map(f => {
       const isError = errors[f] ? "error" : ""
       return (
-        <div key={f} className={isError + " flexed line"}>
+        <div key={f.name} className={isError + " flexed line"}>
           <div className="fieldLabel">
-            {t(f)}
-            {f === "lead_price" && <span className="asterisk-required">*</span>}
+            {t(f.name)}
+            {f.key === "lead_price" && (
+              <span className="asterisk-required">*</span>
+            )}
           </div>
           <div className="fieldValue">
-            <TextField
-              disabled={loading}
-              appStyle={true}
-              placeholder={t(f)}
-              value={fields[f]}
-              onChange={e => {
-                this.props.handleChange(f, e.target.value)
-              }}
-            />
+            {f.type === "input" ? (
+              <TextField
+                disabled={loading}
+                appStyle={true}
+                placeholder={t(f.name)}
+                value={this.props.editLead.values[f.key]}
+                onChange={e => {
+                  this.props.handleChange(f.key, e.target.value)
+                }}
+              />
+            ) : (
+              <Select
+                className="category"
+                value={this.props.editLead.values[f.key]}
+                options={f.options}
+                onChange={e => {
+                  this.props.handleChange(f.key, e.target.value)
+                }}
+              />
+            )}
           </div>
         </div>
       )
@@ -67,18 +81,8 @@ class EditLead extends React.Component {
   }
 
   render() {
-    const {
-      private_fields,
-      public_fields,
-      loading,
-      errors,
-    } = this.props.editLead
-    if (Object.keys(private_fields) === 0) {
-      if (id) {
-        console.log(this.props.buyLeads)
-      }
-      return <div>{t("Loading...")}</div>
-    }
+    const { fields, loading, errors } = this.props.editLead
+
     return (
       <div className="edit_lead">
         <div className="back-wrapper">
@@ -109,13 +113,13 @@ class EditLead extends React.Component {
                 )}
               </div>
             </div>
-            <div className="fields">{this.renderFields(private_fields)}</div>
+            <div className="fields">{this.renderFields(fields.private)}</div>
           </div>
           <div className="public">
             <div className="help_text">
               <div className="header bigger">{t("Public Fields")}</div>
             </div>
-            <div className="fields">{this.renderFields(public_fields)}</div>
+            <div className="fields">{this.renderFields(fields.public)}</div>
           </div>
           {this.renderTerms()}
           {errors && (
