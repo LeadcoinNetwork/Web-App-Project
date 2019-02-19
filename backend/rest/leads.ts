@@ -2,14 +2,14 @@
 import * as passport from "passport"
 import * as Express from "express"
 import AppLogic from "../app-logic/index"
-import NotFound from "../utils/not-found"
-import { appModels } from "../app-logic/types"
+// import NotFound from "../utils/not-found"
+// import { appModels } from "../app-logic/types"
 import * as Chance from "chance"
 const chance = Chance()
 
-import * as auth from "../models/user-auth/user-auth"
+// import * as auth from "../models/user-auth/user-auth"
 
-import { Lead, Industry, Categories } from "../models/leads/types"
+import { Lead, Industry } from "../models/leads/types"
 
 const authOptions = {
   session: false,
@@ -32,17 +32,36 @@ export function start({
     count = parseInt(count)
     for (let i = 1; i < count + 1; i++) {
       let owner = Math.floor(count / i)
-      let status = await appLogic.models.leads.insertLead({
-        Industry: "Real Estate",
-        Category: "Sell",
-        "Bedrooms/Baths": "2BR / 2BA",
+      let newLead: Lead = {
+        Industry: "Web Building",
+        "Number of pages": chance.integer({ min: 1, max: 30 }),
+        "Content Updates": chance.pickone(["Mostly Static", "Dynamic"]),
         date: new Date().valueOf(),
-        Size: chance.integer({ min: 1, max: 20 }),
+        Functionality: [
+          chance.pickone([
+            "Personal",
+            "Corporate",
+            "Educational",
+            "Portfolio",
+            "Restaurant",
+            "Small Business",
+            "Other",
+          ]),
+        ],
+        "Mobile Design": chance.bool(),
+        SEO: chance.bool(),
+        "Content Management": chance.bool(),
+        "E-commerce": chance.bool(),
+        Blog: chance.bool(),
+        Budget: chance.integer({ min: 1, max: 128 }),
+        Languages: [chance.country()],
+        Hosting: chance.bool(),
+        Comments: chance.sentence({
+          words: chance.integer({ min: 1, max: 9 }),
+        }),
         Description: chance.sentence({
           words: chance.integer({ min: 1, max: 9 }),
         }),
-        State: chance.state(),
-        "Housing Type": "Cardboard Box",
         bought_from: null,
         forSale: true,
         "Lead Price": chance.integer({ min: 1, max: 20 }),
@@ -57,12 +76,26 @@ export function start({
             .substring(0, 7)
             .slice(1, -1),
         ),
-      })
+      }
+
+      // Number of pages: Numeric
+      // Content Updates: (dropdown - single selection) Mostly Static, Dynamic
+      // Functionality: (multiple selection) Personal, Corporate, Educational, Portfolio, Restaurant, Small Business, Other
+      // Mobile Design: (Yes or No)
+      // SEO: (Yes or No)
+      // Content Management: (Yes or No)
+      // E-commerce: (Yes or No)
+      // Blog: (Yes or No)
+      // Budget: Currency (USD)
+      // Language(s): (multiple selection) List of Languages
+      // Hosting: (Yes or No)
+      // Comments: Free text
+
+      let status = await appLogic.models.leads.insertLead(newLead)
       if (status.affectedRows) rc.push(status.insertId)
     }
     return rc
   }
-  // Industry,Category,Description,Bedrooms / Baths,Price,Size,State,Location,Housing Type,Telephone,Contact Person
 
   async function mock_leads(req, res, next) {
     ;(async () => {
@@ -531,11 +564,9 @@ export function start({
         const { sortBy, page, limit, sortOrder } = req.query
         const {
           industry,
-          category,
           search,
         }: {
           industry: Industry
-          category: Categories
           search: string
         } = req.query.filter
         const { user } = req
@@ -543,7 +574,7 @@ export function start({
           sortBy: sortBy && sortBy != "id" ? sortBy : "date",
           sortOrder: sortOrder || "DESC",
         }
-        let filters = { search: null, industry: null, category: null }
+        let filters = { search: null, industry: null }
         if (search) {
           filters.search = ["Bedrooms/Baths", "Description", "Location"].map(
             field => {
@@ -556,7 +587,6 @@ export function start({
           )
         }
         filters.industry = industry === "All" ? "" : industry
-        filters.category = category === "All" ? "" : category
         let _limit = {
           start: parseInt(page || 0) * parseInt(limit || 50),
           offset: limit || 50,

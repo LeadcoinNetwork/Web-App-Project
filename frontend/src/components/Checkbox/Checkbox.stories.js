@@ -20,12 +20,9 @@ class CheckboxState extends React.Component {
     )
   }
 }
-storiesOf("Components/Checkbox",module).add("check checkbox", () => <CheckboxState />)
+storiesOf("Components/Checkbox", module)
+  .add("check checkbox", () => <CheckboxState />)
 
-.add("checkbox with label", () => (
-  <CheckboxState label={"With Label"} />
-))
+  .add("checkbox with label", () => <CheckboxState label={"With Label"} />)
 
-.add("checkbox with onclick", () => (
-  <Checkbox onClick={action("onClick")} />
-))
+  .add("checkbox with onclick", () => <Checkbox onClick={action("onClick")} />)

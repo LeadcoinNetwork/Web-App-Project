@@ -7,7 +7,7 @@ export default {
       payload: {
         name,
         value,
-      }
+      },
     }
   },
   withdrawPageSubmit() {

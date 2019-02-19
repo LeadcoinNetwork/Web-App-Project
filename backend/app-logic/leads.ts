@@ -1,4 +1,4 @@
-import { Lead, LeadQueryOptions, NewBaseLead } from "../models/leads/types"
+import { Lead, LeadQueryOptions } from "../models/leads/types"
 
 import { IModels } from "./index"
 import { Notification } from "../models/notifications/types"

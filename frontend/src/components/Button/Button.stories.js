@@ -2,7 +2,7 @@ import React from "react"
 import { storiesOf } from "@storybook/react"
 import Button from "./Button"
 
-storiesOf("Components/Button",module)
+storiesOf("Components/Button", module)
   .add("With text", () => <Button label="Hello" />)
   .add("Secondary", () => <Button label="Hello" secondary />)
   .add("With Click", () => (

@@ -22,7 +22,7 @@ class TextFieldState extends React.Component {
   }
 }
 
-storiesOf("Components/TextField",module)
+storiesOf("Components/TextField", module)
   .add("add text", () => <TextFieldState label="Text Field" />)
   .add("add with hint", () => (
     <TextFieldState label="Hinted Text Field" placeholder="Hint!" />

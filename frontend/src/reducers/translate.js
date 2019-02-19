@@ -7,7 +7,7 @@ const flagLanguageConverter = {
   cn: "zh",
   jp: "ja",
   kr: "ko",
-  il: "he"
+  il: "he",
 }
 
 const initialState = {

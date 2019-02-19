@@ -26,7 +26,10 @@ const mapStateToProps = state => ({
   user: state.user,
 })
 
-export default connect(mapStateToProps, {
-  logout: actions.user.loggedOut,
-  resend: actions.emailConfirmation.emailConfirmationResend,
-})(EmailConfirmation)
+export default connect(
+  mapStateToProps,
+  {
+    logout: actions.user.loggedOut,
+    resend: actions.emailConfirmation.emailConfirmationResend,
+  },
+)(EmailConfirmation)
