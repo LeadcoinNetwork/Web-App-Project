@@ -31,9 +31,10 @@ export interface BaseLead {
   // Category: WebBuildingCategory | CryptoCategory
   Price: number
   Description: string
-  "Lead Price": number
+  lead_price: number
   date: number
   Telephone: string
+  Email: string
   bought_from: number | null
   ownerId: number
   forSale: boolean

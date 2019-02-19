@@ -34,6 +34,7 @@ export function start({
       let owner = Math.floor(count / i)
       let newLead: Lead = {
         Industry: "Web Building",
+        Email: chance.email(),
         "Number of pages": chance.integer({ min: 1, max: 30 }),
         "Content Updates": chance.pickone(["Mostly Static", "Dynamic"]),
         date: new Date().valueOf(),
@@ -64,7 +65,7 @@ export function start({
         }),
         bought_from: null,
         forSale: true,
-        "Lead Price": chance.integer({ min: 1, max: 20 }),
+        lead_price: chance.integer({ min: 1, max: 20 }),
         ownerId: owner,
         "Contact Person": chance.name(),
         Telephone: chance.phone(),
@@ -78,19 +79,6 @@ export function start({
         ),
       }
 
-      // Number of pages: Numeric
-      // Content Updates: (dropdown - single selection) Mostly Static, Dynamic
-      // Functionality: (multiple selection) Personal, Corporate, Educational, Portfolio, Restaurant, Small Business, Other
-      // Mobile Design: (Yes or No)
-      // SEO: (Yes or No)
-      // Content Management: (Yes or No)
-      // E-commerce: (Yes or No)
-      // Blog: (Yes or No)
-      // Budget: Currency (USD)
-      // Language(s): (multiple selection) List of Languages
-      // Hosting: (Yes or No)
-      // Comments: Free text
-
       let status = await appLogic.models.leads.insertLead(newLead)
       if (status.affectedRows) rc.push(status.insertId)
     }
@@ -103,8 +91,7 @@ export function start({
       const done = add_fake_leads(quantity)
       res.status(200)
       res.send({ done })
-      return
-      next()
+      return next()
     })().catch(done)
   }
 
