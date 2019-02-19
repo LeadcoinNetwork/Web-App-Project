@@ -64,7 +64,7 @@ class AddLead extends React.Component {
                 value={this.props.values[f.key]}
                 options={f.options}
                 onChange={e => {
-                  this.props.handleSelectChange(f.key, e.target.value)
+                  this.props.handleChange(f.key, e.target.value)
                 }}
               />
             )}
