@@ -46,7 +46,7 @@ export interface WebBuildingLead extends BaseLead {
   Industry: "Web Building"
   // Category: WebBuildingCategory
   "Number of pages": number
-  "Content Updates": string
+  "Content Updates": "Mostly Static" | "Dynamic"
   Functionality: string[]
   "Mobile Design": boolean
   SEO: boolean

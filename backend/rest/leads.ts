@@ -32,14 +32,15 @@ export function start({
     count = parseInt(count)
     for (let i = 1; i < count + 1; i++) {
       let owner = Math.floor(count / i)
+      // @ts-ignore
       let newLead: Lead = {
         Industry: "Web Building",
         Email: chance.email(),
         "Number of pages": chance.integer({ min: 1, max: 30 }),
         "Content Updates": chance.pickone(["Mostly Static", "Dynamic"]),
         date: new Date().valueOf(),
-        Functionality: [
-          chance.pickone([
+        Functionality: chance.pickset(
+          [
             "Personal",
             "Corporate",
             "Educational",
@@ -47,15 +48,27 @@ export function start({
             "Restaurant",
             "Small Business",
             "Other",
-          ]),
-        ],
+          ],
+          chance.integer({ min: 1, max: 5 }),
+        ),
         "Mobile Design": chance.bool(),
         SEO: chance.bool(),
         "Content Management": chance.bool(),
         "E-commerce": chance.bool(),
         Blog: chance.bool(),
         Budget: chance.integer({ min: 1, max: 128 }),
-        Languages: [chance.country()],
+        Languages: chance.pickset(
+          [
+            "Hebrew",
+            "Irish",
+            "Italian",
+            "Korean",
+            "Latin",
+            "Polish",
+            "Russian",
+          ],
+          chance.integer({ min: 1, max: 5 }),
+        ),
         Hosting: chance.bool(),
         Comments: chance.sentence({
           words: chance.integer({ min: 1, max: 9 }),
