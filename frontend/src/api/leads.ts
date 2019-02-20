@@ -1,11 +1,7 @@
 //@ts-ignore
 
 import { methods, request } from "./request"
-import {
-  Lead,
-  NewLead,
-  LeadQueryOptions,
-} from "../../../backend/models/leads/types"
+import { Lead, LeadQueryOptions } from "../../../backend/models/leads/types"
 
 //@ts-ignore
 import papaParse from "papaparse"
@@ -110,7 +106,7 @@ export default class LeadsApi {
     })
   }
 
-  async sellLeadsAddByForm(lead: NewLead) {
+  async sellLeadsAddByForm(lead) {
     return await this.request(methods.post, "/sell-leads/addbyform", { lead })
   }
 

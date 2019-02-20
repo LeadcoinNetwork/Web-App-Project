@@ -84,29 +84,6 @@ class BuyLeads extends React.Component {
               {t("Loans")}
             </option>
           </Select>
-          <Select
-            className="category"
-            value={this.props.leads.filter.category}
-            onChange={e => {
-              const filter = this.props.leads.filter
-              this.props.handleFilter({
-                ...filter,
-                category: e.target.value,
-              })
-            }}
-          >
-            <option value="All">{t("Choose your category")}</option>
-            <option value="Buy" disabled>
-              {t("Buy")}
-            </option>
-            <option value="Sell">{t("Sell")}</option>
-            <option value="Looking to rent" disabled>
-              {t("Looking to rent")}
-            </option>
-            <option value="Properties for rent">
-              {t("Properties for rent")}
-            </option>
-          </Select>
           <TextField
             appStyle
             className="search_bar"

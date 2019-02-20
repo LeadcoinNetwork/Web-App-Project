@@ -2,7 +2,12 @@ import { types } from "../actions"
 import fields from "./fields-data"
 
 const initialValues = fields.reduce((values, field) => {
-  values[field.key] = field.type === "input" ? "" : field.options[0]
+  values[field.key] =
+    field.type === "input"
+      ? ""
+      : field.type === "select"
+        ? field.options[0]
+        : []
   return values
 }, {})
 
@@ -75,12 +80,41 @@ export default function(state = initialState, action) {
     case types.ADD_LEAD_HANDLE_FORM_CHANGE:
       newErrors = { ...state.errors }
       delete newErrors[action.payload.name]
-      console.log(state)
       return {
         ...state,
         values: {
           ...state.values,
           [action.payload.name]: action.payload.value,
+        },
+        errors: newErrors,
+      }
+
+    case types.ADD_LEAD_HANDLE_MULTI_SELECT_CHANGE:
+      newErrors = { ...state.errors }
+      delete newErrors[action.payload.name]
+      const payload = action.payload
+
+      return {
+        ...state,
+        values: {
+          ...state.values,
+          [payload.value.type]: [
+            ...state.values[payload.value.type],
+            payload.value,
+          ],
+        },
+        errors: newErrors,
+      }
+
+    case types.ADD_LEAD_HANDLE_MULTI_SELECT_DELETE_VALUE:
+      console.log(action, state)
+      return {
+        ...state,
+        values: {
+          ...state.values,
+          [action.payload.value.type]: state.values[
+            action.payload.value.type
+          ].filter(value => value.label !== action.payload.value.label),
         },
         errors: newErrors,
       }

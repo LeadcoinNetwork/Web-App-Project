@@ -29,58 +29,100 @@ const RealEstateLead = lead => {
           </div>
         </div>
       )}
-      {lead.fieldsCheck.Industry && (
-        <div className="rel-industry">{lead.Industry}</div>
+      {lead.fieldsCheck.industry && (
+        <div className="rel-industry">{lead.industry}</div>
       )}
-      {lead.fieldsCheck.Description && (
-        <div className="rel-description">{lead.Description}</div>
+      {lead.fieldsCheck.comments && (
+        <div className="rel-description">{lead.comments}</div>
       )}
       {lead.fieldsCheck.lead_price && (
         <div className="rel-price">{priceString(lead.lead_price)}</div>
       )}
       <div className="rel-details-wrapper">
         <div className="rel-details">
-          {lead.fieldsCheck.Category && (
-            <div className="reld-category">{lead.Category}</div>
-          )}
           <div className="reld-date">{fromNow(lead.date)}</div>
-          <div className="reld-location">
-            {lead.State}, {lead.Location}
-          </div>
-          {lead.fieldsCheck["Contact Person"] && (
+          {lead.fieldsCheck.contact_person && (
             <div className="rel-contact-details">
-              {lead.fieldsCheck["Contact Person"] && (
-                <div className="reld-contact-person">
-                  {lead["Contact Person"]}
-                </div>
+              {lead.fieldsCheck.contact_person && (
+                <div className="reld-contact-person">{lead.contact_person}</div>
               )}
-              {lead.fieldsCheck.Email && (
-                <div className="reld-email">{lead.Email}</div>
+              {lead.fieldsCheck.email && (
+                <div className="reld-email">{lead.email}</div>
               )}
-              {lead.fieldsCheck.Telephone && (
-                <div className="reld-telephone">{lead.Telephone}</div>
+              {lead.fieldsCheck.telephone && (
+                <div className="reld-telephone">{lead.telephone}</div>
               )}
             </div>
           )}
         </div>
         <div className="rel-features">
-          {lead.fieldsCheck["Housing Type"] &&
-            lead["Housing Type"].length > 0 && (
-              <span>{lead["Housing Type"]}</span>
-            )}
-          {lead.fieldsCheck["Bedrooms/Baths"] &&
-            lead["Bedrooms/Baths"].length > 0 && (
-              <span>{lead["Bedrooms/Baths"]}</span>
-            )}
-          {lead.fieldsCheck.Size &&
-            lead.Size.length > 0 && <span>{lead.Size}</span>}
-          {lead.fieldsCheck.Price &&
-            lead.Price && (
+          {lead.fieldsCheck.pages && (
+            <span>
+              {t("Number of pages: ")}
+              {lead.pages}
+            </span>
+          )}
+          {lead.fieldsCheck.content_updates && (
+            <span>
+              {t("Content Updates: ")}
+              {lead.content_updates}
+            </span>
+          )}
+          {lead.fieldsCheck.functionality && (
+            <span>
+              {t("Functionality: ")}
+              {lead.functionality.join(", ")}
+            </span>
+          )}
+          {lead.fieldsCheck.mobile_design && (
+            <span>
+              {t("Mobile Design: ")}
+              {lead.mobile_design}
+            </span>
+          )}
+          {lead.fieldsCheck.seo && (
+            <span>
+              {t("SEO: ")}
+              {lead.seo}
+            </span>
+          )}
+          {lead.fieldsCheck.content_management && (
+            <span>
+              {t("Content management: ")}
+              {lead.content_management}
+            </span>
+          )}
+          {lead.fieldsCheck.e_commerce && (
+            <span>
+              {t("E-commerce: ")}
+              {lead.e_commerce}
+            </span>
+          )}
+          {lead.fieldsCheck.blog && (
+            <span>
+              {t("Blog: ")}
+              {lead.blog}
+            </span>
+          )}
+          {lead.fieldsCheck.budget &&
+            lead.budget && (
               <span>
-                {t("Price ")}
-                {priceString(lead.Price)}
+                {t("Budget: ")}
+                {priceString(Number(lead.budget))}
               </span>
             )}
+          {lead.fieldsCheck.languages && (
+            <span>
+              {t("Languages: ")}
+              {lead.languages.join(", ")}
+            </span>
+          )}
+          {lead.fieldsCheck.hosting && (
+            <span>
+              {t("Hosting: ")}
+              {lead.hosting}
+            </span>
+          )}
         </div>
       </div>
       {!lead.constantCardOpen && (

@@ -1,5 +1,6 @@
 import React from "react"
 import Select from "Components/Select"
+import MultiSelect from "react-select"
 import Button from "Components/Button"
 import TextField from "Components/TextField"
 import Checkbox from "Components/Checkbox"
@@ -9,11 +10,48 @@ import t from "../../utils/translate/translate"
 import ConfirmationDialog from "../../components/ConfirmationDialog"
 import { push } from "react-router-redux"
 
+const customStyles = {
+  option: (styles, state) => {
+    return {
+      ...styles,
+      color: "#000",
+      "font-weight": "300",
+    }
+  },
+  container: styles => {
+    return {
+      ...styles,
+      color: "white",
+      "font-weight": "300",
+    }
+  },
+  multiValueRemove: styles => ({
+    ...styles,
+
+    color: "#000",
+  }),
+  multiValue: styles => ({
+    ...styles,
+    "font-size": "16px",
+  }),
+  dropdownIndicator: styles => ({
+    ...styles,
+    color: "#000",
+  }),
+}
+
 class AddLead extends React.Component {
   constructor(props) {
     super(props)
     this.state = { showConfirmation: false }
   }
+
+  handleMultiSelectChange = (selected, payload) => {
+    payload.action === "select-option"
+      ? this.props.handleSelectChange(payload.option)
+      : this.props.removeMultiSelectValue(payload.removedValue)
+  }
+
   renderTerms() {
     const { errors } = this.props
     const error = errors["agree_to_terms"] ? "error" : ""
@@ -35,10 +73,9 @@ class AddLead extends React.Component {
 
   renderFields(fields) {
     const { errors, values, loading } = this.props
+    console.log(this.props)
     return fields.map(f => {
       const isError = errors[f.key] ? "error" : ""
-      console.log(f)
-      console.log(this.props)
       return (
         <div key={f.key} className={isError + " flexed line"}>
           <div className="fieldLabel">
@@ -58,14 +95,24 @@ class AddLead extends React.Component {
                   this.props.handleChange(f.key, e.target.value)
                 }}
               />
-            ) : (
+            ) : f.type === "select" ? (
               <Select
                 className="category"
-                value={this.props.values[f.key]}
+                value={values[f.key]}
                 options={f.options}
                 onChange={e => {
                   this.props.handleChange(f.key, e.target.value)
                 }}
+              />
+            ) : (
+              <MultiSelect
+                value={values[f.key]}
+                isMulti
+                options={f.options}
+                className={"multiselect"}
+                styles={customStyles}
+                isClearable={false}
+                onChange={this.handleMultiSelectChange}
               />
             )}
           </div>
@@ -161,6 +208,7 @@ export default connect(
     agreeToTerms: addLead.addLeadAgreeToTerms,
     handleChange: addLead.addLeadHandleFormChange,
     handleSelectChange: addLead.addLeadHandleSelectChange,
+    removeMultiSelectValue: addLead.addLeadHandleMultiSelectDeleteValue,
     submit: addLead.addLeadSubmitForm,
     clear: addLead.addLeadClearForm,
     push,

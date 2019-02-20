@@ -5,6 +5,11 @@ import { push } from "react-router-redux"
 
 import API from "../api/index"
 
+const preparedData = values => {
+  values.languages = values.languages.map(lng => lng.label)
+  values.functionality = values.functionality.map(lng => lng.label)
+  return values
+}
 /**
  * @param api {API} - this is this paramters
  */
@@ -13,8 +18,10 @@ export default function* addLead(api) {
     const action = yield take(types.ADD_LEAD_SUBMIT_FORM)
     let { values, agree_to_terms } = yield select(state => state.addLead)
     yield put(actions.addLead.addLeadLoadingStart())
+    const prepData = preparedData(values)
+    console.log(prepData)
     let res = yield api.leads.sellLeadsAddByForm({
-      ...values,
+      ...prepData,
       agree_to_terms,
     })
     yield put(actions.addLead.addLeadLoadingEnd())

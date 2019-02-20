@@ -82,7 +82,6 @@ section.ldc-real-estate-lead {
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
-      max-height: 75px;
       color: $main-color;
 
       span {
@@ -279,6 +278,16 @@ section.ldc-real-estate-lead {
   }
 }
 
+@media (min-width: $screen-xl) {
+  section.ldc-real-estate-lead {
+    .rel-details-wrapper {
+      .rel-features {
+        max-height: 75px;
+      }
+    }
+  }
+}
+
 @media (max-width: $screen-tablets) {
   section.ldc-real-estate-lead {
     $padding: 20px;
@@ -305,7 +314,7 @@ section.ldc-real-estate-lead {
           padding-left: 26px;
 
           &:before {
-            left: 0px;
+            left: 0;
           }
         }
       }

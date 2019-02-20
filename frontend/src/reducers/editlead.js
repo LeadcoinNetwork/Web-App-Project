@@ -108,6 +108,7 @@ export default function(state = initialState, action) {
     case types.EDIT_LEAD_HANDLE_FORM_CHANGE:
       newErrors = { ...state.errors }
       delete newErrors[action.payload.name]
+
       return {
         ...state,
         values: {

@@ -41,7 +41,7 @@
 
 @media (max-width: $screen-tablets) {
   .ldc-select {
-    height: 60px;
+    min-height: 60px;
     font-size: 18px;
     padding: 0 16px;
   }

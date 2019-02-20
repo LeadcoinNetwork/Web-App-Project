@@ -14,11 +14,18 @@ export default {
       payload: { name, value },
     }
   },
-  addLeadHandleSelectChange(name, value) {
-    console.log(name, value)
+
+  addLeadHandleSelectChange(value) {
     return {
-      type: types.ADD_LEAD_HANDLE_SELECT_CHANGE,
-      payload: { name, value },
+      type: types.ADD_LEAD_HANDLE_MULTI_SELECT_CHANGE,
+      payload: { value },
+    }
+  },
+
+  addLeadHandleMultiSelectDeleteValue(value) {
+    return {
+      type: types.ADD_LEAD_HANDLE_MULTI_SELECT_DELETE_VALUE,
+      payload: { value },
     }
   },
 

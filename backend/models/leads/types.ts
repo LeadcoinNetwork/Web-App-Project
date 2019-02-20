@@ -47,14 +47,14 @@ export interface WebBuildingLead extends BaseLead {
   // Category: WebBuildingCategory
   "Number of pages": number
   "Content Updates": string
-  Functionality: string[]
+  Functionality: string
   "Mobile Design": boolean
   SEO: boolean
   "Content Management": boolean
   "E-commerce": boolean
   Blog: boolean
   Budget: number
-  Languages: string[]
+  Languages: string
   Hosting: boolean
   Comments: string
 }
