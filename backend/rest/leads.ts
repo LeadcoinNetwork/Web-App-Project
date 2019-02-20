@@ -563,7 +563,7 @@ export function start({
         }
         let filters = { search: null, industry: null }
         if (search) {
-          filters.search = ["Bedrooms/Baths", "Description", "Location"].map(
+          filters.search = ["Content Updates", "Description", "Comments"].map(
             field => {
               return {
                 field,
