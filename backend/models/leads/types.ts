@@ -26,15 +26,14 @@ export interface LeadQueryOptions {
 
 export interface BaseLead {
   id?: number
-  Industry: Industry
-  "Contact Person": string
+  industry: Industry
+  contact_person: string
   // Category: WebBuildingCategory | CryptoCategory
-  Price: number
-  Description: string
+  price: number
   lead_price: number
   date: number
-  Telephone: string
-  Email: string
+  telephone: string
+  email: string
   bought_from: number | null
   ownerId: number
   forSale: boolean
@@ -43,20 +42,20 @@ export interface BaseLead {
 }
 
 export interface WebBuildingLead extends BaseLead {
-  Industry: "Web Building"
+  industry: "Web Building"
   // Category: WebBuildingCategory
-  "Number of pages": number
-  "Content Updates": "Mostly Static" | "Dynamic"
-  Functionality: string[]
-  "Mobile Design": boolean
-  SEO: boolean
-  "Content Management": boolean
-  "E-commerce": boolean
-  Blog: boolean
-  Budget: number
-  Languages: string[]
-  Hosting: boolean
-  Comments: string
+  pages: number
+  content_updates: "Mostly Static" | "Dynamic"
+  functionality: string[]
+  mobile_design: boolean
+  seo: boolean
+  content_management: boolean
+  e_commerce: boolean
+  blog: boolean
+  budget: number
+  languages: string[]
+  hosting: boolean
+  comments: string
 }
 
 export type Lead = WebBuildingLead

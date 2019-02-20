@@ -20,7 +20,7 @@ const done = a => {
 }
 
 const contains_contact = lead => {
-  return lead.telephone || lead.name || lead.email || lead["Contact Person"]
+  return lead.telephone || lead.name || lead.email || lead.contact_person
 }
 
 /**

@@ -196,7 +196,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
           .join(`\nOR `)
       }
       if (filters.industry)
-        where_additions = `${this.fieldName}->>'$.Industry' = '${
+        where_additions = `${this.fieldName}->>'$.industry' = '${
           filters.industry
         }'`
       if (filters.category)
@@ -225,9 +225,9 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
       rows = rows.map(row => {
         return Object.assign(row, {
-          "Contact Person": "**********",
-          Email: "*********@gmail.com",
-          Telephone: row["Telephone"].substring(0, 6) + "******",
+          contact_person: "**********",
+          email: "*********@gmail.com",
+          telephone: row["telephone"].substring(0, 6) + "******",
         })
       }) // remove contact information
       return { list: rows, total: count[0].count }

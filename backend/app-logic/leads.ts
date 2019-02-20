@@ -31,7 +31,7 @@ export interface getLeadsOptions {
 }
 
 const contains_contact = lead => {
-  return lead.telephone || lead.name || lead.email || lead["Contact Person"]
+  return lead.telephone || lead.name || lead.email || lead["contact_person"]
 }
 
 const validate_lead = lead => {

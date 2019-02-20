@@ -34,12 +34,12 @@ export function start({
       let owner = Math.floor(count / i)
       // @ts-ignore
       let newLead: Lead = {
-        Industry: "Web Building",
-        Email: chance.email(),
-        "Number of pages": chance.integer({ min: 1, max: 30 }),
-        "Content Updates": chance.pickone(["Mostly Static", "Dynamic"]),
+        industry: "Web Building",
+        email: chance.email(),
+        pages: chance.integer({ min: 1, max: 30 }),
+        content_updates: chance.pickone(["Mostly Static", "Dynamic"]),
         date: new Date().valueOf(),
-        Functionality: chance.pickset(
+        functionality: chance.pickset(
           [
             "Personal",
             "Corporate",
@@ -51,13 +51,13 @@ export function start({
           ],
           chance.integer({ min: 1, max: 5 }),
         ),
-        "Mobile Design": chance.bool(),
-        SEO: chance.bool(),
-        "Content Management": chance.bool(),
-        "E-commerce": chance.bool(),
-        Blog: chance.bool(),
-        Budget: chance.integer({ min: 1, max: 128 }),
-        Languages: chance.pickset(
+        mobile_design: chance.bool(),
+        seo: chance.bool(),
+        content_management: chance.bool(),
+        e_commerce: chance.bool(),
+        blog: chance.bool(),
+        budget: chance.integer({ min: 1, max: 128 }),
+        languages: chance.pickset(
           [
             "Hebrew",
             "Irish",
@@ -69,21 +69,18 @@ export function start({
           ],
           chance.integer({ min: 1, max: 5 }),
         ),
-        Hosting: chance.bool(),
-        Comments: chance.sentence({
-          words: chance.integer({ min: 1, max: 9 }),
-        }),
-        Description: chance.sentence({
+        hosting: chance.bool(),
+        comments: chance.sentence({
           words: chance.integer({ min: 1, max: 9 }),
         }),
         bought_from: null,
         forSale: true,
         lead_price: chance.integer({ min: 1, max: 20 }),
         ownerId: owner,
-        "Contact Person": chance.name(),
-        Telephone: chance.phone(),
+        contact_person: chance.name(),
+        telephone: chance.phone(),
         active: true,
-        Price: parseInt(
+        price: parseInt(
           chance
             .integer()
             .toString()
@@ -152,8 +149,8 @@ export function start({
             if (lead.ownerId != user.id)
               lead = Object.assign({
                 email: "***@gmail.com",
-                "Contact Person": "***",
-                Telephone: "***",
+                contact_person: "***",
+                telephone: "***",
               })
             res.json(lead)
           })
@@ -576,15 +573,13 @@ export function start({
         }
         let filters = { search: null, industry: null }
         if (search) {
-          filters.search = ["Content Updates", "Description", "Comments"].map(
-            field => {
-              return {
-                field,
-                op: "LIKE",
-                val: search,
-              }
-            },
-          )
+          filters.search = ["content_updates", "comments"].map(field => {
+            return {
+              field,
+              op: "LIKE",
+              val: search,
+            }
+          })
         }
         filters.industry = industry === "All" ? "" : industry
         let _limit = {
