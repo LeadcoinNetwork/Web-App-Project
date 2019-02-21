@@ -34,7 +34,7 @@ export function start({
       let owner = Math.floor(count / i)
       // @ts-ignore
       let newLead: Lead = {
-        industry: "Web Building",
+        industry: "Website building",
         email: chance.email(),
         pages: chance.integer({ min: 1, max: 30 }),
         content_updates: chance.pickone(["Mostly Static", "Dynamic"]),

@@ -413,19 +413,27 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     */
 
     this.log("update " + this.tableName + " start", record)
-    var str = ""
-    var values = Object.keys(record).forEach(key => {
-      const value = record[key]
-      if (key.includes(" ")) key = '"' + key + '"'
-      if (key.includes("/")) key = '"' + key + '"'
-      str += `, ${mysql.escape("$." + key)} , ${mysql.escape(value)}`
+    let jsonSetStr = ""
+
+    Object.keys(record).forEach(key => {
+      let value = record[key]
+      key = JSON.stringify(key)
+
+      if (typeof value === "object") {
+        value = `JSON_ARRAY(${value.map(mysql.escape).join(",")})`
+      } else {
+        value = mysql.escape(value)
+      }
+
+      jsonSetStr += `, ${mysql.escape("$." + key)}, ${value}`
     })
 
-    var query = `UPDATE ${this.tableName} SET ${this.fieldName}=JSON_SET(${
+    let query = `UPDATE ${this.tableName} SET ${this.fieldName}=JSON_SET(${
       this.fieldName
-    } ${str})   WHERE id = ${mysql.escape(id)}`
+    } ${jsonSetStr}) WHERE id = ${mysql.escape(id)}`
 
     let status = await this.sql.query(query)
+
     if (status.affectedRows == 0) {
       this.log("record not updated end", record)
       throw new Error("record not updated")

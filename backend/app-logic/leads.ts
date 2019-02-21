@@ -143,7 +143,7 @@ export default class Leads {
     if (problems.length > 0) throw new Error(problems.join(" ;"))
     lead = await this.sanitizeLead(lead)
     const current_lead = await this.models.leads.getSingleLead(lead.id)
-    console.log({ current_lead, lead })
+
     switch (true) {
       case current_lead.ownerId != lead.ownerId:
       case !current_lead.active:

@@ -1,6 +1,11 @@
 // import { Currency } from "../../utils/currency"
 
-export type Industry = "All" | "Web Building" | "Crypto" | "Insurance" | "Loans"
+export type Industry =
+  | "All"
+  | "Website building"
+  | "Crypto"
+  | "Insurance"
+  | "Loans"
 // export type WebBuildingCategory = "Buy" | "Sell"
 // export type CryptoCategory = "Buy" | "Sell"
 
@@ -42,7 +47,7 @@ export interface BaseLead {
 }
 
 export interface WebBuildingLead extends BaseLead {
-  industry: "Web Building"
+  industry: "Website building"
   // Category: WebBuildingCategory
   pages: number
   content_updates: "Mostly Static" | "Dynamic"
