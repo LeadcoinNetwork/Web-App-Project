@@ -1,6 +1,5 @@
 import React from "react"
-import Select from "Components/Select"
-import MultiSelect from "react-select"
+import Select from "react-select"
 import Button from "Components/Button"
 import TextField from "Components/TextField"
 import Checkbox from "Components/Checkbox"
@@ -46,9 +45,13 @@ class AddLead extends React.Component {
     this.state = { showConfirmation: false }
   }
 
+  handleSelectChange = (selected, payload) => {
+    this.props.handleSelectChange(payload.name, selected)
+  }
+
   handleMultiSelectChange = (selected, payload) => {
     payload.action === "select-option"
-      ? this.props.handleSelectChange(payload.option)
+      ? this.props.handleMultiSelectChange(payload.option)
       : this.props.removeMultiSelectValue(payload.removedValue)
   }
 
@@ -97,15 +100,15 @@ class AddLead extends React.Component {
               />
             ) : f.type === "select" ? (
               <Select
-                className="category"
+                className="multiselect"
                 value={values[f.key]}
                 options={f.options}
-                onChange={e => {
-                  this.props.handleChange(f.key, e.target.value)
-                }}
+                name={f.key}
+                styles={customStyles}
+                onChange={this.handleSelectChange}
               />
             ) : (
-              <MultiSelect
+              <Select
                 value={values[f.key]}
                 isMulti
                 options={f.options}
@@ -208,6 +211,7 @@ export default connect(
     agreeToTerms: addLead.addLeadAgreeToTerms,
     handleChange: addLead.addLeadHandleFormChange,
     handleSelectChange: addLead.addLeadHandleSelectChange,
+    handleMultiSelectChange: addLead.addLeadHandleMultiSelectChange,
     removeMultiSelectValue: addLead.addLeadHandleMultiSelectDeleteValue,
     submit: addLead.addLeadSubmitForm,
     clear: addLead.addLeadClearForm,

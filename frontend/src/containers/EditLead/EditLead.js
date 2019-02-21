@@ -1,5 +1,5 @@
 import React from "react"
-import Select from "Components/Select"
+import Select from "react-select"
 import Button from "Components/Button"
 import TextField from "Components/TextField"
 import Checkbox from "Components/Checkbox"
@@ -9,10 +9,50 @@ import t from "../../utils/translate/translate"
 import ConfirmationDialog from "../../components/ConfirmationDialog"
 import { push } from "react-router-redux"
 
+const customStyles = {
+  option: (styles, state) => {
+    return {
+      ...styles,
+      color: "#000",
+      "font-weight": "300",
+    }
+  },
+  container: styles => {
+    return {
+      ...styles,
+      color: "white",
+      "font-weight": "300",
+    }
+  },
+  multiValueRemove: styles => ({
+    ...styles,
+
+    color: "#000",
+  }),
+  multiValue: styles => ({
+    ...styles,
+    "font-size": "16px",
+  }),
+  dropdownIndicator: styles => ({
+    ...styles,
+    color: "#000",
+  }),
+}
+
 class EditLead extends React.Component {
   constructor(props) {
     super(props)
     this.state = { showConfirmation: false }
+  }
+
+  handleSelectChange = (selected, payload) => {
+    this.props.handleSelectChange(payload.name, selected)
+  }
+
+  handleMultiSelectChange = (selected, payload) => {
+    payload.action === "select-option"
+      ? this.props.handleMultiSelectChange(payload.option)
+      : this.props.removeMultiSelectValue(payload.removedValue)
   }
 
   renderTerms() {
@@ -35,7 +75,7 @@ class EditLead extends React.Component {
   }
 
   renderFields(fields) {
-    const { errors, loading } = this.props.editLead
+    const { errors, values, loading } = this.props.editLead
     return fields.map(f => {
       const isError = errors[f] ? "error" : ""
       return (
@@ -52,19 +92,29 @@ class EditLead extends React.Component {
                 disabled={loading}
                 appStyle={true}
                 placeholder={t(f.name)}
-                value={this.props.editLead.values[f.key]}
+                value={values[f.key]}
                 onChange={e => {
                   this.props.handleChange(f.key, e.target.value)
                 }}
               />
+            ) : f.type === "select" ? (
+              <Select
+                className="multiselect"
+                value={values[f.key]}
+                options={f.options}
+                name={f.key}
+                styles={customStyles}
+                onChange={this.handleSelectChange}
+              />
             ) : (
               <Select
-                className="category"
-                value={this.props.editLead.values[f.key]}
+                value={values[f.key]}
+                isMulti
                 options={f.options}
-                onChange={e => {
-                  this.props.handleChange(f.key, e.target.value)
-                }}
+                className={"multiselect"}
+                styles={customStyles}
+                isClearable={false}
+                onChange={this.handleMultiSelectChange}
               />
             )}
           </div>
@@ -168,6 +218,9 @@ export default connect(
     loadLead: editLead.editLead,
     agreeToTerms: editLead.editLeadAgreeToTerms,
     handleChange: editLead.editLeadHandleFormChange,
+    handleSelectChange: editLead.editLeadHandleSelectChange,
+    handleMultiSelectChange: editLead.editLeadHandleMultiSelectChange,
+    removeMultiSelectValue: editLead.editLeadHandleMultiSelectDeleteValue,
     submit: editLead.editLeadSubmitForm,
     clear: editLead.editLeadClearForm,
     push,

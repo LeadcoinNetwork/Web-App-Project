@@ -71,7 +71,7 @@ const RealEstateLead = lead => {
           {lead.fieldsCheck.functionality && (
             <span>
               {t("Functionality: ")}
-              {lead.functionality.join(", ")}
+              {lead.functionality}
             </span>
           )}
           {lead.fieldsCheck.mobile_design && (
@@ -114,7 +114,7 @@ const RealEstateLead = lead => {
           {lead.fieldsCheck.languages && (
             <span>
               {t("Languages: ")}
-              {lead.languages.join(", ")}
+              {lead.languages}
             </span>
           )}
           {lead.fieldsCheck.hosting && (

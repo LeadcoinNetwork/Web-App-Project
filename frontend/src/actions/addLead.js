@@ -8,14 +8,14 @@ export default {
     }
   },
 
-  addLeadHandleFormChange(name, value) {
+  addLeadHandleSelectChange(name, value) {
     return {
-      type: types.ADD_LEAD_HANDLE_FORM_CHANGE,
+      type: types.ADD_LEAD_HANDLE_SELECT_CHANGE,
       payload: { name, value },
     }
   },
 
-  addLeadHandleSelectChange(value) {
+  addLeadHandleMultiSelectChange(value) {
     return {
       type: types.ADD_LEAD_HANDLE_MULTI_SELECT_CHANGE,
       payload: { value },
@@ -26,6 +26,13 @@ export default {
     return {
       type: types.ADD_LEAD_HANDLE_MULTI_SELECT_DELETE_VALUE,
       payload: { value },
+    }
+  },
+
+  addLeadHandleFormChange(name, value) {
+    return {
+      type: types.ADD_LEAD_HANDLE_FORM_CHANGE,
+      payload: { name, value },
     }
   },
 

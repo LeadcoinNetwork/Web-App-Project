@@ -1,29 +1,12 @@
 import { types } from "../actions"
 import fields from "./fields-data"
 
-const lead_fields = [
-  "Contact Person",
-  "Telephone",
-  "Email",
-  "Number of pages",
-  "Content Updates",
-  "Functionality",
-  "Mobile Design",
-  "SEO",
-  "Content Management",
-  "E-commerce",
-  "Blog",
-  "Budget",
-  "Language",
-  "Hosting",
-  "Comments",
-]
-
 const initialState = {
   original_copy: null,
   fields: {
     private: fields
       .filter(field => field.private)
+      .filter(field => field.editable)
       .map(field => {
         return {
           key: field.key,
@@ -31,10 +14,10 @@ const initialState = {
           type: field.type,
           options: field.options,
         }
-      })
-      .filter(field => lead_fields.includes(field.key)),
+      }),
     public: fields
       .filter(field => !field.private)
+      .filter(field => field.editable)
       .map(field => {
         return {
           key: field.key,
@@ -42,8 +25,7 @@ const initialState = {
           type: field.type,
           options: field.options,
         }
-      })
-      .filter(field => lead_fields.includes(field.key)),
+      }),
   },
   errors: {},
   agree_to_terms: false,
@@ -53,11 +35,16 @@ const initialState = {
 
 const filterFields = lead => {
   let obj = {}
-  lead_fields.forEach(f => {
-    if (lead[f]) {
-      obj[f] = lead[f]
-    }
+  console.log(lead)
+  fields.filter(field => field.editable).forEach(f => {
+    obj[f.key] =
+      f.type === "input"
+        ? lead[f.key]
+        : f.type === "select"
+          ? { value: lead[f.key], label: lead[f.key] }
+          : lead[f.key].map(r => ({ type: f.key, value: r, label: r }))
   })
+  console.log(obj)
   return obj
 }
 
@@ -114,6 +101,51 @@ export default function(state = initialState, action) {
         values: {
           ...state.values,
           [action.payload.name]: action.payload.value,
+        },
+        errors: newErrors,
+      }
+
+    case types.EDIT_LEAD_HANDLE_SELECT_CHANGE:
+      newErrors = { ...state.errors }
+      delete newErrors[action.payload.name]
+
+      return {
+        ...state,
+        values: {
+          ...state.values,
+          [action.payload.name]: action.payload.value,
+        },
+        errors: newErrors,
+      }
+
+    case types.EDIT_LEAD_HANDLE_MULTI_SELECT_CHANGE:
+      newErrors = { ...state.errors }
+      delete newErrors[action.payload.name]
+      const payload = action.payload
+
+      return {
+        ...state,
+        values: {
+          ...state.values,
+          [payload.value.type]: [
+            ...state.values[payload.value.type],
+            payload.value,
+          ],
+        },
+        errors: newErrors,
+      }
+
+    case types.EDIT_LEAD_HANDLE_MULTI_SELECT_DELETE_VALUE:
+      newErrors = { ...state.errors }
+      delete newErrors[action.payload.name]
+
+      return {
+        ...state,
+        values: {
+          ...state.values,
+          [action.payload.value.type]: state.values[
+            action.payload.value.type
+          ].filter(value => value.label !== action.payload.value.label),
         },
         errors: newErrors,
       }

@@ -12,8 +12,6 @@ const TBody = props => (
         price: r.price ? priceString(r.price) : undefined,
         lead_price: r.lead_price ? priceString(r.lead_price) : undefined,
         budget: r.budget ? priceString(Number(r.budget)) : undefined,
-        languages: r.languages ? r.languages.join(", ") : undefined,
-        functionality: r.functionality ? r.functionality.join(", ") : undefined,
       }))
       .map(r => <TBRow key={r.id} {...r} {...props} />)}
     {props.records.length === 0 ? props.showOnZeroRecords : null}

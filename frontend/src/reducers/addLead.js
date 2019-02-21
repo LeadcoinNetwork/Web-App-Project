@@ -89,6 +89,19 @@ export default function(state = initialState, action) {
         errors: newErrors,
       }
 
+    case types.ADD_LEAD_HANDLE_SELECT_CHANGE:
+      newErrors = { ...state.errors }
+      delete newErrors[action.payload.name]
+
+      return {
+        ...state,
+        values: {
+          ...state.values,
+          [action.payload.name]: action.payload.value,
+        },
+        errors: newErrors,
+      }
+
     case types.ADD_LEAD_HANDLE_MULTI_SELECT_CHANGE:
       newErrors = { ...state.errors }
       delete newErrors[action.payload.name]
@@ -107,7 +120,9 @@ export default function(state = initialState, action) {
       }
 
     case types.ADD_LEAD_HANDLE_MULTI_SELECT_DELETE_VALUE:
-      console.log(action, state)
+      newErrors = { ...state.errors }
+      delete newErrors[action.payload.name]
+
       return {
         ...state,
         values: {

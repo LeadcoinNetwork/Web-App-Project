@@ -66,6 +66,7 @@ class Table extends React.Component {
       this.props.setSelectedRecords(selected)
     }
   }
+
   getDinamicColsCount(fields) {
     return fields.filter(f => f.maxWidth === "auto").length
   }

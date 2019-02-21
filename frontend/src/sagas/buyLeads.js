@@ -2,6 +2,7 @@ import { select, take, put, call } from "redux-saga/effects"
 import { push } from "react-router-redux"
 import { types } from "../actions"
 import * as actions from "../actions"
+import { prepareData } from "../utils/prepare-data"
 
 import API from "../api/index"
 
@@ -22,7 +23,7 @@ export default function* buyLeads(api) {
     if (res.error) {
       yield put(actions.leads.fetchError("BUY_LEADS"))
     } else {
-      yield put(actions.leads.fetchSuccess("BUY_LEADS", res))
+      yield put(actions.leads.fetchSuccess("BUY_LEADS", prepareData(res)))
     }
 
     yield take([

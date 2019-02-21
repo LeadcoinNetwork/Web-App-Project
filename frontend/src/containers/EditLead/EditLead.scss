@@ -53,8 +53,7 @@
     }
 
     margin: 10px 15px;
-    height: 50px;
-    line-height: 50px;
+    align-items: center;
     justify-content: flex-start;
 
     input::placeholder {
@@ -73,6 +72,13 @@
     font-size: 18px;
     padding: 5px;
     width: 300px;
+  }
+}
+
+@media (max-width: $screen-tablets) {
+  .multiselect {
+    min-height: 60px;
+    display: grid;
   }
 }
 

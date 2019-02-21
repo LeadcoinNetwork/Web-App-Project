@@ -1,13 +1,14 @@
 import LANGUAGES from "./langs"
 
 const OPTIONS = {
-  YES_OR_NO: ["Yes", "No"],
+  YES_OR_NO: [{ value: "Yes", label: "Yes" }, { value: "No", label: "No" }],
   FUNCTIONALITY: [
     { type: "functionality", value: "personal", label: "Personal" },
     { type: "functionality", value: "corporate", label: "Corporate" },
     { type: "functionality", value: "educational", label: "Educational" },
     { type: "functionality", value: "portfolio", label: "Portfolio" },
     { type: "functionality", value: "restaurant", label: "Restaurant" },
+    { type: "functionality", value: "other", label: "Other" },
     {
       type: "functionality",
       value: "samall business",
@@ -15,7 +16,10 @@ const OPTIONS = {
     },
     { type: "functionality", value: "personal", label: "Portfolio" },
   ],
-  CONTENT_UPDATES: ["Mostly Static", "Dynamic"],
+  CONTENT_UPDATES: [
+    { value: "Mostly Static", label: "Mostly Static" },
+    { value: "Dynamic", label: "Dynamic" },
+  ],
   LANGUAGES: LANGUAGES,
 }
 
@@ -105,8 +109,8 @@ const fields = [
     name: "E-commerce",
     sortable: true,
     editable: true,
-    maxWidth: "auto",
-    minWidth: "auto",
+    maxWidth: "100px",
+    minWidth: "100px",
     type: "select",
     options: OPTIONS.YES_OR_NO,
   },

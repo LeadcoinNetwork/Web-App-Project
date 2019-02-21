@@ -21,6 +21,27 @@ export default {
     }
   },
 
+  editLeadHandleSelectChange(name, value) {
+    return {
+      type: types.EDIT_LEAD_HANDLE_SELECT_CHANGE,
+      payload: { name, value },
+    }
+  },
+
+  editLeadHandleMultiSelectChange(value) {
+    return {
+      type: types.EDIT_LEAD_HANDLE_MULTI_SELECT_CHANGE,
+      payload: { value },
+    }
+  },
+
+  editLeadHandleMultiSelectDeleteValue(value) {
+    return {
+      type: types.EDIT_LEAD_HANDLE_MULTI_SELECT_DELETE_VALUE,
+      payload: { value },
+    }
+  },
+
   editLeadAgreeToTerms(value) {
     return {
       type: types.EDIT_LEAD_AGREE_TO_TERMS,
