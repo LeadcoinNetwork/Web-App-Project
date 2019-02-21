@@ -51,11 +51,11 @@ export function start({
           ],
           chance.integer({ min: 1, max: 5 }),
         ),
-        mobile_design: chance.bool(),
-        seo: chance.bool(),
-        content_management: chance.bool(),
-        e_commerce: chance.bool(),
-        blog: chance.bool(),
+        mobile_design: chance.pickone(["Yes", "No"]),
+        seo: chance.pickone(["Yes", "No"]),
+        content_management: chance.pickone(["Yes", "No"]),
+        e_commerce: chance.pickone(["Yes", "No"]),
+        blog: chance.pickone(["Yes", "No"]),
         budget: chance.integer({ min: 1, max: 128 }),
         languages: chance.pickset(
           [
@@ -69,7 +69,7 @@ export function start({
           ],
           chance.integer({ min: 1, max: 5 }),
         ),
-        hosting: chance.bool(),
+        hosting: chance.pickone(["Yes", "No"]),
         comments: chance.sentence({
           words: chance.integer({ min: 1, max: 9 }),
         }),

@@ -47,14 +47,14 @@ export interface WebBuildingLead extends BaseLead {
   pages: number
   content_updates: "Mostly Static" | "Dynamic"
   functionality: string[]
-  mobile_design: boolean
-  seo: boolean
-  content_management: boolean
-  e_commerce: boolean
-  blog: boolean
+  mobile_design: "Yes" | "No"
+  seo: "Yes" | "No"
+  content_management: "Yes" | "No"
+  e_commerce: "Yes" | "No"
+  blog: "Yes" | "No"
   budget: number
   languages: string[]
-  hosting: boolean
+  hosting: "Yes" | "No"
   comments: string
 }
 
