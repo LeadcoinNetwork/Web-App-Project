@@ -35,7 +35,6 @@ const initialState = {
 
 const filterFields = lead => {
   let obj = {}
-  console.log(lead)
   fields.filter(field => field.editable).forEach(f => {
     obj[f.key] =
       f.type === "input"
@@ -44,7 +43,6 @@ const filterFields = lead => {
           ? { value: lead[f.key], label: lead[f.key] }
           : lead[f.key].map(r => ({ type: f.key, value: r, label: r }))
   })
-  console.log(obj)
   return obj
 }
 

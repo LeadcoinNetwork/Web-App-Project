@@ -1,114 +1,192 @@
 [
   {
+    "key": "industry",
+    "name": "Industry",
+    "sortable": true,
+    "editable": true,
+    "maxWidth": "auto",
+    "minWidth": "auto",
+    "type": "input",
+    "options": []
+  },
+  {
     "key": "date",
-    "name": "date",
-    "sortable": true,
-    "editable": false,
-    "maxWidth": "80px",
-    "minWidth": "80px"
-  },
-  {
-    "key": "name",
-    "name": "name",
-    "sortable": true,
-    "editable": false,
-    "maxWidth": "90px",
-    "minWidth": "90px"
-  },
-  {
-    "key": "phone",
-    "name": "phone",
+    "name": "Date Published",
     "sortable": true,
     "editable": false,
     "maxWidth": "auto",
-    "minWidth": "auto"
+    "minWidth": "auto",
+    "type": "input",
+    "options": [""]
   },
   {
-    "key": "email",
-    "name": "email",
+    "key": "pages",
+    "name": "Number of pages",
     "sortable": true,
-    "editable": false,
+    "editable": true,
     "maxWidth": "auto",
-    "minWidth": "auto"
+    "minWidth": "auto",
+    "type": "input",
+    "options": []
   },
   {
-    "key": "state",
-    "name": "state",
+    "key": "content_updates",
+    "name": "Content updates",
     "sortable": true,
-    "editable": false,
-    "maxWidth": "80px",
-    "minWidth": "80px"
-  },
-  {
-    "key": "city",
-    "name": "city",
-    "sortable": true,
-    "editable": false,
-    "maxWidth": "70px",
-    "minWidth": "70px"
-  },
-  {
-    "key": "property_type",
-    "name": "property type",
-    "sortable": true,
-    "editable": false,
+    "editable": true,
     "maxWidth": "auto",
-    "minWidth": "auto"
+    "minWidth": "auto",
+    "type": "select",
+    "options": ["Mostly Static", "Dynamic"]
   },
   {
-    "key": "size",
-    "name": "size (SqFt)",
+    "key": "functionality",
+    "name": "Functionality",
     "sortable": true,
-    "editable": false,
-    "maxWidth": "50px",
-    "minWidth": "50px"
+    "editable": true,
+    "maxWidth": "auto",
+    "minWidth": "auto",
+    "type": "multiselect",
+    "options": [
+      "Personal",
+      "Corporate",
+      "Educational",
+      "Portfolio",
+      "Restaurant",
+      "Other"
+    ]
+  },
+  {
+    "key": "mobile_design",
+    "name": "Mobile design",
+    "sortable": true,
+    "editable": true,
+    "maxWidth": "auto",
+    "minWidth": "auto",
+    "type": "select",
+    "options": ["YES", "NO"]
+  },
+  {
+    "key": "seo",
+    "name": "SEO",
+    "sortable": true,
+    "editable": true,
+    "maxWidth": "auto",
+    "minWidth": "auto",
+    "type": "select",
+    "options": ["YES", "NO"]
+  },
+  {
+    "key": "content_management",
+    "name": "Content Management",
+    "sortable": true,
+    "editable": true,
+    "maxWidth": "auto",
+    "minWidth": "auto",
+    "type": "select",
+    "options": ["YES", "NO"]
+  },
+  {
+    "key": "e_commerce",
+    "name": "E-commerce",
+    "sortable": true,
+    "editable": true,
+    "maxWidth": "100px",
+    "minWidth": "100px",
+    "type": "select",
+    "options": ["YES", "NO"]
+  },
+  {
+    "key": "blog",
+    "name": "Blog",
+    "sortable": true,
+    "editable": true,
+    "maxWidth": "auto",
+    "minWidth": "auto",
+    "type": "select",
+    "options": ["YES", "NO"]
   },
   {
     "key": "budget",
-    "name": "budget",
+    "name": "Budget",
     "sortable": true,
-    "editable": false,
-    "maxWidth": "70px",
-    "minWidth": "70px"
-  },
-  {
-    "key": "bedrooms",
-    "name": "rooms",
-    "sortable": true,
-    "editable": false,
-    "maxWidth": "80px",
-    "minWidth": "80px"
-  },
-  {
-    "key": "floor",
-    "name": "floor",
-    "sortable": true,
-    "editable": false,
-    "maxWidth": "50px",
-    "minWidth": "50px"
-  },
-  {
-    "key": "specification",
-    "name": "specification",
-    "sortable": true,
-    "editable": false,
+    "editable": true,
     "maxWidth": "auto",
-    "minWidth": "auto"
+    "minWidth": "auto",
+    "type": "input",
+    "options": []
+  },
+  {
+    "key": "languages",
+    "name": "Languages",
+    "sortable": true,
+    "editable": true,
+    "maxWidth": "auto",
+    "minWidth": "auto",
+    "type": "multiselect",
+    "options": ["YES", "NO"]
+  },
+  {
+    "key": "hosting",
+    "name": "Hosting",
+    "sortable": true,
+    "editable": true,
+    "maxWidth": "auto",
+    "minWidth": "auto",
+    "type": "select",
+    "options": ["YES", "NO"]
+  },
+  {
+    "key": "comments",
+    "name": "Comments",
+    "sortable": true,
+    "editable": true,
+    "maxWidth": "auto",
+    "minWidth": "auto",
+    "type": "input",
+    "options": []
+  },
+  {
+    "key": "contact_person",
+    "name": "Contact Person",
+    "sortable": true,
+    "editable": true,
+    "maxWidth": "auto",
+    "minWidth": "auto",
+    "type": "input",
+    "private": true,
+    "options": []
+  },
+  {
+    "key": "email",
+    "name": "Email",
+    "sortable": true,
+    "editable": true,
+    "maxWidth": "auto",
+    "minWidth": "auto",
+    "type": "input",
+    "private": true,
+    "options": []
+  },
+  {
+    "key": "telephone",
+    "name": "Telephone",
+    "sortable": true,
+    "editable": true,
+    "maxWidth": "auto",
+    "minWidth": "auto",
+    "type": "input",
+    "private": true,
+    "options": []
   },
   {
     "key": "lead_price",
-    "name": "lead price",
+    "name": "Lead Price",
     "sortable": true,
-    "editable": false,
-    "maxWidth": "auto",
-    "minWidth": "auto"
-  },
-  {
-    "key": "active",
-    "name": "active",
-    "sortable": true,
-    "editable": false,
-    "maxWidth": "65px",
-    "minWidth": "65px"
+    "editable": true,
+    "maxWidth": "100px",
+    "minWidth": "100px",
+    "type": "input",
+    "options": []
   }
 ]

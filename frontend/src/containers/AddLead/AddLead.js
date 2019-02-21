@@ -76,7 +76,6 @@ class AddLead extends React.Component {
 
   renderFields(fields) {
     const { errors, values, loading } = this.props
-    console.log(this.props)
     return fields.map(f => {
       const isError = errors[f.key] ? "error" : ""
       return (

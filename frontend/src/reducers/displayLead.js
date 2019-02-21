@@ -6,25 +6,37 @@ const initialState = {
 }
 
 /**
- id: 134917,
- lead_price: 10,
- ownerId: 8434,
- date: 1534322606144,
- lead_type: "realestate",
- active: true,
- forSale: true,
- bought_from: 0,
- "Contact Person": "Erez",
- Telephone: "(225)65734",
- Email: "whatisthisemail@gmail.com",
- Description: "Beautiful Cattle and Horse Country Farm Approx 125 Acres",
- "Bedrooms/Baths": "",
- Type: "Rent",
- Price: "10,500",
- Size: "127",
- State: "Ohio",
- Location: "Akron",
- "Housing Type": "apartment",
+ "industry": "Website Building",
+ "email": "luho@sokga.bh",
+ "pages": 5,
+ "content_updates": "Mostly Static",
+ "date": 1550762925487,
+ "functionality": [
+ "Corporate"
+ ],
+ "mobile_design": "Yes",
+ "seo": "No",
+ "content_management": "No",
+ "e_commerce": "Yes",
+ "blog": "Yes",
+ "budget": 99,
+ "languages": [
+ "Hebrew",
+ "Russian",
+ "Irish",
+ "Italian",
+ "Polish"
+ ],
+ "hosting": "Yes",
+ "comments": "Voemfez arinep.",
+ "bought_from": null,
+ "forSale": true,
+ "lead_price": 10,
+ "ownerId": 20,
+ "contact_person": "Christian Padilla",
+ "telephone": "(316) 822-6386",
+ "active": true,
+ "price": 42959
  */
 
 const contact_info_fields = ["Contact Person", "Telephone", "Email"]

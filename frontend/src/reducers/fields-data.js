@@ -46,7 +46,7 @@ const fields = [
   },
   {
     key: "pages",
-    name: "Pages",
+    name: "Number of pages",
     sortable: true,
     editable: true,
     maxWidth: "auto",
