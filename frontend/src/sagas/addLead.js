@@ -3,7 +3,7 @@ import * as actions from "Actions"
 import { select, take, put, call } from "redux-saga/effects"
 import { push } from "react-router-redux"
 import API from "../api/index"
-import { preparedLeadData } from "../utils/prepare-data"
+import { prepareLeadDataForServer } from "../utils/prepare-data"
 
 /**
  * @param api {API} - this is this paramters
@@ -14,7 +14,7 @@ export default function* addLead(api) {
     const action = yield take(types.ADD_LEAD_SUBMIT_FORM)
     let { values, agree_to_terms } = yield select(state => state.addLead)
     yield put(actions.addLead.addLeadLoadingStart())
-    const prepData = preparedLeadData(values)
+    const prepData = prepareLeadDataForServer(values)
     console.log(prepData)
     let res = yield api.leads.sellLeadsAddByForm({
       ...prepData,

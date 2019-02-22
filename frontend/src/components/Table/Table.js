@@ -85,7 +85,6 @@ class Table extends React.Component {
     let props = this.props,
       dinamicColsCount = this.getDinamicColsCount(props.fields),
       widthOfStaticCols = this.getWidthOfStaticCols(props.fields)
-    console.log(this.props)
     return (
       <section className="ldc-table">
         <div className="t-buttons">

@@ -8,6 +8,7 @@ interface LeadsApiOptions {
   sort_by?: [string, "ASC" | "DESC"]
   filters?: [string, string][]
 }
+
 let leads_mock = require("mocks/leads.json")
 
 const pFileReader = file => {
@@ -47,6 +48,7 @@ export default class LeadsApi {
     window.mockIds = []
     leads_mock.forEach(async lead => {
       lead.agree_to_terms = true
+      lead.meta = { mock: true }
       //@ts-ignore
       let { response } = await window.apiClient.leads.sellLeadsAddByForm(lead)
     })

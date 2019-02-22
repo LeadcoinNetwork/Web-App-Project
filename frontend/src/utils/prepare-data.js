@@ -1,6 +1,6 @@
 import fields from "../reducers/fields-data"
 
-export const prepareData = data => {
+export const prepareLeadDataForDisplay = data => {
   data.list = data.list.map(value => ({
     ...value,
     languages: value.languages.join(", "),
@@ -9,16 +9,28 @@ export const prepareData = data => {
   return data
 }
 
-export const preparedLeadData = data => {
-  data = fields.reduce((values, field) => {
-    data[field.key] =
+export const prepareLeadDataForServer = data => {
+  let obj = Object.assign({}, data)
+  fields.forEach(field => {
+    obj[field.key] =
       field.type === "select"
-        ? data[field.key].label
+        ? obj[field.key].label
         : field.type === "multiselect"
-          ? data[field.key].map(r => r.label)
-          : data[field.key]
-    return data
-  }, {})
+          ? obj[field.key].map(r => r.label)
+          : obj[field.key]
+  })
+  return obj
+}
 
-  return data
+export const filterFields = lead => {
+  let obj = {}
+  fields.filter(field => field.editable).forEach(f => {
+    obj[f.key] =
+      f.type === "input"
+        ? lead[f.key]
+        : f.type === "select"
+          ? { value: lead[f.key], label: lead[f.key] }
+          : lead[f.key].map(r => ({ type: f.key, value: r, label: r }))
+  })
+  return obj
 }

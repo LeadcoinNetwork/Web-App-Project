@@ -39,35 +39,34 @@ const initialState = {
  "price": 42959
  */
 
-const contact_info_fields = ["Contact Person", "Telephone", "Email"]
+const contact_info_fields = ["contact_person", "telephone", "email"]
 const lead_fields = [
-  "Number of pages",
-  "Content Updates",
-  "Functionality",
-  "Mobile Design",
-  "SEO",
-  "Content Management",
-  "E-commerce",
-  "Blog",
-  "Budget",
-  "Language",
-  "Hosting",
-  "Comments",
+  "pages",
+  "content_updates",
+  "functionality",
+  "mobile_design",
+  "seo",
+  "content_management",
+  "e_commerce",
+  "blog",
+  "budget",
+  "languages",
+  "hosting",
+  "comments",
 ]
 
 const seperateLead = lead => {
+  const fields = lead.fields
   let priv = {},
     pub = {}
-  contact_info_fields.forEach(f => {
-    if (lead[f]) {
-      priv[f] = lead[f]
+  fields.forEach(f => {
+    if (contact_info_fields.includes(f.key)) {
+      priv[f.name] = lead[f.key]
+    } else if (lead_fields.includes(f.key)) {
+      pub[f.name] = lead[f.key]
     }
   })
-  lead_fields.forEach(f => {
-    if (lead[f]) {
-      pub[f] = lead[f]
-    }
-  })
+
   return [priv, pub]
 }
 

@@ -1,5 +1,6 @@
 import { types } from "../actions"
 import fields from "./fields-data"
+import { filterFields } from "../utils/prepare-data"
 
 const initialState = {
   original_copy: null,
@@ -31,19 +32,6 @@ const initialState = {
   agree_to_terms: false,
   loading: false,
   values: {},
-}
-
-const filterFields = lead => {
-  let obj = {}
-  fields.filter(field => field.editable).forEach(f => {
-    obj[f.key] =
-      f.type === "input"
-        ? lead[f.key]
-        : f.type === "select"
-          ? { value: lead[f.key], label: lead[f.key] }
-          : lead[f.key].map(r => ({ type: f.key, value: r, label: r }))
-  })
-  return obj
 }
 
 let newErrors = null

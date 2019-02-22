@@ -1,10 +1,6 @@
 import { types } from "../actions"
 import * as Actions from "../actions"
 import { select, take, put, call } from "redux-saga/effects"
-import { routerMiddleware, push } from "react-router-redux"
-import { delay } from "redux-saga"
-
-import API from "../api/index"
 
 export default function* loadLeadForEdit(api) {
   while (true) {
