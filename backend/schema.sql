@@ -29,3 +29,9 @@ CREATE TABLE  `leadcoin`.`notifications` (
   doc longtext
 ) DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_bin;
+
+-- Change fields type with JSON data to JSON
+ALTER TABLE `users` CHANGE `doc` `doc` JSON NULL DEFAULT NULL;
+ALTER TABLE `leads_upload` CHANGE `leads_upload` `leads_upload` JSON NULL DEFAULT NULL;
+ALTER TABLE `leads` CHANGE `doc` `doc` JSON NULL DEFAULT NULL;
+ALTER TABLE `notifications` CHANGE `doc` `doc` JSON NULL DEFAULT NULL;
