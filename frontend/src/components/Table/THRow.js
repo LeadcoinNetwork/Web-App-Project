@@ -13,16 +13,26 @@ const THRow = props => (
         <Checkbox checked={props.isAllSelected} onClick={props.toggleAll} />
       </div>
     )}
-    {props.fields.map(f => (
-      <THRCol
-        key={f.name}
-        colCount={props.colCount}
-        staticColsWidth={props.staticColsWidth}
-        field={f}
-        onSort={props.onSort}
-        sortedBy={props.sortedBy}
-      />
-    ))}
+    {props.fields
+      .map(f => ({
+        ...f,
+        name:
+          f.name === "Content Management"
+            ? "CMS"
+            : f.name === "Number of pages"
+              ? "Pages Count"
+              : f.name,
+      }))
+      .map(f => (
+        <THRCol
+          key={f.name}
+          colCount={props.colCount}
+          staticColsWidth={props.staticColsWidth}
+          field={f}
+          onSort={props.onSort}
+          sortedBy={props.sortedBy}
+        />
+      ))}
   </div>
 )
 

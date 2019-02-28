@@ -20,6 +20,10 @@
       width: 242px;
     }
   }
+  .multiselect svg {
+    height: 18px;
+    width: 18px;
+  }
   .header {
     &.bigger {
       padding-top: 5px;
@@ -50,12 +54,12 @@
 
     .fieldLabel {
       width: 160px;
+      padding: 8px 0;
     }
 
     margin: 10px 15px;
-    align-items: center;
     justify-content: flex-start;
-
+    align-items: center;
     input::placeholder {
       text-transform: capitalize;
     }
@@ -75,15 +79,8 @@
   }
 }
 
-@media (max-width: $screen-tablets) {
-  .multiselect {
-    min-height: 60px;
-    display: grid;
-  }
-}
-
 @media (max-width: 760px) {
-  .add_lead {
+  .edit_lead {
     .personal,
     .public {
       display: block;
@@ -97,5 +94,11 @@
     .field_submit.flexed {
       width: unset;
     }
+  }
+}
+@media (max-width: $screen-tablets) {
+  .multiselect {
+    min-height: 50px;
+    display: grid;
   }
 }

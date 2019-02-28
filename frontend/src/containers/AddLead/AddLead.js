@@ -26,12 +26,14 @@ const customStyles = {
   },
   multiValueRemove: styles => ({
     ...styles,
-
+    width: "27px",
+    height: "27px",
     color: "#000",
   }),
   multiValue: styles => ({
     ...styles,
-    "font-size": "16px",
+    margin: "3px",
+    "font-size": "20px",
   }),
   dropdownIndicator: styles => ({
     ...styles,
