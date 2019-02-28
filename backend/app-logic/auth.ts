@@ -140,6 +140,9 @@ export default class Auth {
     // set balance to user
     user.balance = this.models.config.INITIAL_BALANCE
 
+    // create wallet field
+    user.wallet = user.wallet || null
+
     var newUserid = await users.createUser(user)
     let token = auth.generateJWT(newUserid, config.auth.jwt.secret)
     return {

@@ -31,6 +31,7 @@ const userSchema = Joi.object().keys({
   role: Joi.string()
     .only("user", "admin")
     .label("Role"),
+  wallet: Joi.string().label("Wallet"),
 })
 
 function joiPassword(joi) {
