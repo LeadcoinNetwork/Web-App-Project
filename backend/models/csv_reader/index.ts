@@ -3,8 +3,6 @@ const csv = require("csv")
 const fs = require("fs")
 const papaparse = require("papaparse")
 
-import { Lead, NewRealEstateLead } from "../leads/types"
-
 export interface fieldsMap {
   fieldName: {
     mappedName: string
