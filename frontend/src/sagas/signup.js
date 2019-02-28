@@ -11,11 +11,14 @@ export default function* signup(api) {
   while (true) {
     yield take(types.SIGNUP_SUBMIT)
     yield put(Actions.signup.signupLoading())
-    var { fname, lname, email, password } = yield select(state => state.signup)
+    var { fname, lname, wallet, email, password } = yield select(
+      state => state.signup,
+    )
     var ans = yield api.users.signUp({
       fname,
       lname,
       email,
+      wallet,
       password,
     })
     window.triggerFetch()

@@ -6,6 +6,8 @@ import Button from "Components/Button"
 import t from "../../utils/translate/translate"
 import { push } from "react-router-redux"
 import { priceString } from "Utils/numbers"
+import { metamask } from "../../utils/metamask-service"
+import { toast } from "react-toastify"
 
 const Checkout = ({
   fields,
@@ -13,6 +15,7 @@ const Checkout = ({
   buyLeads,
   balance,
   push,
+  user,
   checkoutBuyStart,
 }) => {
   if (!buyLeads.selected.size) {
@@ -23,6 +26,13 @@ const Checkout = ({
     buyLeads.selected.has(lead.id),
   )
 
+  const toaster = (content, type, position) =>
+    toast(content, {
+      type,
+      position,
+      closeOnClick: true,
+    })
+
   const parseLeadPrice = leadPrice => {
     if (!leadPrice) {
       return 0
@@ -32,13 +42,34 @@ const Checkout = ({
       return leadPrice
     }
   }
+  const handleLeadBuy = async ev => {
+    try {
+      const checkWallet = await metamask.isAddress(user.wallet)
+      toaster("Wallet is verified", "success", "top-right")
+      const transfer = await metamask.transfer(user.wallet, 10)
+      toaster(
+        `Tanscation has been send, TxHash ${transfer}`,
+        "success",
+        "top-right",
+      )
+      const checkTxHash = await metamask.checkTxHash(transfer)
+      toaster(
+        `Transaction succeeded, TxHash ${transfer}`,
+        "success",
+        "top-right",
+      )
+      checkoutBuyStart()
+    } catch (err) {
+      toaster(err, "error", "top-right")
+    }
+  }
 
   const totalPayment = selectedLeads.reduce(
     (price, lead) => price + parseLeadPrice(lead.lead_price),
     0,
   )
   const shoppingCartFields = fields.filter(
-    field => field.key === "Description" || field.key === "lead_price",
+    field => field.key === "comments" || field.key === "lead_price",
   )
   return (
     <div className="ldc-checkout">
@@ -101,7 +132,7 @@ const Checkout = ({
       <div className="button-container">
         <Button
           label={t("Buy")}
-          onClick={checkoutBuyStart}
+          onClick={handleLeadBuy}
           loading={checkout.loading}
           loadingLabel={t("Processing")}
           appStyle={true}
@@ -117,6 +148,7 @@ const mapStateToProps = state => ({
   checkout: state.checkout,
   buyLeads: state.buyLeads,
   balance: state.balance,
+  user: state.user,
 })
 
 export default connect(

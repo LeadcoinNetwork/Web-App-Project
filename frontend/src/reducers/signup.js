@@ -5,6 +5,7 @@ const initialState = {
   email: "",
   fname: "",
   lname: "",
+  wallet: "",
   password: "",
   errors: {},
 }

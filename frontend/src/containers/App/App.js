@@ -39,7 +39,6 @@ class App extends React.Component {
     let loggedIn = !!get(this.props, "user.id")
     let disabled = !!get(this.props, "user.disabled")
     let path = get(this.props, "location.pathname", "")
-
     return (
       <div>
         {/* <Steps /> */}

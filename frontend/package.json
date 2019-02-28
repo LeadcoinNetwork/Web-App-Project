@@ -117,6 +117,7 @@
     "ts-jest": "^22.4.6",
     "ts-loader": "^4.2.0",
     "typescript": "^2.9.2",
+    "web3": "^0.20.7",
     "webpack": "^4.9.1",
     "webpack-cli": "^2.1.4",
     "webpack-dev-server": "^3.1.4",

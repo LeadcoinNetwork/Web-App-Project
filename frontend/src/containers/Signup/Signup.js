@@ -20,7 +20,15 @@ class Signup extends React.Component {
     )
   }
   render() {
-    let { fname, lname, email, password, errors, loading } = this.props.signup
+    let {
+      fname,
+      lname,
+      email,
+      wallet,
+      password,
+      errors,
+      loading,
+    } = this.props.signup
 
     return (
       <section className="ldc-signup">
@@ -47,6 +55,13 @@ class Signup extends React.Component {
               placeholder={t("Last Name")}
               value={lname}
               name="lname"
+              onChange={this.handleChange}
+            />
+            <TextField
+              className={"wallet" + (errors.email ? " error" : "")}
+              placeholder={t("Metamask wallet")}
+              value={wallet}
+              name="wallet"
               onChange={this.handleChange}
             />
             <TextField

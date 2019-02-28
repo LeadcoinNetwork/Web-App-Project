@@ -1,5 +1,5 @@
 import typeScriptExample from "./example"
-
+import { metamask } from "./utils/metamask-service/index.js"
 import "Styles/global.scss"
 
 import React from "react"
@@ -16,7 +16,9 @@ import { composeWithDevTools } from "redux-devtools-extension"
 import { compose, createStore, applyMiddleware } from "redux"
 import rootReducer from "./reducers/index"
 import createSagaMiddleware from "redux-saga"
+import { toast } from "react-toastify"
 import rootSaga from "./sagas"
+
 var url = require("url")
 var basename = url.parse(process.env.FRONTEND).path
 const history = createBrowserHistory({ basename })
@@ -59,6 +61,28 @@ if (module.hot) {
     runSagas()
   })
 }
+
+const toaster = (content, type, position) =>
+  toast(content, {
+    type,
+    position,
+    closeOnClick: true,
+  })
+
+async function initMetamask() {
+  try {
+    const init = await metamask.init()
+    const verify = await metamask.verify(init)
+  } catch (err) {
+    return toaster(
+      "This is not supported by this browser. Please follow your browser’s support for MetaMask (such as Chrome)",
+      "error",
+      "top-right",
+    )
+  }
+}
+
+initMetamask()
 
 function createReducer() {
   return connectRouter(history)(rootReducer)
