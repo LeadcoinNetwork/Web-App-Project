@@ -5,16 +5,69 @@ import { select, take, put, call } from "redux-saga/effects"
 import { push } from "react-router-redux"
 import { toast } from "react-toastify"
 import API from "../api/index"
+import { metamask } from "../utils/metamask-service"
+import { totalLeadsPrice } from "../utils/prepare-data"
+
 /**
  * @param api {API} - this is this paramters
  */
+// try {
+//   checkoutBuyStart()
+//
+//   toaster(, "success", "top-right")
+//   toaster(
+//     `Tanscation has been send, TxHash ${transfer}`,
+//     "success",
+//     "top-right",
+//   )
+//   const checkTxHash = await metamask.checkTxHash(transfer)
+//   toaster(
+//     `Transaction succeeded, TxHash ${transfer}`,
+//     "success",
+//     "top-right",
+//   )
+// } catch (err) {
+//   console.log(err)
+//   toaster(err, "error", "top-right")
+// }
 export default function* checkout(api) {
   while (true) {
     yield take(types.CHECKOUT_BUY_START)
 
-    let { selected } = yield select(state => state.buyLeads)
+    let { selected, list } = yield select(state => state.buyLeads)
+    let user = yield select(state => state.user)
+    console.log(user)
+    let selectedLeads = list.filter(lead => selected.has(lead.id))
+    let price = totalLeadsPrice(selectedLeads)
+    let checkWallet = yield metamask.isAddress(user.wallet)
+    toast("Wallet is verified", {
+      type: "success",
+      closeOnClick: true,
+    })
 
-    let res = yield api.leads.buyLeadsBuy(Array.from(selected))
+    let transfer = yield metamask.transfer(user.wallet, price)
+    toast(
+      <div
+        ref={e => {
+          if (e) {
+            e = e.parentElement // toast body
+            e = e.parentElement // toast class
+            e = e.parentElement // toast container
+            e.style.width = "625px"
+          }
+        }}
+      >
+        Tanscation has been send, TxHash {transfer}
+      </div>,
+      {
+        type: "success",
+        closeOnClick: true,
+      },
+    )
+
+    let checkTxHash = yield metamask.checkTxHash(transfer)
+
+    let res = yield api.leads.buyLeadsBuy([...selected])
 
     if (res.error) {
       yield put(actions.checkout.checkoutBuyError(res.error))
@@ -31,13 +84,16 @@ export default function* checkout(api) {
             }
           }}
         >
-          <div> Your order has been completed. </div>
+          <div> Your order has been completed.</div>
           <div>
             {" "}
             Your TX has been broadcast to the network. Check your TX below:{" "}
           </div>
-          <div> {res.response.txid} </div>
-          <a target="_blank" href={res.response.link}>
+          <div> {transfer} </div>
+          <a
+            target="_blank"
+            href={`https://ropsten.etherscan.io/tx/${transfer}`}
+          >
             {" "}
             View It Here{" "}
           </a>

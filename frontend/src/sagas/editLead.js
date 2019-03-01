@@ -2,7 +2,7 @@ import { types } from "Actions"
 import * as actions from "Actions"
 import { select, take, put, call } from "redux-saga/effects"
 import { push } from "react-router-redux"
-import { prepareLeadDataForServer } from "../utils/prepare-data"
+import { prepareLeadDataForSend } from "../utils/prepare-data"
 
 import API from "../api/index"
 
@@ -15,7 +15,7 @@ export default function* editLead(api) {
     let { original_copy, values, agree_to_terms } = yield select(
       state => state.editLead,
     )
-    const prepData = prepareLeadDataForServer(values)
+    const prepData = prepareLeadDataForSend(values)
     const lead = Object.assign(original_copy, prepData, {
       agree_to_terms,
     })

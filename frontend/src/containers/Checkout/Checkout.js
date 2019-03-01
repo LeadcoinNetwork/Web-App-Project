@@ -15,7 +15,6 @@ const Checkout = ({
   buyLeads,
   balance,
   push,
-  user,
   checkoutBuyStart,
 }) => {
   if (!buyLeads.selected.size) {
@@ -40,27 +39,6 @@ const Checkout = ({
       return Math.abs(Number(leadPrice.replace("$", "")))
     } else {
       return leadPrice
-    }
-  }
-  const handleLeadBuy = async ev => {
-    try {
-      const checkWallet = await metamask.isAddress(user.wallet)
-      toaster("Wallet is verified", "success", "top-right")
-      const transfer = await metamask.transfer(user.wallet, 10)
-      toaster(
-        `Tanscation has been send, TxHash ${transfer}`,
-        "success",
-        "top-right",
-      )
-      const checkTxHash = await metamask.checkTxHash(transfer)
-      toaster(
-        `Transaction succeeded, TxHash ${transfer}`,
-        "success",
-        "top-right",
-      )
-      checkoutBuyStart()
-    } catch (err) {
-      toaster(err, "error", "top-right")
     }
   }
 
@@ -132,7 +110,7 @@ const Checkout = ({
       <div className="button-container">
         <Button
           label={t("Buy")}
-          onClick={handleLeadBuy}
+          onClick={checkoutBuyStart}
           loading={checkout.loading}
           loadingLabel={t("Processing")}
           appStyle={true}
@@ -148,7 +126,6 @@ const mapStateToProps = state => ({
   checkout: state.checkout,
   buyLeads: state.buyLeads,
   balance: state.balance,
-  user: state.user,
 })
 
 export default connect(

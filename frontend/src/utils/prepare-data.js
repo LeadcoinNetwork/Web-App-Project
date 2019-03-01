@@ -9,7 +9,7 @@ export const prepareLeadDataForDisplay = data => {
   return data
 }
 
-export const prepareLeadDataForServer = data => {
+export const prepareLeadDataForSend = data => {
   let obj = Object.assign({}, data)
   fields.forEach(field => {
     obj[field.key] =
@@ -35,3 +35,6 @@ export const filterFields = lead => {
   })
   return obj
 }
+
+export const totalLeadsPrice = leads =>
+  leads.reduce((price, lead) => price + lead.lead_price, 0)
