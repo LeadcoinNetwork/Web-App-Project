@@ -18,7 +18,7 @@
 
     .t-head,
     .t-body {
-      min-width: 1100px;
+      min-width: 1350px;
 
       .th-row,
       .tb-row {
@@ -26,7 +26,7 @@
         padding-left: 50px;
 
         &.display-lead {
-          padding-left: 80px;
+          padding-left: 50px;
         }
 
         .thr-checkbox {
@@ -41,7 +41,7 @@
         .thr-col,
         .tbr-col {
           display: inline-block;
-          padding: 0 10px;
+          padding: 0 5px;
           height: 50px;
           line-height: 50px;
           overflow: hidden;

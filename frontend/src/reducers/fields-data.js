@@ -11,7 +11,7 @@ const OPTIONS = {
     { type: "functionality", value: "other", label: "Other" },
     {
       type: "functionality",
-      value: "samall business",
+      value: "small business",
       label: "Small Business",
     },
     { type: "functionality", value: "personal", label: "Portfolio" },
@@ -53,6 +53,7 @@ const fields = [
     minWidth: "100px",
     type: "input",
     options: [],
+    tooltip: "How many web pages do you expect to have?",
   },
   {
     key: "content_updates",
@@ -63,6 +64,7 @@ const fields = [
     minWidth: "100px",
     type: "select",
     options: OPTIONS.CONTENT_UPDATES,
+    tooltip: "Regularity and scale of content changes?",
   },
   {
     key: "functionality",
@@ -73,6 +75,7 @@ const fields = [
     minWidth: "100px",
     type: "multiselect",
     options: OPTIONS.FUNCTIONALITY,
+    tooltip: "Core function of the website?",
   },
   {
     key: "mobile_design",
@@ -83,6 +86,7 @@ const fields = [
     minWidth: "75px",
     type: "select",
     options: OPTIONS.YES_OR_NO,
+    tooltip: "Do you require mobile design?",
   },
   {
     key: "seo",
@@ -93,6 +97,7 @@ const fields = [
     minWidth: "50px",
     type: "select",
     options: OPTIONS.YES_OR_NO,
+    tooltip: "Is Search Engine Optimization required?",
   },
   {
     key: "content_management",
@@ -103,6 +108,7 @@ const fields = [
     minWidth: "50px",
     type: "select",
     options: OPTIONS.YES_OR_NO,
+    tooltip: "Do you require content management functionality?",
   },
   {
     key: "e_commerce",
@@ -113,6 +119,8 @@ const fields = [
     minWidth: "100px",
     type: "select",
     options: OPTIONS.YES_OR_NO,
+    tooltip:
+      "Will the website be used for buying or selling of goods and services?",
   },
   {
     key: "blog",
@@ -123,6 +131,7 @@ const fields = [
     minWidth: "50px",
     type: "select",
     options: OPTIONS.YES_OR_NO,
+    tooltip: "Will the website be used for blogging?",
   },
   {
     key: "budget",
@@ -132,6 +141,7 @@ const fields = [
     maxWidth: "85px",
     minWidth: "85px",
     type: "input",
+    tooltip: "What is your estimated budget for this project?",
   },
   {
     key: "languages",
@@ -152,6 +162,8 @@ const fields = [
     minWidth: "65px",
     type: "select",
     options: OPTIONS.YES_OR_NO,
+    tooltip:
+      "Do you need hosting for your website, or will you be providing your own?",
   },
   {
     key: "comments",
@@ -198,13 +210,14 @@ const fields = [
   },
   {
     key: "lead_price",
-    name: "Lead Price",
+    name: "Price",
     sortable: true,
     editable: true,
-    maxWidth: "100px",
-    minWidth: "100px",
+    maxWidth: "auto",
+    minWidth: "60px",
     type: "input",
     options: [],
+    tooltip: "Leads amount",
   },
 ]
 

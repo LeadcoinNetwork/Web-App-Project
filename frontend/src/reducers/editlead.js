@@ -2,6 +2,8 @@ import { types } from "../actions"
 import fields from "./fields-data"
 import { filterFields } from "../utils/prepare-data"
 
+const fields_not_for_display = ["Industry"]
+
 const initialState = {
   original_copy: null,
   fields: {
@@ -14,6 +16,7 @@ const initialState = {
           name: field.name,
           type: field.type,
           options: field.options,
+          tooltip: field.tooltip,
         }
       }),
     public: fields
@@ -25,8 +28,10 @@ const initialState = {
           name: field.name,
           type: field.type,
           options: field.options,
+          tooltip: field.tooltip,
         }
-      }),
+      })
+      .filter(f => !fields_not_for_display.includes(f.name)),
   },
   errors: {},
   agree_to_terms: false,

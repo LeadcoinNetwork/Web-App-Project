@@ -5,9 +5,10 @@ import TextField from "Components/TextField"
 import Checkbox from "Components/Checkbox"
 import { connect } from "react-redux"
 import { addLead } from "Actions"
+import { push } from "react-router-redux"
+import ReactTooltip from "react-tooltip"
 import t from "../../utils/translate/translate"
 import ConfirmationDialog from "../../components/ConfirmationDialog"
-import { push } from "react-router-redux"
 
 const customStyles = {
   option: (styles, state) => {
@@ -78,12 +79,29 @@ class AddLead extends React.Component {
 
   renderFields(fields) {
     const { errors, values, loading } = this.props
+    console.log(fields)
     return fields.map(f => {
       const isError = errors[f.key] ? "error" : ""
       return (
         <div key={f.key} className={isError + " flexed line"}>
           <div className="fieldLabel">
-            {t(f.name)}
+            <span
+              className="field-tooltip-web"
+              data-for="field-tooltip"
+              data-tip={f.tooltip}
+            >
+              {t(f.name)}
+            </span>
+            <span className="field-tooltip-mobile">
+              {t(f.name)}{" "}
+              {f.tooltip && (
+                <i
+                  data-for="field-tooltip-mob"
+                  data-tip={f.tooltip}
+                  className="fas fa-question-circle"
+                />
+              )}
+            </span>
             {f.key === "lead_price" && (
               <span className="asterisk-required">*</span>
             )}
@@ -199,6 +217,12 @@ class AddLead extends React.Component {
             </div>
           </div>
         </div>
+        <ReactTooltip id="field-tooltip" getContent={dataTip => dataTip} />
+        <ReactTooltip
+          id="field-tooltip-mob"
+          className="tooltip-mobile"
+          getContent={dataTip => dataTip}
+        />
       </div>
     )
   }

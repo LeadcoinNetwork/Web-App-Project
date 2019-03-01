@@ -19,6 +19,7 @@ export const prepareLeadDataForServer = data => {
           ? obj[field.key].map(r => r.label)
           : obj[field.key]
   })
+  obj.industry = "Website building"
   return obj
 }
 

@@ -11,14 +11,18 @@ const initialValues = fields.reduce((values, field) => {
   return values
 }, {})
 
-const fields_not_for_display = ["active"]
+const fields_not_for_display = ["Industry"]
 const initialState = {
   db_fields: {
     private: fields
       .filter(field => field.editable)
       .filter(field => field.private)
-      .map(field => ({ key: field.key, name: field.name, type: field.type }))
-      .filter(f => !fields_not_for_display.includes(f)),
+      .map(field => ({
+        key: field.key,
+        name: field.name,
+        type: field.type,
+        tooltip: field.tooltip,
+      })),
     public: fields
       .filter(field => field.editable)
       .filter(field => !field.private)
@@ -27,8 +31,9 @@ const initialState = {
         name: field.name,
         options: field.options,
         type: field.type,
+        tooltip: field.tooltip,
       }))
-      .filter(f => !fields_not_for_display.includes(f.key)),
+      .filter(f => !fields_not_for_display.includes(f.name)),
   },
   values: initialValues,
   errors: {},

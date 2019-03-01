@@ -3,6 +3,7 @@ import withInfiniteScroll from "HOC/withInfiniteScroll"
 import Button from "Components/Button"
 import THead from "./THead"
 import TBody from "./TBody"
+import ReactTooltip from "react-tooltip"
 
 class Table extends React.Component {
   constructor(props) {
@@ -129,6 +130,11 @@ class Table extends React.Component {
             isSelectable={props.isSelectable}
           />
         </div>
+        <ReactTooltip
+          id="field-tooltip"
+          effect="solid"
+          getContent={dataTip => dataTip}
+        />
         <div className="t-footer" />
       </section>
     )

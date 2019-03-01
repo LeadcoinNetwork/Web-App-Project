@@ -38,6 +38,9 @@
     justify-content: flex-end;
     display: flex;
   }
+  .field-tooltip-mobile {
+    display: none;
+  }
 
   .line {
     &.error .fieldValue input {
@@ -49,7 +52,7 @@
     }
 
     .fieldLabel {
-      width: 160px;
+      width: 170px;
       padding: 8px 0;
     }
 
@@ -86,6 +89,24 @@
         width: unset;
         display: block;
       }
+    }
+    .field-tooltip-web {
+      display: none;
+    }
+    .tooltip-mobile {
+      font-size: 16px !important;
+      max-width: 45vw;
+      max-height: 45vw;
+      text-align: center;
+      padding: 25px;
+      float: contour;
+      border-radius: 50%;
+    }
+    .field-tooltip-mobile {
+      display: inline-block;
+    }
+    .field-tooltip-mobile i {
+      margin-left: 6px;
     }
     .field_submit.flexed {
       width: unset;

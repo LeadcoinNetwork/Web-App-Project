@@ -7,6 +7,8 @@ const THRCol = ({ field, colCount, staticColsWidth, onSort, sortedBy }) => (
   <div
     key={field.name}
     className="thr-col"
+    data-for="field-tooltip"
+    data-tip={field.tooltip}
     style={{
       width: `calc((100% - ${staticColsWidth}px) / ${colCount})`,
       maxWidth: field.maxWidth,
