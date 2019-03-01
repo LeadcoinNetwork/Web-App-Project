@@ -11,25 +11,7 @@ import { totalLeadsPrice } from "../utils/prepare-data"
 /**
  * @param api {API} - this is this paramters
  */
-// try {
-//   checkoutBuyStart()
-//
-//   toaster(, "success", "top-right")
-//   toaster(
-//     `Tanscation has been send, TxHash ${transfer}`,
-//     "success",
-//     "top-right",
-//   )
-//   const checkTxHash = await metamask.checkTxHash(transfer)
-//   toaster(
-//     `Transaction succeeded, TxHash ${transfer}`,
-//     "success",
-//     "top-right",
-//   )
-// } catch (err) {
-//   console.log(err)
-//   toaster(err, "error", "top-right")
-// }
+
 export default function* checkout(api) {
   while (true) {
     yield take(types.CHECKOUT_BUY_START)
