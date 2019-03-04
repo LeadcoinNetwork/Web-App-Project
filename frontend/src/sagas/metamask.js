@@ -10,26 +10,6 @@ import { toast } from "react-toastify"
  * @param api {API} - this is this paramters
  */
 
-// initMetamask = async () => {
-//   let isActive
-//   try {
-//     const init = await metamaskService.init()
-//     const verify = await metamaskService.verify(init)
-//      = verify.success
-//   } catch (err) {
-//     return toast(
-//       "Metamask is not supported by this browser. Please follow your browser’s support for MetaMask (such as Chrome)",
-//       {
-//         type: "error",
-//         closeOnClick: true,
-//         autoClose: false,
-//       },
-//     )
-//   } finally {
-//     this.props.handleMetamaskInit(isActive, true)
-//   }
-// }
-
 export default function* metamask(api) {
   while (true) {
     const action = yield take(types.METAMASK_INIT)
