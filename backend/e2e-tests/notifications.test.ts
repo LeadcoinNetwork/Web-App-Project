@@ -20,7 +20,6 @@ test("notifications are only being sent once", async () => {
   appLogic.models.notifications.createNotification({
     userId: user.id,
     msg: "testmsg1",
-    unread: true,
   })
   let body = await ApiForToken(token).notifications.getNotifications()
   expect(body.list.length).toBe(1)

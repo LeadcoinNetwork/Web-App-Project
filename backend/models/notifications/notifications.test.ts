@@ -15,7 +15,6 @@ test("create a notification", async () => {
   const { affectedRows } = await notifications.createNotification({
     msg: "test msg",
     userId: 1,
-    unread: true,
   })
   expect(affectedRows).toBe(1)
 })
@@ -24,7 +23,6 @@ test("get notification for user X", async () => {
   const { affectedRows } = await notifications.createNotification({
     msg: "test msg",
     userId: 1,
-    unread: true,
   })
   const _notifications = await notifications.getNotificationsByUserId(1)
   expect(_notifications.length).toBe(1)
@@ -34,7 +32,6 @@ test("mark notification as read for user X", async () => {
   const { affectedRows } = await notifications.createNotification({
     msg: "test msg",
     userId: 1,
-    unread: true,
   })
   const { changedRows } = await notifications.MarkAllNotificationAsReadForUser(
     1,
