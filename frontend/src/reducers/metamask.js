@@ -2,7 +2,6 @@ import types from "../actions/types"
 let initialState = {
   loading: false,
   isActive: false,
-  checked: false,
 }
 export default function(state = initialState, action) {
   switch (action.type) {
