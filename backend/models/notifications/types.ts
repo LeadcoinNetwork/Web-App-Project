@@ -1,11 +1,7 @@
 export interface BaseNotification {
   msg: string
   userId: number
-}
-
-export interface NewNotification extends BaseNotification {
-  id?: number
-  unread: true
+  unread?: boolean
 }
 
 export interface Notification extends BaseNotification {

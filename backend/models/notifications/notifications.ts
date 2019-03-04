@@ -1,12 +1,12 @@
 import SQL from "../mysql-pool/mysql-pool"
-import * as passport from "passport"
-import * as Express from "express"
-import { NewNotification, Notification, NotificationQuery } from "./types"
+// import * as passport from "passport"
+// import * as Express from "express"
+import { BaseNotification, Notification, NotificationQuery } from "./types"
 
 import baseDBModel from "../base-db-model/base-db-model"
 
 export default class Notifications extends baseDBModel<
-  NewNotification,
+  BaseNotification,
   Notification,
   NotificationQuery
 > {
@@ -14,9 +14,10 @@ export default class Notifications extends baseDBModel<
     super(sql, "notifications")
   }
 
-  async createNotification(notification: NewNotification) {
+  async createNotification(notification: BaseNotification) {
     notification = Object.assign(notification, {
       timestamp: new Date().valueOf(),
+      unread: true,
     })
     return await this.insert(notification)
   }

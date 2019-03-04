@@ -68,42 +68,43 @@ export default class Leads {
   }
 
   public async buyLeads(leads: number[], new_owner: number) {
-    const deal_price = await this.models.leads.getDealPrice(leads)
-    let buyer
-    if (new_owner > 0) {
-      buyer = await this.models.users.mustGetUserById(new_owner)
-    } else {
-      buyer = {
-        balance: 999999999,
-      }
-    }
-    buyer.balance = buyer.balance | 0
-    if (buyer.balance < deal_price) {
-      throw new Error("balance::Amount insufficient.")
-    }
+    // const deal_price = await this.models.leads.getDealPrice(leads)
+    // let buyer
+    // if (new_owner > 0) {
+    //   buyer = await this.models.users.mustGetUserById(new_owner)
+    // } else {
+    //   buyer = {
+    //     balance: 999999999,
+    //   }
+    // }
+    // buyer.balance = buyer.balance | 0
+    // if (buyer.balance < deal_price) {
+    //   throw new Error("balance::Amount insufficient.")
+    // }
     const result = await this.models.leads.buy(leads, new_owner)
     const groupedByOwner = _.groupBy(result, "bought_from")
-    let overall_cost = 0
+    // let overall_cost = 0
+
     for (let key in groupedByOwner) {
-      const seller = parseInt(key)
+      const seller: number = parseInt(key, 10)
       const group: Lead[] = groupedByOwner[key]
-      const transaction_amount = group.reduce(summy("lead_price"), 0)
-      overall_cost += transaction_amount
-      this.models.users.increaseBalance(seller, transaction_amount)
+      const transaction_amount: number = group.reduce(summy("lead_price"), 0)
+      // overall_cost += transaction_amount
+      // this.models.users.increaseBalance(seller, transaction_amount)
       this.models.notifications.createNotification({
         msg: `Someone bought ${
           group.length
-        } of your leads for a total of ${overall_cost}$.`,
+        } of your leads for a total of ${transaction_amount} LDC.`,
         userId: seller,
-        unread: true,
       })
     }
-    this.models.users.decreaseBalance(new_owner, overall_cost)
-    const txDetails = await logTransaction({
-      leads_count: result.length.toString(),
-      fiat_amount: (overall_cost * 100).toString(),
-      exchange_rate: "1999000000000000000",
-    })
+
+    // this.models.users.decreaseBalance(new_owner, overall_cost)
+    // const txDetails = await logTransaction({
+    //   leads_count: result.length.toString(),
+    //   fiat_amount: (overall_cost * 100).toString(),
+    //   exchange_rate: "1999000000000000000",
+    // })
     /*
     I'll just comment this part out instead of deleting it, maybe they'll want it back someday (@Leekao)
 
@@ -113,7 +114,10 @@ export default class Leads {
       unread: true,
     })
     */
-    return txDetails
+    // return txDetails
+    return {
+      success: true,
+    }
   }
 
   public async removeLead(lead_id: number) {
