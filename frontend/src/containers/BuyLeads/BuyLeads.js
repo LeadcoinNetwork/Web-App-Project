@@ -7,16 +7,41 @@ import Select from "Components/Select"
 import TextField from "Components/TextField"
 import Button from "Components/Button"
 import t from "../../utils/translate/translate"
+import { toast } from "react-toastify"
 
 class BuyLeads extends React.Component {
   buyLeads = () => {
-    this.props.push("/shopping-cart")
+    const { metamask } = this.props
+    if (metamask.isActive) {
+      this.props.push("/shopping-cart")
+    } else {
+      toast(
+        "To buy leads you need to install Metamask for your browser. Please follow your browser’s support for MetaMask (such as Chrome)",
+        {
+          type: "error",
+          closeOnClick: true,
+          autoClose: false,
+        },
+      )
+    }
   }
   buyLead = id => {
-    let selected = new Set(this.props.leads.selected)
-    selected.add(id)
-    this.props.setSelectedLeads(selected)
-    this.buyLeads()
+    const { metamask } = this.props
+    if (metamask.isActive) {
+      let selected = new Set(this.props.leads.selected)
+      selected.add(id)
+      this.props.setSelectedLeads(selected)
+      this.buyLeads()
+    } else {
+      toast(
+        "To buy leads you need install Metamask for your browser. Please follow your browser’s support for MetaMask (such as Chrome)",
+        {
+          type: "error",
+          closeOnClick: true,
+          autoClose: false,
+        },
+      )
+    }
   }
   buildButtonLabel = () => {
     let amount = this.props.leads.selected.size
@@ -51,6 +76,7 @@ class BuyLeads extends React.Component {
       record: this.getLeadButtons(),
     }
   }
+
   render() {
     return (
       // do not change classnames, it's connected to the manual
@@ -125,6 +151,7 @@ class BuyLeads extends React.Component {
 
 const mapStateToProps = state => ({
   leads: state.buyLeads,
+  metamask: state.metamask,
   fields: state.fields.filter(lead => !lead.private),
 })
 

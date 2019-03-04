@@ -25,7 +25,7 @@ const abi = [
 ]
 const metamask = {}
 
-// window.metamask = metamask;
+// window.metamask.js = metamask.js;
 
 const isProvider = () => {
   return new Promise((resolve, reject) => {
@@ -145,7 +145,10 @@ metamask.verify = async () => {
   let verify = []
   verify.push(await isProvider())
   verify.push(await isMainNetwork())
-  return Promise.all(verify).then(() => "Verification is successful")
+  return Promise.all(verify).then(() => ({
+    success: true,
+    message: "Verification is successful",
+  }))
 }
 
 metamask.isAddress = address => {
