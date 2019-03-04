@@ -18,7 +18,6 @@ export default function* checkout(api) {
 
     let { selected, list } = yield select(state => state.buyLeads)
     let user = yield select(state => state.user)
-    console.log(user)
     let selectedLeads = list.filter(lead => selected.has(lead.id))
     let price = totalLeadsPrice(selectedLeads)
     let checkWallet = yield metamask.isAddress(user.wallet)

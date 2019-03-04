@@ -1,5 +1,6 @@
 import React from "react"
 import { app, user, route } from "Actions"
+
 var get = require("lodash/get")
 
 import Header from "Containers/Header"
@@ -12,7 +13,6 @@ import MyLeads from "Containers/MyLeads"
 import SellLeads from "Containers/SellLeads"
 import BuyLeads from "Containers/BuyLeads"
 import Payments from "Containers/Payments"
-import UploadForm from "containers/UploadForm"
 import CSVUpload from "Containers/CSVUpload"
 import CSVMapping from "Containers/CSVMapping"
 import AddLead from "Containers/AddLead"
@@ -23,7 +23,6 @@ import Checkout from "Containers/Checkout"
 import NotificationTable from "containers/NotificationsTable"
 import Signup from "Containers/Signup"
 import EmailConfirmation from "containers/EmailConfirmation"
-// import CompleteRegistration from "containers/CompleteRegistration"
 import Login from "Containers/Login"
 import ForgotPassword from "Containers/ForgotPassword"
 import UserSettings from "Containers/UserSettings"
@@ -31,14 +30,20 @@ import Withdraw from "containers/Withdraw"
 import Terms from "Containers/Terms"
 import Privacy from "Containers/Privacy"
 import { connect } from "react-redux"
-import { createBrowserHistory } from "history"
+import { metamask } from "Actions"
+
 // import Steps from "../steps"
 
 class App extends React.Component {
+  componentDidMount() {
+    this.props.handleMetamaskInit()
+  }
+
   render() {
     let loggedIn = !!get(this.props, "user.id")
     let disabled = !!get(this.props, "user.disabled")
     let path = get(this.props, "location.pathname", "")
+
     return (
       <div>
         {/* <Steps /> */}
@@ -89,6 +94,7 @@ class App extends React.Component {
 const mapStateToProps = state => ({
   app: state.app,
   user: state.user,
+  metamask: state.metamask,
   location: get(state, "router.location"),
   pathname: get(state, "router.location.pathname"),
 
@@ -101,5 +107,6 @@ export default connect(
   mapStateToProps,
   {
     toggleResultsMode: () => {},
+    handleMetamaskInit: metamask.metamaskInit,
   },
 )(App)

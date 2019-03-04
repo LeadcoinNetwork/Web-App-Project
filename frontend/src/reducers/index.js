@@ -24,7 +24,7 @@ import fields from "./fields"
 import translate from "./translate"
 import withdraw from "./withdraw"
 import displayLead from "./displayLead"
-
+import metamask from "./metamask"
 const rootReducer = combineReducers({
   app,
   displayLead,
@@ -53,6 +53,7 @@ const rootReducer = combineReducers({
   fields,
   translate,
   withdraw,
+  metamask,
 })
 
 export default rootReducer

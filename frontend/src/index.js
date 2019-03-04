@@ -62,28 +62,6 @@ if (module.hot) {
   })
 }
 
-const toaster = (content, type, position) =>
-  toast(content, {
-    type,
-    position,
-    closeOnClick: true,
-  })
-
-async function initMetamask() {
-  try {
-    const init = await metamask.init()
-    const verify = await metamask.verify(init)
-  } catch (err) {
-    return toaster(
-      "This is not supported by this browser. Please follow your browser’s support for MetaMask (such as Chrome)",
-      "error",
-      "top-right",
-    )
-  }
-}
-
-initMetamask()
-
 function createReducer() {
   return connectRouter(history)(rootReducer)
 }

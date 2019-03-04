@@ -23,6 +23,7 @@ import language from "./language"
 import inlinemanual from "./inlinemanual"
 import notifications from "./notifications"
 import googleAnalytics from "./googleanalytics"
+import metamask from "./metamask"
 
 import { spawn, fork } from "redux-saga/effects"
 import * as superagent from "superagent"
@@ -66,6 +67,7 @@ export default function* rootSaga() {
     checkout,
     myLeads,
     moveToSell,
+    metamask,
     inlinemanual,
     notifications,
     googleAnalytics,

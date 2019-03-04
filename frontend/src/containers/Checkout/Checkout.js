@@ -36,7 +36,7 @@ const Checkout = ({
     if (!leadPrice) {
       return 0
     } else if (typeof leadPrice === "string") {
-      return Math.abs(Number(leadPrice.replace("$", "")))
+      return Math.abs(Number(leadPrice.replace("LDC", "")))
     } else {
       return leadPrice
     }
@@ -67,7 +67,7 @@ const Checkout = ({
               {shoppingCartFields.map(field => (
                 <td className={"d-" + field.key}>
                   {field.key === "lead_price"
-                    ? priceString(lead.lead_price)
+                    ? lead.lead_price + " LDC"
                     : lead[field.key]}
                 </td>
               ))}
@@ -75,27 +75,12 @@ const Checkout = ({
           ))}
         </tbody>
       </table>
-
-      <div className="c-total">
-        <span className="text">{t("Total")}:&nbsp;</span>
-        {priceString(totalPayment)}
-      </div>
       <div className="c-details">
         <table>
           <tbody>
-            <tr className="c-balance">
-              <td>{t("My Balance:")}</td>
-              <td className="amount">{priceString(balance.total)}</td>
-            </tr>
             <tr className="c-payment">
               <td>{t("Total Payment:")}</td>
-              <td className="amount">{"-" + priceString(totalPayment)}</td>
-            </tr>
-            <tr className="c-remainder">
-              <td>{t("Balance After Checkout:")}</td>
-              <td className="amount">
-                {priceString(balance.total - totalPayment)}
-              </td>
+              <td className="amount">{totalPayment + " LDC"}</td>
             </tr>
           </tbody>
         </table>
