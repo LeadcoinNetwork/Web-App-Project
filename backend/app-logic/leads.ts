@@ -7,6 +7,8 @@ import * as _ from "lodash"
 import config from "./config"
 var request = require("request-promise")
 
+const Industries = ["Website building"]
+
 const logTransaction = async ({ fiat_amount, exchange_rate, leads_count }) => {
   const res = await request({
     uri: "http://blockchain.leadcoin.network/exchange",
@@ -42,6 +44,64 @@ const validate_lead = lead => {
     errors.push("name::")
     errors.push("email::")
   }
+
+  if (!_.includes(Industries, lead.industry)) {
+    errors.push("industry::Wrong industry.")
+    console.log(Industries, lead.industry)
+  }
+
+  if (lead.industry === "Website building") {
+    errors.push(...validateWebBuildingLead(lead))
+  }
+
+  return errors
+}
+
+const validateWebBuildingLead = lead => {
+  let errors: string[] = []
+
+  // fields contains: "Yes" or "No"
+  const boolFields = [
+    "hosting",
+    "blog",
+    "e_commerce",
+    "content_management",
+    "seo",
+    "mobile_design",
+  ]
+
+  // fields contains array
+  const arrayFields = ["languages", "functionality"]
+
+  // For check by types
+  for (let key in lead) {
+    if (!lead.hasOwnProperty(key)) {
+      continue
+    }
+
+    let value = lead[key]
+
+    // Is boolean
+    if (_.includes(boolFields, key)) {
+      if (!_.includes(["Yes", "No"], value)) {
+        errors.push(`${key}::May contain only "Yes" or "No".`)
+      }
+    }
+
+    // Is string[]
+    if (_.includes(arrayFields, key)) {
+      if (!_.isArray(value) || !_.every(value, _.isString)) {
+        errors.push(`${key}::May contain only string array.`)
+      }
+    }
+  }
+
+  if (!_.includes(["Mostly Static", "Dynamic"], lead.content_updates)) {
+    errors.push(
+      `content_updates::May contain only "Mostly Static" or "Dynamic".`,
+    )
+  }
+
   return errors
 }
 

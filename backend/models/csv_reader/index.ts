@@ -1,4 +1,6 @@
 // external modules
+import * as _ from "lodash"
+
 const csv = require("csv")
 const fs = require("fs")
 const papaparse = require("papaparse")
@@ -25,7 +27,7 @@ export function parseMappedFile(
   let records = papaparse.parse(fileContents, parseConfig).data
 
   // fields with data to store as array
-  const arrayFields: string[] = ["languages", "functionality"]
+  const arrayFields = ["languages", "functionality"]
 
   // array items separator for csv
   const arraySeparator = ";"
@@ -43,8 +45,8 @@ export function parseMappedFile(
       let mappedIndex = fields_map[key]
       lead[key] = line[mappedIndex]
 
-      if (arrayFields.indexOf(key) !== -1) {
-        lead[key] = lead[key].split(arraySeparator).map(str => str.trim)
+      if (_.includes(arrayFields, key)) {
+        lead[key] = lead[key].split(arraySeparator).map(str => str.trim())
       }
     }
     return lead
