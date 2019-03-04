@@ -23,12 +23,18 @@ export function parseMappedFile(
   lead_price: number,
 ) {
   let records = papaparse.parse(fileContents, parseConfig).data
+
+  // fields with data to store as array
+  const arrayFields: string[] = ["languages", "functionality"]
+
+  // array items separator for csv
+  const arraySeparator = ";"
+
   const leads = records.map(line => {
     const lead = {
       lead_price,
       ownerId: user_id,
       date: new Date().valueOf(),
-      lead_type: "realestate",
       active: true,
       forSale: true,
       bought_from: 0,
@@ -36,8 +42,13 @@ export function parseMappedFile(
     for (let key in fields_map) {
       let mappedIndex = fields_map[key]
       lead[key] = line[mappedIndex]
+
+      if (arrayFields.indexOf(key) !== -1) {
+        lead[key] = lead[key].split(arraySeparator).map(str => str.trim)
+      }
     }
     return lead
   })
+
   return leads
 }
