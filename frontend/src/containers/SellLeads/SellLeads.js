@@ -9,9 +9,6 @@ class SellLeads extends React.Component {
   sellLeads = () => {
     console.log(Array.from(this.props.leads.selected))
   }
-  sellLead = id => {
-    console.log([id])
-  }
   buildButtonLabel = () => {
     let amount = this.props.leads.selected.size
 
@@ -56,6 +53,9 @@ class SellLeads extends React.Component {
         </div>
         <div style={{ float: "right" }}>
           <div className="upload-links">
+            <Link to="/salesforce-manual" className="csv-upload no-underline">
+              {t("Salesforce Import")}
+            </Link>
             <Link to="/csv-upload" className="csv-upload no-underline">
               {t("Upload CSV File")}
             </Link>

@@ -61,20 +61,21 @@
     }
   }
   .line {
-    margin: 10px 10px;
-    height: 40px;
-    line-height: 40px;
+    margin: 10px 15px;
+    justify-content: flex-start;
+    align-items: center;
     .fieldLabel {
-      width: 200px;
-      margin-right: 5px;
+      width: 235px;
+      margin-right: 15px;
+      padding: 8px 0;
       text-transform: capitalize;
     }
   }
   .price {
     margin-left: 292px;
     input {
-      margin-left: 47px;
-      width: 240px;
+      margin-left: 78px;
+      width: 256px;
     }
   }
   .flexed {

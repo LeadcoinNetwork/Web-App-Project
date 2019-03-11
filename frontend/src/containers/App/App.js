@@ -29,6 +29,7 @@ import UserSettings from "Containers/UserSettings"
 import Withdraw from "containers/Withdraw"
 import Terms from "Containers/Terms"
 import Privacy from "Containers/Privacy"
+import SalesforceManual from "Containers/SalesforceManual"
 import { connect } from "react-redux"
 import { metamask } from "Actions"
 
@@ -82,6 +83,7 @@ class App extends React.Component {
               <Route path="/notifications" component={NotificationTable} />
               <Route path="/terms" component={Terms} />
               <Route path="/privacy" component={Privacy} />
+              <Route path="/salesforce-manual" component={SalesforceManual} />
             </Switch>
           </main>
           <Snackbar />

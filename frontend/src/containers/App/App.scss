@@ -56,6 +56,41 @@
       }
     }
 
+    .next-wrapper {
+
+      padding-right: 20px;
+
+      .next {
+        display: inline-block;
+        cursor: pointer;
+        margin-bottom: 24px;
+        color: $bg-level-3;
+
+        &:hover {
+          opacity: 0.8;
+        }
+
+        .next-arrow,
+        .next-text {
+          display: inline-block;
+          height: 13px;
+        }
+
+        .next-arrow {
+          width: 13px;
+          border-left: 1px solid $bg-level-3;
+          border-bottom: 1px solid $bg-level-3;
+          transform: rotateZ(224deg);
+        }
+        .next-text {
+          position: relative;
+          font-size: 20px;
+        }
+      }
+    }
+
+
+
     h1 {
       font-size: 30px;
       font-weight: 300;
@@ -112,6 +147,9 @@
 
       &.a-app-mode {
         padding: calc(#{$header-height} + 80px) 20px 20px;
+      }
+      .next-wrapper {
+        padding-right: 0;
       }
     }
   }

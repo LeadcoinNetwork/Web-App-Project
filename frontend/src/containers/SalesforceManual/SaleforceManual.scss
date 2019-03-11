@@ -1,0 +1,23 @@
+@import "~Styles/variables";
+
+
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.manual-container {
+  padding: 20px 0;
+
+  ol {
+    max-width: 700px;
+
+    li {
+      padding: 10px;
+    }
+  }
+  .next-button {
+    float: right;
+  }
+}
