@@ -85,13 +85,13 @@ class User extends baseDBModel<
     return this.update(user_id, { password: hashed_password })
   }
 
-  async activateUser({ user_id }: { user_id: number }) {
-    return await this.updateUser(user_id, { disabled: null })
-  }
+  // async activateUser({ user_id }: { user_id: number }) {
+  //   return await this.updateUser(user_id, { disabled: null })
+  // }
 
-  async updateWallet({ user_id, wallet }: { user_id: number; wallet: string }) {
-    return await this.updateUser(user_id, { wallet })
-  }
+  // async updateWallet({ user_id, wallet }: { user_id: number; wallet: string }) {
+  //   return await this.updateUser(user_id, { wallet })
+  // }
 
   async mustGetUserById(id) {
     var result = await this.tryGetById(id)

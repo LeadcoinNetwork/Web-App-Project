@@ -105,9 +105,11 @@ export default class Leads extends baseDBModel<
       })
       .map(async leadPromise => {
         const lead = await leadPromise
-        const status = await this.insert(lead)
+        await this.insert(lead)
+
         return lead
       })
+
     return Promise.all(lead_promises)
   }
 
