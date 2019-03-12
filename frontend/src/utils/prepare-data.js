@@ -38,3 +38,15 @@ export const filterFields = lead => {
 
 export const totalLeadsPrice = leads =>
   leads.reduce((price, lead) => price + lead.lead_price, 0)
+
+export const parseFieldsMap = fields_map => {
+  let obj = {}
+
+  fields.forEach(x => {
+    if (x.name === fields_map[x.name]) {
+      obj[x.key] = fields_map[x.name]
+    }
+  })
+
+  return obj
+}

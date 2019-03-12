@@ -9,6 +9,8 @@ import t from "../../utils/translate/translate"
 import { connect } from "react-redux"
 import * as actions from "actions"
 import { Route, Switch } from "react-router"
+import ReactTooltip from 'react-tooltip'
+
 const Header = ({
   pathname,
   loggedIn,
@@ -64,6 +66,7 @@ const Header = ({
         <NotificationElement />
         <UserMenu />
       </div>
+      <ReactTooltip className="balance-tooltip" id="balance-tooltip"  effect="solid" getContent={dataTip => dataTip} />
     </header>
   )
 }

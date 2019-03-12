@@ -6,7 +6,9 @@ import { priceString } from "Utils/numbers"
 const BalanceWidget = ({ balance }) => (
   <>
     {balance.loading ? null : (
-      <div className="ldc-balance-widget">{priceString(balance.total)}</div>
+      <div data-for="balance-tooltip"
+        data-tip="LDCs received to-date" className="ldc-balance-widget" >{balance.total + ' LDC'}
+      </div>
     )}
   </>
 )

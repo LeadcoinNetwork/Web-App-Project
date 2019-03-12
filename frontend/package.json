@@ -5,7 +5,8 @@
   "scripts": {
     "start": "webpack-dev-server --hot --config webpack.dev.js --profile ",
     "build": "./node_modules/.bin/webpack --config webpack.prod.js --profile",
-    "webpack-stats": "./node_modules/.bin/webpack --profile --config webpack.prod.js --json >stats.json",
+    "webpack-stats":
+      "./node_modules/.bin/webpack --profile --config webpack.prod.js --json >stats.json",
     "webpack-analyze": "webpack-bundle-analyzer stats.json",
     "stats": "npm-run-all webpack-stats webpack-analyze",
     "test": "jest",
@@ -96,6 +97,7 @@
     "react-dropzone": "^4.2.13",
     "react-hot-loader": "^4.3.3",
     "react-joyride": "^1.11.4",
+    "react-modal": "^3.8.1",
     "react-phone-input-2": "^2.4.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
@@ -120,7 +122,7 @@
     "typescript": "^2.9.2",
     "web3": "^0.20.7",
     "webpack": "^4.9.1",
-    "webpack-cli": "^2.1.4",
+    "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.1.4",
     "webpack-merge": "^4.1.2",
     "webpack-rtl-plugin": "^1.7.0"

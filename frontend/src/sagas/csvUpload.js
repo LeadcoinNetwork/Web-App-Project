@@ -3,7 +3,7 @@ import * as Actions from "../actions"
 import { select, take, put, call } from "redux-saga/effects"
 import { routerMiddleware, push } from "react-router-redux"
 import { delay } from "redux-saga"
-
+import { parseFieldsMap } from "../utils/prepare-data"
 import API from "../api/index"
 
 export default function* csvUpload(api) {
@@ -14,6 +14,7 @@ export default function* csvUpload(api) {
     )
     let { file } = yield select(state => state.csvUpload)
     yield put(Actions.csvUpload.csvUploadLoadingStart())
+    yield (fields_map = parseFieldsMap(fields_map))
     let res = yield api.leads.sellLeadsCsvMapping({
       fields_map,
       agree_to_terms,

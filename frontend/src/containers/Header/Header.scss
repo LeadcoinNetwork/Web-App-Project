@@ -103,6 +103,12 @@ header.ldc-header {
       }
     }
   }
+
+  .balance-tooltip {
+    height: 45px;
+    font-size: 16px;
+    line-height: 30px;
+  }
 }
 
 @media (max-width: $screen-tablets) {

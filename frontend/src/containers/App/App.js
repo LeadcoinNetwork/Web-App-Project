@@ -103,10 +103,7 @@ const mapStateToProps = state => ({
 })
 
 // export default App
-export default connect(
-  mapStateToProps,
-  {
-    toggleResultsMode: () => {},
-    handleMetamaskInit: metamask.metamaskInit,
-  },
-)(App)
+export default connect(mapStateToProps, {
+  toggleResultsMode: () => {},
+  handleMetamaskInit: metamask.metamaskInit,
+})(App)
