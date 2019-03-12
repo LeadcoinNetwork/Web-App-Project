@@ -419,7 +419,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       let value = record[key]
       key = JSON.stringify(key)
 
-      if (typeof value === "object") {
+      if (value && typeof value === "object") {
         value = `JSON_ARRAY(${value.map(mysql.escape).join(",")})`
       } else {
         value = mysql.escape(value)

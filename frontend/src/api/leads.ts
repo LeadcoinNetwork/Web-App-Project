@@ -9,7 +9,7 @@ interface LeadsApiOptions {
   filters?: [string, string][]
 }
 
-let leads_mock = require("mocks/leads.json")
+let leads_mock = require("../mocks/leads.json")
 
 const pFileReader = file => {
   //@ts-ignore

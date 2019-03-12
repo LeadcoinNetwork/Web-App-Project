@@ -1,29 +1,16 @@
 import Leads from "./leads"
-import * as Chance from "chance"
-var chance = Chance()
 import { Lead } from "./types"
 import config from "../../app-logic/config"
 
 import SQL from "../mysql-pool/mysql-pool"
-var leads = new Leads(new SQL(config))
+const leads = new Leads(new SQL(config))
 
-beforeEach(async () => {
-  await leads.deleteAll()
-})
-
-import NotFound from "../../utils/not-found"
+beforeEach(async () => await leads.deleteAll())
 
 test("delete lead - insert, delete and then test cannot find lead after deleted", async () => {
-  const status = await leads.insertLead({
-    date: 1212,
-    ownerId: 1,
-    name: "test lead",
-    phone: "12301212",
-    email: "moshe@moshe.com",
-    active: true,
-    bought_from: null,
-  })
+  const status = await leads.insertLead(Leads.getMockLead())
   expect(status.insertId).toBeTruthy()
+
   const id = status.insertId
   const result = await leads.remove(id)
   const record: Lead = await leads.getById(id)
@@ -47,17 +34,7 @@ test("add new lead with bad data", async () => {
 const add_leads = async count => {
   const rc = []
   for (let i = 1; i < count + 1; i++) {
-    let status = await leads.insertLead({
-      date: 1212,
-      ownerId: i,
-      name: chance.name(),
-      phone: "12301212",
-      email: "moshe@moshe.com",
-      active: true,
-      price: 0,
-      bought_currency: "USD",
-      bought_from: null,
-    })
+    let status = await leads.insertLead(Leads.getMockLead(i))
     if (status.affectedRows) rc.push(status.insertId)
   }
   return rc
@@ -92,6 +69,7 @@ test("paging and limit should work", async () => {
       offset: 20,
     },
   })
+
   expect(records1.length).toBe(20)
   expect(records1.pop().ownerId).toBe(20)
   const records2: Lead[] = await leads.findLeads({
@@ -119,81 +97,54 @@ test("paging and limit should work", async () => {
 })
 
 test("add new lead", async () => {
-  const success = await leads.insertLead({
-    date: 1212,
-    ownerId: 1,
-    name: "test lead",
-    phone: "12301212",
-    email: "moshe@moshe.com",
-    active: true,
-    bought_from: null,
-  })
+  const success = await leads.insertLead(Leads.getMockLead(1))
   expect(success).toBeTruthy()
 })
 
 test("find lead", async () => {
-  await leads.insertLead({
-    date: 1212,
-    bought_currency: "USD",
-    price: 0,
-    ownerId: 1,
-    name: "test lead",
-    active: true,
-    phone: "1",
-    email: "moshe@moshe.com",
-    bought_from: null,
-  })
+  let newLead = Leads.getMockLead()
+  newLead.telephone = "1"
+
+  await leads.insertLead(newLead)
   const [record]: Lead[] = await leads.findLeads({
     condition: {
       email: "moshe@moshe.com",
     },
   })
   expect(record.email).toBe("moshe@moshe.com")
-  await leads.insertLead({
-    date: 1213,
-    bought_currency: "USD",
-    price: 0,
-    ownerId: 1,
-    name: "test lead 2",
-    active: true,
-    phone: "2",
-    email: "moshe@moshe.com",
-    bought_from: null,
-  })
+
+  newLead = Leads.getMockLead()
+  newLead.telephone = "2"
+
+  await leads.insertLead(newLead)
   const [record3, record4]: Lead[] = await leads.findLeads({
     condition: {
       email: "moshe@moshe.com",
     },
     sort: {
-      sortBy: "phone",
+      sortBy: "telephone",
       sortOrder: "DESC",
     },
   })
-  expect(record3.name).toBe("test lead 2")
-  expect(record4.name).toBe("test lead")
+  expect(record3.telephone).toBe("2")
+  expect(record4.telephone).toBe("1")
   const [record5, record6]: Lead[] = await leads.findLeads({
     condition: {
       email: "moshe@moshe.com",
     },
     sort: {
-      sortBy: "phone",
+      sortBy: "telephone",
       sortOrder: "ASC",
     },
   })
-  expect(record6.name).toBe("test lead 2")
-  expect(record5.name).toBe("test lead")
+  expect(record6.telephone).toBe("2")
+  expect(record5.telephone).toBe("1")
 })
 
 test("delete lead", async () => {
-  await leads.insertLead({
-    date: 1212,
-    ownerId: 1,
-    active: true,
-    name: "test lead",
-    phone: "12301212",
-    email: "moshe@moshe.com",
-    bought_from: null,
-  })
+  let newLead = Leads.getMockLead()
+
+  await leads.insertLead(newLead)
   const [record]: Lead[] = await leads.findLeads({
     condition: {
       email: "moshe@moshe.com",
