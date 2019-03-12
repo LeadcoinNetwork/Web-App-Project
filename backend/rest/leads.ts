@@ -395,18 +395,31 @@ export function start({
       ;(async () => {
         const { user } = req
         let { search, sortBy, page, limit, sortOrder, mock } = req.query
+
         let _sort = {
           sortBy: sortBy && sortBy != "id" ? sortBy : "date",
           sortOrder: sortOrder || "DESC",
         }
+
         let _limit = {
           start: parseInt(page || 0) * parseInt(limit || 50),
           offset: limit || 50,
         }
+
+        let _filters = search
+          ? ["content_updates", "comments"].map(field => {
+              return {
+                field,
+                op: "LIKE",
+                val: search,
+              }
+            })
+          : []
+
         await appLogic.leads
           .getBoughtLeads(user.id, {
             sort: _sort,
-            filters: [],
+            filters: _filters,
             limit: _limit,
           })
           .then(response => {
@@ -509,7 +522,9 @@ export function start({
         }: {
           industry: Industry
           search: string
-        } = req.query.filter
+        } =
+          req.query.filter || []
+
         const { user } = req
         let _sort = {
           sortBy: sortBy && sortBy != "id" ? sortBy : "date",
@@ -525,12 +540,14 @@ export function start({
             }
           })
         }
-        filters.industry = industry === "All" ? "" : industry
+
+        filters.industry = industry === "All" || !industry ? "" : industry
+
         let _limit = {
           start: parseInt(page || 0) * parseInt(limit || 50),
           offset: limit || 50,
         }
-        console.log({ user })
+        // console.log({ user })
         await appLogic.leads
           .getAllLeads({
             sort: _sort,
