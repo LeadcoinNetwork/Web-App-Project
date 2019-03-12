@@ -9,11 +9,24 @@ import Dropzone from "react-dropzone"
 import papaparse from "papaparse"
 import ConfirmationDialog from "../../components/ConfirmationDialog"
 import { push } from "react-router-redux"
+import Modal from "../../components/Modal"
+
 class CSVUpload extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { showConfirmation: false }
+
+    this.state = {
+      showConfirmation: false,
+      modalStepOne: false,
+      modalStepTwo: false,
+      modalStepThree: false,
+    }
   }
+
+  handleModal(state) {
+    this.setState(state)
+  }
+
   generalError() {
     const { errors } = this.props.csvUpload
     if (!errors) return
@@ -231,10 +244,159 @@ class CSVUpload extends React.Component {
       )
     })
   }
+
+  componentWillMount() {
+    this.state.modalStepOne = this.props.location.isSalesforce
+  }
+
   componentWillUnmount() {
     this.props.clear()
     this.props.reset()
   }
+
+  renderList(step) {
+    let stepContent
+    switch (step) {
+      case "stepOne":
+        stepContent = (
+          <ol>
+            <li>
+              Open the{" "}
+              <a
+                href="https://help.salesforce.com/articleView?id=installing_the_data_loader.htm&type=5"
+                target="_blank"
+              >
+                Data Loader
+              </a>
+              .
+            </li>
+            <li>
+              Click Export. If you want to also export archived activity records
+              and soft-deleted records, click Export All instead.
+            </li>
+            <li>
+              Enter your Salesforce username and password, and click Log in.
+            </li>
+          </ol>
+        )
+        break
+      case "stepTwo":
+        stepContent = (
+          <ol start="4">
+            <li>
+              When you’re logged in, click Next. (You are not asked to log in
+              again until you log out or close the program.) If your
+              organization restricts IP addresses, logins from untrusted IPs are
+              blocked until they’re activated. Salesforce automatically sends
+              you an activation email that you can use to log in. The email
+              contains a security token that you must add to the end of your
+              password. For example, if your password is mypassword, and your
+              security token is XXXXXXXXXX, you must enter mypasswordXXXXXXXXXX
+              to log in.
+            </li>
+            <li>
+              Choose an object. For example, select the Account object. If your
+              object name isn’t listed, select Show all objects to see all the
+              objects that you can access. The objects are listed by localized
+              label name, with the developer name in parentheses. For object
+              descriptions, see the{" "}
+              <a
+                href="https://developer.salesforce.com/docs/atlas.en-us.218.0.api.meta/api/sforce_api_quickstart_intro.htm"
+                target="_blank"
+              >
+                SOAP API Developer Guide
+              </a>
+              .
+            </li>
+            <li>
+              Select the CSV file to export the data to. You can choose an
+              existing file or create a file. If you select an existing file,
+              the export replaces its contents. To confirm the action, click
+              Yes, or choose another file by clicking No.
+            </li>
+            <li>Click Next.</li>
+          </ol>
+        )
+        break
+      case "stepThree":
+        stepContent = (
+          <ol start="8">
+            <li>
+              Create a SOQL query for the data export. For example, select Id
+              and Name in the query fields, and click Finish. As you follow the
+              next steps, the CSV viewer displays all the Account names and
+              their IDs. SOQL is the Salesforce Object Query Language. Similar
+              to the SELECT command in SQL, with SOQL, you can specify the
+              source object, a list of fields to retrieve, and conditions for
+              selecting rows in the source object. Choose the fields you want to
+              export. Optionally, select conditions to filter your dataset. If
+              you do not select any conditions, all the data to which you have
+              read access is returned. Review the generated query and edit if
+              necessary.For more information on SOQL, see the{" "}
+              <a
+                href="https://developer.salesforce.com/docs/atlas.en-us.218.0.soql_sosl.meta/soql_sosl/"
+                target="_blank"
+              >
+                SOQL and SOSL Reference
+              </a>
+              .
+            </li>
+            <li>
+              Click Finish, then click Yes to confirm. A progress information
+              window reports the status of the operation. After the operation
+              completes, a confirmation window summarizes your results.
+            </li>
+            <li>
+              To view the CSV file. click View Extraction, or to close, click
+              OK. For more details, see{" "}
+              <a
+                href="https://help.salesforce.com/articleView?id=reviewing_output_files.htm&type=5"
+                target="_blank"
+              >
+                Review Data Loader Output Files
+              </a>
+              .
+            </li>
+          </ol>
+        )
+    }
+    return stepContent
+  }
+
+  handleStepChangeContent(step) {
+    let stepContent = this.renderList(step)
+
+    return (
+      <>
+        <h3>
+          {t(
+            "This is step by step guide how to export your leads from salesforce in to CSV file.",
+          )}
+        </h3>
+        <p>
+          Original docs you can find{" "}
+          <a
+            href="https://help.salesforce.com/articleView?id=exporting_data.htm&type=5"
+            target="_blank"
+          >
+            here
+          </a>
+          .
+        </p>
+        <div className="manual-container">
+          <h2>Export Data</h2>
+          <h4>
+            You can use the Data Loader export wizard to extract data from a
+            Salesforce object.
+          </h4>
+          <div>
+            <ol>{stepContent}</ol>
+          </div>
+        </div>
+      </>
+    )
+  }
+
   render() {
     let fileLabel = t("Choose File")
     const { finished, file } = this.props.csvUpload
@@ -253,6 +415,47 @@ class CSVUpload extends React.Component {
     }
     return (
       <div className="csvUpload">
+        <Modal
+          isOpen={this.state.modalStepOne}
+          modalContent={this.handleStepChangeContent("stepOne")}
+          shouldCloseOnOverlayClick={true}
+          isNext={true}
+          onNext={async () => {
+            await this.handleModal({ modalStepOne: false })
+            await this.handleModal({ modalStepTwo: true })
+          }}
+          onRequestClose={() => this.handleModal({ modalStepOne: false })}
+          onClose={() => this.handleModal({ modalStepOne: false })}
+        />
+        <Modal
+          isOpen={this.state.modalStepTwo}
+          modalContent={this.handleStepChangeContent("stepTwo")}
+          shouldCloseOnOverlayClick={true}
+          isPrev={true}
+          onPrev={() => {
+            this.handleModal({ modalStepTwo: false })
+            this.handleModal({ modalStepOne: true })
+          }}
+          isNext={true}
+          onNext={async () => {
+            await this.handleModal({ modalStepTwo: false })
+            await this.handleModal({ modalStepThree: true })
+          }}
+          onRequestClose={() => this.handleModal({ modalStepTwo: false })}
+          onClose={() => this.handleModal({ modalStepTwo: false })}
+        />
+        <Modal
+          isOpen={this.state.modalStepThree}
+          modalContent={this.handleStepChangeContent("stepThree")}
+          shouldCloseOnOverlayClick={true}
+          isPrev={true}
+          onPrev={() => {
+            this.handleModal({ modalStepThree: false })
+            this.handleModal({ modalStepTwo: true })
+          }}
+          onRequestClose={() => this.handleModal({ modalStepThree: false })}
+          onClose={() => this.handleModal({ modalStepThree: false })}
+        />
         <div className="back-wrapper">
           <div
             className="back"
@@ -282,7 +485,8 @@ class CSVUpload extends React.Component {
                 >
                   <center>
                     <h3>
-                      <br />Drop a CSV file into this box
+                      <br />
+                      Drop a CSV file into this box
                     </h3>
                   </center>
                 </Dropzone>
@@ -317,19 +521,16 @@ const mapStateToProps = state => ({
   csvUpload: state.csvUpload,
   csvMapping: state.csvMapping,
 })
-export default connect(
-  mapStateToProps,
-  {
-    pickFile: csvUpload.csvUploadPickFile,
-    handleChange: csvMapping.csvMappingFormChange,
-    setFileFields: csvMapping.csvMappingGetFileFields,
-    setDbFields: csvMapping.csvMappingGetDbFields,
-    agreeToTerms: csvMapping.csvMappingAgreeToTerms,
-    handleMapChange: csvMapping.csvMappingMapChange,
-    handleErrors: csvMapping.csvMappingError,
-    clear: csvMapping.csvMappingClearForm,
-    reset: csvUpload.csvUploadReset,
-    submit: csvUpload.csvUploadSubmit,
-    push,
-  },
-)(CSVUpload)
+export default connect(mapStateToProps, {
+  pickFile: csvUpload.csvUploadPickFile,
+  handleChange: csvMapping.csvMappingFormChange,
+  setFileFields: csvMapping.csvMappingGetFileFields,
+  setDbFields: csvMapping.csvMappingGetDbFields,
+  agreeToTerms: csvMapping.csvMappingAgreeToTerms,
+  handleMapChange: csvMapping.csvMappingMapChange,
+  handleErrors: csvMapping.csvMappingError,
+  clear: csvMapping.csvMappingClearForm,
+  reset: csvUpload.csvUploadReset,
+  submit: csvUpload.csvUploadSubmit,
+  push,
+})(CSVUpload)

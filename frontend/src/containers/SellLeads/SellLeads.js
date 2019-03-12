@@ -20,6 +20,7 @@ class SellLeads extends React.Component {
       return t("sell leads")
     }
   }
+
   getListButtons = () => {
     return [
       {
@@ -45,6 +46,7 @@ class SellLeads extends React.Component {
   setSelectedRecords = selectedLeads => {
     this.props.dispatch(leads.setSelectedLeads(selectedLeads))
   }
+
   render() {
     return (
       <>
@@ -53,9 +55,17 @@ class SellLeads extends React.Component {
         </div>
         <div style={{ float: "right" }}>
           <div className="upload-links">
-            <Link to="/salesforce-manual" className="csv-upload no-underline">
+            <Link
+              to={{
+                pathname: "/csv-upload",
+                isSalesforce: true,
+              }}
+              params="sal"
+              className="csv-upload no-underline"
+            >
               {t("Salesforce Import")}
             </Link>
+
             <Link to="/csv-upload" className="csv-upload no-underline">
               {t("Upload CSV File")}
             </Link>
@@ -84,13 +94,10 @@ const mapStateToProps = state => ({
   fields: state.fields,
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    fetchLeads: (...params) => leads.fetchLeads("SELL_LEADS", ...params),
-    setSelectedLeads: selectedLeads =>
-      leads.setSelectedLeads("SELL_LEADS", selectedLeads),
+export default connect(mapStateToProps, {
+  fetchLeads: (...params) => leads.fetchLeads("SELL_LEADS", ...params),
+  setSelectedLeads: selectedLeads =>
+    leads.setSelectedLeads("SELL_LEADS", selectedLeads),
 
-    toggelCardView: index => leads.toggelCardView("SELL_LEADS", index),
-  },
-)(SellLeads)
+  toggelCardView: index => leads.toggelCardView("SELL_LEADS", index),
+})(SellLeads)

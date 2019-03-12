@@ -1,0 +1,46 @@
+@import "~Styles/variables";
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: transparent;
+}
+
+.modal-container {
+  top: 50%;
+  left: 60%;
+  right: auto;
+  bottom: auto;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  max-width: 650px;
+  max-height: 725px;
+  width: 100%;
+  background: #fff;
+  outline: none;
+  border-radius: 6px;
+  padding: 1.3em;
+  color: #000;
+}
+
+.buttons-section {
+  padding: 4px;
+  display: flex;
+}
+
+.align-end {
+  justify-content: flex-end;
+}
+.align-between {
+  justify-content: space-between;
+}
+.close-button {
+  display: flex;
+  justify-content: flex-end;
+  padding: 4px;
+  cursor: pointer;
+  color: #777777;
+}
