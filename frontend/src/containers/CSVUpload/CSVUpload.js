@@ -61,7 +61,6 @@ class CSVUpload extends React.Component {
         "Languages",
         "Hosting",
         "Comments",
-        "Contact Person",
       ],
     }
     this.props.setDbFields(mock_fields)
@@ -167,7 +166,7 @@ class CSVUpload extends React.Component {
       if (fields_map && fields_map[fieldName]) value = fields_map[fieldName]
       const items = file_fields.map((field, i) => {
         fields_map[fieldName] = value =
-          value === "" && fieldName == field ? field : value
+          value === "" && fieldName === field ? field : value
         return t(field)
       })
       items.unshift(["0", t("I Don't have this field")])
