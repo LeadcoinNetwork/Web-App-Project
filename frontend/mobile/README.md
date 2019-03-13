@@ -1,6 +1,8 @@
 ### Build apk file for mobile version
 
-To build mobile application you need to make a few steps:
+To build mobile application you need to install Android Studio, JDK 1.8, Cordova on your computer
+
+If you have all of it installed make a few steps:
 
 * go to frontend directory
 
@@ -24,13 +26,13 @@ npm run build:move
  npm run platform
 ```
 
-* we need to modify index.html and move dist folder to "www" for mobile version so run:
+* we need to modify index.html and move dist folder to "www" for mobile version:
 
 ```
 npm run build:mobile
 ```
 
-* finally to build apk file run:
+* to build apk file run:
 
 ```
 npm run build:apk
