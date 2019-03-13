@@ -57,6 +57,62 @@ const validate_lead = lead => {
   return errors
 }
 
+const sanitaizeWebBuildingLead = lead => {
+  // fields contains: "Yes" or "No"
+  const boolFields = [
+    "hosting",
+    "blog",
+    "e_commerce",
+    "content_management",
+    "seo",
+    "mobile_design",
+  ]
+  const boolValues = {
+    Yes: ["yes", "y", "true", "t", "+"],
+    No: ["no", "n", "false", "f", "-"],
+  }
+
+  const content_updates = ["Mostly Static", "Dynamic"]
+
+  // For fix by types
+  for (let key in lead) {
+    // skip internal property
+    if (!lead.hasOwnProperty(key)) {
+      continue
+    }
+
+    // skip no string
+    if (typeof lead[key] != "string") {
+      continue
+    }
+
+    lead[key] = lead[key].trim()
+    let value = lead[key].toLowerCase()
+
+    // boolean
+    if (_.includes(boolFields, key)) {
+      if (_.includes(boolValues.Yes, value)) {
+        lead[key] = "Yes"
+      }
+
+      if (_.includes(boolValues.No, value)) {
+        lead[key] = "No"
+      }
+    }
+
+    // content_updates
+    if (key === "content_updates") {
+      for (let option of content_updates) {
+        if (value == option.toLowerCase()) {
+          lead[key] = option
+        }
+      }
+    }
+  }
+
+  return lead
+}
+
 const validateWebBuildingLead = lead => {
   let errors: string[] = []
 
@@ -192,6 +248,10 @@ export default class Leads {
 
   public validateLead(lead) {
     return validate_lead(lead)
+  }
+
+  public sanitaizeCsvLead(lead) {
+    return sanitaizeWebBuildingLead(lead)
   }
 
   public sanitizeLead(lead) {

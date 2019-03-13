@@ -104,22 +104,19 @@ export function start({
       )
 
       for (let lead of leads) {
+        // fix values
+        lead = appLogic.leads.sanitaizeCsvLead(lead)
+
         let problems = appLogic.leads.validateLead(lead)
         if (!problems.length) {
           await appLogic.leads.AddLead(lead, true)
         } else {
-          // let errors = {}
-          // for (let problem of problems) {
-          //   let [key, val] = problem.split('::')
-          //   errors[key] = [val];
-          // }
-
+          // let error_obj = errStringToObj(problems.join(" ;"))
           return res.status(400).json({ error: problems })
         }
       }
 
-      res.json({ status: true })
-      return
+      return res.json({ status: true })
     } catch (e) {
       next(e)
     }
