@@ -102,6 +102,12 @@
     cursor: pointer;
     display: inline-block;
     margin-bottom: 10px;
+    .upload-container {
+      display: block;
+      height: 100%;
+      text-align: center;
+      width: 100%;
+    }
     .ldc-button {
       position: relative;
       .displaynone {

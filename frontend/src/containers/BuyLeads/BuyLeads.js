@@ -12,6 +12,7 @@ import { toast } from "react-toastify"
 class BuyLeads extends React.Component {
   buyLeads = () => {
     const { metamask } = this.props
+
     if (metamask.isActive) {
       this.props.push("/shopping-cart")
     } else {
@@ -20,11 +21,12 @@ class BuyLeads extends React.Component {
         {
           type: "error",
           closeOnClick: true,
-          autoClose: false,
+          autoClose: true,
         },
       )
     }
   }
+
   buyLead = id => {
     const { metamask } = this.props
     if (metamask.isActive) {
@@ -43,6 +45,7 @@ class BuyLeads extends React.Component {
       )
     }
   }
+
   buildButtonLabel = () => {
     let amount = this.props.leads.selected.size
 
@@ -155,16 +158,13 @@ const mapStateToProps = state => ({
   fields: state.fields.filter(lead => !lead.private),
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    push: push,
-    handleFilter: newFilter => leads.filterChange("BUY_LEADS", newFilter),
-    fetchLeads: params => leads.fetchLeads("BUY_LEADS", params),
-    setSelectedLeads: selectedLeads =>
-      leads.setSelectedLeads("BUY_LEADS", selectedLeads),
-    toggelCardView: index => leads.toggelCardView("BUY_LEADS", index),
-    searchClicked: () => leads.searchClicked("BUY_LEADS"),
-    clearList: () => leads.clearList("BUY_LEADS"),
-  },
-)(BuyLeads)
+export default connect(mapStateToProps, {
+  push: push,
+  handleFilter: newFilter => leads.filterChange("BUY_LEADS", newFilter),
+  fetchLeads: params => leads.fetchLeads("BUY_LEADS", params),
+  setSelectedLeads: selectedLeads =>
+    leads.setSelectedLeads("BUY_LEADS", selectedLeads),
+  toggelCardView: index => leads.toggelCardView("BUY_LEADS", index),
+  searchClicked: () => leads.searchClicked("BUY_LEADS"),
+  clearList: () => leads.clearList("BUY_LEADS"),
+})(BuyLeads)

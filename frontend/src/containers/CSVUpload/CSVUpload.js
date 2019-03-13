@@ -3,13 +3,13 @@ import Button from "Components/Button"
 import Select from "Components/Select"
 import TextField from "Components/TextField"
 import { connect } from "react-redux"
-import { csvUpload, csvMapping } from "../../actions"
-import t from "../../utils/translate/translate"
 import Dropzone from "react-dropzone"
 import papaparse from "papaparse"
-import ConfirmationDialog from "../../components/ConfirmationDialog"
 import { push } from "react-router-redux"
+import ConfirmationDialog from "../../components/ConfirmationDialog"
 import Modal from "../../components/Modal"
+import { csvUpload, csvMapping } from "../../actions"
+import t from "../../utils/translate/translate"
 
 class CSVUpload extends React.Component {
   constructor(props) {
@@ -396,6 +396,33 @@ class CSVUpload extends React.Component {
     )
   }
 
+  dropzoneWrapp() {
+    let refDropzone
+
+    return (
+      <div className="file-pick">
+        <Dropzone
+          accept=".csv"
+          ref={node => {
+            refDropzone = node
+          }}
+          disableClick={true}
+          onDrop={acceptedFiles => {
+            this.props.pickFile(acceptedFiles[0])
+            this.tryReadingCsv(acceptedFiles[0])
+          }}
+        >
+          <div className="upload-container" onClick={() => refDropzone.open()}>
+            <h3>
+              <br />
+              Drop a CSV file into this box
+            </h3>
+          </div>
+        </Dropzone>
+      </div>
+    )
+  }
+
   render() {
     let fileLabel = t("Choose File")
     const { finished, file } = this.props.csvUpload
@@ -474,25 +501,10 @@ class CSVUpload extends React.Component {
               <h3>
                 {t("Add multiple leads for sale by uploading a CSV file.")}
               </h3>
-              <div className="file-pick">
-                <Dropzone
-                  accept=".csv"
-                  onDrop={acceptedFiles => {
-                    this.props.pickFile(acceptedFiles[0])
-                    this.tryReadingCsv(acceptedFiles[0])
-                  }}
-                >
-                  <center>
-                    <h3>
-                      <br />
-                      Drop a CSV file into this box
-                    </h3>
-                  </center>
-                </Dropzone>
-              </div>
+              {this.dropzoneWrapp()}
               <p className="template">
                 Click <a href="assets/real-estate-csv-template.csv">here</a> to
-                download a template csv file for real estate leads.
+                download a template csv file for website building leads.
               </p>
             </div>
           )}

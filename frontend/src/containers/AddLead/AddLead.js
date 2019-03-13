@@ -1,44 +1,44 @@
-import React from 'react'
-import Select from 'react-select'
-import Button from 'Components/Button'
-import TextField from 'Components/TextField'
-import Checkbox from 'Components/Checkbox'
-import { connect } from 'react-redux'
-import { addLead } from 'Actions'
-import { push } from 'react-router-redux'
-import ReactTooltip from 'react-tooltip'
-import t from '../../utils/translate/translate'
-import ConfirmationDialog from '../../components/ConfirmationDialog'
+import React from "react"
+import Select from "react-select"
+import Button from "Components/Button"
+import TextField from "Components/TextField"
+import Checkbox from "Components/Checkbox"
+import { connect } from "react-redux"
+import { addLead } from "Actions"
+import { push } from "react-router-redux"
+import ReactTooltip from "react-tooltip"
+import t from "../../utils/translate/translate"
+import ConfirmationDialog from "../../components/ConfirmationDialog"
 
 const customStyles = {
   option: (styles, state) => {
     return {
       ...styles,
-      color: '#000',
-      'font-weight': '300',
+      color: "#000",
+      "font-weight": "300",
     }
   },
   container: styles => {
     return {
       ...styles,
-      color: 'white',
-      'font-weight': '300',
+      color: "white",
+      "font-weight": "300",
     }
   },
   multiValueRemove: styles => ({
     ...styles,
-    width: '27px',
-    height: '27px',
-    color: '#000',
+    width: "27px",
+    height: "27px",
+    color: "#000",
   }),
   multiValue: styles => ({
     ...styles,
-    margin: '3px',
-    'font-size': '20px',
+    margin: "3px",
+    "font-size": "20px",
   }),
   dropdownIndicator: styles => ({
     ...styles,
-    color: '#000',
+    color: "#000",
   }),
 }
 
@@ -53,18 +53,18 @@ class AddLead extends React.Component {
   }
 
   handleMultiSelectChange = (selected, payload) => {
-    payload.action === 'select-option'
+    payload.action === "select-option"
       ? this.props.handleMultiSelectChange(payload.option)
       : this.props.removeMultiSelectValue(payload.removedValue)
   }
 
   renderTerms() {
     const { errors } = this.props
-    const error = errors['agree_to_terms'] ? 'error' : ''
+    const error = errors["agree_to_terms"] ? "error" : ""
     return (
-      <div className={error + ' agree_to_terms twothirds'}>
+      <div className={error + " agree_to_terms twothirds"}>
         <Checkbox
-          label={t('I AGREE TO THE TERMS')}
+          label={t("I AGREE TO THE TERMS")}
           name="agree_to_terms"
           id="terms_checkbox"
           checked={this.props.agree_to_terms}
@@ -81,9 +81,9 @@ class AddLead extends React.Component {
     const { errors, values, loading } = this.props
 
     return fields.map(f => {
-      const isError = errors[f.key] ? 'error' : ''
+      const isError = errors[f.key] ? "error" : ""
       return (
-        <div key={f.key} className={isError + ' flexed line'}>
+        <div key={f.key} className={isError + " flexed line"}>
           <div className="fieldLabel">
             <span
               className="field-tooltip-web"
@@ -93,7 +93,7 @@ class AddLead extends React.Component {
               {t(f.name)}
             </span>
             <span className="field-tooltip-mobile">
-              {t(f.name)}{' '}
+              {t(f.name)}{" "}
               {f.tooltip && (
                 <i
                   data-for="field-tooltip-mob"
@@ -102,25 +102,27 @@ class AddLead extends React.Component {
                 />
               )}
             </span>
-            {f.key === 'lead_price' && (
+            {f.key === "lead_price" && (
               <span className="asterisk-required">*</span>
             )}
           </div>
           <div className="fieldValue">
-            {f.type === 'input' ? (
+            {f.type === "input" ? (
               <TextField
                 disabled={loading}
                 appStyle={true}
                 placeholder={t(f.name)}
+                type={f.key === "email" ? "email" : "text"}
                 value={values[f.key]}
                 onChange={e => {
                   this.props.handleChange(f.key, e.target.value)
                 }}
               />
-            ) : f.type === 'select' ? (
+            ) : f.type === "select" ? (
               <Select
                 className="multiselect"
                 value={values[f.key]}
+                isSearchable={false}
                 options={f.options}
                 name={f.key}
                 styles={customStyles}
@@ -131,7 +133,7 @@ class AddLead extends React.Component {
                 value={values[f.key]}
                 isMulti
                 options={f.options}
-                className={'multiselect'}
+                className={"multiselect"}
                 styles={customStyles}
                 isClearable={false}
                 onChange={this.handleMultiSelectChange}
@@ -146,7 +148,7 @@ class AddLead extends React.Component {
   render() {
     const { db_fields, loading, errors } = this.props
     if (!db_fields.private.length) {
-      return <div>{t('Loading...')}</div>
+      return <div>{t("Loading...")}</div>
     }
     return (
       <div className="add_lead">
@@ -155,26 +157,26 @@ class AddLead extends React.Component {
             className="back"
             onClick={() => {
               this.props.clear()
-              this.props.push('/sell-leads')
+              this.props.push("/sell-leads")
             }}
           >
             <div className="back-arrow" />
             <div className="back-text">Back</div>
           </div>
         </div>
-        <h1>{t('add lead')}</h1>
+        <h1>{t("add lead")}</h1>
         <h3>
-          {t('Add a new lead for sale by filling out a simple web form.')}
+          {t("Add a new lead for sale by filling out a simple web form.")}
         </h3>
         <div className="main_container">
           <div className="personal">
             <div className="help_text">
               <div className="header bigger">
-                {t('Personal Identification Information')}
+                {t("Personal Identification Information")}
               </div>
               <div className="header smaller">
                 {t(
-                  'This information will remain hidden until a buyer purchases the lead.',
+                  "This information will remain hidden until a buyer purchases the lead.",
                 )}
               </div>
             </div>
@@ -182,7 +184,7 @@ class AddLead extends React.Component {
           </div>
           <div className="public">
             <div className="help_text">
-              <div className="header bigger">{t('Public Fields')}</div>
+              <div className="header bigger">{t("Public Fields")}</div>
             </div>
             <div className="fields">{this.renderFields(db_fields.public)}</div>
           </div>
@@ -202,7 +204,7 @@ class AddLead extends React.Component {
                 onClick={() => {
                   this.setState({ showConfirmation: true })
                 }}
-                label={t('Submit')}
+                label={t("Submit")}
               />
               {this.state.showConfirmation && (
                 <ConfirmationDialog
@@ -230,16 +232,13 @@ class AddLead extends React.Component {
 
 const mapStateToProps = state => state.addLead
 
-export default connect(
-  mapStateToProps,
-  {
-    agreeToTerms: addLead.addLeadAgreeToTerms,
-    handleChange: addLead.addLeadHandleFormChange,
-    handleSelectChange: addLead.addLeadHandleSelectChange,
-    handleMultiSelectChange: addLead.addLeadHandleMultiSelectChange,
-    removeMultiSelectValue: addLead.addLeadHandleMultiSelectDeleteValue,
-    submit: addLead.addLeadSubmitForm,
-    clear: addLead.addLeadClearForm,
-    push,
-  },
-)(AddLead)
+export default connect(mapStateToProps, {
+  agreeToTerms: addLead.addLeadAgreeToTerms,
+  handleChange: addLead.addLeadHandleFormChange,
+  handleSelectChange: addLead.addLeadHandleSelectChange,
+  handleMultiSelectChange: addLead.addLeadHandleMultiSelectChange,
+  removeMultiSelectValue: addLead.addLeadHandleMultiSelectDeleteValue,
+  submit: addLead.addLeadSubmitForm,
+  clear: addLead.addLeadClearForm,
+  push,
+})(AddLead)

@@ -36,7 +36,7 @@ const RealEstateLead = lead => {
         <div className="rel-description">{lead.comments}</div>
       )}
       {lead.fieldsCheck.lead_price && (
-        <div className="rel-price">{priceString(lead.lead_price)}</div>
+        <div className="rel-price">{lead.lead_price + " LDC"}</div>
       )}
       <div className="rel-details-wrapper">
         <div className="rel-details">
