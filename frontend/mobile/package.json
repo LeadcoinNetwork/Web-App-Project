@@ -1,0 +1,22 @@
+{
+  "name": "leadcoin-client",
+  "version": "0.1.0",
+  "displayName": "LeadCoin - Webydo Node",
+  "private": true,
+  "homepage": "./",
+  "scripts": {
+    "build:mobile": "node __script.js && rmdir /s /q www && move dist www",
+    "platform": "cordova platform add android",
+    "build:apk": "cordova build android"
+  },
+  "dependencies": {
+    "cordova-android": "^7.0.0",
+    "cordova-plugin-whitelist": "^1.3.3"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {}
+    },
+    "platforms": ["android"]
+  }
+}
