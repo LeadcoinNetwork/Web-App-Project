@@ -5,11 +5,17 @@ import { methods, request } from "./request"
 //@ts-ignore
 
 interface LeadsApiOptions {
+  sortOrder?: "ASC" | "DESC"
+  limit?: number
+  page?: number
+  sortBy?: string
+  filter?: [string, string]
+
   sort_by?: [string, "ASC" | "DESC"]
   filters?: [string, string][]
 }
 
-let leads_mock = require("mocks/leads.json")
+let leads_mock = require("../mocks/leads.json")
 
 const pFileReader = file => {
   //@ts-ignore

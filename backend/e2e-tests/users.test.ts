@@ -2,10 +2,8 @@ import * as Chance from "chance"
 import * as _ from "lodash"
 
 import * as RoutesForTests from "./utils/routes.for.tests"
-import NotFound from "../utils/not-found"
 import { disabledReason } from "../models/users/types"
 import * as ValidatedUserForTests from "./utils/user.for.tests"
-import Auth from "../app-logic/auth"
 import { user } from "../../frontend/src/actions"
 
 var {
@@ -27,15 +25,19 @@ test("POST /user sign up using WRONG username and password", async () => {
       firstname: "moshe",
     })
     .then(x => {
-      var expected =
-        '"First name" is required; "Last name" is required; "Email" is required; "Password" is required'
-      var actual = JSON.parse(x.error.text).error
-      expect(actual).toEqual(expected)
+      let body = x.body
+      var expected = {
+        fname: ['"First name" is required'],
+        lname: ['"Last name" is required'],
+        email: ['"Email" is required'],
+        plainPassword: ['"Password" is required'],
+      }
+      expect(body.error).toEqual(expected)
       expect(x.status).toEqual(400)
     })
 })
 
-test("Creating a new user adds a 1000$ to their balance", async () => {
+test("Creating a new user with 0 balance", async () => {
   var fname = chance.first()
   var lname = chance.last()
   var x = await request.post("/user").send({
@@ -44,7 +46,7 @@ test("Creating a new user adds a 1000$ to their balance", async () => {
     password: "KGHasdF987654&*^%$#",
     email: chance.email(),
   })
-  expect(x.body.user.balance).toBe(1000)
+  expect(x.body.user.balance).toBe(0)
   expect(typeof x.body.user.id).toEqual("number")
 })
 
@@ -60,10 +62,11 @@ test("POST /user sign up using REAL username and password", async () => {
   expect(typeof x.body.user.id).toEqual("number")
 })
 
-describe("POST /user is sending emails that contain the right link", () => {
+// but email verify is disabled
+/*describe("POST /user is sending emails that contain the right link", () => {
   test("using mock email provider", async () => {
     // We create routes here. Because we need to use the emailSenderMock
-    var { request, emailSenderMock, appLogic } = RoutesForTests.create()
+    var {request, emailSenderMock, appLogic} = RoutesForTests.create()
     var fname = chance.first()
     var lname = chance.last()
     var x = await request.post("/user").send({
@@ -84,7 +87,7 @@ describe("POST /user is sending emails that contain the right link", () => {
   test.skip("using real email provider", async () => {
     // We create routes here. Because we need to use the emailSenderMock
 
-    var { request, emailSenderMock, appLogic } = RoutesForTests.create({
+    var {request, emailSenderMock, appLogic} = RoutesForTests.create({
       realEmail: true,
     })
 
@@ -105,7 +108,7 @@ describe("POST /user is sending emails that contain the right link", () => {
     // var emailHTML = emailSenderMock.lastCall().html
     // expect(emailHTML).toMatch("/auth/confirm-email-update?key=" + key)
   })
-})
+})*/
 
 test("GET /me sign up using real username and password", async () => {
   var fname = chance.first()
@@ -194,7 +197,8 @@ test("update-password endpoint should update the password)", async () => {
   expect(body2.error).toBeFalsy()
 })
 
-test("activateUserByKey (ensure that is disabled before)", async () => {
+// but email verify is disabled
+/*test("activateUserByKey (ensure that is disabled before)", async () => {
   const fname = chance.first()
   const lname = chance.last()
   const email = chance.email()
@@ -206,7 +210,7 @@ test("activateUserByKey (ensure that is disabled before)", async () => {
   })
 
   var TokenCookie = _.get(x, _.toPath("header['set-cookie'][0]"))
-  var tokenFromCookie = TokenCookie.replace(/token=(.*?);.*/, "$1")
+  var tokenFromCookie = TokenCookie.replace(/token=(.*?);.*!/, "$1")
 
   var x = await request.get("/me").set({
     cookie: "token=" + tokenFromCookie,
@@ -228,7 +232,7 @@ test("activateUserByKey (ensure that is disabled before)", async () => {
 
   var user = await appLogic.models.users.mustGetUserById(x.body.user.id)
   expect(user.disabled).toBe(disabledReason.PROFILE_NOT_COMPLETED)
-})
+})*/
 
 describe("/complete-profile", () => {
   test("using invalid date (no phone) should not update database, and set disabled as null", async () => {

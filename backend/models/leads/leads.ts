@@ -3,7 +3,9 @@ import SQL from "../mysql-pool/mysql-pool"
 import { Lead, LeadQueryOptions, BaseLead } from "./types"
 
 import baseDBModel from "../base-db-model/base-db-model"
-import NotFound from "../../utils/not-found"
+// import NotFound from "../../utils/not-found"
+import * as Chance from "chance"
+const chance = Chance()
 
 export default class Leads extends baseDBModel<
   BaseLead,
@@ -12,6 +14,57 @@ export default class Leads extends baseDBModel<
 > {
   constructor(sql: SQL) {
     super(sql, "leads")
+  }
+
+  public static getMockLead(owner: number = 0): Lead {
+    //@ts-ignore
+    return {
+      industry: "Website building",
+      email: "moshe@moshe.com", //chance.email(),
+      pages: chance.integer({ min: 1, max: 30 }),
+      content_updates: chance.pickone(["Mostly Static", "Dynamic"]),
+      date: new Date().valueOf(),
+      functionality: chance.pickset(
+        [
+          "Personal",
+          "Corporate",
+          "Educational",
+          "Portfolio",
+          "Restaurant",
+          "Small Business",
+          "Other",
+        ],
+        chance.integer({ min: 1, max: 5 }),
+      ),
+      mobile_design: chance.pickone(["Yes", "No"]),
+      seo: chance.pickone(["Yes", "No"]),
+      content_management: chance.pickone(["Yes", "No"]),
+      e_commerce: chance.pickone(["Yes", "No"]),
+      blog: chance.pickone(["Yes", "No"]),
+      budget: chance.integer({ min: 1, max: 128 }),
+      languages: chance.pickset(
+        ["Hebrew", "Irish", "Italian", "Korean", "Latin", "Polish", "Russian"],
+        chance.integer({ min: 1, max: 5 }),
+      ),
+      hosting: chance.pickone(["Yes", "No"]),
+      comments: chance.sentence({
+        words: chance.integer({ min: 1, max: 9 }),
+      }),
+      bought_from: null,
+      forSale: true,
+      lead_price: chance.integer({ min: 1, max: 20 }),
+      ownerId: owner,
+      contact_person: chance.name(),
+      telephone: chance.phone(),
+      active: true,
+      price: parseInt(
+        chance
+          .integer()
+          .toString()
+          .substring(0, 7)
+          .slice(1, -1),
+      ),
+    }
   }
 
   public async AddLead(lead: Lead) {

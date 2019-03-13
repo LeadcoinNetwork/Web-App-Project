@@ -4,12 +4,11 @@ import * as Express from "express"
 import AppLogic from "../app-logic/index"
 // import NotFound from "../utils/not-found"
 // import { appModels } from "../app-logic/types"
-import * as Chance from "chance"
-const chance = Chance()
 
 // import * as auth from "../models/user-auth/user-auth"
 
 import { Lead, Industry } from "../models/leads/types"
+import Leads from "../models/leads/leads"
 
 const authOptions = {
   session: false,
@@ -32,62 +31,7 @@ export function start({
     count = parseInt(count)
     for (let i = 1; i < count + 1; i++) {
       let owner = Math.floor(count / i)
-      // @ts-ignore
-      let newLead: Lead = {
-        industry: "Website building",
-        email: chance.email(),
-        pages: chance.integer({ min: 1, max: 30 }),
-        content_updates: chance.pickone(["Mostly Static", "Dynamic"]),
-        date: new Date().valueOf(),
-        functionality: chance.pickset(
-          [
-            "Personal",
-            "Corporate",
-            "Educational",
-            "Portfolio",
-            "Restaurant",
-            "Small Business",
-            "Other",
-          ],
-          chance.integer({ min: 1, max: 5 }),
-        ),
-        mobile_design: chance.pickone(["Yes", "No"]),
-        seo: chance.pickone(["Yes", "No"]),
-        content_management: chance.pickone(["Yes", "No"]),
-        e_commerce: chance.pickone(["Yes", "No"]),
-        blog: chance.pickone(["Yes", "No"]),
-        budget: chance.integer({ min: 1, max: 128 }),
-        languages: chance.pickset(
-          [
-            "Hebrew",
-            "Irish",
-            "Italian",
-            "Korean",
-            "Latin",
-            "Polish",
-            "Russian",
-          ],
-          chance.integer({ min: 1, max: 5 }),
-        ),
-        hosting: chance.pickone(["Yes", "No"]),
-        comments: chance.sentence({
-          words: chance.integer({ min: 1, max: 9 }),
-        }),
-        bought_from: null,
-        forSale: true,
-        lead_price: chance.integer({ min: 1, max: 20 }),
-        ownerId: owner,
-        contact_person: chance.name(),
-        telephone: chance.phone(),
-        active: true,
-        price: parseInt(
-          chance
-            .integer()
-            .toString()
-            .substring(0, 7)
-            .slice(1, -1),
-        ),
-      }
+      let newLead = Leads.getMockLead(owner)
 
       let status = await appLogic.models.leads.insertLead(newLead)
       if (status.affectedRows) rc.push(status.insertId)
@@ -451,18 +395,31 @@ export function start({
       ;(async () => {
         const { user } = req
         let { search, sortBy, page, limit, sortOrder, mock } = req.query
+
         let _sort = {
           sortBy: sortBy && sortBy != "id" ? sortBy : "date",
           sortOrder: sortOrder || "DESC",
         }
+
         let _limit = {
           start: parseInt(page || 0) * parseInt(limit || 50),
           offset: limit || 50,
         }
+
+        let _filters = search
+          ? ["content_updates", "comments"].map(field => {
+              return {
+                field,
+                op: "LIKE",
+                val: search,
+              }
+            })
+          : []
+
         await appLogic.leads
           .getBoughtLeads(user.id, {
             sort: _sort,
-            filters: [],
+            filters: _filters,
             limit: _limit,
           })
           .then(response => {
@@ -565,7 +522,9 @@ export function start({
         }: {
           industry: Industry
           search: string
-        } = req.query.filter
+        } =
+          req.query.filter || []
+
         const { user } = req
         let _sort = {
           sortBy: sortBy && sortBy != "id" ? sortBy : "date",
@@ -581,12 +540,14 @@ export function start({
             }
           })
         }
-        filters.industry = industry === "All" ? "" : industry
+
+        filters.industry = industry === "All" || !industry ? "" : industry
+
         let _limit = {
           start: parseInt(page || 0) * parseInt(limit || 50),
           offset: limit || 50,
         }
-        console.log({ user })
+        // console.log({ user })
         await appLogic.leads
           .getAllLeads({
             sort: _sort,
