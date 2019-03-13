@@ -190,6 +190,10 @@ export default class Leads {
     return await this.models.leads.remove(lead_id)
   }
 
+  public validateLead(lead) {
+    return validate_lead(lead)
+  }
+
   public sanitizeLead(lead) {
     if (lead.lead_price && lead.lead_price.replace)
       lead.lead_price = Number(lead.lead_price.replace(/[^0-9\.-]+/g, ""))
@@ -198,13 +202,14 @@ export default class Leads {
     return lead
   }
 
-  public async AddLead(lead: Lead) {
-    const problems = validate_lead(lead)
+  public async AddLead(lead: Lead, skipValidate: boolean = false) {
+    const problems = skipValidate ? [] : validate_lead(lead)
     if (problems.length == 0) {
       lead = this.sanitizeLead(lead)
       const id = await this.models.leads.AddLead(lead)
       return id
     }
+
     throw new Error(problems.join(" ;"))
   }
 
