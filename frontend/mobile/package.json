@@ -5,7 +5,7 @@
   "private": true,
   "homepage": "./",
   "scripts": {
-    "build:mobile": "node __script.js && rmdir /s /q www && move dist www",
+    "build:mobile": "node __script.js",
     "platform": "cordova platform add android",
     "build:apk": "cordova build android"
   },
@@ -17,6 +17,8 @@
     "plugins": {
       "cordova-plugin-whitelist": {}
     },
-    "platforms": ["android"]
+    "platforms": [
+      "android"
+    ]
   }
 }
