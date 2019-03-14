@@ -18,7 +18,13 @@ function insertContent(fullContent, beforeWhat, newContent) {
 const afterAddingMeta = insertContent(
   data,
   "<link",
-  `<meta http-equiv="Content-Security-Policy" content="default-src 'self' connect-src * data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">` +
+  `<meta http-equiv="Content-Security-Policy" content="default-src *  data: blob: 'unsafe-inline' 'unsafe-eval'; 
+                                                       script-src * data: blob: 'unsafe-inline' 'unsafe-eval'; 
+                                                       connect-src * data: blob: 'unsafe-inline'; 
+                                                       img-src * data: blob: 'unsafe-inline'; 
+                                                       frame-src * data: blob: ; 
+                                                       style-src * data: blob: 'unsafe-inline';
+                                                       font-src * data: blob: 'unsafe-inline';">` +
     `<meta name="format-detection" content="telephone=no">` +
     `<meta name="msapplication-tap-highlight" content="no">`,
 )
@@ -37,5 +43,4 @@ FS.writeFile("./dist/index.html", afterAddingScript, "utf8", err => {
   }
 })
 
-FS.emptyDirSync("./www")
-FS.moveSync("./dist", "./www")
+FS.emptyDir("./www").then(res => FS.moveSync("./dist", "./www"))

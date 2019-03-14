@@ -388,21 +388,21 @@ class CSVUpload extends React.Component {
             You can use the Data Loader export wizard to extract data from a
             Salesforce object.
           </h4>
-          <div>
-            <ol>{stepContent}</ol>
-          </div>
+          <div>{stepContent}</div>
         </div>
       </>
     )
   }
 
   dropzoneWrapp() {
+    const checkMobile = navigator.userAgent.match(/Android/i)
+
     let refDropzone
 
     return (
       <div className="file-pick">
         <Dropzone
-          accept=".csv"
+          accept={checkMobile ? "image/*" : ".csv"}
           ref={node => {
             refDropzone = node
           }}

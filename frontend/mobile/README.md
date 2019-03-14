@@ -20,6 +20,12 @@ npm run build:move
 
 * go to mobile directory
 
+* install dependencies
+
+```
+npm install
+```
+
 * add android platform (only once):
 
 ```
@@ -36,4 +42,10 @@ npm run build:mobile
 
 ```
 npm run build:apk
+```
+
+* apk file will be located in :
+
+```
+./frontend/mobile/platforms/android/app/build/outputs/apk/debug/
 ```
