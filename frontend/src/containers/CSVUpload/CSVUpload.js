@@ -6,6 +6,7 @@ import { connect } from "react-redux"
 import Dropzone from "react-dropzone"
 import papaparse from "papaparse"
 import { push } from "react-router-redux"
+import Hammer from "react-hammerjs"
 import ConfirmationDialog from "../../components/ConfirmationDialog"
 import Modal from "../../components/Modal"
 import { csvUpload, csvMapping } from "../../actions"
@@ -395,12 +396,14 @@ class CSVUpload extends React.Component {
   }
 
   dropzoneWrapp() {
+    const checkMobile = navigator.userAgent.match(/Android/i)
+
     let refDropzone
 
     return (
       <div className="file-pick">
         <Dropzone
-          accept=".csv"
+          accept={checkMobile ? "image/*" : ".csv"}
           ref={node => {
             refDropzone = node
           }}
@@ -410,12 +413,17 @@ class CSVUpload extends React.Component {
             this.tryReadingCsv(acceptedFiles[0])
           }}
         >
-          <div className="upload-container" onClick={() => refDropzone.open()}>
-            <h3>
-              <br />
-              Drop a CSV file into this box
-            </h3>
-          </div>
+          <Hammer>
+            <div
+              className="upload-container"
+              onClick={() => refDropzone.open()}
+            >
+              <h3>
+                <br />
+                Drop a CSV file into this box
+              </h3>
+            </div>
+          </Hammer>
         </Dropzone>
       </div>
     )
