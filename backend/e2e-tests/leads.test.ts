@@ -57,7 +57,6 @@ test(`
   User adds lead, 
   User2 buys it, 
   User1 balance is increased 
-  User2 balance is decreased
   both get notifications`, async () => {
   let { user: user1_1, token: token1 } = await ValidatedUserForTests.create({
     users: appLogic.models.users,
@@ -85,9 +84,9 @@ test(`
 
   // check balance
   let { user: user1_2 } = await ApiForToken(token1).users.getMe()
-  let { user: user2_2 } = await ApiForToken(token2).users.getMe()
+  // let { user: user2_2 } = await ApiForToken(token2).users.getMe()
   expect(user1_2.balance).toBe(user1_1.balance + lead.lead_price)
-  expect(user2_2.balance).toBe(user2_1.balance - lead.lead_price)
+  // expect(user2_2.balance).toBe(user2_1.balance - lead.lead_price)
 })
 
 test("1st user adds lead, 2nd user buys it, everything should work", async () => {
@@ -148,7 +147,8 @@ test("getting all leads should work", async () => {
   expect(typeof body.list).toEqual("object")
 })
 
-test(`user1 add a lead
+// unused but only increase balance
+test.skip(`user1 add a lead
       user2 tries to buys it but fails because he has no money
       user2 dies alone, homeless and poor`, async () => {
   let { token } = await ValidatedUserForTests.create({
