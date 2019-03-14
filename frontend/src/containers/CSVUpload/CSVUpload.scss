@@ -147,6 +147,25 @@
   }
 }
 @media (max-width: 760px) {
+  .manual-container {
+    padding: 10px 0;
+  }
+  .modal-container {
+    ol {
+      overflow-y: auto;
+      max-height: 20vh;
+      li {
+        padding: 5px;
+      }
+    }
+
+    .buttons-section button {
+      height: 30px;
+      width: auto;
+      font-size: 14px;
+      font-weight: 400;
+    }
+  }
   .fields_mapper {
     .help_text {
       width: unset;
