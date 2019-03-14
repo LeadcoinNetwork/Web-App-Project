@@ -1,10 +1,9 @@
 import { Lead, LeadQueryOptions } from "../models/leads/types"
 
 import { IModels } from "./index"
-import { Notification } from "../models/notifications/types"
 
 import * as _ from "lodash"
-import config from "./config"
+
 var request = require("request-promise")
 
 const Industries = ["Website building"]
@@ -46,8 +45,11 @@ const validate_lead = lead => {
   }
 
   if (!_.includes(Industries, lead.industry)) {
-    errors.push("industry::Wrong industry.")
-    console.log(Industries, lead.industry)
+    errors.push(
+      `industry::Wrong industry "${lead.industry}" only: ${Industries.join(
+        ", ",
+      )}.`,
+    )
   }
 
   if (lead.industry === "Website building") {
@@ -105,6 +107,7 @@ const sanitaizeWebBuildingLead = lead => {
       for (let option of content_updates) {
         if (value == option.toLowerCase()) {
           lead[key] = option
+          break
         }
       }
     }
@@ -251,7 +254,22 @@ export default class Leads {
   }
 
   public sanitaizeCsvLead(lead) {
-    return sanitaizeWebBuildingLead(lead)
+    // fix industry name
+    const industry = lead.industry.trim().toLowerCase()
+
+    for (let option of Industries) {
+      if (industry == option.toLowerCase()) {
+        lead.industry = option
+        break
+      }
+    }
+
+    switch (lead.industry) {
+      case "Website building":
+        return sanitaizeWebBuildingLead(lead)
+      default:
+        return lead
+    }
   }
 
   public sanitizeLead(lead) {
