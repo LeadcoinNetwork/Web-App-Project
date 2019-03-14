@@ -412,17 +412,12 @@ class CSVUpload extends React.Component {
             this.tryReadingCsv(acceptedFiles[0])
           }}
         >
-          <Hammer>
-            <div
-              className="upload-container"
-              onClick={() => refDropzone.open()}
-            >
-              <h3>
-                <br />
-                Drop a CSV file into this box
-              </h3>
-            </div>
-          </Hammer>
+          <div className="upload-container" onClick={() => refDropzone.open()}>
+            <h3>
+              <br />
+              Drop a CSV file into this box
+            </h3>
+          </div>
         </Dropzone>
       </div>
     )
