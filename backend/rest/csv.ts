@@ -86,16 +86,16 @@ export function start({
         lead_price: number
         fileContent: string
       } = req.body
-      let errors = []
-      errors = validate_mapping(req.body)
+
+      let errors = validate_mapping(req.body)
+
       if (errors.length > 0) {
         let errorString = errors.join(" ;")
         let error_obj = errStringToObj(errorString)
         res.status(400)
         return res.send({ error: error_obj })
       }
-      res.status(200)
-      res.send({ status: true })
+
       const leads = await parseMappedFile(
         user.id,
         fileContent,
@@ -103,11 +103,20 @@ export function start({
         lead_price,
       )
 
-      leads.map(async lead => {
-        const res = await appLogic.leads.AddLead(lead)
-      })
+      for (let lead of leads) {
+        // fix values
+        lead = appLogic.leads.sanitaizeCsvLead(lead)
 
-      return
+        let problems = appLogic.leads.validateLead(lead)
+        if (!problems.length) {
+          await appLogic.leads.AddLead(lead, true)
+        } else {
+          // let error_obj = errStringToObj(problems.join(" ;"))
+          return res.status(400).json({ error: problems })
+        }
+      }
+
+      return res.json({ status: true })
     } catch (e) {
       next(e)
     }

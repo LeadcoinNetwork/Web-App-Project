@@ -8,13 +8,12 @@ export function start(app) {
       err.status = 400
     }
 
-    var status = err.status || 500
+    let status = err.status || 500
 
     LogModelActions("Error", err)
 
     if (status == 500) {
       try {
-        res
         res.statusMessage = "Unexpected failure. We have been notified."
         res
           .status(500)

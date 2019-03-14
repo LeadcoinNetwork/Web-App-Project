@@ -57,6 +57,62 @@ const validate_lead = lead => {
   return errors
 }
 
+const sanitaizeWebBuildingLead = lead => {
+  // fields contains: "Yes" or "No"
+  const boolFields = [
+    "hosting",
+    "blog",
+    "e_commerce",
+    "content_management",
+    "seo",
+    "mobile_design",
+  ]
+  const boolValues = {
+    Yes: ["yes", "y", "true", "t", "+"],
+    No: ["no", "n", "false", "f", "-"],
+  }
+
+  const content_updates = ["Mostly Static", "Dynamic"]
+
+  // For fix by types
+  for (let key in lead) {
+    // skip internal property
+    if (!lead.hasOwnProperty(key)) {
+      continue
+    }
+
+    // skip no string
+    if (typeof lead[key] != "string") {
+      continue
+    }
+
+    lead[key] = lead[key].trim()
+    let value = lead[key].toLowerCase()
+
+    // boolean
+    if (_.includes(boolFields, key)) {
+      if (_.includes(boolValues.Yes, value)) {
+        lead[key] = "Yes"
+      }
+
+      if (_.includes(boolValues.No, value)) {
+        lead[key] = "No"
+      }
+    }
+
+    // content_updates
+    if (key === "content_updates") {
+      for (let option of content_updates) {
+        if (value == option.toLowerCase()) {
+          lead[key] = option
+        }
+      }
+    }
+  }
+
+  return lead
+}
+
 const validateWebBuildingLead = lead => {
   let errors: string[] = []
 
@@ -128,33 +184,33 @@ export default class Leads {
   }
 
   public async buyLeads(leads: number[], new_owner: number) {
-    const deal_price = await this.models.leads.getDealPrice(leads)
-    let buyer
+    // const deal_price = await this.models.leads.getDealPrice(leads)
+    // let buyer
+    //
+    // if (new_owner > 0) {
+    //   buyer = await this.models.users.mustGetUserById(new_owner)
+    // } else {
+    //   // demo buyer
+    //   buyer = {
+    //     balance: Number.MAX_SAFE_INTEGER,
+    //   }
+    // }
 
-    if (new_owner > 0) {
-      buyer = await this.models.users.mustGetUserById(new_owner)
-    } else {
-      // demo buyer
-      buyer = {
-        balance: Number.MAX_SAFE_INTEGER,
-      }
-    }
-
-    buyer.balance = buyer.balance | 0
-    if (buyer.balance < deal_price) {
-      throw new Error("balance::Amount insufficient.")
-    }
+    // buyer.balance = buyer.balance | 0
+    // if (buyer.balance < deal_price) {
+    //   throw new Error("balance::Amount insufficient.")
+    // }
 
     const result = await this.models.leads.buy(leads, new_owner)
     const groupedByOwner = _.groupBy(result, "bought_from")
-    let overall_cost = 0
+    // let overall_cost = 0
 
     for (let key in groupedByOwner) {
       const seller: number = parseInt(key, 10)
       const group: Lead[] = groupedByOwner[key]
       const transaction_amount: number = group.reduce(summy("lead_price"), 0)
 
-      overall_cost += transaction_amount
+      // overall_cost += transaction_amount
       await this.models.users.increaseBalance(seller, transaction_amount)
 
       await this.models.notifications.createNotification({
@@ -165,7 +221,7 @@ export default class Leads {
       })
     }
 
-    await this.models.users.decreaseBalance(new_owner, overall_cost)
+    // await this.models.users.decreaseBalance(new_owner, overall_cost)
     // const txDetails = await logTransaction({
     //   leads_count: result.length.toString(),
     //   fiat_amount: (overall_cost * 100).toString(),
@@ -190,7 +246,15 @@ export default class Leads {
     return await this.models.leads.remove(lead_id)
   }
 
-  public async sanitizeLead(lead) {
+  public validateLead(lead) {
+    return validate_lead(lead)
+  }
+
+  public sanitaizeCsvLead(lead) {
+    return sanitaizeWebBuildingLead(lead)
+  }
+
+  public sanitizeLead(lead) {
     if (lead.lead_price && lead.lead_price.replace)
       lead.lead_price = Number(lead.lead_price.replace(/[^0-9\.-]+/g, ""))
     if (lead.price && lead.price.replace)
@@ -198,13 +262,14 @@ export default class Leads {
     return lead
   }
 
-  public async AddLead(lead: Lead) {
-    const problems = validate_lead(lead)
+  public async AddLead(lead: Lead, skipValidate: boolean = false) {
+    const problems = skipValidate ? [] : validate_lead(lead)
     if (problems.length == 0) {
-      lead = await this.sanitizeLead(lead)
+      lead = this.sanitizeLead(lead)
       const id = await this.models.leads.AddLead(lead)
       return id
     }
+
     throw new Error(problems.join(" ;"))
   }
 

@@ -1,4 +1,4 @@
-let FS = require("fs")
+const FS = require("fs-extra")
 
 // read the index.html from build folder
 let data = FS.readFileSync("./dist/index.html", "utf8")
@@ -36,3 +36,6 @@ FS.writeFile("./dist/index.html", afterAddingScript, "utf8", err => {
     throw err
   }
 })
+
+FS.emptyDirSync("./www")
+FS.moveSync("./dist", "./www")
