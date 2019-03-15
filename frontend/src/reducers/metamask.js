@@ -6,7 +6,6 @@ let initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
     case types.METAMASK_UPDATE_STATUS:
-      console.log(action.payload)
       return {
         loading: false,
         isActive: action.payload.status,

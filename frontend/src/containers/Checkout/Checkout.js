@@ -85,13 +85,6 @@ const Checkout = ({
           </tbody>
         </table>
       </div>
-      {checkout.error && (
-        <div className="error">
-          {Object.keys(checkout.error).map((error, index) => (
-            <div key={index}>{t(checkout.error[error])}</div>
-          ))}
-        </div>
-      )}
       <div className="button-container">
         <Button
           label={t("Buy")}

@@ -7,7 +7,7 @@ export default {
     }
   },
 
-  updateMetamaskStatus(status, checked) {
+  updateMetamaskStatus(status) {
     return {
       type: types.METAMASK_UPDATE_STATUS,
       payload: {

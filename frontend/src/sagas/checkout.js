@@ -25,35 +25,8 @@ export default function* checkout(api) {
       type: "success",
       closeOnClick: true,
     })
-
-    let transfer = yield metamask.transfer(user.wallet, price)
-    toast(
-      <div
-        ref={e => {
-          if (e) {
-            e = e.parentElement // toast body
-            e = e.parentElement // toast class
-            e = e.parentElement // toast container
-            e.style.width = "625px"
-          }
-        }}
-      >
-        Tanscation has been send, TxHash {transfer}
-      </div>,
-      {
-        type: "success",
-        closeOnClick: true,
-      },
-    )
-
-    let checkTxHash = yield metamask.checkTxHash(transfer)
-
-    let res = yield api.leads.buyLeadsBuy([...selected])
-
-    if (res.error) {
-      yield put(actions.checkout.checkoutBuyError(res.error))
-    } else {
-      yield put(actions.checkout.checkoutBuySuccess())
+    try {
+      let transfer = yield metamask.transfer(user.wallet, price)
       toast(
         <div
           ref={e => {
@@ -65,30 +38,64 @@ export default function* checkout(api) {
             }
           }}
         >
-          <div> Your order has been completed.</div>
-          <div>
-            {" "}
-            Your TX has been broadcast to the network. Check your TX below:{" "}
-          </div>
-          <div> {transfer} </div>
-          <a
-            target="_blank"
-            href={`https://ropsten.etherscan.io/tx/${transfer}`}
-          >
-            {" "}
-            View It Here{" "}
-          </a>
+          Tanscation has been send, TxHash {transfer}
         </div>,
         {
           type: "success",
-          autoClose: false,
-          closeOnClick: false,
-          // pauseOnHover: true,
+          closeOnClick: true,
         },
       )
-      yield put(actions.leads.setSelectedLeads("BUY_LEADS", new Set()))
-      window.triggerFetch()
-      yield put(push("/my-leads"))
+
+      let checkTxHash = yield metamask.checkTxHash(transfer)
+
+      let res = yield api.leads.buyLeadsBuy([...selected])
+
+      if (res.error) {
+        yield put(actions.checkout.checkoutBuyError(res.error))
+      } else {
+        yield put(actions.checkout.checkoutBuySuccess())
+        toast(
+          <div
+            ref={e => {
+              if (e) {
+                e = e.parentElement // toast body
+                e = e.parentElement // toast class
+                e = e.parentElement // toast container
+                e.style.width = "625px"
+              }
+            }}
+          >
+            <div> Your order has been completed.</div>
+            <div>
+              {" "}
+              Your TX has been broadcast to the network. Check your TX below:{" "}
+            </div>
+            <div> {transfer} </div>
+            <a
+              target="_blank"
+              href={`https://ropsten.etherscan.io/tx/${transfer}`}
+            >
+              {" "}
+              View It Here{" "}
+            </a>
+          </div>,
+          {
+            type: "success",
+            autoClose: false,
+            closeOnClick: false,
+            // pauseOnHover: true,
+          },
+        )
+        yield put(actions.leads.setSelectedLeads("BUY_LEADS", new Set()))
+        window.triggerFetch()
+        yield put(push("/my-leads"))
+      }
+    } catch (err) {
+      toast(err.message, {
+        type: "error",
+        closeOnClick: true,
+      })
+      yield put(actions.checkout.checkoutBuyError(err.message))
     }
   }
 }
