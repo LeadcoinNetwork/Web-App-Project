@@ -6,8 +6,7 @@
     "start": "webpack-dev-server --hot --config webpack.dev.js --profile ",
     "build": "./node_modules/.bin/webpack --config webpack.prod.js --profile",
     "build:move": "move dist mobile",
-    "webpack-stats":
-      "./node_modules/.bin/webpack --profile --config webpack.prod.js --json >stats.json",
+    "webpack-stats": "./node_modules/.bin/webpack --profile --config webpack.prod.js --json >stats.json",
     "webpack-analyze": "webpack-bundle-analyzer stats.json",
     "stats": "npm-run-all webpack-stats webpack-analyze",
     "test": "jest",
