@@ -9,6 +9,14 @@ import { priceString } from "Utils/numbers"
 import { metamask } from "../../utils/metamask-service"
 import { toast } from "react-toastify"
 
+const notActiveFields = [
+  "date",
+  "industry",
+  "contact_person",
+  "telephone",
+  "email",
+]
+
 const Checkout = ({
   fields,
   checkout,
@@ -46,35 +54,41 @@ const Checkout = ({
     (price, lead) => price + parseLeadPrice(lead.lead_price),
     0,
   )
+
+  console.log(fields)
   const shoppingCartFields = fields.filter(
-    field => field.key === "comments" || field.key === "lead_price",
+    field => !notActiveFields.includes(field.key),
   )
   return (
     <div className="ldc-checkout">
       <h1>{t("Shopping Cart")}</h1>
       <h3>{t("Buy all of your selected leads now.")}</h3>
-      <table className="shopping-cart">
-        <thead>
-          <tr>
-            {shoppingCartFields.map(field => (
-              <th className={"h-" + field.key}>{t(field.name)}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {selectedLeads.map(lead => (
-            <tr>
-              {shoppingCartFields.map(field => (
-                <td className={"d-" + field.key}>
-                  {field.key === "lead_price"
-                    ? lead.lead_price + " LDC"
-                    : lead[field.key]}
-                </td>
+      <div className="table-container">
+        <div className="table-wrapper">
+          <table className="shopping-cart">
+            <thead>
+              <tr>
+                {shoppingCartFields.map(field => (
+                  <th className={"h-" + field.key}>{t(field.name)}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {selectedLeads.map(lead => (
+                <tr>
+                  {shoppingCartFields.map(field => (
+                    <td className={"d-" + field.key}>
+                      {field.key === "lead_price"
+                        ? lead.lead_price + " LDC"
+                        : lead[field.key]}
+                    </td>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+            </tbody>
+          </table>
+        </div>
+      </div>
       <div className="c-details">
         <table>
           <tbody>
@@ -106,10 +120,7 @@ const mapStateToProps = state => ({
   balance: state.balance,
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    push,
-    checkoutBuyStart: Actions.checkout.checkoutBuyStart,
-  },
-)(Checkout)
+export default connect(mapStateToProps, {
+  push,
+  checkoutBuyStart: Actions.checkout.checkoutBuyStart,
+})(Checkout)
