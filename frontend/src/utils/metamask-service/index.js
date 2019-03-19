@@ -7,7 +7,7 @@
 const Web3 = require("web3")
 
 const web3js = new Web3()
-const address = "0x9d397e179642172c337378504fa273573d603623" //"0x5102791ca02fc3595398400bfe0e33d7b6c82267"
+const address = "0x5102791ca02fc3595398400bfe0e33d7b6c82267"
 const decimals = 18
 const abi = [
   {
@@ -42,7 +42,7 @@ const isMainNetwork = () => {
     web3js.version.getNetwork((err, netId) => {
       if (err !== null) {
         return reject(err)
-      } else if (netId === "3") {
+      } else if (netId === "1") {
         return resolve("This network is main network")
       }
       return reject(new Error("This network is not main network"))
