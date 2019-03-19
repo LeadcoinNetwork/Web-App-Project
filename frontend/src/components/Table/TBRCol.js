@@ -3,6 +3,10 @@ import { localeString } from "Utils/time"
 
 const TBRCol = ({ field, value, colCount, staticColsWidth }) => (
   <div
+    data-for="field-tooltip"
+    data-tip={
+      field.key === "functionality" || field.key === "languages" ? value : null
+    }
     className="tbr-col"
     style={{
       width: `calc((100% - ${staticColsWidth}px) / ${colCount})`,
