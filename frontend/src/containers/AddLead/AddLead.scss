@@ -93,6 +93,11 @@
     .field-tooltip-web {
       display: none;
     }
+    .line {
+      .fieldLabel {
+        width: 185px;
+      }
+    }
     .tooltip-mobile {
       font-size: 16px !important;
       max-width: 45vw;

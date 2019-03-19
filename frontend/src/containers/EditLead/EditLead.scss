@@ -92,6 +92,9 @@
         line-height: unset;
         width: unset;
         display: block;
+        .fieldLabel {
+          width: 185px;
+        }
       }
     }
     .tooltip-mobile {
@@ -117,6 +120,7 @@
     }
   }
 }
+
 @media (max-width: $screen-tablets) {
   .multiselect {
     min-height: 50px;

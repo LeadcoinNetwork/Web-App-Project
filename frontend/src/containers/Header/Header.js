@@ -9,7 +9,7 @@ import t from "../../utils/translate/translate"
 import { connect } from "react-redux"
 import * as actions from "actions"
 import { Route, Switch } from "react-router"
-import ReactTooltip from 'react-tooltip'
+import ReactTooltip from "react-tooltip"
 
 const Header = ({
   pathname,
@@ -28,7 +28,6 @@ const Header = ({
       <div className="logo">
         <span className="logo-link" onClick={gotoDefaultHome} />
       </div>
-      <span className="alpha-demo">DEMO</span>
       {/*
       uncomment bring back the language selector
       <div className="m-both-right">
@@ -66,7 +65,12 @@ const Header = ({
         <NotificationElement />
         <UserMenu />
       </div>
-      <ReactTooltip className="balance-tooltip" id="balance-tooltip"  effect="solid" getContent={dataTip => dataTip} />
+      <ReactTooltip
+        className="balance-tooltip"
+        id="balance-tooltip"
+        effect="solid"
+        getContent={dataTip => dataTip}
+      />
     </header>
   )
 }
@@ -81,7 +85,4 @@ var mapDispatchToProps = {
   gotoDefaultHome: actions.route.gotoDefaultHome,
   logout: actions.user.logOut,
 }
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Header)
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

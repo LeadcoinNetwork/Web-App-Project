@@ -474,6 +474,8 @@ class CSVUpload extends React.Component {
           isOpen={this.state.modalStepThree}
           modalContent={this.handleStepChangeContent("stepThree")}
           shouldCloseOnOverlayClick={true}
+          isEnd={true}
+          onEnd={() => this.handleModal({ modalStepThree: false })}
           isPrev={true}
           onPrev={() => {
             this.handleModal({ modalStepThree: false })
@@ -503,7 +505,8 @@ class CSVUpload extends React.Component {
               </h3>
               {this.dropzoneWrapp()}
               <p className="template">
-                Click <a href="assets/real-estate-csv-template.csv">here</a> to
+                Click{" "}
+                <a href="assets/website-building-csv-template.csv">here</a> to
                 download a template csv file for website building leads.
               </p>
             </div>

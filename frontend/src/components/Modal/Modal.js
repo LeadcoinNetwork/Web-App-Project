@@ -14,6 +14,8 @@ const Modal = ({
   isNext,
   isPrev,
   onPrev,
+  isEnd,
+  onEnd,
 }) => {
   const btnClass = isPrev ? "align-between" : "align-end"
 
@@ -41,6 +43,11 @@ const Modal = ({
           {isNext ? (
             <Button className="next-button" onClick={onNext} appStyle={true}>
               {t("Next")}
+            </Button>
+          ) : null}
+          {isEnd ? (
+            <Button className="next-button" onClick={onEnd} appStyle={true}>
+              {t("End")}
             </Button>
           ) : null}
         </div>
