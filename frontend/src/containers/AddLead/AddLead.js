@@ -133,6 +133,7 @@ class AddLead extends React.Component {
                 value={values[f.key]}
                 isMulti
                 options={f.options}
+                isSearchable={f.key !== "functionality"}
                 className={"multiselect"}
                 styles={customStyles}
                 isClearable={false}
