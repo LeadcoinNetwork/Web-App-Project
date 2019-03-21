@@ -43,6 +43,31 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     }
   }
 
+  protected prepareFilters(filters): string {
+    return filters.search
+      .map(f => {
+        const escaped = mysql.escape(f.val.toLowerCase())
+        let field = f.field
+
+        console.log(field, escaped)
+
+        if (field.endsWith("[]")) {
+          // find in array
+          field = field.replace(/\[]$/, "")
+
+          return `JSON_SEARCH(LOWER(${this.fieldName}->>${mysql.escape(
+            "$." + field,
+          )}), "one", ${escaped}) is not null`
+        } else {
+          // find string
+          return `LOWER(${this.fieldName}->>${mysql.escape("$." + field)}) ${
+            f.op
+          } "%${escaped.slice(1, -1)}%"`
+        }
+      })
+      .join(" OR ")
+  }
+
   notificationsQueries = {
     markAsReadByIds: async ids => {
       let sql = `UPDATE leadcoin.notifications
@@ -142,17 +167,10 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
 
     getBoughtLeads: async (user_id: number, options: any) => {
       const { limit, filters, sort } = options
-      let where_additions = []
+      let where_additions = ""
 
       if (filters) {
-        where_additions = filters
-          .map(f => {
-            const escaped = mysql.escape(f.val)
-            return `${this.fieldName}->>${mysql.escape("$." + f.field)} ${
-              f.op
-            } "%${escaped.slice(1, -1)}%"`
-          })
-          .join(" OR ")
+        where_additions = this.prepareFilters(filters)
       }
       let limit_addition = ""
       let countHeader = "SELECT COUNT(*) as count "
@@ -164,7 +182,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         AND doc->>"$.bought_from" > 0
         AND doc->>"$.forSale" = "false"
       `
-      if (where_additions.length > 0) query += `AND ${where_additions};`
+      if (where_additions) query += `AND (${where_additions});`
       if (sort) {
         query += ` ORDER BY ${this.fieldName} ->> ${mysql.escape(
           "$." + sort.sortBy,
@@ -181,37 +199,29 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
 
     buyLeadsGetAll: async (options: any) => {
       const { limit, filters, sort, user_id } = options
-      let where_additions = ""
+      let where_additions = []
       let search_additions = []
       if (filters.search) {
-        search_additions = filters.search
-          .map(f => {
-            const escaped = mysql.escape(f.val)
-            if (f.field.includes(" ")) f.field = '"' + f.field + '"'
-            if (f.field.includes("/")) f.field = '"' + f.field + '"'
-            return `${this.fieldName}->>${mysql.escape("$." + f.field)} ${
-              f.op
-            } "%${escaped.slice(1, -1)}%"`
-          })
-          .join(`\nOR `)
+        where_additions.push(this.prepareFilters(filters))
       }
       if (filters.industry)
-        where_additions = `${this.fieldName}->>'$.industry' = '${
-          filters.industry
-        }'`
+        where_additions.push(
+          `${this.fieldName}->>'$.industry' = '${filters.industry}'`,
+        )
       if (filters.category)
-        where_additions +=
-          (where_additions ? `\nAND ` : "") +
-          `${this.fieldName}->>'$.Category' = '${filters.category}'`
+        where_additions.push(
+          `${this.fieldName}->>'$.Category' = '${filters.category}'`,
+        )
       if (search_additions.length > 0)
-        where_additions +=
-          (where_additions ? `\nAND ` : "") + "(" + search_additions + ")"
+        where_additions.push("(" + search_additions + ")")
       let limit_addition = ""
       let countHeader = "SELECT COUNT(*) as count "
       let realHeader = "SELECT *"
       let query = `\nFROM leads\nWHERE doc->>'$.active' = 'true'\nAND doc->>'$.forSale' = 'true'`
       if (user_id) query += `\nAND doc->>'$.ownerId' <> ${user_id} `
-      if (where_additions) query += `\nAND ${where_additions}`
+      if (where_additions.length)
+        query += `\nAND ${where_additions.join(" AND ")}`
+
       if (sort) {
         query += `\nORDER BY ${this.fieldName}->>${mysql.escape(
           "$." + sort.sortBy,
