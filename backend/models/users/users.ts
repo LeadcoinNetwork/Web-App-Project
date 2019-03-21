@@ -89,9 +89,9 @@ class User extends baseDBModel<
   //   return await this.updateUser(user_id, { disabled: null })
   // }
 
-  // async updateWallet({ user_id, wallet }: { user_id: number; wallet: string }) {
-  //   return await this.updateUser(user_id, { wallet })
-  // }
+  async updateWallet(user_id: number, wallet: string) {
+    return await this.updateUser(user_id, { wallet })
+  }
 
   async mustGetUserById(id) {
     var result = await this.tryGetById(id)
