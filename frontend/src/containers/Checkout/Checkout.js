@@ -17,30 +17,27 @@ const notActiveFields = [
   "email",
 ]
 
-const Checkout = ({
-  fields,
-  checkout,
-  buyLeads,
-  balance,
-  push,
-  checkoutBuyStart,
-}) => {
-  if (!buyLeads.selected.size) {
-    // push("/buy-leads")
+class Checkout extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      selectedLeads: [],
+    }
   }
 
-  let selectedLeads = buyLeads.list.filter(lead =>
-    buyLeads.selected.has(lead.id),
-  )
+  componentWillMount() {
+    this.state.selectedLeads = this.props.buyLeads.list.filter(lead =>
+      this.props.buyLeads.selected.has(lead.id),
+    )
+  }
 
-  const toaster = (content, type, position) =>
-    toast(content, {
-      type,
-      position,
-      closeOnClick: true,
+  removeLead = id => {
+    this.setState({
+      selectedLeads: this.state.selectedLeads.filter(lead => lead.id !== id),
     })
+  }
 
-  const parseLeadPrice = leadPrice => {
+  parseLeadPrice = leadPrice => {
     if (!leadPrice) {
       return 0
     } else if (typeof leadPrice === "string") {
@@ -50,67 +47,81 @@ const Checkout = ({
     }
   }
 
-  const totalPayment = selectedLeads.reduce(
-    (price, lead) => price + parseLeadPrice(lead.lead_price),
-    0,
-  )
+  render() {
+    let totalPayment = this.state.selectedLeads.reduce(
+      (price, lead) => price + this.parseLeadPrice(lead.lead_price),
+      0,
+    )
 
-  console.log(fields)
-  const shoppingCartFields = fields.filter(
-    field => !notActiveFields.includes(field.key),
-  )
-  return (
-    <div className="ldc-checkout">
-      <h1>{t("Shopping Cart")}</h1>
-      <h3>{t("Buy all of your selected leads now.")}</h3>
-      <div className="table-container">
-        <div className="table-wrapper">
-          <table className="shopping-cart">
-            <thead>
-              <tr>
-                {shoppingCartFields.map(field => (
-                  <th className={"h-" + field.key}>{t(field.name)}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {selectedLeads.map(lead => (
+    let shoppingCartFields = this.props.fields.filter(
+      field => !notActiveFields.includes(field.key),
+    )
+
+    return (
+      <div className="ldc-checkout">
+        <h1>{t("Shopping Cart")}</h1>
+        <h3>{t("Buy all of your selected leads now.")}</h3>
+        <div className="table-container">
+          <div className="table-wrapper">
+            <table className="shopping-cart">
+              <thead>
                 <tr>
                   {shoppingCartFields.map(field => (
-                    <td className={"d-" + field.key}>
-                      {field.key === "lead_price"
-                        ? lead.lead_price + " LDC"
-                        : lead[field.key]}
-                    </td>
+                    <th className={"h-" + field.key}>{t(field.name)}</th>
                   ))}
+                  <th>Remove lead</th>
                 </tr>
-              ))}
+              </thead>
+              <tbody>
+                {this.state.selectedLeads.map(lead => (
+                  <tr>
+                    {shoppingCartFields.map(field => (
+                      <td className={"d-" + field.key} key={field.id}>
+                        {field.key === "lead_price"
+                          ? lead.lead_price + " LDC"
+                          : lead[field.key]}
+                      </td>
+                    ))}
+                    <td>
+                      <div
+                        className="remove-lead-button"
+                        onClick={e => {
+                          e.stopPropagation()
+                          this.removeLead(lead.id)
+                        }}
+                      >
+                        <i className="fas fa-times" />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className="c-details">
+          <table>
+            <tbody>
+              <tr className="c-payment">
+                <td>{t("Total Payment:")}</td>
+                <td className="amount">{totalPayment + " LDC"}</td>
+              </tr>
             </tbody>
           </table>
         </div>
+        <div className="button-container">
+          <Button
+            label={t("Buy")}
+            onClick={this.props.checkoutBuyStart}
+            loading={this.props.checkout.loading}
+            loadingLabel={t("Processing")}
+            appStyle={true}
+            disabled={!this.props.buyLeads.selected.size}
+          />
+        </div>
       </div>
-      <div className="c-details">
-        <table>
-          <tbody>
-            <tr className="c-payment">
-              <td>{t("Total Payment:")}</td>
-              <td className="amount">{totalPayment + " LDC"}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div className="button-container">
-        <Button
-          label={t("Buy")}
-          onClick={checkoutBuyStart}
-          loading={checkout.loading}
-          loadingLabel={t("Processing")}
-          appStyle={true}
-          disabled={!buyLeads.selected.size}
-        />
-      </div>
-    </div>
-  )
+    )
+  }
 }
 
 const mapStateToProps = state => ({
