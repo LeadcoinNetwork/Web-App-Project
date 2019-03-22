@@ -278,7 +278,7 @@ export function start({
         const leads = await appLogic.leads.getMockLeads(user.id)
         if (leads) {
           appLogic.leads
-            .buyLeads(leads, 0)
+            .buyLeads(leads, 0, "0x0")
             .then(response => {
               res.json({ response })
             })
@@ -337,10 +337,11 @@ export function start({
     async function(req, res, next) {
       ;(async () => {
         const { user } = req
-        const { leads }: { leads: number[] } = req.body
-        if (leads) {
+        const { leads, hash }: { leads: number[]; hash: string } = req.body
+
+        if (leads && hash) {
           appLogic.leads
-            .buyLeads(leads, user.id)
+            .buyLeads(leads, user.id, hash)
             .then(response => {
               res.json({ response })
             })

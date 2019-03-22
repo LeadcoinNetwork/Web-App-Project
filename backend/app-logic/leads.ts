@@ -186,7 +186,7 @@ export default class Leads {
     return await this.models.leads.moveMyToSell(leads)
   }
 
-  public async buyLeads(leads: number[], new_owner: number) {
+  public async buyLeads(leads: number[], new_owner: number, txHash: string) {
     // const deal_price = await this.models.leads.getDealPrice(leads)
     // let buyer
     //
@@ -220,6 +220,7 @@ export default class Leads {
         msg: `Someone bought ${
           group.length
         } of your leads for a total of ${transaction_amount} LDC.`,
+        txHash,
         userId: seller,
       })
     }
@@ -230,16 +231,15 @@ export default class Leads {
     //   fiat_amount: (overall_cost * 100).toString(),
     //   exchange_rate: "1999000000000000000",
     // })
-    /*
-    I'll just comment this part out instead of deleting it, maybe they'll want it back someday (@Leekao)
 
-    this.models.notifications.createNotification({
-      msg: "Your transaction was logged to " + txDetails.link,
+    //I'll just comment this part out instead of deleting it, maybe they'll want it back someday (@Leekao)
+
+    await this.models.notifications.createNotification({
+      msg: `Your transaction was logged to ${txHash}`,
+      txHash,
       userId: new_owner,
-      unread: true,
     })
-    */
-    // return txDetails
+
     return {
       success: true,
     }

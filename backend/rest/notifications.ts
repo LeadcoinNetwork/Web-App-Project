@@ -31,14 +31,14 @@ export function start({
     async function(req, res, next) {
       ;(async () => {
         const { user } = req
-        const { mock } = req.query
-        if (mock == 1) {
-          res.json({
-            msg: "ALL YOUR BASE ARE BELONG TO US!",
-            userId: 666,
-          })
-          return
-        }
+        // const { mock } = req.query
+        // if (mock == 1) {
+        //   res.json({
+        //     msg: "ALL YOUR BASE ARE BELONG TO US!",
+        //     userId: 666,
+        //   })
+        //   return
+        // }
         await appLogic.notifications
           .getNotificationsAndCount(user.id)
           .then(responseTupple => {
@@ -46,6 +46,46 @@ export function start({
               list: responseTupple[0],
               unreadCount: responseTupple[1],
             })
+          })
+          .catch(err => {
+            res.status(400)
+            res.send({ error: err.message })
+          })
+        return next()
+      })().catch(err => {
+        res.status(400)
+        res.send({ error: err.message })
+      })
+    },
+  )
+
+  expressApp.post(
+    "/notifications",
+    passport.authenticate("jwt", authOptions),
+    async function(req, res, next) {
+      ;(async () => {
+        const { user } = req
+        const { msg, txHash }: { msg: string; txHash: string } = req.body
+
+        await appLogic.models.notifications
+          .createNotification({
+            msg,
+            txHash,
+            userId: user.id,
+          })
+          .then(async () => {
+            await appLogic.notifications
+              .getNotificationsAndCount(user.id)
+              .then(responseTupple => {
+                res.json({
+                  list: responseTupple[0],
+                  unreadCount: responseTupple[1],
+                })
+              })
+              .catch(err => {
+                res.status(400)
+                res.send({ error: err.message })
+              })
           })
           .catch(err => {
             res.status(400)
