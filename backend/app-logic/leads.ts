@@ -3,6 +3,7 @@ import { Lead, LeadQueryOptions } from "../models/leads/types"
 import { IModels } from "./index"
 
 import * as _ from "lodash"
+import { BaseUserInterface } from "@/models/users/types"
 
 var request = require("request-promise")
 
@@ -186,6 +187,24 @@ export default class Leads {
     return await this.models.leads.moveMyToSell(leads)
   }
 
+  // add lead owner wallet
+  public async formatLead(lead: Lead) {
+    let owner: BaseUserInterface = await this.models.users.mustGetUserById(
+      lead.ownerId,
+    )
+
+    return {
+      ...lead,
+      ownerWallet: owner.wallet,
+    }
+  }
+
+  public async formatLeads(leads) {
+    return await Promise.all(
+      leads.map(async lead => await this.formatLead(lead)),
+    )
+  }
+
   public async buyLeads(leads: number[], new_owner: number, txHash: string) {
     // const deal_price = await this.models.leads.getDealPrice(leads)
     // let buyer
@@ -235,7 +254,7 @@ export default class Leads {
     //I'll just comment this part out instead of deleting it, maybe they'll want it back someday (@Leekao)
 
     await this.models.notifications.createNotification({
-      msg: `Your transaction was logged to ${txHash}`,
+      msg: "Confirmed transaction",
       txHash,
       userId: new_owner,
     })

@@ -73,7 +73,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
   notificationsQueries = {
     markAsReadByIds: async ids => {
       let sql = `UPDATE leadcoin.notifications
-      SET doc=JSON_set(doc,"$.unread","false")
+      SET doc=JSON_set(doc,"$.unread",false)
       WHERE id in (${ids.join(",")})
        ;`
       let rows = await this.sql.query(sql)
@@ -84,7 +84,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       let sql = `UPDATE leadcoin.notifications
       SET doc=JSON_set(doc,"$.unread","false")
       WHERE doc->>"$.userId"=${user_id}
-      AND doc->>"$.unread"= "true"
+      AND doc->>"$.unread"=true
        ;`
       let rows = await this.sql.query(sql)
       return rows
@@ -95,8 +95,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       SELECT COUNT(id) as count
       FROM leadcoin.notifications
       WHERE doc->>"$.userId"=${user_id} 
-      AND doc->>"$.unread"= "true"
-      ;`
+      AND doc->>"$.unread"="true";`
       let rows = await this.sql.query(sql)
       return rows[0].count
     },

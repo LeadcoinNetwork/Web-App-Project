@@ -13,10 +13,12 @@ export default class Notifications {
     let unreadCount = await this.models.notifications.getUnreadNotificationsCount(
       user_id,
     )
+
     if (notifications.length > 0) {
       let ids = notifications.map(n => n.id)
       await this.models.notifications.MarkNotificationAsRead(ids)
     }
+
     return [notifications, unreadCount]
   }
 }
