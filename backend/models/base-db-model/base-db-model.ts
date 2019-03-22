@@ -1,3 +1,5 @@
+import { log } from "util"
+
 const mysql = require("mysql")
 import * as _ from "lodash"
 
@@ -44,7 +46,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
   }
 
   protected prepareFilters(filters): string {
-    return filters.search
+    return filters
       .map(f => {
         const escaped = mysql.escape(f.val.toLowerCase())
         let field = f.field
@@ -169,7 +171,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       const { limit, filters, sort } = options
       let where_additions = ""
 
-      if (filters) {
+      if (filters && filters.length) {
         where_additions = this.prepareFilters(filters)
       }
       let limit_addition = ""
@@ -202,7 +204,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       let where_additions = []
       let search_additions = []
       if (filters.search) {
-        where_additions.push(this.prepareFilters(filters))
+        where_additions.push(this.prepareFilters(filters.search))
       }
       if (filters.industry)
         where_additions.push(
