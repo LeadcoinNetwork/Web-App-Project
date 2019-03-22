@@ -407,7 +407,12 @@ export function start({
         }
 
         let _filters = search
-          ? ["content_updates", "comments"].map(field => {
+          ? [
+              "content_updates",
+              "comments",
+              "functionality[]",
+              "languages[]",
+            ].map(field => {
               return {
                 field,
                 op: "LIKE",
@@ -532,7 +537,13 @@ export function start({
         }
         let filters = { search: null, industry: null }
         if (search) {
-          filters.search = ["content_updates", "comments"].map(field => {
+          // if end with [] then need search inArray
+          filters.search = [
+            "content_updates",
+            "comments",
+            "functionality[]",
+            "languages[]",
+          ].map(field => {
             return {
               field,
               op: "LIKE",

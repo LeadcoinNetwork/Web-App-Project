@@ -45,6 +45,11 @@ export function start({
     .get(get)
 
   expressApp
+    .route("/update")
+    .all(passport.authenticate("jwt", authOptions))
+    .post(updateProfile)
+
+  expressApp
     .route("/user/:userId")
     .all(passport.authenticate("jwt", authOptions))
     .get(find)
@@ -56,6 +61,22 @@ export function start({
     passport.authenticate("jwt", authOptions),
     completeProfile,
   )
+
+  async function updateProfile(req, res, next) {
+    try {
+      const users = appLogic.models.users
+      const address = req.body.address.trim()
+
+      if (address) {
+        users.updateWallet(req.user.id, address)
+        res.send({ success: true })
+      } else {
+        res.status(400).send({ error: "Empty address" })
+      }
+    } catch (e) {
+      next(e)
+    }
+  }
 
   function completeProfile(req, res) {
     appLogic.auth
@@ -82,7 +103,7 @@ export function start({
       res.cookie("token", token)
       res.json({ user: _user, token })
     })().catch(err => {
-      res.status(400)      
+      res.status(400)
       if (err.message) err = err.message
       res.send({ error: errStringToObj(err) })
     })
