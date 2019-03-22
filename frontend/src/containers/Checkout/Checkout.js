@@ -114,7 +114,7 @@ class Checkout extends React.Component {
             label={t("Buy")}
             onClick={this.props.checkoutBuyStart}
             loading={this.props.checkout.loading}
-            loadingLabel={t("Processing")}
+            loadingLabel={t("Pending")}
             appStyle={true}
             disabled={!this.props.buyLeads.selected.size}
           />

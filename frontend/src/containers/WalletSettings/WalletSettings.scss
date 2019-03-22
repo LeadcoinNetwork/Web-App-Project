@@ -1,0 +1,83 @@
+@import "~Styles/variables";
+
+.personal {
+  display: flex;
+  padding-bottom: 10px;
+  border-bottom: solid 1px black;
+}
+.public {
+  display: flex;
+  padding-top: 10px;
+}
+.help_text {
+  width: 250px;
+}
+.field_submit {
+  margin-top: 5px;
+  .twothirds {
+    width: 242px;
+  }
+}
+.header {
+  &.bigger {
+    padding-top: 5px;
+    margin-top: 10px;
+    font-weight: 500;
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  &.smaller {
+    font-weight: 300;
+    font-size: 16px;
+  }
+}
+.flexed {
+  width: 620px;
+  justify-content: flex-end;
+  display: flex;
+}
+
+.wallet-container {
+  display: flex;
+}
+
+.fieldLabel {
+  width: 110px;
+  padding: 8px 0;
+}
+.fieldValue {
+  width: 100%;
+}
+
+.controls {
+  margin-top: 15px;
+}
+
+@media (max-width: 760px) {
+  .wallet-container {
+    display: block;
+  }
+  .line {
+    height: unset;
+    line-height: unset;
+    width: unset;
+    display: block;
+  }
+
+  .line {
+    .fieldLabel {
+      width: 185px;
+    }
+  }
+
+  .controls {
+    width: unset;
+    display: block;
+  }
+}
+@media (max-width: $screen-tablets) {
+  .multiselect {
+    min-height: 60px;
+    display: grid;
+  }
+}

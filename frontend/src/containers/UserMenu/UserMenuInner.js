@@ -23,10 +23,17 @@ const UserMenuInner = ({ user, logOut }) => (
       </Link>
     ))}
     <Link
+      to={"/wallet-settings"}
+      className="no-underline um-row log-out"
+      key={menuItems.length}
+    >
+      {t("Wallet settings")}
+    </Link>
+    <Link
       to={"/"}
       onClick={logOut}
       className="no-underline um-row log-out"
-      key={menuItems.length}
+      key={menuItems.length + 1}
     >
       {t("Log Out")}
     </Link>
