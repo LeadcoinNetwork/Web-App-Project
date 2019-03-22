@@ -140,7 +140,7 @@ const fields = [
     maxWidth: "85px",
     minWidth: "85px",
     type: "input",
-    tooltip: "What is your estimated budget for this project?",
+    tooltip: "What is your estimated budget for this project (USD)?",
   },
   {
     key: "languages",
@@ -216,7 +216,7 @@ const fields = [
     minWidth: "60px",
     type: "input",
     options: [],
-    tooltip: "The lead’s price",
+    tooltip: "The lead’s price in LDCs",
   },
 ]
 

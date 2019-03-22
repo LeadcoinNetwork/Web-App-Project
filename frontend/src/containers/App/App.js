@@ -26,11 +26,12 @@ import EmailConfirmation from "containers/EmailConfirmation"
 import Login from "Containers/Login"
 import ForgotPassword from "Containers/ForgotPassword"
 import UserSettings from "Containers/UserSettings"
-import Withdraw from "containers/Withdraw"
+import Withdraw from "Containers/Withdraw"
 import Terms from "Containers/Terms"
 import Privacy from "Containers/Privacy"
 import { connect } from "react-redux"
 import { metamask } from "Actions"
+import WalletSettings from "Containers/WalletSettings"
 
 // import Steps from "../steps"
 
@@ -82,6 +83,7 @@ class App extends React.Component {
               <Route path="/notifications" component={NotificationTable} />
               <Route path="/terms" component={Terms} />
               <Route path="/privacy" component={Privacy} />
+              <Route path="/wallet-settings" component={WalletSettings} />
             </Switch>
           </main>
           <Snackbar />
