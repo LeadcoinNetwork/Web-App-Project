@@ -8,7 +8,7 @@ const BalanceWidget = ({ balance }) => (
     {balance.loading ? null : (
       <div
         data-for="balance-tooltip"
-        data-tip="LDCs received to-date"
+        data-tip="LDC wallet status"
         className="ldc-balance-widget"
       >
         {balance.total + " LDC"}

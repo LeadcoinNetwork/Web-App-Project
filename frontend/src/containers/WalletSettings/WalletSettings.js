@@ -5,7 +5,6 @@ import { connect } from "react-redux"
 import { push } from "react-router-redux"
 import t from "../../utils/translate/translate"
 import ConfirmationDialog from "../../components/ConfirmationDialog"
-import { metamask } from "../../utils/metamask-service"
 import * as actions from "Actions"
 
 class WalletSettings extends React.Component {
