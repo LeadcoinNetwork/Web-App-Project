@@ -45,7 +45,7 @@ export function start({
     .get(get)
 
   expressApp
-    .route("/update")
+    .route("/user/update")
     .all(passport.authenticate("jwt", authOptions))
     .post(updateProfile)
 

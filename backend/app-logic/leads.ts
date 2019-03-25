@@ -188,10 +188,10 @@ export default class Leads {
   }
 
   // add lead owner wallet
-  public async formatLead(lead: Lead) {
-    let owner: BaseUserInterface = await this.models.users.mustGetUserById(
-      lead.ownerId,
-    )
+  public async formatLead(lead: Lead, users = []) {
+    let owner: BaseUserInterface =
+      _.find(users, ["id", lead.ownerId]) ||
+      (await this.models.users.mustGetUserById(lead.ownerId))
 
     return {
       ...lead,
@@ -199,9 +199,14 @@ export default class Leads {
     }
   }
 
-  public async formatLeads(leads) {
+  public async formatLeads(leads: Lead[]) {
+    let usersId = _.uniq(leads.map(l => l.ownerId))
+    let users = await Promise.all(
+      usersId.map(async id => await this.models.users.mustGetUserById(id)),
+    )
+
     return await Promise.all(
-      leads.map(async lead => await this.formatLead(lead)),
+      leads.map(async lead => await this.formatLead(lead, users)),
     )
   }
 
