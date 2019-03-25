@@ -2,6 +2,7 @@ export interface BaseNotification {
   msg: string
   userId: number
   unread?: boolean
+  txHash?: string
 }
 
 export interface Notification extends BaseNotification {

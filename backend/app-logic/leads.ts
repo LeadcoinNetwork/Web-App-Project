@@ -3,6 +3,7 @@ import { Lead, LeadQueryOptions } from "../models/leads/types"
 import { IModels } from "./index"
 
 import * as _ from "lodash"
+import { BaseUserInterface } from "@/models/users/types"
 
 var request = require("request-promise")
 
@@ -186,7 +187,30 @@ export default class Leads {
     return await this.models.leads.moveMyToSell(leads)
   }
 
-  public async buyLeads(leads: number[], new_owner: number) {
+  // add lead owner wallet
+  public async formatLead(lead: Lead, users = []) {
+    let owner: BaseUserInterface =
+      _.find(users, ["id", lead.ownerId]) ||
+      (await this.models.users.mustGetUserById(lead.ownerId))
+
+    return {
+      ...lead,
+      ownerWallet: owner.wallet,
+    }
+  }
+
+  public async formatLeads(leads: Lead[]) {
+    let usersId = _.uniq(leads.map(l => l.ownerId))
+    let users = await Promise.all(
+      usersId.map(async id => await this.models.users.mustGetUserById(id)),
+    )
+
+    return await Promise.all(
+      leads.map(async lead => await this.formatLead(lead, users)),
+    )
+  }
+
+  public async buyLeads(leads: number[], new_owner: number, txHash: string) {
     // const deal_price = await this.models.leads.getDealPrice(leads)
     // let buyer
     //
@@ -220,6 +244,7 @@ export default class Leads {
         msg: `Someone bought ${
           group.length
         } of your leads for a total of ${transaction_amount} LDC.`,
+        txHash,
         userId: seller,
       })
     }
@@ -230,16 +255,15 @@ export default class Leads {
     //   fiat_amount: (overall_cost * 100).toString(),
     //   exchange_rate: "1999000000000000000",
     // })
-    /*
-    I'll just comment this part out instead of deleting it, maybe they'll want it back someday (@Leekao)
 
-    this.models.notifications.createNotification({
-      msg: "Your transaction was logged to " + txDetails.link,
+    //I'll just comment this part out instead of deleting it, maybe they'll want it back someday (@Leekao)
+
+    await this.models.notifications.createNotification({
+      msg: "Confirmed transaction",
+      txHash,
       userId: new_owner,
-      unread: true,
     })
-    */
-    // return txDetails
+
     return {
       success: true,
     }

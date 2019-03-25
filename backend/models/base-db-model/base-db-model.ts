@@ -1,3 +1,5 @@
+import { log } from "util"
+
 const mysql = require("mysql")
 import * as _ from "lodash"
 
@@ -44,7 +46,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
   }
 
   protected prepareFilters(filters): string {
-    return filters.search
+    return filters
       .map(f => {
         const escaped = mysql.escape(f.val.toLowerCase())
         let field = f.field
@@ -71,7 +73,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
   notificationsQueries = {
     markAsReadByIds: async ids => {
       let sql = `UPDATE leadcoin.notifications
-      SET doc=JSON_set(doc,"$.unread","false")
+      SET doc=JSON_set(doc,"$.unread",false)
       WHERE id in (${ids.join(",")})
        ;`
       let rows = await this.sql.query(sql)
@@ -82,7 +84,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       let sql = `UPDATE leadcoin.notifications
       SET doc=JSON_set(doc,"$.unread","false")
       WHERE doc->>"$.userId"=${user_id}
-      AND doc->>"$.unread"= "true"
+      AND doc->>"$.unread"=true
        ;`
       let rows = await this.sql.query(sql)
       return rows
@@ -93,8 +95,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       SELECT COUNT(id) as count
       FROM leadcoin.notifications
       WHERE doc->>"$.userId"=${user_id} 
-      AND doc->>"$.unread"= "true"
-      ;`
+      AND doc->>"$.unread"="true";`
       let rows = await this.sql.query(sql)
       return rows[0].count
     },
@@ -169,7 +170,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       const { limit, filters, sort } = options
       let where_additions = ""
 
-      if (filters) {
+      if (filters && filters.length) {
         where_additions = this.prepareFilters(filters)
       }
       let limit_addition = ""
@@ -202,7 +203,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       let where_additions = []
       let search_additions = []
       if (filters.search) {
-        where_additions.push(this.prepareFilters(filters))
+        where_additions.push(this.prepareFilters(filters.search))
       }
       if (filters.industry)
         where_additions.push(

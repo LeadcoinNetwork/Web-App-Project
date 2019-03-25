@@ -278,7 +278,7 @@ export function start({
         const leads = await appLogic.leads.getMockLeads(user.id)
         if (leads) {
           appLogic.leads
-            .buyLeads(leads, 0)
+            .buyLeads(leads, 0, "0x0")
             .then(response => {
               res.json({ response })
             })
@@ -337,10 +337,11 @@ export function start({
     async function(req, res, next) {
       ;(async () => {
         const { user } = req
-        const { leads }: { leads: number[] } = req.body
-        if (leads) {
+        const { leads, txHash }: { leads: number[]; txHash: string } = req.body
+
+        if (leads && txHash) {
           appLogic.leads
-            .buyLeads(leads, user.id)
+            .buyLeads(leads, user.id, txHash)
             .then(response => {
               res.json({ response })
             })
@@ -427,8 +428,12 @@ export function start({
             filters: _filters,
             limit: _limit,
           })
-          .then(response => {
+          .then(async response => {
             let jsonResponse = Object.assign(response, req.query)
+            jsonResponse.list = await appLogic.leads.formatLeads(
+              jsonResponse.list,
+            )
+
             res.json(jsonResponse)
           })
           .catch(err => {
@@ -566,8 +571,12 @@ export function start({
             limit: _limit,
             user_id: user.id,
           })
-          .then(response => {
+          .then(async response => {
             let jsonResponse = Object.assign(response, req.query)
+            jsonResponse.list = await appLogic.leads.formatLeads(
+              jsonResponse.list,
+            )
+
             res.json(jsonResponse)
           })
           .catch(err => {
