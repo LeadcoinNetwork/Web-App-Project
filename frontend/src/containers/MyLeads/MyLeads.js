@@ -112,20 +112,15 @@ class MyLeads extends React.Component {
 
 const mapStateToProps = state => ({
   leads: state.myLeads,
-  fields: state.fields.filter(f => {
-    return f.key != "lead_price"
-  }),
+  fields: state.fields,
 })
 
-export default connect(
-  mapStateToProps,
-  {
-    fetchLeads: (...params) => leads.fetchLeads("MY_LEADS", ...params),
-    setSelectedLeads: selectedLeads =>
-      leads.setSelectedLeads("MY_LEADS", selectedLeads),
-    toggelCardView: index => leads.toggelCardView("MY_LEADS", index),
-    moveToSell: moveToSell.myLeadsMoveToSellBegin,
-    displayLead: displayLead.displayLeadGet,
-    push,
-  },
-)(MyLeads)
+export default connect(mapStateToProps, {
+  fetchLeads: (...params) => leads.fetchLeads("MY_LEADS", ...params),
+  setSelectedLeads: selectedLeads =>
+    leads.setSelectedLeads("MY_LEADS", selectedLeads),
+  toggelCardView: index => leads.toggelCardView("MY_LEADS", index),
+  moveToSell: moveToSell.myLeadsMoveToSellBegin,
+  displayLead: displayLead.displayLeadGet,
+  push,
+})(MyLeads)

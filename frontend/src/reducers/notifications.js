@@ -32,7 +32,9 @@ const notifications = (state = initialState, action) => {
       return {
         ...state,
         list: action.payload.list,
-        unreadCount: action.payload.unreadCount,
+        unreadCount: state.unreadCount
+          ? action.payload.unreadCount + state.unreadCount
+          : action.payload.unreadCount,
         error: "",
       }
     case types.NOTIFICATIONS_CREATE:

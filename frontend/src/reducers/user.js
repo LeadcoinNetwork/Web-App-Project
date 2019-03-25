@@ -11,6 +11,7 @@ const user = (state = initialState, action) => {
 
     case types.LOGGED_OUT:
       return initialState
+
     default:
       return state
   }

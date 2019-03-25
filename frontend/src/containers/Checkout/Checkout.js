@@ -79,9 +79,11 @@ class Checkout extends React.Component {
               <thead>
                 <tr>
                   {shoppingCartFields.map(field => (
-                    <th className={"h-" + field.key}>{t(field.name)}</th>
+                    <th className={"h-" + field.key} key={field.id}>
+                      {t(field.name)}
+                    </th>
                   ))}
-                  <th>Remove lead</th>
+                  <th>Remove Lead</th>
                 </tr>
               </thead>
               <tbody>

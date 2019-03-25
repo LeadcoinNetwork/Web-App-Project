@@ -1,9 +1,11 @@
 //ts-check
 import * as actions from "../actions"
-import { select, put, take } from "redux-saga/effects"
+import { metamask } from "../utils/metamask-service"
+import { select, put, take, call } from "redux-saga/effects"
 import { push } from "react-router-redux"
 
 import API from "../api/index"
+
 /**
  * This SAGA fetch the user from the server and updates the state
  * This saga start immediatly and do not waits for (TAKE)
@@ -12,7 +14,8 @@ import API from "../api/index"
  */
 export default function* fetchUserToState(api) {
   while (true) {
-    var ans = yield api.users.getMe()
+    const ans = yield api.users.getMe()
+
     if (ans.user) {
       yield put(actions.user.loggedIn(ans.user)) // Update the state
       if (lastUserId != ans.user.id) {
@@ -32,16 +35,22 @@ export default function* fetchUserToState(api) {
         }
         startPlayerWaitUntilItsLoaded()
       }
-
-      // update the balance
-      yield put(actions.balance.balanceUpdate(ans.user.balance))
+      if (!metamask.initialized) {
+        const init = yield metamask.init()
+        const verify = yield metamask.verify()
+        const balance = yield metamask.getBalance(ans.user.wallet)
+        yield put(actions.balance.balanceUpdate(balance))
+      } else {
+        const balance = yield metamask.getBalance(ans.user.wallet)
+        yield put(actions.balance.balanceUpdate(balance))
+      }
     }
-
     yield put(actions.route.redirectIfNeeded())
     yield take(actions.types.FETCH_USER_AGAIN)
   }
 }
 var lastUserId
+const balance = 0
 
 function startPlayerWaitUntilItsLoaded() {
   if (localStorage.skip_inline_manual) return

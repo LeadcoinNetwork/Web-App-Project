@@ -23,10 +23,5 @@ export default function* notificationsCreate(api) {
         actions.notifications.notificationsUpdate(res.list, res.unreadCount),
       )
     }
-    yield take([
-      types.NOTIFICATIONS_FETCH_START,
-      types.LOGIN_FINISH,
-      types.LOGGED_OUT,
-    ])
   }
 }

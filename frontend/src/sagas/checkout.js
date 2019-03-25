@@ -1,12 +1,11 @@
 import React from "react"
 import { types } from "Actions"
 import * as actions from "Actions"
-import { select, take, put, call } from "redux-saga/effects"
+import { select, take, put, all, call } from "redux-saga/effects"
 import { push } from "react-router-redux"
 import { toast } from "react-toastify"
 import API from "../api/index"
 import { metamask } from "../utils/metamask-service"
-import { totalLeadsPrice } from "../utils/prepare-data"
 
 /**
  * @param api {API} - this is this paramters
@@ -18,99 +17,98 @@ export default function* checkout(api) {
     let { selected, list } = yield select(state => state.buyLeads)
     let user = yield select(state => state.user)
     let selectedLeads = list.filter(lead => selected.has(lead.id))
-    let price = totalLeadsPrice(selectedLeads)
-    let checkWallet = yield metamask.isAddress(user.wallet)
+    let checkUserWallet = yield metamask.isAddress(user.wallet)
     toast("Wallet is verified", {
       type: "success",
       closeOnClick: true,
     })
-    try {
-      let transfer = yield metamask.transfer(user.wallet, price)
-      yield put(
-        actions.notifications.notificationsCreate({
-          msg: "Pending transaction",
-          txHash: transfer,
-        }),
-      )
-      toast(
-        <div
-          ref={e => {
-            if (e) {
-              e = e.parentElement // toast body
-              e = e.parentElement // toast class
-              e = e.parentElement // toast container
-              e.style.width = "625px"
-            }
-          }}
-        >
-          Tanscation has been send, TxHash {transfer}
-        </div>,
-        {
-          type: "success",
-          closeOnClick: true,
-        },
-      )
 
-      let checkTxHash = yield metamask.checkTxHash(transfer)
+    yield all(selectedLeads.map(lead => call(leadTransfer, api, lead, user)))
 
-      let res = yield api.leads.buyLeadsBuy([...selected], transfer)
+    yield put(actions.checkout.checkoutBuySuccess())
+    yield put(actions.leads.setSelectedLeads("BUY_LEADS", new Set()))
+    window.triggerFetch()
+    yield put(push("/my-leads"))
+  }
+}
 
-      if (res.error) {
-        yield put(actions.checkout.checkoutBuyError(res.error))
-      } else {
-        yield put(actions.checkout.checkoutBuySuccess())
-
-        yield put(
-          actions.notifications.notificationsCreate({
-            msg: "Confirmed transaction",
-            txHash: transfer,
-          }),
-        )
-
-        toast(
-          <div
-            ref={e => {
-              if (e) {
-                e = e.parentElement // toast body
-                e = e.parentElement // toast class
-                e = e.parentElement // toast container
-                e.style.width = "625px"
-              }
-            }}
-          >
-            <div> Your order has been completed.</div>
-            <div>
-              {" "}
-              Your TX has been broadcast to the network. Check your TX below:{" "}
-            </div>
-            <div> {transfer} </div>
-            <a target="_blank" href={`https://etherscan.io/tx/${transfer}`}>
-              {" "}
-              View It Here{" "}
-            </a>
-          </div>,
-          {
-            type: "success",
-            autoClose: false,
-            closeOnClick: false,
-            // pauseOnHover: true,
-          },
-        )
-
-        const balance = yield metamaskService.getBalance(user.wallet)
-
-        yield put(actions.balance.balanceUpdate(balance))
-
-        yield put(actions.leads.setSelectedLeads("BUY_LEADS", new Set()))
-        window.triggerFetch()
-        yield put(push("/my-leads"))
-      }
-    } catch (err) {
-      toast(err.message, {
-        type: "error",
+const leadTransfer = function*(api, lead, user) {
+  try {
+    let transfer = yield metamask.transfer(lead.ownerWallet, lead.lead_price)
+    yield put(
+      actions.notifications.notificationsCreate({
+        msg: "Pending transaction",
+        txHash: transfer,
+      }),
+    )
+    toast(
+      <div
+        ref={e => {
+          if (e) {
+            e = e.parentElement // toast body
+            e = e.parentElement // toast class
+            e = e.parentElement // toast container
+            e.style.width = "625px"
+          }
+        }}
+      >
+        Tanscation has been send, TxHash {transfer}
+      </div>,
+      {
+        type: "success",
         closeOnClick: true,
-      })
-      yield put(actions.checkout.checkoutBuyError(err.message))
-    }
+      },
+    )
+
+    let checkTxHash = yield metamask.checkTxHash(transfer)
+
+    const balance = yield metamask.getBalance(user.wallet)
+    console.log(balance)
+    yield put(actions.balance.balanceUpdate(balance))
+
+    let res = yield api.leads.buyLeadsBuy([lead.id], transfer)
+
+    yield put(
+      actions.notifications.notificationsCreate({
+        msg: "Confirmed transaction",
+        txHash: transfer,
+      }),
+    )
+
+    toast(
+      <div
+        ref={e => {
+          if (e) {
+            e = e.parentElement // toast body
+            e = e.parentElement // toast class
+            e = e.parentElement // toast container
+            e.style.width = "625px"
+          }
+        }}
+      >
+        <div> Your order has been completed.</div>
+        <div>
+          {" "}
+          Your TX has been broadcast to the network. Check your TX below:{" "}
+        </div>
+        <div> {transfer} </div>
+        <a target="_blank" href={`https://etherscan.io/tx/${transfer}`}>
+          {" "}
+          View It Here{" "}
+        </a>
+      </div>,
+      {
+        type: "success",
+        autoClose: false,
+        closeOnClick: false,
+        // pauseOnHover: true,
+      },
+    )
+  } catch (err) {
+    toast(err.message, {
+      type: "error",
+      closeOnClick: true,
+    })
+    yield put(actions.checkout.checkoutBuyError(err.message))
   }
 }

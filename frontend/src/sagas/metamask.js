@@ -14,22 +14,24 @@ export default function* metamask(api) {
   while (true) {
     const action = yield take(types.METAMASK_INIT)
     let isActive = false
+    if (!metamaskService.initialized) {
+      try {
+        const init = yield metamaskService.init()
+        const verify = yield metamaskService.verify()
 
-    try {
-      const init = yield metamaskService.init()
-      const verify = yield metamaskService.verify()
-      isActive = true
-    } catch (err) {
-      toast(
-        "Metamask is not supported by this browser or not installed. Please follow your browser’s support for MetaMask (such as Chrome)",
-        {
-          type: "error",
-          closeOnClick: true,
-          autoClose: false,
-        },
-      )
-    } finally {
-      yield put(actions.metamask.updateMetamaskStatus(isActive))
+        isActive = verify.success
+      } catch (err) {
+        toast(
+          "Metamask is not supported by this browser or not installed. Please follow your browser’s support for MetaMask (such as Chrome)",
+          {
+            type: "error",
+            closeOnClick: true,
+            autoClose: false,
+          },
+        )
+      } finally {
+        yield put(actions.metamask.updateMetamaskStatus(isActive))
+      }
     }
   }
 }
