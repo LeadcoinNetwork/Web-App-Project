@@ -18,7 +18,7 @@ export default function* metamask(api) {
     try {
       const init = yield metamaskService.init()
       const verify = yield metamaskService.verify()
-      isActive = verify.success
+      isActive = true
     } catch (err) {
       toast(
         "Metamask is not supported by this browser or not installed. Please follow your browser’s support for MetaMask (such as Chrome)",

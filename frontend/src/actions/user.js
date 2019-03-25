@@ -19,6 +19,13 @@ export default {
     }
   },
 
+  editWallet(wallet) {
+    return {
+      type: types.EDIT_WALLET,
+      payload: wallet,
+    }
+  },
+
   loggedOut() {
     return {
       type: types.LOGGED_OUT,

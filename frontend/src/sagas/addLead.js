@@ -15,7 +15,7 @@ export default function* addLead(api) {
     let { values, agree_to_terms } = yield select(state => state.addLead)
     yield put(actions.addLead.addLeadLoadingStart())
     const prepData = prepareLeadDataForSend(values)
-    console.log(prepData)
+
     let res = yield api.leads.sellLeadsAddByForm({
       ...prepData,
       agree_to_terms,

@@ -21,7 +21,6 @@ export default {
   },
 
   notificationsCreate(payload) {
-    console.log(payload)
     return {
       type: types.NOTIFICATIONS_CREATE,
       payload,

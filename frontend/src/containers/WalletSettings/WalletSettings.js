@@ -2,25 +2,35 @@ import React from "react"
 import Button from "Components/Button"
 import TextField from "Components/TextField"
 import { connect } from "react-redux"
+import { push } from "react-router-redux"
 import t from "../../utils/translate/translate"
 import ConfirmationDialog from "../../components/ConfirmationDialog"
-var get = require("lodash/get")
+import { metamask } from "../../utils/metamask-service"
+import * as actions from "Actions"
 
 class WalletSettings extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       showConfirmation: false,
-      wallet: "",
+      wallet: props.user ? props.user.wallet : "",
     }
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.user) {
+      return { ...state, wallet: state.wallet || props.user.wallet }
+    }
+    return state
   }
 
   handleChange(value) {
     this.setState({ wallet: value })
-    console.log(this.state)
   }
 
-  verifyWallet() {}
+  handleSubmit() {
+    this.props.editWallet(this.state.wallet)
+  }
 
   render() {
     return (
@@ -39,9 +49,9 @@ class WalletSettings extends React.Component {
               appStyle={true}
               placeholder={t("Wallet")}
               type={"text"}
-              value={this.props.user.wallet}
+              value={this.state.wallet}
               onChange={e => {
-                this.props.handleChange(e.target.value)
+                this.handleChange(e.target.value)
               }}
             />
           </div>
@@ -59,6 +69,7 @@ class WalletSettings extends React.Component {
               <ConfirmationDialog
                 description="You are about to change your wallet. Are you sure you want to proceed?"
                 onConfirm={() => {
+                  this.handleSubmit()
                   this.setState({ showConfirmation: false })
                 }}
                 onDismiss={() => this.setState({ showConfirmation: false })}
@@ -73,4 +84,7 @@ class WalletSettings extends React.Component {
 
 const mapStateToProps = state => ({ user: state.user })
 
-export default connect(mapStateToProps, {})(WalletSettings)
+export default connect(mapStateToProps, {
+  editWallet: actions.user.editWallet,
+  push,
+})(WalletSettings)

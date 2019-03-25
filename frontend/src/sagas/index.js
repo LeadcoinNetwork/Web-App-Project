@@ -25,6 +25,7 @@ import notifications from "./notifications"
 import googleAnalytics from "./googleanalytics"
 import metamask from "./metamask"
 import notificationsCreate from "./notificationCreate"
+import editWallet from "./walletSettings"
 import { spawn, fork } from "redux-saga/effects"
 import * as superagent from "superagent"
 
@@ -72,6 +73,7 @@ export default function* rootSaga() {
     notifications,
     googleAnalytics,
     notificationsCreate,
+    editWallet,
   ]
   for (var i in sagas) {
     yield fork(sagas[i], api)

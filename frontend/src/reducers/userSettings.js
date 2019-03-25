@@ -4,6 +4,7 @@ const initialState = {
   currentPassword: "",
   newPassword: "",
   confirmPassword: "",
+  newWallet: "",
   loading: false,
   error: "",
 }
@@ -33,6 +34,13 @@ const userSettings = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload,
+      }
+
+    case types.EDIT_WALLET:
+      return {
+        ...state,
+        newWallet: action.payload,
+        loading: false,
       }
     default:
       return state

@@ -14,8 +14,6 @@ export default function* notificationsCreate(api) {
       state => state.notifications.newNotification,
     )
 
-    console.log(newNotification)
-
     let res = yield api.notifications.createNotification(newNotification)
 
     if (res.error) {

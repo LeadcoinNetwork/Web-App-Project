@@ -20,7 +20,6 @@ export default function* changePassword(api) {
         newPassword: userSettings.newPassword,
       })
       yield put(actions.userSettings.userSettingsFinish())
-      console.log(res)
 
       if (res.error) {
         yield put(actions.userSettings.userSettingsError(res.error))

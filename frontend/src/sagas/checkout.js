@@ -59,6 +59,14 @@ export default function* checkout(api) {
         yield put(actions.checkout.checkoutBuyError(res.error))
       } else {
         yield put(actions.checkout.checkoutBuySuccess())
+
+        yield put(
+          actions.notifications.notificationsCreate({
+            msg: "Confirmed transaction",
+            txHash: transfer,
+          }),
+        )
+
         toast(
           <div
             ref={e => {
@@ -90,7 +98,7 @@ export default function* checkout(api) {
         )
 
         const balance = yield metamaskService.getBalance(user.wallet)
-        console.log(balance)
+
         yield put(actions.balance.balanceUpdate(balance))
 
         yield put(actions.leads.setSelectedLeads("BUY_LEADS", new Set()))
