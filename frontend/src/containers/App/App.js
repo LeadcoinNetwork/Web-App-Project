@@ -96,7 +96,6 @@ class App extends React.Component {
 const mapStateToProps = state => ({
   app: state.app,
   user: state.user,
-  metamask: state.metamask,
   location: get(state, "router.location"),
   pathname: get(state, "router.location.pathname"),
 

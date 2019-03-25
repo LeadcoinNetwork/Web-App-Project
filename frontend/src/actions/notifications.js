@@ -20,6 +20,14 @@ export default {
     }
   },
 
+  notificationsCreate(payload) {
+    console.log(payload)
+    return {
+      type: types.NOTIFICATIONS_CREATE,
+      payload,
+    }
+  },
+
   notificationsClick() {
     return {
       type: types.NOTIFICATIONS_CLICK,

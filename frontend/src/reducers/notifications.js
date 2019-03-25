@@ -3,6 +3,7 @@ import types from "../actions/types"
 const initialState = {
   list: [],
   unreadCount: 0,
+  newNotification: {},
   isOpen: false,
   error: "",
 }
@@ -30,8 +31,14 @@ const notifications = (state = initialState, action) => {
     case types.NOTIFICATIONS_UPDATE:
       return {
         ...state,
-        list: action.payload.list.concat(state.list),
+        list: action.payload.list,
         unreadCount: action.payload.unreadCount,
+        error: "",
+      }
+    case types.NOTIFICATIONS_CREATE:
+      return {
+        ...state,
+        newNotification: action.payload,
         error: "",
       }
     case types.NOTIFICATIONS_FETCH_ERROR:

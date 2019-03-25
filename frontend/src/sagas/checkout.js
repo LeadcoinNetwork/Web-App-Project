@@ -15,7 +15,6 @@ import { totalLeadsPrice } from "../utils/prepare-data"
 export default function* checkout(api) {
   while (true) {
     yield take(types.CHECKOUT_BUY_START)
-
     let { selected, list } = yield select(state => state.buyLeads)
     let user = yield select(state => state.user)
     let selectedLeads = list.filter(lead => selected.has(lead.id))
@@ -27,6 +26,12 @@ export default function* checkout(api) {
     })
     try {
       let transfer = yield metamask.transfer(user.wallet, price)
+      yield put(
+        actions.notifications.notificationsCreate({
+          msg: "Pending transaction",
+          txHash: transfer,
+        }),
+      )
       toast(
         <div
           ref={e => {
@@ -48,7 +53,7 @@ export default function* checkout(api) {
 
       let checkTxHash = yield metamask.checkTxHash(transfer)
 
-      let res = yield api.leads.buyLeadsBuy([...selected])
+      let res = yield api.leads.buyLeadsBuy([...selected], transfer)
 
       if (res.error) {
         yield put(actions.checkout.checkoutBuyError(res.error))
@@ -71,10 +76,7 @@ export default function* checkout(api) {
               Your TX has been broadcast to the network. Check your TX below:{" "}
             </div>
             <div> {transfer} </div>
-            <a
-              target="_blank"
-              href={`https://ropsten.etherscan.io/tx/${transfer}`}
-            >
+            <a target="_blank" href={`https://etherscan.io/tx/${transfer}`}>
               {" "}
               View It Here{" "}
             </a>
@@ -86,6 +88,11 @@ export default function* checkout(api) {
             // pauseOnHover: true,
           },
         )
+
+        const balance = yield metamaskService.getBalance(user.wallet)
+        console.log(balance)
+        yield put(actions.balance.balanceUpdate(balance))
+
         yield put(actions.leads.setSelectedLeads("BUY_LEADS", new Set()))
         window.triggerFetch()
         yield put(push("/my-leads"))

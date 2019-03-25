@@ -5,4 +5,8 @@ export default class NotificationsApi {
   async getNotifications() {
     return await this.request(methods.get, "/notifications")
   }
+
+  async createNotification(data) {
+    return await this.request(methods.post, "/notifications", data)
+  }
 }

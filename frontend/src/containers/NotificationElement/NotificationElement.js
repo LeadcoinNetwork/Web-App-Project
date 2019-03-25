@@ -18,8 +18,12 @@ class NotificationElement extends Component {
     window.removeEventListener("click", this.handleClick)
   }
 
+  getNotifications() {
+    return this.props.list.slice(0, 5)
+  }
+
   render() {
-    let { unreadCount, list, isOpen, notificationsClick } = this.props
+    let { unreadCount, isOpen, notificationsClick } = this.props
     return (
       <div
         className="ldc-notification-element far icon bell"
@@ -35,7 +39,7 @@ class NotificationElement extends Component {
             {unreadCount < 10 ? unreadCount : "9+"}
           </div>
         )}
-        {isOpen && <NotificationInner list={list.slice(0, 5)} />}
+        {isOpen && <NotificationInner list={this.getNotifications()} />}
       </div>
     )
   }

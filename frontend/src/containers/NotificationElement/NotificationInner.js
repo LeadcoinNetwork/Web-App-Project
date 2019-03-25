@@ -9,14 +9,27 @@ const NotificationInner = ({ list }) => (
   // <Link to="/notifications" className="notification-inner">
   <div className="notification-inner">
     <div className="small-arrow" />
-    {list.slice(0, 9).map(notification => (
+    {list.map(notification => (
       <div key={notification.id}>
         <div
           className={"ni-row" + (notification.unread ? " unread" : "")}
           key={notification.id}
         >
           <div className="nr-time">{fromNow(notification.timestamp)}</div>{" "}
-          <div className="nr-content"> {t(notification.msg)} </div>
+          {notification.txHash ? (
+            <div className="nr-content">
+              {" "}
+              {t(notification.msg)} <br />
+              <a
+                href={"https://etherscan.io/tx/" + notification.txHash}
+                target="_blank"
+              >
+                View at Etherscan
+              </a>
+            </div>
+          ) : (
+            <div className="nr-content"> {t(notification.msg)}</div>
+          )}
         </div>
       </div>
     ))}
@@ -30,7 +43,7 @@ const NotificationInner = ({ list }) => (
       <span className="view-all-text">{t("View All Notifications")}</span>
     </div> */}
     {list.length === 0 && (
-      <div className="ni-row">{t("You Have No Notifications.")}</div>
+      <div className="ni-row">{t("You have no notifications.")}</div>
     )}
   </div>
   // </Link>

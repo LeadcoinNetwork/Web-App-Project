@@ -8,6 +8,7 @@ import { push } from "react-router-redux"
 import { priceString } from "Utils/numbers"
 import { metamask } from "../../utils/metamask-service"
 import { toast } from "react-toastify"
+import { leads } from "../../actions"
 
 const notActiveFields = [
   "date",
@@ -31,10 +32,21 @@ class Checkout extends React.Component {
     )
   }
 
-  removeLead = id => {
-    this.setState({
-      selectedLeads: this.state.selectedLeads.filter(lead => lead.id !== id),
+  removeLead = async id => {
+    const selectedLeads = this.state.selectedLeads.filter(
+      lead => lead.id !== id,
+    )
+    await this.setState({
+      selectedLeads,
     })
+
+    this.updateSelectedLeads()
+  }
+
+  updateSelectedLeads() {
+    let selected = new Set()
+    this.state.selectedLeads.forEach(lead => selected.add(lead.id))
+    this.props.setSelectedLeads(selected)
   }
 
   parseLeadPrice = leadPrice => {
@@ -116,7 +128,7 @@ class Checkout extends React.Component {
             loading={this.props.checkout.loading}
             loadingLabel={t("Pending")}
             appStyle={true}
-            disabled={!this.props.buyLeads.selected.size}
+            disabled={!this.state.selectedLeads.length}
           />
         </div>
       </div>
@@ -134,4 +146,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   push,
   checkoutBuyStart: Actions.checkout.checkoutBuyStart,
+  setSelectedLeads: selectedLeads =>
+    leads.setSelectedLeads("BUY_LEADS", selectedLeads),
 })(Checkout)
