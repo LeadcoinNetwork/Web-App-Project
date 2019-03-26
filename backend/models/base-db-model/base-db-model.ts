@@ -51,8 +51,6 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         const escaped = mysql.escape(f.val.toLowerCase())
         let field = f.field
 
-        console.log(field, escaped)
-
         if (field.endsWith("[]")) {
           // find in array
           field = field.replace(/\[]$/, "")
@@ -82,10 +80,9 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
 
     markAsRead: async user_id => {
       let sql = `UPDATE leadcoin.notifications
-      SET doc=JSON_set(doc,"$.unread","false")
+      SET doc=JSON_set(doc,"$.unread",false)
       WHERE doc->>"$.userId"=${user_id}
-      AND doc->>"$.unread"=true
-       ;`
+      AND doc->>"$.unread"="true";`
       let rows = await this.sql.query(sql)
       return rows
     },

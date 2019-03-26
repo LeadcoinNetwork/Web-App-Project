@@ -53,7 +53,8 @@ test("when adding leads currency should be removed from the price", async () => 
   expect(last.lead_price).toBe(20)
 })
 
-test(`
+// skip but site balance is metamask balance
+test.skip(`
   User adds lead, 
   User2 buys it, 
   User1 balance is increased 
@@ -76,7 +77,7 @@ test(`
   let [old_record] = body.list
 
   // buy lead as user 2
-  await ApiForToken(token2).leads.buyLeadsBuy([old_record.id])
+  await ApiForToken(token2).leads.buyLeadsBuy([old_record.id], "0x0")
 
   // check notifications as user1
   let n = await ApiForToken(token1).notifications.getNotifications()
@@ -104,7 +105,7 @@ test("1st user adds lead, 2nd user buys it, everything should work", async () =>
   expect(body.list.length).toBe(1)
   let [old_record] = body.list
   expect(old_record.ownerId).toBe(user1.id)
-  await ApiForToken(token2).leads.buyLeadsBuy([body.list[0].id])
+  await ApiForToken(token2).leads.buyLeadsBuy([body.list[0].id], "0x0")
   body = await ApiForToken(token2).leads.getMyLeads({})
   expect(body.list.length).toBe(1)
   let [new_record] = body.list
@@ -163,7 +164,10 @@ test.skip(`user1 add a lead
   await ApiForToken(token).leads.sellLeadsAddByForm(lead)
   let body = await ApiForToken(token2).leads.buyLeadsGetList()
 
-  let body2 = await ApiForToken(token2).leads.buyLeadsBuy([body.list[0].id])
+  let body2 = await ApiForToken(token2).leads.buyLeadsBuy(
+    [body.list[0].id],
+    "0x0",
+  )
   expect(body2.error).toBeTruthy()
   expect(body2.error.balance[0]).toBe("Amount insufficient.")
 })
@@ -181,7 +185,7 @@ test(`user1 add a lead
   const lead = mock_lead()
   await ApiForToken(token).leads.sellLeadsAddByForm(lead)
   let body = await ApiForToken(token2).leads.buyLeadsGetList()
-  await ApiForToken(token2).leads.buyLeadsBuy([body.list[0].id])
+  await ApiForToken(token2).leads.buyLeadsBuy([body.list[0].id], "0x0")
   body = await ApiForToken(token2).leads.getMyLeads({})
   const [record] = body.list
   body = await ApiForToken(token2).leads.myLeadsMoveToSell([body.list[0].id])
@@ -199,7 +203,7 @@ test("user1 add lead, user2 buys it and then he sees it as his lead under /my-le
   const lead = mock_lead()
   await ApiForToken(token).leads.sellLeadsAddByForm(lead)
   let body = await ApiForToken(token2).leads.buyLeadsGetList()
-  await ApiForToken(token2).leads.buyLeadsBuy([body.list[0].id])
+  await ApiForToken(token2).leads.buyLeadsBuy([body.list[0].id], "0x0")
   body = await ApiForToken(token2).leads.getMyLeads({})
   expect(body.error).toBeFalsy()
   const [record] = body.list
