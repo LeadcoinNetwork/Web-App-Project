@@ -22,8 +22,9 @@ export default function* checkout(api) {
       type: "success",
       closeOnClick: true,
     })
-
-    yield all(selectedLeads.map(lead => call(leadTransfer, api, lead, user)))
+    const transfer = yield all(
+      selectedLeads.map(lead => call(leadTransfer, api, lead, user)),
+    )
 
     yield put(actions.checkout.checkoutBuySuccess())
     yield put(actions.leads.setSelectedLeads("BUY_LEADS", new Set()))
@@ -63,7 +64,6 @@ const leadTransfer = function*(api, lead, user) {
     let checkTxHash = yield metamask.checkTxHash(transfer)
 
     const balance = yield metamask.getBalance(user.wallet)
-    console.log(balance)
     yield put(actions.balance.balanceUpdate(balance))
 
     let res = yield api.leads.buyLeadsBuy([lead.id], transfer)

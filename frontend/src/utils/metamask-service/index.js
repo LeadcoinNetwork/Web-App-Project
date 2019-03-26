@@ -34,7 +34,9 @@ const abi = [
     type: "function",
   },
 ]
-const metamask = {}
+const metamask = {
+  initialized: false,
+}
 
 const isProvider = () => {
   return new Promise((resolve, reject) => {
@@ -172,9 +174,11 @@ metamask.init = () => {
     window.addEventListener("load", () => {
       if (typeof ethereum !== "undefined") {
         web3js.setProvider(ethereum)
+        metamask.initialized = true
         return resolve("Initialization completed")
       } else if (typeof web3 !== "undefined") {
         web3js.setProvider(web3.currentProvider)
+        metamask.initialized = true
         return resolve("Initialization completed")
       }
       return reject(new Error("web3 and ethereum is not defined"))
@@ -185,7 +189,7 @@ metamask.init = () => {
 metamask.verify = () => {
   return isProvider()
     .then(() => isMainNetwork())
-    .then(() => "Verification is successful")
+    .then(() => ({ msg: "Verification is successful", success: true }))
 }
 
 metamask.isAddress = isAddress
