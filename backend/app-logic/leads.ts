@@ -256,13 +256,12 @@ export default class Leads {
     //   exchange_rate: "1999000000000000000",
     // })
 
-    //I'll just comment this part out instead of deleting it, maybe they'll want it back someday (@Leekao)
-
+    /*   // I'll just comment this part out instead of deleting it, maybe they'll want it back someday (@Leekao)
     await this.models.notifications.createNotification({
       msg: "Confirmed transaction",
       txHash,
       userId: new_owner,
-    })
+    })*/
 
     return {
       success: true,
