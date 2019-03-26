@@ -11,7 +11,8 @@ const BalanceWidget = ({ balance }) => (
         data-tip="LDC wallet status"
         className="ldc-balance-widget"
       >
-        {balance.total + " LDC"}
+        {balance.total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") +
+          " LDC"}
       </div>
     )}
   </>
