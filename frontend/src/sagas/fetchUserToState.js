@@ -38,6 +38,7 @@ export default function* fetchUserToState(api) {
       if (!metamask.initialized) {
         const init = yield metamask.init()
         const verify = yield metamask.verify()
+        yield put(actions.metamask.updateMetamaskStatus(verify.success))
         const balance = yield metamask.getBalance(ans.user.wallet)
         yield put(actions.balance.balanceUpdate(balance))
       } else {

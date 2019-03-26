@@ -25,7 +25,7 @@ export default function* editWallet(api) {
       if (res.success) {
         yield put(
           actions.notifications.notificationsCreate({
-            msg: "You change your wallet",
+            msg: "Your wallet address has been updated",
           }),
         )
         toast("Wallet has been changed successfully", {
