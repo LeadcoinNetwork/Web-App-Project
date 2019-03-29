@@ -44,7 +44,7 @@ npm run build:mobile
 npm run build:apk
 ```
 
-* apk file will be located in :
+* apk file will be located in:
 
 ```
 ./frontend/mobile/platforms/android/app/build/outputs/apk/debug/
