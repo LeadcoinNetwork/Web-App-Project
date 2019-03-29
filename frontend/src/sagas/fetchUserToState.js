@@ -1,8 +1,7 @@
 //ts-check
 import * as actions from "../actions"
 import { metamask } from "../utils/metamask-service"
-import { select, put, take, call } from "redux-saga/effects"
-import { push } from "react-router-redux"
+import { put, take } from "redux-saga/effects"
 
 import API from "../api/index"
 
@@ -15,6 +14,7 @@ import API from "../api/index"
 export default function* fetchUserToState(api) {
   while (true) {
     const ans = yield api.users.getMe()
+    let checkWallet
 
     if (ans.user) {
       yield put(actions.user.loggedIn(ans.user)) // Update the state
@@ -35,19 +35,25 @@ export default function* fetchUserToState(api) {
         }
         startPlayerWaitUntilItsLoaded()
       }
-      if (!metamask.initialized) {
-        const init = yield metamask.init()
-        const verify = yield metamask.verify()
-        yield put(actions.metamask.updateMetamaskStatus(verify.success))
-        const balance = yield metamask.getBalance(ans.user.wallet)
-        yield put(actions.balance.balanceUpdate(balance))
-      } else {
-        const balance = yield metamask.getBalance(ans.user.wallet)
-        yield put(actions.balance.balanceUpdate(balance))
+      try {
+        if (!metamask.initialized) {
+          const init = yield metamask.init()
+          const verify = yield metamask.verify()
+          yield put(actions.metamask.updateMetamaskStatus(verify.success))
+        }
+
+        checkWallet = yield metamask.isAddress(ans.user.wallet)
+        console.log(checkWallet)
+        if (checkWallet.success) {
+          const balance = yield metamask.getBalance(ans.user.wallet)
+          yield put(actions.balance.balanceUpdate(balance))
+        }
+      } catch (err) {
+        console.log(err)
       }
+      yield put(actions.route.redirectIfNeeded())
+      yield take(actions.types.FETCH_USER_AGAIN)
     }
-    yield put(actions.route.redirectIfNeeded())
-    yield take(actions.types.FETCH_USER_AGAIN)
   }
 }
 var lastUserId

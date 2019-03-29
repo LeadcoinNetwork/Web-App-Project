@@ -163,7 +163,7 @@ const getTransactionReceipt = txHash => {
 const isAddress = address => {
   return new Promise((resolve, reject) => {
     if (!web3js.isAddress(address)) {
-      return reject(new Error("address is false"))
+      return reject({ msg: "address is false", success: false })
     }
     return resolve({ msg: "address is true", success: true })
   })
