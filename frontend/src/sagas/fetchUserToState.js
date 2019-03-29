@@ -43,7 +43,6 @@ export default function* fetchUserToState(api) {
         }
 
         checkWallet = yield metamask.isAddress(ans.user.wallet)
-        console.log(checkWallet)
         if (checkWallet.success) {
           const balance = yield metamask.getBalance(ans.user.wallet)
           yield put(actions.balance.balanceUpdate(balance))
@@ -51,9 +50,9 @@ export default function* fetchUserToState(api) {
       } catch (err) {
         console.log(err)
       }
-      yield put(actions.route.redirectIfNeeded())
-      yield take(actions.types.FETCH_USER_AGAIN)
     }
+    yield put(actions.route.redirectIfNeeded())
+    yield take(actions.types.FETCH_USER_AGAIN)
   }
 }
 var lastUserId
