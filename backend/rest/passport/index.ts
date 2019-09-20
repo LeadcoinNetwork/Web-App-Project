@@ -12,6 +12,7 @@ function start({ expressApp, appLogic }: { expressApp; appLogic: AppLogic }) {
   passport.use(s.jwtStrategy)
   passport.use(s.googleStrategy)
   passport.use(s.linkedInStrategy)
+  passport.use(s.facebookStrategy)
 }
 
 export default { start }

@@ -29,7 +29,10 @@ class Login extends React.Component {
               connectWithText={t("connect with")}
               provider="google"
             />
-            {/* <SocialLogin connectWithText={t("connect with")} provider="linkedin" /> */}
+            <SocialLogin
+              connectWithText={t("connect with")}
+              provider="facebook"
+            />
           </div>
           <div className="lm-form">
             <h4>{t("Or enter your details:")}</h4>

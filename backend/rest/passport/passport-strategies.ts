@@ -4,6 +4,7 @@ const JWTStrategy = require("passport-jwt").Strategy
 const ExtractJwt = require("passport-jwt").ExtractJwt
 const GoogleStrategy = require("passport-google-oauth20").Strategy
 const LinkedInStrategy = require("passport-linkedin-oauth2").Strategy
+const FacebookStrategy = require("passport-facebook").Strategy
 import NotFound from "../../utils/not-found"
 import LogModelActions from "../../models/log-model-actions/log-model-actions"
 import AppLogic from "../../app-logic/index"
@@ -178,9 +179,89 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
     },
   )
 
+  const facebookStrategy = new FacebookStrategy(
+    {
+      clientID: config.auth.facebook.clientID,
+      clientSecret: config.auth.facebook.clientSecret,
+      callbackURL: config.auth.facebook.callbackURL,
+      scope: ["profile", "email"],
+    },
+    function(accessToken, refreshToken, profile, done) {
+      console.log(profile)
+
+      // try to find user by provider
+      ;(async () => {
+        const _done = (...args) => {
+          //TODO?: log
+          done(...args)
+        }
+        let user = await appLogic.models.users.getOne({
+          provider_id: profile.id,
+          provider: profile.provider,
+        })
+        if (user instanceof NotFound) {
+          // user never sign using this provider
+
+          // try to find user by email
+          let user = await appLogic.models.users.getOne({
+            email: profile.emails[0].value,
+          })
+          if (user instanceof NotFound) {
+            // user never signin using same email
+
+            // create a new user
+            let user = {
+              fname: profile.name.givenName,
+              lname: profile.name.familyName,
+              email: profile.emails[0].value,
+              provider_id: profile.id,
+              provider: profile.provider,
+              balance: config.INITIAL_BALANCE,
+              created: Date.now(),
+              role: "user",
+            }
+            var { user: user_id } = await appLogic.auth.register(user, false)
+
+            _done(null, { user })
+          } else {
+            // user email exists, but user never signup using SSO
+
+            let update = {
+              provider_id: profile.id,
+              provider: profile.provider,
+            }
+            await appLogic.models.users.updateUser(user.id, update)
+            _done(null, Object.assign({}, user, update))
+          }
+        } else {
+          // user already logged in using same provider.
+
+          // update user details from provider
+          let update = utils.difference(
+            {
+              fname: user.fname,
+              lname: user.lname,
+              email: user.email,
+            },
+            {
+              fname: profile.name.givenName,
+              lname: profile.name.familyName,
+              email: profile.emails[0].value,
+            },
+          )
+          if (Object.keys(update).length) {
+            await appLogic.models.users.updateUser(user.id, update)
+          }
+          _done(null, user)
+        }
+      })().catch(done)
+    },
+  )
+
   return {
     jwtStrategy,
     googleStrategy,
     linkedInStrategy,
+    facebookStrategy,
   }
 }

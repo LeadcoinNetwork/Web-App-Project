@@ -33,6 +33,11 @@ class Config {
       clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
       callbackURL: process.env.BACKEND + "/auth/linkedin/callback",
     },
+    facebook: {
+      clientID: process.env.FACEBOOK_CLIENT_ID,
+      clientSecret: process.env.FACEBOOK_APP_SECRET,
+      callbackURL: process.env.BACKEND + "/auth/facebook/callback",
+    },
   }
   mail = {
     mailer: process.env.MAILER,
