@@ -45,9 +45,9 @@ export function start({
     .get(get)
 
   expressApp
-    .route("/user/update")
+    .route("/user/update-wallet")
     .all(passport.authenticate("jwt", authOptions))
-    .post(updateProfile)
+    .put(updateWallet)
 
   expressApp
     .route("/user/:userId")
@@ -62,7 +62,7 @@ export function start({
     completeProfile,
   )
 
-  async function updateProfile(req, res, next) {
+  async function updateWallet(req, res, next) {
     try {
       const users = appLogic.models.users
       const address = req.body.address.trim()
