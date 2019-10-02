@@ -25,6 +25,8 @@ import translate from "./translate"
 import withdraw from "./withdraw"
 import displayLead from "./displayLead"
 import metamask from "./metamask"
+import userProfileSettings from "./userProfileSettings"
+
 const rootReducer = combineReducers({
   app,
   displayLead,
@@ -54,6 +56,7 @@ const rootReducer = combineReducers({
   translate,
   withdraw,
   metamask,
+  userProfileSettings,
 })
 
 export default rootReducer

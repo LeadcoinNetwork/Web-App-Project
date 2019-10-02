@@ -32,6 +32,8 @@ import Privacy from "Containers/Privacy"
 import { connect } from "react-redux"
 import { metamask } from "Actions"
 import WalletSettings from "Containers/WalletSettings"
+import UserProfileSettings from "Containers/UserProfileSettings"
+import Settings from "Containers/Settings"
 
 // import Steps from "../steps"
 
@@ -84,6 +86,11 @@ class App extends React.Component {
               <Route path="/terms" component={Terms} />
               <Route path="/privacy" component={Privacy} />
               <Route path="/wallet-settings" component={WalletSettings} />
+              <Route
+                path="/user-profile-settings"
+                component={UserProfileSettings}
+              />
+              <Route path="/settings" component={Settings} />
             </Switch>
           </main>
           <Snackbar />
@@ -104,7 +111,10 @@ const mapStateToProps = state => ({
 })
 
 // export default App
-export default connect(mapStateToProps, {
-  toggleResultsMode: () => {},
-  handleMetamaskInit: metamask.metamaskInit,
-})(App)
+export default connect(
+  mapStateToProps,
+  {
+    toggleResultsMode: () => {},
+    handleMetamaskInit: metamask.metamaskInit,
+  },
+)(App)

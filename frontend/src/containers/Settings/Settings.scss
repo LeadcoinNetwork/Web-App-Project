@@ -1,0 +1,43 @@
+@import "~Styles/variables";
+
+.ldc-settings {
+  .ldc-textfield {
+    border-radius: 5px;
+  }
+
+  &-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  &-item {
+    width: 48%;
+  }
+
+  section.ldc-user-settings .us-password {
+    max-width: 100%;
+  }
+
+  .wallet-container.line.flexed {
+    max-width: 100%;
+  }
+
+  .controls.field_submit.flexed {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: $screen-md) {
+  .ldc-settings {
+    &-item {
+      width: 100%;
+      padding-bottom: 40px;
+    }
+
+    &-item-inner {
+      padding-bottom: 40px;
+    }
+  }
+}

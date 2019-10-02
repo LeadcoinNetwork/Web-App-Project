@@ -32,4 +32,7 @@ export default class UserApi {
   async logout() {
     this.request(methods.post, "/auth/logout")
   }
+  async userUpdate(data) {
+    return await this.request(methods.put, "/user/update", data)
+  }
 }

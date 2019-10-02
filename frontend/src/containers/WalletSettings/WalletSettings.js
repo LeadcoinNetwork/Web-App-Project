@@ -83,7 +83,10 @@ class WalletSettings extends React.Component {
 
 const mapStateToProps = state => ({ user: state.user })
 
-export default connect(mapStateToProps, {
-  editWallet: actions.user.editWallet,
-  push,
-})(WalletSettings)
+export default connect(
+  mapStateToProps,
+  {
+    editWallet: actions.user.editWallet,
+    push,
+  },
+)(WalletSettings)
