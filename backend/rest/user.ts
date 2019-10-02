@@ -45,6 +45,11 @@ export function start({
     .get(get)
 
   expressApp
+    .route("/user/update")
+    .all(passport.authenticate("jwt", authOptions))
+    .put(updateProfile)
+
+  expressApp
     .route("/user/update-wallet")
     .all(passport.authenticate("jwt", authOptions))
     .put(updateWallet)
@@ -78,6 +83,17 @@ export function start({
     }
   }
 
+  function updateProfile(req, res) {
+    appLogic.auth
+      .updateProfile(req.user.id, req.body)
+      .then(() => {
+        res.send({ ok: true })
+      })
+      .catch(err => {
+        res.status(500).send({ error: err.message })
+      })
+  }
+
   function completeProfile(req, res) {
     appLogic.auth
       .completeProfile(req.user.id, req.body)
@@ -88,6 +104,7 @@ export function start({
         res.status(500).send({ error: err.message })
       })
   }
+
   async function get(req, res, next) {
     var synsitzedUser = appLogic.userSyntisize(req.user)
     res.send({ user: synsitzedUser })

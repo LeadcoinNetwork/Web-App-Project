@@ -18,6 +18,14 @@ interface ICompleteProfile {
   phone: string
 }
 
+interface IUpdateProfile {
+  fname?: string
+  lname?: string
+  country?: string
+  phone?: string
+  company?: string
+}
+
 export default class Auth {
   constructor(private models: IModels) {}
 
@@ -162,6 +170,12 @@ export default class Auth {
     var str = emailCreator.confirmEmail(user, emailConfirmationKey)
     await emailSender.send(str)
     return users.updateUser(user.id, { emailConfirmationKey })
+  }
+
+  async updateProfile(user_id, updateProfile: IUpdateProfile) {
+    var { users } = this.models
+    let { fname, lname, country, phone, company } = updateProfile
+    return users.updateUser(user_id, { fname, lname, country, phone, company })
   }
 
   async completeProfile(user_id, completeProfile: ICompleteProfile) {
