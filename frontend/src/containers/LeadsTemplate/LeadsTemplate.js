@@ -13,6 +13,13 @@ import { Link } from "react-router-dom"
 import { push } from "react-router-redux"
 
 class LeadsTemplate extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      sortedBy: null,
+    }
+  }
+
   onScrollBottom = () => {
     let { fetchLeads, leads } = this.props
 
@@ -35,6 +42,18 @@ class LeadsTemplate extends React.Component {
       setSelectedLeads(selected)
     }
   }
+
+  onSortHandler = (name, direction, key) => {
+    this.setState((state, props) => {
+      return {
+        sortedBy: {
+          key: key,
+          direction: direction,
+        },
+      }
+    })
+  }
+
   toggleAll = () => {
     let { leads, setSelectedLeads } = this.props,
       selected = new Set()
@@ -206,6 +225,8 @@ class LeadsTemplate extends React.Component {
                   isSearchResults={pageName === "buy" ? true : false}
                   editLead={editLead}
                   displayLead={displayLead}
+                  onSort={this.onSortHandler}
+                  sortedBy={this.state.sortedBy}
                 />
               )
             ) : (

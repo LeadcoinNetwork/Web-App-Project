@@ -20,18 +20,22 @@ const THRCol = ({ field, colCount, staticColsWidth, onSort, sortedBy }) => (
         ? () =>
             onSort(
               field.name,
-              !sortedBy || sortedBy.key !== field.name
+              !sortedBy ||
+              String(sortedBy.key).toLowerCase() !==
+                String(field.key).toLowerCase()
                 ? "asc"
                 : sortedBy.direction === "asc"
                   ? "desc"
                   : "asc",
+              field.key,
             )
         : undefined
     }
   >
     {field.name}
     {sortedBy &&
-      sortedBy.key === field.name && (
+      String(sortedBy.key).toLowerCase() ===
+        String(field.key).toLowerCase() && (
         <FontAwesomeIcon
           icon={sortedBy.direction === "asc" ? faSortUp : faSortDown}
         />
