@@ -937,4 +937,19 @@ export default {
     ja:
       "CSV マッピング機能で、CSV のフィールドをシステムのと一致させることができます。",
   },
+  "Profile settings": {
+    en: "User settings",
+    he: "הגדרות משתמש",
+    ja: "ユーザー設定",
+  },
+  Settings: {
+    en: "Settings",
+    he: "הגדרות",
+    ja: "設定",
+  },
+  "Password settings": {
+    en: "Password settings",
+    he: "הגדרות סיסמא",
+    ja: "パスワード設定",
+  },
 }
