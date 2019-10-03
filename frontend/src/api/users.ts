@@ -27,7 +27,7 @@ export default class UserApi {
     return this.request(methods.post, "/complete-profile", data)
   }
   async editWallet(data) {
-    return await this.request(methods.post, "/user/update", data)
+    return await this.request(methods.put, "/user/update-wallet", data)
   }
   async logout() {
     this.request(methods.post, "/auth/logout")
