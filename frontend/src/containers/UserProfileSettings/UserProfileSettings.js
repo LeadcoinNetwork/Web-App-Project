@@ -30,7 +30,7 @@ class UserProfileSettings extends React.Component {
     this.setState({
       phone: value,
     })
-    this.props.onChange("phone", { value, ...countryData })
+    this.props.onChange("phone", value)
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -45,6 +45,13 @@ class UserProfileSettings extends React.Component {
       }
     }
     return state
+  }
+
+  onSubmit = () => {
+    for (let key in this.state) {
+      this.props.onChange(key, this.state[key])
+    }
+    this.props.onSubmit()
   }
 
   render() {
@@ -88,7 +95,7 @@ class UserProfileSettings extends React.Component {
           <div className="ldc-user-profile-settings-submit">
             <Button
               label={t("submit")}
-              onClick={this.props.onSubmit}
+              onClick={this.onSubmit}
               appStyle={true}
             />
           </div>
