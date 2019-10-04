@@ -215,21 +215,30 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       let limit_addition = ""
       let countHeader = "SELECT COUNT(*) as count "
       let realHeader = "SELECT *"
+
+      if (sort) {
+        realHeader += `\n, JSON_EXTRACT(${this.fieldName}, '$.${
+          sort.sortBy
+        }') AS ${sort.sortBy}`
+      }
+
       let query = `\nFROM leads\nWHERE doc->>'$.active' = 'true'\nAND doc->>'$.forSale' = 'true'`
       if (user_id) query += `\nAND doc->>'$.ownerId' <> ${user_id} `
       if (where_additions.length)
         query += `\nAND ${where_additions.join(" AND ")}`
 
+      let order = ""
+
       if (sort) {
-        query += `\nORDER BY ${this.fieldName}->>${mysql.escape(
-          "$." + sort.sortBy,
-        )} ${sort.sortOrder}`
+        order = `\nORDER BY ${sort.sortBy} ${sort.sortOrder}`
       }
       if (limit) {
         limit_addition += `\nLIMIT ${limit.start},${limit.offset} `
       }
       let count = await this.sql.query(countHeader + query)
-      let rows = await this.sql.query(realHeader + query + limit_addition)
+      let rows = await this.sql.query(
+        realHeader + query + order + limit_addition,
+      )
       rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
       rows = rows.map(row => {
         return Object.assign(row, {

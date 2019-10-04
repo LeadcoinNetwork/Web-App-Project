@@ -395,7 +395,15 @@ export function start({
     async function(req, res, next) {
       ;(async () => {
         const { user } = req
-        let { search, sortBy, page, limit, sortOrder, mock } = req.query
+        let {
+          search,
+          searchIn,
+          sortBy,
+          page,
+          limit,
+          sortOrder,
+          mock,
+        } = req.query
 
         let _sort = {
           sortBy: sortBy && sortBy != "id" ? sortBy : "date",
@@ -407,20 +415,28 @@ export function start({
           offset: limit || 50,
         }
 
-        let _filters = search
-          ? [
-              "content_updates",
-              "comments",
-              "functionality[]",
-              "languages[]",
-            ].map(field => {
-              return {
-                field,
-                op: "LIKE",
-                val: search,
-              }
-            })
-          : []
+        let _filters = []
+
+        if (search) {
+          const allSearchFields = [
+            "content_updates",
+            "comments",
+            "functionality[]",
+            "languages[]",
+          ]
+          const searchFields =
+            allSearchFields.indexOf(searchIn) === -1
+              ? allSearchFields
+              : [searchIn]
+
+          _filters = searchFields.map(field => {
+            return {
+              field,
+              op: "LIKE",
+              val: search,
+            }
+          })
+        }
 
         await appLogic.leads
           .getBoughtLeads(user.id, {
@@ -529,9 +545,11 @@ export function start({
         const {
           industry,
           search,
+          searchIn,
         }: {
           industry: Industry
           search: string
+          searchIn: string
         } =
           req.query.filter || []
 
@@ -543,12 +561,19 @@ export function start({
         let filters = { search: null, industry: null }
         if (search) {
           // if end with [] then need search inArray
-          filters.search = [
+
+          const allSearchFields = [
             "content_updates",
             "comments",
             "functionality[]",
             "languages[]",
-          ].map(field => {
+          ]
+          const searchFields =
+            allSearchFields.indexOf(searchIn) === -1
+              ? allSearchFields
+              : [searchIn]
+
+          filters.search = searchFields.map(field => {
             return {
               field,
               op: "LIKE",
