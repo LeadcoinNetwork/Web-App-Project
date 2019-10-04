@@ -18,15 +18,14 @@
 
     .t-head,
     .t-body {
-      min-width: 1630px;
-
+      min-width: 1830px;
       .th-row,
       .tb-row {
         position: relative;
         padding-left: 50px;
 
         &.display-lead {
-          padding-left: 80px;
+          padding-left: 100px;
         }
 
         .thr-checkbox {

@@ -115,12 +115,15 @@ const mapStateToProps = state => ({
   fields: state.fields,
 })
 
-export default connect(mapStateToProps, {
-  fetchLeads: (...params) => leads.fetchLeads("MY_LEADS", ...params),
-  setSelectedLeads: selectedLeads =>
-    leads.setSelectedLeads("MY_LEADS", selectedLeads),
-  toggelCardView: index => leads.toggelCardView("MY_LEADS", index),
-  moveToSell: moveToSell.myLeadsMoveToSellBegin,
-  displayLead: displayLead.displayLeadGet,
-  push,
-})(MyLeads)
+export default connect(
+  mapStateToProps,
+  {
+    fetchLeads: (...params) => leads.fetchLeads("MY_LEADS", ...params),
+    setSelectedLeads: selectedLeads =>
+      leads.setSelectedLeads("MY_LEADS", selectedLeads),
+    toggelCardView: index => leads.toggelCardView("MY_LEADS", index),
+    moveToSell: moveToSell.myLeadsMoveToSellBegin,
+    displayLead: displayLead.displayLeadGet,
+    push,
+  },
+)(MyLeads)

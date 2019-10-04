@@ -52,6 +52,12 @@ class LeadsTemplate extends React.Component {
         },
       }
     })
+
+    let { fetchLeads, leads } = this.props
+    fetchLeads({
+      sortBy: key,
+      sortOrder: String(direction).toUpperCase(),
+    })
   }
 
   toggleAll = () => {
@@ -123,17 +129,19 @@ class LeadsTemplate extends React.Component {
       `}
       >
         {isSearchResults && <h4>{t("Search Results")}</h4>}
-        {isSelectable &&
-          getButtons &&
-          getButtons().table.map(button => (
-            <Button
-              key={button.value}
-              label={button.value}
-              onClick={button.onClick}
-              appStyle={true}
-              disabled={!leads.selected.size}
-            />
-          ))}
+        <div className="ldc-table-buttons">
+          {isSelectable &&
+            getButtons &&
+            getButtons().table.map(button => (
+              <Button
+                key={button.value}
+                label={button.value}
+                onClick={button.onClick}
+                appStyle={true}
+                disabled={!leads.selected.size}
+              />
+            ))}
+        </div>
         {/* <label className="ltrh-count">
           {leads.list.length} {t("of")} {leads.total} {t("leads")}
         </label> */}
