@@ -1,3 +1,5 @@
+import * as _ from "lodash"
+
 import { NewUserInterface, disabledReason } from "../models/users/types"
 import * as auth from "../models/user-auth/user-auth"
 import * as utils from "../utils/index"
@@ -209,6 +211,24 @@ export default class Auth {
       )
       return { ok: true, token }
     }
+  }
+
+  async addFavorites(user_id: number, newFavorites: number[]) {
+    let { users } = this.models
+    let user: any = await users.getOne({ id: user_id })
+    let oldFavorites = user.favorites || []
+    const favorites = _.union(oldFavorites, newFavorites)
+    return users.updateUser(user_id, { favorites })
+  }
+
+  async removeFavorites(user_id: number, favoritesForDelete: number[]) {
+    let { users } = this.models
+    let user: any = await users.getOne({ id: user_id })
+    let oldFavorites = user.favorites || []
+    const favorites = oldFavorites.filter(
+      favorite => favoritesForDelete.indexOf(favorite) === -1,
+    )
+    return users.updateUser(user_id, { favorites })
   }
 }
 

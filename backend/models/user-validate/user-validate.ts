@@ -32,6 +32,11 @@ const userSchema = Joi.object().keys({
     .only("user", "admin")
     .label("Role"),
   wallet: Joi.string().label("Wallet"),
+  favorites: Joi.array().items(
+    Joi.number()
+      .integer()
+      .min(0),
+  ),
 })
 
 function joiPassword(joi) {

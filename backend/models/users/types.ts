@@ -11,6 +11,7 @@ export interface BaseUserInterface {
   company?: string
   balance?: number
   wallet?: string
+  favorites?: number[]
 }
 export interface ExistingUserInterface extends BaseUserInterface {
   password: string
@@ -36,6 +37,7 @@ export interface ExistingUserInterfaceCondition {
   phone?: string
   company?: string
   wallet?: string
+  favorites?: number[]
 }
 
 export interface NewUserInterface extends BaseUserInterface {

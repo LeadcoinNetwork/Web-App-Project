@@ -126,6 +126,46 @@ export function start({
     })
   }
 
+  expressApp
+    .route("/favorites/update")
+    .all(passport.authenticate("jwt", authOptions))
+    .post(addFavorites)
+
+  expressApp
+    .route("/favorites/remove")
+    .all(passport.authenticate("jwt", authOptions))
+    .post(removeFavorites)
+
+  function addFavorites(req, res, next) {
+    const { user } = req
+    const { favorites } = req.body
+    if (!Array.isArray(favorites))
+      return res.status(500).send({ error: "bad data" })
+    appLogic.auth
+      .addFavorites(req.user.id, favorites)
+      .then(() => {
+        res.send({ ok: true })
+      })
+      .catch(err => {
+        res.status(500).send({ error: err.message })
+      })
+  }
+
+  function removeFavorites(req, res, next) {
+    const { user } = req
+    const { favorites } = req.body
+    if (!Array.isArray(favorites))
+      return res.status(500).send({ error: "bad data" })
+    appLogic.auth
+      .removeFavorites(req.user.id, favorites)
+      .then(() => {
+        res.send({ ok: true })
+      })
+      .catch(err => {
+        res.status(500).send({ error: err.message })
+      })
+  }
+
   async function remove(req, res, next) {
     // try {
     //   let status = await userActions.remove(req.params.userId)
