@@ -210,6 +210,15 @@ export default class Leads {
     )
   }
 
+  public addIsFavoriteTotLeads(leads: Lead[], favorites: number[]) {
+    if (favorites.length === 0) return leads
+    return leads.map(lead => {
+      if (favorites.indexOf(lead.id) === -1) lead.favorite = false
+      else lead.favorite = true
+      return lead
+    })
+  }
+
   public async buyLeads(leads: number[], new_owner: number, txHash: string) {
     // const deal_price = await this.models.leads.getDealPrice(leads)
     // let buyer

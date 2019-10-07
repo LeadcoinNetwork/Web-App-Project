@@ -546,10 +546,12 @@ export function start({
           industry,
           search,
           searchIn,
+          favorites,
         }: {
           industry: Industry
           search: string
           searchIn: string
+          favorites: string
         } =
           req.query.filter || []
 
@@ -558,7 +560,16 @@ export function start({
           sortBy: sortBy && sortBy != "id" ? sortBy : "date",
           sortOrder: sortOrder || "DESC",
         }
-        let filters = { search: null, industry: null }
+        let filters = { search: null, industry: null, favorites: null }
+
+        if (favorites === "true") filters.favorites = user.favorites || []
+
+        if (favorites === "true" && filters.favorites.length === 0) {
+          let jsonResponse = { ...req.query, list: [], total: 0 }
+          res.json(jsonResponse)
+          return
+        }
+
         if (search) {
           // if end with [] then need search inArray
 
@@ -600,6 +611,10 @@ export function start({
             let jsonResponse = Object.assign(response, req.query)
             jsonResponse.list = await appLogic.leads.formatLeads(
               jsonResponse.list,
+            )
+            jsonResponse.list = appLogic.leads.addIsFavoriteTotLeads(
+              jsonResponse.list,
+              user.favorites || [],
             )
 
             res.json(jsonResponse)

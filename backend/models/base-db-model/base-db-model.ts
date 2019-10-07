@@ -226,9 +226,9 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       if (user_id) query += `\nAND doc->>'$.ownerId' <> ${user_id} `
       if (where_additions.length)
         query += `\nAND ${where_additions.join(" AND ")}`
+      if (filters.favorites) query += `\nAND id IN (${filters.favorites})`
 
       let order = ""
-
       if (sort) {
         order = `\nORDER BY ${sort.sortBy} ${sort.sortOrder}`
       }

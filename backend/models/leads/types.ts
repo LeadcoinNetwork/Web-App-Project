@@ -61,6 +61,7 @@ export interface WebBuildingLead extends BaseLead {
   languages: string[]
   hosting: "Yes" | "No"
   comments: string
+  favorite: boolean
 }
 
 export type Lead = WebBuildingLead
