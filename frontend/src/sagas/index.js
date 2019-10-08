@@ -27,11 +27,13 @@ import metamask from "./metamask"
 import notificationsCreate from "./notificationCreate"
 import editWallet from "./walletSettings"
 import updateUser from "./updateUser"
+import favorites from "./favorites"
 
 import { spawn, fork } from "redux-saga/effects"
 import * as superagent from "superagent"
 
 import API from "../api/index"
+import favoritesRemove from "./favoritesRemove"
 
 // Create a request object for all the API's
 // This request object add the default backend URLs, and do other defaults.
@@ -77,6 +79,8 @@ export default function* rootSaga() {
     notificationsCreate,
     editWallet,
     updateUser,
+    favorites,
+    favoritesRemove,
   ]
   for (var i in sagas) {
     yield fork(sagas[i], api)

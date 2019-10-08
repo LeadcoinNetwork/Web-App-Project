@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import { push } from "react-router-redux"
-import { leads } from "../../actions"
+import { leads, favorites } from "../../actions"
 import LeadsTemplate from "Containers/LeadsTemplate"
 import Select from "Components/Select"
 import TextField from "Components/TextField"
@@ -10,12 +10,15 @@ import t from "../../utils/translate/translate"
 import { toast } from "react-toastify"
 import displayLead from "../../actions/displayLead"
 import DisplayLead from "../DisplayLead"
+import Checkbox from "../../components/Checkbox"
 
 class BuyLeads extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       isDisplayingLead: false,
+      favorites: !!props.leads.filter.favorites,
+      selectedLeads: [],
     }
   }
 
@@ -68,30 +71,44 @@ class BuyLeads extends React.Component {
   }
   getListButtons = () => {
     return [
-      // {
-      //     value: t("Add to Favorites"),
-      //     onClick: this.addToFavorites,
-      // },
       {
         value: this.buildButtonLabel(),
         onClick: this.buyLeads,
+      },
+      {
+        value: t("Add to Favorites"),
+        onClick: this.addToFavorites,
+      },
+      {
+        value: t("Remove from Favorites"),
+        onClick: this.removeFromFavorites,
       },
     ]
   }
 
   addToFavorites = () => {
     console.log("test favorites")
+    this.props.favoritesAddStart()
+  }
+
+  removeFromFavorites = () => {
+    console.log("test remove favorites")
+    this.props.favoritesRemoveStart()
   }
 
   getLeadButtons = () => {
     return [
-      // {
-      //     value: t("Add to Favorites"),
-      //     onClick: this.addToFavorites,
-      // },
       {
         value: t("buy"),
         onClick: this.buyLead,
+      },
+      {
+        value: t("Add to Favorites"),
+        onClick: this.addToFavorites,
+      },
+      {
+        value: t("Remove from Favorites"),
+        onClick: this.removeFromFavorites,
       },
     ]
   }
@@ -107,6 +124,17 @@ class BuyLeads extends React.Component {
     this.setState({ isDisplayingLead: true })
     return
     //this.props.push("/display-lead")
+  }
+
+  toggleFavorites = value => {
+    const filter = this.props.leads.filter
+    this.props.handleFilter({
+      ...filter,
+      favorites: !!value,
+    })
+    this.setState((prev, props) => {
+      return { favorites: !!value }
+    })
   }
 
   render() {
@@ -169,6 +197,17 @@ class BuyLeads extends React.Component {
                   })
                 }}
               />
+              <div className="buy_leads-favorites">
+                <Checkbox
+                  label={t("Favorites")}
+                  name="farovites"
+                  id="favoritest_checkbox"
+                  checked={this.state.favorites}
+                  onClick={e => {
+                    this.toggleFavorites(e.target.checked)
+                  }}
+                />
+              </div>
               <Button
                 className="search"
                 onClick={() => {
@@ -216,5 +255,7 @@ export default connect(
     searchClicked: () => leads.searchClicked("BUY_LEADS"),
     clearList: () => leads.clearList("BUY_LEADS"),
     displayLead: displayLead.displayLeadGet,
+    favoritesAddStart: favorites.favoritesAddStart,
+    favoritesRemoveStart: favorites.favoritesRemoveStart,
   },
 )(BuyLeads)

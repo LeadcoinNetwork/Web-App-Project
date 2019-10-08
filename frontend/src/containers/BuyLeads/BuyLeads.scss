@@ -28,29 +28,47 @@
       margin-right: 25px;
     }
   }
+
+  &-favorites {
+    display: inline-block;
+    padding-right: 10px;
+    .ldc-checkbox {
+      font-size: 20px;
+    }
+  }
 }
 
 @media (max-width: $screen-tablets) {
-  .buy_leads .bl-filters {
-    padding-bottom: 40px;
-    position: relative;
-
-    .search_bar {
-      margin-right: unset;
-      width: 100%;
-      margin-top: unset;
-      margin-bottom: 15px;
+  .buy_leads {
+    &-favorites {
+      display: block;
+      padding: 0 0 15px 0;
+      .ldc-checkbox {
+        font-size: 20px;
+      }
     }
 
-    &:after {
-      height: 5px;
-      right: -20px;
-    }
+    .bl-filters {
+      padding-bottom: 40px;
+      position: relative;
 
-    select {
-      width: 100%;
-      margin-right: 0;
-      margin-bottom: 20px;
+      .search_bar {
+        margin-right: unset;
+        width: 100%;
+        margin-top: unset;
+        margin-bottom: 15px;
+      }
+
+      &:after {
+        height: 5px;
+        right: -20px;
+      }
+
+      select {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+      }
     }
   }
 }

@@ -1,3 +1,5 @@
 /www
 /dist
 /platforms
+/node_modules
+/plugins

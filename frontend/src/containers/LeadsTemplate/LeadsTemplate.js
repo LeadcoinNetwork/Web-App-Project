@@ -32,6 +32,7 @@ class LeadsTemplate extends React.Component {
 
     return leads.list.length && leads.selected.size !== leads.list.length
   }
+
   toggleLead = (event, id) => {
     let { leads, setSelectedLeads } = this.props
 

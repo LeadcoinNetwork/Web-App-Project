@@ -59,6 +59,7 @@ const initialState = {
     industry: "All",
     category: "All",
     search: "",
+    favorites: false,
   },
   searchClicked: false,
   error: "",
