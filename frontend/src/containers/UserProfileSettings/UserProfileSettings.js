@@ -47,6 +47,14 @@ class UserProfileSettings extends React.Component {
     return state
   }
 
+  getErrors(errors) {
+    return (
+      <ul className="ldc-error-text">
+        {errors.split(";").map(e => <li>{t(e)}</li>)}
+      </ul>
+    )
+  }
+
   onSubmit = () => {
     for (let key in this.state) {
       this.props.onChange(key, this.state[key])
@@ -92,10 +100,12 @@ class UserProfileSettings extends React.Component {
             defaultCountry={"us"}
             onChange={this.handlePhoneChange}
           />
+          {error && this.getErrors(error)}
           <div className="ldc-user-profile-settings-submit">
             <Button
               label={t("submit")}
               onClick={this.onSubmit}
+              loading={loading}
               appStyle={true}
             />
           </div>

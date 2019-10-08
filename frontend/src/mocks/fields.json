@@ -81,8 +81,8 @@
     "name": "Content Management",
     "sortable": true,
     "editable": true,
-    "maxWidth": "auto",
-    "minWidth": "auto",
+    "maxWidth": "150px",
+    "minWidth": "150px",
     "type": "select",
     "options": ["YES", "NO"]
   },

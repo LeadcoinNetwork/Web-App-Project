@@ -26,12 +26,15 @@ export default class UserApi {
   async completeProfile(data: { company; phone; country }) {
     return this.request(methods.post, "/complete-profile", data)
   }
+
   async editWallet(data) {
     return await this.request(methods.put, "/user/update-wallet", data)
   }
+
   async logout() {
     this.request(methods.post, "/auth/logout")
   }
+
   async userUpdate(data) {
     return await this.request(methods.put, "/user/update", data)
   }

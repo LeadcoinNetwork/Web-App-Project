@@ -10,7 +10,6 @@ interface LeadsApiOptions {
   page?: number
   sortBy?: string
   filter?: [string, string]
-
   sort_by?: [string, "ASC" | "DESC"]
   filters?: [string, string][]
 }
@@ -99,5 +98,13 @@ export default class LeadsApi {
 
   async getSoldLeads(options: LeadsApiOptions) {
     return await this.request(methods.get, "/leads/sold", null, { ...options })
+  }
+
+  async favoritesAdd(data) {
+    return await this.request(methods.post, "/favorites/update", data)
+  }
+
+  async favoritesRemove(data) {
+    return await this.request(methods.post, "/favorites/remove", data)
   }
 }

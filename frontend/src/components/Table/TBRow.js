@@ -10,21 +10,21 @@ const TBRow = props => (
     ${props.displayLead ? " display-lead" : ""}
   `}
   >
+    {props.editLead && (
+      <div
+        className="pencil"
+        onClick={() => {
+          props.editLead(props)
+        }}
+      />
+    )}
     {props.displayLead && (
-      <>
-        <div
-          className="pencil"
-          onClick={() => {
-            props.editLead(props)
-          }}
-        />
-        <div
-          className="eye"
-          onClick={() => {
-            props.displayLead(props)
-          }}
-        />
-      </>
+      <div
+        className="eye"
+        onClick={() => {
+          props.displayLead(props)
+        }}
+      />
     )}
     {props.isSelectable && (
       <div className="tbr-checkbox">

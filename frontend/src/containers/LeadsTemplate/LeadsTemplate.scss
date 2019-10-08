@@ -20,10 +20,14 @@
       box-sizing: content-box;
     }
 
+    .ldc-table-buttons {
+    }
+
     .ldc-button {
-      position: absolute;
-      top: 20px;
-      right: 0;
+      //position: absolute;
+      //top: 20px;
+      //right: 0;
+      margin-right: 5px;
     }
   }
 
@@ -74,7 +78,8 @@
       }
 
       .ldc-button {
-        display: none;
+        //display: none;
+        margin: 20px 0 0 0;
       }
     }
 
