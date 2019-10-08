@@ -23,7 +23,7 @@ export default function* favoritesRemove(api) {
         type: "success",
         closeOnClick: true,
       })
-      yield put(actions.favorites.favoritesRemoveSuccess)
+      //yield put(actions.favorites.favoritesRemoveSuccess())
     } else {
       toast("Favorites remove error", {
         type: "error",

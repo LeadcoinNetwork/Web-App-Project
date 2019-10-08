@@ -14,6 +14,10 @@ section.ldc-real-estate-lead {
   transform-origin: right;
   transition: all 300ms ease, transform 200ms ease;
 
+  &.rel-card-favorite {
+    border: 10px solid $favorite-lead;
+  }
+
   .rel-industry {
     font-size: 12px;
     letter-spacing: 0.2px;

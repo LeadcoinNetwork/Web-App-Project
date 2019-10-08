@@ -24,6 +24,10 @@
         position: relative;
         padding-left: 50px;
 
+        &.favorite-lead {
+          background: $favorite-lead;
+        }
+
         &.display-lead {
           padding-left: 100px;
         }
@@ -65,11 +69,11 @@
         position: relative;
         margin-bottom: 1px;
 
-        &:nth-child(odd) {
+        &:not(.favorite-lead):nth-child(odd) {
           background-color: $table-background-odd;
         }
 
-        &:nth-child(even) {
+        &:not(.favorite-lead):nth-child(even) {
           background-color: $table-background-even;
         }
 

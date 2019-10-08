@@ -23,7 +23,7 @@ export default function* favoritesAdd(api) {
         type: "success",
         closeOnClick: true,
       })
-      yield put(actions.favorites.favoritesAddSuccess)
+      //yield put(actions.favorites.favoritesAddSuccess)
     } else {
       toast("Favorites add error", {
         type: "error",
