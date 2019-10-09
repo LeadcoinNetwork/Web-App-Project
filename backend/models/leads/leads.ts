@@ -142,27 +142,15 @@ export default class Leads extends baseDBModel<
   }
 
   async buy(lead_ids: number[], new_owner: number) {
-    const lead_promises = lead_ids
-      .filter(async (l_id: number) => {
-        await this.update(l_id, { active: "false" })
+    const lead_promises = lead_ids.map(async (l_id: number) => {
+      const lead: Lead = await this.getById(l_id, true)
+      await this.update(l_id, {
+        forSale: false,
+        bought_from: lead.ownerId,
+        ownerId: new_owner,
       })
-      .map(async (l_id: number) => {
-        const lead: Lead = await this.getById(l_id, true)
-        return Object.assign(lead, {
-          id: undefined,
-          active: true,
-          forSale: false,
-          bought_from: lead.ownerId,
-          ownerId: new_owner,
-        })
-      })
-      .map(async leadPromise => {
-        const lead = await leadPromise
-        await this.insert(lead)
-
-        return lead
-      })
-
+      return await this.getById(l_id, true)
+    })
     return Promise.all(lead_promises)
   }
 
