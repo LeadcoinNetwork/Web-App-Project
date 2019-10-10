@@ -16,7 +16,7 @@ class HistoryLead extends React.Component {
   }
 
   render() {
-    const { lead_history_fields } = this.props
+    const { ...lead_history_fields } = this.props
     if (!lead_history_fields) {
       return <div>{t("Loading...")}</div>
     }
@@ -29,7 +29,9 @@ class HistoryLead extends React.Component {
   }
 }
 
-const mapStateToProps = state => state.displayLead
+const mapStateToProps = state => ({
+  lead_history: state.displayLeadHistory,
+})
 
 export default connect(
   mapStateToProps,

@@ -1,6 +1,7 @@
 import types from "../actions/types"
 
 const initialState = {
+  id: null,
   private_fields: null,
   public_fields: null,
 }
@@ -74,7 +75,7 @@ const displayLead = (state = initialState, action) => {
   switch (action.type) {
     case types.DISPLAY_LEAD_GET:
       const [private_fields, public_fields] = seperateLead(action.lead)
-      return { ...state, private_fields, public_fields }
+      return { ...state, private_fields, public_fields, id: action.lead.id }
     case types.DISPLAY_LEAD_CLEAR:
       return initialState
     default:
