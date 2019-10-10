@@ -4,6 +4,7 @@ import { IModels } from "./index"
 
 import * as _ from "lodash"
 import { BaseUserInterface } from "@/models/users/types"
+import { LeadHistory } from "@/models/leads-history/types"
 
 var request = require("request-promise")
 
@@ -184,7 +185,18 @@ export default class Leads {
   }
 
   public async moveMyLeadsToSellLeads(leads: number[]) {
-    return await this.models.leads.moveMyToSell(leads)
+    const result = await this.models.leads.moveMyToSell(leads)
+    for (const leadId of leads) {
+      const lead = await this.models.leads.getById(leadId)
+      const newLeadHistory: LeadHistory = {
+        leadId: lead.id,
+        date: new Date().getTime(),
+        event: "forSale",
+        ownerId: lead.ownerId,
+      }
+      await this.models.leadsHistory.addLeadHistory(newLeadHistory)
+    }
+    return result
   }
 
   // add lead owner wallet
@@ -238,6 +250,17 @@ export default class Leads {
     // }
 
     const result = await this.models.leads.buy(leads, new_owner)
+
+    for (const lead of result) {
+      const newLeadHistory: LeadHistory = {
+        leadId: lead.id,
+        date: new Date().getTime(),
+        event: "purchased",
+        ownerId: lead.ownerId,
+      }
+      await this.models.leadsHistory.addLeadHistory(newLeadHistory)
+    }
+
     const groupedByOwner = _.groupBy(result, "bought_from")
     // let overall_cost = 0
 
@@ -316,8 +339,16 @@ export default class Leads {
     const problems = skipValidate ? [] : validate_lead(lead)
     if (problems.length == 0) {
       lead = this.sanitizeLead(lead)
-      const id = await this.models.leads.AddLead(lead)
-      return id
+      const result = await this.models.leads.AddLead(lead)
+      const newLead = await this.models.leads.getById(result.insertId)
+      const newLeadHistory: LeadHistory = {
+        leadId: newLead.id,
+        date: new Date().getTime(),
+        event: "created",
+        ownerId: newLead.ownerId,
+      }
+      await this.models.leadsHistory.addLeadHistory(newLeadHistory)
+      return result
     }
 
     throw new Error(problems.join(" ;"))
@@ -327,14 +358,33 @@ export default class Leads {
     const problems = validate_lead(lead)
     if (problems.length > 0) throw new Error(problems.join(" ;"))
     lead = await this.sanitizeLead(lead)
-    const current_lead = await this.models.leads.getSingleLead(lead.id)
+    const leadToChange = await this.models.leads.getSingleLead(lead.id)
 
     switch (true) {
-      case current_lead.ownerId != lead.ownerId:
-      case !current_lead.active:
+      case leadToChange.ownerId != lead.ownerId:
+      case !leadToChange.active:
         throw new Error("general::lead mutated.")
     }
-    return await this.models.leads.EditLead(lead)
+    const result = await this.models.leads.EditLead(lead)
+
+    const leadAfterChange = await this.models.leads.getSingleLead(lead.id)
+    const changed = await this.models.leadsHistory.wasChanged(
+      leadToChange,
+      leadAfterChange,
+    )
+
+    if (changed.length > 0) {
+      const newLeadHistory: LeadHistory = {
+        leadId: lead.id,
+        date: new Date().getTime(),
+        event: "updated",
+        ownerId: lead.ownerId,
+        description: { changed },
+      }
+      await this.models.leadsHistory.addLeadHistory(newLeadHistory)
+    }
+
+    return result
   }
 
   public async getMockLeads(user_id: number) {
