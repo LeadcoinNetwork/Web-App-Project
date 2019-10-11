@@ -34,6 +34,7 @@ import * as superagent from "superagent"
 
 import API from "../api/index"
 import favoritesRemove from "./favoritesRemove"
+import transactionHistory from "./transactionHistory"
 
 // Create a request object for all the API's
 // This request object add the default backend URLs, and do other defaults.
@@ -81,6 +82,7 @@ export default function* rootSaga() {
     updateUser,
     favorites,
     favoritesRemove,
+    transactionHistory,
   ]
   for (var i in sagas) {
     yield fork(sagas[i], api)

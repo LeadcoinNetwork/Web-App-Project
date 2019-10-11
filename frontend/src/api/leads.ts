@@ -115,7 +115,7 @@ export default class LeadsApi {
     return await this.request(methods.post, "/favorites/remove", data)
   }
 
-  async transactionHistoryGet(data) {
-    return await this.request(methods.post, "/transactions", data)
+  async transactionHistoryGet(id) {
+    return await this.request(methods.get, "/transactions", { userId: id })
   }
 }

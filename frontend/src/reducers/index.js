@@ -26,6 +26,7 @@ import withdraw from "./withdraw"
 import displayLead from "./displayLead"
 import metamask from "./metamask"
 import userProfileSettings from "./userProfileSettings"
+import transactionHistory from "./transactionHistory"
 
 const rootReducer = combineReducers({
   app,
@@ -57,6 +58,7 @@ const rootReducer = combineReducers({
   withdraw,
   metamask,
   userProfileSettings,
+  transactionHistory,
 })
 
 export default rootReducer

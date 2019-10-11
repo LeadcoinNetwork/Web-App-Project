@@ -30,10 +30,17 @@ const UserMenuInner = ({ user, logOut }) => (
       {t("Settings")}
     </Link>
     <Link
+      to={"/transaction-history"}
+      className="no-underline um-row log-out"
+      key={menuItems.length + 2}
+    >
+      {t("Transaction")}
+    </Link>
+    <Link
       to={"/"}
       onClick={logOut}
       className="no-underline um-row log-out"
-      key={menuItems.length + 2}
+      key={menuItems.length + 3}
     >
       {t("Log Out")}
     </Link>
