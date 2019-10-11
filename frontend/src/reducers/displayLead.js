@@ -60,13 +60,15 @@ const seperateLead = lead => {
   const fields = lead.fields
   let priv = {},
     pub = {}
-  fields.forEach(f => {
-    if (contact_info_fields.includes(f.key)) {
-      priv[f.name] = lead[f.key]
-    } else if (lead_fields.includes(f.key)) {
-      pub[f.name] = lead[f.key]
-    }
-  })
+  if (fields && fields.length) {
+    fields.forEach(f => {
+      if (contact_info_fields.includes(f.key)) {
+        priv[f.name] = lead[f.key]
+      } else if (lead_fields.includes(f.key)) {
+        pub[f.name] = lead[f.key]
+      }
+    })
+  }
 
   return [priv, pub]
 }

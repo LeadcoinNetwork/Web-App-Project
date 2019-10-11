@@ -211,7 +211,7 @@ metamask.checkTxHash = txHash => {
     .then(() => getTransactionReceipt(txHash))
     .then(receipt => {
       if (receipt.status === "0x1") {
-        return "Transaction succeeded"
+        return { ...receipt, message: "Transaction succeeded" }
       }
       throw new Error("Transaction failure")
     })

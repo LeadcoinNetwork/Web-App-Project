@@ -34,6 +34,14 @@ CREATE TABLE `notifications`
 ) DEFAULT CHARACTER SET = utf8
   COLLATE = utf8_bin;
 
+  DROP TABLE IF EXISTS `transactions`;
+CREATE TABLE `transactions`
+(
+  `id`  int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `doc` JSON
+) DEFAULT CHARACTER SET = utf8
+  COLLATE = utf8_bin;
+
   DROP TABLE IF EXISTS `leads_history`;
 CREATE TABLE `leads_history`
 (

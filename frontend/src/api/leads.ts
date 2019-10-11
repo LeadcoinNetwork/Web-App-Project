@@ -80,8 +80,15 @@ export default class LeadsApi {
     return await this.request(methods.get, "/buy-leads", null, { ...filters })
   }
 
-  async buyLeadsBuy(leads: string[], txHash) {
-    return await this.request(methods.post, "/buy-leads/buy", { leads, txHash })
+  async buyLeadsBuy(leads: string[], txHash, value, from, to, date) {
+    return await this.request(methods.post, "/buy-leads/buy", {
+      leads,
+      txHash,
+      value,
+      from,
+      to,
+      date,
+    })
   }
 
   async sellLeadsGetList(options: LeadsApiOptions) {
@@ -110,5 +117,12 @@ export default class LeadsApi {
 
   async getHistoryLead(data) {
     return await this.request(methods.get, "/leads-history", null, data)
+  }
+
+  async transactionHistoryGet(id) {
+    console.log(id)
+    return await this.request(methods.get, "/transactions", null, {
+      userId: id,
+    })
   }
 }
