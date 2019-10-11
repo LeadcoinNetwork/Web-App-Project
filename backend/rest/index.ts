@@ -13,6 +13,7 @@ import * as errorhandler from "./errorhandler"
 import * as userRouter from "./user"
 import * as auth from "./auth"
 import * as leads from "./leads"
+import * as leadsHistory from "./leads-history"
 import * as csv from "./csv"
 import * as cors from "./cors"
 import * as notifications from "./notifications"
@@ -86,6 +87,7 @@ export default class RestServer {
     auth.start({ appLogic: this.appLogic, expressApp })
     userRouter.start({ appLogic: this.appLogic, expressApp })
     leads.start({ appLogic, expressApp })
+    leadsHistory.start({ appLogic, expressApp })
     notifications.start({ appLogic, expressApp })
     csv.start({ appLogic, expressApp })
 

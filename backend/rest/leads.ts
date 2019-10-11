@@ -8,6 +8,7 @@ import AppLogic from "../app-logic/index"
 // import * as auth from "../models/user-auth/user-auth"
 
 import { Lead, Industry } from "../models/leads/types"
+import { LeadHistory } from "../models/leads-history/types"
 import Leads from "../models/leads/leads"
 
 const authOptions = {
@@ -34,7 +35,16 @@ export function start({
       let newLead = Leads.getMockLead(owner)
 
       let status = await appLogic.models.leads.insertLead(newLead)
-      if (status.affectedRows) rc.push(status.insertId)
+      if (status.affectedRows) {
+        rc.push(status.insertId)
+        const newLeadHistory: LeadHistory = {
+          leadId: status.insertId,
+          date: new Date().getTime(),
+          event: "created",
+          ownerId: newLead.ownerId,
+        }
+        await appLogic.models.leadsHistory.addLeadHistory(newLeadHistory)
+      }
     }
     return rc
   }

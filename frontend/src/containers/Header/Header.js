@@ -85,4 +85,7 @@ var mapDispatchToProps = {
   gotoDefaultHome: actions.route.gotoDefaultHome,
   logout: actions.user.logOut,
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Header)
