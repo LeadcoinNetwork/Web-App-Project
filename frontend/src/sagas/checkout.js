@@ -61,12 +61,18 @@ const leadTransfer = function*(api, lead, user) {
       },
     )
 
-    let checkTxHash = yield metamask.checkTxHash(transfer)
-
+    let receipt = yield metamask.checkTxHash(transfer)
     const balance = yield metamask.getBalance(user.wallet)
     yield put(actions.balance.balanceUpdate(balance))
-
-    let res = yield api.leads.buyLeadsBuy([lead.id], transfer)
+    // , valueParam, fromParam, toParam, dateParam
+    let res = yield api.leads.buyLeadsBuy(
+      [lead.id],
+      transfer,
+      lead.lead_price,
+      receipt.from,
+      lead.ownerWallet,
+      new Date().getTime(),
+    )
 
     yield put(
       actions.notifications.notificationsCreate({

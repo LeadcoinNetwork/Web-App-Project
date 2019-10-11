@@ -80,8 +80,15 @@ export default class LeadsApi {
     return await this.request(methods.get, "/buy-leads", null, { ...filters })
   }
 
-  async buyLeadsBuy(leads: string[], txHash) {
-    return await this.request(methods.post, "/buy-leads/buy", { leads, txHash })
+  async buyLeadsBuy(leads: string[], txHash, value, from, to, date) {
+    return await this.request(methods.post, "/buy-leads/buy", {
+      leads,
+      txHash,
+      value,
+      from,
+      to,
+      date,
+    })
   }
 
   async sellLeadsGetList(options: LeadsApiOptions) {
@@ -106,5 +113,9 @@ export default class LeadsApi {
 
   async favoritesRemove(data) {
     return await this.request(methods.post, "/favorites/remove", data)
+  }
+
+  async transactionHistoryGet(data) {
+    return await this.request(methods.post, "/transactions", data)
   }
 }

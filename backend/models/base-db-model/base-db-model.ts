@@ -7,7 +7,12 @@ import SQL from "../mysql-pool/mysql-pool"
 import LogModelActions from "../log-model-actions/log-model-actions"
 import NotFound from "../../utils/not-found"
 
-type tableName = "users" | "leads" | "notifications" | "leads_history"
+type tableName =
+  | "users"
+  | "leads"
+  | "notifications"
+  | "leads_history"
+  | "transactions"
 
 const private_fields = ["name", "phone"]
 

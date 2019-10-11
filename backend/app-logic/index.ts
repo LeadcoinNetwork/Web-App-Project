@@ -19,6 +19,8 @@ import NotificationsModel from "../models/notifications/notifications"
 import leads from "./leads"
 import leadsHistory from "./leads-history"
 import notifications from "./notifications"
+import TransactionsModel from "../models/transactions/transactions"
+import transactions from "./transactions"
 
 import NotFound from "@/utils/not-found.ts"
 
@@ -29,6 +31,7 @@ export interface IModels {
   leads: LeadsModel
   leadsHistory: LeadsHistoryModel
   notifications: NotificationsModel
+  transactions: TransactionsModel
   emailCreator: EmailCreator
   emailSender: EmailSenderAbstraction
   config: IConfig
@@ -45,6 +48,7 @@ export default class AppLogic {
     leads: new LeadsModel(this.sql),
     leadsHistory: new LeadsHistoryModel(this.sql),
     notifications: new NotificationsModel(this.sql),
+    transactions: new TransactionsModel(this.sql),
     emailCreator: null,
     emailSender: null,
     config: this.config,
@@ -52,6 +56,7 @@ export default class AppLogic {
   public leads = new leads(this.models)
   public leadsHistory = new leadsHistory(this.models)
   public notifications = new notifications(this.models)
+  public transactions = new transactions(this.models)
 
   public userSyntisize = userSyntisize
 

@@ -231,7 +231,15 @@ export default class Leads {
     })
   }
 
-  public async buyLeads(leads: number[], new_owner: number, txHash: string) {
+  public async buyLeads(
+    leads: number[],
+    new_owner: number,
+    txHash: string,
+    value: string,
+    from: string,
+    to: string,
+    date: number,
+  ) {
     // const deal_price = await this.models.leads.getDealPrice(leads)
     // let buyer
     //
@@ -280,6 +288,9 @@ export default class Leads {
         userId: seller,
       })
     }
+    const transaction = { userId: new_owner, date, to, from, value, txHash }
+
+    await this.models.transactions.addTransactions(transaction)
 
     // await this.models.users.decreaseBalance(new_owner, overall_cost)
     // const txDetails = await logTransaction({

@@ -17,6 +17,7 @@ import * as leadsHistory from "./leads-history"
 import * as csv from "./csv"
 import * as cors from "./cors"
 import * as notifications from "./notifications"
+import * as transactions from "./transactions"
 
 import AppPassports from "./passport/index"
 const io = require("./io/io")
@@ -90,6 +91,7 @@ export default class RestServer {
     leadsHistory.start({ appLogic, expressApp })
     notifications.start({ appLogic, expressApp })
     csv.start({ appLogic, expressApp })
+    transactions.start({ appLogic, expressApp })
 
     expressApp.route("/gitlog.txt").get((req, res) => {
       var gitlog = ""
