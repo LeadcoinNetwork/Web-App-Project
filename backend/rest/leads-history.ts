@@ -19,9 +19,10 @@ export function start({
     .get(getLeadHistoryByLeadId)
 
   function getLeadHistoryByLeadId(req, res, nex) {
+    const { user } = req
     const { leadId } = req.query
     appLogic.leadsHistory
-      .getLeadHistory({ leadId })
+      .getLeadHistory(leadId, user.id)
       .then(history => {
         res.json(history)
       })
