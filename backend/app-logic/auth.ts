@@ -159,9 +159,11 @@ export default class Auth {
     }
   }
 
-  async setNewPassword(user_id, new_password) {
+  async setNewPassword(user, new_password) {
     let { users } = this.models
-    return users.setNewPassword(user_id, new_password)
+    let email = this.models.emailCreator.resetPassword(user)
+    await this.models.emailSender.send(email)
+    return users.setNewPassword(user.id, new_password)
   }
 
   async resendConfirmationEmail(user) {
