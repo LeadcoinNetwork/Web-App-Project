@@ -39,8 +39,9 @@ export default class LeadsHistory extends baseDBModel<
   public async getLeadHistory(
     condition: LeadHistoryQueryOptions,
     isLeadOwner: boolean = false,
+    limit,
   ) {
-    let histories: LeadHistory[] = await this.find({ condition })
+    let histories: LeadHistory[] = await this.find({ condition, limit })
     if (!isLeadOwner) histories = this.hideContactInformation(histories)
     return histories
   }

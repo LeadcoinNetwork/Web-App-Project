@@ -6,10 +6,14 @@ import { IModels } from "./index"
 export default class LeadsHistory {
   constructor(private models: IModels) {}
 
-  public async getLeadHistory(leadId, userId) {
+  public async getLeadHistory(leadId, userId, limit) {
     const options: LeadHistoryQueryOptions = { leadId }
     const lead: Lead = await this.models.leads.getById(leadId, true)
     const isLeadOwner = userId === lead.ownerId
-    return await this.models.leadsHistory.getLeadHistory(options, isLeadOwner)
+    return await this.models.leadsHistory.getLeadHistory(
+      options,
+      isLeadOwner,
+      limit,
+    )
   }
 }
