@@ -34,6 +34,7 @@ import { metamask } from "Actions"
 import WalletSettings from "Containers/WalletSettings"
 import UserProfileSettings from "Containers/UserProfileSettings"
 import Settings from "Containers/Settings"
+import HistoryLead from "../HistoryLead/HistoryLead"
 
 // import Steps from "../steps"
 

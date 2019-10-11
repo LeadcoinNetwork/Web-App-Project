@@ -4,6 +4,7 @@ import Button from "Components/Button"
 import { displayLead } from "Actions"
 import t from "../../utils/translate/translate"
 import { push, goBack } from "react-router-redux"
+import HistoryLead from "../HistoryLead/HistoryLead"
 
 class DisplayLead extends React.Component {
   renderFields(fieldsObj) {
@@ -60,6 +61,7 @@ class DisplayLead extends React.Component {
             <div className="fields">{this.renderFields(public_fields)}</div>
           </div>
         </div>
+        <HistoryLead />
       </div>
     )
   }

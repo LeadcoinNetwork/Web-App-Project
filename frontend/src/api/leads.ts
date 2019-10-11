@@ -107,4 +107,8 @@ export default class LeadsApi {
   async favoritesRemove(data) {
     return await this.request(methods.post, "/favorites/remove", data)
   }
+
+  async getHistoryLead(data) {
+    return await this.request(methods.get, "/leads-history", null, data)
+  }
 }

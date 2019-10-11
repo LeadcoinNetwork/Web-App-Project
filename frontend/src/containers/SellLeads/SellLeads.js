@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import { leads } from "Actions"
 import LeadsTemplate from "Containers/LeadsTemplate"
 import t from "../../utils/translate/translate"
+import displayLead from "../../actions/displayLead"
 
 class SellLeads extends React.Component {
   sellLeads = () => {
@@ -48,6 +49,7 @@ class SellLeads extends React.Component {
   }
 
   render() {
+    const { displayLead } = this.props
     return (
       <>
         <div style={{ float: "left" }}>
@@ -83,6 +85,7 @@ class SellLeads extends React.Component {
           pageName="sell"
           constantCardOpen={true}
           isSelectable={false}
+          displayLead={displayLead}
         />
       </>
     )
@@ -94,10 +97,14 @@ const mapStateToProps = state => ({
   fields: state.fields,
 })
 
-export default connect(mapStateToProps, {
-  fetchLeads: (...params) => leads.fetchLeads("SELL_LEADS", ...params),
-  setSelectedLeads: selectedLeads =>
-    leads.setSelectedLeads("SELL_LEADS", selectedLeads),
+export default connect(
+  mapStateToProps,
+  {
+    fetchLeads: (...params) => leads.fetchLeads("SELL_LEADS", ...params),
+    setSelectedLeads: selectedLeads =>
+      leads.setSelectedLeads("SELL_LEADS", selectedLeads),
 
-  toggelCardView: index => leads.toggelCardView("SELL_LEADS", index),
-})(SellLeads)
+    toggelCardView: index => leads.toggelCardView("SELL_LEADS", index),
+    displayLead: displayLead.displayLeadGet,
+  },
+)(SellLeads)

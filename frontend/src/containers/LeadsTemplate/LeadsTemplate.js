@@ -26,7 +26,7 @@ class LeadsTemplate extends React.Component {
     fetchLeads({
       page: Number(leads.page) + 1,
     })
-  }
+  } /**/
   isNotAllSelected = () => {
     let { leads } = this.props
 
@@ -207,6 +207,7 @@ class LeadsTemplate extends React.Component {
                       toggleCardView={() => this.props.toggelCardView(index)}
                       constantCardOpen={constantCardOpen}
                       editLead={editLead}
+                      displayLead={displayLead}
                     />
                   )}
                 />
