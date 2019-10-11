@@ -45,7 +45,7 @@ export function start({
       if (maybeUser instanceof NotFound) {
         res.status(409).send({ error: "wrong password supplied" })
       } else {
-        const done = await appLogic.auth.setNewPassword(user.id, newPassword)
+        const done = await appLogic.auth.setNewPassword(user, newPassword)
         res.send({ done })
       }
     },
@@ -70,13 +70,11 @@ export function start({
       password,
     )
     if (user instanceof NotFound) {
-      res
-        .status(409)
-        .send({
-          error: {
-            credentials: "The username or password you entered is incorrect",
-          },
-        })
+      res.status(409).send({
+        error: {
+          credentials: "The username or password you entered is incorrect",
+        },
+      })
     } else {
       var token = await appLogic.auth.loginUserNameAndPassword(user.id)
       res.cookie("token", token)

@@ -83,6 +83,7 @@ export default class AppLogic {
     } else {
       this.models.emailCreator = new EmailCreator({
         backend: this.config.backend,
+        frontend: this.config.frontend,
         from: this.config.mail.from,
       })
     }
