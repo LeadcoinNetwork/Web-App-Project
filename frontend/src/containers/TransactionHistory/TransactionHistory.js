@@ -4,41 +4,60 @@ import { transactionHistory } from "Actions"
 import t from "../../utils/translate/translate"
 
 class TransactionHistory extends React.Component {
-  componentDidMount() {
-    console.log(this.props)
-    this.props.transactionHistory.transactionHistoryFetch()
+  id = null
+
+  constructor(props) {
+    super(props)
+  }
+
+  fetchData() {
+    this.props.transactionHistoryFetch()
   }
 
   renderFields(fieldsObj) {
     const data = fieldsObj
-    return Object.keys(data).map(f => {
+    return data.map((v, index) => {
       return (
-        <div key={f} className="line flexed">
-          <div className="fieldLabel"> {f} </div>
-          <div className="fieldValue"> {fieldsObj[f]} </div>
+        <div key={index}>
+          date: {v.date}
+          from: {v.from}
+          id: {v.id}
+          to: {v.to}
+          txHash: {v.txHash}
+          value: {v.value}
         </div>
       )
     })
   }
 
   render() {
-    console.log("ffff")
+    if (
+      this.props.user &&
+      this.props.user.id &&
+      this.props.user.id !== this.id
+    ) {
+      this.id = this.props.user.id
+      this.fetchData()
+    }
     const { loading, data } = this.props.transactionHistoryData
     if (!data || loading) {
       return <div className="transaction-history">{t("Loading...")}</div>
     }
-    return <div className="transaction-history" />
+    return (
+      <div className="transaction-history"> {this.renderFields(data)} </div>
+    )
   }
 }
 
 const mapStateToProps = state => {
   return {
     transactionHistoryData: state.transactionHistory,
+    user: state.user,
   }
 }
 export default connect(
   mapStateToProps,
   {
-    transactionHistory: transactionHistory,
+    transactionHistoryFetch: transactionHistory.transactionHistoryFetch,
   },
 )(TransactionHistory)
