@@ -36,8 +36,14 @@ export default class LeadsHistory extends baseDBModel<
     super(sql, "leads_history")
   }
 
-  public async getLeadHistory(condition: LeadHistoryQueryOptions) {
-    return await this.find({ condition })
+  public async getLeadHistory(
+    condition: LeadHistoryQueryOptions,
+    isLeadOwner: boolean = false,
+    limit,
+  ) {
+    let histories: LeadHistory[] = await this.find({ condition, limit })
+    if (!isLeadOwner) histories = this.hideContactInformation(histories)
+    return histories
   }
 
   public async addLeadHistory(leadHistory: LeadHistory) {
@@ -58,5 +64,30 @@ export default class LeadsHistory extends baseDBModel<
       }
     })
     return changed
+  }
+
+  public hideContactInformation(histories: LeadHistory[]) {
+    return histories.map(history => {
+      if (
+        history.description &&
+        history.description.changed &&
+        history.description.changed.length > 0
+      )
+        history.description.changed.map(change => {
+          switch (change.key) {
+            case "contact_person":
+              change.oldValue = "**********"
+              change.newValue = "**********"
+            case "email":
+              change.oldValue = "*********@gmail.com"
+              change.newValue = "*********@gmail.com"
+            case "telephone":
+              change.oldValue = change.oldValue.substring(0, 6) + "******"
+              change.newValue = change.newValue.substring(0, 6) + "******"
+          }
+          return change
+        })
+      return history
+    })
   }
 }

@@ -19,9 +19,14 @@ export function start({
     .get(getLeadHistoryByLeadId)
 
   function getLeadHistoryByLeadId(req, res, nex) {
-    const { leadId } = req.query
+    const { user } = req
+    const { leadId, page, limit } = req.query
+    let _limit = {
+      start: parseInt(page || 0) * parseInt(limit || 10000),
+      offset: limit || 10000,
+    }
     appLogic.leadsHistory
-      .getLeadHistory({ leadId })
+      .getLeadHistory(leadId, user.id, _limit)
       .then(history => {
         res.json(history)
       })
