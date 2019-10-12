@@ -9,7 +9,15 @@ const transactionItem = ["date", "from", "to", "txHash", "value"]
 class TransactionHistory extends React.Component {
   id = null
 
+  componentDidMount() {
+    this.fetchData()
+  }
+
   componentDidUpdate() {
+    this.fetchData()
+  }
+
+  fetchData() {
     if (
       this.props &&
       this.props.user &&

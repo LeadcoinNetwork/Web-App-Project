@@ -199,6 +199,10 @@ class LeadsTemplate extends React.Component {
                       key={lead.id}
                       fieldsCheck={fieldsCheck}
                       {...lead}
+                      fields={fields.map(field => ({
+                        ...field,
+                        name: t(field.name),
+                      }))}
                       checked={isSelectable && leads.selected.has(lead.id)}
                       isSelectable={isSelectable}
                       push={this.props.push}
