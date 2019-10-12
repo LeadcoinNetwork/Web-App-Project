@@ -128,63 +128,6 @@
   }
 }
 
-//todo move to component class, because from compoent not loaded
-.history-lead {
-  display: flex;
-  border-top: solid 1px black;
-
-  &-fields {
-    padding-top: 25px;
-  }
-
-  &-value {
-    font-weight: 300;
-  }
-
-  &-label {
-    text-transform: capitalize;
-    min-width: 200px;
-  }
-
-  &-detail-key {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    font-weight: 700;
-  }
-
-  &-detail-values {
-    padding-left: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-
-  &-title {
-    width: 250px;
-    padding-top: 15px;
-    margin-top: 10px;
-    font-weight: 500;
-    font-size: 20px;
-    margin-bottom: 20px;
-  }
-
-  &-item {
-    margin: 10px 15px;
-    width: auto;
-    display: flex;
-  }
-}
-
-@media (max-width: 760px) {
-  .history-lead {
-    display: block;
-
-    &-item {
-      margin: 0;
-      display: block;
-    }
-  }
-}
-
 @media (max-width: $screen-tablets) {
   .ldc-app {
     main {

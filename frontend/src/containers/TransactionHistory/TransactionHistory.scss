@@ -1,4 +1,47 @@
 @import "~Styles/variables";
 
 .transaction-history {
+  word-break: break-all;
+
+  &-title {
+    padding-bottom: 20px;
+    font-size: 30px;
+    font-weight: 300;
+  }
+
+  &-label {
+    min-width: 200px;
+    display: inline-block;
+    font-weight: 700;
+    text-transform: capitalize;
+  }
+
+  &-value {
+  }
+
+  &-subitem {
+    padding: 4px 0;
+    display: flex;
+  }
+
+  &-item {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: 300;
+  }
+}
+
+@media (max-width: $screen-tablets) {
+  .transaction-history {
+    &-subitem {
+      display: block;
+    }
+
+    &-label {
+      display: block;
+      width: auto;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+  }
 }

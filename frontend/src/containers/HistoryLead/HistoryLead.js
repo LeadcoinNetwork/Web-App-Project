@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import t from "../../utils/translate/translate"
 import { historyLead } from "Actions"
 import { localeString } from "Utils/time"
+import HistoryLeadStyle from "./HistoryLead.scss"
 
 class HistoryLead extends React.Component {
   componentDidMount() {

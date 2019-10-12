@@ -2,49 +2,57 @@ import React from "react"
 import { connect } from "react-redux"
 import { transactionHistory } from "Actions"
 import t from "../../utils/translate/translate"
+import { localeString } from "Utils/time"
+
+const transactionItem = ["date", "from", "to", "txHash", "value"]
 
 class TransactionHistory extends React.Component {
   id = null
 
-  constructor(props) {
-    super(props)
+  componentDidUpdate() {
+    if (
+      this.props &&
+      this.props.user &&
+      this.props.user.id &&
+      this.id !== this.props.user.id
+    ) {
+      this.id = this.props.user.id
+      this.props.transactionHistoryFetch()
+    }
   }
 
-  fetchData() {
-    this.props.transactionHistoryFetch()
-  }
-
-  renderFields(fieldsObj) {
-    const data = fieldsObj
+  renderFields(data) {
     return data.map((v, index) => {
       return (
-        <div key={index}>
-          date: {v.date}
-          from: {v.from}
-          id: {v.id}
-          to: {v.to}
-          txHash: {v.txHash}
-          value: {v.value}
+        <div key={index} className="transaction-history-item">
+          <div className="transaction-history-title">
+            {t("Transactions history")}
+          </div>
+          {transactionItem.map((key, index) => {
+            return (
+              <div className="transaction-history-subitem" key={index}>
+                <span className="transaction-history-label">{t(key)}:</span>
+                <span className="transaction-history-value">
+                  {key === "date" ? localeString(v.date) : v[key]}
+                </span>
+              </div>
+            )
+          })}
         </div>
       )
     })
   }
 
   render() {
-    if (
-      this.props.user &&
-      this.props.user.id &&
-      this.props.user.id !== this.id
-    ) {
-      this.id = this.props.user.id
-      this.fetchData()
-    }
     const { loading, data } = this.props.transactionHistoryData
     if (!data || loading) {
       return <div className="transaction-history">{t("Loading...")}</div>
     }
     return (
-      <div className="transaction-history"> {this.renderFields(data)} </div>
+      <div className="transaction-history">
+        {data && data.length === 0 && <div> {t("List is empty")}</div>}
+        {this.renderFields(data)}
+      </div>
     )
   }
 }
