@@ -54,7 +54,8 @@ class LeadsTemplate extends React.Component {
       }
     })
 
-    let { fetchLeads, leads } = this.props
+    let { fetchLeads, leads, clearList } = this.props
+    clearList()
     fetchLeads({
       sortBy: key,
       sortOrder: String(direction).toUpperCase(),

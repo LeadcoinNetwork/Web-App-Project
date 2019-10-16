@@ -122,6 +122,7 @@ export default connect(
     setSelectedLeads: selectedLeads =>
       leads.setSelectedLeads("MY_LEADS", selectedLeads),
     toggelCardView: index => leads.toggelCardView("MY_LEADS", index),
+    clearList: () => leads.clearList("MY_LEADS"),
     moveToSell: moveToSell.myLeadsMoveToSellBegin,
     displayLead: displayLead.displayLeadGet,
     push,

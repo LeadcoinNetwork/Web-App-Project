@@ -34,7 +34,7 @@ const UserMenuInner = ({ user, logOut }) => (
       className="no-underline um-row log-out"
       key={menuItems.length + 2}
     >
-      {t("Transaction")}
+      {t("Transactions")}
     </Link>
     <Link
       to={"/"}

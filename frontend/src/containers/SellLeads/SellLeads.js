@@ -103,7 +103,7 @@ export default connect(
     fetchLeads: (...params) => leads.fetchLeads("SELL_LEADS", ...params),
     setSelectedLeads: selectedLeads =>
       leads.setSelectedLeads("SELL_LEADS", selectedLeads),
-
+    clearList: () => leads.clearList("SELL_LEADS"),
     toggelCardView: index => leads.toggelCardView("SELL_LEADS", index),
     displayLead: displayLead.displayLeadGet,
   },

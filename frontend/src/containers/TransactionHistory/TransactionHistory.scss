@@ -25,9 +25,13 @@
   }
 
   &-item {
+    border-bottom: solid 1px black;
     padding-top: 10px;
     padding-bottom: 10px;
     font-weight: 300;
+    &:last-child {
+      border-bottom: none;
+    }
   }
 }
 

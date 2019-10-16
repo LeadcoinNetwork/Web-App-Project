@@ -33,9 +33,6 @@ class TransactionHistory extends React.Component {
     return data.map((v, index) => {
       return (
         <div key={index} className="transaction-history-item">
-          <div className="transaction-history-title">
-            {t("Transactions history")}
-          </div>
           {transactionItem.map((key, index) => {
             return (
               <div className="transaction-history-subitem" key={index}>
@@ -58,6 +55,9 @@ class TransactionHistory extends React.Component {
     }
     return (
       <div className="transaction-history">
+        <div className="transaction-history-title">
+          {t("Transactions history")}
+        </div>
         {data && data.length === 0 && <div> {t("List is empty")}</div>}
         {this.renderFields(data)}
       </div>
