@@ -142,15 +142,15 @@ class EmailCreator {
       "                     <td" +
       "                        style='color: #180852 !important; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px; padding-top: 30px; padding-right: 25px; padding-bottom: 30px; padding-left: 25px;'>" +
       content +
+      `<span style='display:none !important;font-size:1px;color:#333333;line-height:1px;
+                                                height:0px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;
+                                                visibility:hidden;'> ${new Date()} </span>` +
       "                     </td>" +
       "                   </tr>" +
       "              </table>" +
       "        </td>" +
       "    </tr>" +
       "</table>" +
-      `<span style='display:none !important;font-size:1px;color:#333333;line-height:1px;
-                                                height:0px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;
-                                                visibility:hidden;'> ${new Date()} </span>` +
       "</body>"
     return html
   }
