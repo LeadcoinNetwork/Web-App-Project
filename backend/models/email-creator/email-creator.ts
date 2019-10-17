@@ -29,7 +29,7 @@ class EmailCreator {
         "Confirm Email",
         "Hello " +
           user.fname +
-          ",<br>" +
+          ",<br><br>" +
           "Thanks for becoming part of LeadCoin, the future of web marketing. Before you can start buying and selling leads on the network you’ll need to activate your account.<br><br>" +
           "Please " +
           '<a href="' +
@@ -55,7 +55,7 @@ class EmailCreator {
         "Email Address Update",
         "Hello " +
           user.fname +
-          ",<br>" +
+          ",<br><br>" +
           "We see that you just updated the email address that you have registered in the system. In order to complete the update you’ll need to authorize the change.<br><br>" +
           "Please confirm your new email address " +
           '<a href="' +
@@ -80,8 +80,8 @@ class EmailCreator {
         "Reset Password",
         "Hello " +
           user.fname +
-          ",<br>" +
-          "We see that you forgot your password, and we’re happy to help you reset it. We’ve issued you a temporary password that will be valid for 24 hours.<br> " +
+          ",<br><br>" +
+          "We see that you forgot your password, and we’re happy to help you reset it. We’ve issued you a temporary password that will be valid for 24 hours.<br><br> " +
           "Temporary password: " +
           password +
           "<br><br>" +
@@ -110,38 +110,47 @@ class EmailCreator {
 
   private createLetter(title, content) {
     const html =
-      "<body style='margin: 0; padding: 0;'>\n" +
-      "<table align='center' border='0' cellpadding='0' cellspacing='0' width='600'>\n" +
-      "    <tr>\n" +
-      "        <td bgcolor='#180852'>\n" +
-      "            <table border='0' cellpadding='0' cellspacing='0' width='100%'>\n" +
-      "                <tr>\n" +
-      "                    <td width='120' valign='top'\n" +
-      "                        style='font-family: Arial, sans-serif; font-size: 16px; line-height: 20px; padding-top: 17px; padding-right: 17px; padding-bottom: 17px; padding-left: 17px;'>\n" +
+      "<!DOCTYPE html>" +
+      "<body style='margin: 0; padding: 0;'>" +
+      "<table align='center' border='0' cellpadding='0' cellspacing='0' width='100%' style='margin:0; padding:0'>" +
+      "    <tr>" +
+      "        <td align='center'>" +
+      "            <table bgcolor='#180852' align='center' border='0' cellpadding='0' cellspacing='0' width='600px' style='margin:0; padding:0'>" +
+      "                <tr>" +
+      "                    <td width='120' " +
+      "                        style='font-family: Arial, sans-serif; font-size: 16px; line-height: 20px; padding-top: 17px; padding-right: 17px; padding-bottom: 17px; padding-left: 17px;'>" +
       `                        <a href='${
         this.frontend
-      }' title='leadcoin.network'><img\n` +
+      }' title='leadcoin.network'><img` +
       `                                src='${
         this.frontend
-      }/images/logo.png' alt='LEAD COIN' width='120'\n` +
-      "                                style='display: block; color: #ffffff'></a>\n" +
-      "                    </td>\n" +
-      "                    <td align='right'\n" +
-      "                        style='color: #ffffff; font-family: Arial, sans-serif; font-size: 18px; line-height: 20px; padding-top: 17px; padding-right: 40px; padding-bottom: 17px; padding-left: 23px;'>\n" +
+      }/images/logo.png' alt='LEAD COIN' width='120'` +
+      "                                style='display: block; color: #ffffff'></a>" +
+      "                    </td>" +
+      "                    <td align='right'" +
+      "                        style='color: #ffffff; font-family: Arial, sans-serif; font-size: 18px; line-height: 20px; padding-top: 17px; padding-right: 40px; padding-bottom: 17px; padding-left: 23px;'>" +
       title +
-      "                    </td>\n" +
-      "                </tr>\n" +
-      "                </tr>\n" +
-      "            </table>\n" +
-      "        </td>\n" +
-      "    </tr>\n" +
-      "    <tr>\n" +
-      "        <td bgcolor='#4c389b'\n" +
-      "            style='color: #ffffff; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px; padding-top: 60px; padding-right: 55px; padding-bottom: 60px; padding-left: 55px;'>\n" +
+      "                    </td>" +
+      "                </tr>" +
+      "            </table>" +
+      "        </td>" +
+      "    </tr>" +
+      "    <tr>" +
+      "        <td align='center'>" +
+      "              <table align='center' cellpadding='0' cellspacing='0' width='600px' style='margin:0; padding:0; border:#4c389b 30px solid;'>" +
+      "                   <tr>" +
+      "                     <td" +
+      "                        style='color: #180852 !important; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px; padding-top: 30px; padding-right: 25px; padding-bottom: 30px; padding-left: 25px;'>" +
       content +
-      "        </td>\n" +
-      "    </tr>\n" +
-      "</table>\n" +
+      "                     </td>" +
+      "                   </tr>" +
+      "              </table>" +
+      "        </td>" +
+      "    </tr>" +
+      "</table>" +
+      `<span style='display:none !important;font-size:1px;color:#333333;line-height:1px;
+                                                height:0px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;
+                                                visibility:hidden;'> ${new Date()} </span>` +
       "</body>"
     return html
   }
