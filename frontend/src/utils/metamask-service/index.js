@@ -57,6 +57,7 @@ const isMainNetwork = () => {
         return reject(err)
       } else if (netId === "1") {
         // 1 Ethereum // 3 Ropsten
+
         return resolve("This network is main network")
       }
       return reject(new Error("This network is not main network"))
