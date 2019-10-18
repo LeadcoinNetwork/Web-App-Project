@@ -35,7 +35,7 @@ class Config {
     },
     facebook: {
       clientID: process.env.FACEBOOK_CLIENT_ID,
-      clientSecret: process.env.FACEBOOK_APP_SECRET,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
       callbackURL: process.env.BACKEND + "/auth/facebook/callback",
     },
   }
