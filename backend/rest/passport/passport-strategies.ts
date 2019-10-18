@@ -184,7 +184,8 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
       clientID: config.auth.facebook.clientID,
       clientSecret: config.auth.facebook.clientSecret,
       callbackURL: config.auth.facebook.callbackURL,
-      scope: ["profile", "email"],
+      scope: ["email"],
+      profileFields: ["id", "displayName", "first_name", "last_name", "email"],
     },
     function(accessToken, refreshToken, profile, done) {
       console.log(profile)
