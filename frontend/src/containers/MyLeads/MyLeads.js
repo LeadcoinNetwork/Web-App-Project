@@ -1,12 +1,15 @@
 import React from "react"
 import { connect } from "react-redux"
 import t from "utils/translate/translate"
+import { toast } from "react-toastify"
 import LeadsTemplate from "../LeadsTemplate"
 import { leads, moveToSell } from "Actions"
 import displayLead from "../../actions/displayLead"
 import { push } from "react-router-redux"
 import DisplayLead from "../DisplayLead"
 import ConfirmationDialog from "../../components/ConfirmationDialog"
+import Modal from "../../components/Modal"
+import AuctionNew from "../../components/AuctionNew"
 
 class MyLeads extends React.Component {
   constructor(props) {
@@ -14,17 +17,36 @@ class MyLeads extends React.Component {
     this.state = {
       showConfirmation: false,
       isDisplayingLead: false,
+      showAuctionForm: false,
     }
   }
+
   moveLeadsToSell = () => {
     this.props.moveToSell()
   }
+
   moveLeadToSell = id => {
     let selected = new Set(this.props.leads.selected)
     selected.add(id)
     this.props.setSelectedLeads(selected)
     this.moveLeadsToSell()
   }
+
+  addToAuction = () => {
+    console.log("add to auction")
+    if (this.props.leads.selected.size > 1) {
+      toast(t("You can add only one item to an auction"), {
+        type: "error",
+        closeOnClick: true,
+        autoClose: true,
+      })
+      return
+    }
+    this.setState(state => ({
+      showAuctionForm: true,
+    }))
+  }
+
   buildButtonLabel = () => {
     let amount = this.props.leads.selected.size
 
@@ -36,14 +58,20 @@ class MyLeads extends React.Component {
       return t("move leads to sell")
     }
   }
+
   getListButtons = () => {
     return [
       {
         value: this.buildButtonLabel(),
         onClick: () => this.setState({ showConfirmation: true }),
       },
+      {
+        value: t("add to auction"),
+        onClick: this.addToAuction,
+      },
     ]
   }
+
   getLeadButtons = () => {
     return [
       {
@@ -52,12 +80,14 @@ class MyLeads extends React.Component {
       },
     ]
   }
+
   getButtons = () => {
     return {
       table: this.getListButtons(),
       record: this.getLeadButtons(),
     }
   }
+
   displayLead = lead => {
     this.props.displayLead(lead)
     this.setState({ isDisplayingLead: true })
@@ -68,6 +98,10 @@ class MyLeads extends React.Component {
   editLead = lead => {
     this.props.push("/edit-lead-" + lead.id)
     return
+  }
+
+  auctionForm = () => {
+    return <>Test</>
   }
 
   render() {
@@ -105,6 +139,12 @@ class MyLeads extends React.Component {
             onDismiss={() => this.setState({ showConfirmation: false })}
           />
         )}
+        <AuctionNew
+          isOpen={this.state.showAuctionForm}
+          onClose={() => {
+            this.setState({ showAuctionForm: false })
+          }}
+        />
       </>
     )
   }

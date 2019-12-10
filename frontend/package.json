@@ -93,6 +93,7 @@
     "prettier": "^1.13.2",
     "pretty-quick": "^1.6.0",
     "react": "^16.4.0",
+    "react-datepicker": "^2.10.1",
     "react-dom": "^16.4.0",
     "react-dropzone": "^4.2.13",
     "react-hot-loader": "^4.3.3",

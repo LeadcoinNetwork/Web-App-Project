@@ -952,4 +952,24 @@ export default {
     he: "הגדרות סיסמא",
     ja: "パスワード設定",
   },
+  "add to auction": {
+    en: "Add to auction",
+    he: "הוסף למכירה פומבית",
+    ja: "オークションに追加",
+  },
+  "New auction": {
+    en: "New auction",
+    he: "מכירה פומבית חדשה",
+    ja: "新しいオークション",
+  },
+  "You can add only one item to an auction": {
+    en: "You can add only one item to an auction",
+    he: "אתה יכול להוסיף פריט אחד בלבד למכירה פומבית",
+    ja: "オークションに追加できるアイテムは1つだけです",
+  },
+  "End date auction": {
+    en: "End date",
+    he: "תאריך סיום",
+    ja: "終了日",
+  },
 }

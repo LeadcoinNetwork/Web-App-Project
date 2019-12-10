@@ -3,6 +3,7 @@ import { app, user, route } from "Actions"
 
 var get = require("lodash/get")
 
+import "react-datepicker/dist/react-datepicker.css"
 import Header from "Containers/Header"
 import SideMenu from "Containers/SideMenu"
 import Snackbar from "Containers/Snackbar"
