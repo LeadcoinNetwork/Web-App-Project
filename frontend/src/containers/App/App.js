@@ -36,6 +36,7 @@ import WalletSettings from "Containers/WalletSettings"
 import UserProfileSettings from "Containers/UserProfileSettings"
 import Settings from "Containers/Settings"
 import TransactionHistory from "Containers/TransactionHistory"
+import Auctions from "Containers/Auctions"
 
 // import Steps from "../steps"
 
@@ -97,6 +98,7 @@ class App extends React.Component {
                 component={UserProfileSettings}
               />
               <Route path="/settings" component={Settings} />
+              <Route path="/auctions" component={Auctions} />
             </Switch>
           </main>
           <Snackbar />

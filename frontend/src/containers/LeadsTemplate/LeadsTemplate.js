@@ -248,7 +248,8 @@ class LeadsTemplate extends React.Component {
               <div className="lt-zero-results">{this.zeroResults()}</div>
             )}
             {isSelectable &&
-              getButtons && (
+              getButtons &&
+              getButtons().table.length && (
                 <div className="mobileOnly downStrip">
                   <Button
                     className={pageName + "Leads"}

@@ -12,7 +12,7 @@ import displayLead from "../../actions/displayLead"
 import DisplayLead from "../DisplayLead"
 import Checkbox from "../../components/Checkbox"
 
-class BuyLeads extends React.Component {
+class Auctions extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -152,9 +152,9 @@ class BuyLeads extends React.Component {
           />
         )}
         {!isDisplayingLead && (
-          <section className="buy_leads">
-            <h1>{t("Buy Leads")}</h1>
-            <h3>{t("Purchase hot leads for your business.")}</h3>
+          <section className="auctions">
+            <h1>{t("Auction")}</h1>
+            <h3>{t("auction management")}</h3>
             <div className="bl-filters">
               <Select
                 className="industry"
@@ -197,7 +197,7 @@ class BuyLeads extends React.Component {
                   })
                 }}
               />
-              <div className="buy_leads-favorites">
+              <div className="auctions-favorites">
                 <Checkbox
                   label={t("Favorites")}
                   name="farovites"
@@ -220,16 +220,16 @@ class BuyLeads extends React.Component {
                 {t("Search")}
               </Button>
             </div>
-            {
+            {this.props.leads.searchClicked && (
               <LeadsTemplate
                 {...this.props}
-                pageName="buy"
+                pageName="auction"
                 constantCardOpen={false}
                 isSelectable={true}
                 getButtons={this.getButtons}
                 displayLead={this.displayLead.bind(this)}
               />
-            }
+            )}
           </section>
         )}
       </>
@@ -247,15 +247,15 @@ export default connect(
   mapStateToProps,
   {
     push: push,
-    handleFilter: newFilter => leads.filterChange("BUY_LEADS", newFilter),
-    fetchLeads: params => leads.fetchLeads("BUY_LEADS", params),
+    handleFilter: newFilter => leads.filterChange("AUCTION_LEADS", newFilter),
+    fetchLeads: params => leads.fetchLeads("AUCTION_LEADS", params),
     setSelectedLeads: selectedLeads =>
-      leads.setSelectedLeads("BUY_LEADS", selectedLeads),
-    toggelCardView: index => leads.toggelCardView("BUY_LEADS", index),
-    searchClicked: () => leads.searchClicked("BUY_LEADS"),
-    clearList: () => leads.clearList("BUY_LEADS"),
+      leads.setSelectedLeads("AUCTION_LEADS", selectedLeads),
+    toggelCardView: index => leads.toggelCardView("AUCTION_LEADS", index),
+    searchClicked: () => leads.searchClicked("AUCTION_LEADS"),
+    clearList: () => leads.clearList("AUCTION_LEADS"),
     displayLead: displayLead.displayLeadGet,
     favoritesAddStart: favorites.favoritesAddStart,
     favoritesRemoveStart: favorites.favoritesRemoveStart,
   },
-)(BuyLeads)
+)(Auctions)

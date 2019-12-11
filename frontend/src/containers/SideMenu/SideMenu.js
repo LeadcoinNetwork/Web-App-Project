@@ -13,6 +13,15 @@ const SideMenu = ({ path }) => {
         <div className="menu-icons cart" />
       </Link>
       <Link
+        to="/auctions"
+        className={path === "/auctions" ? "sm-active" : ""}
+        data-text={t("auctions")}
+      >
+        <div className="menu-icons">
+          <i className="fas fa-gavel" />
+        </div>
+      </Link>
+      <Link
         to="/sell-leads"
         className={path === "/sell-leads" ? "sm-active" : ""}
         data-text={t("sell leads")}

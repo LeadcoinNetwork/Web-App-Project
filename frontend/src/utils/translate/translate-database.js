@@ -972,4 +972,9 @@ export default {
     he: "תאריך סיום",
     ja: "終了日",
   },
+  "auction management": {
+    en: "Auction management",
+    he: "ניהול מכירה פומבית",
+    ja: "オークション管理",
+  },
 }
