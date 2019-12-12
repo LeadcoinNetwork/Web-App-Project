@@ -8,8 +8,7 @@ const TBRow = props => (
     className={`tb-row
     ${props.selected && props.selected.has(props.id) ? " r-selected" : ""}
     ${props.displayLead ? " display-lead" : ""}
-    ${props.favorite ? "favorite-lead" : ""}
-  `}
+    ${props.favorite ? "favorite-lead" : ""} `}
   >
     {props.editLead && (
       <div

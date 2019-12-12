@@ -40,6 +40,7 @@ const rootReducer = combineReducers({
   buyLeads: createLeadsReducerFor("BUY_LEADS"),
   sellLeads: createLeadsReducerFor("SELL_LEADS"),
   myLeads: createLeadsReducerFor("MY_LEADS"),
+  auctionLeads: createLeadsReducerFor("AUCTION_LEADS"),
   notifications,
   notificationsTable,
   signup,

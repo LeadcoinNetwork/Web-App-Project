@@ -127,8 +127,7 @@ class LeadsTemplate extends React.Component {
     return (
       <div
         className={`lt-results-head
-        ${isSearchResults ? " is-search-results" : " not-search-results"}
-      `}
+        ${isSearchResults ? " is-search-results" : " not-search-results"}`}
       >
         {isSearchResults && <h4>{t("Search Results")}</h4>}
         <div className="ldc-table-buttons">

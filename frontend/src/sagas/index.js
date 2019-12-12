@@ -29,6 +29,7 @@ import editWallet from "./walletSettings"
 import updateUser from "./updateUser"
 import favorites from "./favorites"
 import historyLead from "./historyLead"
+import auctionLeads from "./auctionLeads"
 
 import { spawn, fork } from "redux-saga/effects"
 import * as superagent from "superagent"
@@ -85,6 +86,7 @@ export default function* rootSaga() {
     favoritesRemove,
     historyLead,
     transactionHistory,
+    auctionLeads,
   ]
   for (var i in sagas) {
     yield fork(sagas[i], api)

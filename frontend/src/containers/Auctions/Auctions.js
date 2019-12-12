@@ -39,13 +39,17 @@ class Auctions extends React.Component {
     }
   }
 
-  buyLead = id => {
+  makeBet = () => {
+    console.log("bet auction")
+  }
+
+  betAuction = id => {
     const { metamask } = this.props
     if (metamask.isActive) {
       let selected = new Set(this.props.leads.selected)
       selected.add(id)
       this.props.setSelectedLeads(selected)
-      this.buyLeads()
+      this.makeBet()
     } else {
       toast(
         "To buy leads you need install Metamask for your browser. Please follow your browser’s support for MetaMask (such as Chrome)",
@@ -58,22 +62,11 @@ class Auctions extends React.Component {
     }
   }
 
-  buildButtonLabel = () => {
-    let amount = this.props.leads.selected.size
-
-    if (amount > 1) {
-      return t("buy ") + amount + t(" leads")
-    } else if (amount === 1) {
-      return t("buy lead")
-    } else {
-      return t("buy leads")
-    }
-  }
   getListButtons = () => {
     return [
       {
-        value: this.buildButtonLabel(),
-        onClick: this.buyLeads,
+        value: t("Bet"),
+        onClick: this.betAuction,
       },
       {
         value: t("Add to Favorites"),
@@ -112,6 +105,7 @@ class Auctions extends React.Component {
       },
     ]
   }
+
   getButtons = () => {
     return {
       table: this.getListButtons(),
@@ -220,7 +214,7 @@ class Auctions extends React.Component {
                 {t("Search")}
               </Button>
             </div>
-            {this.props.leads.searchClicked && (
+            {
               <LeadsTemplate
                 {...this.props}
                 pageName="auction"
@@ -229,7 +223,7 @@ class Auctions extends React.Component {
                 getButtons={this.getButtons}
                 displayLead={this.displayLead.bind(this)}
               />
-            )}
+            }
           </section>
         )}
       </>
@@ -238,7 +232,7 @@ class Auctions extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  leads: state.buyLeads,
+  leads: state.auctionLeads,
   metamask: state.metamask,
   fields: state.fields.filter(lead => !lead.private),
 })
