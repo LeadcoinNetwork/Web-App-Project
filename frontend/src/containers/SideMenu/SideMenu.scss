@@ -1,6 +1,11 @@
 @import "~Styles/variables";
 
 @media (max-width: $screen-tablets) {
+  a:hover {
+    background: inherit;
+    color: inherit;
+  }
+
   nav.ldc-side-menu {
     .clipboard {
       display: none;
@@ -75,7 +80,7 @@ nav.ldc-side-menu {
     transition: all 350ms ease;
 
     &:hover {
-      color: $ldc-color;
+      //color: $ldc-color;
     }
 
     &.sm-active {

@@ -67,6 +67,7 @@ class Auctions extends React.Component {
       {
         value: t("Bet"),
         onClick: this.betAuction,
+        enableCount: 1,
       },
       {
         value: t("Add to Favorites"),
@@ -94,6 +95,7 @@ class Auctions extends React.Component {
       {
         value: t("buy"),
         onClick: this.buyLead,
+        enableCount: 1,
       },
       {
         value: t("Add to Favorites"),
@@ -116,7 +118,6 @@ class Auctions extends React.Component {
   displayLead = lead => {
     this.props.displayLead(lead)
     this.setState({ isDisplayingLead: true })
-    return
     //this.props.push("/display-lead")
   }
 

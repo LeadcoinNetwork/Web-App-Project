@@ -44,6 +44,17 @@ class LeadsTemplate extends React.Component {
     }
   }
 
+  isDisabledButton = button => {
+    if (button.enableCount) {
+      if (
+        this.props.leads.selected &&
+        this.props.leads.selected.size > button.enableCount
+      )
+        return true
+    }
+    return !this.props.leads.selected.size
+  }
+
   onSortHandler = (name, direction, key) => {
     this.setState((state, props) => {
       return {
@@ -139,7 +150,7 @@ class LeadsTemplate extends React.Component {
                 label={button.value}
                 onClick={button.onClick}
                 appStyle={true}
-                disabled={!leads.selected.size}
+                disabled={this.isDisabledButton(button)}
               />
             ))}
         </div>

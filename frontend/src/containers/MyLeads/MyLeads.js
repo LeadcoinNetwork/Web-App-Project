@@ -68,6 +68,7 @@ class MyLeads extends React.Component {
       {
         value: t("add to auction"),
         onClick: this.addToAuction,
+        enableCount: 1,
       },
     ]
   }
