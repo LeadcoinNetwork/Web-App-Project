@@ -101,10 +101,6 @@ class MyLeads extends React.Component {
     return
   }
 
-  auctionForm = () => {
-    return <>Test</>
-  }
-
   render() {
     const isDisplayingLead = this.state ? this.state.isDisplayingLead : false
     return (

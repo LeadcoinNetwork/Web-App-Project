@@ -24,6 +24,7 @@ export default function* inlinemanualsaga() {
       yield put({ type: actions.types.MY_LEADS_FETCH_LEADS })
       yield put({ type: actions.types.SELL_LEADS_FETCH_LEADS })
       yield put({ type: actions.types.BUY_LEADS_FETCH_LEADS })
+      yield put({ type: actions.types.AUCTION_LEADS_FETCH_LEADS })
       yield put({ type: actions.types.NOTIFICATIONS_FETCH_START })
       delete localStorage.shouldFetchAgain
     }

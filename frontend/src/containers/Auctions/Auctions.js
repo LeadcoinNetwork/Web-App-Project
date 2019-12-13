@@ -11,12 +11,14 @@ import { toast } from "react-toastify"
 import displayLead from "../../actions/displayLead"
 import DisplayLead from "../DisplayLead"
 import Checkbox from "../../components/Checkbox"
+import Bet from "../../components/Bet"
 
 class Auctions extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       isDisplayingLead: false,
+      showMakeBet: false,
       favorites: false,
       selectedLeads: [],
     }
@@ -39,8 +41,12 @@ class Auctions extends React.Component {
     }
   }
 
-  makeBet = () => {
-    console.log("bet auction")
+  makeBet = bet => {
+    console.log("bet auction", bet)
+  }
+
+  showBet = () => {
+    this.setState({ showMakeBet: true })
   }
 
   betAuction = id => {
@@ -66,7 +72,7 @@ class Auctions extends React.Component {
     return [
       {
         value: t("Bet"),
-        onClick: this.betAuction,
+        onClick: this.showBet,
         enableCount: 1,
       },
       {
@@ -93,8 +99,8 @@ class Auctions extends React.Component {
   getLeadButtons = () => {
     return [
       {
-        value: t("buy"),
-        onClick: this.buyLead,
+        value: t("Bet"),
+        onClick: this.showBet,
         enableCount: 1,
       },
       {
@@ -130,6 +136,23 @@ class Auctions extends React.Component {
     this.setState((prev, props) => {
       return { favorites: !!value }
     })
+  }
+
+  getCurrentSelectedLeadAuctionPrice = () => {
+    if (this.props.leads && this.props.leads.selected.size) {
+      let lead = this.props.leads.list.find(lead =>
+        this.props.leads.selected.has(lead.id),
+      )
+      return (lead && lead.lead_price) || 0.0
+    }
+    return 0.0
+  }
+
+  getCurrentSelectedLead() {
+    if (this.props.leads && this.props.leads.selected.size)
+      return this.props.leads.list.find(lead =>
+        this.props.leads.selected.has(lead.id),
+      )
   }
 
   render() {
@@ -226,6 +249,17 @@ class Auctions extends React.Component {
               />
             }
           </section>
+        )}
+        {this.state.showMakeBet && (
+          <Bet
+            lead={this.getCurrentSelectedLead()}
+            isOpen={this.state.showMakeBet}
+            onClose={() => {
+              this.setState({ showMakeBet: false })
+            }}
+            value={this.getCurrentSelectedLeadAuctionPrice()}
+            onSuccess={this.makeBet}
+          />
         )}
       </>
     )
