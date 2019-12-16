@@ -28,6 +28,8 @@ import metamask from "./metamask"
 import userProfileSettings from "./userProfileSettings"
 import historyLead from "./historyLead"
 import transactionHistory from "./transactionHistory"
+import profile from "./profile"
+import review from "./review"
 
 const rootReducer = combineReducers({
   app,
@@ -62,6 +64,8 @@ const rootReducer = combineReducers({
   userProfileSettings,
   transactionHistory,
   historyLead,
+  profile,
+  review,
 })
 
 export default rootReducer
