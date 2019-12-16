@@ -24,6 +24,10 @@ class Auctions extends React.Component {
     }
   }
 
+  showBet = () => {
+    this.setState({ showMakeBet: true })
+  }
+
   buyLeads = () => {
     const { metamask } = this.props
 
@@ -41,21 +45,12 @@ class Auctions extends React.Component {
     }
   }
 
-  makeBet = bet => {
-    console.log("bet auction", bet)
-  }
-
-  showBet = () => {
-    this.setState({ showMakeBet: true })
-  }
-
   betAuction = id => {
     const { metamask } = this.props
     if (metamask.isActive) {
       let selected = new Set(this.props.leads.selected)
       selected.add(id)
       this.props.setSelectedLeads(selected)
-      this.makeBet()
     } else {
       toast(
         "To buy leads you need install Metamask for your browser. Please follow your browser’s support for MetaMask (such as Chrome)",
@@ -68,12 +63,26 @@ class Auctions extends React.Component {
     }
   }
 
+  isDisabledBuy = () => {
+    let disabled = false
+    this.props.leads.selected.forEach(id => {
+      let lead = this.props.leads.list.find(lead => lead.id === id)
+      if (lead && !lead.isForBuy) disabled = true
+    })
+    return disabled
+  }
+
   getListButtons = () => {
     return [
       {
         value: t("Bet"),
         onClick: this.showBet,
         enableCount: 1,
+      },
+      {
+        value: t("Buy"),
+        onClick: this.buyLeads,
+        disabled: this.isDisabledBuy(),
       },
       {
         value: t("Add to Favorites"),
@@ -102,6 +111,11 @@ class Auctions extends React.Component {
         value: t("Bet"),
         onClick: this.showBet,
         enableCount: 1,
+      },
+      {
+        value: t("Buy"),
+        onClick: this.buyLeads,
+        disabled: this.isDisabledBuy(),
       },
       {
         value: t("Add to Favorites"),
@@ -148,7 +162,7 @@ class Auctions extends React.Component {
     return 0.0
   }
 
-  getCurrentSelectedLead() {
+  getCurrentSelectedLead = () => {
     if (this.props.leads && this.props.leads.selected.size)
       return this.props.leads.list.find(lead =>
         this.props.leads.selected.has(lead.id),
@@ -258,7 +272,7 @@ class Auctions extends React.Component {
               this.setState({ showMakeBet: false })
             }}
             value={this.getCurrentSelectedLeadAuctionPrice()}
-            onSuccess={this.makeBet}
+            onSuccess={this.betAuction}
           />
         )}
       </>

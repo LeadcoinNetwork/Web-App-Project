@@ -63,11 +63,11 @@ class AuctionNew extends React.Component {
             </div>
           </div>
           <div className="buttons-section">
-            <Button className="button" appStyle={true} onClick={onClose}>
-              {t("Cancel")}
-            </Button>
             <Button className="button" appStyle={true}>
               {t("Ok")}
+            </Button>
+            <Button className="button" appStyle={true} onClick={onClose}>
+              {t("Cancel")}
             </Button>
           </div>
         </div>

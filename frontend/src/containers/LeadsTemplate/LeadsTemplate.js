@@ -26,10 +26,10 @@ class LeadsTemplate extends React.Component {
     fetchLeads({
       page: Number(leads.page) + 1,
     })
-  } /**/
+  }
+
   isNotAllSelected = () => {
     let { leads } = this.props
-
     return leads.list.length && leads.selected.size !== leads.list.length
   }
 
@@ -52,6 +52,7 @@ class LeadsTemplate extends React.Component {
       )
         return true
     }
+    if (button.disabled) return true
     return !this.props.leads.selected.size
   }
 
@@ -83,6 +84,7 @@ class LeadsTemplate extends React.Component {
 
     setSelectedLeads(selected)
   }
+
   zeroResults = () => {
     const { loading } = this.props.leads
     console.log({ loading })
@@ -126,6 +128,7 @@ class LeadsTemplate extends React.Component {
         )
     }
   }
+
   renderResultsHead = isSearchResults => {
     let {
       pageName,
@@ -166,6 +169,7 @@ class LeadsTemplate extends React.Component {
       </div>
     )
   }
+
   render() {
     let {
       pageName,
