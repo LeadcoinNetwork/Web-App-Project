@@ -977,4 +977,24 @@ export default {
     he: "ניהול מכירה פומבית",
     ja: "オークション管理",
   },
+  "buy tab": {
+    en: "Buy",
+    he: "לקנות",
+    ja: "購入",
+  },
+  "sell tab": {
+    en: "Sell",
+    he: "מכירה",
+    ja: "売る",
+  },
+  "auction tab": {
+    en: "Auction",
+    he: "מכירה פומבית",
+    ja: "オークション",
+  },
+  "my tab": {
+    en: "My",
+    he: "שלי",
+    ja: "僕の",
+  },
 }

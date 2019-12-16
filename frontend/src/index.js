@@ -1,6 +1,8 @@
 import typeScriptExample from "./example"
 import { metamask } from "./utils/metamask-service/index.js"
 import "Styles/global.scss"
+import "react-datepicker/dist/react-datepicker.css"
+import "react-tabs/style/react-tabs.css"
 
 import React from "react"
 import ReactDOM from "react-dom"

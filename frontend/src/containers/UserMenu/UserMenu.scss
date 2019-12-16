@@ -50,18 +50,14 @@
       padding: 8px 15px;
       color: white;
       font-weight: 400;
-
-      &.log-out {
-        border-top: 1px solid #6a56bb;
-
-        &:hover {
-          border-top-color: #b7adef;
-        }
-      }
+      border-bottom: 1px solid #6a56bb;
 
       &:hover {
-        background-color: #b7adef;
         border-bottom-color: #b7adef;
+      }
+
+      &:nth-last-child {
+        border-bottom: none;
       }
     }
   }

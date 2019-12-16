@@ -3,7 +3,6 @@ import { app, user, route } from "Actions"
 
 var get = require("lodash/get")
 
-import "react-datepicker/dist/react-datepicker.css"
 import Header from "Containers/Header"
 import SideMenu from "Containers/SideMenu"
 import Snackbar from "Containers/Snackbar"
@@ -37,6 +36,7 @@ import UserProfileSettings from "Containers/UserProfileSettings"
 import Settings from "Containers/Settings"
 import TransactionHistory from "Containers/TransactionHistory"
 import Auctions from "Containers/Auctions"
+import Profile from "Containers/Profile"
 
 // import Steps from "../steps"
 
@@ -99,6 +99,7 @@ class App extends React.Component {
               />
               <Route path="/settings" component={Settings} />
               <Route path="/auctions" component={Auctions} />
+              <Route path="/profile" component={Profile} />
             </Switch>
           </main>
           <Snackbar />

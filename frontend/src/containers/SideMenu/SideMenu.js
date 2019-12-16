@@ -8,14 +8,14 @@ const SideMenu = ({ path }) => {
       <Link
         to="/buy-leads"
         className={path === "/buy-leads" ? "sm-active" : ""}
-        data-text={t("buy leads")}
+        data-text={t("buy tab")}
       >
         <div className="menu-icons cart" />
       </Link>
       <Link
         to="/auctions"
         className={path === "/auctions" ? "sm-active" : ""}
-        data-text={t("auctions")}
+        data-text={t("auction tab")}
       >
         <div className="menu-icons">
           <i className="fas fa-gavel" />
@@ -24,14 +24,14 @@ const SideMenu = ({ path }) => {
       <Link
         to="/sell-leads"
         className={path === "/sell-leads" ? "sm-active" : ""}
-        data-text={t("sell leads")}
+        data-text={t("sell tab")}
       >
         <div className="menu-icons coins" />
       </Link>
       <Link
         to="/my-leads"
         className={path === "/my-leads" ? "sm-active" : ""}
-        data-text={t("my leads")}
+        data-text={t("my tab")}
       >
         <div className="menu-icons clipboard" />
       </Link>

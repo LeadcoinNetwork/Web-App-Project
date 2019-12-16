@@ -1,0 +1,32 @@
+@import "~Styles/variables";
+
+.ldc-profile {
+  &-rating {
+    padding: 10px 0;
+  }
+
+  .item-container {
+    display: flex;
+    padding: 10px 0;
+  }
+
+  .item-title {
+    min-width: 200px;
+    display: flex;
+    font-weight: bold;
+  }
+
+  .item-value {
+    display: flex;
+  }
+}
+
+@media (max-width: $screen-md) {
+  .ldc-profile {
+    .item-title,
+    .item-value,
+    .item-container {
+      display: block;
+    }
+  }
+}
