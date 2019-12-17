@@ -1,7 +1,7 @@
 import { types } from "../actions"
 
 const initialState = {
-  review: "",
+  text: "",
   rating: 1,
   loading: false,
   error: {},
@@ -12,7 +12,7 @@ const review = (state = initialState, action) => {
     case types.REVIEW_HANDLE_CHANGE:
       return {
         ...state,
-        [action.payload.name]: action.payload.value,
+        [action.payload.key]: action.payload.value,
       }
     case types.REVIEW_LOADING:
       return {
@@ -22,7 +22,8 @@ const review = (state = initialState, action) => {
     case types.REVIEW_FINISH:
       return {
         ...state,
-        email: "",
+        text: "",
+        rating: 0,
         loading: false,
       }
     case types.REVIEW_ERROR:

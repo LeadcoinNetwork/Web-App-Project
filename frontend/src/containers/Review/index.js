@@ -1,4 +1,4 @@
-import "./ForgotPassword.scss"
-import ForgotPassword from "./ForgotPassword"
+import "./Review.scss"
+import Review from "./Review"
 
-export default ForgotPassword
+export default Review

@@ -1,33 +1,80 @@
 import React from "react"
-import TextField from "Components/TextField"
+import reviewStyle from "./Review.scss"
 import Button from "Components/Button"
 import { connect } from "react-redux"
 import { review } from "Actions"
 import t from "../../utils/translate/translate"
+import Textarea from "../../components/Textarea"
+import RatingCustom from "../../components/RatingCustom"
 
-const Review = ({ forgotPassword, handleChange, submit }) => (
-  <section className="ldc-forgot-password">
-    <h1>{t("Forgot your password?")}</h1>
-    <p>
-      {t(
-        "Enter the email address associated with your account, and we’ll email you a link to reset your password.",
+/**
+ *
+ * @param mode - "new" - create new review, "view" - review read mode
+ * @param text - review text
+ * @param rating
+ * @returns {*}
+ * @constructor
+ */
+const Review = ({
+  mode = "view",
+  text = "",
+  rating = 0,
+  review,
+  handleChange,
+  submit,
+}) => {
+  const MAX_TEXT_SIZE = 500
+
+  const handleChangeValue = (key, value) => {
+    handleChange({
+      key,
+      value,
+    })
+  }
+
+  const send = () => {
+    console.log("submit review")
+    submit()
+  }
+
+  return (
+    <div className="ldc-review">
+      {mode === "new" && (
+        <div className="ldc-review-new">
+          <div className="ldc-review-new__title">
+            <RatingCustom
+              onChange={value => handleChangeValue("rating", value)}
+              initialRating={review.rating}
+            />
+          </div>
+          <div className="ldc-review-new__content">
+            <Textarea
+              placeholder={t("Text")}
+              name="text"
+              value={review.text}
+              maxLength={MAX_TEXT_SIZE}
+              onChange={e => handleChangeValue("text", e.target.value)}
+            />
+            <Button
+              label={t("Send")}
+              onClick={send}
+              loading={review.loading}
+              disabled={!text}
+            />
+          </div>
+        </div>
       )}
-    </p>
-    <TextField
-      placeholder={t("Email")}
-      name="email"
-      type="email"
-      value={forgotPassword.email}
-      onChange={e => handleChange("email", e.target.value)}
-    />
-    <Button
-      label={t("Send Reset Link")}
-      onClick={submit}
-      loading={forgotPassword.loading}
-      disabled={!forgotPassword.email}
-    />
-  </section>
-)
+      {mode === "view" && (
+        <div className="ldc-review-read">
+          <div className="ldc-review-read__title">
+            <RatingCustom readonly={true} initialRating={rating} />
+          </div>
+          <p className="ldc-review-read__content">{text}</p>
+        </div>
+      )}
+    </div>
+  )
+}
 
 const mapStateToProps = state => ({
   review: state.review,

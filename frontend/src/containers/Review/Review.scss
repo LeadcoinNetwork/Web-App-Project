@@ -1,9 +1,19 @@
 @import "~Styles/variables";
 
 .ldc-review {
+  padding-top: 10px;
+  &-read {
+    &__content {
+      padding: 10px 0 5px 0;
+    }
+  }
+
+  &-new {
+  }
 }
 
 @media (max-width: $screen-md) {
   .ldc-review {
+    padding: 10px;
   }
 }

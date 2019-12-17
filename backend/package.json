@@ -15,6 +15,7 @@
     "chalk": "^2.4.1",
     "commander": "^2.15.1",
     "cookie-parser": "^1.4.3",
+    "cron": "^1.7.2",
     "cross-env": "^5.1.6",
     "csv": "^3.1.0",
     "dotenv": "^5.0.1",
