@@ -1,4 +1,11 @@
-export type HistoryEvent = "created" | "updated" | "purchased" | "forSale"
+export type HistoryEvent =
+  | "created"
+  | "updated"
+  | "purchased"
+  | "forSale"
+  | "auctionCreate"
+  | "auctionPurchase"
+  | "auctionRevert"
 
 export interface LeadHistory {
   leadId: number

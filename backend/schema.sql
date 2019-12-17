@@ -34,18 +34,18 @@ CREATE TABLE `notifications`
 ) DEFAULT CHARACTER SET = utf8
   COLLATE = utf8_bin;
 
-  DROP TABLE IF EXISTS `transactions`;
-CREATE TABLE `transactions`
+DROP TABLE IF EXISTS `auctions`;
+CREATE TABLE `auctions`
 (
-  `id`  int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `doc` JSON
+    `id`  int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `doc` JSON
 ) DEFAULT CHARACTER SET = utf8
   COLLATE = utf8_bin;
 
-  DROP TABLE IF EXISTS `leads_history`;
-CREATE TABLE `leads_history`
+DROP TABLE IF EXISTS `bets`;
+CREATE TABLE `bets`
 (
-  `id`  int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `doc` JSON
+    `id`  int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `doc` JSON
 ) DEFAULT CHARACTER SET = utf8
   COLLATE = utf8_bin;

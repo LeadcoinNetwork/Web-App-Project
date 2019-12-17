@@ -13,6 +13,8 @@ type tableName =
   | "notifications"
   | "leads_history"
   | "transactions"
+  | "auctions"
+  | "bets"
 
 const private_fields = ["name", "phone"]
 
@@ -35,12 +37,15 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     return result.length > 0
   }
 
-  private convertRowToObject(row) {
-    return {
-      ..._.omit(row, this.fieldName),
+  private convertRowToObject(row, customFields = []) {
+    let convertRow = {
+      ..._.omit(row, [this.fieldName].concat(customFields)),
       ...JSON.parse(row[this.fieldName]),
     }
+    customFields.forEach(field => (convertRow[field] = JSON.parse(row[field])))
+    return convertRow
   }
+
   protected async getOne(whatever: any): Promise<IExisting | NotFound> {
     var result = await this.find(whatever)
     if (result.length != 1) {
@@ -50,7 +55,8 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     }
   }
 
-  protected prepareFilters(filters): string {
+  protected prepareFilters(filters, table?): string {
+    let tableStr = table ? `${table}.` : ""
     return filters
       .map(f => {
         const escaped = mysql.escape(f.val.toLowerCase())
@@ -60,14 +66,14 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
           // find in array
           field = field.replace(/\[]$/, "")
 
-          return `JSON_SEARCH(LOWER(${this.fieldName}->>${mysql.escape(
-            "$." + field,
-          )}), "one", ${escaped}) is not null`
+          return `JSON_SEARCH(LOWER(${tableStr}${
+            this.fieldName
+          }->>${mysql.escape("$." + field)}), "one", ${escaped}) is not null`
         } else {
           // find string
-          return `LOWER(${this.fieldName}->>${mysql.escape("$." + field)}) ${
-            f.op
-          } "%${escaped.slice(1, -1)}%"`
+          return `LOWER(${tableStr}${this.fieldName}->>${mysql.escape(
+            "$." + field,
+          )}) ${f.op} "%${escaped.slice(1, -1)}%"`
         }
       })
       .join(" OR ")
@@ -215,7 +221,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         where_additions.push(
           `${this.fieldName}->>'$.Category' = '${filters.category}'`,
         )
-      if (search_additions.length > 0)
+      if (search_additions.length)
         where_additions.push("(" + search_additions + ")")
       let limit_addition = ""
       let countHeader = "SELECT COUNT(*) as count "
@@ -232,6 +238,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       if (where_additions.length)
         query += `\nAND ${where_additions.join(" AND ")}`
       if (filters.favorites) query += `\nAND id IN (${filters.favorites})`
+      query += `\nAND id NOT IN (SELECT auctions.doc ->> '$.leadId' AS id FROM auctions WHERE auctions.doc ->> '$.status' IN ('active', 'ransom'))`
 
       let order = ""
       if (sort) {
@@ -277,7 +284,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         AND doc->>"$.active" = "true" 
         AND doc->>"$.forSale" = "false"
       `
-      if (where_additions.length > 0) query += `AND ${where_additions}`
+      if (where_additions.length) query += `AND ${where_additions}`
       if (sort) {
         query += ` ORDER BY ${this.fieldName} ->> ${mysql.escape(
           "$." + sort.sortBy,
@@ -299,33 +306,54 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         where_additions = filters
           .map(f => {
             const escaped = mysql.escape(f.val)
-            return `${this.fieldName} ->> ${mysql.escape("$." + f.field)} ${
-              f.op
-            } "%${escaped.slice(1, -1)}%"`
+            return `leads.${this.fieldName} ->> ${mysql.escape(
+              "$." + f.field,
+            )} ${f.op} "%${escaped.slice(1, -1)}%"`
           })
           .join(" OR ")
       }
       let limit_addition = ""
-      let countHeader = "SELECT COUNT(*) as count "
-      let realHeader = "SELECT *"
+      let countHeader = "SELECT COUNT(*) as count FROM leads"
+      let realHeader = `SELECT leads.id, leads.doc, auctions.doc AS auction, auctions.id AS auctionId,
+                        MAX(bets.doc ->> '$.price') AS auctionMaxBet, 
+                        COUNT(bets.id) AS countBets
+                        FROM leads LEFT JOIN auctions ON auctions.doc ->> '$.leadId' = leads.id 
+                        AND auctions.doc ->> "$.status" IN ("active", "ransom")
+                        LEFT JOIN bets ON bets.doc ->> '$.auctionId' = auctions.id`
       let query = `
-        FROM leads
-        WHERE doc->>"$.ownerId" = ${user_id}
-        AND doc->>"$.active" = "true" 
-        AND doc->>"$.forSale" = "true"
+        WHERE leads.doc->>"$.ownerId" = ${user_id}
+        AND leads.doc->>"$.active" = "true" 
+        AND leads.doc->>"$.forSale" = "true"
       `
-      if (where_additions.length > 0) query += `AND ${where_additions}`
+
+      if (where_additions.length) query += `AND ${where_additions}`
+      let queryCount = query
+      query += " GROUP BY leads.id, auctions.id"
       if (sort) {
-        query += ` ORDER BY ${this.fieldName} ->> ${mysql.escape(
+        query += ` ORDER BY leads.${this.fieldName} ->> ${mysql.escape(
           "$." + sort.sortBy,
         )} ${sort.sortOrder}`
       }
       if (limit) {
         limit_addition += ` LIMIT ${limit.start},${limit.offset} `
       }
-      let count = await this.sql.query(countHeader + query)
+      let count = await this.sql.query(countHeader + queryCount)
       let rows = await this.sql.query(realHeader + query + limit_addition)
-      rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
+      rows = rows.map(row => {
+        let newRow = this.convertRowToObject(row, ["auction"])
+        if (newRow.auction) {
+          newRow.auction.id = newRow.auctionId
+          newRow.auction.maxBet = newRow.maxBet =
+            newRow.auctionMaxBet != null
+              ? newRow.auctionMaxBet
+              : newRow.auction.startPrice
+          newRow.auction.countBets = newRow.countBets
+        }
+        delete newRow.auctionId
+        delete newRow.auctionMaxBet
+        delete newRow.countBets
+        return newRow
+      }) // remove RowDataPacket class
       return { list: rows, total: count[0].count }
     },
 
@@ -345,7 +373,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         WHERE doc->>"$.bought_from" = ${user_id}
         AND doc->>"$.active" = "true" 
       `
-      if (where_additions.length > 0) query += `AND ${where_additions} `
+      if (where_additions.length) query += `AND ${where_additions} `
       if (sort) {
         query += ` ORDER BY ${this.fieldName} ->> ${mysql.escape(
           "$." + sort.sortBy,
@@ -357,6 +385,79 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     },
   }
 
+  auctionsQueries = {
+    auctionsAndLeadGetAll: async (options: any) => {
+      const { limit, filters, sort, userId } = options
+      let where_additions = []
+      let search_additions = []
+      if (filters.search) {
+        where_additions.push(this.prepareFilters(filters.search, "leads"))
+      }
+      if (filters.industry)
+        where_additions.push(
+          `leads.${this.fieldName}->>'$.industry' = '${filters.industry}'`,
+        )
+      if (filters.category)
+        where_additions.push(
+          `leads.${this.fieldName}->>'$.Category' = '${filters.category}'`,
+        )
+      if (search_additions.length)
+        where_additions.push("(" + search_additions + ")")
+      let limit_addition = ""
+      let countHeader = "SELECT COUNT(*) as count "
+      let realHeader =
+        "SELECT auctions.id, auctions.doc, leads.doc AS lead, users.doc ->> '$.wallet' AS leadOwnerWallet "
+
+      if (sort) {
+        realHeader += `\n, JSON_EXTRACT(leads.${this.fieldName}, '$.${
+          sort.sortBy
+        }') AS ${sort.sortBy}`
+      }
+
+      let query = `\nFROM auctions\nINNER JOIN leads ON auctions.doc ->> '$.leadId' = leads.id AND leads.doc->>'$.active' = 'true'\nAND leads.doc->>'$.forSale' = 'true'
+                                  \nINNER JOIN users ON users.id = leads.doc ->> '$.ownerId'`
+      query += `\nWHERE auctions.doc->>'$.creatorId' <> ${userId} `
+      if (where_additions.length)
+        query += `\nAND ${where_additions.join(" AND ")}`
+      if (filters.favorites) query += `\nAND leads.id IN (${filters.favorites})`
+      query += `\nAND (auctions.doc ->> '$.status' = 'active' OR (auctions.doc ->> '$.status' = 'ransom' AND auctions.id = (
+      SELECT bets.doc ->> '$.auctionId' FROM bets WHERE bets.id = auctions.doc ->> '$.winningBetId' AND bets.doc ->> '$.userId' = ${userId} )))`
+      let order = ""
+      if (sort) {
+        order = `\nORDER BY ${sort.sortBy} ${sort.sortOrder}`
+      }
+      if (limit) {
+        limit_addition += `\nLIMIT ${limit.start},${limit.offset} `
+      }
+      let count = await this.sql.query(countHeader + query)
+      let rows = await this.sql.query(
+        realHeader + query + order + limit_addition,
+      )
+      rows = rows.map(row => this.convertRowToObject(row, ["lead"])) // remove RowDataPacket class
+      rows = rows.map(row => {
+        let newRow = {
+          ...row,
+          lead: Object.assign(row.lead, {
+            contact_person: "**********",
+            email: "*********@gmail.com",
+            telephone: row.lead["telephone"].substring(0, 6) + "******",
+          }),
+        }
+        newRow.lead.ownerWallet = row.leadOwnerWallet
+        delete newRow.leadOwnerWallet
+        return newRow
+      }) // remove contact information
+      return { list: rows, total: count[0].count }
+    },
+  }
+
+  betsQueries = {
+    getMaxBetsPrice: async (auctionId: number) => {
+      let query = `SELECT JSON_UNQUOTE(MAX(doc -> '$.price')) AS maxPrice FROM bets WHERE doc->>'$.auctionId' = ${auctionId}`
+      let rows = await this.sql.query(query)
+      return +rows[0]["maxPrice"]
+    },
+  }
   /**
    *  If not found, not returing an error.
    */
@@ -364,10 +465,12 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     condition,
     sort,
     limit,
+    where,
   }: {
     condition?: ICondition
     sort?: { sortBy: string; sortOrder: "ASC" | "DESC" }
     limit?: { start: number; offset: number }
+    where?: string
   }): Promise<IExisting[]> {
     var cnd = Object.keys(condition)
       .map(key => {
@@ -390,6 +493,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       .join(" AND ")
 
     if (cnd) cnd = `WHERE ${cnd}`
+    if (where) cnd += ` AND ${where}`
     let sql_sort = ""
     let sql_limit = ""
     if (sort) {

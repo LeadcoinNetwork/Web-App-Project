@@ -225,8 +225,7 @@ export default class Leads {
   public addIsFavoriteTotLeads(leads: Lead[], favorites: number[]) {
     if (favorites.length === 0) return leads
     return leads.map(lead => {
-      if (favorites.indexOf(lead.id) === -1) lead.favorite = false
-      else lead.favorite = true
+      lead.favorite = favorites.indexOf(lead.id) === -1 ? false : true
       return lead
     })
   }
@@ -367,7 +366,7 @@ export default class Leads {
 
   public async EditLead(lead: Lead) {
     const problems = validate_lead(lead)
-    if (problems.length > 0) throw new Error(problems.join(" ;"))
+    if (problems.length) throw new Error(problems.join(" ;"))
     lead = await this.sanitizeLead(lead)
     const leadToChange = await this.models.leads.getSingleLead(lead.id)
 
@@ -384,7 +383,7 @@ export default class Leads {
       leadAfterChange,
     )
 
-    if (changed.length > 0) {
+    if (changed.length) {
       const newLeadHistory: LeadHistory = {
         leadId: lead.id,
         date: new Date().getTime(),
