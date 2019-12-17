@@ -7,7 +7,7 @@
 const Web3 = require("web3")
 
 const web3js = new Web3()
-const token = "0x5102791ca02fc3595398400bfe0e33d7b6c82267"
+const token = "0x9d397e179642172c337378504fa273573d603623"
 //LeadCoin "0x5102791ca02fc3595398400bfe0e33d7b6c82267"
 //SimpleToken "0x9d397e179642172c337378504fa273573d603623"
 const decimals = 18
@@ -55,7 +55,7 @@ const isMainNetwork = () => {
     web3js.version.getNetwork((err, netId) => {
       if (err !== null) {
         return reject(err)
-      } else if (netId === "1") {
+      } else if (netId === "3") {
         // 1 Ethereum // 3 Ropsten
 
         return resolve("This network is main network")
