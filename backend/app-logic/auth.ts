@@ -26,6 +26,8 @@ interface IUpdateProfile {
   country?: string
   phone?: string
   company?: string
+  getNotifications?: boolean
+  getEmails?: boolean
 }
 
 export default class Auth {
@@ -178,8 +180,24 @@ export default class Auth {
 
   async updateProfile(user_id, updateProfile: IUpdateProfile) {
     var { users } = this.models
-    let { fname, lname, country, phone, company } = updateProfile
-    return users.updateUser(user_id, { fname, lname, country, phone, company })
+    let {
+      fname,
+      lname,
+      country,
+      phone,
+      company,
+      getNotifications,
+      getEmails,
+    } = updateProfile
+    return users.updateUser(user_id, {
+      fname,
+      lname,
+      country,
+      phone,
+      company,
+      getNotifications,
+      getEmails,
+    })
   }
 
   async completeProfile(user_id, completeProfile: ICompleteProfile) {
