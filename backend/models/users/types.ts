@@ -12,6 +12,8 @@ export interface BaseUserInterface {
   balance?: number
   wallet?: string
   favorites?: number[]
+  getNotifications?: boolean
+  getEmails?: boolean
 }
 export interface ExistingUserInterface extends BaseUserInterface {
   password: string
@@ -38,6 +40,8 @@ export interface ExistingUserInterfaceCondition {
   company?: string
   wallet?: string
   favorites?: number[]
+  getNotifications?: boolean
+  getEmails?: boolean
 }
 
 export interface NewUserInterface extends BaseUserInterface {
