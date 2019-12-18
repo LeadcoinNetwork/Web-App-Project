@@ -5,6 +5,9 @@ import { displayLead } from "Actions"
 import t from "../../utils/translate/translate"
 import { push, goBack } from "react-router-redux"
 import HistoryLead from "../HistoryLead/HistoryLead"
+import { Tab, TabList, TabPanel, Tabs } from "react-tabs"
+import RatingCustom from "../../components/RatingCustom"
+import Review from "../Review/Review"
 
 class DisplayLead extends React.Component {
   renderFields(fieldsObj) {
@@ -20,12 +23,18 @@ class DisplayLead extends React.Component {
   }
 
   render() {
-    const { private_fields, public_fields, noheader } = this.props
+    const {
+      private_fields,
+      public_fields,
+      noheader,
+      isShowHistory = true,
+      isShowReview = true,
+    } = this.props
     if (!private_fields) {
       return <div>{t("Loading...")}</div>
     }
     return (
-      <div className="display_lead">
+      <div className="display-lead">
         <div className="back-wrapper">
           <div
             className="back"
@@ -43,25 +52,50 @@ class DisplayLead extends React.Component {
         </div>
         {!noheader && <h1>{t("Lead Details")}</h1>}
         <div className="main_container">
-          <div className="personal">
-            <div className="help_text">
-              <div className="header bigger">
-                {t("Personal Identification Information")}
+          <Tabs>
+            <TabList>
+              <Tab>{t("Info")}</Tab>
+              {isShowHistory && <Tab>{t("History")}</Tab>}
+              {isShowReview && <Tab>{t("Review")}</Tab>}
+            </TabList>
+            <TabPanel>
+              <div className="personal">
+                <div className="help_text">
+                  <div className="header bigger">
+                    {t("Personal Identification Information")}
+                  </div>
+                  <div className="header smaller">
+                    {t("This information will remain hidden from other users.")}
+                  </div>
+                </div>
+                <div className="fields">
+                  {this.renderFields(private_fields)}
+                </div>
               </div>
-              <div className="header smaller">
-                {t("This information will remain hidden from other users.")}
+              <div className="public">
+                <div className="help_text">
+                  <div className="header bigger">{t("Public Fields")}</div>
+                </div>
+                <div className="fields">{this.renderFields(public_fields)}</div>
               </div>
-            </div>
-            <div className="fields">{this.renderFields(private_fields)}</div>
-          </div>
-          <div className="public">
-            <div className="help_text">
-              <div className="header bigger">{t("Public Fields")}</div>
-            </div>
-            <div className="fields">{this.renderFields(public_fields)}</div>
-          </div>
+            </TabPanel>
+            {isShowHistory && (
+              <TabPanel>
+                <HistoryLead />
+              </TabPanel>
+            )}
+            {isShowReview && (
+              <TabPanel>
+                <div className="display-lead__review-header">
+                  {t("Review about the owner of the lead")}
+                </div>
+                <div>
+                  <Review mode="new" />
+                </div>
+              </TabPanel>
+            )}
+          </Tabs>
         </div>
-        <HistoryLead />
       </div>
     )
   }

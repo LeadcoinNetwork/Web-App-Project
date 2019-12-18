@@ -68,7 +68,7 @@ class HistoryLead extends React.Component {
     if (!history || loading) {
       return <div>{t("Loading...")}</div>
     }
-    if (history.length === 0) return null
+    if (history.length === 0) return <div> {t("This lead has no history")}</div>
     return (
       <div className="history-lead">
         <div className="history-lead-title">{t("Lead history")}</div>

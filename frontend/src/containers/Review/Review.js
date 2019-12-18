@@ -60,7 +60,7 @@ const Review = ({
                 label={t("Send")}
                 onClick={send}
                 loading={review.loading}
-                disabled={!text}
+                disabled={!review.text || !review.rating}
               />
             </div>
           </div>

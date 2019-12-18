@@ -2,7 +2,7 @@ import { types } from "../actions"
 
 const initialState = {
   text: "",
-  rating: 1,
+  rating: 0,
   loading: false,
   error: {},
 }

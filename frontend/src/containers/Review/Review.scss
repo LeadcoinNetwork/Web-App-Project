@@ -13,6 +13,7 @@
   }
 
   &__control {
+    padding-top: 10px;
     display: flex;
     justify-content: flex-end;
   }
@@ -20,6 +21,6 @@
 
 @media (max-width: $screen-md) {
   .ldc-review {
-    padding: 10px;
+    padding-top: 10px;
   }
 }

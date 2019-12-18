@@ -1,7 +1,12 @@
 @import "~Styles/variables";
 
-.display_lead {
+.display-lead {
   padding: 10px;
+
+  &__review-header {
+    font-size: 20px;
+  }
+
   .personal {
     display: flex;
     padding-bottom: 10px;
@@ -79,7 +84,7 @@
 }
 
 @media (max-width: 760px) {
-  .display_lead {
+  .display-lead {
     .header {
       width: unset;
     }

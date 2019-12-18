@@ -5,11 +5,20 @@ import { leads } from "Actions"
 import LeadsTemplate from "Containers/LeadsTemplate"
 import t from "../../utils/translate/translate"
 import displayLead from "../../actions/displayLead"
+import DisplayLead from "../DisplayLead"
 
 class SellLeads extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      isDisplayLead: false,
+    }
+  }
+
   sellLeads = () => {
     console.log(Array.from(this.props.leads.selected))
   }
+
   buildButtonLabel = () => {
     let amount = this.props.leads.selected.size
 
@@ -30,6 +39,7 @@ class SellLeads extends React.Component {
       },
     ]
   }
+
   getLeadButtons = () => {
     return [
       {
@@ -38,55 +48,78 @@ class SellLeads extends React.Component {
       },
     ]
   }
+
   getButtons = () => {
     return {
       table: this.getListButtons(),
       record: this.getLeadButtons(),
     }
   }
+
   setSelectedRecords = selectedLeads => {
     this.props.dispatch(leads.setSelectedLeads(selectedLeads))
+  }
+
+  displayLead = lead => {
+    this.props.displayLead(lead)
+    this.setState({ isDisplayLead: true })
+    //this.props.push("/display-lead")
   }
 
   render() {
     const { displayLead } = this.props
     return (
       <>
-        <div style={{ float: "left" }}>
-          <h1>{t("Sell Leads")}</h1>
-        </div>
-        <div style={{ float: "right" }}>
-          <div className="upload-links">
-            <Link
-              to={{
-                pathname: "/csv-upload",
-                isSalesforce: true,
-              }}
-              params="sal"
-              className="csv-upload no-underline"
-            >
-              {t("Salesforce Import")}
-            </Link>
+        {this.state.isDisplayLead && (
+          <DisplayLead
+            noheader
+            isShowReview={false}
+            backFunction={() => {
+              this.setState({ isDisplayLead: false })
+            }}
+          />
+        )}
+        {!this.state.isDisplayLead && (
+          <div>
+            <div style={{ float: "left" }}>
+              <h1>{t("Sell Leads")}</h1>
+            </div>
+            <div style={{ float: "right" }}>
+              <div className="upload-links">
+                <Link
+                  to={{
+                    pathname: "/csv-upload",
+                    isSalesforce: true,
+                  }}
+                  params="sal"
+                  className="csv-upload no-underline"
+                >
+                  {t("Salesforce Import")}
+                </Link>
 
-            <Link to="/csv-upload" className="csv-upload no-underline">
-              {t("Upload CSV File")}
-            </Link>
-            <Link to="/add-lead" className="add-lead no-underline">
-              {t("Upload a Single Lead")}
-            </Link>
+                <Link to="/csv-upload" className="csv-upload no-underline">
+                  {t("Upload CSV File")}
+                </Link>
+                <Link to="/add-lead" className="add-lead no-underline">
+                  {t("Upload a Single Lead")}
+                </Link>
+              </div>
+            </div>
+            <br style={{ clear: "both" }} />
+            <h3>
+              {t(
+                "Earn money by selling your unused leads to other professionals.",
+              )}
+            </h3>
+            <LeadsTemplate
+              {...this.props}
+              pageName="sell"
+              constantCardOpen={true}
+              isSelectable={false}
+              displayLead={this.displayLead.bind(this)}
+            />
           </div>
-        </div>
-        <br style={{ clear: "both" }} />
-        <h3>
-          {t("Earn money by selling your unused leads to other professionals.")}
-        </h3>
-        <LeadsTemplate
-          {...this.props}
-          pageName="sell"
-          constantCardOpen={true}
-          isSelectable={false}
-          displayLead={displayLead}
-        />
+        )}
       </>
     )
   }
