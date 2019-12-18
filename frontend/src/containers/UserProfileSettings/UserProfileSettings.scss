@@ -1,6 +1,10 @@
 @import "~Styles/variables";
 
 .ldc-user-profile-settings {
+  &__item {
+    padding-bottom: 10px;
+  }
+
   &-submit {
     display: flex;
     justify-content: flex-end;

@@ -55,12 +55,14 @@ const Review = ({
               maxLength={MAX_TEXT_SIZE}
               onChange={e => handleChangeValue("text", e.target.value)}
             />
-            <Button
-              label={t("Send")}
-              onClick={send}
-              loading={review.loading}
-              disabled={!text}
-            />
+            <div className="ldc-review__control">
+              <Button
+                label={t("Send")}
+                onClick={send}
+                loading={review.loading}
+                disabled={!text}
+              />
+            </div>
           </div>
         </div>
       )}

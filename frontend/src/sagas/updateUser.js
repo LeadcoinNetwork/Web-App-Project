@@ -23,6 +23,8 @@ export default function* updateUser(api) {
         country: userProfileSettings.country,
         company: userProfileSettings.company,
         phone: userProfileSettings.phone,
+        getNotifications: userProfileSettings.getNotifications,
+        getEmails: userProfileSettings.getEmails,
       })
       yield put(actions.userProfileSettings.userProfileSettingsFinish())
       if (res.error) {
@@ -38,12 +40,6 @@ export default function* updateUser(api) {
         )
         yield put(actions.userProfileSettings.userProfileSettingsClear())
       }
-    } else {
-      yield put(
-        actions.userProfileSettings.userSettingsError(
-          "User data contain error",
-        ),
-      )
     }
   }
 }

@@ -6,6 +6,8 @@ const initialState = {
   country: "",
   phone: "",
   company: "",
+  getNotifications: false,
+  getEmails: false,
   loading: false,
   error: "",
 }

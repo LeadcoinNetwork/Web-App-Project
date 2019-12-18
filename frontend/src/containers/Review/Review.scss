@@ -2,13 +2,19 @@
 
 .ldc-review {
   padding-top: 10px;
-  &-read {
+  &-read,
+  &-new {
     &__content {
       padding: 10px 0 5px 0;
     }
   }
 
   &-new {
+  }
+
+  &__control {
+    display: flex;
+    justify-content: flex-end;
   }
 }
 
