@@ -36,8 +36,8 @@ export default class Reviews {
     return await this.models.users.updateUser(userId, { numberReviews, rating })
   }
 
-  public async getReviews(toUserId, limit) {
-    return await this.models.reviews.getReviews(toUserId, limit)
+  public async getReviews(toUserId, limit, sort) {
+    return await this.models.reviews.getReviews(toUserId, limit, sort)
   }
 
   private normalizeRating(rating) {

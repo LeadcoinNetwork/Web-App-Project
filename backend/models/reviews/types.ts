@@ -14,4 +14,5 @@ export interface ReviewQueryOptions {
   comment?: string
   rating?: number
   limit?: any
+  sort?: any
 }

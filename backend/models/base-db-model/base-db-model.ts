@@ -409,12 +409,6 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       let realHeader =
         "SELECT auctions.id, auctions.doc, leads.doc AS lead, users.doc ->> '$.wallet' AS leadOwnerWallet "
 
-      if (sort) {
-        realHeader += `\n, JSON_EXTRACT(leads.${this.fieldName}, '$.${
-          sort.sortBy
-        }') AS ${sort.sortBy}`
-      }
-
       let query = `\nFROM auctions\nINNER JOIN leads ON auctions.doc ->> '$.leadId' = leads.id AND leads.doc->>'$.active' = 'true'\nAND leads.doc->>'$.forSale' = 'true'
                                   \nINNER JOIN users ON users.id = leads.doc ->> '$.ownerId'`
       query += `\nWHERE auctions.doc->>'$.creatorId' <> ${userId} `
@@ -425,7 +419,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       SELECT bets.doc ->> '$.auctionId' FROM bets WHERE bets.id = auctions.doc ->> '$.winningBetId' AND bets.doc ->> '$.userId' = ${userId} )))`
       let order = ""
       if (sort) {
-        order = `\nORDER BY ${sort.sortBy} ${sort.sortOrder}`
+        order = `\nORDER BY leads.doc->'$.${sort.sortBy}' ${sort.sortOrder}`
       }
       if (limit) {
         limit_addition += `\nLIMIT ${limit.start},${limit.offset} `

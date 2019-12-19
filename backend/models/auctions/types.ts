@@ -8,7 +8,7 @@ export interface Auction {
   startDate: number
   endDate: number
   startPrice: number
-  status: AuctionStatuses
+  isPast: boolean
 }
 
 export interface AuctionQueryOptions {
@@ -17,7 +17,7 @@ export interface AuctionQueryOptions {
   startDate?: number
   endDate?: number
   startPrice?: number
-  status?: AuctionStatuses
+  isPast?: boolean
   id?: number
   industry?: Industry
   sort?: any

@@ -20,7 +20,6 @@ export default class Auctions {
     ]))
     if (isAuctionPresent) throw new Error("auction is present")
     const startPrice = lead.lead_price
-    const status: AuctionStatuses = "active"
     const creatorId = userId
     const result = await this.models.auctions.addAuction({
       leadId,
@@ -28,7 +27,7 @@ export default class Auctions {
       startDate,
       startPrice,
       creatorId,
-      status,
+      isPast: false,
     })
 
     const newLeadHistory: LeadHistory = {
@@ -36,7 +35,7 @@ export default class Auctions {
       date: new Date().getTime(),
       event: "auctionCreate",
       ownerId: lead.ownerId,
-      description: { status, startDate, endDate, startPrice },
+      description: { startDate, endDate, startPrice },
     }
     await this.models.leadsHistory.addLeadHistory(newLeadHistory)
     return await this.getAuction({ id: result.insertId })
@@ -47,9 +46,11 @@ export default class Auctions {
   }
 
   public async getAuctionsAndLead(options: AuctionQueryOptions) {
-    return await this.models.auctions.auctionsQueries.auctionsAndLeadGetAll(
+    const auctions = await this.models.auctions.auctionsQueries.auctionsAndLeadGetAll(
       options,
     )
+    auctions.list = this.addStatusToAuctions(auctions.list)
+    return auctions
   }
 
   public addIsFavoriteTotAuctionsAndLead(auctions, favorites: number[]) {
@@ -59,5 +60,20 @@ export default class Auctions {
         favorites.indexOf(auctions.lead.id) === -1 ? false : true
       return auction
     })
+  }
+
+  private addStatusToAuctions(auctions) {
+    return auctions.map(auction => {
+      auction.status = this.getStatus(auction)
+      return auction
+    })
+  }
+
+  private getStatus(auction) {
+    const now = new Date().getTime()
+    const ransomPeriodDuration = 172800000000 //2 days
+    if (auction.isPast) return "past"
+    if (auction.endDate > now) return "active"
+    if (auction.endDate > now - ransomPeriodDuration) return "ransom"
   }
 }

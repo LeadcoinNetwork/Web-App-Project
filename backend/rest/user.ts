@@ -187,15 +187,19 @@ export function start({
   }
 
   function getReviews(req, res, next) {
-    const { limit, page } = req.query
-    const limit_ = {
+    const { limit, page, sortBy, sortOrder } = req.query
+    const _limit = {
       start: parseInt(page || 0) * parseInt(limit || 50),
       offset: limit || 50,
+    }
+    let _sort = {
+      sortBy: sortBy && sortBy != "id" ? sortBy : "date",
+      sortOrder: sortOrder || "DESC",
     }
     const toUserId = req.params.id
 
     appLogic.reviews
-      .getReviews(toUserId, limit_)
+      .getReviews(toUserId, _limit, _sort)
       .then(reviews => {
         res.json(reviews)
       })

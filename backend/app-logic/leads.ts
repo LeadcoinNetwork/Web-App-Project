@@ -290,6 +290,7 @@ export default class Leads {
     const transaction = { userId: new_owner, date, to, from, value, txHash }
 
     await this.models.transactions.addTransactions(transaction)
+    await this.models.auctions.compliteAuctions(leads)
 
     // await this.models.users.decreaseBalance(new_owner, overall_cost)
     // const txDetails = await logTransaction({

@@ -21,8 +21,8 @@ export default class Reviews extends baseDBModel<
     return record
   }
 
-  public async getReviews(toUserId, limit) {
-    return await this.find({ condition: { toUserId }, limit })
+  public async getReviews(toUserId, limit, sort) {
+    return await this.find({ condition: { toUserId }, limit, sort })
   }
 
   public async getRatings(userId: number) {
