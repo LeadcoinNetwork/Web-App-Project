@@ -125,4 +125,20 @@ export default class LeadsApi {
       userId: id,
     })
   }
+
+  async getAuctions(...options) {
+    return await this.request(methods.get, "/auctions/", null, {
+      ...options,
+    })
+  }
+
+  async addToAuction(data) {
+    return await this.request(methods.post, "/auctions/", data)
+  }
+
+  async betAuction(id, data) {
+    return await this.request(methods.post, "/auctions/" + id + "/bets", {
+      ...data,
+    })
+  }
 }

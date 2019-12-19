@@ -1,0 +1,35 @@
+import { types } from "../actions"
+import * as actions from "../actions"
+import { select, take, put, call } from "redux-saga/effects"
+import { push } from "react-router-redux"
+
+import API from "../api/index"
+
+/**
+ * @param api {API} - this is this paramters
+ */
+export default function* addToAuction(api) {
+  while (true) {
+    yield take(types.MY_LEADS_ADD_TO_AUCTION_START)
+
+    let { selected } = yield select(state => state.myLeads)
+
+    let res = yield api.leads.addToAuction(Array.from(selected))
+
+    if (res.error) {
+      yield put(actions.addToAuction.addToAuctionSuccess())
+    } else {
+      yield put(actions.leads.loadingStart("MY_LEADS"))
+      yield put(actions.leads.clearLeads("MY_LEADS"))
+      yield put(actions.leads.clearLeads("SELL_LEADS"))
+      yield put(actions.leads.clearLeads("AUCTION_LEADS"))
+      yield put(actions.addToAuction.addToAuctionError())
+      yield put(
+        actions.app.notificationShow(
+          "Lead added to auction successfully",
+          "success",
+        ),
+      )
+    }
+  }
+}

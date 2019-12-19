@@ -38,4 +38,16 @@ export default class UserApi {
   async userUpdate(data) {
     return await this.request(methods.put, "/user/update", data)
   }
+
+  async getReviews(id, options) {
+    return await this.request(methods.put, "/users/" + id + "/reviews", {
+      ...options,
+    })
+  }
+
+  async createReview(options) {
+    return await this.request(methods.post, "/users/reviews", {
+      ...options,
+    })
+  }
 }
