@@ -20,7 +20,7 @@ export default class Auctions extends baseDBModel<
     condition: AuctionQueryOptions,
     statuses: string[] = [],
   ) {
-    let where = statuses.length
+    const where = statuses.length
       ? `doc->>'$.status' IN ('${statuses.join("', '")}')`
       : ""
     const [record] = await this.find({ condition, where })

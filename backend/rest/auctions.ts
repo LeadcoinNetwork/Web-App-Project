@@ -26,8 +26,8 @@ export function start({
     .post(AddBet)
 
   function AddAuction(req, res, nex) {
-    let { leadId, endDate } = req.body
-    let { user } = req
+    const { leadId, endDate } = req.body
+    const { user } = req
     appLogic.auctions
       .addAuction({ leadId, endDate, userId: user.id })
       .then(auction => {
@@ -119,7 +119,7 @@ export function start({
     let auctionId = req.params.id
     let { price } = req.body
     let { user } = req
-    appLogic.auctions
+    appLogic.bets
       .addBet({ auctionId, price, userId: user.id })
       .then(bet => {
         res.json(bet)
