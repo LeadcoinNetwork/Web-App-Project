@@ -85,6 +85,8 @@ export default class Auth {
           provider: provider,
           created: Date.now(),
           role: "user",
+          rating: 0,
+          numberReviews: 0,
         }
         var result = await this.models.users.createUser(user)
 

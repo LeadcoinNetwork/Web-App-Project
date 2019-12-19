@@ -140,6 +140,8 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
               balance: config.INITIAL_BALANCE,
               created: Date.now(),
               role: "user",
+              rating: 0,
+              numberReviews: 0,
             }
             var { user: user_id } = await appLogic.auth.register(user, false)
 
@@ -220,6 +222,8 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
               balance: config.INITIAL_BALANCE,
               created: Date.now(),
               role: "user",
+              rating: 0,
+              numberReviews: 0,
             }
             var { user: user_id } = await appLogic.auth.register(user, false)
 

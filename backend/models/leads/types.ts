@@ -27,6 +27,7 @@ export interface LeadQueryOptions {
   ownerId?: number
   active?: boolean
   filters?: object
+  isReview?: boolean
 }
 
 export interface BaseLead {
@@ -43,6 +44,7 @@ export interface BaseLead {
   ownerId: number
   forSale: boolean
   active: boolean
+  isReview: boolean
   meta?: any
 }
 

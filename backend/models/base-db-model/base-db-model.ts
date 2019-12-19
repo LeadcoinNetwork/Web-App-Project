@@ -15,6 +15,7 @@ type tableName =
   | "transactions"
   | "auctions"
   | "bets"
+  | "reviews"
 
 const private_fields = ["name", "phone"]
 
@@ -453,11 +454,19 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
 
   betsQueries = {
     getMaxBetsPrice: async (auctionId: number) => {
-      let query = `SELECT JSON_UNQUOTE(MAX(doc -> '$.price')) AS maxPrice FROM bets WHERE doc->>'$.auctionId' = ${auctionId}`
-      let rows = await this.sql.query(query)
+      const query = `SELECT JSON_UNQUOTE(MAX(doc -> '$.price')) AS maxPrice FROM bets WHERE doc->>'$.auctionId' = ${auctionId}`
+      const rows = await this.sql.query(query)
       return +rows[0]["maxPrice"]
     },
   }
+
+  reviewsQueries = {
+    getRatings: async (userId: number) => {
+      const query = `SELECT doc->>'$.rating' AS rating FROM reviews WHERE doc->>'$.toUserId' = ${userId}`
+      return await this.sql.query(query)
+    },
+  }
+
   /**
    *  If not found, not returing an error.
    */
@@ -466,11 +475,13 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     sort,
     limit,
     where,
+    select,
   }: {
     condition?: ICondition
     sort?: { sortBy: string; sortOrder: "ASC" | "DESC" }
     limit?: { start: number; offset: number }
     where?: string
+    select?: string
   }): Promise<IExisting[]> {
     var cnd = Object.keys(condition)
       .map(key => {
@@ -504,7 +515,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     if (limit) {
       sql_limit = ` LIMIT ${limit.start},${limit.offset} `
     }
-    let sql_query = `SELECT * FROM ${
+    let sql_query = `SELECT ${select || "*"} FROM ${
       this.tableName
     } ${cnd} ${sql_sort} ${sql_limit} ;`
     let rows = await this.sql.query(sql_query)

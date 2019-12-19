@@ -67,6 +67,16 @@ export function start({
     completeProfile,
   )
 
+  expressApp
+    .route("/users/reviews")
+    .all(passport.authenticate("jwt", authOptions))
+    .post(addReview)
+
+  expressApp
+    .route("/users/:id/reviews")
+    .all(passport.authenticate("jwt", authOptions))
+    .get(getReviews)
+
   async function updateWallet(req, res, next) {
     try {
       const users = appLogic.models.users
@@ -160,6 +170,34 @@ export function start({
       .removeFavorites(req.user.id, favorites)
       .then(() => {
         res.send({ ok: true })
+      })
+      .catch(err => {
+        res.status(500).send({ error: err.message })
+      })
+  }
+
+  function addReview(req, res, next) {
+    let { user } = req
+    appLogic.reviews
+      .addReview({ fromUserId: user.id, ...req.body })
+      .then(review => res.json(review))
+      .catch(err => {
+        res.status(400).send({ error: err.message })
+      })
+  }
+
+  function getReviews(req, res, next) {
+    const { limit, page } = req.query
+    const limit_ = {
+      start: parseInt(page || 0) * parseInt(limit || 50),
+      offset: limit || 50,
+    }
+    const toUserId = req.params.id
+
+    appLogic.reviews
+      .getReviews(toUserId, limit_)
+      .then(reviews => {
+        res.json(reviews)
       })
       .catch(err => {
         res.status(500).send({ error: err.message })

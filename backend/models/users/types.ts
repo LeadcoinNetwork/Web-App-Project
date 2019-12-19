@@ -4,6 +4,8 @@ export interface BaseUserInterface {
   fname: string
   lname: string
   email: string
+  rating: number
+  numberReviews: number
   disabled?: disabledReason
   emailConfirmationKey?: string
   country?: string
@@ -40,6 +42,8 @@ export interface ExistingUserInterfaceCondition {
   company?: string
   wallet?: string
   favorites?: number[]
+  rating?: number
+  numberReviews?: number
   getNotifications?: boolean
   getEmails?: boolean
 }

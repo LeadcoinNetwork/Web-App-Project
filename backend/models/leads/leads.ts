@@ -68,11 +68,15 @@ export default class Leads extends baseDBModel<
   }
 
   public async AddLead(lead: Lead) {
+    lead.isReview = false
     return await this.insert(lead)
   }
 
   public async EditLead(lead: Lead) {
     return await this.update(lead.id, lead)
+  }
+  public async reviewLeft(leadId) {
+    return await this.update(leadId, { isReview: true })
   }
 
   public async insertLead(new_lead: Lead) {
@@ -145,6 +149,7 @@ export default class Leads extends baseDBModel<
     const lead_promises = lead_ids.map(async (l_id: number) => {
       const lead: Lead = await this.getById(l_id, true)
       await this.update(l_id, {
+        isReview: false,
         forSale: false,
         bought_from: lead.ownerId,
         ownerId: new_owner,
