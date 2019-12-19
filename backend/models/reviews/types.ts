@@ -1,4 +1,5 @@
 export interface Review {
+  id?: number
   toUserId: number
   fromUserId: number
   date: number

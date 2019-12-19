@@ -3,6 +3,7 @@ import { Industry } from "@/models/leads/types"
 export type AuctionStatuses = "ransom" | "past" | "active"
 
 export interface Auction {
+  id?: number
   leadId: number
   creatorId: number
   startDate: number

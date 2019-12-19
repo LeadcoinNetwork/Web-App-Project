@@ -41,8 +41,15 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
   private convertRowToObject(row, customFields = []) {
     let convertRow = {
       ..._.omit(row, [this.fieldName].concat(customFields)),
-      ...JSON.parse(row[this.fieldName]),
     }
+
+    if (row[this.fieldName]) {
+      convertRow = {
+        ...convertRow,
+        ...JSON.parse(row[this.fieldName]),
+      }
+    }
+
     customFields.forEach(field => (convertRow[field] = JSON.parse(row[field])))
     return convertRow
   }
@@ -477,28 +484,34 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     where?: string
     select?: string
   }): Promise<IExisting[]> {
-    var cnd = Object.keys(condition)
-      .map(key => {
-        var field
-        switch (key) {
-          case "id":
-            field = "id"
-            break
+    let cnd = ""
+    if (condition) {
+      cnd = Object.keys(condition)
+        .map(key => {
+          var field
+          switch (key) {
+            case "id":
+              field = "id"
+              break
 
-          default:
-            field = `${this.fieldName} ->> ${mysql.escape("$." + key)}`
-            break
-        }
-        let val = condition[key]
-        if (typeof val == "boolean") {
-          val = "" + val + ""
-        }
-        return `${field} = ${mysql.escape(condition[key])}`
-      })
-      .join(" AND ")
+            default:
+              field = `${this.fieldName} ->> ${mysql.escape("$." + key)}`
+              break
+          }
+          let val = condition[key]
+          if (typeof val == "boolean") {
+            val = "" + val + ""
+          }
+          return `${field} = ${mysql.escape(condition[key])}`
+        })
+        .join(" AND ")
+    }
 
+    if (where) {
+      cnd += cnd ? " AND " : ""
+      cnd += where
+    }
     if (cnd) cnd = `WHERE ${cnd}`
-    if (where) cnd += ` AND ${where}`
     let sql_sort = ""
     let sql_limit = ""
     if (sort) {

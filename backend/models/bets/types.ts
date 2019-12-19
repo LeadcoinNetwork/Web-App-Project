@@ -1,4 +1,5 @@
 export interface Bet {
+  id?: number
   auctionId: number
   userId: number
   date: number
