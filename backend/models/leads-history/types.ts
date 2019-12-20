@@ -4,7 +4,6 @@ export type HistoryEvent =
   | "purchased"
   | "forSale"
   | "auctionCreate"
-  | "auctionPurchase"
   | "auctionRevert"
 
 export interface LeadHistory {

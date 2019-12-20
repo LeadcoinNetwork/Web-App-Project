@@ -54,6 +54,27 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     return convertRow
   }
 
+  //get conditions by auction status
+  public getCndByStatuses(statuses) {
+    const now = new Date().getTime()
+    const ransomPeriodDuration = 172800000000 //2 days
+    let conditions = []
+
+    if (statuses.indexOf("active") !== -1)
+      conditions.push(
+        `( auctions.doc->>'$.endDate' > ${now} AND auctions.doc->>'$.isPast' <> false )`,
+      )
+    if (statuses.indexOf("ransom") !== -1)
+      conditions.push(
+        `(auctions.doc->>'$.endDate' > ${now -
+          ransomPeriodDuration} AND auctions.doc->>'$.isPast' <> false )`,
+      )
+    if (statuses.indexOf("past") !== -1)
+      conditions.push(`auctions.doc->>'$.isPast' = true`)
+
+    return conditions.join(" OR ")
+  }
+
   protected async getOne(whatever: any): Promise<IExisting | NotFound> {
     var result = await this.find(whatever)
     if (result.length != 1) {
@@ -246,7 +267,9 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       if (where_additions.length)
         query += `\nAND ${where_additions.join(" AND ")}`
       if (filters.favorites) query += `\nAND id IN (${filters.favorites})`
-      query += `\nAND id NOT IN (SELECT auctions.doc ->> '$.leadId' AS id FROM auctions WHERE auctions.doc ->> '$.status' IN ('active', 'ransom'))`
+      query += `\nAND id NOT IN (SELECT auctions.doc ->> '$.leadId' AS id FROM auctions WHERE ${this.getCndByStatuses(
+        ["active", "ransom"],
+      )})`
 
       let order = ""
       if (sort) {
@@ -325,8 +348,9 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       let realHeader = `SELECT leads.id, leads.doc, auctions.doc AS auction, auctions.id AS auctionId,
                         MAX(bets.doc ->> '$.price') AS auctionMaxBet, 
                         COUNT(bets.id) AS countBets
-                        FROM leads LEFT JOIN auctions ON auctions.doc ->> '$.leadId' = leads.id 
-                        AND auctions.doc ->> "$.status" IN ("active", "ransom")
+                        FROM leads 
+                        LEFT JOIN auctions ON auctions.doc ->> '$.leadId' = leads.id 
+                        AND ${this.getCndByStatuses(["active", "ransom"])}
                         LEFT JOIN bets ON bets.doc ->> '$.auctionId' = auctions.id`
       let query = `
         WHERE leads.doc->>"$.ownerId" = ${user_id}
@@ -422,8 +446,15 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       if (where_additions.length)
         query += `\nAND ${where_additions.join(" AND ")}`
       if (filters.favorites) query += `\nAND leads.id IN (${filters.favorites})`
-      query += `\nAND (auctions.doc ->> '$.status' = 'active' OR (auctions.doc ->> '$.status' = 'ransom' AND auctions.id = (
-      SELECT bets.doc ->> '$.auctionId' FROM bets WHERE bets.id = auctions.doc ->> '$.winningBetId' AND bets.doc ->> '$.userId' = ${userId} )))`
+      query += `\nAND (${this.getCndByStatuses([
+        "active",
+      ])} OR (${this.getCndByStatuses(["ransom"])} AND (
+      SELECT id FROM bets 
+      WHERE bets.doc->>'$.auctionsId' = auctions.id AND 
+      bets.doc->>'$.userId' = ${userId} AND 
+      bets.doc->>'$.price'= (
+        SELECT JSON_UNQUOTE(MAX(bets.doc->'$.price')) FROM bets WHERE bets.doc->>'$.auctionsId' = auctions.id)
+      ) IS NOT NULL))`
       let order = ""
       if (sort) {
         order = `\nORDER BY leads.doc->'$.${sort.sortBy}' ${sort.sortOrder}`
@@ -452,14 +483,11 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       return { list: rows, total: count[0].count }
     },
 
-    getCompletedAuctionIds: async () => {
-      const now = new Date().getTime()
-      const ransomPeriodDuration = 172800000000 //2 days
-      const query = `SELECT auctions.id 
+    getCompletedAuctions: async () => {
+      const query = `SELECT auctions.id, doc->>'$.leadId' AS leadId, doc->>'$.creatorId' AS creatorId
                      FROM auctions 
-                     WHERE auctions.doc->>'$.endDate' < ${now -
-                       ransomPeriodDuration} OR 
-                     (auctions.doc->>'$.endDate' < ${now} AND (
+                     WHERE ${this.getCndByStatuses(["ransom"])} OR 
+                     (${this.getCndByStatuses(["active"])} AND (
                       SELECT COUNT(*) FROM bets WHERE doc->>'$.auctionId' = auctions.id) = 0)`
       return await this.sql.query(query)
     },
