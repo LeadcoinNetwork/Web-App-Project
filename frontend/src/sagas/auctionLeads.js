@@ -37,6 +37,7 @@ export default function* auctionLeads(api) {
 
     yield take([
       types.AUCTION_LEADS_FETCH_LEADS,
+      types.MY_LEADS_ADD_TO_AUCTION_SUCCESS,
       types.LOGIN_FINISH,
       types.LOGGED_OUT,
     ])

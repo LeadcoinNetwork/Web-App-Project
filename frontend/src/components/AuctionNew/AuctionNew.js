@@ -9,7 +9,7 @@ class AuctionNew extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      startDate: this.initDate(),
+      endDate: this.initDate(),
     }
   }
 
@@ -22,8 +22,12 @@ class AuctionNew extends React.Component {
   handleChangeData = date => {
     console.log(date)
     this.setState({
-      startDate: date,
+      endDate: date,
     })
+  }
+
+  onOk = () => {
+    this.props.onOk && this.props.onOk({ ...this.state })
   }
 
   render = () => {
@@ -57,13 +61,13 @@ class AuctionNew extends React.Component {
                 timeIntervals={60}
                 timeCaption="time"
                 dateFormat="MMMM d, yyyy h:mm aa"
-                selected={this.state.startDate}
+                selected={this.state.endDate}
                 onChange={this.handleChangeData}
               />
             </div>
           </div>
           <div className="buttons-section">
-            <Button className="button" appStyle={true}>
+            <Button className="button" appStyle={true} onClick={this.onOk}>
               {t("Ok")}
             </Button>
             <Button className="button" appStyle={true} onClick={onClose}>

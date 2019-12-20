@@ -10,6 +10,7 @@ import DisplayLead from "../DisplayLead"
 import ConfirmationDialog from "../../components/ConfirmationDialog"
 import Modal from "../../components/Modal"
 import AuctionNew from "../../components/AuctionNew"
+import { addToAuction } from "../../actions"
 
 class MyLeads extends React.Component {
   constructor(props) {
@@ -101,6 +102,11 @@ class MyLeads extends React.Component {
     return
   }
 
+  onAddToAuction = data => {
+    console.log(data)
+    this.props.addToAuctionStart(data.endDate.getTime())
+  }
+
   render() {
     const isDisplayingLead = this.state ? this.state.isDisplayingLead : false
     return (
@@ -141,6 +147,10 @@ class MyLeads extends React.Component {
           onClose={() => {
             this.setState({ showAuctionForm: false })
           }}
+          onOk={data => {
+            this.setState({ showAuctionForm: false })
+            this.onAddToAuction(data)
+          }}
         />
       </>
     )
@@ -163,5 +173,6 @@ export default connect(
     moveToSell: moveToSell.myLeadsMoveToSellBegin,
     displayLead: displayLead.displayLeadGet,
     push,
+    addToAuctionStart: addToAuction.addToAuctionStart,
   },
 )(MyLeads)
