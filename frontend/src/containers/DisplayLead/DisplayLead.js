@@ -8,6 +8,7 @@ import HistoryLead from "../HistoryLead/HistoryLead"
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs"
 import RatingCustom from "../../components/RatingCustom"
 import Review from "../Review/Review"
+import ReviewsUser from "../ReviewsUser/ReviewsUser"
 
 class DisplayLead extends React.Component {
   renderFields(fieldsObj) {
@@ -29,7 +30,7 @@ class DisplayLead extends React.Component {
       noheader,
       isShowHistory = true,
       isShowReview = true,
-    } = this.props
+    } = this.props.lead
     if (!private_fields) {
       return <div>{t("Loading...")}</div>
     }
@@ -90,7 +91,7 @@ class DisplayLead extends React.Component {
                   {t("Review about the owner of the lead")}
                 </div>
                 <div>
-                  <Review mode="new" />
+                  <ReviewsUser />
                 </div>
               </TabPanel>
             )}
@@ -101,7 +102,9 @@ class DisplayLead extends React.Component {
   }
 }
 
-const mapStateToProps = state => state.displayLead
+const mapStateToProps = state => ({
+  lead: state.displayLead,
+})
 
 export default connect(
   mapStateToProps,

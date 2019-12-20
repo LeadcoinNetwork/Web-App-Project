@@ -5,21 +5,21 @@ const initialState = {
   reviews: null,
   error: null,
 }
-const reviewsLead = (state = initialState, action) => {
+const reviewsUser = (state = initialState, action) => {
   switch (action.type) {
-    case types.REVIEWS_LEAD_START:
+    case types.REVIEWS_USER_START:
       return {
         ...state,
         loading: true,
       }
-    case types.REVIEWS_LEAD_SUCCESS:
+    case types.REVIEWS_USER_SUCCESS:
       return {
         ...state,
         reviews: action.payload,
         loading: false,
         error: null,
       }
-    case types.REVIEWS_LEAD_ERROR:
+    case types.REVIEWS_USER_ERROR:
       return {
         ...state,
         error: action.payload,
@@ -30,4 +30,4 @@ const reviewsLead = (state = initialState, action) => {
   }
 }
 
-export default reviewsLead
+export default reviewsUser

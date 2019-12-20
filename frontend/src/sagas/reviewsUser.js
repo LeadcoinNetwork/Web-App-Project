@@ -7,19 +7,19 @@ import API from "../api/index"
 /**
  * @param api {API} - this is this paramters
  */
-export default function* reviewsLead(api) {
+export default function* reviewsUser(api) {
   while (true) {
-    const action = yield take(types.REVIEWS_LEAD_START)
-    let { id } = yield select(state => state.displayLead)
-    let res = yield api.users.getReviews(id)
+    const action = yield take(types.REVIEWS_USER_START)
+    let { ownerId } = yield select(state => state.displayLead)
+    let res = yield api.users.getReviews(ownerId)
     if (res.error) {
       const errors = res.error
       for (let error in errors) {
-        yield put(actions.historyLead.historyLeadError(error))
+        yield put(actions.reviewsUser.reviewsUserError(error))
       }
     } else {
       console.log(res)
-      yield put(actions.historyLead.historyLeadSuccess(res))
+      yield put(actions.reviewsUser.reviewsUserSuccess(res))
     }
   }
 }
