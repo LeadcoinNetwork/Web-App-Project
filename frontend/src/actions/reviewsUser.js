@@ -1,6 +1,12 @@
 import types from "./types"
 
 export default {
+  reviewsUserSetMode(data) {
+    return {
+      type: types.REVIEWS_USER_SET_MODE,
+      payload: data,
+    }
+  },
   reviewsUserStart() {
     return {
       type: types.REVIEWS_USER_START,

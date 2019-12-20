@@ -12,9 +12,11 @@
   &-new {
   }
 
-  &__date {
-    display: inline-block;
-    padding-left: 20px;
+  &-read {
+    &__date {
+      display: inline-block;
+      padding-left: 20px;
+    }
   }
 
   &__control {

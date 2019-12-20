@@ -9,8 +9,14 @@ import { Tab, TabList, TabPanel, Tabs } from "react-tabs"
 import RatingCustom from "../../components/RatingCustom"
 import Review from "../Review/Review"
 import ReviewsUser from "../ReviewsUser/ReviewsUser"
+import reviewsUser from "../../actions/reviewsUser"
 
 class DisplayLead extends React.Component {
+  constructor(props) {
+    super(props)
+    props.reviewsUserSetMode({ mode: "lead" })
+  }
+
   renderFields(fieldsObj) {
     const data = fieldsObj
     return Object.keys(data).map(f => {
@@ -111,5 +117,6 @@ export default connect(
   {
     push,
     goBack,
+    reviewsUserSetMode: reviewsUser.reviewsUserSetMode,
   },
 )(DisplayLead)

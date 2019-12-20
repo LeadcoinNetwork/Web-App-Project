@@ -4,6 +4,8 @@ import t from "../../utils/translate/translate"
 import RatingCustom from "../../components/RatingCustom"
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs"
 import Review from "../Review/Review"
+import ReviewsUser from "../ReviewsUser/ReviewsUser"
+import reviewsUser from "../../actions/reviewsUser"
 
 class Profile extends React.Component {
   items = [
@@ -26,6 +28,7 @@ class Profile extends React.Component {
       email: props.user && props.user.email ? props.user.email : "",
     }
     console.log(this.state)
+    props.reviewsUserSetMode({ mode: "my" })
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -72,28 +75,7 @@ class Profile extends React.Component {
             ))}
           </TabPanel>
           <TabPanel>
-            <Review
-              mode="view"
-              text={
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-              }
-              rating={3}
-              key={1}
-            />
-            <Review
-              mode="new"
-              text={
-                "Enim nunc faucibus a pellentesque sit amet porttitor eget dolor. Enim sed faucibus turpis in eu mi bibendum neque egestas. Quam lacus suspendisse faucibus interdum posuere lorem ipsum dolor sit. Aliquam sem fringilla ut morbi. Turpis cursus in hac habitasse platea dictumst quisque sagittis purus. Urna et pharetra pharetra massa massa. Cursus sit amet dictum sit amet. Tempor nec feugiat nisl pretium fusce id velit ut tortor. Nascetur ridiculus mus mauris vitae. Ultrices sagittis orci a scelerisque purus semper. Id volutpat lacus laoreet non curabitur gravida arcu ac tortor. Tempus quam pellentesque nec nam aliquam sem. Nec tincidunt praesent semper feugiat nibh sed pulvinar. Lacinia at quis risus sed vulputate odio. Turpis tincidunt id aliquet risus feugiat in ante. Ipsum faucibus vitae aliquet nec ullamcorper sit amet. A erat nam at lectus urna duis convallis."
-              }
-              key={2}
-            />
-            <Review
-              mode="view"
-              text={
-                "Velit egestas dui id ornare arcu odio ut sem nulla. Cras ornare arcu dui vivamus. Euismod nisi porta lorem mollis aliquam ut porttitor. Sodales neque sodales ut etiam sit amet. Malesuada fames ac turpis egestas sed tempus urna et. Suspendisse in est ante in nibh mauris cursus. Ac placerat vestibulum lectus mauris ultrices. Amet justo donec enim diam vulputate ut pharetra sit. Aenean euismod elementum nisi quis eleifend quam adipiscing vitae. Egestas sed sed risus pretium quam vulputate dignissim. Rutrum tellus pellentesque eu tincidunt tortor aliquam. Consectetur adipiscing elit pellentesque habitant morbi tristique senectus et. Id porta nibh venenatis cras sed felis eget velit."
-              }
-              key={3}
-            />
+            <ReviewsUser />
           </TabPanel>
         </Tabs>
       </section>
@@ -108,5 +90,7 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {},
+  {
+    reviewsUserSetMode: reviewsUser.reviewsUserSetMode,
+  },
 )(Profile)
