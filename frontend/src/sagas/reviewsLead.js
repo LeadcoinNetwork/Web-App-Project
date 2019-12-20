@@ -7,11 +7,11 @@ import API from "../api/index"
 /**
  * @param api {API} - this is this paramters
  */
-export default function* historyLead(api) {
+export default function* reviewsLead(api) {
   while (true) {
-    const action = yield take(types.HISTORY_LEAD_START)
+    const action = yield take(types.REVIEWS_LEAD_START)
     let { id } = yield select(state => state.displayLead)
-    let res = yield api.leads.getHistoryLead({ leadId: id })
+    let res = yield api.users.getReviews(id)
     if (res.error) {
       const errors = res.error
       for (let error in errors) {

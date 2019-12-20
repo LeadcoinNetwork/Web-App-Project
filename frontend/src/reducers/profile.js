@@ -6,7 +6,7 @@ const initialState = {
   country: "",
   phone: "",
   company: "",
-  rating: "",
+  rating: 0,
   reviews: [],
   loading: false,
   error: "",

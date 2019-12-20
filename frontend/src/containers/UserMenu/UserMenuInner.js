@@ -7,7 +7,7 @@ const UserMenuInner = ({ user, logOut }) => {
     { title: "Settings", path: "/settings" },
     { title: "Profile", path: "/profile" },
     { title: "Transactions", path: "/transaction-history" },
-    { title: "Log Out", path: "/", onClick: logOut },
+    { title: "Log Out", path: "/login", onClick: logOut },
   ]
 
   return (
@@ -20,7 +20,12 @@ const UserMenuInner = ({ user, logOut }) => {
         </label>
       )}
       {menuItems.map((item, index) => (
-        <Link to={item.path} className="no-underline um-row " key={index}>
+        <Link
+          to={item.path}
+          className="no-underline um-row "
+          key={index}
+          onClick={item.onClick}
+        >
           {t(item.title)}
         </Link>
       ))}

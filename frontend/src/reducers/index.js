@@ -31,6 +31,7 @@ import transactionHistory from "./transactionHistory"
 import profile from "./profile"
 import review from "./review"
 import addToAuction from "./addToAuction"
+import reviewsLead from "../actions/reviewsLead"
 
 const rootReducer = combineReducers({
   app,
@@ -68,6 +69,7 @@ const rootReducer = combineReducers({
   profile,
   review,
   addToAuction,
+  reviewsLead,
 })
 
 export default rootReducer

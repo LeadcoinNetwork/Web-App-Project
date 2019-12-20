@@ -2,6 +2,7 @@ import types from "../actions/types"
 
 const initialState = {
   id: null,
+  ownerId: null,
   private_fields: null,
   public_fields: null,
 }
@@ -78,7 +79,13 @@ const displayLead = (state = initialState, action) => {
     case types.DISPLAY_LEAD_GET:
       console.log(action.lead)
       const [private_fields, public_fields] = seperateLead(action.lead)
-      return { ...state, private_fields, public_fields, id: action.lead.id }
+      return {
+        ...state,
+        private_fields,
+        public_fields,
+        id: action.lead.id,
+        ownerId: action.lead.ownerId,
+      }
     case types.DISPLAY_LEAD_CLEAR:
       return initialState
     default:

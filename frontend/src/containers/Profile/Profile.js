@@ -7,6 +7,7 @@ import Review from "../Review/Review"
 
 class Profile extends React.Component {
   items = [
+    { key: "email", title: "Email" },
     { key: "fname", title: "First name" },
     { key: "lname", title: "Last Name" },
     { key: "country", title: "Country" },
@@ -22,6 +23,7 @@ class Profile extends React.Component {
       country: props.user && props.user.country ? props.user.country : "",
       phone: props.user && props.user.phone ? props.user.phone : "",
       company: props.user && props.user.company ? props.user.company : "",
+      email: props.user && props.user.email ? props.user.email : "",
     }
     console.log(this.state)
   }
@@ -35,13 +37,20 @@ class Profile extends React.Component {
         country: state.country || props.user.country || "",
         phone: state.phone || props.user.phone || "",
         company: state.company || props.user.company || "",
+        email: state.email || props.user.email || "",
       }
     }
     return state
   }
 
   render() {
-    let { loading, error, rating } = this.props.profile
+    let rating = 0
+    let { loading, error } = this.props.profile
+    if (this.props.profile && this.props.profile.rating) {
+      rating = this.props.profile.rating
+    } else if (this.props.user && this.props.user.rating) {
+      rating = this.props.user.rating
+    }
 
     return (
       <section className="ldc-profile">
@@ -53,7 +62,7 @@ class Profile extends React.Component {
           </TabList>
           <TabPanel>
             <div className="ldc-profile-rating">
-              <RatingCustom readonly={true} initialRating={rating || 3} />
+              <RatingCustom readonly={true} initialRating={rating} />
             </div>
             {this.items.map((item, index) => (
               <div className="item-container" key={index}>
