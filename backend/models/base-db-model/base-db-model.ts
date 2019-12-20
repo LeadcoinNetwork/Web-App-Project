@@ -55,7 +55,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
   }
 
   //get conditions by auction status
-  public getCndByStatuses(statuses) {
+  public getCndByStatuses(statuses = []) {
     const now = new Date().getTime()
     const ransomPeriodDuration = 172800000000 //2 days
     let conditions = []
