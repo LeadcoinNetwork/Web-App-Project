@@ -12,6 +12,11 @@
   &-new {
   }
 
+  &__date {
+    display: inline-block;
+    padding-left: 20px;
+  }
+
   &__control {
     padding-top: 10px;
     display: flex;

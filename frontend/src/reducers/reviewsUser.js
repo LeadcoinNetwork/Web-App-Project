@@ -15,7 +15,7 @@ const reviewsUser = (state = initialState, action) => {
     case types.REVIEWS_USER_SUCCESS:
       return {
         ...state,
-        reviews: action.payload,
+        reviews: action.payload || [],
         loading: false,
         error: null,
       }

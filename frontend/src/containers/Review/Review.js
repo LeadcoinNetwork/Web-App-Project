@@ -6,6 +6,7 @@ import { review } from "Actions"
 import t from "../../utils/translate/translate"
 import Textarea from "../../components/Textarea"
 import RatingCustom from "../../components/RatingCustom"
+import * as moment from "moment"
 
 /**
  *
@@ -19,11 +20,17 @@ const Review = ({
   mode = "view",
   text = "",
   rating = 0,
+  date = null,
   review,
   handleChange,
   submit,
 }) => {
   const MAX_TEXT_SIZE = 500
+  let dateStr = ""
+  const dateParsed = date && new Date(date)
+  if (dateParsed) {
+    dateStr = moment(dateParsed).format("MMMM Do YYYY, h:mm:ss a")
+  }
 
   const handleChangeValue = (key, value) => {
     handleChange({
@@ -70,6 +77,7 @@ const Review = ({
         <div className="ldc-review-read">
           <div className="ldc-review-read__title">
             <RatingCustom readonly={true} initialRating={rating} />
+            <span className="ldc-review-read__date">{dateStr}</span>
           </div>
           <p className="ldc-review-read__content">{text}</p>
         </div>
@@ -78,14 +86,9 @@ const Review = ({
   )
 }
 
-const mapStateToProps = state => ({
-  review: state.review,
-})
+const mapStateToProps = state => ({})
 
 export default connect(
   mapStateToProps,
-  {
-    handleChange: review.reviewHandleChange,
-    submit: review.reviewSubmit,
-  },
+  {},
 )(Review)

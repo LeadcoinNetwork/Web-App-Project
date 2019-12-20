@@ -39,7 +39,7 @@ export default class UserApi {
     return await this.request(methods.put, "/user/update", data)
   }
 
-  async getReviews(id, options) {
+  async getReviews(id, options = {}) {
     return await this.request(methods.put, "/users/" + id + "/reviews", {
       ...options,
     })

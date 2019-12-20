@@ -6,10 +6,10 @@ export default {
       type: types.REVIEWS_USER_START,
     }
   },
-  reviewsUserSuccess(params) {
+  reviewsUserSuccess(data) {
     return {
       type: types.REVIEWS_USER_SUCCESS,
-      payload: params,
+      payload: data,
     }
   },
   reviewsUserError(params) {

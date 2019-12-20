@@ -14,8 +14,13 @@ export default function* reviewsUser(api) {
     let res = yield api.users.getReviews(ownerId)
     if (res.error) {
       const errors = res.error
-      for (let error in errors) {
-        yield put(actions.reviewsUser.reviewsUserError(error))
+      if (typeof errors === "object") {
+        for (let error in errors) {
+          yield put(actions.reviewsUser.reviewsUserError(error))
+        }
+      }
+      if (typeof errors === "string") {
+        yield put(actions.reviewsUser.reviewsUserError(errors))
       }
     } else {
       console.log(res)
