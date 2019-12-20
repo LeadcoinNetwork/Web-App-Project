@@ -30,6 +30,8 @@ export default class Auctions {
       isPast: false,
     })
 
+    await this.models.leads.moveMyToSell(leadId)
+
     const newLeadHistory: LeadHistory = {
       leadId: leadId,
       date: new Date().getTime(),
@@ -63,7 +65,20 @@ export default class Auctions {
   }
 
   public async completeAuctions() {
-    return this.models.auctions.completeAuctions()
+    const auctions = await this.models.auctions.auctionsQueries.getCompletedAuctions()
+    for (const auction of auctions) {
+      const newLeadHistory: LeadHistory = {
+        leadId: auction.leadId,
+        date: new Date().getTime(),
+        event: "auctionRevert",
+        ownerId: auction.creatorId,
+        description: { auctionId: auction.id },
+      }
+      await this.models.leadsHistory.addLeadHistory(newLeadHistory)
+    }
+    return await this.models.auctions.completeAuctionsByIds(
+      auctions.map(a => a.id),
+    )
   }
 
   private addStatusToAuctions(auctions) {

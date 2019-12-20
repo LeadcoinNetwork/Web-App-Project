@@ -28,15 +28,4 @@ export default class Reviews extends baseDBModel<
   public async getRatings(userId: number) {
     return await this.reviewsQueries.getRatings(userId)
   }
-
-  // public async getAuction(
-  //   condition: AuctionQueryOptions,
-  //   statuses: string[] = [],
-  // ) {
-  //   let where = statuses.length
-  //     ? `doc->>'$.status' IN ('${statuses.join("', '")}')`
-  //     : ""
-  //   const [record] = await this.find({ condition, where })
-  //   return record
-  // }
 }
