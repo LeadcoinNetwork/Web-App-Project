@@ -31,7 +31,7 @@ import transactionHistory from "./transactionHistory"
 import profile from "./profile"
 import review from "./review"
 import addToAuction from "./addToAuction"
-import reviewsUser from "../actions/reviewsUser"
+import reviewsUser from "./reviewsUser"
 
 const rootReducer = combineReducers({
   app,

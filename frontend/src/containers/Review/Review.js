@@ -29,7 +29,7 @@ const Review = ({
   let dateStr = ""
   const dateParsed = date && new Date(date)
   if (dateParsed) {
-    dateStr = moment(dateParsed).format("MMMM Do YYYY, h:mm:ss a")
+    dateStr = moment(dateParsed).format("DD/MM/YYYY, h:mm:ss a")
   }
 
   const handleChangeValue = (key, value) => {
@@ -86,9 +86,14 @@ const Review = ({
   )
 }
 
-const mapStateToProps = state => ({})
+const mapStateToProps = state => ({
+  review: state.review,
+})
 
 export default connect(
   mapStateToProps,
-  {},
+  {
+    handleChange: review.reviewHandleChange,
+    submit: review.reviewSubmit,
+  },
 )(Review)
