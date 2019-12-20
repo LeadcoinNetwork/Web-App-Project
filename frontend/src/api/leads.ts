@@ -126,10 +126,8 @@ export default class LeadsApi {
     })
   }
 
-  async getAuctions(...options) {
-    return await this.request(methods.get, "/auctions/", null, {
-      ...options,
-    })
+  async auctionLeadsGetList(filters?) {
+    return await this.request(methods.get, "/auctions", null, { ...filters })
   }
 
   async addToAuction(data) {

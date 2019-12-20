@@ -15,7 +15,7 @@ export default function* auctionLeads(api) {
       state => state.auctionLeads,
     )
 
-    let res = yield api.leads.buyLeadsGetList({
+    let res = yield api.leads.auctionLeadsGetList({
       //fixme rewrite to use auction
       page,
       limit,

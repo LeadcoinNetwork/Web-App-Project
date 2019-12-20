@@ -28,6 +28,8 @@ export default function* addToAuction(api) {
       yield put(actions.leads.clearLeads("MY_LEADS"))
       yield put(actions.leads.loadingStart("AUCTION_LEADS"))
       yield put(actions.leads.clearLeads("AUCTION_LEADS"))
+      yield put(actions.leads.loadingStart("SELL_LEADS"))
+      yield put(actions.leads.clearLeads("SELL_LEADS"))
       yield put(actions.addToAuction.addToAuctionSuccess())
       yield put(
         actions.app.notificationShow(

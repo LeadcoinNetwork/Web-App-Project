@@ -126,6 +126,12 @@ class LeadsTemplate extends React.Component {
             </span>
           </>
         )
+      case "auction":
+        return (
+          <>
+            <h3>{t("List is empty")}</h3>
+          </>
+        )
     }
   }
 
