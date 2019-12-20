@@ -24,6 +24,7 @@ const Review = ({
   review,
   handleChange,
   submit,
+  onSubmit,
 }) => {
   const MAX_TEXT_SIZE = 500
   let dateStr = ""
@@ -42,6 +43,7 @@ const Review = ({
   const send = () => {
     console.log("submit review")
     submit()
+    onSubmit()
   }
 
   return (
