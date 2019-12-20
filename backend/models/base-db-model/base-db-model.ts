@@ -62,12 +62,12 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
 
     if (statuses.indexOf("active") !== -1)
       conditions.push(
-        `( auctions.doc->>'$.endDate' > ${now} AND auctions.doc->>'$.isPast' <> false )`,
+        `( auctions.doc->>'$.endDate' > ${now} AND auctions.doc->>'$.isPast' = false )`,
       )
     if (statuses.indexOf("ransom") !== -1)
       conditions.push(
         `(auctions.doc->>'$.endDate' > ${now -
-          ransomPeriodDuration} AND auctions.doc->>'$.isPast' <> false )`,
+          ransomPeriodDuration} AND auctions.doc->>'$.isPast' = false )`,
       )
     if (statuses.indexOf("past") !== -1)
       conditions.push(`auctions.doc->>'$.isPast' = true`)
@@ -350,7 +350,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
                         COUNT(bets.id) AS countBets
                         FROM leads 
                         LEFT JOIN auctions ON auctions.doc ->> '$.leadId' = leads.id 
-                        AND ${this.getCndByStatuses(["active", "ransom"])}
+                        AND (${this.getCndByStatuses(["active", "ransom"])})
                         LEFT JOIN bets ON bets.doc ->> '$.auctionId' = auctions.id`
       let query = `
         WHERE leads.doc->>"$.ownerId" = ${user_id}
