@@ -32,6 +32,13 @@ const review = (state = initialState, action) => {
         loading: false,
         error: action.payload,
       }
+    case types.REVIEW_CLEAR:
+      return {
+        ...state,
+        loading: false,
+        text: "",
+        rating: 0,
+      }
     default:
       return state
   }

@@ -29,6 +29,14 @@ class DisplayLead extends React.Component {
     })
   }
 
+  back = () => {
+    if (this.props.backFunction) {
+      this.props.backFunction()
+    } else {
+      this.props.goBack()
+    }
+  }
+
   render() {
     const {
       private_fields,
@@ -46,11 +54,7 @@ class DisplayLead extends React.Component {
           <div
             className="back"
             onClick={() => {
-              if (this.props.backFunction) {
-                this.props.backFunction()
-              } else {
-                this.props.goBack()
-              }
+              this.back()
             }}
           >
             <div className="back-arrow" />
@@ -95,6 +99,9 @@ class DisplayLead extends React.Component {
               <TabPanel>
                 <div className="display-lead__review-header">
                   {t("Review about the owner of the lead")}
+                </div>
+                <div>
+                  <Review mode="new" onSubmit={this.back} />
                 </div>
                 <div>
                   <ReviewsUser />

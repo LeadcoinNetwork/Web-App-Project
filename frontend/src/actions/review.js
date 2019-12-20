@@ -22,6 +22,12 @@ export default {
     }
   },
 
+  reviewClear(data) {
+    return {
+      type: types.REVIEW_CLEAR,
+    }
+  },
+
   reviewError(data) {
     return {
       type: types.REVIEW_ERROR,
