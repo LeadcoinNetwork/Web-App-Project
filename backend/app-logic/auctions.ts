@@ -30,7 +30,7 @@ export default class Auctions {
       isPast: false,
     })
 
-    await this.models.leads.moveMyToSell(leadId)
+    await this.models.leads.moveMyToSell([leadId])
 
     const newLeadHistory: LeadHistory = {
       leadId: leadId,
