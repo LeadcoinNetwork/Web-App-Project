@@ -1,8 +1,11 @@
-const CronJob = require("../lib/cron.js").CronJob
+const CronJob = require("cron").CronJob
 
-const job = new CronJob("0 */10 * * * *", function() {
-  const d = new Date()
-  console.log("Every Tenth Minute:", d)
-})
-
-job.start()
+export const CompleteAuctions = AppLogic =>
+  new CronJob("0 */1 * * * *", function() {
+    const now = new Date()
+    console.log("Cron complete auction start at", now)
+    AppLogic.auctions
+      .completeAuctions()
+      .then(() => console.log("Cron complete auction successful"))
+      .catch(err => console.log("Cron complete error: " + err))
+  })

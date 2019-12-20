@@ -62,6 +62,10 @@ export default class Auctions {
     })
   }
 
+  public async completeAuctions() {
+    return this.models.auctions.completeAuctions()
+  }
+
   private addStatusToAuctions(auctions) {
     return auctions.map(auction => {
       auction.status = this.getStatus(auction)

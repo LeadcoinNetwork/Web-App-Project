@@ -23,16 +23,17 @@ export default class Auctions extends baseDBModel<
     const now = new Date().getTime()
     const ransomPeriodDuration = 172800000000 //2 days
     let whereCondition = []
-    if (statuses.indexOf("active"))
+    if (statuses.indexOf("active") !== -1)
       whereCondition.push(
-        `doc->>'$.endDate' > ${now} AND doc->>'$.isPast' <> false`,
+        `( doc->>'$.endDate' > ${now} AND doc->>'$.isPast' <> false )`,
       )
-    if (statuses.indexOf("ransom"))
+    if (statuses.indexOf("ransom") !== -1)
       whereCondition.push(
         `(doc->>'$.endDate' > ${now -
-          ransomPeriodDuration}) AND doc->>'$.isPast' <> false`,
+          ransomPeriodDuration} AND doc->>'$.isPast' <> false )`,
       )
-    if (statuses.indexOf("past")) whereCondition.push(`doc->>'$.isPast' = true`)
+    if (statuses.indexOf("past") !== -1)
+      whereCondition.push(`doc->>'$.isPast' = true`)
     const where = whereCondition.join(" OR ")
     const [record] = await this.find({ condition, where })
     return record
@@ -52,5 +53,10 @@ export default class Auctions extends baseDBModel<
     const auctions = await this.find({ where, select })
     const auctionIds = auctions.map(a => a.id)
     return await this.completeAuctionsByIds(auctionIds)
+  }
+
+  public async completeAuctions() {
+    const auctionIds = await this.auctionsQueries.getCompletedAuctionIds()
+    return await this.completeAuctionsByIds(auctionIds.map(a => a.id))
   }
 }

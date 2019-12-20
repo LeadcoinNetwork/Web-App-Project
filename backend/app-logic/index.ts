@@ -3,6 +3,8 @@ import UploadForm from "./upload-form"
 import UploadLeads from "./leads"
 import Auth from "./auth"
 
+import { CompleteAuctions as CompleteAuctionCron } from "../cron/index"
+
 import { appModels } from "./types"
 import config, { IConfig } from "./config"
 
@@ -130,5 +132,10 @@ export default class AppLogic {
       console.log("listening on *:" + config.app.port)
     })
     return httpServer
+  }
+
+  startCron() {
+    CompleteAuctionCron(this).start()
+    console.log("Start crons")
   }
 }

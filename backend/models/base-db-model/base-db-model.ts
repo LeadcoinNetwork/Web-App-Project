@@ -451,6 +451,18 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       }) // remove contact information
       return { list: rows, total: count[0].count }
     },
+
+    getCompletedAuctionIds: async () => {
+      const now = new Date().getTime()
+      const ransomPeriodDuration = 172800000000 //2 days
+      const query = `SELECT auctions.id 
+                     FROM auctions 
+                     WHERE auctions.doc->>'$.endDate' < ${now -
+                       ransomPeriodDuration} OR 
+                     (auctions.doc->>'$.endDate' < ${now} AND (
+                      SELECT COUNT(*) FROM bets WHERE doc->>'$.auctionId' = auctions.id) = 0)`
+      return await this.sql.query(query)
+    },
   }
 
   betsQueries = {
