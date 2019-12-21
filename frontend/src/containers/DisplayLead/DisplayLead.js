@@ -39,12 +39,14 @@ class DisplayLead extends React.Component {
 
   render() {
     const {
+      isReview,
       private_fields,
       public_fields,
       noheader,
       isShowHistory = true,
       isShowReview = true,
     } = this.props.lead
+
     if (!private_fields) {
       return <div>{t("Loading...")}</div>
     }
@@ -100,9 +102,11 @@ class DisplayLead extends React.Component {
                 <div className="display-lead__review-header">
                   {t("Review about the owner of the lead")}
                 </div>
-                <div>
-                  <Review mode="new" onSubmit={this.back} />
-                </div>
+                {isReview === false && (
+                  <div>
+                    <Review mode="new" onSubmit={this.back} />
+                  </div>
+                )}
                 <div>
                   <ReviewsUser />
                 </div>

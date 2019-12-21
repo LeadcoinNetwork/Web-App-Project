@@ -24,6 +24,22 @@ const OPTIONS = {
 
 const fields = [
   {
+    key: "maxBet",
+    name: "Max Bet",
+    sortable: true,
+    editable: false,
+    maxWidth: "100px",
+    minWidth: "100px",
+  },
+  {
+    key: "countBets",
+    name: "Count Bets",
+    sortable: true,
+    editable: false,
+    maxWidth: "100px",
+    minWidth: "100px",
+  },
+  {
     key: "startPrice",
     name: "Start price",
     sortable: true,
