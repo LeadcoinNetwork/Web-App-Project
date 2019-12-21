@@ -59,7 +59,7 @@ export default class Auctions {
     if (favorites.length === 0) return auctions
     return auctions.map(auction => {
       auction.lead.favorite =
-        favorites.indexOf(auctions.lead.id) === -1 ? false : true
+        favorites.indexOf(auction.lead.id) === -1 ? false : true
       return auction
     })
   }

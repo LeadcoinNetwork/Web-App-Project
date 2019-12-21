@@ -355,7 +355,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
                         COUNT(bets.id) AS countBets
                         FROM leads 
                         LEFT JOIN auctions ON leads.id = auctions.doc ->> '$.leadId'
-                        AND (${this.getCndByStatuses(["past"])})
+                        AND (${this.getCndByStatuses(["active", "ransom"])})
                         LEFT JOIN bets ON bets.doc ->> '$.auctionId' = auctions.id`
       let query = `
         WHERE leads.doc->>"$.ownerId" = ${user_id}
@@ -442,11 +442,12 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         where_additions.push("(" + search_additions + ")")
       let limit_addition = ""
       let countHeader = "SELECT COUNT(*) as count "
-      let realHeader =
-        "SELECT auctions.id, auctions.doc, leads.doc AS lead, users.doc ->> '$.wallet' AS leadOwnerWallet "
-
+      let realHeader = `SELECT auctions.id, auctions.doc, leads.doc AS lead, leads.id AS leadId, users.doc ->> '$.wallet' AS leadOwnerWallet, 
+        MAX(bets.doc ->> '$.price') AS maxBet,
+        COUNT(bets.id) AS countBets `
       let query = `\nFROM auctions\nINNER JOIN leads ON auctions.doc ->> '$.leadId' = leads.id AND leads.doc->>'$.active' = 'true'\nAND leads.doc->>'$.forSale' = 'true'
-                                  \nINNER JOIN users ON users.id = leads.doc ->> '$.ownerId'`
+                                  \nINNER JOIN users ON users.id = leads.doc ->> '$.ownerId'
+                                  \nLEFT JOIN bets ON bets.doc ->> '$.auctionId' = auctions.id`
       query += `\nWHERE auctions.doc->>'$.creatorId' <> ${userId} `
       if (where_additions.length)
         query += `\nAND ${where_additions.join(" AND ")}`
@@ -460,6 +461,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       bets.doc->>'$.price'= (
         SELECT JSON_UNQUOTE(MAX(bets.doc->'$.price')) FROM bets WHERE bets.doc->>'$.auctionsId' = auctions.id)
       ) IS NOT NULL))`
+      const group = "\nGROUP BY leads.id, auctions.id, users.id "
       let order = ""
       if (sort) {
         order = `\nORDER BY leads.doc->'$.${sort.sortBy}' ${sort.sortOrder}`
@@ -469,7 +471,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       }
       let count = await this.sql.query(countHeader + query)
       let rows = await this.sql.query(
-        realHeader + query + order + limit_addition,
+        realHeader + query + group + order + limit_addition,
       )
       rows = rows.map(row => this.convertRowToObject(row, ["lead"])) // remove RowDataPacket class
       rows = rows.map(row => {
@@ -481,7 +483,10 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
             telephone: row.lead["telephone"].substring(0, 6) + "******",
           }),
         }
+        newRow.maxBet = newRow.maxBet || newRow.startPrice
         newRow.lead.ownerWallet = row.leadOwnerWallet
+        newRow.lead.id = newRow.leadId
+        delete newRow.leadId
         delete newRow.leadOwnerWallet
         return newRow
       }) // remove contact information
