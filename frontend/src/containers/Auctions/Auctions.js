@@ -31,7 +31,6 @@ class Auctions extends React.Component {
 
   buyLeads = () => {
     const { metamask } = this.props
-
     if (metamask.isActive) {
       this.props.push("/shopping-cart")
     } else {
@@ -41,6 +40,25 @@ class Auctions extends React.Component {
           type: "error",
           closeOnClick: true,
           autoClose: true,
+        },
+      )
+    }
+  }
+
+  buyLead = id => {
+    const { metamask } = this.props
+    if (metamask.isActive) {
+      let selected = new Set(this.props.leads.selected)
+      selected.add(id)
+      this.props.setSelectedLeads(selected)
+      this.buyLeads()
+    } else {
+      toast(
+        "To buy leads you need install Metamask for your browser. Please follow your browser’s support for MetaMask (such as Chrome)",
+        {
+          type: "error",
+          closeOnClick: true,
+          autoClose: false,
         },
       )
     }
@@ -59,7 +77,7 @@ class Auctions extends React.Component {
     let disabled = false
     this.props.leads.selected.forEach(id => {
       let lead = this.props.leads.list.find(lead => lead.id === id)
-      if (lead && !lead.isForBuy) disabled = true
+      if (lead && lead.status === "ransome") disabled = true //todo fix it to use !==
     })
     return disabled
   }
@@ -73,7 +91,7 @@ class Auctions extends React.Component {
       },
       {
         value: t("Buy"),
-        onClick: this.buyLeads,
+        onClick: this.buyLead,
         disabled: this.isDisabledBuy(),
       },
       {
@@ -106,7 +124,7 @@ class Auctions extends React.Component {
       },
       {
         value: t("Buy"),
-        onClick: this.buyLeads,
+        onClick: this.buyLead,
         disabled: this.isDisabledBuy(),
       },
       {
