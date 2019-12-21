@@ -77,7 +77,8 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
       (SELECT COUNT(*) FROM bets WHERE bets.doc->>'$.auctionId' = auctions.id) = 0) OR
       auctions.doc->>'$.endDate' < ${now - ransomPeriodDuration}
       )`)
-    return ` ( ${conditions.join(" OR ")} ) `
+    const condition = conditions.join(" OR ")
+    return condition === "" ? "" : `( ${condition} )`
   }
 
   protected async getOne(whatever: any): Promise<IExisting | NotFound> {
