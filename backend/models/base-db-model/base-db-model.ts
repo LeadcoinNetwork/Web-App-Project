@@ -62,16 +62,21 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
 
     if (statuses.indexOf("active") !== -1)
       conditions.push(
-        `( auctions.doc->>'$.endDate' > ${now} AND auctions.doc->>'$.isPast' = false )`,
+        `( auctions.doc->>'$.endDate' > ${now} AND auctions.doc->>'$.isClosed' = false )`,
       )
     if (statuses.indexOf("ransom") !== -1)
       conditions.push(
         `(auctions.doc->>'$.endDate' > ${now -
-          ransomPeriodDuration} AND auctions.doc->>'$.isPast' = false )`,
+          ransomPeriodDuration} AND auctions.doc->>'$.isClosed' = false )`,
       )
+    if (statuses.indexOf("closed") !== -1)
+      conditions.push(`auctions.doc->>'$.isClosed' = true`)
     if (statuses.indexOf("past") !== -1)
-      conditions.push(`auctions.doc->>'$.isPast' = true`)
-
+      conditions.push(`
+      ((auctions.doc->>'$.endDate' < ${now} AND 
+      (SELECT COUNT(*) FROM bets WHERE bets.doc->>'$.auctionId' = auctions.id) = 0) OR
+      auctions.doc->>'$.endDate' < ${now - ransomPeriodDuration}
+      )`)
     return conditions.join(" OR ")
   }
 
@@ -349,8 +354,8 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
                         MAX(bets.doc ->> '$.price') AS auctionMaxBet, 
                         COUNT(bets.id) AS countBets
                         FROM leads 
-                        LEFT JOIN auctions ON auctions.doc ->> '$.leadId' = leads.id 
-                        AND (${this.getCndByStatuses(["active", "ransom"])})
+                        LEFT JOIN auctions ON leads.id = auctions.doc ->> '$.leadId'
+                        AND (${this.getCndByStatuses(["past"])})
                         LEFT JOIN bets ON bets.doc ->> '$.auctionId' = auctions.id`
       let query = `
         WHERE leads.doc->>"$.ownerId" = ${user_id}
@@ -486,9 +491,9 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     getCompletedAuctions: async () => {
       const query = `SELECT auctions.id, doc->>'$.leadId' AS leadId, doc->>'$.creatorId' AS creatorId
                      FROM auctions 
-                     WHERE ${this.getCndByStatuses(["ransom"])} OR 
-                     (${this.getCndByStatuses(["active"])} AND (
-                      SELECT COUNT(*) FROM bets WHERE doc->>'$.auctionId' = auctions.id) = 0)`
+                     WHERE ${this.getCndByStatuses([
+                       "past",
+                     ])} AND NOT ${this.getCndByStatuses(["closed"])}`
       return await this.sql.query(query)
     },
   }
