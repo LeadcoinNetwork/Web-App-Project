@@ -1,7 +1,7 @@
 const CronJob = require("cron").CronJob
 
 export const CompleteAuctions = AppLogic =>
-  new CronJob("0 */3 * * * *", function() {
+  new CronJob("0 */1 * * * *", function() {
     const now = new Date()
     console.log("Cron complete auction start at", now)
     AppLogic.auctions

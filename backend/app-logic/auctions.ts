@@ -27,7 +27,7 @@ export default class Auctions {
       startDate,
       startPrice,
       creatorId,
-      isPast: false,
+      isClosed: false,
     })
 
     await this.models.leads.moveMyToSell([leadId])
@@ -66,6 +66,10 @@ export default class Auctions {
 
   public async completeAuctions() {
     const auctions = await this.models.auctions.auctionsQueries.getCompletedAuctions()
+    const auctionIds = auctions.map(auction => auction.id)
+    const leadIds = auctions.map(auction => auction.leadId)
+    await this.models.auctions.completeAuctionsByIds(auctionIds)
+    await this.models.leads.completeBidding(leadIds)
     for (const auction of auctions) {
       const newLeadHistory: LeadHistory = {
         leadId: auction.leadId,
@@ -76,9 +80,7 @@ export default class Auctions {
       }
       await this.models.leadsHistory.addLeadHistory(newLeadHistory)
     }
-    return await this.models.auctions.completeAuctionsByIds(
-      auctions.map(a => a.id),
-    )
+    return true
   }
 
   private addStatusToAuctions(auctions) {
@@ -91,7 +93,7 @@ export default class Auctions {
   private getStatus(auction) {
     const now = new Date().getTime()
     const ransomPeriodDuration = 172800000000 //2 days
-    if (auction.isPast) return "past"
+    if (auction.isClosed) return "past"
     if (auction.endDate > now) return "active"
     if (auction.endDate > now - ransomPeriodDuration) return "ransom"
   }

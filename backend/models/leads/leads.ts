@@ -172,4 +172,8 @@ export default class Leads extends baseDBModel<
     const status = await this.update(id, { active: false })
     return status
   }
+
+  async completeBidding(leadIds) {
+    return leadIds.map(leadId => this.update(leadId, { forSale: false }))
+  }
 }

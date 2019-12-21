@@ -26,7 +26,9 @@ export default class Auctions extends baseDBModel<
   }
 
   public async completeAuctionsByIds(auctionIds: number[]) {
-    return auctionIds.map(auctionId => this.update(auctionId, { isPast: true }))
+    return auctionIds.map(auctionId =>
+      this.update(auctionId, { isClosed: true }),
+    )
   }
 
   public async completeAuctionsByLeadIds(leadIds = []) {
