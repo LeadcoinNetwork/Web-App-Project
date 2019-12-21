@@ -12,6 +12,7 @@ import displayLead from "../../actions/displayLead"
 import DisplayLead from "../DisplayLead"
 import Checkbox from "../../components/Checkbox"
 import Bet from "../../components/Bet"
+import auctionBet from "../../actions/auctionBet"
 
 class Auctions extends React.Component {
   constructor(props) {
@@ -45,22 +46,13 @@ class Auctions extends React.Component {
     }
   }
 
-  betAuction = id => {
-    const { metamask } = this.props
-    if (metamask.isActive) {
-      let selected = new Set(this.props.leads.selected)
-      selected.add(id)
-      this.props.setSelectedLeads(selected)
-    } else {
-      toast(
-        "To buy leads you need install Metamask for your browser. Please follow your browser’s support for MetaMask (such as Chrome)",
-        {
-          type: "error",
-          closeOnClick: true,
-          autoClose: false,
-        },
-      )
-    }
+  betAuction = data => {
+    this.setState({
+      showMakeBet: false,
+    })
+    console.log("bet auction data", data)
+    this.props.auctionBetSet({ bet: data.bet })
+    this.props.auctionBetStart()
   }
 
   isDisabledBuy = () => {
@@ -283,7 +275,7 @@ class Auctions extends React.Component {
 const mapStateToProps = state => ({
   leads: state.auctionLeads,
   metamask: state.metamask,
-  fields: state.fields.filter(lead => !lead.private),
+  fields: state.fieldsAuction.filter(lead => !lead.private),
 })
 
 export default connect(
@@ -300,5 +292,7 @@ export default connect(
     displayLead: displayLead.displayLeadGet,
     favoritesAddStart: favorites.favoritesAddStart,
     favoritesRemoveStart: favorites.favoritesRemoveStart,
+    auctionBetSet: auctionBet.auctionBetSet,
+    auctionBetStart: auctionBet.auctionBetStart,
   },
 )(Auctions)

@@ -9,6 +9,12 @@ const TBody = props => (
       .map(r => ({
         ...r,
         date: moment(r.date).format("DD-MM-YY"),
+        startDate: r.startDate
+          ? moment(r.startDate).format("DD-MM-YY hh:mm")
+          : undefined,
+        endDate: r.endDate
+          ? moment(r.endDate).format("DD-MM-YY hh:mm")
+          : undefined,
         price: r.price ? priceString(r.price) : undefined,
         lead_price: r.lead_price + " LDC",
         budget: r.budget ? priceString(Number(r.budget)) : undefined,

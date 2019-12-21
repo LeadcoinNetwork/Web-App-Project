@@ -32,6 +32,10 @@ import profile from "./profile"
 import review from "./review"
 import addToAuction from "./addToAuction"
 import reviewsUser from "./reviewsUser"
+import fieldsMy from "./fieldsMy"
+import fieldsSell from "./fieldsSell"
+import fieldsAuction from "./fieldsAuction"
+import auctionBet from "./auctionBet"
 
 const rootReducer = combineReducers({
   app,
@@ -70,6 +74,10 @@ const rootReducer = combineReducers({
   review,
   addToAuction,
   reviewsUser,
+  fieldsMy,
+  fieldsSell,
+  fieldsAuction,
+  auctionBet,
 })
 
 export default rootReducer

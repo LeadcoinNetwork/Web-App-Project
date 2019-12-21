@@ -5,7 +5,28 @@ export const prepareLeadDataForDisplay = data => {
     ...value,
     languages: value.languages.join(", "),
     functionality: value.functionality.join(", "),
+    auction: !!value.auction,
+    auctionData: value.auction,
   }))
+  return data
+}
+
+export const prepareLeadDataForDisplayAuction = data => {
+  data.list = data.list.map(value => {
+    let lead = { ...value.lead }
+    let auction = { ...value }
+    delete auction.lead
+    if (!lead.id) {
+      lead.id = auction.leadId
+    }
+    lead.startPrice = auction.startPrice
+    lead.startDate = auction.startDate
+    lead.endDate = auction.endDate
+    return {
+      ...lead,
+      auctionData: auction,
+    }
+  })
   return data
 }
 

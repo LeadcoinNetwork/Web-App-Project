@@ -14,6 +14,7 @@ class Bet extends React.Component {
     this.state = {
       bet: props.value,
       showConfirm: false,
+      isEnableOk: false,
     }
   }
 
@@ -22,10 +23,19 @@ class Bet extends React.Component {
     this.setState({
       bet: bet,
     })
+    if (bet <= this.props.value) {
+      this.setState({
+        isEnableOk: false,
+      })
+    } else {
+      this.setState({
+        isEnableOk: true,
+      })
+    }
   }
 
   onOk = () => {
-    this.props.onSuccess()
+    this.props.onSuccess({ bet: this.state.bet })
   }
 
   showConfirm = () => {
@@ -89,6 +99,7 @@ class Bet extends React.Component {
               </div>
               <div className="buttons-section">
                 <Button
+                  disabled={!this.state.isEnableOk}
                   className="button"
                   appStyle={true}
                   onClick={this.checkBet}

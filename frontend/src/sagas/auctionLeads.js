@@ -2,7 +2,7 @@ import { select, take, put, call } from "redux-saga/effects"
 import { push } from "react-router-redux"
 import { types } from "../actions"
 import * as actions from "../actions"
-import { prepareLeadDataForDisplay } from "../utils/prepare-data"
+import { prepareLeadDataForDisplayAuction } from "../utils/prepare-data"
 
 import API from "../api/index"
 
@@ -30,7 +30,7 @@ export default function* auctionLeads(api) {
       yield put(
         actions.leads.fetchSuccess(
           "AUCTION_LEADS",
-          prepareLeadDataForDisplay(res),
+          prepareLeadDataForDisplayAuction(res),
         ),
       )
     }
@@ -38,6 +38,7 @@ export default function* auctionLeads(api) {
     yield take([
       types.AUCTION_LEADS_FETCH_LEADS,
       types.MY_LEADS_ADD_TO_AUCTION_SUCCESS,
+      types.AUCTION_BET_SUCCESS,
       types.LOGIN_FINISH,
       types.LOGGED_OUT,
     ])

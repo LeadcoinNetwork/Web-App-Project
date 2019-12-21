@@ -159,7 +159,7 @@ class MyLeads extends React.Component {
 
 const mapStateToProps = state => ({
   leads: state.myLeads,
-  fields: state.fields,
+  fields: state.fieldsMy,
 })
 
 export default connect(

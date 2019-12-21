@@ -96,7 +96,6 @@ class SellLeads extends React.Component {
                 >
                   {t("Salesforce Import")}
                 </Link>
-
                 <Link to="/csv-upload" className="csv-upload no-underline">
                   {t("Upload CSV File")}
                 </Link>
@@ -127,7 +126,7 @@ class SellLeads extends React.Component {
 
 const mapStateToProps = state => ({
   leads: state.sellLeads,
-  fields: state.fields,
+  fields: state.fieldsSell,
 })
 
 export default connect(
