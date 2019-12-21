@@ -22,6 +22,8 @@ export const prepareLeadDataForDisplayAuction = data => {
     lead.startPrice = auction.startPrice
     lead.startDate = auction.startDate
     lead.endDate = auction.endDate
+    lead.maxBet = auction.maxBet
+    lead.countBets = auction.countBets
     return {
       ...lead,
       auctionData: auction,

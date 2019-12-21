@@ -17,7 +17,7 @@ export default function* auctionBet(api) {
     let selectedLeads = list.filter(lead => selected.has(lead.id))
     let auctionId = selectedLeads[0].auctionData.id
     var req = yield api.leads.betAuction(auctionId, {
-      price: bet,
+      price: +bet,
     })
     window.triggerFetch()
     if (!req.error) {

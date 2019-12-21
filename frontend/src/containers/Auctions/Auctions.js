@@ -167,7 +167,8 @@ class Auctions extends React.Component {
       let lead = this.props.leads.list.find(lead =>
         this.props.leads.selected.has(lead.id),
       )
-      return (lead && lead.lead_price) || 0.0
+      let price = +lead.maxBet || +lead.startPrice
+      return price
     }
     return 0.0
   }

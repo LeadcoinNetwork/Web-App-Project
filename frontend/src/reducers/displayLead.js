@@ -85,6 +85,7 @@ const displayLead = (state = initialState, action) => {
         public_fields,
         id: action.lead.id,
         ownerId: action.lead.ownerId,
+        isReview: action.lead.isReview,
       }
     case types.DISPLAY_LEAD_CLEAR:
       return initialState
