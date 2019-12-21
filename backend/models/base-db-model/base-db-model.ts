@@ -457,10 +457,10 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         "active",
       ])} OR (${this.getCndByStatuses(["ransom"])} AND (
       SELECT id FROM bets 
-      WHERE bets.doc->>'$.auctionsId' = auctions.id AND 
+      WHERE bets.doc->>'$.auctionId' = auctions.id AND 
       bets.doc->>'$.userId' = ${userId} AND 
       bets.doc->>'$.price'= (
-        SELECT JSON_UNQUOTE(MAX(bets.doc->'$.price')) FROM bets WHERE bets.doc->>'$.auctionsId' = auctions.id)
+        SELECT JSON_UNQUOTE(MAX(bets.doc->'$.price')) FROM bets WHERE bets.doc->>'$.auctionId' = auctions.id)
       ) IS NOT NULL))`
       const group = "\nGROUP BY leads.id, auctions.id, users.id "
       let order = ""
