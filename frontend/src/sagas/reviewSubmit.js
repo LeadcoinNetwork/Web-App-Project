@@ -14,10 +14,11 @@ export default function* reviewSubmit(api) {
     yield take(types.REVIEW_SUBMIT)
 
     let { id } = yield select(state => state.displayLead)
-    let { text } = yield select(state => state.review)
+    let { text, rating } = yield select(state => state.review)
 
     yield put(actions.review.reviewLoading())
     let res = yield api.users.createReview({
+      rating: rating,
       comment: text,
       leadId: id,
     })

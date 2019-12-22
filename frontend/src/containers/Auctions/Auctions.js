@@ -77,7 +77,18 @@ class Auctions extends React.Component {
     let disabled = false
     this.props.leads.selected.forEach(id => {
       let lead = this.props.leads.list.find(lead => lead.id === id)
-      if (lead && lead.status === "ransome") disabled = true //todo fix it to use !==
+      if (lead && lead.auctionData && lead.auctionData.status !== "ransom")
+        disabled = true
+    })
+    return disabled
+  }
+
+  isDisabledBet = () => {
+    let disabled = false
+    this.props.leads.selected.forEach(id => {
+      let lead = this.props.leads.list.find(lead => lead.id === id)
+      if (lead && lead.auctionData && lead.auctionData.status !== "active")
+        disabled = true
     })
     return disabled
   }
@@ -88,10 +99,11 @@ class Auctions extends React.Component {
         value: t("Bet"),
         onClick: this.showBet,
         enableCount: 1,
+        disabled: this.isDisabledBet(),
       },
       {
         value: t("Buy"),
-        onClick: this.buyLead,
+        onClick: this.buyLeads,
         disabled: this.isDisabledBuy(),
       },
       {
@@ -124,7 +136,7 @@ class Auctions extends React.Component {
       },
       {
         value: t("Buy"),
-        onClick: this.buyLead,
+        onClick: this.buyLeads,
         disabled: this.isDisabledBuy(),
       },
       {
