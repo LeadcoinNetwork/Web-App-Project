@@ -26,7 +26,7 @@ class ReviewsUser extends React.Component {
   }
 
   render() {
-    const { reviews, loading } = this.props
+    let { reviews, loading } = this.props.reviewsUser
     if (loading) {
       return <div>{t("Loading...")}</div>
     }
@@ -37,7 +37,7 @@ class ReviewsUser extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  reviews: state.reviews,
+  reviewsUser: state.reviewsUser,
 })
 
 export default connect(

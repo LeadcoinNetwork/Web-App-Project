@@ -39,6 +39,7 @@ class DisplayLead extends React.Component {
 
   render() {
     let { isReview, private_fields, public_fields, noheader } = this.props.lead
+    isReview = !!isReview
     let { isShowHistory = true, isShowReview = true } = this.props
 
     switch (this.props.pageName) {
@@ -46,9 +47,11 @@ class DisplayLead extends React.Component {
         break
       case "buy":
         isShowReview = true
+        isReview = true
         break
       case "auction":
         isShowReview = true
+        isReview = true
         break
       case "my":
         isShowReview = !isReview
