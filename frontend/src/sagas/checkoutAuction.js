@@ -35,7 +35,7 @@ export default function* checkoutAuction(api) {
 
 const leadTransfer = function*(api, lead, user) {
   try {
-    let transfer = yield metamask.transfer(lead.ownerWallet, lead.lead_price)
+    let transfer = yield metamask.transfer(lead.ownerWallet, lead.maxBet)
     yield put(
       actions.notifications.notificationsCreate({
         msg: "Pending transaction",
@@ -68,7 +68,7 @@ const leadTransfer = function*(api, lead, user) {
     let res = yield api.leads.buyLeadsBuy(
       [lead.id],
       transfer,
-      lead.lead_price,
+      lead.maxBet,
       receipt.from,
       lead.ownerWallet,
       new Date().getTime(),
