@@ -14,6 +14,16 @@ export default class Notifications extends baseDBModel<
     super(sql, "notifications")
   }
 
+  public async sendNotificationForFavorites(userIds: number[]) {
+    for (const userId of userIds) {
+      this.createNotification({
+        msg: "Your favorites leads are on sale again.",
+        userId: userId,
+        unread: true,
+      })
+    }
+  }
+
   async createNotification(notification: BaseNotification) {
     notification = Object.assign(notification, {
       timestamp: new Date().valueOf(),

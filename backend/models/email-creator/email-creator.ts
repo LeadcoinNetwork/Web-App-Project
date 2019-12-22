@@ -108,6 +108,24 @@ class EmailCreator {
     }
   }
 
+  forFavorites(user) {
+    return {
+      to: user.email,
+      from: this.from,
+      subject: "Favorite Leads Notifications",
+      html: this.createLetter(
+        "Favorite Leads",
+        "Hello " +
+          user.fname +
+          ",<br><br>" +
+          "Your favorites leads are on sale again." +
+          "<br><br>" +
+          "Best Regards,<br><br>" +
+          "The LeadCoin Team",
+      ),
+    }
+  }
+
   private createLetter(title, content) {
     const html =
       "<!DOCTYPE html>" +

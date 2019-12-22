@@ -62,15 +62,15 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
 
     if (statuses.indexOf("active") !== -1)
       conditions.push(
-        `( auctions.doc->>'$.endDate' > ${now} AND auctions.doc->>'$.isClosed' = false )`,
+        `( auctions.doc->>'$.endDate' > ${now} AND auctions.doc->>'$.isClosed' = 'false' )`,
       )
     if (statuses.indexOf("ransom") !== -1)
       conditions.push(
         `(auctions.doc->>'$.endDate' > ${now -
-          ransomPeriodDuration} AND auctions.doc->>'$.isClosed' = false )`,
+          ransomPeriodDuration} AND auctions.doc->>'$.isClosed' = 'false' )`,
       )
     if (statuses.indexOf("closed") !== -1)
-      conditions.push(`auctions.doc->>'$.isClosed' = true`)
+      conditions.push(`auctions.doc->>'$.isClosed' = 'true'`)
     if (statuses.indexOf("past") !== -1)
       conditions.push(`
       ((auctions.doc->>'$.endDate' < ${now} AND 
@@ -381,7 +381,7 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
         let newRow = this.convertRowToObject(row, ["auction"])
         if (newRow.auction) {
           newRow.auction.id = newRow.auctionId
-          newRow.auction.maxBet = newRow.maxBet =
+          newRow.auction.maxBet =
             newRow.auctionMaxBet != null
               ? newRow.auctionMaxBet
               : newRow.auction.startPrice

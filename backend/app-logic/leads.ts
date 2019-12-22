@@ -1,6 +1,6 @@
 import { Lead, LeadQueryOptions } from "../models/leads/types"
 
-import { IModels } from "./index"
+import AppLogic, { IModels } from "./index"
 
 import * as _ from "lodash"
 import { BaseUserInterface } from "@/models/users/types"
@@ -196,6 +196,7 @@ export default class Leads {
       }
       await this.models.leadsHistory.addLeadHistory(newLeadHistory)
     }
+    await this.sendFavorites(leads)
     return result
   }
 
@@ -425,5 +426,30 @@ export default class Leads {
 
   public async getAllLeads(options: LeadQueryOptions) {
     return await this.models.leads.buyLeadsGetAll(options)
+  }
+
+  private async sendFavorites(leadIds) {
+    const users = await this.models.users.haveFavorite(leadIds)
+
+    let notificationUserIds = []
+    let emailUser = []
+
+    users.forEach(user => {
+      if (user.getNotifications) notificationUserIds.push(user.id)
+      if (user.getEmails) emailUser.push(user)
+    })
+
+    if (notificationUserIds.length) {
+      await this.models.notifications.sendNotificationForFavorites(
+        notificationUserIds,
+      )
+    }
+    if (emailUser.length) {
+      for (const user of emailUser) {
+        let email = this.models.emailCreator.forFavorites(user)
+        await this.models.emailSender.send(email)
+      }
+    }
+    return true
   }
 }

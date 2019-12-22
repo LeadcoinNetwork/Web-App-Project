@@ -85,6 +85,20 @@ class User extends baseDBModel<
     return this.update(user_id, { password: hashed_password })
   }
 
+  public async haveFavorite(leadIds) {
+    if (!leadIds.length) return []
+    let where = ""
+    where = leadIds
+      .map(leadId => {
+        return `(JSON_SEARCH(doc->>'$.favorites', "one", "${leadId}") IS NOT NULL 
+      OR JSON_CONTAINS(doc->>'$.favorites', "${leadId}") = 1)`
+      })
+      .join(" OR ")
+    where = `( ${where} ) AND (doc->>'$.getNotifications' = 'true' OR doc->>'$.getEmails' = 'true')`
+
+    return await this.find({ where })
+  }
+
   // async activateUser({ user_id }: { user_id: number }) {
   //   return await this.updateUser(user_id, { disabled: null })
   // }

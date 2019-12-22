@@ -40,6 +40,7 @@ export default class Auctions {
       description: { startDate, endDate, startPrice },
     }
     await this.models.leadsHistory.addLeadHistory(newLeadHistory)
+    await this.sendFavorites([leadId])
     return await this.getAuction({ id: result.insertId })
   }
 
@@ -96,5 +97,30 @@ export default class Auctions {
     if (auction.isClosed) return "past"
     if (auction.endDate > now) return "active"
     if (auction.endDate > now - ransomPeriodDuration) return "ransom"
+  }
+
+  private async sendFavorites(leadIds) {
+    const users = await this.models.users.haveFavorite(leadIds)
+
+    let notificationUserIds = []
+    let emailUser = []
+
+    users.forEach(user => {
+      if (user.getNotifications) notificationUserIds.push(user.id)
+      if (user.getEmails) emailUser.push(user)
+    })
+
+    if (notificationUserIds.length) {
+      await this.models.notifications.sendNotificationForFavorites(
+        notificationUserIds,
+      )
+    }
+    if (emailUser.length) {
+      for (const user of emailUser) {
+        let email = this.models.emailCreator.forFavorites(user)
+        await this.models.emailSender.send(email)
+      }
+    }
+    return true
   }
 }
