@@ -247,17 +247,6 @@ const fields = [
     private: true,
     options: [],
   },
-  {
-    key: "lead_price",
-    name: "Price",
-    sortable: true,
-    editable: true,
-    maxWidth: "auto",
-    minWidth: "60px",
-    type: "input",
-    options: [],
-    tooltip: "The lead’s price in LDCs",
-  },
 ]
 
 export default fields
