@@ -51,7 +51,7 @@ class DisplayLead extends React.Component {
         isShowReview = true
         break
       case "my":
-        isShowReview = isReview
+        isShowReview = !isReview
         break
       default:
     }
