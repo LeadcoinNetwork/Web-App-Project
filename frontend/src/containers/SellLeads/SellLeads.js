@@ -73,6 +73,7 @@ class SellLeads extends React.Component {
         {this.state.isDisplayLead && (
           <DisplayLead
             noheader
+            pageName="sell"
             isShowReview={false}
             backFunction={() => {
               this.setState({ isDisplayLead: false })

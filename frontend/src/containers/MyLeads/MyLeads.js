@@ -116,6 +116,7 @@ class MyLeads extends React.Component {
         {isDisplayingLead && (
           <DisplayLead
             noheader
+            pageName="my"
             backFunction={() => {
               this.setState({ isDisplayingLead: false })
             }}

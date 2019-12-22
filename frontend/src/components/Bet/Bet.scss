@@ -11,8 +11,9 @@
     border: 1px solid black;
   }
 
-  &_headerTitle {
+  &_ &_headerTitle {
     font-size: 18px;
+    display: block;
   }
 
   &_body {

@@ -38,15 +38,23 @@ class DisplayLead extends React.Component {
   }
 
   render() {
-    const {
-      isReview,
-      private_fields,
-      public_fields,
-      noheader,
-      isShowHistory = true,
-      isShowReview = true,
-    } = this.props.lead
+    let { isReview, private_fields, public_fields, noheader } = this.props.lead
+    let { isShowHistory = true, isShowReview = true } = this.props
 
+    switch (this.props.pageName) {
+      case "sell":
+        break
+      case "buy":
+        isShowReview = true
+        break
+      case "auction":
+        isShowReview = true
+        break
+      case "my":
+        isShowReview = isReview
+        break
+      default:
+    }
     if (!private_fields) {
       return <div>{t("Loading...")}</div>
     }
@@ -107,9 +115,11 @@ class DisplayLead extends React.Component {
                     <Review mode="new" onSubmit={this.back} />
                   </div>
                 )}
-                <div>
-                  <ReviewsUser />
-                </div>
+                {this.props.pageName !== "my" && (
+                  <div>
+                    <ReviewsUser />
+                  </div>
+                )}
               </TabPanel>
             )}
           </Tabs>

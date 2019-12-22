@@ -146,6 +146,7 @@ class BuyLeads extends React.Component {
         {isDisplayingLead && (
           <DisplayLead
             noheader
+            pageName="buy"
             backFunction={() => {
               this.setState({ isDisplayingLead: false })
             }}

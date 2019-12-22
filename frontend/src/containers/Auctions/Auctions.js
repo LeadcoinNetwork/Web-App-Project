@@ -184,6 +184,7 @@ class Auctions extends React.Component {
         {isDisplayingLead && (
           <DisplayLead
             noheader
+            pageName="auction"
             backFunction={() => {
               this.setState({ isDisplayingLead: false })
             }}
