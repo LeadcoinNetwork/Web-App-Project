@@ -22,7 +22,7 @@ const reviewsUser = (state = initialState, action) => {
       console.log(action)
       return {
         ...state,
-        reviews: [...action.payload],
+        reviews: action.payload,
         loading: false,
         error: null,
       }
