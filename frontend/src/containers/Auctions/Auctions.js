@@ -30,9 +30,11 @@ class Auctions extends React.Component {
   }
 
   buyLeads = () => {
+    let selected = new Set(this.props.leads.selected)
+    this.props.setSelectedLeads(selected)
     const { metamask } = this.props
     if (metamask.isActive) {
-      this.props.push("/shopping-cart")
+      this.props.push("/shopping-cart-auction")
     } else {
       toast(
         "To buy leads you need to installfe Metamask for your browser. Please follow your browser’s support for MetaMask (such as Chrome)",
@@ -40,25 +42,6 @@ class Auctions extends React.Component {
           type: "error",
           closeOnClick: true,
           autoClose: true,
-        },
-      )
-    }
-  }
-
-  buyLead = id => {
-    const { metamask } = this.props
-    if (metamask.isActive) {
-      let selected = new Set(this.props.leads.selected)
-      selected.add(id)
-      this.props.setSelectedLeads(selected)
-      this.buyLeads()
-    } else {
-      toast(
-        "To buy leads you need install Metamask for your browser. Please follow your browser’s support for MetaMask (such as Chrome)",
-        {
-          type: "error",
-          closeOnClick: true,
-          autoClose: false,
         },
       )
     }

@@ -36,6 +36,7 @@ import fieldsMy from "./fieldsMy"
 import fieldsSell from "./fieldsSell"
 import fieldsAuction from "./fieldsAuction"
 import auctionBet from "./auctionBet"
+import checkoutAuction from "./checkoutAuction"
 
 const rootReducer = combineReducers({
   app,
@@ -78,6 +79,7 @@ const rootReducer = combineReducers({
   fieldsSell,
   fieldsAuction,
   auctionBet,
+  checkoutAuction,
 })
 
 export default rootReducer

@@ -1,0 +1,116 @@
+@import "~Styles/variables";
+
+.ldc-checkout-auction {
+  display: flow-root;
+  .table-container {
+    overflow-x: auto;
+  }
+  .table-wrapper {
+    min-width: 1580px;
+  }
+
+  .shopping-cart {
+    border-spacing: 0;
+    border-collapse: collapse;
+    font-size: 14px;
+    width: 100%;
+
+    thead tr {
+      background-color: $main-color;
+
+      th {
+        text-align: left;
+        padding: 10px;
+      }
+    }
+    .h-lead_price,
+    .d-lead_price {
+      width: 100px;
+    }
+
+    .h-startDate,
+    .h-endDate,
+    .d-startDate,
+    .d-endDate {
+      min-width: 150px;
+    }
+
+    .d-lead_price {
+      text-align: left;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: $table-background-even;
+    }
+    tbody tr:nth-child(odd) {
+      background-color: $table-background-odd;
+    }
+
+    td {
+      padding: 8px;
+      .remove-lead-button {
+        display: flex;
+        justify-content: center;
+        padding: 4px;
+        cursor: pointer;
+        color: #fff;
+      }
+    }
+  }
+
+  .error {
+    text-align: right;
+    color: orangered;
+    margin: 5px;
+    clear: both;
+  }
+
+  .c-total .text {
+    font-weight: 200;
+    font-size: 18px;
+  }
+  .c-total {
+    font-size: 25px;
+    font-weight: 500;
+    margin-top: 10px;
+    margin-right: 10px;
+    text-align: right;
+
+    table {
+      width: 100%;
+      padding: 0 63px;
+    }
+  }
+
+  .c-details {
+    position: relative;
+    float: right;
+    font-weight: 300;
+    font-size: 16px;
+    margin-top: 20px;
+
+    table {
+      border-collapse: collapse;
+      margin: 20px 0;
+
+      .c-remainder {
+        border-top: 2px solid white;
+      }
+    }
+  }
+
+  .amount {
+    text-align: right;
+    padding-left: 10px;
+  }
+
+  .button-container {
+    width: 100%;
+    clear: both;
+    margin-top: 10px;
+
+    .ldc-button {
+      float: right;
+    }
+  }
+}

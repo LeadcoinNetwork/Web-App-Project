@@ -41,6 +41,7 @@ import addToAuction from "./addToAuction"
 import reviewsUser from "./reviewsUser"
 import reviewSubmit from "./reviewSubmit"
 import auctionBet from "./auctionBet"
+import checkoutAuction from "./checkoutAuction"
 
 // Create a request object for all the API's
 // This request object add the default backend URLs, and do other defaults.
@@ -95,6 +96,7 @@ export default function* rootSaga() {
     reviewsUser,
     reviewSubmit,
     auctionBet,
+    checkoutAuction,
   ]
   for (var i in sagas) {
     yield fork(sagas[i], api)

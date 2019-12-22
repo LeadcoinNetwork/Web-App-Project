@@ -37,6 +37,7 @@ import Settings from "Containers/Settings"
 import TransactionHistory from "Containers/TransactionHistory"
 import Auctions from "Containers/Auctions"
 import Profile from "Containers/Profile"
+import CheckoutAuction from "Containers/CheckoutAuction"
 
 // import Steps from "../steps"
 
@@ -84,6 +85,10 @@ class App extends React.Component {
               <Route path="/add-lead" component={AddLead} />
               <Route path="/display-lead" component={DisplayLead} />
               <Route path="/shopping-cart" component={Checkout} />
+              <Route
+                path="/shopping-cart-auction"
+                component={CheckoutAuction}
+              />
               <Route path="/dispute" component={Dispute} />
               <Route path="/notifications" component={NotificationTable} />
               <Route path="/terms" component={Terms} />
