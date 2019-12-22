@@ -51,7 +51,6 @@ class Auctions extends React.Component {
     this.setState({
       showMakeBet: false,
     })
-    console.log("bet auction data", data)
     this.props.auctionBetSet({ bet: data.bet })
     this.props.auctionBetStart()
   }
@@ -101,12 +100,10 @@ class Auctions extends React.Component {
   }
 
   addToFavorites = () => {
-    console.log("test favorites")
     this.props.favoritesAddStart()
   }
 
   removeFromFavorites = () => {
-    console.log("test remove favorites")
     this.props.favoritesRemoveStart()
   }
 

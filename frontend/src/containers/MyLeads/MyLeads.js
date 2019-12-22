@@ -103,7 +103,6 @@ class MyLeads extends React.Component {
   }
 
   onAddToAuction = data => {
-    console.log(data)
     this.props.addToAuctionStart(data.endDate.getTime())
   }
 

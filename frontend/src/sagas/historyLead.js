@@ -18,7 +18,6 @@ export default function* historyLead(api) {
         yield put(actions.historyLead.historyLeadError(error))
       }
     } else {
-      console.log(res)
       yield put(actions.historyLead.historyLeadSuccess(res))
     }
   }

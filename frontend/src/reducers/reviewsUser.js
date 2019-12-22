@@ -19,7 +19,6 @@ const reviewsUser = (state = initialState, action) => {
         loading: true,
       }
     case types.REVIEWS_USER_SUCCESS:
-      console.log(action)
       return {
         ...state,
         reviews: action.payload,

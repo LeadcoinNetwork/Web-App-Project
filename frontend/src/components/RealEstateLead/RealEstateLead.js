@@ -9,9 +9,7 @@ import { goBack, push } from "react-router-redux"
 class RealEstateLead extends React.Component {
   render() {
     const lead = this.props
-    console.log("lead", lead)
     const activeLead = this.props.leadInfo
-    console.log(activeLead)
     return (
       <section
         className={`ldc-real-estate-lead${lead.checked ? " rel-checked" : ""}

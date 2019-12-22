@@ -31,7 +31,6 @@ export default function* reviewsUser(api) {
         yield put(actions.reviewsUser.reviewsUserError(errors))
       }
     } else {
-      console.log(res)
       yield put(actions.reviewsUser.reviewsUserSuccess(res))
     }
   }

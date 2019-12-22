@@ -120,7 +120,6 @@ export default class LeadsApi {
   }
 
   async transactionHistoryGet(id) {
-    console.log(id)
     return await this.request(methods.get, "/transactions", null, {
       userId: id,
     })

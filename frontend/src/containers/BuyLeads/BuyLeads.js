@@ -87,12 +87,10 @@ class BuyLeads extends React.Component {
   }
 
   addToFavorites = () => {
-    console.log("test favorites")
     this.props.favoritesAddStart()
   }
 
   removeFromFavorites = () => {
-    console.log("test remove favorites")
     this.props.favoritesRemoveStart()
   }
 

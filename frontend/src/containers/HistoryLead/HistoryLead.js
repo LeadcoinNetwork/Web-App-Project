@@ -14,7 +14,6 @@ class HistoryLead extends React.Component {
     if (typeof value === "number" || typeof value === "string") {
       return value
     }
-    console.log(value)
     if (Array.isArray(value)) {
       return value.reduce((accumulator, current, index) => {
         return accumulator + (accumulator.length ? ", " : "") + current

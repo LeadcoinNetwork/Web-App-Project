@@ -29,9 +29,7 @@ class UserDetails extends React.Component {
         country,
         phone,
       })
-      .then(response => {
-        console.log(response)
-      })
+      .then(response => {})
       .catch(error => {
         if (error.response) {
           // error originated from server

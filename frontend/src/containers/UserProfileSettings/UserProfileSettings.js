@@ -23,7 +23,6 @@ class UserProfileSettings extends React.Component {
       getEmails:
         props.user && props.user.getEmails ? props.user.getEmails : false,
     }
-    console.log(this.state)
   }
 
   handleChange = event => {

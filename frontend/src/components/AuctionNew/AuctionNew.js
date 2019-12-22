@@ -20,7 +20,6 @@ class AuctionNew extends React.Component {
   }
 
   handleChangeData = date => {
-    console.log(date)
     this.setState({
       endDate: date,
     })

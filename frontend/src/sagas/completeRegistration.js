@@ -20,7 +20,6 @@ export default function* completeRegistration(api) {
         actions.completeRegistration.completeRegistrationError(ans.error),
       )
     } else {
-      console.log("here2")
       yield put(actions.route.bootAgain())
     }
   }

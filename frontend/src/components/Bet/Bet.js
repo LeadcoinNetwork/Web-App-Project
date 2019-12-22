@@ -10,7 +10,6 @@ import ConfirmationDialog from "../ConfirmationDialog"
 class Bet extends React.Component {
   constructor(props) {
     super(props)
-    console.log(props)
     this.state = {
       bet: props.value,
       showConfirm: false,
@@ -19,7 +18,6 @@ class Bet extends React.Component {
   }
 
   handleChange = bet => {
-    console.log(bet)
     this.setState({
       bet: bet,
     })

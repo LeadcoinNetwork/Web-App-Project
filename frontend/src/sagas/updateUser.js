@@ -16,7 +16,6 @@ export default function* updateUser(api) {
     // for future can write some code for validation
     if (true) {
       yield put(actions.userProfileSettings.userProfileSettingsLoading())
-      console.log(userProfileSettings)
       let res = yield api.users.userUpdate({
         fname: userProfileSettings.fname,
         lname: userProfileSettings.lname,

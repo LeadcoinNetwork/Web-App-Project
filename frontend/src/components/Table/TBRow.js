@@ -23,7 +23,6 @@ const TBRow = props => {
         <div
           className="eye"
           onClick={() => {
-            console.log("view props", props)
             props.displayLead(props)
           }}
         />

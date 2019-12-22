@@ -77,7 +77,6 @@ const seperateLead = lead => {
 const displayLead = (state = initialState, action) => {
   switch (action.type) {
     case types.DISPLAY_LEAD_GET:
-      console.log(action.lead)
       const [private_fields, public_fields] = seperateLead(action.lead)
       return {
         ...state,

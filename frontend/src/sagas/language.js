@@ -7,7 +7,6 @@ export default function* language(API) {
   }
   while (true) {
     var act = yield take(actions.types.LANGUAGE_SELECTOR_UPDATE)
-    console.log(act)
     if (act.payload == "il") {
       chagneLanguage("rtl")
     } else {

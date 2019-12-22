@@ -14,7 +14,6 @@ export default function* addToAuction(api) {
 
     let { selected } = yield select(state => state.myLeads)
     let addToAuctionData = yield select(state => state.addToAuction)
-    console.log(selected, addToAuctionData)
     let request = {
       leadId: Array.from(selected)[0],
       endDate: addToAuctionData.endDate,

@@ -27,7 +27,6 @@ class Profile extends React.Component {
       company: props.user && props.user.company ? props.user.company : "",
       email: props.user && props.user.email ? props.user.email : "",
     }
-    console.log(this.state)
     props.reviewsUserSetMode({ mode: "my" })
   }
 

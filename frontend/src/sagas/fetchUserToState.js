@@ -47,9 +47,7 @@ export default function* fetchUserToState(api) {
           const balance = yield metamask.getBalance(ans.user.wallet)
           yield put(actions.balance.balanceUpdate(balance))
         }
-      } catch (err) {
-        console.log(err)
-      }
+      } catch (err) {}
     }
     yield put(actions.route.redirectIfNeeded())
     yield take(actions.types.FETCH_USER_AGAIN)
