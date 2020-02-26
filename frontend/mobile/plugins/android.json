@@ -8,7 +8,23 @@
   },
   "installed_plugins": {
     "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "network.leadcoin.app"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "network.leadcoin.app"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "network.leadcoin.app"
+    },
+    "cordova-plugin-ionic-webview": {
+      "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+",
+      "PACKAGE_NAME": "network.leadcoin.app"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "network.leadcoin.app"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "network.leadcoin.app"
     }
   },
   "dependent_plugins": {}

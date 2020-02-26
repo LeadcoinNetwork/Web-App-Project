@@ -43,4 +43,6 @@ FS.writeFile("./dist/index.html", afterAddingScript, "utf8", err => {
   }
 })
 
-FS.emptyDir("./www").then(res => FS.moveSync("./dist", "./www"))
+FS.emptyDir("./www").then(res =>
+  FS.moveSync("./dist", "./www", { overwrite: true }),
+)
