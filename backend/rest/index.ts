@@ -19,6 +19,7 @@ import * as cors from "./cors"
 import * as notifications from "./notifications"
 import * as transactions from "./transactions"
 import * as auctions from "./auctions"
+import * as excel from "./excel"
 
 import AppPassports from "./passport/index"
 const io = require("./io/io")
@@ -94,6 +95,7 @@ export default class RestServer {
     csv.start({ appLogic, expressApp })
     transactions.start({ appLogic, expressApp })
     auctions.start({ appLogic, expressApp })
+    excel.start({ appLogic, expressApp })
 
     expressApp.route("/gitlog.txt").get((req, res) => {
       var gitlog = ""
