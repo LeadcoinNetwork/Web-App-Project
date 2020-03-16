@@ -19,13 +19,13 @@ export default function* favoritesAdd(api) {
     })
     window.triggerFetch()
     if (!req.error) {
-      toast("Favorites added", {
+      toast(t("Favorites added"), {
         type: "success",
         closeOnClick: true,
       })
       //yield put(actions.favorites.favoritesAddSuccess)
     } else {
-      toast("Favorites add error", {
+      toast(t("Favorites add error"), {
         type: "error",
         closeOnClick: true,
       })

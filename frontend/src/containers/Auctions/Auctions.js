@@ -37,7 +37,9 @@ class Auctions extends React.Component {
       this.props.push("/shopping-cart-auction")
     } else {
       toast(
-        "To buy leads you need to installfe Metamask for your browser. Please follow your browser’s support for MetaMask (such as Chrome)",
+        t(
+          "To buy leads you need to install Metamask for your browser. Please follow your browser’s support for MetaMask (such as Chrome)",
+        ),
         {
           type: "error",
           closeOnClick: true,

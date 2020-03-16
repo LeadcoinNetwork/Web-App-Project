@@ -21,13 +21,13 @@ export default function* auctionBet(api) {
     })
     window.triggerFetch()
     if (!req.error) {
-      toast("Bet completed successfully", {
+      toast(t("Bet completed successfully"), {
         type: "success",
         closeOnClick: true,
       })
       yield put(actions.auctionBet.auctionBetSuccess())
     } else {
-      toast("Bet process has error", {
+      toast(t("Bet process has error"), {
         type: "error",
         closeOnClick: true,
       })

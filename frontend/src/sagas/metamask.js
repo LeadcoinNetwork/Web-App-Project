@@ -22,7 +22,9 @@ export default function* metamask(api) {
         isActive = verify.success
       } catch (err) {
         toast(
-          "Metamask is not supported by this browser or not installed. Please follow your browser’s support for MetaMask (such as Chrome)",
+          t(
+            "Metamask is not supported by this browser or not installed. Please follow your browser’s support for MetaMask (such as Chrome)",
+          ),
           {
             type: "error",
             closeOnClick: true,

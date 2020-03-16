@@ -19,13 +19,13 @@ export default function* favoritesRemove(api) {
     })
     window.triggerFetch()
     if (!req.error) {
-      toast("Favorites removed", {
+      toast(t("Favorites removed"), {
         type: "success",
         closeOnClick: true,
       })
       //yield put(actions.favorites.favoritesRemoveSuccess())
     } else {
-      toast("Favorites remove error", {
+      toast(t("Favorites remove error"), {
         type: "error",
         closeOnClick: true,
       })
