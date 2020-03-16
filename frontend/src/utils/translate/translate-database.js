@@ -1398,4 +1398,64 @@ export default {
     en: "Russian",
     ru: "Русский",
   },
+  "To buy leads you need to install Metamask for your browser. Please follow your browser’s support for MetaMask (such as Chrome)": {
+    en:
+      "To buy leads you need to install Metamask for your browser. Please follow your browser’s support for MetaMask (such as Chrome)",
+    ru:
+      "Чтобы купить leads, вам нужно установить Metamask для вашего браузера. Пожалуйста, следите за поддержкой вашего браузера для MetaMask (например, Chrome)",
+  },
+  "Favorites added": {
+    en: "Favorites added",
+    ru: "Добавленно в избранные",
+  },
+  "Favorites add error": {
+    en: "Favorites add error",
+    ru: "Ошибка добавления в избранные",
+  },
+  "Favorites removed": {
+    en: "Favorites removed",
+    ru: "Избранные удалены",
+  },
+  "Favorites remove error": {
+    en: "Favorites remove error",
+    ru: "Ошибка удаления",
+  },
+  "Bet completed successfully": {
+    en: "Bet completed successfully",
+    ru: "Ставка установленная успешно",
+  },
+  "Bet process has error": {
+    en: "Bet process has error",
+    ru: "Ошибка установки ставки",
+  },
+  "Wallet is verified": {
+    en: "Wallet is verified",
+    ru: "Кошелек подтвержден",
+  },
+  "Wallet has been changed successfully": {
+    en: "Wallet has been changed successfully",
+    ru: "Кошелек успешно изменен",
+  },
+  "Wallet is not valid": {
+    en: "Wallet is not valid",
+    ru: "Кошелек не действителен",
+  },
+  "You are about to change your wallet. Are you sure you want to proceed?": {
+    en:
+      "You are about to change your wallet. Are you sure you want to proceed?",
+    ru:
+      "Вы собираетесь сменить ваш кошелек. Вы уверены, что хотите продолжить?",
+  },
+  Yes: {
+    en: "Yes",
+    ru: "Да",
+  },
+  No: {
+    en: "No",
+    ru: "Нет",
+  },
+  Cancel: {
+    en: "Cancel",
+    ru: "Отменить",
+  },
 }

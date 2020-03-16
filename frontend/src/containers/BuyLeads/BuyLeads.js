@@ -30,7 +30,7 @@ class BuyLeads extends React.Component {
     } else {
       toast(
         t(
-          "To buy leads you need to installfe Metamask for your browser. Please follow your browser’s support for MetaMask (such as Chrome)",
+          "To buy leads you need to install Metamask for your browser. Please follow your browser’s support for MetaMask (such as Chrome)",
         ),
         {
           type: "error",
@@ -51,7 +51,7 @@ class BuyLeads extends React.Component {
     } else {
       toast(
         t(
-          "To buy leads you need install Metamask for your browser. Please follow your browser’s support for MetaMask (such as Chrome)",
+          "To buy leads you need to install Metamask for your browser. Please follow your browser’s support for MetaMask (such as Chrome)",
         ),
         {
           type: "error",
