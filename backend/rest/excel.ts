@@ -7,7 +7,6 @@ const excel = require("exceljs")
 const fs = require("fs")
 const { promisify } = require("util")
 
-const workbook = new excel.Workbook()
 const unlink = promisify(fs.unlink)
 const excelPath = "tmp/excel"
 const storage = multer.diskStorage({
@@ -75,7 +74,7 @@ export function start({
     importExcel,
   )
 
-  expressApp.post(
+  expressApp.get(
     "/excel/export",
     passport.authenticate("jwt", authOptions),
     exportExcel,
@@ -89,6 +88,8 @@ export function start({
 
     let filePath = excelPath + "/" + fileName
     let isReadFileError = false
+
+    let workbook = new excel.Workbook()
 
     try {
       await workbook.xlsx.readFile(filePath)
@@ -149,6 +150,8 @@ export function start({
     if (isLeadsError || !leads.length) {
       return res.status(400).json({ error: "leadIds is incorrect" })
     }
+
+    let workbook = new excel.Workbook()
 
     let sheet = workbook.addWorksheet("leads")
     sheet.columns = fields.map(field => {
