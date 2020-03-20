@@ -11,7 +11,6 @@ import ConfirmationDialog from "../../components/ConfirmationDialog"
 import Modal from "../../components/Modal"
 import AuctionNew from "../../components/AuctionNew"
 import { addToAuction } from "../../actions"
-import xlsxExport from "../../actions/xlsxExport"
 
 class MyLeads extends React.Component {
   constructor(props) {
@@ -66,7 +65,6 @@ class MyLeads extends React.Component {
     let fakeLink = document.createElement("a")
     fakeLink.setAttribute("href", process.env.BACKEND + path)
     document.body.appendChild(fakeLink)
-    // fakeLink.setAttribute('download');
     fakeLink.click()
     document.body.removeChild(fakeLink)
   }
@@ -193,7 +191,6 @@ class MyLeads extends React.Component {
 const mapStateToProps = state => ({
   leads: state.myLeads,
   fields: state.fieldsMy,
-  excelFile: state.xlsxExport.file,
 })
 
 export default connect(
@@ -208,7 +205,5 @@ export default connect(
     displayLead: displayLead.displayLeadGet,
     push,
     addToAuctionStart: addToAuction.addToAuctionStart,
-    exportIds: xlsxExport.exportIds,
-    clearExcelFile: xlsxExport.importFile(""),
   },
 )(MyLeads)

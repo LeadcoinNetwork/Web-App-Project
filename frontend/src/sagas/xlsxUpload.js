@@ -19,11 +19,8 @@ export default function* xlsxUpload(api) {
     yield put(actions.xlsxUpload.xlsxUploadLoadingDone())
     window.triggerFetch()
     if (ans.error) {
-      yield put(actions.login.loginError(ans.error))
+      yield put(actions.xlsxUpload.xlsxUploadError("Error", ans.error))
     } else {
-      // console.log('REQUEST', ans);
-      // yield put(actions.user.loggedIn(ans.user))
-      // yield put(actions.route.gotoDefaultHome())
       yield put(push("/sell-leads"))
     }
   }

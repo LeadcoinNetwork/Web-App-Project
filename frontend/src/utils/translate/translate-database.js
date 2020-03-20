@@ -937,6 +937,12 @@ export default {
     ja: "CSV ファイルをアップロード",
     ru: "Загрузить CSV файл",
   },
+  "Upload XLSX File": {
+    en: "Upload XLSX File",
+    he: "העלאת קובץ XLSX",
+    ja: "XLSX ファイルをアップロード",
+    ru: "Загрузить XLSX файл",
+  },
   "Create New Lead": {
     en: "Create New Lead",
     he: "יצירת לִיד חדש",
@@ -972,6 +978,12 @@ export default {
     he: "קובץ CSV",
     ja: "CSV ファイルを",
     ru: "CSV файл",
+  },
+  "XLSX file": {
+    en: "XLSX file",
+    he: "קובץ XLSX",
+    ja: "XLSX ファイルを",
+    ru: "XLSX файл",
   },
   " or by filling out a ": {
     en: " or by filling out a ",
@@ -1046,6 +1058,12 @@ export default {
     ja: "CSVファイルをアップロードすれば販売するリードを複数追加できます。",
     ru: "Добавьте несколько заявок на продажу, загрузив файл CSV.",
   },
+  "Add multiple leads for sale by uploading a XLSX file.": {
+    en: "Add multiple leads for sale by uploading a XLSX file.",
+    he: 'הוספת לִידים למכירה ע"י העלאת קובץ XLSX.',
+    ja: "XLSXファイルをアップロードすれば販売するリードを複数追加できます。",
+    ru: "Добавьте несколько заявок на продажу, загрузив файл XLSX.",
+  },
   "See buy/sell alerts and check your system messages.": {
     en: "See buy/sell alerts and check your system messages.",
     he: "צפייה בהתראות קניה/מכירה והודעות מערכת.",
@@ -1088,6 +1106,15 @@ export default {
       "CSV マッピング機能で、CSV のフィールドをシステムのと一致させることができます。",
     ru:
       "Сопоставьте поля в вашем CSV с нашими, используя нашу функцию сопоставления CSV.",
+  },
+  "Match the fields in your XLSX with ours by utilizing our XLSX mapping feature.": {
+    en:
+      "Match the fields in your XLSX with ours by utilizing our XLSX mapping feature.",
+    he: "מיפוי השדות בXLSX שלך בעזרת שימוש בכלי היעודי שלנו.",
+    ja:
+      "XLSX マッピング機能で、XLSX のフィールドをシステムのと一致させることができます。",
+    ru:
+      "Сопоставьте поля в вашем XLSX с нашими, используя нашу функцию сопоставления XLSX.",
   },
   "Profile settings": {
     en: "User settings",
@@ -1457,5 +1484,33 @@ export default {
   Cancel: {
     en: "Cancel",
     ru: "Отменить",
+  },
+  "export to excel": {
+    en: "Export to excel",
+    ru: "Экспортировать в excel",
+  },
+  Click: {
+    en: "Click",
+    ru: "Нажмите",
+  },
+  here: {
+    en: "here",
+    ru: "сюда",
+  },
+  " to download a template xlsx file for website building leads.": {
+    en: " to download a template xlsx file for website building leads.",
+    ru: " что бы загрузить шаблон xlsx файла",
+  },
+  " to download a template csv file for website building leads.": {
+    en: " to download a template csv file for website building leads.",
+    ru: " что бы загрузить шаблон csv файла",
+  },
+  "Drop a XLSX file into this box": {
+    en: "Drop a XLSX file into this box",
+    ru: "Перетащите XLSX файл в этот квадрат",
+  },
+  "Drop a CSV file into this box": {
+    en: "Drop a CSV file into this box",
+    ru: "Перетащите CSV файл в этот квадрат",
   },
 }

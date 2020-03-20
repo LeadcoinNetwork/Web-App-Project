@@ -4,13 +4,10 @@ import Select from "Components/Select"
 import TextField from "Components/TextField"
 import { connect } from "react-redux"
 import Dropzone from "react-dropzone"
-import papaparse from "papaparse"
 import { push } from "react-router-redux"
-import ConfirmationDialog from "../../components/ConfirmationDialog"
 import Modal from "../../components/Modal"
 import { csvUpload, csvMapping, xlsxUpload } from "../../actions"
 import t from "../../utils/translate/translate"
-import API from "../../api/leads"
 
 class XLSXUpload extends React.Component {
   constructor(props) {
@@ -69,96 +66,6 @@ class XLSXUpload extends React.Component {
 
   tryReadingXlsx(file) {
     this.props.parseFile(file)
-    // papaparse.parse(file, {
-    //   dynamicTyping: true,
-    //   header: true,
-    //   preview: 1,
-    //   complete: rows => {
-    //     this.process(rows.data[0])
-    //   },
-    // })
-  }
-
-  maybeCsvMapper() {
-    const { file_fields } = this.props.csvMapping
-    if (!!file_fields.length) {
-      return this.csvMapper()
-    }
-    return null
-  }
-
-  csvMapper() {
-    const { db_fields } = this.props.csvMapping
-    const price_element = this.renderPriceElement()
-    const terms = this.renderTerms()
-    const { loading } = this.props.csvUpload
-
-    return (
-      <div className="fields_mapper">
-        <div>
-          {t(
-            "Match the fields from your XLSX file with the fields that appear in LeadCoin's Network.",
-          )}{" "}
-          <br />
-          {t(
-            "Go through and match each one of your fields with the field name that exists for the real estate category.",
-          )}
-        </div>
-        <div className="main_container">
-          <div className="titles flexed">
-            <div className="help_text" />
-            <div className="fieldsTitles flexed">
-              <div className="ldcTitle">LeadCoin Field Names</div>
-              <div className="csvTitle">Your Field Names</div>
-            </div>
-          </div>
-          <div className="personal flexed">
-            <div className="help_text">
-              <div className="header bigger">
-                {t("Personal Identification Information")}
-              </div>
-              <div className="header smaller">
-                {t(
-                  "This information will remain hidden until a buyer purchases the lead.",
-                )}
-              </div>
-            </div>
-            <div className="fields">{this.renderFields(db_fields.private)}</div>
-          </div>
-          <div className="public flexed">
-            <div className="help_text">
-              <div className="header bigger">{t("Public Fields")}</div>
-            </div>
-            <div className="fields">{this.renderFields(db_fields.public)}</div>
-          </div>
-          {price_element}
-          {this.generalError()}
-          <div className="controls field_submit flexed">
-            {terms}
-            <div className="mapSubmit">
-              <Button
-                loading={loading}
-                appStyle
-                onClick={() => {
-                  this.setState({ showConfirmation: true })
-                }}
-                label={t("Submit")}
-              />
-              {this.state.showConfirmation && (
-                <ConfirmationDialog
-                  description="You are about to upload new leads to be publicly traded. Are you sure you want to proceed?"
-                  onConfirm={() => {
-                    this.setState({ showConfirmation: false })
-                    this.props.submit()
-                  }}
-                  onDismiss={() => this.setState({ showConfirmation: false })}
-                />
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-    )
   }
 
   listItems(fieldName) {
@@ -250,10 +157,7 @@ class XLSXUpload extends React.Component {
     this.state.modalStepOne = this.props.location.isSalesforce
   }
 
-  componentWillUnmount() {
-    // this.props.clear()
-    // this.props.reset()
-  }
+  componentWillUnmount() {}
 
   renderList(step) {
     let stepContent
@@ -417,7 +321,7 @@ class XLSXUpload extends React.Component {
           <div className="upload-container" onClick={() => refDropzone.open()}>
             <h3>
               <br />
-              Drop a XLSX file into this box
+              {t("Drop a XLSX file into this box")}
             </h3>
           </div>
         </Dropzone>
@@ -500,19 +404,19 @@ class XLSXUpload extends React.Component {
         <h1>{t("Upload XLSX File")}</h1>
         <div>
           {/* <Button appStyle secondary label={fileLabel}> */}
-          {!this.maybeCsvMapper() && (
-            <div>
-              <h3>
-                {t("Add multiple leads for sale by uploading a XLSX file.")}
-              </h3>
-              {this.dropzoneWrapp()}
-              <p className="template">
-                Click{" "}
-                <a href="assets/website-building-csv-template.csv">here</a> to
-                download a template csv file for website building leads.
-              </p>
-            </div>
-          )}
+          <div>
+            <h3>
+              {t("Add multiple leads for sale by uploading a XLSX file.")}
+            </h3>
+            {this.dropzoneWrapp()}
+            <p className="template">
+              {t("Click")}{" "}
+              <a href="assets/website-building-csv-template.csv">{t("here")}</a>
+              {t(
+                ` to download a template xlsx file for website building leads.`,
+              )}
+            </p>
+          </div>
           {/* <input
               className="displaynone"
               type="file"
@@ -527,7 +431,6 @@ class XLSXUpload extends React.Component {
             /> */}
           {/* </Button> */}
         </div>
-        {this.maybeCsvMapper()}
       </div>
     )
   }

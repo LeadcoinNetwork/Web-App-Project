@@ -415,7 +415,7 @@ class CSVUpload extends React.Component {
           <div className="upload-container" onClick={() => refDropzone.open()}>
             <h3>
               <br />
-              Drop a CSV file into this box
+              {t("Drop a CSV file into this box")}
             </h3>
           </div>
         </Dropzone>
@@ -505,9 +505,13 @@ class CSVUpload extends React.Component {
               </h3>
               {this.dropzoneWrapp()}
               <p className="template">
-                Click{" "}
-                <a href="assets/website-building-csv-template.csv">here</a> to
-                download a template csv file for website building leads.
+                {t("Click")}{" "}
+                <a href="assets/website-building-csv-template.csv">
+                  {t("here")}
+                </a>
+                {t(
+                  " to download a template csv file for website building leads.",
+                )}
               </p>
             </div>
           )}
@@ -535,16 +539,19 @@ const mapStateToProps = state => ({
   csvUpload: state.csvUpload,
   csvMapping: state.csvMapping,
 })
-export default connect(mapStateToProps, {
-  pickFile: csvUpload.csvUploadPickFile,
-  handleChange: csvMapping.csvMappingFormChange,
-  setFileFields: csvMapping.csvMappingGetFileFields,
-  setDbFields: csvMapping.csvMappingGetDbFields,
-  agreeToTerms: csvMapping.csvMappingAgreeToTerms,
-  handleMapChange: csvMapping.csvMappingMapChange,
-  handleErrors: csvMapping.csvMappingError,
-  clear: csvMapping.csvMappingClearForm,
-  reset: csvUpload.csvUploadReset,
-  submit: csvUpload.csvUploadSubmit,
-  push,
-})(CSVUpload)
+export default connect(
+  mapStateToProps,
+  {
+    pickFile: csvUpload.csvUploadPickFile,
+    handleChange: csvMapping.csvMappingFormChange,
+    setFileFields: csvMapping.csvMappingGetFileFields,
+    setDbFields: csvMapping.csvMappingGetDbFields,
+    agreeToTerms: csvMapping.csvMappingAgreeToTerms,
+    handleMapChange: csvMapping.csvMappingMapChange,
+    handleErrors: csvMapping.csvMappingError,
+    clear: csvMapping.csvMappingClearForm,
+    reset: csvUpload.csvUploadReset,
+    submit: csvUpload.csvUploadSubmit,
+    push,
+  },
+)(CSVUpload)
