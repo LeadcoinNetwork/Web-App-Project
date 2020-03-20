@@ -122,7 +122,12 @@ export function start({
 
   async function exportExcel(req, res, next) {
     const { user } = req
-    const { leadIds } = req.body
+    const leadIds = req.query.leadId
+      ? []
+          .concat(req.query.leadId)
+          .map(lId => +lId)
+          .filter(lId => Number.isInteger(lId))
+      : null
 
     if (!leadIds || !leadIds.length) {
       return res.status(400).json({ error: "leadIds is incorrect" })
