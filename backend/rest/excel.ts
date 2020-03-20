@@ -7,9 +7,10 @@ const excel = require("exceljs")
 const fs = require("fs")
 const { promisify } = require("util")
 
-const workbook = new excel.Workbook()
 const unlink = promisify(fs.unlink)
 const excelPath = "tmp/excel"
+const mimetype =
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 const storage = multer.diskStorage({
   destination: excelPath,
   filename: function(req, file, cb) {
@@ -24,10 +25,7 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage,
   fileFilter: (req, file, cb) => {
-    if (
-      file.mimetype ==
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    ) {
+    if (file.mimetype == mimetype) {
       cb(null, true)
     } else {
       cb(null, false)
@@ -75,7 +73,7 @@ export function start({
     importExcel,
   )
 
-  expressApp.post(
+  expressApp.get(
     "/excel/export",
     passport.authenticate("jwt", authOptions),
     exportExcel,
@@ -89,6 +87,8 @@ export function start({
 
     let filePath = excelPath + "/" + fileName
     let isReadFileError = false
+
+    let workbook = new excel.Workbook()
 
     try {
       await workbook.xlsx.readFile(filePath)
@@ -121,7 +121,12 @@ export function start({
 
   async function exportExcel(req, res, next) {
     const { user } = req
-    const { leadIds } = req.body
+    const leadIds = req.query.leadId
+      ? []
+          .concat(req.query.leadId)
+          .map(lId => +lId)
+          .filter(lId => Number.isInteger(lId))
+      : null
 
     if (!leadIds || !leadIds.length) {
       return res.status(400).json({ error: "leadIds is incorrect" })
@@ -150,6 +155,8 @@ export function start({
       return res.status(400).json({ error: "leadIds is incorrect" })
     }
 
+    let workbook = new excel.Workbook()
+
     let sheet = workbook.addWorksheet("leads")
     sheet.columns = fields.map(field => {
       return { width: field.width }
@@ -160,23 +167,9 @@ export function start({
       lead = excelDecorator(lead)
       sheet.addRow(fields.map(field => lead[field.property]))
     })
-
-    // let isWriteFileError = false;
-    // try {
-    // await workbook.xlsx.writeFile(filePath);
-    // } catch (e) {
-    //     isWriteFileError = e;
-    // }
-    // if (isWriteFileError) {
-    //     return res.status(400).json({error: isWriteFileError});
-    // }e
-    // let file = fs.createReadStream(filePath);
-    // file.on('end', function() {
-    //     unlink(filePath);
-    // });
-    // return file.pipe(res);
-
-    return await workbook.xlsx.write(res)
+    res.setHeader("Content-disposition", "attachment; filename=leads.xlsx")
+    res.setHeader("Content-type", mimetype)
+    return workbook.xlsx.write(res)
   }
 
   const excelDecorator = lead => {
