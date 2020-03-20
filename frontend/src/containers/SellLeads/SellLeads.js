@@ -100,6 +100,9 @@ class SellLeads extends React.Component {
                 <Link to="/csv-upload" className="csv-upload no-underline">
                   {t("Upload CSV File")}
                 </Link>
+                <Link to="/xlsx-upload" className="csv-upload no-underline">
+                  {t("Upload XLSX File")}
+                </Link>
                 <Link to="/add-lead" className="add-lead no-underline">
                   {t("Upload a Single Lead")}
                 </Link>

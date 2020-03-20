@@ -11,6 +11,7 @@ import ConfirmationDialog from "../../components/ConfirmationDialog"
 import Modal from "../../components/Modal"
 import AuctionNew from "../../components/AuctionNew"
 import { addToAuction } from "../../actions"
+import xlsxExport from "../../actions/xlsxExport"
 
 class MyLeads extends React.Component {
   constructor(props) {
@@ -48,6 +49,28 @@ class MyLeads extends React.Component {
     }))
   }
 
+  exportToExcel = () => {
+    let leadIds = new Array()
+    this.props.leads.selected.forEach(item => {
+      leadIds.push(item)
+    })
+    let path = "/excel/export?"
+    leadIds.forEach((id, index) => {
+      if (index < leadIds.length - 1) {
+        path += `leadId=${id}&`
+      } else {
+        path += `leadId=${id}`
+      }
+    })
+
+    let fakeLink = document.createElement("a")
+    fakeLink.setAttribute("href", process.env.BACKEND + path)
+    document.body.appendChild(fakeLink)
+    // fakeLink.setAttribute('download');
+    fakeLink.click()
+    document.body.removeChild(fakeLink)
+  }
+
   buildButtonLabel = () => {
     let amount = this.props.leads.selected.size
 
@@ -70,6 +93,10 @@ class MyLeads extends React.Component {
         value: t("add to auction"),
         onClick: this.addToAuction,
         enableCount: 1,
+      },
+      {
+        value: t("export to excel"),
+        onClick: this.exportToExcel,
       },
     ]
   }
@@ -104,6 +131,12 @@ class MyLeads extends React.Component {
 
   onAddToAuction = data => {
     this.props.addToAuctionStart(data.endDate.getTime())
+  }
+
+  checkExcelFile() {
+    if (this.props.excelFile) {
+      console.log(this.props.excelFile)
+    }
   }
 
   render() {
@@ -160,6 +193,7 @@ class MyLeads extends React.Component {
 const mapStateToProps = state => ({
   leads: state.myLeads,
   fields: state.fieldsMy,
+  excelFile: state.xlsxExport.file,
 })
 
 export default connect(
@@ -174,5 +208,7 @@ export default connect(
     displayLead: displayLead.displayLeadGet,
     push,
     addToAuctionStart: addToAuction.addToAuctionStart,
+    exportIds: xlsxExport.exportIds,
+    clearExcelFile: xlsxExport.importFile(""),
   },
 )(MyLeads)

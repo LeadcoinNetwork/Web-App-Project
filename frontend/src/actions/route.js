@@ -6,6 +6,7 @@ export default {
       type: types.GOTO_DEFAULT_HOME,
     }
   },
+
   redirectIfNeeded() {
     return {
       type: types.REDIRECT_IF_NEEDED,
