@@ -9,6 +9,8 @@ const { promisify } = require("util")
 
 const unlink = promisify(fs.unlink)
 const excelPath = "tmp/excel"
+const mimetype =
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 const storage = multer.diskStorage({
   destination: excelPath,
   filename: function(req, file, cb) {
@@ -23,10 +25,7 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage,
   fileFilter: (req, file, cb) => {
-    if (
-      file.mimetype ==
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    ) {
+    if (file.mimetype == mimetype) {
       cb(null, true)
     } else {
       cb(null, false)
@@ -168,23 +167,9 @@ export function start({
       lead = excelDecorator(lead)
       sheet.addRow(fields.map(field => lead[field.property]))
     })
-
-    // let isWriteFileError = false;
-    // try {
-    // await workbook.xlsx.writeFile(filePath);
-    // } catch (e) {
-    //     isWriteFileError = e;
-    // }
-    // if (isWriteFileError) {
-    //     return res.status(400).json({error: isWriteFileError});
-    // }e
-    // let file = fs.createReadStream(filePath);
-    // file.on('end', function() {
-    //     unlink(filePath);
-    // });
-    // return file.pipe(res);
-
-    return await workbook.xlsx.write(res)
+    res.setHeader("Content-disposition", "attachment; filename=leads.xlsx")
+    res.setHeader("Content-type", mimetype)
+    return workbook.xlsx.write(res)
   }
 
   const excelDecorator = lead => {
