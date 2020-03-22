@@ -1513,4 +1513,10 @@ export default {
     en: "Drop a CSV file into this box",
     ru: "Перетащите CSV файл в этот квадрат",
   },
+  "Metamask is not supported by this browser or not installed. Please follow your browser’s support for MetaMask (such as Chrome)": {
+    en:
+      "Metamask is not supported by this browser or not installed. Please follow your browser’s support for MetaMask (such as Chrome)",
+    ru:
+      "Метамаска не поддерживается этим браузером или не установлена. Пожалуйста, следите за поддержкой вашего браузера для MetaMask (например, Chrome)",
+  },
 }

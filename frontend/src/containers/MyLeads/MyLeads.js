@@ -82,21 +82,35 @@ class MyLeads extends React.Component {
   }
 
   getListButtons = () => {
-    return [
-      {
-        value: this.buildButtonLabel(),
-        onClick: () => this.setState({ showConfirmation: true }),
-      },
-      {
-        value: t("add to auction"),
-        onClick: this.addToAuction,
-        enableCount: 1,
-      },
-      {
-        value: t("export to excel"),
-        onClick: this.exportToExcel,
-      },
-    ]
+    if (!window.cordova) {
+      return [
+        {
+          value: this.buildButtonLabel(),
+          onClick: () => this.setState({ showConfirmation: true }),
+        },
+        {
+          value: t("add to auction"),
+          onClick: this.addToAuction,
+          enableCount: 1,
+        },
+        {
+          value: t("export to excel"),
+          onClick: this.exportToExcel,
+        },
+      ]
+    } else {
+      return [
+        {
+          value: this.buildButtonLabel(),
+          onClick: () => this.setState({ showConfirmation: true }),
+        },
+        {
+          value: t("add to auction"),
+          onClick: this.addToAuction,
+          enableCount: 1,
+        },
+      ]
+    }
   }
 
   getLeadButtons = () => {

@@ -1,6 +1,7 @@
 import { types } from "Actions"
 import * as actions from "Actions"
 import { select, take, put, call } from "redux-saga/effects"
+import t from "../utils/translate/translate"
 import { push } from "react-router-redux"
 
 import API from "../api/index"
