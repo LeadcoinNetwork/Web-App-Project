@@ -254,12 +254,12 @@ class UserProfileSettings extends React.Component {
             value={this.state.lang.full}
             name="language"
           >
-            <option value={"English"}>{t("English")}</option>
-            <option value={"Hebrew"}>{t("Hebrew")}</option>
-            <option value={"Japanese"}>{t("Japanese")}</option>
-            <option value={"Chinese"}>{t("Chinese")}</option>
-            <option value={"Korean"}>{t("Korean")}</option>
-            <option value={"Russian"}>{t("Russian")}</option>
+            <option value={"English"}>English</option>
+            <option value={"Hebrew"}>עברית</option>
+            <option value={"Japanese"}>日本語</option>
+            <option value={"Chinese"}>中文</option>
+            <option value={"Korean"}>중국말</option>
+            <option value={"Russian"}>Русский</option>
           </Select>
           {error && this.getErrors(error)}
           <div className="ldc-user-profile-settings-submit">

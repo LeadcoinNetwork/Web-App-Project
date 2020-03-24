@@ -1401,30 +1401,6 @@ export default {
     en: "This information will remain hidden from other users.",
     ru: "Эта информация не будет видна остальным пользователям.",
   },
-  English: {
-    en: "English",
-    ru: "Английский",
-  },
-  Hebrew: {
-    en: "Hebrew",
-    ru: "Иврит",
-  },
-  Japanese: {
-    en: "Japanese",
-    ru: "Японский",
-  },
-  Chinese: {
-    en: "Chinese",
-    ru: "Китайский",
-  },
-  Korean: {
-    en: "Korean",
-    ru: "Корейский",
-  },
-  Russian: {
-    en: "Russian",
-    ru: "Русский",
-  },
   "To buy leads you need to install Metamask for your browser. Please follow your browser’s support for MetaMask (such as Chrome)": {
     en:
       "To buy leads you need to install Metamask for your browser. Please follow your browser’s support for MetaMask (such as Chrome)",

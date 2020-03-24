@@ -411,7 +411,9 @@ class XLSXUpload extends React.Component {
             {this.dropzoneWrapp()}
             <p className="template">
               {t("Click")}{" "}
-              <a href="assets/website-building-csv-template.csv">{t("here")}</a>
+              <a href="assets/website-building-excel-template.xlsx">
+                {t("here")}
+              </a>
               {t(
                 ` to download a template xlsx file for website building leads.`,
               )}
