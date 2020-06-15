@@ -18,6 +18,7 @@ import buyLeads from "./buyLeads"
 import checkout from "./checkout"
 import myLeads from "./myLeads"
 import csvUpload from "./csvUpload"
+import xlsxUpload from "./xlsxUpload"
 import moveToSell from "./moveToSell"
 import language from "./language"
 import inlinemanual from "./inlinemanual"
@@ -60,6 +61,7 @@ export default function* rootSaga() {
   var sagas = [
     redirectIfNotAllowed,
     csvUpload,
+    xlsxUpload,
     login,
     forgotPassword,
     addLead,

@@ -14,6 +14,7 @@ import SellLeads from "Containers/SellLeads"
 import BuyLeads from "Containers/BuyLeads"
 import Payments from "Containers/Payments"
 import CSVUpload from "Containers/CSVUpload"
+import XLSXUpload from "Containers/XLSXUpload"
 import CSVMapping from "Containers/CSVMapping"
 import AddLead from "Containers/AddLead"
 import EditLead from "Containers/EditLead"
@@ -80,6 +81,7 @@ class App extends React.Component {
               <Route path="/withdraw" component={Withdraw} />
               {/* <Route path="/uploadform" component={UploadForm} /> */}
               <Route path="/csv-upload" component={CSVUpload} />
+              <Route path="/xlsx-upload" component={XLSXUpload} />
               <Route path="/csv-mapping" component={CSVMapping} />
               <Route path="/edit-lead-:id" component={EditLead} />
               <Route path="/add-lead" component={AddLead} />

@@ -18,7 +18,7 @@ export default function* checkout(api) {
     let user = yield select(state => state.user)
     let selectedLeads = list.filter(lead => selected.has(lead.id))
     let checkUserWallet = yield metamask.isAddress(user.wallet)
-    toast("Wallet is verified", {
+    toast(t("Wallet is verified"), {
       type: "success",
       closeOnClick: true,
     })

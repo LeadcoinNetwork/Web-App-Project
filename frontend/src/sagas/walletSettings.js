@@ -28,7 +28,7 @@ export default function* editWallet(api) {
             msg: "Your wallet address has been updated",
           }),
         )
-        toast("Wallet has been changed successfully", {
+        toast(t("Wallet has been changed successfully"), {
           type: "success",
           closeOnClick: true,
         })
@@ -39,7 +39,7 @@ export default function* editWallet(api) {
         })
       }
     } catch (err) {
-      toast("Wallet is not valid", {
+      toast(t("Wallet is not valid"), {
         type: "error",
         closeOnClick: true,
       })

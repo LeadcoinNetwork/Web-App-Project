@@ -35,7 +35,7 @@ class WalletSettings extends React.Component {
     return (
       <div>
         <div>
-          <h1>{t("Edit your wallet")}</h1>
+          <h1>{t("Edit Your Wallet")}</h1>
           <h3>{t("Here you can change your wallet or enter a new one.")}</h3>
         </div>
 

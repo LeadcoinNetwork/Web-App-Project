@@ -1,6 +1,7 @@
 import { types } from "Actions"
 import * as actions from "Actions"
 import { select, take, put, call } from "redux-saga/effects"
+import t from "../utils/translate/translate"
 import { push } from "react-router-redux"
 
 import API from "../api/index"
@@ -22,7 +23,9 @@ export default function* metamask(api) {
         isActive = verify.success
       } catch (err) {
         toast(
-          "Metamask is not supported by this browser or not installed. Please follow your browser’s support for MetaMask (such as Chrome)",
+          t(
+            "Metamask is not supported by this browser or not installed. Please follow your browser’s support for MetaMask (such as Chrome)",
+          ),
           {
             type: "error",
             closeOnClick: true,

@@ -1,0 +1,200 @@
+@import "~Styles/variables";
+
+.fields_mapper {
+  padding: 10px;
+  .titles {
+    padding-top: 20px;
+    .help_text {
+      width: 210px;
+    }
+    .fieldsTitles {
+      width: 360px;
+      .ldcTitle,
+      .csvTitle {
+        font-weight: 350;
+        font-size: 18px;
+        flex-grow: 1;
+      }
+      .ldcTitle {
+        width: 15px;
+        text-align: left;
+      }
+      .csvTitle {
+        line-height: 35px;
+        text-align: center;
+      }
+    }
+  }
+
+  .terms {
+    margin-right: 320px;
+    width: 200px;
+    padding-top: 15px;
+  }
+  .personal {
+    padding-bottom: 10px;
+    border-bottom: solid 1px black;
+  }
+  .public {
+    padding-top: 10px;
+  }
+  .controls {
+    margin: 20px;
+  }
+  .help_text {
+    width: 200px;
+    margin-right: 80px;
+  }
+  .mapSubmit {
+    margin-right: 2px;
+  }
+  .form_error {
+    color: $ldc-error-color;
+    select {
+      border-color: $ldc-error-color;
+    }
+  }
+  .error {
+    color: $ldc-error-color;
+    label {
+      color: $ldc-error-color;
+    }
+  }
+  .line {
+    margin: 10px 15px;
+    justify-content: flex-start;
+    align-items: center;
+    .fieldLabel {
+      width: 235px;
+      margin-right: 15px;
+      padding: 8px 0;
+      text-transform: capitalize;
+    }
+  }
+  .price {
+    margin-left: 292px;
+    input {
+      margin-left: 78px;
+      width: 256px;
+    }
+  }
+  .flexed {
+    display: flex;
+  }
+}
+
+.csvUpload {
+  padding: 10px;
+  .header {
+    &.bigger {
+      padding-top: 5px;
+      margin-top: 10px;
+      font-weight: 500;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    &.smaller {
+      font-weight: 300;
+      font-size: 16px;
+    }
+  }
+  .file-pick {
+    cursor: pointer;
+    display: inline-block;
+    margin-bottom: 10px;
+    .upload-container {
+      display: block;
+      height: 100%;
+      text-align: center;
+      width: 100%;
+    }
+    .ldc-button {
+      position: relative;
+      .displaynone {
+        position: absolute;
+        opacity: 0;
+        border-radius: 25px;
+        width: 100%;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+    }
+
+    .template {
+      margin-top: 30px;
+    }
+  }
+}
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.manual-container {
+  padding: 20px 0;
+
+  ol {
+    max-width: 700px;
+
+    li {
+      padding: 10px;
+    }
+  }
+  .next-button {
+    float: right;
+  }
+}
+@media (max-width: 760px) {
+  .manual-container {
+    padding: 10px 0;
+  }
+  .modal-container {
+    ol {
+      overflow-y: auto;
+      max-height: 20vh;
+      li {
+        padding: 5px;
+      }
+    }
+
+    .buttons-section button {
+      height: 30px;
+      width: auto;
+      font-size: 14px;
+      font-weight: 400;
+    }
+  }
+  .fields_mapper {
+    .help_text {
+      width: unset;
+      margin-right: 0;
+    }
+    .main_container {
+      .fieldsTitles {
+        display: none;
+      }
+      .price {
+        margin-left: 0;
+        input {
+          margin-left: 11px;
+          width: 300px;
+        }
+      }
+      .line.flexed {
+        display: block;
+        height: unset;
+        line-height: unset;
+        margin-bottom: 10px;
+        .fieldLabel {
+          width: auto;
+          margin-left: -10px;
+        }
+      }
+      > div {
+        display: block;
+      }
+    }
+  }
+}

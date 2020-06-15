@@ -6,7 +6,7 @@ import t from "../../utils/translate/translate"
 
 const Settings = () => (
   <div className="ldc-settings">
-    <h1>{t("settings")}</h1>
+    <h1>{t("Settings")}</h1>
     <div className="ldc-settings-container">
       <div className="ldc-settings-item">
         <UserProfileSettings />

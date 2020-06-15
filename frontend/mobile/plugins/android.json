@@ -10,9 +10,6 @@
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "network.leadcoin.app"
     },
-    "cordova-plugin-device": {
-      "PACKAGE_NAME": "network.leadcoin.app"
-    },
     "cordova-plugin-inappbrowser": {
       "PACKAGE_NAME": "network.leadcoin.app"
     },

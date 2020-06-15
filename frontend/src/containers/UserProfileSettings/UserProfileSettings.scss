@@ -17,6 +17,10 @@
     text-transform: capitalize;
   }
 
+  h4 {
+    margin-top: 9px;
+  }
+
   .ldc-textfield {
     margin-top: 18px;
   }
@@ -106,6 +110,10 @@
   section.ldc-user-profile-settings {
     .ldc-textfield {
       margin-top: 20px;
+    }
+
+    h4 {
+      margin-top: 10px;
     }
 
     .ldc-button {

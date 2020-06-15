@@ -72,6 +72,22 @@ export default class LeadsApi {
     })
   }
 
+  async sellLeadsXlsxParsing(formData) {
+    return await this.request(methods.post, "/excel/import", formData)
+  }
+
+  async exportXlsx(leadIds) {
+    let path = "/excel/export?"
+    leadIds.forEach((id, index) => {
+      if (index < leadIds.length - 1) {
+        path += `leadId=${id}&`
+      } else {
+        path += `leadId=${id}`
+      }
+    })
+    return await this.request(methods.get, path)
+  }
+
   async sellLeadsAddByForm(lead) {
     return await this.request(methods.post, "/sell-leads/addbyform", { lead })
   }

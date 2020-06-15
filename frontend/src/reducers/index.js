@@ -18,6 +18,7 @@ import emailConfirmation from "./emailConfirmation"
 import dispute from "./dispute"
 import csvMapping from "./csvMapping"
 import csvUpload from "./csvUpload"
+import xlsxUpload from "./xlsxUpload"
 import addLead from "./addLead"
 import editLead from "./editlead"
 import fields from "./fields"
@@ -62,6 +63,7 @@ const rootReducer = combineReducers({
   dispute,
   csvMapping,
   csvUpload,
+  xlsxUpload,
   editLead,
   addLead,
   fields,

@@ -29,7 +29,9 @@ class BuyLeads extends React.Component {
       this.props.push("/shopping-cart")
     } else {
       toast(
-        "To buy leads you need to installfe Metamask for your browser. Please follow your browser’s support for MetaMask (such as Chrome)",
+        t(
+          "To buy leads you need to install Metamask for your browser. Please follow your browser’s support for MetaMask (such as Chrome)",
+        ),
         {
           type: "error",
           closeOnClick: true,
@@ -48,7 +50,9 @@ class BuyLeads extends React.Component {
       this.buyLeads()
     } else {
       toast(
-        "To buy leads you need install Metamask for your browser. Please follow your browser’s support for MetaMask (such as Chrome)",
+        t(
+          "To buy leads you need to install Metamask for your browser. Please follow your browser’s support for MetaMask (such as Chrome)",
+        ),
         {
           type: "error",
           closeOnClick: true,
@@ -101,11 +105,11 @@ class BuyLeads extends React.Component {
         onClick: this.buyLead,
       },
       {
-        value: t("Add to Favorites"),
+        value: t("Add to favorites"),
         onClick: this.addToFavorites,
       },
       {
-        value: t("Remove from Favorites"),
+        value: t("Remove from favorites"),
         onClick: this.removeFromFavorites,
       },
     ]

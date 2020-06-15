@@ -48,6 +48,27 @@ class MyLeads extends React.Component {
     }))
   }
 
+  exportToExcel = () => {
+    let leadIds = new Array()
+    this.props.leads.selected.forEach(item => {
+      leadIds.push(item)
+    })
+    let path = "/excel/export?"
+    leadIds.forEach((id, index) => {
+      if (index < leadIds.length - 1) {
+        path += `leadId=${id}&`
+      } else {
+        path += `leadId=${id}`
+      }
+    })
+
+    let fakeLink = document.createElement("a")
+    fakeLink.setAttribute("href", process.env.BACKEND + path)
+    document.body.appendChild(fakeLink)
+    fakeLink.click()
+    document.body.removeChild(fakeLink)
+  }
+
   buildButtonLabel = () => {
     let amount = this.props.leads.selected.size
 
@@ -61,17 +82,35 @@ class MyLeads extends React.Component {
   }
 
   getListButtons = () => {
-    return [
-      {
-        value: this.buildButtonLabel(),
-        onClick: () => this.setState({ showConfirmation: true }),
-      },
-      {
-        value: t("add to auction"),
-        onClick: this.addToAuction,
-        enableCount: 1,
-      },
-    ]
+    if (!window.cordova) {
+      return [
+        {
+          value: this.buildButtonLabel(),
+          onClick: () => this.setState({ showConfirmation: true }),
+        },
+        {
+          value: t("add to auction"),
+          onClick: this.addToAuction,
+          enableCount: 1,
+        },
+        {
+          value: t("export to excel"),
+          onClick: this.exportToExcel,
+        },
+      ]
+    } else {
+      return [
+        {
+          value: this.buildButtonLabel(),
+          onClick: () => this.setState({ showConfirmation: true }),
+        },
+        {
+          value: t("add to auction"),
+          onClick: this.addToAuction,
+          enableCount: 1,
+        },
+      ]
+    }
   }
 
   getLeadButtons = () => {
@@ -104,6 +143,12 @@ class MyLeads extends React.Component {
 
   onAddToAuction = data => {
     this.props.addToAuctionStart(data.endDate.getTime())
+  }
+
+  checkExcelFile() {
+    if (this.props.excelFile) {
+      console.log(this.props.excelFile)
+    }
   }
 
   render() {
