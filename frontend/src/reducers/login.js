@@ -6,6 +6,7 @@ const initialState = {
   password: "",
   error: {},
   remember: true,
+  loading: false,
 }
 
 const login = (state = initialState, action) => {
