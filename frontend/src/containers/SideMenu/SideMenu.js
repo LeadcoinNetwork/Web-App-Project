@@ -38,7 +38,7 @@ const SideMenu = ({ path, user }) => {
       {user &&
         user.role &&
         user.role === "admin" && (
-          <a href={process.env.BACKEND} className="admin-link">
+          <a href={process.env.BACKEND} className="admin-link for-reset-server">
             <div className="menu-icons admin" />
             <span>Admin</span>
           </a>
