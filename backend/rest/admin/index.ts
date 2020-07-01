@@ -31,4 +31,6 @@ export const start = ({
   bets.start({ appLogic, expressApp })
   reviews.start({ appLogic, expressApp })
   authenticate.start({ appLogic, expressApp })
+
+  console.log("start admin")
 }

@@ -19,7 +19,7 @@ export const start = ({
       const { filter, range, sort } = req.query
 
       const _sort = { sortBy: sort[0], sortOrder: sort[1] }
-      const limit = { start: range[0], offset: range[1] }
+      const limit = { start: range[0], offset: range[1] - range[0] + 1 }
 
       let condition
       if (filter && Object.keys(filter).length) {
