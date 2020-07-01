@@ -2,9 +2,12 @@ import React from "react"
 import { Link } from "react-router-dom"
 import t from "../../utils/translate/translate"
 
-const SideMenu = ({ path }) => {
+const SideMenu = ({ path, user }) => {
   return (
     <nav className="ldc-side-menu">
+      {user &&
+        user.role &&
+        user.role === "admin" && <a href={process.env.BACKEND}>Admin</a>}
       <Link
         to="/buy-leads"
         className={path === "/buy-leads" ? "sm-active" : ""}

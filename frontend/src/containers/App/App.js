@@ -57,7 +57,8 @@ class App extends React.Component {
         {/* <Steps /> */}
         <div className="ldc-app">
           <Header />
-          {loggedIn && !disabled && <SideMenu path={path} />}
+          {loggedIn &&
+            !disabled && <SideMenu user={this.props.user} path={path} />}
           <main
             className={loggedIn && !disabled ? "a-app-mode" : "a-sign-mode"}
           >
