@@ -22,7 +22,7 @@ export const start = ({
   expressApp: Express.Express
 }) => {
   expressApp.use(/\/api\/admin\/.*/, queryParser)
-  expressApp.use("/", Express.static("../admin/build"))
+  expressApp.use("/", Express.static("./rest/admin/build"))
 
   users.start({ appLogic, expressApp })
   leads.start({ appLogic, expressApp })

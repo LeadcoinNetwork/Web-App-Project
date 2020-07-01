@@ -1,5 +1,7 @@
 // External Modules
 
+import { Role } from "../../models/users/types"
+
 const JWTStrategy = require("passport-jwt").Strategy
 const ExtractJwt = require("passport-jwt").ExtractJwt
 const GoogleStrategy = require("passport-google-oauth20").Strategy
@@ -139,7 +141,7 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
               provider: profile.provider,
               balance: config.INITIAL_BALANCE,
               created: Date.now(),
-              role: "user",
+              role: Role.user,
               rating: 0,
               numberReviews: 0,
             }
@@ -221,7 +223,7 @@ export function getStrategies({ appLogic }: { appLogic: AppLogic }) {
               provider: profile.provider,
               balance: config.INITIAL_BALANCE,
               created: Date.now(),
-              role: "user",
+              role: Role.user,
               rating: 0,
               numberReviews: 0,
             }
