@@ -35,14 +35,14 @@ const SideMenu = ({ path, user }) => {
       >
         <div className="menu-icons clipboard" />
       </Link>
-      {user &&
-        user.role &&
-        user.role === "admin" && (
-          <a href={process.env.BACKEND} className="admin-link for-reset-server">
-            <div className="menu-icons admin" />
-            <span>Admin</span>
-          </a>
-        )}
+      {/*{user &&*/}
+      {/*  user.role &&*/}
+      {/*  user.role === "admin" && (*/}
+      {/*    <a href={process.env.BACKEND} className="admin-link">*/}
+      {/*      <div className="menu-icons admin" />*/}
+      {/*      <span>Admin</span>*/}
+      {/*    </a>*/}
+      {/*  )}*/}
     </nav>
   )
 }
