@@ -7,7 +7,12 @@ const SideMenu = ({ path, user }) => {
     <nav className="ldc-side-menu">
       {user &&
         user.role &&
-        user.role === "admin" && <a href={process.env.BACKEND}>Admin</a>}
+        user.role === "admin" && (
+          <a href={process.env.BACKEND} className="admin-link">
+            <div className="menu-icons admin" />
+            <span>Admin</span>
+          </a>
+        )}
       <Link
         to="/buy-leads"
         className={path === "/buy-leads" ? "sm-active" : ""}
