@@ -5,14 +5,6 @@ import t from "../../utils/translate/translate"
 const SideMenu = ({ path, user }) => {
   return (
     <nav className="ldc-side-menu">
-      {user &&
-        user.role &&
-        user.role === "admin" && (
-          <a href={process.env.BACKEND} className="admin-link">
-            <div className="menu-icons admin" />
-            <span>Admin</span>
-          </a>
-        )}
       <Link
         to="/buy-leads"
         className={path === "/buy-leads" ? "sm-active" : ""}
@@ -43,6 +35,14 @@ const SideMenu = ({ path, user }) => {
       >
         <div className="menu-icons clipboard" />
       </Link>
+      {user &&
+        user.role &&
+        user.role === "admin" && (
+          <a href={process.env.BACKEND} className="admin-link">
+            <div className="menu-icons admin" />
+            <span>Admin</span>
+          </a>
+        )}
     </nav>
   )
 }
