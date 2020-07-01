@@ -46,4 +46,13 @@ export default class Reviews {
     rating = Math.min(5, rating)
     return rating
   }
+
+  public async getAllReviews(condition, sort, limit) {
+    let [bets, count] = await this.models.reviews.getAllReviews(
+      condition,
+      sort,
+      limit,
+    )
+    return [bets, count]
+  }
 }

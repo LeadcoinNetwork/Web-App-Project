@@ -1,6 +1,6 @@
 import * as _ from "lodash"
 
-import { NewUserInterface, disabledReason } from "../models/users/types"
+import { NewUserInterface, disabledReason, Role } from "../models/users/types"
 import * as auth from "../models/user-auth/user-auth"
 import * as utils from "../utils/index"
 
@@ -84,7 +84,7 @@ export default class Auth {
           provider_id: provider_id,
           provider: provider,
           created: Date.now(),
-          role: "user",
+          role: Role.user,
           rating: 0,
           numberReviews: 0,
         }

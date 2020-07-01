@@ -452,4 +452,13 @@ export default class Leads {
     }
     return true
   }
+
+  public async getLeadsAll(condition, sort, limit) {
+    let [bets, count] = await this.models.leads.getAllLeads(
+      condition,
+      sort,
+      limit,
+    )
+    return [bets, count]
+  }
 }

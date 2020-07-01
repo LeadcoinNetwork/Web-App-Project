@@ -176,4 +176,10 @@ export default class Leads extends baseDBModel<
   async completeBidding(leadIds) {
     return leadIds.map(leadId => this.update(leadId, { forSale: false }))
   }
+
+  public async getAllLeads(condition, sort, limit) {
+    const records = await this.find({ condition, sort, limit })
+    const count = await this.count({ condition })
+    return [records, count]
+  }
 }

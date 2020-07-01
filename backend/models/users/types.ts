@@ -1,5 +1,10 @@
 type timestamp = number
 
+export enum Role {
+  "user" = "user",
+  "admin" = "admin",
+}
+
 export interface BaseUserInterface {
   fname: string
   lname: string
@@ -16,6 +21,7 @@ export interface BaseUserInterface {
   favorites?: number[]
   getNotifications?: boolean
   getEmails?: boolean
+  role?: Role
 }
 export interface ExistingUserInterface extends BaseUserInterface {
   password: string
@@ -46,6 +52,7 @@ export interface ExistingUserInterfaceCondition {
   numberReviews?: number
   getNotifications?: boolean
   getEmails?: boolean
+  role?: Role
 }
 
 export interface NewUserInterface extends BaseUserInterface {

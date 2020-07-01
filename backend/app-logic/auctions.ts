@@ -123,4 +123,13 @@ export default class Auctions {
     }
     return true
   }
+
+  public async getAllAuctions(condition, sort, limit) {
+    let [bets, count] = await this.models.auctions.getAllAuctions(
+      condition,
+      sort,
+      limit,
+    )
+    return [bets, count]
+  }
 }

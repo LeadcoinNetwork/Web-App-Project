@@ -20,4 +20,10 @@ export default class Leads extends baseDBModel<
   public async getTransactions(condition: TransactionsQueryOptions, limit) {
     return this.find({ condition, limit })
   }
+
+  public async getAllTransactions(condition, sort, limit) {
+    const records = await this.find({ condition, sort, limit })
+    const count = await this.count({ condition })
+    return [records, count]
+  }
 }

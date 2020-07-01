@@ -26,4 +26,13 @@ export default class Bets {
     })
     return await this.models.bets.getBet({ id: result.insertId })
   }
+
+  public async getAllBets(condition, sort, limit) {
+    let [bets, count] = await this.models.bets.getAllBets(
+      condition,
+      sort,
+      limit,
+    )
+    return [bets, count]
+  }
 }
