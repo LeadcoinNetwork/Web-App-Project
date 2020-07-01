@@ -28,4 +28,10 @@ export default class Reviews extends baseDBModel<
   public async getRatings(userId: number) {
     return await this.reviewsQueries.getRatings(userId)
   }
+
+  public async getAllReviews(condition, sort, limit) {
+    const records = await this.find({ condition, sort, limit })
+    const count = await this.count({ condition })
+    return [records, count]
+  }
 }

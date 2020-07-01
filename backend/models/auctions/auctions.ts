@@ -42,4 +42,10 @@ export default class Auctions extends baseDBModel<
     const auctionIds = auctions.map(a => a.id)
     return await this.completeAuctionsByIds(auctionIds)
   }
+
+  public async getAllAuctions(condition, sort, limit) {
+    const records = await this.find({ condition, sort, limit })
+    const count = await this.count({ condition })
+    return [records, count]
+  }
 }

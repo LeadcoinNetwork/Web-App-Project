@@ -565,20 +565,66 @@ export default abstract class BaseDBModel<INew, IExisting, ICondition> {
     if (cnd) cnd = `WHERE ${cnd}`
     let sql_sort = ""
     let sql_limit = ""
+    let sortParam = ""
+
     if (sort) {
-      sql_sort = ` ORDER BY ${this.fieldName} ->> ${mysql.escape(
-        "$." + sort.sortBy,
-      )} ${sort.sortOrder}`
+      if (sort.sortBy !== "id") {
+        sortParam = `\n, JSON_EXTRACT(${this.fieldName}, '$.${
+          sort.sortBy
+        }') AS \`${sort.sortBy}\``
+      }
+      sql_sort = `\nORDER BY \`${sort.sortBy}\` ${sort.sortOrder}`
     }
+
     if (limit) {
       sql_limit = ` LIMIT ${limit.start},${limit.offset} `
     }
-    let sql_query = `SELECT ${select || "*"} FROM ${
+    let sql_query = `SELECT ${select || "*"} ${sortParam} FROM ${
       this.tableName
     } ${cnd} ${sql_sort} ${sql_limit} ;`
     let rows = await this.sql.query(sql_query)
     rows = rows.map(row => this.convertRowToObject(row)) // remove RowDataPacket class
     return rows
+  }
+
+  protected async count({
+    condition,
+    where,
+  }: {
+    condition?: ICondition
+    where?: string
+  }): Promise<IExisting[]> {
+    let cnd = ""
+    if (condition) {
+      cnd = Object.keys(condition)
+        .map(key => {
+          var field
+          switch (key) {
+            case "id":
+              field = "id"
+              break
+
+            default:
+              field = `${this.fieldName} ->> ${mysql.escape("$." + key)}`
+              break
+          }
+          let val = condition[key]
+          if (typeof val == "boolean") {
+            val = "" + val + ""
+          }
+          return `${field} = ${mysql.escape(condition[key])}`
+        })
+        .join(" AND ")
+    }
+
+    if (where) {
+      cnd += cnd ? " AND " : ""
+      cnd += where
+    }
+    if (cnd) cnd = `WHERE ${cnd}`
+    let sql_query = `SELECT COUNT(*) FROM ${this.tableName} ${cnd};`
+    const count = await this.sql.query(sql_query)
+    return count[0]["COUNT(*)"]
   }
 
   protected async insert(record: INew) {

@@ -29,6 +29,7 @@ import BetsModel from "../models/bets/bets"
 import bets from "./bets"
 import ReviewsModel from "../models/reviews/reviews"
 import reviews from "./reviews"
+import users from "./users"
 
 import NotFound from "@/utils/not-found.ts"
 
@@ -74,6 +75,7 @@ export default class AppLogic {
   public auctions = new auctions(this.models)
   public bets = new bets(this.models)
   public reviews = new reviews(this.models)
+  public users = new users(this.models)
 
   public userSyntisize = userSyntisize
 

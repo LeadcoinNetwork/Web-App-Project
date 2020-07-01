@@ -16,6 +16,7 @@ export interface BaseUserInterface {
   favorites?: number[]
   getNotifications?: boolean
   getEmails?: boolean
+  role?: "user" | "admin"
 }
 export interface ExistingUserInterface extends BaseUserInterface {
   password: string
@@ -46,6 +47,7 @@ export interface ExistingUserInterfaceCondition {
   numberReviews?: number
   getNotifications?: boolean
   getEmails?: boolean
+  role?: "user" | "admin"
 }
 
 export interface NewUserInterface extends BaseUserInterface {

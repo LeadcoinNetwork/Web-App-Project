@@ -142,6 +142,12 @@ class User extends baseDBModel<
     if (Object.keys(user).length > 0) return this.update(userId, user)
     return
   }
+
+  public async getAllUsers(condition, sort, limit) {
+    const records = await this.find({ condition, sort, limit })
+    const count = await this.count({ condition })
+    return [records, count]
+  }
 }
 
 export default User
