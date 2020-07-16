@@ -22,7 +22,7 @@
     "express-fileupload": "^0.4.0",
     "joi": "^13.1.2",
     "jsonwebtoken": "^8.2.1",
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.19",
     "multer": "^1.3.0",
     "node.js": "0.0.0",
     "nodemailer-promise": "^2.0.0",
