@@ -10,7 +10,7 @@
   "dependencies": {
     "@types/superagent": "^3.8.0",
     "@types/zone.js": "^0.5.12",
-    "bcrypt": "^2.0.1",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.18.2",
     "chalk": "^2.4.1",
     "commander": "^2.15.1",
